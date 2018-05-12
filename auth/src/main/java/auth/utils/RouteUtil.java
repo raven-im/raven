@@ -11,12 +11,14 @@ import protobuf.generate.internal.Internal;
  * Created by win7 on 2016/3/3.
  */
 public class RouteUtil {
-    public static void sendResponse(int code, String desc, long netId,String userId) {
+
+    public static void sendResponse(int code, String desc, long netId, String userId) {
         Auth.SResponse.Builder sb = Auth.SResponse.newBuilder();
         sb.setCode(code);
         sb.setDesc(desc);
-
-        ByteBuf byteBuf = Utils.pack2Server(sb.build(), MessageProtoNum.SRESPONSE, netId, Internal.Dest.Client, userId);
+        ByteBuf byteBuf = Utils
+                .pack2Server(sb.build(), MessageProtoNum.SRESPONSE, netId, Internal.Dest.Client,
+                        userId);
         AuthServerHandler.getGateAuthConnection().writeAndFlush(byteBuf);
     }
 }

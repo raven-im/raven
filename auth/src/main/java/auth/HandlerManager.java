@@ -21,6 +21,7 @@ import java.util.Map;
  * Created by Dell on 2016/3/4.
  */
 public class HandlerManager {
+
     private static final Logger logger = LoggerFactory.getLogger(HandlerManager.class);
 
     private static final Map<Integer, Constructor<? extends IMHandler>> _handlers = new HashMap<>();
@@ -28,7 +29,9 @@ public class HandlerManager {
     public static void register(Class<? extends Message> msg, Class<? extends IMHandler> handler) {
         int num = ParseMap.getPtoNum(msg);
         try {
-            Constructor<? extends IMHandler> constructor = handler.getConstructor(String.class, long.class, Message.class, ChannelHandlerContext.class);
+            Constructor<? extends IMHandler> constructor = handler
+                    .getConstructor(String.class, long.class, Message.class,
+                            ChannelHandlerContext.class);
             _handlers.put(num, constructor);
         } catch (NoSuchMethodException e) {
             throw new RuntimeException(e);
@@ -36,10 +39,10 @@ public class HandlerManager {
     }
 
     public static IMHandler getHandler(int msgNum, String userId, long netId,
-                                       Message msg, ChannelHandlerContext ctx)
+            Message msg, ChannelHandlerContext ctx)
             throws IllegalAccessException, InvocationTargetException, InstantiationException {
         Constructor<? extends IMHandler> constructor = _handlers.get(msgNum);
-        if(constructor == null) {
+        if (constructor == null) {
             logger.error("handler not exist, Message Number: {}", msgNum);
             return null;
         }
@@ -49,9 +52,9 @@ public class HandlerManager {
 
     public static void initHandlers() {
         HandlerManager.register(Internal.Greet.class, GreetHandler.class);
-        HandlerManager.register(Auth.CLogin.class, CLoginHandler.class);
-        HandlerManager.register(Auth.CRegister.class, CRegisterHandler.class);
-        HandlerManager.register(Chat.CPrivateChat.class, CPrivateChatHandler.class);
+        HandlerManager.register(Auth.CLogin.class, LoginHandler.class);
+        HandlerManager.register(Auth.CRegister.class, RegisterHandler.class);
+        HandlerManager.register(Chat.CPrivateChat.class, PrivateMessageHandler.class);
 
     }
 }

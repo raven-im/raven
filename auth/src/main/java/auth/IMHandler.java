@@ -9,8 +9,9 @@ import redis.clients.jedis.Jedis;
  * Created by Dell on 2016/3/2.
  */
 public abstract class IMHandler {
+
     protected final String _userid;
-    protected final long  _netid;
+    protected final long _netid;
     protected final Message _msg;
     protected ChannelHandlerContext _ctx;
     protected Jedis _jedis;

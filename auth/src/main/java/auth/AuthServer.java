@@ -18,8 +18,8 @@ import java.net.InetSocketAddress;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import protobuf.ParseRegistryMap;
-import protobuf.code.PacketDecoder;
-import protobuf.code.PacketEncoder;
+import protobuf.code.MessageDecoder;
+import protobuf.code.MessageEncoder;
 
 
 public class AuthServer {
@@ -36,27 +36,22 @@ public class AuthServer {
                     @Override
                     protected void initChannel(SocketChannel channel) {
                         ChannelPipeline pipeline = channel.pipeline();
-                        pipeline.addLast("MessageDecoder", new PacketDecoder());
-                        pipeline.addLast("MessageEncoder", new PacketEncoder());
-
+                        pipeline.addLast("MessageDecoder", new MessageDecoder());
+                        pipeline.addLast("MessageEncoder", new MessageEncoder());
                         pipeline.addLast("AuthServerHandler", new AuthServerHandler());
                     }
                 });
-
         bindConnectionOptions(bootstrap);
-
         bootstrap.bind(new InetSocketAddress(port)).addListener(new ChannelFutureListener() {
             @Override
-            public void operationComplete(ChannelFuture future)
-                    throws Exception {
+            public void operationComplete(ChannelFuture future){
                 if (future.isSuccess()) {
                     //init registry
                     ParseRegistryMap.initRegistry();
                     HandlerManager.initHandlers();
-                    logger.info(
-                            "[AuthServer] Started Success, waiting for other server connect...");
+                    logger.info("AuthServer Started Success, port:{}",port);
                 } else {
-                    logger.error("[AuthServer] Started Failed");
+                    logger.error("AuthServer Started Failed");
                 }
             }
         });

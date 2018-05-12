@@ -14,8 +14,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import protobuf.ParseRegistryMap;
-import protobuf.code.PacketDecoder;
-import protobuf.code.PacketEncoder;
+import protobuf.code.MessageDecoder;
+import protobuf.code.MessageEncoder;
 
 import java.net.InetSocketAddress;
 
@@ -36,8 +36,8 @@ public class GateServer {
                     protected void initChannel(SocketChannel channel)
                             throws Exception {
                         ChannelPipeline pipeline = channel.pipeline();
-                        pipeline.addLast("MessageDecoder", new PacketDecoder());
-                        pipeline.addLast("MessageEncoder", new PacketEncoder());
+                        pipeline.addLast("MessageDecoder", new MessageDecoder());
+                        pipeline.addLast("MessageEncoder", new MessageEncoder());
                         pipeline.addLast("ClientMessageHandler", new GateServerHandler());
                     }
                 });
@@ -51,17 +51,15 @@ public class GateServer {
                     //init Registry
                     ParseRegistryMap.initRegistry();
                     TransferHandlerMap.initRegistry();
-                    logger.info(
-                            "[GateServer] Started Successed, registry is complete, waiting for client connect...");
+                    logger.info("GateServer Started Successed, port: {}", port);
                 } else {
-                    logger.error("[GateServer] Started Failed, registry is incomplete");
+                    logger.error("GateServer Started Failed!");
                 }
             }
         });
     }
 
     private static void bindConnectionOptions(ServerBootstrap bootstrap) {
-
         bootstrap.option(ChannelOption.SO_BACKLOG, 1024);
         bootstrap.childOption(ChannelOption.SO_LINGER, 0);
         bootstrap.childOption(ChannelOption.TCP_NODELAY, true);

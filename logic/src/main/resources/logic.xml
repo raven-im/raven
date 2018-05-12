@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<logic>
+
+    <!--waiting for other server incoming-->
+    <logicserver ip = "0.0.0.0"
+                port = "7070"
+                workNum = "5"/>
+
+    <!--这里配置redis数据库地址-->
+    <redis      ip = "127.0.0.1"
+                port = "6379" />
+
+</logic>

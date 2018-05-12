@@ -2,7 +2,7 @@ package auth.utils;
 
 import auth.handler.AuthServerHandler;
 import io.netty.buffer.ByteBuf;
-import protobuf.ParseRegistryMap;
+import protobuf.MessageProtoNum;
 import protobuf.Utils;
 import protobuf.generate.cli2srv.login.Auth;
 import protobuf.generate.internal.Internal;
@@ -16,7 +16,7 @@ public class RouteUtil {
         sb.setCode(code);
         sb.setDesc(desc);
 
-        ByteBuf byteBuf = Utils.pack2Server(sb.build(), ParseRegistryMap.SRESPONSE, netId, Internal.Dest.Client, userId);
+        ByteBuf byteBuf = Utils.pack2Server(sb.build(), MessageProtoNum.SRESPONSE, netId, Internal.Dest.Client, userId);
         AuthServerHandler.getGateAuthConnection().writeAndFlush(byteBuf);
     }
 }

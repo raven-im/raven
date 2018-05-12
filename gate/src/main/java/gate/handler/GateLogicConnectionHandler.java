@@ -6,7 +6,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import protobuf.ParseRegistryMap;
+import protobuf.MessageProtoNum;
 import protobuf.Utils;
 import protobuf.generate.internal.Internal;
 
@@ -37,7 +37,7 @@ public class GateLogicConnectionHandler extends SimpleChannelInboundHandler<Mess
     private void sendGreet2Logic() {
         Internal.Greet.Builder ig = Internal.Greet.newBuilder();
         ig.setFrom(Internal.Greet.From.Gate);
-        ByteBuf out = Utils.pack2Server(ig.build(), ParseRegistryMap.GREET, -1, Internal.Dest.Logic, "admin");
+        ByteBuf out = Utils.pack2Server(ig.build(), MessageProtoNum.GREET, -1, Internal.Dest.Logic, "admin");
         getGatelogicConnection().writeAndFlush(out);
         logger.info("Gate send Green to Logic.");
     }

@@ -9,7 +9,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import protobuf.ParseRegistryMap;
+import protobuf.MessageProtoNum;
 import protobuf.Utils;
 import protobuf.analysis.ParseMap;
 import protobuf.generate.cli2srv.chat.Chat;
@@ -53,7 +53,7 @@ public class AuthLogicConnectionHandler extends SimpleChannelInboundHandler<Mess
     private void sendGreet2Logic() {
         Internal.Greet.Builder ig = Internal.Greet.newBuilder();
         ig.setFrom(Internal.Greet.From.Auth);
-        ByteBuf out = Utils.pack2Server(ig.build(), ParseRegistryMap.GREET, -1, Internal.Dest.Logic, "admin");
+        ByteBuf out = Utils.pack2Server(ig.build(), MessageProtoNum.GREET, -1, Internal.Dest.Logic, "admin");
         getAuthLogicConnection().writeAndFlush(out);
         logger.info("Auth send Green to Logic.");
     }

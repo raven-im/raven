@@ -8,7 +8,7 @@ import logic.Worker;
 import org.apache.thrift.TException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import protobuf.ParseRegistryMap;
+import protobuf.MessageProtoNum;
 import protobuf.Utils;
 import protobuf.generate.cli2srv.chat.Chat;
 import protobuf.generate.cli2srv.login.Auth;
@@ -30,7 +30,7 @@ public class CPrivateChatHandler extends IMHandler{
         ByteBuf byteBuf = null;
 
         //转发给auth
-        byteBuf = Utils.pack2Server(_msg, ParseRegistryMap.CPRIVATECHAT, Internal.Dest.Auth, msg.getDest());
+        byteBuf = Utils.pack2Server(_msg, MessageProtoNum.CPRIVATECHAT, Internal.Dest.Auth, msg.getDest());
         LogicServerHandler.getAuthLogicConnection().writeAndFlush(byteBuf);
 
         //给发消息的人回应

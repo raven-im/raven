@@ -2,6 +2,7 @@ package gate;
 /**
  * Created by Qzy on 2016/1/28.
  */
+
 import gate.handler.GateServerHandler;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -20,6 +21,7 @@ import java.net.InetSocketAddress;
 
 
 public class GateServer {
+
     private static final Logger logger = LoggerFactory.getLogger(GateServer.class);
 
     public static void startGateServer(int port) {
@@ -44,13 +46,13 @@ public class GateServer {
 
         bootstrap.bind(new InetSocketAddress(port)).addListener(new ChannelFutureListener() {
             @Override
-            public void operationComplete(ChannelFuture future)
-                    throws Exception {
+            public void operationComplete(ChannelFuture future) {
                 if (future.isSuccess()) {
                     //init Registry
                     ParseRegistryMap.initRegistry();
                     TransferHandlerMap.initRegistry();
-                    logger.info("[GateServer] Started Successed, registry is complete, waiting for client connect...");
+                    logger.info(
+                            "[GateServer] Started Successed, registry is complete, waiting for client connect...");
                 } else {
                     logger.error("[GateServer] Started Failed, registry is incomplete");
                 }
@@ -58,7 +60,7 @@ public class GateServer {
         });
     }
 
-    protected static void bindConnectionOptions(ServerBootstrap bootstrap) {
+    private static void bindConnectionOptions(ServerBootstrap bootstrap) {
 
         bootstrap.option(ChannelOption.SO_BACKLOG, 1024);
         bootstrap.childOption(ChannelOption.SO_LINGER, 0);

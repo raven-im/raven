@@ -15,26 +15,28 @@ import protobuf.code.PacketEncoder;
  * Created by Qzy on 2016/1/28.
  */
 public class GateAuthConnection {
+
     private static final Logger logger = LoggerFactory.getLogger(GateAuthConnection.class);
 
     public static void startGateAuthConnection(String ip, int port) {
         EventLoopGroup group = new NioEventLoopGroup();
-
         Bootstrap bootstrap = new Bootstrap()
                 .group(group)
                 .channel(NioSocketChannel.class)
                 .handler(new ChannelInitializer<SocketChannel>() {
                     @Override
-                    protected void initChannel(SocketChannel channel)
-                            throws Exception {
+                    protected void initChannel(SocketChannel channel) {
                         ChannelPipeline pipeline = channel.pipeline();
-
                         pipeline.addLast("MessageDecoder", new PacketDecoder());
                         pipeline.addLast("MessageEncoder", new PacketEncoder());
-                        pipeline.addLast("GateAuthConnectionHandler", new GateAuthConnectionHandler());  //Auth -> gate
+                        pipeline.addLast("GateAuthConnectionHandler",
+                                new GateAuthConnectionHandler());  //Auth -> gate
                     }
                 });
-
-        bootstrap.connect(ip, port);
+        if (bootstrap.connect(ip, port).isSuccess()) {
+            logger.info("connect auth server success");
+        } else {
+            logger.error("connect auth server failed");
+        }
     }
 }

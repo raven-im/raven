@@ -4,7 +4,6 @@ import auth.IMHandler;
 import auth.Worker;
 import com.google.protobuf.Message;
 import io.netty.channel.ChannelHandlerContext;
-import org.apache.thrift.TException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,7 +18,7 @@ public class GreetHandler extends IMHandler {
     }
 
     @Override
-    protected void excute(Worker worker) throws TException {
+    protected void excute(Worker worker) {
         AuthServerHandler.setGateAuthConnection(_ctx);
         logger.info("[Gate-Auth] connection is established");
     }

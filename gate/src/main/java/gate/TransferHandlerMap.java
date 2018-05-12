@@ -13,8 +13,13 @@ public class TransferHandlerMap {
      * 注册消息转发
      */
     public static void initRegistry() {
-        ClientMessage.registerTranferHandler(MessageProtoNum.CLOGIN, ClientMessage::transfer2Auth, Auth.CLogin.class);
-        ClientMessage.registerTranferHandler(MessageProtoNum.CREGISTER, ClientMessage::transfer2Auth, Auth.CRegister.class);
-        ClientMessage.registerTranferHandler(MessageProtoNum.CPRIVATECHAT, ClientMessage::transfer2Logic, Chat.CPrivateChat.class);
+        ClientMessage.registerTranferHandler(MessageProtoNum.CLOGIN, ClientMessage::transfer2Auth,
+                Auth.CLogin.class);
+        ClientMessage
+                .registerTranferHandler(MessageProtoNum.CREGISTER, ClientMessage::transfer2Auth,
+                        Auth.CRegister.class);
+        ClientMessage
+                .registerTranferHandler(MessageProtoNum.CPRIVATECHAT, ClientMessage::transfer2Logic,
+                        Chat.CPrivateChat.class);
     }
 }

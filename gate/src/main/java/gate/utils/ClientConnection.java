@@ -2,11 +2,10 @@ package gate.utils;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.AttributeKey;
+import java.util.concurrent.atomic.AtomicLong;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import thirdparty.threedes.ThreeDES;
-
-import java.util.concurrent.atomic.AtomicLong;
+import tools.threedes.ThreeDES;
 
 /**
  * Created by Qzy on 2016/1/29.

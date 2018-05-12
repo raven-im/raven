@@ -1,7 +1,7 @@
 package gate.starter;
 
 import gate.GateAuthConnection;
-import gate.GateLogicConnection;
+import gate.GateMessageConnection;
 import gate.GateServer;
 import java.io.FileInputStream;
 import java.util.Properties;
@@ -28,17 +28,14 @@ public class GateStarter {
         gateId = Integer.parseInt(prop.getProperty("gate.id"));
         logger.info("gate id " + gateId);
         int gateListenPort = Integer.parseInt(prop.getProperty("gate.server.port"));
-        logger.info("gateserver gateListenPort " + gateListenPort);
         String authIP = prop.getProperty("auth.ip");
         int authPort = Integer.parseInt(prop.getProperty("auth.port"));
-        logger.info("GateAuthConnection auth ip: {}  auth port: {}", authIP, authPort);
-        String logicIP = prop.getProperty("logic.ip");
-        int logicPort = Integer.parseInt(prop.getProperty("logic.port"));
-        logger.info("GateLogicConnection logic ip: {}  logic port: {}", logicIP, logicPort);
+        String messageIp = prop.getProperty("message.ip");
+        int messagePort = Integer.parseInt(prop.getProperty("message.port"));
         //Start Servers
         new Thread(() -> GateServer.startGateServer(gateListenPort)).start();
         new Thread(() -> GateAuthConnection.startGateAuthConnection(authIP, authPort)).start();
-        new Thread(() -> GateLogicConnection.startGateLogicConnection(logicIP, logicPort))
+        new Thread(() -> GateMessageConnection.startGateMessageConnection(messageIp, messagePort))
                 .start();
     }
 

@@ -8,8 +8,8 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import protobuf.code.PacketDecoder;
-import protobuf.code.PacketEncoder;
+import protobuf.code.MessageDecoder;
+import protobuf.code.MessageEncoder;
 
 /**
  * Created by Qzy on 2016/1/28.
@@ -27,16 +27,21 @@ public class GateAuthConnection {
                     @Override
                     protected void initChannel(SocketChannel channel) {
                         ChannelPipeline pipeline = channel.pipeline();
-                        pipeline.addLast("MessageDecoder", new PacketDecoder());
-                        pipeline.addLast("MessageEncoder", new PacketEncoder());
+                        pipeline.addLast("MessageDecoder", new MessageDecoder());
+                        pipeline.addLast("MessageEncoder", new MessageEncoder());
                         pipeline.addLast("GateAuthConnectionHandler",
-                                new GateAuthConnectionHandler());  //Auth -> gate
+                                new GateAuthConnectionHandler());
                     }
                 });
-        if (bootstrap.connect(ip, port).isSuccess()) {
-            logger.info("connect auth server success");
-        } else {
-            logger.error("connect auth server failed");
-        }
+        bootstrap.connect(ip, port).addListener(new ChannelFutureListener() {
+            @Override
+            public void operationComplete(ChannelFuture future) {
+                if (future.isSuccess()) {
+                    logger.info("gate connect auth sucess ");
+                } else {
+                    logger.error("gate connect auth failed! ");
+                }
+            }
+        });
     }
 }

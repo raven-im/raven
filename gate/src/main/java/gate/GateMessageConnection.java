@@ -34,14 +34,11 @@ public class GateMessageConnection {
                                 new GateMessageConnectionHandler());  //meaage -> gate
                     }
                 });
-        bootstrap.connect(ip, port).addListener(new ChannelFutureListener() {
-            @Override
-            public void operationComplete(ChannelFuture future) {
-                if (future.isSuccess()) {
-                    logger.info("gate connect message sucess ");
-                } else {
-                    logger.error("gate connect message failed! ");
-                }
+        bootstrap.connect(ip, port).addListener(future -> {
+            if (future.isSuccess()) {
+                logger.info("gate connect message sucess ");
+            } else {
+                logger.error("gate connect message failed! ");
             }
         });
 

@@ -13,7 +13,9 @@ import tools.threedes.ThreeDES;
  */
 
 public class ClientConnection {
+
     private static final AtomicLong netidGenerator = new AtomicLong(0);
+
     ClientConnection(ChannelHandlerContext c) {
         _netId = netidGenerator.incrementAndGet();
         _ctx = c;
@@ -45,7 +47,10 @@ public class ClientConnection {
 
     }
 
-    public void setCtx(ChannelHandlerContext ctx) {_ctx = ctx;}
+    public void setCtx(ChannelHandlerContext ctx) {
+        _ctx = ctx;
+    }
+
     public ChannelHandlerContext getCtx() {
         return _ctx;
     }

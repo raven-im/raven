@@ -14,9 +14,9 @@ import java.util.concurrent.TimeUnit;
 public class Worker extends Thread {
 
     private static final Logger logger = LoggerFactory.getLogger(Worker.class);
-    private static Worker[] _workers;
+    private static Worker[] workers;
 
-    private volatile boolean _stop = false;
+    private volatile boolean stop = false;
     private final BlockingQueue<IMHandler> _tasks = new LinkedBlockingDeque<>();
 
     public static void dispatch(String userId, IMHandler handler) {
@@ -25,12 +25,12 @@ public class Worker extends Thread {
             logger.error("handler is null");
             return;
         }
-        _workers[workId]._tasks.offer(handler);
+        workers[workId]._tasks.offer(handler);
     }
 
     @Override
     public void run() {
-        while (!_stop) {
+        while (!stop) {
             IMHandler handler = null;
             try {
                 handler = _tasks.poll(600, TimeUnit.MILLISECONDS);
@@ -39,6 +39,7 @@ public class Worker extends Thread {
                 }
             } catch (InterruptedException e) {
                 logger.error("Caught Exception");
+                Thread.currentThread().interrupt();
             }
             try {
                 assert handler != null;
@@ -58,16 +59,16 @@ public class Worker extends Thread {
     }
 
     public static void startWorker(int workNum) {
-        _workers = new Worker[workNum];
+        workers = new Worker[workNum];
         for (int i = 0; i < workNum; i++) {
-            _workers[i] = new Worker();
-            _workers[i].start();
+            workers[i] = new Worker();
+            workers[i].start();
         }
     }
 
     public static void stopWorkers() {
         for (int i = 0; i < AuthStarter.workNum; i++) {
-            _workers[i]._stop = true;
+            workers[i].stop = true;
         }
     }
 }

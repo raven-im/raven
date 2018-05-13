@@ -5,7 +5,6 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import message.IMHandler;
 import message.Worker;
-import org.apache.thrift.TException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import protobuf.MessageProtoNum;
@@ -26,7 +25,7 @@ public class PrivateMessageHandler extends IMHandler {
     }
 
     @Override
-    protected void excute(Worker worker) throws TException {
+    protected void excute(Worker worker) {
         Chat.CPrivateChat msg = (Chat.CPrivateChat) _msg;
         ByteBuf byteBuf = null;
         //转发给auth

@@ -5,8 +5,6 @@ package auth;
 
 import auth.handler.AuthServerHandler;
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.ChannelPipeline;
@@ -42,17 +40,14 @@ public class AuthServer {
                     }
                 });
         bindConnectionOptions(bootstrap);
-        bootstrap.bind(new InetSocketAddress(port)).addListener(new ChannelFutureListener() {
-            @Override
-            public void operationComplete(ChannelFuture future){
-                if (future.isSuccess()) {
-                    //init registry
-                    ParseRegistryMap.initRegistry();
-                    HandlerManager.initHandlers();
-                    logger.info("AuthServer Started Success, port:{}",port);
-                } else {
-                    logger.error("AuthServer Started Failed");
-                }
+        bootstrap.bind(new InetSocketAddress(port)).addListener(future -> {
+            if (future.isSuccess()) {
+                //init registry
+                ParseRegistryMap.initRegistry();
+                HandlerManager.initHandlers();
+                logger.info("AuthServer Started Success, port:{}", port);
+            } else {
+                logger.error("AuthServer Started Failed");
             }
         });
     }

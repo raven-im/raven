@@ -7,13 +7,10 @@
         <artifactId>IMServer</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
-
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>auth</groupId>
     <artifactId>auth</artifactId>
     <version>1.0-SNAPSHOT</version>
-
     <dependencies>
         <dependency>
             <groupId>protobuf</groupId>

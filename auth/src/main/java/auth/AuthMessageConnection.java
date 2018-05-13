@@ -2,8 +2,6 @@ package auth;
 
 import auth.handler.AuthMessageConnectionHandler;
 import io.netty.bootstrap.Bootstrap;
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.EventLoopGroup;
@@ -29,8 +27,7 @@ public class AuthMessageConnection {
                 .channel(NioSocketChannel.class)
                 .handler(new ChannelInitializer<SocketChannel>() {
                     @Override
-                    protected void initChannel(SocketChannel channel)
-                            throws Exception {
+                    protected void initChannel(SocketChannel channel) {
                         ChannelPipeline pipeline = channel.pipeline();
                         pipeline.addLast("MessageDecoder", new MessageDecoder());
                         pipeline.addLast("MessageEncoder", new MessageEncoder());
@@ -38,15 +35,12 @@ public class AuthMessageConnection {
                                 new AuthMessageConnectionHandler());  //Auth -> gate
                     }
                 });
-        bootstrap.connect(ip, port).addListener(new ChannelFutureListener() {
-            @Override
-            public void operationComplete(ChannelFuture future) {
-                if (future.isSuccess()) {
-                    logger.info(
-                            "auth connect message success");
-                } else {
-                    logger.error("auth connect message failed!");
-                }
+        bootstrap.connect(ip, port).addListener(future -> {
+            if (future.isSuccess()) {
+                logger.info(
+                        "auth connect message success");
+            } else {
+                logger.error("auth connect message failed!");
             }
         });
     }

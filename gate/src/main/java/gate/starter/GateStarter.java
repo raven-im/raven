@@ -3,6 +3,7 @@ package gate.starter;
 import gate.GateAuthConnection;
 import gate.GateMessageConnection;
 import gate.GateServer;
+import java.io.File;
 import java.io.FileInputStream;
 import java.util.Properties;
 import org.slf4j.Logger;
@@ -24,7 +25,14 @@ public class GateStarter {
 
     private static void configAndStart() throws Exception {
         Properties prop = new Properties();
-        prop.load(new FileInputStream(cfg));
+        File file = new File(cfg);
+        if (file.exists()) {
+            prop.load(new FileInputStream(cfg));
+        } else {
+            ClassLoader classLoader = GateStarter.class.getClassLoader();
+            // 获取到package下的文件
+            prop.load(classLoader.getResourceAsStream("gate.properties"));
+        }
         gateId = Integer.parseInt(prop.getProperty("gate.id"));
         logger.info("gate id " + gateId);
         int gateListenPort = Integer.parseInt(prop.getProperty("gate.server.port"));

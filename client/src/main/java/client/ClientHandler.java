@@ -18,6 +18,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * 模拟客户端聊天：自己给自己发消息
  */
 public class ClientHandler extends SimpleChannelInboundHandler<Message> {
+
     public static ChannelHandlerContext _gateClientConnection;
 
     private static final Logger logger = LoggerFactory.getLogger(ClientHandler.class);
@@ -32,7 +33,6 @@ public class ClientHandler extends SimpleChannelInboundHandler<Message> {
         _gateClientConnection = ctx;
         String passwd = "123";
         _userId = Long.toString(increased.getAndIncrement());
-
         sendCRegister(ctx, _userId, passwd);
         sendCLogin(ctx, _userId, passwd);
     }
@@ -41,7 +41,6 @@ public class ClientHandler extends SimpleChannelInboundHandler<Message> {
         Auth.CRegister.Builder cb = Auth.CRegister.newBuilder();
         cb.setUserid(userid);
         cb.setPasswd(passwd);
-
         ByteBuf byteBuf = Utils.pack2Client(cb.build());
         ctx.writeAndFlush(byteBuf);
         logger.info("send CRegister userid:{}", _userId);
@@ -53,16 +52,16 @@ public class ClientHandler extends SimpleChannelInboundHandler<Message> {
         loginInfo.setPasswd(passwd);
         loginInfo.setPlatform("ios");
         loginInfo.setAppVersion("1.0.0");
-
         ByteBuf byteBuf = Utils.pack2Client(loginInfo.build());
         ctx.writeAndFlush(byteBuf);
         logger.info("send CLogin userid:{}", _userId);
     }
 
     @Override
-    protected void channelRead0(ChannelHandlerContext channelHandlerContext, Message msg) throws Exception {
+    protected void channelRead0(ChannelHandlerContext channelHandlerContext, Message msg)
+            throws Exception {
         logger.info("received message: {}", msg.getClass());
-        if(msg instanceof Auth.SResponse) {
+        if (msg instanceof Auth.SResponse) {
             Auth.SResponse sp = (Auth.SResponse) msg;
             int code = sp.getCode();
             String desc = sp.getDesc();
@@ -93,12 +92,13 @@ public class ClientHandler extends SimpleChannelInboundHandler<Message> {
                 default:
                     logger.info("Unknow code: {}", code);
             }
-        } else if(msg instanceof Chat.SPrivateChat) {
-            logger.info("{} receiced chat message: {}.Total:{}", _userId, ((Chat.SPrivateChat) msg).getContent(), ++count);
+        } else if (msg instanceof Chat.SPrivateChat) {
+            logger.info("{} receiced chat message: {}.Total:{}", _userId,
+                    ((Chat.SPrivateChat) msg).getContent(), ++count);
         }
 
         //这样设置的原因是，防止两方都阻塞在输入上
-        if(_verify) {
+        if (_verify) {
             sendMessage();
             Thread.sleep(Client.frequency);
         }
@@ -110,12 +110,10 @@ public class ClientHandler extends SimpleChannelInboundHandler<Message> {
 //        String content = sc.nextLine();
         String content = "Hello, I am Tom!";
 //        logger.info("{} Send Message: {} to {}", _userId, content, _friend);
-
         Chat.CPrivateChat.Builder cp = Chat.CPrivateChat.newBuilder();
         cp.setContent(content);
         cp.setSelf(_userId);
         cp.setDest(_userId);
-
         ByteBuf byteBuf = Utils.pack2Client(cp.build());
         _gateClientConnection.writeAndFlush(byteBuf);
     }

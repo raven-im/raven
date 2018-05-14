@@ -2,6 +2,7 @@ package gate;
 /**
  * Created by Qzy on 2016/1/28.
  */
+
 import gate.handler.GateServerHandler;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -13,13 +14,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import protobuf.ParseRegistryMap;
-import protobuf.code.PacketDecoder;
-import protobuf.code.PacketEncoder;
+import protobuf.code.MessageDecoder;
+import protobuf.code.MessageEncoder;
 
 import java.net.InetSocketAddress;
 
 
 public class GateServer {
+
     private static final Logger logger = LoggerFactory.getLogger(GateServer.class);
 
     public static void startGateServer(int port) {
@@ -34,8 +36,8 @@ public class GateServer {
                     protected void initChannel(SocketChannel channel)
                             throws Exception {
                         ChannelPipeline pipeline = channel.pipeline();
-                        pipeline.addLast("MessageDecoder", new PacketDecoder());
-                        pipeline.addLast("MessageEncoder", new PacketEncoder());
+                        pipeline.addLast("MessageDecoder", new MessageDecoder());
+                        pipeline.addLast("MessageEncoder", new MessageEncoder());
                         pipeline.addLast("ClientMessageHandler", new GateServerHandler());
                     }
                 });
@@ -44,22 +46,20 @@ public class GateServer {
 
         bootstrap.bind(new InetSocketAddress(port)).addListener(new ChannelFutureListener() {
             @Override
-            public void operationComplete(ChannelFuture future)
-                    throws Exception {
+            public void operationComplete(ChannelFuture future) {
                 if (future.isSuccess()) {
                     //init Registry
                     ParseRegistryMap.initRegistry();
                     TransferHandlerMap.initRegistry();
-                    logger.info("[GateServer] Started Successed, registry is complete, waiting for client connect...");
+                    logger.info("GateServer Started Successed, port: {}", port);
                 } else {
-                    logger.error("[GateServer] Started Failed, registry is incomplete");
+                    logger.error("GateServer Started Failed!");
                 }
             }
         });
     }
 
-    protected static void bindConnectionOptions(ServerBootstrap bootstrap) {
-
+    private static void bindConnectionOptions(ServerBootstrap bootstrap) {
         bootstrap.option(ChannelOption.SO_BACKLOG, 1024);
         bootstrap.childOption(ChannelOption.SO_LINGER, 0);
         bootstrap.childOption(ChannelOption.TCP_NODELAY, true);

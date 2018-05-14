@@ -20,7 +20,7 @@ public class Utils {
 
         byte[] bytes = gtf.build().toByteArray();
         int length =bytes.length;
-        int gtfNum = ParseRegistryMap.GTRANSFER;
+        int gtfNum = MessageProtoNum.GTRANSFER;
 
         ByteBuf buf = Unpooled.buffer(8 + length);
         buf.writeInt(length);
@@ -52,7 +52,7 @@ public class Utils {
 
         byte[] bytes = gtf.build().toByteArray();
         int length =bytes.length;
-        int gtfNum = ParseRegistryMap.GTRANSFER;
+        int gtfNum = MessageProtoNum.GTRANSFER;
 
         ByteBuf buf = Unpooled.buffer(8 + length);
         buf.writeInt(length);

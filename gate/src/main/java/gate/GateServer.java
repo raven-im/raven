@@ -44,17 +44,14 @@ public class GateServer {
 
         bindConnectionOptions(bootstrap);
 
-        bootstrap.bind(new InetSocketAddress(port)).addListener(new ChannelFutureListener() {
-            @Override
-            public void operationComplete(ChannelFuture future) {
-                if (future.isSuccess()) {
-                    //init Registry
-                    ParseRegistryMap.initRegistry();
-                    TransferHandlerMap.initRegistry();
-                    logger.info("GateServer Started Successed, port: {}", port);
-                } else {
-                    logger.error("GateServer Started Failed!");
-                }
+        bootstrap.bind(new InetSocketAddress(port)).addListener(future -> {
+            if (future.isSuccess()) {
+                //init Registry
+                ParseRegistryMap.initRegistry();
+                TransferHandlerMap.initRegistry();
+                logger.info("GateServer Started Successed, port: {}", port);
+            } else {
+                logger.error("GateServer Started Failed!");
             }
         });
     }

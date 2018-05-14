@@ -26,7 +26,7 @@ public class AuthStarter {
 
     private static void configAndStart() throws Exception {
         Properties prop = new Properties();
-        File file=new File(cfg);
+        File file = new File(cfg);
         if (file.exists()) {
             prop.load(new FileInputStream(cfg));
         } else {

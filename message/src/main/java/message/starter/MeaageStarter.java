@@ -4,6 +4,7 @@ package message.starter;
  * Created by Dell on 2016/2/2.
  */
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.util.Properties;
 import message.MessageServer;
@@ -29,7 +30,14 @@ public class MeaageStarter {
 
     private static void configAndStart() throws Exception {
         Properties prop = new Properties();
-        prop.load(new FileInputStream(cfg));
+        File file = new File(cfg);
+        if (file.exists()) {
+            prop.load(new FileInputStream(cfg));
+        } else {
+            ClassLoader classLoader = MeaageStarter.class.getClassLoader();
+            // 获取到package下的文件
+            prop.load(classLoader.getResourceAsStream("message.properties"));
+        }
         int messageListenPort = Integer.parseInt(prop.getProperty("message.server.port"));
         workNum = Integer.parseInt(prop.getProperty("message.server.workNum"));
         message.Worker.startWorker(workNum);

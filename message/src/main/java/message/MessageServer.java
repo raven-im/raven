@@ -1,8 +1,6 @@
 package message;
 
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.ChannelPipeline;
@@ -42,16 +40,13 @@ public class MessageServer {
                     }
                 });
         bindConnectionOptions(bootstrap);
-        bootstrap.bind(new InetSocketAddress(port)).addListener(new ChannelFutureListener() {
-            @Override
-            public void operationComplete(ChannelFuture future) {
-                if (future.isSuccess()) {
-                    ParseRegistryMap.initRegistry();
-                    HandlerManager.initHandlers();
-                    logger.info("MeaageServer Started Success,port:{}",port);
-                } else {
-                    logger.error("MeaageServer Started Failed!");
-                }
+        bootstrap.bind(new InetSocketAddress(port)).addListener(future -> {
+            if (future.isSuccess()) {
+                ParseRegistryMap.initRegistry();
+                HandlerManager.initHandlers();
+                logger.info("MeaageServer Started Success,port:{}", port);
+            } else {
+                logger.error("MeaageServer Started Failed!");
             }
         });
     }

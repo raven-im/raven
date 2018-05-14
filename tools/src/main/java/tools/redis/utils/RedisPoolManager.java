@@ -14,16 +14,12 @@ public class RedisPoolManager {
 
     private static final Logger logger = LoggerFactory.getLogger(RedisPoolManager.class);
 
-    public  String REDIS_SERVER = "localhost";
-
-    public  int REDIS_PORT = 6666;
-
+    public String REDIS_SERVER = "localhost";
+    public int REDIS_PORT = 6666;
     private JedisPool pool = null;
 
     private JedisPool getInstance() {
-
         if (pool == null) {
-
             JedisPoolConfig config = new JedisPoolConfig();
             config.setMaxTotal(1000);
             config.setMaxIdle(20);
@@ -33,20 +29,14 @@ public class RedisPoolManager {
 
             pool = new JedisPool(config, REDIS_SERVER, REDIS_PORT, 10);
         }
-
         return pool;
-
     }
 
     /**
      * 获取jedis
-     *
-     * @return
      */
     public Jedis getJedis() {
-
         Jedis jedis = null;
-
         try {
             jedis = getInstance().getResource();
             // jedis.auth(REDIS_AUTH);
@@ -60,8 +50,6 @@ public class RedisPoolManager {
 
     /**
      * 返回jedis
-     *
-     * @param jedis
      */
     public void returnJedis(Jedis jedis) {
         try {
@@ -75,29 +63,21 @@ public class RedisPoolManager {
 
     /**
      * 返回关闭的redis
-     *
-     * @param jedis
      */
     public void returnBrokenJedis(Jedis jedis) {
         try {
-
             if (jedis != null) {
                 getInstance().returnBrokenResource(jedis);
             }
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }
-
     }
 
     /**
      * 释放jedis
-     *
-     * @param jedis
      */
     public void releaseJedis(Jedis jedis) {
         pool.returnResource(jedis);
-
     }
-
 }

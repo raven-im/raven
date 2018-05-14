@@ -27,21 +27,21 @@ public class RegisterHandler extends IMHandler {
 
     @Override
     protected void excute(Worker worker) throws TException {
-        Auth.CRegister msg = (Auth.CRegister) _msg;
+        Auth.CRegister msg = (Auth.CRegister) this.msg;
         String userid = msg.getUserid();
         String passwd = msg.getPasswd();
         Account account = new Account();
         account.setUserid(userid);
         account.setPasswd(passwd);
         //todo 写数据库要加锁
-        if (_jedis.exists(UserUtils.genDBKey(userid))) {
-            RouteUtil.sendResponse(Common.ACCOUNT_DUMPLICATED, "Account already exists", _netid,
+        if (jedis.exists(UserUtils.genDBKey(userid))) {
+            RouteUtil.sendResponse(Common.ACCOUNT_DUMPLICATED, "Account already exists", netid,
                     userid);
             logger.info("Account already exists, userid: {}", userid);
         } else {
-            _jedis.hset(UserUtils.genDBKey(userid), UserUtils.userFileds.Account.field,
+            jedis.hset(UserUtils.genDBKey(userid), UserUtils.userFileds.Account.field,
                     DBOperator.Serialize(account));
-            RouteUtil.sendResponse(Common.REGISTER_OK, "User registerd successd", _netid, userid);
+            RouteUtil.sendResponse(Common.REGISTER_OK, "User registerd successd", netid, userid);
             logger.info("User registerd successd, userid: {}", userid);
         }
 

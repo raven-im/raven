@@ -33,14 +33,11 @@ public class GateAuthConnection {
                                 new GateAuthConnectionHandler());
                     }
                 });
-        bootstrap.connect(ip, port).addListener(new ChannelFutureListener() {
-            @Override
-            public void operationComplete(ChannelFuture future) {
-                if (future.isSuccess()) {
-                    logger.info("gate connect auth sucess ");
-                } else {
-                    logger.error("gate connect auth failed! ");
-                }
+        bootstrap.connect(ip, port).addListener(future -> {
+            if (future.isSuccess()) {
+                logger.info("gate connect auth sucess ");
+            } else {
+                logger.error("gate connect auth failed! ");
             }
         });
     }

@@ -19,8 +19,8 @@ import protobuf.generate.internal.Internal;
 public class MessageServerHandler extends SimpleChannelInboundHandler<Message> {
 
     private static final Logger logger = LoggerFactory.getLogger(MessageServerHandler.class);
-    private static ChannelHandlerContext _gateLogicConnection;
-    private static ChannelHandlerContext _authLogicConnection;
+    private static ChannelHandlerContext gateLogicConnection;
+    private static ChannelHandlerContext authLogicConnection;
 
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, Message message)
@@ -40,24 +40,24 @@ public class MessageServerHandler extends SimpleChannelInboundHandler<Message> {
     }
 
     public static void setGateLogicConnection(ChannelHandlerContext ctx) {
-        _gateLogicConnection = ctx;
+        gateLogicConnection = ctx;
     }
 
     public static ChannelHandlerContext getGateLogicConnection() {
-        if (_gateLogicConnection != null) {
-            return _gateLogicConnection;
+        if (gateLogicConnection != null) {
+            return gateLogicConnection;
         } else {
             return null;
         }
     }
 
     public static void setAuthMessageConnection(ChannelHandlerContext ctx) {
-        _authLogicConnection = ctx;
+        authLogicConnection = ctx;
     }
 
     public static ChannelHandlerContext getAuthMessageConnection() {
-        if (_authLogicConnection != null) {
-            return _authLogicConnection;
+        if (authLogicConnection != null) {
+            return authLogicConnection;
         } else {
             return null;
         }

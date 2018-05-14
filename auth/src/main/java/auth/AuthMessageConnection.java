@@ -20,7 +20,7 @@ public class AuthMessageConnection {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthMessageConnection.class);
 
-    public static void startAuthMessageConnection(String ip, int port) throws InterruptedException {
+    public static void startAuthMessageConnection(String ip, int port) {
         EventLoopGroup group = new NioEventLoopGroup();
         Bootstrap bootstrap = new Bootstrap()
                 .group(group)
@@ -42,6 +42,6 @@ public class AuthMessageConnection {
             } else {
                 logger.error("auth connect message failed!");
             }
-        }).sync();
+        });
     }
 }

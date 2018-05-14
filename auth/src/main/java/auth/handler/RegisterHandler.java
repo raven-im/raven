@@ -27,7 +27,7 @@ public class RegisterHandler extends IMHandler {
 
     @Override
     protected void excute(Worker worker) throws TException {
-        Auth.CRegister msg = (Auth.CRegister) msg;
+        Auth.CRegister msg = (Auth.CRegister) this.msg;
         String userid = msg.getUserid();
         String passwd = msg.getPasswd();
         Account account = new Account();

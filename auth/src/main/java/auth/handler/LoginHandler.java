@@ -27,7 +27,7 @@ public class LoginHandler extends IMHandler {
 
     @Override
     protected void excute(Worker worker) throws TException {
-        Auth.CLogin msg = (Auth.CLogin) msg;
+        Auth.CLogin msg = (Auth.CLogin) this.msg;
         Account account;
         if (!jedis.exists(UserUtils.genDBKey(userid))) {
             RouteUtil.sendResponse(Common.ACCOUNT_INEXIST, "Account not exists", netid, userid);

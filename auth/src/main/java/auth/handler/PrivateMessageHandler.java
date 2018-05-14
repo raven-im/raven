@@ -25,7 +25,7 @@ public class PrivateMessageHandler extends IMHandler {
 
     @Override
     protected void excute(Worker worker) {
-        Chat.CPrivateChat msg = (Chat.CPrivateChat) msg;
+        Chat.CPrivateChat msg = (Chat.CPrivateChat) this.msg;
         ByteBuf byteBuf;
         String dest = msg.getDest();
         Long netid = AuthServerHandler.getNetidByUserid(dest);

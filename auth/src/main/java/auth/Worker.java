@@ -17,7 +17,7 @@ public class Worker extends Thread {
     private static Worker[] workers;
 
     private volatile boolean stop = false;
-    private final BlockingQueue<IMHandler> _tasks = new LinkedBlockingDeque<>();
+    private final BlockingQueue<IMHandler> tasks = new LinkedBlockingDeque<>();
 
     public static void dispatch(String userId, IMHandler handler) {
         int workId = getWorkId(userId);
@@ -25,7 +25,7 @@ public class Worker extends Thread {
             logger.error("handler is null");
             return;
         }
-        workers[workId]._tasks.offer(handler);
+        workers[workId].tasks.offer(handler);
     }
 
     @Override
@@ -33,23 +33,22 @@ public class Worker extends Thread {
         while (!stop) {
             IMHandler handler = null;
             try {
-                handler = _tasks.poll(600, TimeUnit.MILLISECONDS);
+                handler = tasks.poll(600, TimeUnit.MILLISECONDS);
                 if (handler == null) {
                     continue;
                 }
             } catch (InterruptedException e) {
                 logger.error("Caught Exception");
-                Thread.currentThread().interrupt();
             }
             try {
                 assert handler != null;
-                handler._jedis = AuthStarter.redisPoolManager.getJedis();
+                handler.jedis = AuthStarter.redisPoolManager.getJedis();
                 handler.excute(this);
             } catch (Exception e) {
                 logger.error("Caught Exception");
             } finally {
-                AuthStarter.redisPoolManager.releaseJedis(handler._jedis);
-                handler._jedis = null;
+                AuthStarter.redisPoolManager.releaseJedis(handler.jedis);
+                handler.jedis = null;
             }
         }
     }

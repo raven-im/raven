@@ -19,7 +19,7 @@ public class GreetHandler extends IMHandler {
 
     @Override
     protected void excute(Worker worker) {
-        AuthServerHandler.setGateAuthConnection(_ctx);
+        AuthServerHandler.setGateAuthConnection(ctx);
         logger.info("[Gate-Auth] connection is established");
     }
 }

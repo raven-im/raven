@@ -25,7 +25,7 @@ public class PrivateMessageHandler extends IMHandler {
 
     @Override
     protected void excute(Worker worker) {
-        Chat.CPrivateChat msg = (Chat.CPrivateChat) _msg;
+        Chat.CPrivateChat msg = (Chat.CPrivateChat) msg;
         ByteBuf byteBuf;
         String dest = msg.getDest();
         Long netid = AuthServerHandler.getNetidByUserid(dest);
@@ -38,7 +38,7 @@ public class PrivateMessageHandler extends IMHandler {
         byteBuf = Utils
                 .pack2Server(sp.build(), MessageProtoNum.SPRIVATECHAT, netid, Internal.Dest.Gate,
                         dest);
-        _ctx.writeAndFlush(byteBuf);
+        ctx.writeAndFlush(byteBuf);
         logger.info("message has send from {} to {}", msg.getSelf(), msg.getDest());
     }
 }

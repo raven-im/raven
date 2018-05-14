@@ -27,25 +27,25 @@ public class LoginHandler extends IMHandler {
 
     @Override
     protected void excute(Worker worker) throws TException {
-        Auth.CLogin msg = (Auth.CLogin) _msg;
+        Auth.CLogin msg = (Auth.CLogin) msg;
         Account account;
-        if (!_jedis.exists(UserUtils.genDBKey(_userid))) {
-            RouteUtil.sendResponse(Common.ACCOUNT_INEXIST, "Account not exists", _netid, _userid);
-            logger.info("Account not exists, userid: {}", _userid);
+        if (!jedis.exists(UserUtils.genDBKey(userid))) {
+            RouteUtil.sendResponse(Common.ACCOUNT_INEXIST, "Account not exists", netid, userid);
+            logger.info("Account not exists, userid: {}", userid);
             return;
         } else {
-            byte[] userIdBytes = _jedis
-                    .hget(UserUtils.genDBKey(_userid), UserUtils.userFileds.Account.field);
+            byte[] userIdBytes = jedis
+                    .hget(UserUtils.genDBKey(userid), UserUtils.userFileds.Account.field);
             account = DBOperator.Deserialize(new Account(), userIdBytes);
         }
-        if (account.getUserid().equals(_userid) && account.getPasswd().equals(msg.getPasswd())) {
-            AuthServerHandler.putInUseridMap(_userid, _netid);
-            RouteUtil.sendResponse(Common.VERYFY_PASSED, "Verify passed", _netid, _userid);
-            logger.info("userid: {} verify passed", _userid);
+        if (account.getUserid().equals(userid) && account.getPasswd().equals(msg.getPasswd())) {
+            AuthServerHandler.putInUseridMap(userid, netid);
+            RouteUtil.sendResponse(Common.VERYFY_PASSED, "Verify passed", netid, userid);
+            logger.info("userid: {} verify passed", userid);
         } else {
-            RouteUtil.sendResponse(Common.VERYFY_ERROR, "Account not exist or passwd error", _netid,
-                    _userid);
-            logger.info("userid: {} verify failed", _userid);
+            RouteUtil.sendResponse(Common.VERYFY_ERROR, "Account not exist or passwd error", netid,
+                    userid);
+            logger.info("userid: {} verify failed", userid);
         }
     }
 }

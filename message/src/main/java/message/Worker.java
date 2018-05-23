@@ -3,6 +3,7 @@ package message;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.TimeUnit;
+import message.handler.IMHandler;
 import message.starter.MeaageStarter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

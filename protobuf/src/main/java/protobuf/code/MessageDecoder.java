@@ -1,15 +1,14 @@
 package protobuf.code;
 
-import com.google.protobuf.Message;
+import com.google.protobuf.MessageLite;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import protobuf.analysis.ParseMap;
-
-import java.util.List;
 
 /**
  * Created by Administrator on 2016/1/29.
@@ -46,12 +45,12 @@ public class MessageDecoder extends ByteToMessageDecoder {
             ThreeDES des = ctx.channel().attr(ClientAttr.ENCRYPT).get();
             byte[] bareByte = des.decrypt(inByte);*/
             byte[] body = byteBuf.array();
-            Message msg = ParseMap.getMessage(ptoNum, body);
+            MessageLite msg = ParseMap.getMessage(ptoNum, body);
             out.add(msg);
             logger.info("GateServer Received Message: content length {}, ptoNum: {}", length,
                     ptoNum);
         } catch (Exception e) {
-            logger.error(ctx.channel().remoteAddress() + ",decode failed.", e);
+            logger.error("{},decode failed:{}",ctx.channel().remoteAddress(), e);
         }
     }
 }

@@ -9,7 +9,7 @@ import io.netty.channel.ChannelHandlerContext;
 import org.apache.thrift.TException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import protobuf.generate.cli2srv.login.Auth;
+import protobuf.protos.Auth;
 import tools.redis.utils.UserUtils;
 import tools.thrift.generate.db.user.Account;
 import tools.thrift.utils.DBOperator;
@@ -27,22 +27,22 @@ public class RegisterHandler extends IMHandler {
 
     @Override
     protected void excute(Worker worker) throws TException {
-        Auth.CRegister msg = (Auth.CRegister) this.msg;
-        String userid = msg.getUserid();
+        Auth.Register msg = (Auth.Register) this.msg;
+        String username = msg.getUsername();
         String passwd = msg.getPasswd();
         Account account = new Account();
-        account.setUserid(userid);
+        account.setUserid(username);
         account.setPasswd(passwd);
         //todo 写数据库要加锁
-        if (jedis.exists(UserUtils.genDBKey(userid))) {
+        if (jedis.exists(UserUtils.genDBKey(username))) {
             RouteUtil.sendResponse(Common.ACCOUNT_DUMPLICATED, "Account already exists", netid,
-                    userid);
-            logger.info("Account already exists, userid: {}", userid);
+                    username);
+            logger.info("Account already exists, userid: {}", username);
         } else {
-            jedis.hset(UserUtils.genDBKey(userid), UserUtils.userFileds.Account.field,
+            jedis.hset(UserUtils.genDBKey(username), UserUtils.userFileds.Account.field,
                     DBOperator.Serialize(account));
-            RouteUtil.sendResponse(Common.REGISTER_OK, "User registerd successd", netid, userid);
-            logger.info("User registerd successd, userid: {}", userid);
+            RouteUtil.sendResponse(Common.REGISTER_OK, "User registerd successd", netid, username);
+            logger.info("User registerd successd, userid: {}", username);
         }
 
     }

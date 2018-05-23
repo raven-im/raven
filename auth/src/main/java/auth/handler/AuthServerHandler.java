@@ -10,13 +10,11 @@ import auth.Worker;
 import com.google.protobuf.Message;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import java.util.HashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import protobuf.analysis.ParseMap;
-import protobuf.generate.cli2srv.chat.Chat;
-import protobuf.generate.internal.Internal;
-
-import java.util.HashMap;
+import protobuf.protos.Internal;
 
 public class AuthServerHandler extends SimpleChannelInboundHandler<Message> {
     private static final Logger logger = LoggerFactory.getLogger(AuthServerHandler.class);
@@ -42,7 +40,7 @@ public class AuthServerHandler extends SimpleChannelInboundHandler<Message> {
 
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, Message message) throws Exception {
-        Internal.GTransfer gt = (Internal.GTransfer) message;
+        Internal.Transfer gt = (Internal.Transfer) message;
         int ptoNum = gt.getPtoNum();
         Message msg = ParseMap.getMessage(ptoNum, gt.getMsg().toByteArray());
 

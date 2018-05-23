@@ -43,7 +43,6 @@ public class MessageServer {
         bootstrap.bind(new InetSocketAddress(port)).addListener(future -> {
             if (future.isSuccess()) {
                 ParseRegistryMap.initRegistry();
-                HandlerManager.initHandlers();
                 logger.info("MeaageServer Started Success,port:{}", port);
             } else {
                 logger.error("MeaageServer Started Failed!");

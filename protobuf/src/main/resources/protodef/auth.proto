@@ -1,0 +1,20 @@
+syntax = "proto3";
+package protobuf.protos;
+
+option java_outer_classname = "Auth";
+option optimize_for = LITE_RUNTIME; //SPEED;
+
+message Login {
+  string token = 1; // 标识
+}
+
+/*
+code：
+200 -- ok
+400 -- error
+*/
+message Response {
+  int32 code = 1; //返回码
+  string desc = 2; //描述
+}
+

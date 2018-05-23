@@ -1,20 +1,22 @@
 package auth;
 
 
-import auth.handler.*;
+import auth.handler.GreetHandler;
+import auth.handler.LoginHandler;
+import auth.handler.PrivateMessageHandler;
+import auth.handler.RegisterHandler;
 import com.google.protobuf.Message;
 import io.netty.channel.ChannelHandlerContext;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import protobuf.analysis.ParseMap;
-import protobuf.generate.cli2srv.chat.Chat;
-import protobuf.generate.cli2srv.login.Auth;
-import protobuf.generate.internal.Internal;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import protobuf.analysis.ParseMap;
+import protobuf.protos.Auth;
+import protobuf.protos.Internal;
+import protobuf.protos.PrivateMessageProto;
 
 
 /**
@@ -52,9 +54,9 @@ public class HandlerManager {
 
     public static void initHandlers() {
         HandlerManager.register(Internal.Greet.class, GreetHandler.class);
-        HandlerManager.register(Auth.CLogin.class, LoginHandler.class);
-        HandlerManager.register(Auth.CRegister.class, RegisterHandler.class);
-        HandlerManager.register(Chat.CPrivateChat.class, PrivateMessageHandler.class);
+        HandlerManager.register(Auth.Login.class, LoginHandler.class);
+        HandlerManager.register(Auth.Register.class, RegisterHandler.class);
+        HandlerManager.register(PrivateMessageProto.PrivateMessage.class, PrivateMessageHandler.class);
 
     }
 }

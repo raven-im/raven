@@ -1,10 +1,9 @@
-package gate.utils;
+package message.utils;
 
 import io.netty.channel.ChannelHandlerContext;
+import java.util.concurrent.ConcurrentHashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by Dell on 2016/2/2.

@@ -1,4 +1,4 @@
-package gate.utils;
+package message.utils;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.AttributeKey;
@@ -6,11 +6,6 @@ import java.util.concurrent.atomic.AtomicLong;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import tools.threedes.ThreeDES;
-
-/**
- * Created by Qzy on 2016/1/29.
- * 客户端连接的封装类
- */
 
 public class ClientConnection {
 

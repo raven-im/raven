@@ -1,4 +1,4 @@
-package tools.redis.utils;
+package tools.redis;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;

@@ -7,7 +7,7 @@ import java.io.FileInputStream;
 import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import tools.redis.utils.RedisPoolManager;
+import tools.redis.RedisPoolManager;
 
 /**
  * Created by Qzy on 2016/1/28.

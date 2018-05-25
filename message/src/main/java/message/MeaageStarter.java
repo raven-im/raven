@@ -1,4 +1,4 @@
-package message.starter;
+package message;
 
 /**
  * Created by Dell on 2016/2/2.
@@ -7,10 +7,8 @@ package message.starter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.Properties;
-import message.MessageServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import tools.redis.utils.RedisPoolManager;
 
 
 /**
@@ -39,8 +37,6 @@ public class MeaageStarter {
             prop.load(classLoader.getResourceAsStream("message.properties"));
         }
         int messageListenPort = Integer.parseInt(prop.getProperty("message.server.port"));
-        workNum = Integer.parseInt(prop.getProperty("message.server.workNum"));
-        message.Worker.startWorker(workNum);
         redisPoolManager = new RedisPoolManager();
         redisPoolManager.REDIS_SERVER = prop.getProperty("redis.ip");
         redisPoolManager.REDIS_PORT = Integer.parseInt(prop.getProperty("redis.port"));

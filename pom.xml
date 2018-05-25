@@ -11,7 +11,7 @@
         <module>auth</module>
         <module>message</module>
         <module>protobuf</module>
-        <module>tools</module>
+        <module>commomn</module>
         <module>client</module>
     </modules>
     <properties>

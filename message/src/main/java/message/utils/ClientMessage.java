@@ -1,16 +1,12 @@
-package message;
+package message.utils;
 
 import com.google.protobuf.Message;
+import com.google.protobuf.MessageLite;
 import java.io.IOException;
 import java.util.HashMap;
-import message.utils.ClientConnection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
-/**
- * Created by Dell on 2016/2/2.
- */
 public class ClientMessage {
 
     private static final Logger logger = LoggerFactory.getLogger(ClientMessage.class);
@@ -21,7 +17,7 @@ public class ClientMessage {
     @FunctionalInterface
     public interface Transfer {
 
-        void process(Message msg, ClientConnection conn) throws IOException;
+        void process(MessageLite msg, Connection conn) throws IOException;
     }
 
     public static void registerTranferHandler(Integer ptoNum, Transfer tranfer, Class<?> cla) {
@@ -38,7 +34,7 @@ public class ClientMessage {
         }
     }
 
-    public static void processTransferHandler(Message msg, ClientConnection conn)
+    public static void processTransferHandler(Message msg, Connection conn)
             throws IOException {
         logger.info("MessageName {}", msg.getClass());
         int ptoNum = msg2ptoNum.get(msg.getClass());

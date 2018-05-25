@@ -10,9 +10,6 @@ import org.apache.thrift.TException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import protobuf.protos.Auth;
-import tools.redis.utils.UserUtils;
-import tools.thrift.generate.db.user.Account;
-import tools.thrift.utils.DBOperator;
 
 /**
  * Created by win7 on 2016/3/3.

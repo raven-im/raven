@@ -9,9 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import protobuf.analysis.ParseMap;
 
-/**
- * Created by Administrator on 2016/1/29.
- */
+
 public class MessageEncoder extends MessageToByteEncoder<MessageLite> {
 
     private static final Logger logger = LoggerFactory.getLogger(MessageEncoder.class);

@@ -10,9 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import protobuf.analysis.ParseMap;
 
-/**
- * Created by Administrator on 2016/1/29.
- */
+
 public class MessageDecoder extends ByteToMessageDecoder {
 
     private static final Logger logger = LoggerFactory.getLogger(MessageDecoder.class);

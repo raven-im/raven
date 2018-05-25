@@ -6,9 +6,7 @@ import java.util.HashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * Created by Qzy on 2016/1/29.
- */
+
 public class ParseMap {
 
     private static final Logger logger = LoggerFactory.getLogger(ParseMap.class);

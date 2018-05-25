@@ -1,7 +1,4 @@
 package auth;
-/**
- * Created by Qzy on 2016/1/28.
- */
 
 import auth.handler.AuthServerHandler;
 import io.netty.bootstrap.ServerBootstrap;

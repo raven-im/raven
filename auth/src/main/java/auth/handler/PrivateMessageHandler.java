@@ -2,6 +2,7 @@ package auth.handler;
 
 import auth.IMHandler;
 import auth.Worker;
+import com.google.protobuf.Internal;
 import com.google.protobuf.Message;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
@@ -9,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import protobuf.MessageProtoNum;
 import protobuf.Utils;
-import protobuf.protos.Internal;
 import protobuf.protos.PrivateMessageProto;
 
 /**
@@ -19,7 +19,8 @@ public class PrivateMessageHandler extends IMHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(PrivateMessageHandler.class);
 
-    public PrivateMessageHandler(String userid, long netid, Message msg, ChannelHandlerContext ctx) {
+    public PrivateMessageHandler(String userid, long netid, Message msg,
+            ChannelHandlerContext ctx) {
         super(userid, netid, msg, ctx);
     }
 
@@ -33,7 +34,8 @@ public class PrivateMessageHandler extends IMHandler {
             logger.error("Dest User not online");
             return;
         }
-        PrivateMessageProto.PrivateMessage.Builder sp = PrivateMessageProto.PrivateMessage.newBuilder();
+        PrivateMessageProto.PrivateMessage.Builder sp = PrivateMessageProto.PrivateMessage
+                .newBuilder();
         sp.setContent(msg.getContent());
         byteBuf = Utils
                 .pack2Server(sp.build(), MessageProtoNum.PRIVATEMESSAGE, netid, Internal.Dest.Gate,

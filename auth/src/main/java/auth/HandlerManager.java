@@ -1,10 +1,10 @@
 package auth;
 
-
 import auth.handler.GreetHandler;
 import auth.handler.LoginHandler;
 import auth.handler.PrivateMessageHandler;
 import auth.handler.RegisterHandler;
+import com.google.protobuf.Internal;
 import com.google.protobuf.Message;
 import io.netty.channel.ChannelHandlerContext;
 import java.lang.reflect.Constructor;
@@ -15,7 +15,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import protobuf.analysis.ParseMap;
 import protobuf.protos.Auth;
-import protobuf.protos.Internal;
 import protobuf.protos.PrivateMessageProto;
 
 
@@ -56,7 +55,8 @@ public class HandlerManager {
         HandlerManager.register(Internal.Greet.class, GreetHandler.class);
         HandlerManager.register(Auth.Login.class, LoginHandler.class);
         HandlerManager.register(Auth.Register.class, RegisterHandler.class);
-        HandlerManager.register(PrivateMessageProto.PrivateMessage.class, PrivateMessageHandler.class);
+        HandlerManager
+                .register(PrivateMessageProto.PrivateMessage.class, PrivateMessageHandler.class);
 
     }
 }

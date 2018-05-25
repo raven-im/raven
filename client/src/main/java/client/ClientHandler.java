@@ -109,7 +109,8 @@ public class ClientHandler extends SimpleChannelInboundHandler<Message> {
 //        String content = sc.nextLine();
         String content = "Hello, I am Tom!";
 //        logger.info("{} Send Message: {} to {}", _userId, content, _friend);
-        PrivateMessageProto.PrivateMessage.Builder cp = PrivateMessageProto.PrivateMessage.newBuilder();
+        PrivateMessageProto.PrivateMessage.Builder cp = PrivateMessageProto.PrivateMessage
+                .newBuilder();
         cp.setContent(content);
         cp.setFromUId(_userId);
         cp.setToUId(_userId);

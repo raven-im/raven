@@ -1,11 +1,11 @@
 package auth.utils;
 
 import auth.handler.AuthServerHandler;
+import com.google.protobuf.Internal;
 import io.netty.buffer.ByteBuf;
 import protobuf.MessageProtoNum;
 import protobuf.Utils;
 import protobuf.protos.Auth;
-import protobuf.protos.Internal;
 
 /**
  * Created by win7 on 2016/3/3.

@@ -21,7 +21,8 @@ import protobuf.protos.PrivateMessageProto;
  */
 public class AuthMessageConnectionHandler extends SimpleChannelInboundHandler<MessageLite> {
 
-    private static final Logger logger = LoggerFactory.getLogger(AuthMessageConnectionHandler.class);
+    private static final Logger logger = LoggerFactory
+            .getLogger(AuthMessageConnectionHandler.class);
 
     private static ChannelHandlerContext _authLogicConnection;
 

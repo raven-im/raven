@@ -4,2268 +4,2438 @@
 package protobuf.protos;
 
 public final class PrivateMessageProto {
-  private PrivateMessageProto() {}
-  public static void registerAllExtensions(
-      com.google.protobuf.ExtensionRegistryLite registry) {
-  }
-  /**
-   * <pre>
-   *消息类型
-   * </pre>
-   *
-   * Protobuf enum {@code MsgType}
-   */
-  public enum MsgType
-      implements com.google.protobuf.Internal.EnumLite {
-    /**
-     * <pre>
-     *消息类型：单人会话
-     * </pre>
-     *
-     * <code>PERSON = 0;</code>
-     */
-    PERSON(0),
-    /**
-     * <pre>
-     *多人会话
-     * </pre>
-     *
-     * <code>PERSONS = 1;</code>
-     */
-    PERSONS(1),
-    /**
-     * <pre>
-     *群消息
-     * </pre>
-     *
-     * <code>GROUP = 2;</code>
-     */
-    GROUP(2),
-    UNRECOGNIZED(-1),
-    ;
 
-    /**
-     * <pre>
-     *消息类型：单人会话
-     * </pre>
-     *
-     * <code>PERSON = 0;</code>
-     */
-    public static final int PERSON_VALUE = 0;
-    /**
-     * <pre>
-     *多人会话
-     * </pre>
-     *
-     * <code>PERSONS = 1;</code>
-     */
-    public static final int PERSONS_VALUE = 1;
-    /**
-     * <pre>
-     *群消息
-     * </pre>
-     *
-     * <code>GROUP = 2;</code>
-     */
-    public static final int GROUP_VALUE = 2;
+    private PrivateMessageProto() {
+    }
 
-
-    public final int getNumber() {
-      if (this == UNRECOGNIZED) {
-        throw new java.lang.IllegalArgumentException(
-            "Can't get the number of an unknown enum value.");
-      }
-      return value;
+    public static void registerAllExtensions(
+            com.google.protobuf.ExtensionRegistryLite registry) {
     }
 
     /**
-     * @deprecated Use {@link #forNumber(int)} instead.
+     * <pre>
+     * 消息类型
+     * </pre>
+     *
+     * Protobuf enum {@code MsgType}
      */
-    @java.lang.Deprecated
-    public static MsgType valueOf(int value) {
-      return forNumber(value);
-    }
+    public enum MsgType
+            implements com.google.protobuf.Internal.EnumLite {
+        /**
+         * <pre>
+         * 消息类型：单人会话
+         * </pre>
+         *
+         * <code>PERSON = 0;</code>
+         */
+        PERSON(0),
+        /**
+         * <pre>
+         * 多人会话
+         * </pre>
+         *
+         * <code>PERSONS = 1;</code>
+         */
+        PERSONS(1),
+        /**
+         * <pre>
+         * 群消息
+         * </pre>
+         *
+         * <code>GROUP = 2;</code>
+         */
+        GROUP(2),
+        UNRECOGNIZED(-1),;
 
-    public static MsgType forNumber(int value) {
-      switch (value) {
-        case 0: return PERSON;
-        case 1: return PERSONS;
-        case 2: return GROUP;
-        default: return null;
-      }
-    }
+        /**
+         * <pre>
+         * 消息类型：单人会话
+         * </pre>
+         *
+         * <code>PERSON = 0;</code>
+         */
+        public static final int PERSON_VALUE = 0;
+        /**
+         * <pre>
+         * 多人会话
+         * </pre>
+         *
+         * <code>PERSONS = 1;</code>
+         */
+        public static final int PERSONS_VALUE = 1;
+        /**
+         * <pre>
+         * 群消息
+         * </pre>
+         *
+         * <code>GROUP = 2;</code>
+         */
+        public static final int GROUP_VALUE = 2;
 
-    public static com.google.protobuf.Internal.EnumLiteMap<MsgType>
-        internalGetValueMap() {
-      return internalValueMap;
-    }
-    private static final com.google.protobuf.Internal.EnumLiteMap<
-        MsgType> internalValueMap =
-          new com.google.protobuf.Internal.EnumLiteMap<MsgType>() {
-            public MsgType findValueByNumber(int number) {
-              return MsgType.forNumber(number);
+
+        public final int getNumber() {
+            if (this == UNRECOGNIZED) {
+                throw new java.lang.IllegalArgumentException(
+                        "Can't get the number of an unknown enum value.");
             }
-          };
+            return value;
+        }
 
-    private final int value;
+        /**
+         * @deprecated Use {@link #forNumber(int)} instead.
+         */
+        @java.lang.Deprecated
+        public static MsgType valueOf(int value) {
+            return forNumber(value);
+        }
 
-    private MsgType(int value) {
-      this.value = value;
+        public static MsgType forNumber(int value) {
+            switch (value) {
+                case 0:
+                    return PERSON;
+                case 1:
+                    return PERSONS;
+                case 2:
+                    return GROUP;
+                default:
+                    return null;
+            }
+        }
+
+        public static com.google.protobuf.Internal.EnumLiteMap<MsgType>
+        internalGetValueMap() {
+            return internalValueMap;
+        }
+
+        private static final com.google.protobuf.Internal.EnumLiteMap<
+                MsgType> internalValueMap =
+                new com.google.protobuf.Internal.EnumLiteMap<MsgType>() {
+                    public MsgType findValueByNumber(int number) {
+                        return MsgType.forNumber(number);
+                    }
+                };
+
+        private final int value;
+
+        private MsgType(int value) {
+            this.value = value;
+        }
+
+        // @@protoc_insertion_point(enum_scope:MsgType)
     }
 
-    // @@protoc_insertion_point(enum_scope:MsgType)
-  }
+    public interface UpStreamMessageProtoOrBuilder extends
+            // @@protoc_insertion_point(interface_extends:UpStreamMessageProto)
+            com.google.protobuf.MessageLiteOrBuilder {
 
-  public interface UpStreamMessageProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:UpStreamMessageProto)
-      com.google.protobuf.MessageLiteOrBuilder {
-
-    /**
-     * <pre>
-     *消息目标的userid
-     * </pre>
-     *
-     * <code>repeated string toUId = 2;</code>
-     */
-    java.util.List<java.lang.String>
+        /**
+         * <pre>
+         * 消息目标的userid
+         * </pre>
+         *
+         * <code>repeated string toUId = 2;</code>
+         */
+        java.util.List<java.lang.String>
         getToUIdList();
-    /**
-     * <pre>
-     *消息目标的userid
-     * </pre>
-     *
-     * <code>repeated string toUId = 2;</code>
-     */
-    int getToUIdCount();
-    /**
-     * <pre>
-     *消息目标的userid
-     * </pre>
-     *
-     * <code>repeated string toUId = 2;</code>
-     */
-    java.lang.String getToUId(int index);
-    /**
-     * <pre>
-     *消息目标的userid
-     * </pre>
-     *
-     * <code>repeated string toUId = 2;</code>
-     */
-    com.google.protobuf.ByteString
+
+        /**
+         * <pre>
+         * 消息目标的userid
+         * </pre>
+         *
+         * <code>repeated string toUId = 2;</code>
+         */
+        int getToUIdCount();
+
+        /**
+         * <pre>
+         * 消息目标的userid
+         * </pre>
+         *
+         * <code>repeated string toUId = 2;</code>
+         */
+        java.lang.String getToUId(int index);
+
+        /**
+         * <pre>
+         * 消息目标的userid
+         * </pre>
+         *
+         * <code>repeated string toUId = 2;</code>
+         */
+        com.google.protobuf.ByteString
         getToUIdBytes(int index);
 
-    /**
-     * <pre>
-     *内容对象类型名称
-     * </pre>
-     *
-     * <code>string className = 3;</code>
-     */
-    java.lang.String getClassName();
-    /**
-     * <pre>
-     *内容对象类型名称
-     * </pre>
-     *
-     * <code>string className = 3;</code>
-     */
-    com.google.protobuf.ByteString
+        /**
+         * <pre>
+         * 内容对象类型名称
+         * </pre>
+         *
+         * <code>string className = 3;</code>
+         */
+        java.lang.String getClassName();
+
+        /**
+         * <pre>
+         * 内容对象类型名称
+         * </pre>
+         *
+         * <code>string className = 3;</code>
+         */
+        com.google.protobuf.ByteString
         getClassNameBytes();
 
-    /**
-     * <pre>
-     *内容
-     * </pre>
-     *
-     * <code>string content = 4;</code>
-     */
-    java.lang.String getContent();
-    /**
-     * <pre>
-     *内容
-     * </pre>
-     *
-     * <code>string content = 4;</code>
-     */
-    com.google.protobuf.ByteString
+        /**
+         * <pre>
+         * 内容
+         * </pre>
+         *
+         * <code>string content = 4;</code>
+         */
+        java.lang.String getContent();
+
+        /**
+         * <pre>
+         * 内容
+         * </pre>
+         *
+         * <code>string content = 4;</code>
+         */
+        com.google.protobuf.ByteString
         getContentBytes();
 
-    /**
-     * <pre>
-     *发送时间
-     * </pre>
-     *
-     * <code>uint32 sendtiime = 5;</code>
-     */
-    int getSendtiime();
-  }
-  /**
-   * <pre>
-   *客户端发送单聊消息
-   * </pre>
-   *
-   * Protobuf type {@code UpStreamMessageProto}
-   */
-  public  static final class UpStreamMessageProto extends
-      com.google.protobuf.GeneratedMessageLite<
-          UpStreamMessageProto, UpStreamMessageProto.Builder> implements
-      // @@protoc_insertion_point(message_implements:UpStreamMessageProto)
-      UpStreamMessageProtoOrBuilder {
-    private UpStreamMessageProto() {
-      toUId_ = com.google.protobuf.GeneratedMessageLite.emptyProtobufList();
-      className_ = "";
-      content_ = "";
-    }
-    private int bitField0_;
-    public static final int TOUID_FIELD_NUMBER = 2;
-    private com.google.protobuf.Internal.ProtobufList<java.lang.String> toUId_;
-    /**
-     * <pre>
-     *消息目标的userid
-     * </pre>
-     *
-     * <code>repeated string toUId = 2;</code>
-     */
-    public java.util.List<java.lang.String> getToUIdList() {
-      return toUId_;
-    }
-    /**
-     * <pre>
-     *消息目标的userid
-     * </pre>
-     *
-     * <code>repeated string toUId = 2;</code>
-     */
-    public int getToUIdCount() {
-      return toUId_.size();
-    }
-    /**
-     * <pre>
-     *消息目标的userid
-     * </pre>
-     *
-     * <code>repeated string toUId = 2;</code>
-     */
-    public java.lang.String getToUId(int index) {
-      return toUId_.get(index);
-    }
-    /**
-     * <pre>
-     *消息目标的userid
-     * </pre>
-     *
-     * <code>repeated string toUId = 2;</code>
-     */
-    public com.google.protobuf.ByteString
-        getToUIdBytes(int index) {
-      return com.google.protobuf.ByteString.copyFromUtf8(
-          toUId_.get(index));
-    }
-    private void ensureToUIdIsMutable() {
-      if (!toUId_.isModifiable()) {
-        toUId_ =
-            com.google.protobuf.GeneratedMessageLite.mutableCopy(toUId_);
-       }
-    }
-    /**
-     * <pre>
-     *消息目标的userid
-     * </pre>
-     *
-     * <code>repeated string toUId = 2;</code>
-     */
-    private void setToUId(
-        int index, java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  ensureToUIdIsMutable();
-      toUId_.set(index, value);
-    }
-    /**
-     * <pre>
-     *消息目标的userid
-     * </pre>
-     *
-     * <code>repeated string toUId = 2;</code>
-     */
-    private void addToUId(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  ensureToUIdIsMutable();
-      toUId_.add(value);
-    }
-    /**
-     * <pre>
-     *消息目标的userid
-     * </pre>
-     *
-     * <code>repeated string toUId = 2;</code>
-     */
-    private void addAllToUId(
-        java.lang.Iterable<java.lang.String> values) {
-      ensureToUIdIsMutable();
-      com.google.protobuf.AbstractMessageLite.addAll(
-          values, toUId_);
-    }
-    /**
-     * <pre>
-     *消息目标的userid
-     * </pre>
-     *
-     * <code>repeated string toUId = 2;</code>
-     */
-    private void clearToUId() {
-      toUId_ = com.google.protobuf.GeneratedMessageLite.emptyProtobufList();
-    }
-    /**
-     * <pre>
-     *消息目标的userid
-     * </pre>
-     *
-     * <code>repeated string toUId = 2;</code>
-     */
-    private void addToUIdBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      ensureToUIdIsMutable();
-      toUId_.add(value.toStringUtf8());
-    }
-
-    public static final int CLASSNAME_FIELD_NUMBER = 3;
-    private java.lang.String className_;
-    /**
-     * <pre>
-     *内容对象类型名称
-     * </pre>
-     *
-     * <code>string className = 3;</code>
-     */
-    public java.lang.String getClassName() {
-      return className_;
-    }
-    /**
-     * <pre>
-     *内容对象类型名称
-     * </pre>
-     *
-     * <code>string className = 3;</code>
-     */
-    public com.google.protobuf.ByteString
-        getClassNameBytes() {
-      return com.google.protobuf.ByteString.copyFromUtf8(className_);
-    }
-    /**
-     * <pre>
-     *内容对象类型名称
-     * </pre>
-     *
-     * <code>string className = 3;</code>
-     */
-    private void setClassName(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
-      className_ = value;
-    }
-    /**
-     * <pre>
-     *内容对象类型名称
-     * </pre>
-     *
-     * <code>string className = 3;</code>
-     */
-    private void clearClassName() {
-      
-      className_ = getDefaultInstance().getClassName();
-    }
-    /**
-     * <pre>
-     *内容对象类型名称
-     * </pre>
-     *
-     * <code>string className = 3;</code>
-     */
-    private void setClassNameBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
-      className_ = value.toStringUtf8();
-    }
-
-    public static final int CONTENT_FIELD_NUMBER = 4;
-    private java.lang.String content_;
-    /**
-     * <pre>
-     *内容
-     * </pre>
-     *
-     * <code>string content = 4;</code>
-     */
-    public java.lang.String getContent() {
-      return content_;
-    }
-    /**
-     * <pre>
-     *内容
-     * </pre>
-     *
-     * <code>string content = 4;</code>
-     */
-    public com.google.protobuf.ByteString
-        getContentBytes() {
-      return com.google.protobuf.ByteString.copyFromUtf8(content_);
-    }
-    /**
-     * <pre>
-     *内容
-     * </pre>
-     *
-     * <code>string content = 4;</code>
-     */
-    private void setContent(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
-      content_ = value;
-    }
-    /**
-     * <pre>
-     *内容
-     * </pre>
-     *
-     * <code>string content = 4;</code>
-     */
-    private void clearContent() {
-      
-      content_ = getDefaultInstance().getContent();
-    }
-    /**
-     * <pre>
-     *内容
-     * </pre>
-     *
-     * <code>string content = 4;</code>
-     */
-    private void setContentBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
-      content_ = value.toStringUtf8();
-    }
-
-    public static final int SENDTIIME_FIELD_NUMBER = 5;
-    private int sendtiime_;
-    /**
-     * <pre>
-     *发送时间
-     * </pre>
-     *
-     * <code>uint32 sendtiime = 5;</code>
-     */
-    public int getSendtiime() {
-      return sendtiime_;
-    }
-    /**
-     * <pre>
-     *发送时间
-     * </pre>
-     *
-     * <code>uint32 sendtiime = 5;</code>
-     */
-    private void setSendtiime(int value) {
-      
-      sendtiime_ = value;
-    }
-    /**
-     * <pre>
-     *发送时间
-     * </pre>
-     *
-     * <code>uint32 sendtiime = 5;</code>
-     */
-    private void clearSendtiime() {
-      
-      sendtiime_ = 0;
-    }
-
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      for (int i = 0; i < toUId_.size(); i++) {
-        output.writeString(2, toUId_.get(i));
-      }
-      if (!className_.isEmpty()) {
-        output.writeString(3, getClassName());
-      }
-      if (!content_.isEmpty()) {
-        output.writeString(4, getContent());
-      }
-      if (sendtiime_ != 0) {
-        output.writeUInt32(5, sendtiime_);
-      }
-      unknownFields.writeTo(output);
-    }
-
-    public int getSerializedSize() {
-      int size = memoizedSerializedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      {
-        int dataSize = 0;
-        for (int i = 0; i < toUId_.size(); i++) {
-          dataSize += com.google.protobuf.CodedOutputStream
-            .computeStringSizeNoTag(toUId_.get(i));
-        }
-        size += dataSize;
-        size += 1 * getToUIdList().size();
-      }
-      if (!className_.isEmpty()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(3, getClassName());
-      }
-      if (!content_.isEmpty()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(4, getContent());
-      }
-      if (sendtiime_ != 0) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeUInt32Size(5, sendtiime_);
-      }
-      size += unknownFields.getSerializedSize();
-      memoizedSerializedSize = size;
-      return size;
-    }
-
-    public static protobuf.protos.PrivateMessageProto.UpStreamMessageProto parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, data);
-    }
-    public static protobuf.protos.PrivateMessageProto.UpStreamMessageProto parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, data, extensionRegistry);
-    }
-    public static protobuf.protos.PrivateMessageProto.UpStreamMessageProto parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, data);
-    }
-    public static protobuf.protos.PrivateMessageProto.UpStreamMessageProto parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, data, extensionRegistry);
-    }
-    public static protobuf.protos.PrivateMessageProto.UpStreamMessageProto parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, data);
-    }
-    public static protobuf.protos.PrivateMessageProto.UpStreamMessageProto parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, data, extensionRegistry);
-    }
-    public static protobuf.protos.PrivateMessageProto.UpStreamMessageProto parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, input);
-    }
-    public static protobuf.protos.PrivateMessageProto.UpStreamMessageProto parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, input, extensionRegistry);
-    }
-    public static protobuf.protos.PrivateMessageProto.UpStreamMessageProto parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return parseDelimitedFrom(DEFAULT_INSTANCE, input);
-    }
-    public static protobuf.protos.PrivateMessageProto.UpStreamMessageProto parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
-    }
-    public static protobuf.protos.PrivateMessageProto.UpStreamMessageProto parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, input);
-    }
-    public static protobuf.protos.PrivateMessageProto.UpStreamMessageProto parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, input, extensionRegistry);
-    }
-
-    public static Builder newBuilder() {
-      return (Builder) DEFAULT_INSTANCE.createBuilder();
-    }
-    public static Builder newBuilder(protobuf.protos.PrivateMessageProto.UpStreamMessageProto prototype) {
-      return (Builder) DEFAULT_INSTANCE.createBuilder(prototype);
+        /**
+         * <pre>
+         * 发送时间
+         * </pre>
+         *
+         * <code>uint32 sendtiime = 5;</code>
+         */
+        int getSendtiime();
     }
 
     /**
      * <pre>
-     *客户端发送单聊消息
+     * 客户端发送单聊消息
      * </pre>
      *
      * Protobuf type {@code UpStreamMessageProto}
      */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageLite.Builder<
-          protobuf.protos.PrivateMessageProto.UpStreamMessageProto, Builder> implements
-        // @@protoc_insertion_point(builder_implements:UpStreamMessageProto)
-        protobuf.protos.PrivateMessageProto.UpStreamMessageProtoOrBuilder {
-      // Construct using protobuf.protos.PrivateMessageProto.UpStreamMessageProto.newBuilder()
-      private Builder() {
-        super(DEFAULT_INSTANCE);
-      }
+    public static final class UpStreamMessageProto extends
+            com.google.protobuf.GeneratedMessageLite<
+                    UpStreamMessageProto, UpStreamMessageProto.Builder> implements
+            // @@protoc_insertion_point(message_implements:UpStreamMessageProto)
+            UpStreamMessageProtoOrBuilder {
 
-
-      /**
-       * <pre>
-       *消息目标的userid
-       * </pre>
-       *
-       * <code>repeated string toUId = 2;</code>
-       */
-      public java.util.List<java.lang.String>
-          getToUIdList() {
-        return java.util.Collections.unmodifiableList(
-            instance.getToUIdList());
-      }
-      /**
-       * <pre>
-       *消息目标的userid
-       * </pre>
-       *
-       * <code>repeated string toUId = 2;</code>
-       */
-      public int getToUIdCount() {
-        return instance.getToUIdCount();
-      }
-      /**
-       * <pre>
-       *消息目标的userid
-       * </pre>
-       *
-       * <code>repeated string toUId = 2;</code>
-       */
-      public java.lang.String getToUId(int index) {
-        return instance.getToUId(index);
-      }
-      /**
-       * <pre>
-       *消息目标的userid
-       * </pre>
-       *
-       * <code>repeated string toUId = 2;</code>
-       */
-      public com.google.protobuf.ByteString
-          getToUIdBytes(int index) {
-        return instance.getToUIdBytes(index);
-      }
-      /**
-       * <pre>
-       *消息目标的userid
-       * </pre>
-       *
-       * <code>repeated string toUId = 2;</code>
-       */
-      public Builder setToUId(
-          int index, java.lang.String value) {
-        copyOnWrite();
-        instance.setToUId(index, value);
-        return this;
-      }
-      /**
-       * <pre>
-       *消息目标的userid
-       * </pre>
-       *
-       * <code>repeated string toUId = 2;</code>
-       */
-      public Builder addToUId(
-          java.lang.String value) {
-        copyOnWrite();
-        instance.addToUId(value);
-        return this;
-      }
-      /**
-       * <pre>
-       *消息目标的userid
-       * </pre>
-       *
-       * <code>repeated string toUId = 2;</code>
-       */
-      public Builder addAllToUId(
-          java.lang.Iterable<java.lang.String> values) {
-        copyOnWrite();
-        instance.addAllToUId(values);
-        return this;
-      }
-      /**
-       * <pre>
-       *消息目标的userid
-       * </pre>
-       *
-       * <code>repeated string toUId = 2;</code>
-       */
-      public Builder clearToUId() {
-        copyOnWrite();
-        instance.clearToUId();
-        return this;
-      }
-      /**
-       * <pre>
-       *消息目标的userid
-       * </pre>
-       *
-       * <code>repeated string toUId = 2;</code>
-       */
-      public Builder addToUIdBytes(
-          com.google.protobuf.ByteString value) {
-        copyOnWrite();
-        instance.addToUIdBytes(value);
-        return this;
-      }
-
-      /**
-       * <pre>
-       *内容对象类型名称
-       * </pre>
-       *
-       * <code>string className = 3;</code>
-       */
-      public java.lang.String getClassName() {
-        return instance.getClassName();
-      }
-      /**
-       * <pre>
-       *内容对象类型名称
-       * </pre>
-       *
-       * <code>string className = 3;</code>
-       */
-      public com.google.protobuf.ByteString
-          getClassNameBytes() {
-        return instance.getClassNameBytes();
-      }
-      /**
-       * <pre>
-       *内容对象类型名称
-       * </pre>
-       *
-       * <code>string className = 3;</code>
-       */
-      public Builder setClassName(
-          java.lang.String value) {
-        copyOnWrite();
-        instance.setClassName(value);
-        return this;
-      }
-      /**
-       * <pre>
-       *内容对象类型名称
-       * </pre>
-       *
-       * <code>string className = 3;</code>
-       */
-      public Builder clearClassName() {
-        copyOnWrite();
-        instance.clearClassName();
-        return this;
-      }
-      /**
-       * <pre>
-       *内容对象类型名称
-       * </pre>
-       *
-       * <code>string className = 3;</code>
-       */
-      public Builder setClassNameBytes(
-          com.google.protobuf.ByteString value) {
-        copyOnWrite();
-        instance.setClassNameBytes(value);
-        return this;
-      }
-
-      /**
-       * <pre>
-       *内容
-       * </pre>
-       *
-       * <code>string content = 4;</code>
-       */
-      public java.lang.String getContent() {
-        return instance.getContent();
-      }
-      /**
-       * <pre>
-       *内容
-       * </pre>
-       *
-       * <code>string content = 4;</code>
-       */
-      public com.google.protobuf.ByteString
-          getContentBytes() {
-        return instance.getContentBytes();
-      }
-      /**
-       * <pre>
-       *内容
-       * </pre>
-       *
-       * <code>string content = 4;</code>
-       */
-      public Builder setContent(
-          java.lang.String value) {
-        copyOnWrite();
-        instance.setContent(value);
-        return this;
-      }
-      /**
-       * <pre>
-       *内容
-       * </pre>
-       *
-       * <code>string content = 4;</code>
-       */
-      public Builder clearContent() {
-        copyOnWrite();
-        instance.clearContent();
-        return this;
-      }
-      /**
-       * <pre>
-       *内容
-       * </pre>
-       *
-       * <code>string content = 4;</code>
-       */
-      public Builder setContentBytes(
-          com.google.protobuf.ByteString value) {
-        copyOnWrite();
-        instance.setContentBytes(value);
-        return this;
-      }
-
-      /**
-       * <pre>
-       *发送时间
-       * </pre>
-       *
-       * <code>uint32 sendtiime = 5;</code>
-       */
-      public int getSendtiime() {
-        return instance.getSendtiime();
-      }
-      /**
-       * <pre>
-       *发送时间
-       * </pre>
-       *
-       * <code>uint32 sendtiime = 5;</code>
-       */
-      public Builder setSendtiime(int value) {
-        copyOnWrite();
-        instance.setSendtiime(value);
-        return this;
-      }
-      /**
-       * <pre>
-       *发送时间
-       * </pre>
-       *
-       * <code>uint32 sendtiime = 5;</code>
-       */
-      public Builder clearSendtiime() {
-        copyOnWrite();
-        instance.clearSendtiime();
-        return this;
-      }
-
-      // @@protoc_insertion_point(builder_scope:UpStreamMessageProto)
-    }
-    @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
-    protected final java.lang.Object dynamicMethod(
-        com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
-        java.lang.Object arg0, java.lang.Object arg1) {
-      switch (method) {
-        case NEW_MUTABLE_INSTANCE: {
-          return new protobuf.protos.PrivateMessageProto.UpStreamMessageProto();
+        private UpStreamMessageProto() {
+            toUId_ = com.google.protobuf.GeneratedMessageLite.emptyProtobufList();
+            className_ = "";
+            content_ = "";
         }
-        case IS_INITIALIZED: {
-          return DEFAULT_INSTANCE;
+
+        private int bitField0_;
+        public static final int TOUID_FIELD_NUMBER = 2;
+        private com.google.protobuf.Internal.ProtobufList<java.lang.String> toUId_;
+
+        /**
+         * <pre>
+         * 消息目标的userid
+         * </pre>
+         *
+         * <code>repeated string toUId = 2;</code>
+         */
+        public java.util.List<java.lang.String> getToUIdList() {
+            return toUId_;
         }
-        case MAKE_IMMUTABLE: {
-          toUId_.makeImmutable();
-          return null;
+
+        /**
+         * <pre>
+         * 消息目标的userid
+         * </pre>
+         *
+         * <code>repeated string toUId = 2;</code>
+         */
+        public int getToUIdCount() {
+            return toUId_.size();
         }
-        case NEW_BUILDER: {
-          return new Builder();
+
+        /**
+         * <pre>
+         * 消息目标的userid
+         * </pre>
+         *
+         * <code>repeated string toUId = 2;</code>
+         */
+        public java.lang.String getToUId(int index) {
+            return toUId_.get(index);
         }
-        case VISIT: {
-          Visitor visitor = (Visitor) arg0;
-          protobuf.protos.PrivateMessageProto.UpStreamMessageProto other = (protobuf.protos.PrivateMessageProto.UpStreamMessageProto) arg1;
-          toUId_= visitor.visitList(toUId_, other.toUId_);
-          className_ = visitor.visitString(!className_.isEmpty(), className_,
-              !other.className_.isEmpty(), other.className_);
-          content_ = visitor.visitString(!content_.isEmpty(), content_,
-              !other.content_.isEmpty(), other.content_);
-          sendtiime_ = visitor.visitInt(sendtiime_ != 0, sendtiime_,
-              other.sendtiime_ != 0, other.sendtiime_);
-          if (visitor == com.google.protobuf.GeneratedMessageLite.MergeFromVisitor
-              .INSTANCE) {
-            bitField0_ |= other.bitField0_;
-          }
-          return this;
+
+        /**
+         * <pre>
+         * 消息目标的userid
+         * </pre>
+         *
+         * <code>repeated string toUId = 2;</code>
+         */
+        public com.google.protobuf.ByteString
+        getToUIdBytes(int index) {
+            return com.google.protobuf.ByteString.copyFromUtf8(
+                    toUId_.get(index));
         }
-        case MERGE_FROM_STREAM: {
-          com.google.protobuf.CodedInputStream input =
-              (com.google.protobuf.CodedInputStream) arg0;
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry =
-              (com.google.protobuf.ExtensionRegistryLite) arg1;
-          if (extensionRegistry == null) {
-            throw new java.lang.NullPointerException();
-          }
-          try {
-            boolean done = false;
-            while (!done) {
-              int tag = input.readTag();
-              switch (tag) {
-                case 0:
-                  done = true;
-                  break;
-                default: {
-                  if (!parseUnknownField(tag, input)) {
-                    done = true;
-                  }
-                  break;
-                }
-                case 18: {
-                  java.lang.String s = input.readStringRequireUtf8();
-                  if (!toUId_.isModifiable()) {
-                    toUId_ =
+
+        private void ensureToUIdIsMutable() {
+            if (!toUId_.isModifiable()) {
+                toUId_ =
                         com.google.protobuf.GeneratedMessageLite.mutableCopy(toUId_);
-                  }
-                  toUId_.add(s);
-                  break;
-                }
-                case 26: {
-                  java.lang.String s = input.readStringRequireUtf8();
-
-                  className_ = s;
-                  break;
-                }
-                case 34: {
-                  java.lang.String s = input.readStringRequireUtf8();
-
-                  content_ = s;
-                  break;
-                }
-                case 40: {
-
-                  sendtiime_ = input.readUInt32();
-                  break;
-                }
-              }
             }
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw new RuntimeException(e.setUnfinishedMessage(this));
-          } catch (java.io.IOException e) {
-            throw new RuntimeException(
-                new com.google.protobuf.InvalidProtocolBufferException(
-                    e.getMessage()).setUnfinishedMessage(this));
-          } finally {
-          }
         }
-        // fall through
-        case GET_DEFAULT_INSTANCE: {
-          return DEFAULT_INSTANCE;
-        }
-        case GET_PARSER: {
-          if (PARSER == null) {    synchronized (protobuf.protos.PrivateMessageProto.UpStreamMessageProto.class) {
-              if (PARSER == null) {
-                PARSER = new DefaultInstanceBasedParser(DEFAULT_INSTANCE);
-              }
+
+        /**
+         * <pre>
+         * 消息目标的userid
+         * </pre>
+         *
+         * <code>repeated string toUId = 2;</code>
+         */
+        private void setToUId(
+                int index, java.lang.String value) {
+            if (value == null) {
+                throw new NullPointerException();
             }
-          }
-          return PARSER;
-      }
-      case GET_MEMOIZED_IS_INITIALIZED: {
-        return (byte) 1;
-      }
-      case SET_MEMOIZED_IS_INITIALIZED: {
-        return null;
-      }
-      }
-      throw new UnsupportedOperationException();
+            ensureToUIdIsMutable();
+            toUId_.set(index, value);
+        }
+
+        /**
+         * <pre>
+         * 消息目标的userid
+         * </pre>
+         *
+         * <code>repeated string toUId = 2;</code>
+         */
+        private void addToUId(
+                java.lang.String value) {
+            if (value == null) {
+                throw new NullPointerException();
+            }
+            ensureToUIdIsMutable();
+            toUId_.add(value);
+        }
+
+        /**
+         * <pre>
+         * 消息目标的userid
+         * </pre>
+         *
+         * <code>repeated string toUId = 2;</code>
+         */
+        private void addAllToUId(
+                java.lang.Iterable<java.lang.String> values) {
+            ensureToUIdIsMutable();
+            com.google.protobuf.AbstractMessageLite.addAll(
+                    values, toUId_);
+        }
+
+        /**
+         * <pre>
+         * 消息目标的userid
+         * </pre>
+         *
+         * <code>repeated string toUId = 2;</code>
+         */
+        private void clearToUId() {
+            toUId_ = com.google.protobuf.GeneratedMessageLite.emptyProtobufList();
+        }
+
+        /**
+         * <pre>
+         * 消息目标的userid
+         * </pre>
+         *
+         * <code>repeated string toUId = 2;</code>
+         */
+        private void addToUIdBytes(
+                com.google.protobuf.ByteString value) {
+            if (value == null) {
+                throw new NullPointerException();
+            }
+            checkByteStringIsUtf8(value);
+            ensureToUIdIsMutable();
+            toUId_.add(value.toStringUtf8());
+        }
+
+        public static final int CLASSNAME_FIELD_NUMBER = 3;
+        private java.lang.String className_;
+
+        /**
+         * <pre>
+         * 内容对象类型名称
+         * </pre>
+         *
+         * <code>string className = 3;</code>
+         */
+        public java.lang.String getClassName() {
+            return className_;
+        }
+
+        /**
+         * <pre>
+         * 内容对象类型名称
+         * </pre>
+         *
+         * <code>string className = 3;</code>
+         */
+        public com.google.protobuf.ByteString
+        getClassNameBytes() {
+            return com.google.protobuf.ByteString.copyFromUtf8(className_);
+        }
+
+        /**
+         * <pre>
+         * 内容对象类型名称
+         * </pre>
+         *
+         * <code>string className = 3;</code>
+         */
+        private void setClassName(
+                java.lang.String value) {
+            if (value == null) {
+                throw new NullPointerException();
+            }
+
+            className_ = value;
+        }
+
+        /**
+         * <pre>
+         * 内容对象类型名称
+         * </pre>
+         *
+         * <code>string className = 3;</code>
+         */
+        private void clearClassName() {
+
+            className_ = getDefaultInstance().getClassName();
+        }
+
+        /**
+         * <pre>
+         * 内容对象类型名称
+         * </pre>
+         *
+         * <code>string className = 3;</code>
+         */
+        private void setClassNameBytes(
+                com.google.protobuf.ByteString value) {
+            if (value == null) {
+                throw new NullPointerException();
+            }
+            checkByteStringIsUtf8(value);
+
+            className_ = value.toStringUtf8();
+        }
+
+        public static final int CONTENT_FIELD_NUMBER = 4;
+        private java.lang.String content_;
+
+        /**
+         * <pre>
+         * 内容
+         * </pre>
+         *
+         * <code>string content = 4;</code>
+         */
+        public java.lang.String getContent() {
+            return content_;
+        }
+
+        /**
+         * <pre>
+         * 内容
+         * </pre>
+         *
+         * <code>string content = 4;</code>
+         */
+        public com.google.protobuf.ByteString
+        getContentBytes() {
+            return com.google.protobuf.ByteString.copyFromUtf8(content_);
+        }
+
+        /**
+         * <pre>
+         * 内容
+         * </pre>
+         *
+         * <code>string content = 4;</code>
+         */
+        private void setContent(
+                java.lang.String value) {
+            if (value == null) {
+                throw new NullPointerException();
+            }
+
+            content_ = value;
+        }
+
+        /**
+         * <pre>
+         * 内容
+         * </pre>
+         *
+         * <code>string content = 4;</code>
+         */
+        private void clearContent() {
+
+            content_ = getDefaultInstance().getContent();
+        }
+
+        /**
+         * <pre>
+         * 内容
+         * </pre>
+         *
+         * <code>string content = 4;</code>
+         */
+        private void setContentBytes(
+                com.google.protobuf.ByteString value) {
+            if (value == null) {
+                throw new NullPointerException();
+            }
+            checkByteStringIsUtf8(value);
+
+            content_ = value.toStringUtf8();
+        }
+
+        public static final int SENDTIIME_FIELD_NUMBER = 5;
+        private int sendtiime_;
+
+        /**
+         * <pre>
+         * 发送时间
+         * </pre>
+         *
+         * <code>uint32 sendtiime = 5;</code>
+         */
+        public int getSendtiime() {
+            return sendtiime_;
+        }
+
+        /**
+         * <pre>
+         * 发送时间
+         * </pre>
+         *
+         * <code>uint32 sendtiime = 5;</code>
+         */
+        private void setSendtiime(int value) {
+
+            sendtiime_ = value;
+        }
+
+        /**
+         * <pre>
+         * 发送时间
+         * </pre>
+         *
+         * <code>uint32 sendtiime = 5;</code>
+         */
+        private void clearSendtiime() {
+
+            sendtiime_ = 0;
+        }
+
+        public void writeTo(com.google.protobuf.CodedOutputStream output)
+                throws java.io.IOException {
+            for (int i = 0; i < toUId_.size(); i++) {
+                output.writeString(2, toUId_.get(i));
+            }
+            if (!className_.isEmpty()) {
+                output.writeString(3, getClassName());
+            }
+            if (!content_.isEmpty()) {
+                output.writeString(4, getContent());
+            }
+            if (sendtiime_ != 0) {
+                output.writeUInt32(5, sendtiime_);
+            }
+            unknownFields.writeTo(output);
+        }
+
+        public int getSerializedSize() {
+            int size = memoizedSerializedSize;
+            if (size != -1) {
+                return size;
+            }
+
+            size = 0;
+            {
+                int dataSize = 0;
+                for (int i = 0; i < toUId_.size(); i++) {
+                    dataSize += com.google.protobuf.CodedOutputStream
+                            .computeStringSizeNoTag(toUId_.get(i));
+                }
+                size += dataSize;
+                size += 1 * getToUIdList().size();
+            }
+            if (!className_.isEmpty()) {
+                size += com.google.protobuf.CodedOutputStream
+                        .computeStringSize(3, getClassName());
+            }
+            if (!content_.isEmpty()) {
+                size += com.google.protobuf.CodedOutputStream
+                        .computeStringSize(4, getContent());
+            }
+            if (sendtiime_ != 0) {
+                size += com.google.protobuf.CodedOutputStream
+                        .computeUInt32Size(5, sendtiime_);
+            }
+            size += unknownFields.getSerializedSize();
+            memoizedSerializedSize = size;
+            return size;
+        }
+
+        public static protobuf.protos.PrivateMessageProto.UpStreamMessageProto parseFrom(
+                java.nio.ByteBuffer data)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return com.google.protobuf.GeneratedMessageLite.parseFrom(
+                    DEFAULT_INSTANCE, data);
+        }
+
+        public static protobuf.protos.PrivateMessageProto.UpStreamMessageProto parseFrom(
+                java.nio.ByteBuffer data,
+                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return com.google.protobuf.GeneratedMessageLite.parseFrom(
+                    DEFAULT_INSTANCE, data, extensionRegistry);
+        }
+
+        public static protobuf.protos.PrivateMessageProto.UpStreamMessageProto parseFrom(
+                com.google.protobuf.ByteString data)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return com.google.protobuf.GeneratedMessageLite.parseFrom(
+                    DEFAULT_INSTANCE, data);
+        }
+
+        public static protobuf.protos.PrivateMessageProto.UpStreamMessageProto parseFrom(
+                com.google.protobuf.ByteString data,
+                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return com.google.protobuf.GeneratedMessageLite.parseFrom(
+                    DEFAULT_INSTANCE, data, extensionRegistry);
+        }
+
+        public static protobuf.protos.PrivateMessageProto.UpStreamMessageProto parseFrom(
+                byte[] data)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return com.google.protobuf.GeneratedMessageLite.parseFrom(
+                    DEFAULT_INSTANCE, data);
+        }
+
+        public static protobuf.protos.PrivateMessageProto.UpStreamMessageProto parseFrom(
+                byte[] data,
+                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return com.google.protobuf.GeneratedMessageLite.parseFrom(
+                    DEFAULT_INSTANCE, data, extensionRegistry);
+        }
+
+        public static protobuf.protos.PrivateMessageProto.UpStreamMessageProto parseFrom(
+                java.io.InputStream input)
+                throws java.io.IOException {
+            return com.google.protobuf.GeneratedMessageLite.parseFrom(
+                    DEFAULT_INSTANCE, input);
+        }
+
+        public static protobuf.protos.PrivateMessageProto.UpStreamMessageProto parseFrom(
+                java.io.InputStream input,
+                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws java.io.IOException {
+            return com.google.protobuf.GeneratedMessageLite.parseFrom(
+                    DEFAULT_INSTANCE, input, extensionRegistry);
+        }
+
+        public static protobuf.protos.PrivateMessageProto.UpStreamMessageProto parseDelimitedFrom(
+                java.io.InputStream input)
+                throws java.io.IOException {
+            return parseDelimitedFrom(DEFAULT_INSTANCE, input);
+        }
+
+        public static protobuf.protos.PrivateMessageProto.UpStreamMessageProto parseDelimitedFrom(
+                java.io.InputStream input,
+                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws java.io.IOException {
+            return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
+        }
+
+        public static protobuf.protos.PrivateMessageProto.UpStreamMessageProto parseFrom(
+                com.google.protobuf.CodedInputStream input)
+                throws java.io.IOException {
+            return com.google.protobuf.GeneratedMessageLite.parseFrom(
+                    DEFAULT_INSTANCE, input);
+        }
+
+        public static protobuf.protos.PrivateMessageProto.UpStreamMessageProto parseFrom(
+                com.google.protobuf.CodedInputStream input,
+                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws java.io.IOException {
+            return com.google.protobuf.GeneratedMessageLite.parseFrom(
+                    DEFAULT_INSTANCE, input, extensionRegistry);
+        }
+
+        public static Builder newBuilder() {
+            return (Builder) DEFAULT_INSTANCE.createBuilder();
+        }
+
+        public static Builder newBuilder(
+                protobuf.protos.PrivateMessageProto.UpStreamMessageProto prototype) {
+            return (Builder) DEFAULT_INSTANCE.createBuilder(prototype);
+        }
+
+        /**
+         * <pre>
+         * 客户端发送单聊消息
+         * </pre>
+         *
+         * Protobuf type {@code UpStreamMessageProto}
+         */
+        public static final class Builder extends
+                com.google.protobuf.GeneratedMessageLite.Builder<
+                        protobuf.protos.PrivateMessageProto.UpStreamMessageProto, Builder> implements
+                // @@protoc_insertion_point(builder_implements:UpStreamMessageProto)
+                protobuf.protos.PrivateMessageProto.UpStreamMessageProtoOrBuilder {
+
+            // Construct using protobuf.protos.PrivateMessageProto.UpStreamMessageProto.newBuilder()
+            private Builder() {
+                super(DEFAULT_INSTANCE);
+            }
+
+
+            /**
+             * <pre>
+             * 消息目标的userid
+             * </pre>
+             *
+             * <code>repeated string toUId = 2;</code>
+             */
+            public java.util.List<java.lang.String>
+            getToUIdList() {
+                return java.util.Collections.unmodifiableList(
+                        instance.getToUIdList());
+            }
+
+            /**
+             * <pre>
+             * 消息目标的userid
+             * </pre>
+             *
+             * <code>repeated string toUId = 2;</code>
+             */
+            public int getToUIdCount() {
+                return instance.getToUIdCount();
+            }
+
+            /**
+             * <pre>
+             * 消息目标的userid
+             * </pre>
+             *
+             * <code>repeated string toUId = 2;</code>
+             */
+            public java.lang.String getToUId(int index) {
+                return instance.getToUId(index);
+            }
+
+            /**
+             * <pre>
+             * 消息目标的userid
+             * </pre>
+             *
+             * <code>repeated string toUId = 2;</code>
+             */
+            public com.google.protobuf.ByteString
+            getToUIdBytes(int index) {
+                return instance.getToUIdBytes(index);
+            }
+
+            /**
+             * <pre>
+             * 消息目标的userid
+             * </pre>
+             *
+             * <code>repeated string toUId = 2;</code>
+             */
+            public Builder setToUId(
+                    int index, java.lang.String value) {
+                copyOnWrite();
+                instance.setToUId(index, value);
+                return this;
+            }
+
+            /**
+             * <pre>
+             * 消息目标的userid
+             * </pre>
+             *
+             * <code>repeated string toUId = 2;</code>
+             */
+            public Builder addToUId(
+                    java.lang.String value) {
+                copyOnWrite();
+                instance.addToUId(value);
+                return this;
+            }
+
+            /**
+             * <pre>
+             * 消息目标的userid
+             * </pre>
+             *
+             * <code>repeated string toUId = 2;</code>
+             */
+            public Builder addAllToUId(
+                    java.lang.Iterable<java.lang.String> values) {
+                copyOnWrite();
+                instance.addAllToUId(values);
+                return this;
+            }
+
+            /**
+             * <pre>
+             * 消息目标的userid
+             * </pre>
+             *
+             * <code>repeated string toUId = 2;</code>
+             */
+            public Builder clearToUId() {
+                copyOnWrite();
+                instance.clearToUId();
+                return this;
+            }
+
+            /**
+             * <pre>
+             * 消息目标的userid
+             * </pre>
+             *
+             * <code>repeated string toUId = 2;</code>
+             */
+            public Builder addToUIdBytes(
+                    com.google.protobuf.ByteString value) {
+                copyOnWrite();
+                instance.addToUIdBytes(value);
+                return this;
+            }
+
+            /**
+             * <pre>
+             * 内容对象类型名称
+             * </pre>
+             *
+             * <code>string className = 3;</code>
+             */
+            public java.lang.String getClassName() {
+                return instance.getClassName();
+            }
+
+            /**
+             * <pre>
+             * 内容对象类型名称
+             * </pre>
+             *
+             * <code>string className = 3;</code>
+             */
+            public com.google.protobuf.ByteString
+            getClassNameBytes() {
+                return instance.getClassNameBytes();
+            }
+
+            /**
+             * <pre>
+             * 内容对象类型名称
+             * </pre>
+             *
+             * <code>string className = 3;</code>
+             */
+            public Builder setClassName(
+                    java.lang.String value) {
+                copyOnWrite();
+                instance.setClassName(value);
+                return this;
+            }
+
+            /**
+             * <pre>
+             * 内容对象类型名称
+             * </pre>
+             *
+             * <code>string className = 3;</code>
+             */
+            public Builder clearClassName() {
+                copyOnWrite();
+                instance.clearClassName();
+                return this;
+            }
+
+            /**
+             * <pre>
+             * 内容对象类型名称
+             * </pre>
+             *
+             * <code>string className = 3;</code>
+             */
+            public Builder setClassNameBytes(
+                    com.google.protobuf.ByteString value) {
+                copyOnWrite();
+                instance.setClassNameBytes(value);
+                return this;
+            }
+
+            /**
+             * <pre>
+             * 内容
+             * </pre>
+             *
+             * <code>string content = 4;</code>
+             */
+            public java.lang.String getContent() {
+                return instance.getContent();
+            }
+
+            /**
+             * <pre>
+             * 内容
+             * </pre>
+             *
+             * <code>string content = 4;</code>
+             */
+            public com.google.protobuf.ByteString
+            getContentBytes() {
+                return instance.getContentBytes();
+            }
+
+            /**
+             * <pre>
+             * 内容
+             * </pre>
+             *
+             * <code>string content = 4;</code>
+             */
+            public Builder setContent(
+                    java.lang.String value) {
+                copyOnWrite();
+                instance.setContent(value);
+                return this;
+            }
+
+            /**
+             * <pre>
+             * 内容
+             * </pre>
+             *
+             * <code>string content = 4;</code>
+             */
+            public Builder clearContent() {
+                copyOnWrite();
+                instance.clearContent();
+                return this;
+            }
+
+            /**
+             * <pre>
+             * 内容
+             * </pre>
+             *
+             * <code>string content = 4;</code>
+             */
+            public Builder setContentBytes(
+                    com.google.protobuf.ByteString value) {
+                copyOnWrite();
+                instance.setContentBytes(value);
+                return this;
+            }
+
+            /**
+             * <pre>
+             * 发送时间
+             * </pre>
+             *
+             * <code>uint32 sendtiime = 5;</code>
+             */
+            public int getSendtiime() {
+                return instance.getSendtiime();
+            }
+
+            /**
+             * <pre>
+             * 发送时间
+             * </pre>
+             *
+             * <code>uint32 sendtiime = 5;</code>
+             */
+            public Builder setSendtiime(int value) {
+                copyOnWrite();
+                instance.setSendtiime(value);
+                return this;
+            }
+
+            /**
+             * <pre>
+             * 发送时间
+             * </pre>
+             *
+             * <code>uint32 sendtiime = 5;</code>
+             */
+            public Builder clearSendtiime() {
+                copyOnWrite();
+                instance.clearSendtiime();
+                return this;
+            }
+
+            // @@protoc_insertion_point(builder_scope:UpStreamMessageProto)
+        }
+
+        @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+        protected final java.lang.Object dynamicMethod(
+                com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+                java.lang.Object arg0, java.lang.Object arg1) {
+            switch (method) {
+                case NEW_MUTABLE_INSTANCE: {
+                    return new protobuf.protos.PrivateMessageProto.UpStreamMessageProto();
+                }
+                case IS_INITIALIZED: {
+                    return DEFAULT_INSTANCE;
+                }
+                case MAKE_IMMUTABLE: {
+                    toUId_.makeImmutable();
+                    return null;
+                }
+                case NEW_BUILDER: {
+                    return new Builder();
+                }
+                case VISIT: {
+                    Visitor visitor = (Visitor) arg0;
+                    protobuf.protos.PrivateMessageProto.UpStreamMessageProto other = (protobuf.protos.PrivateMessageProto.UpStreamMessageProto) arg1;
+                    toUId_ = visitor.visitList(toUId_, other.toUId_);
+                    className_ = visitor.visitString(!className_.isEmpty(), className_,
+                            !other.className_.isEmpty(), other.className_);
+                    content_ = visitor.visitString(!content_.isEmpty(), content_,
+                            !other.content_.isEmpty(), other.content_);
+                    sendtiime_ = visitor.visitInt(sendtiime_ != 0, sendtiime_,
+                            other.sendtiime_ != 0, other.sendtiime_);
+                    if (visitor == com.google.protobuf.GeneratedMessageLite.MergeFromVisitor
+                            .INSTANCE) {
+                        bitField0_ |= other.bitField0_;
+                    }
+                    return this;
+                }
+                case MERGE_FROM_STREAM: {
+                    com.google.protobuf.CodedInputStream input =
+                            (com.google.protobuf.CodedInputStream) arg0;
+                    com.google.protobuf.ExtensionRegistryLite extensionRegistry =
+                            (com.google.protobuf.ExtensionRegistryLite) arg1;
+                    if (extensionRegistry == null) {
+                        throw new java.lang.NullPointerException();
+                    }
+                    try {
+                        boolean done = false;
+                        while (!done) {
+                            int tag = input.readTag();
+                            switch (tag) {
+                                case 0:
+                                    done = true;
+                                    break;
+                                default: {
+                                    if (!parseUnknownField(tag, input)) {
+                                        done = true;
+                                    }
+                                    break;
+                                }
+                                case 18: {
+                                    java.lang.String s = input.readStringRequireUtf8();
+                                    if (!toUId_.isModifiable()) {
+                                        toUId_ =
+                                                com.google.protobuf.GeneratedMessageLite
+                                                        .mutableCopy(toUId_);
+                                    }
+                                    toUId_.add(s);
+                                    break;
+                                }
+                                case 26: {
+                                    java.lang.String s = input.readStringRequireUtf8();
+
+                                    className_ = s;
+                                    break;
+                                }
+                                case 34: {
+                                    java.lang.String s = input.readStringRequireUtf8();
+
+                                    content_ = s;
+                                    break;
+                                }
+                                case 40: {
+
+                                    sendtiime_ = input.readUInt32();
+                                    break;
+                                }
+                            }
+                        }
+                    } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+                        throw new RuntimeException(e.setUnfinishedMessage(this));
+                    } catch (java.io.IOException e) {
+                        throw new RuntimeException(
+                                new com.google.protobuf.InvalidProtocolBufferException(
+                                        e.getMessage()).setUnfinishedMessage(this));
+                    } finally {
+                    }
+                }
+                // fall through
+                case GET_DEFAULT_INSTANCE: {
+                    return DEFAULT_INSTANCE;
+                }
+                case GET_PARSER: {
+                    if (PARSER == null) {
+                        synchronized (protobuf.protos.PrivateMessageProto.UpStreamMessageProto.class) {
+                            if (PARSER == null) {
+                                PARSER = new DefaultInstanceBasedParser(DEFAULT_INSTANCE);
+                            }
+                        }
+                    }
+                    return PARSER;
+                }
+                case GET_MEMOIZED_IS_INITIALIZED: {
+                    return (byte) 1;
+                }
+                case SET_MEMOIZED_IS_INITIALIZED: {
+                    return null;
+                }
+            }
+            throw new UnsupportedOperationException();
+        }
+
+
+        // @@protoc_insertion_point(class_scope:UpStreamMessageProto)
+        private static final protobuf.protos.PrivateMessageProto.UpStreamMessageProto DEFAULT_INSTANCE;
+
+        static {
+            DEFAULT_INSTANCE = new UpStreamMessageProto();
+            DEFAULT_INSTANCE.makeImmutable();
+        }
+
+        public static protobuf.protos.PrivateMessageProto.UpStreamMessageProto getDefaultInstance() {
+            return DEFAULT_INSTANCE;
+        }
+
+        private static volatile com.google.protobuf.Parser<UpStreamMessageProto> PARSER;
+
+        public static com.google.protobuf.Parser<UpStreamMessageProto> parser() {
+            return DEFAULT_INSTANCE.getParserForType();
+        }
     }
 
+    public interface DownStreamMessageProtoOrBuilder extends
+            // @@protoc_insertion_point(interface_extends:DownStreamMessageProto)
+            com.google.protobuf.MessageLiteOrBuilder {
 
-    // @@protoc_insertion_point(class_scope:UpStreamMessageProto)
-    private static final protobuf.protos.PrivateMessageProto.UpStreamMessageProto DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new UpStreamMessageProto();
-      DEFAULT_INSTANCE.makeImmutable();
-    }
+        /**
+         * <pre>
+         * 发送方uid
+         * </pre>
+         *
+         * <code>string fromUserId = 1;</code>
+         */
+        java.lang.String getFromUserId();
 
-    public static protobuf.protos.PrivateMessageProto.UpStreamMessageProto getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    private static volatile com.google.protobuf.Parser<UpStreamMessageProto> PARSER;
-
-    public static com.google.protobuf.Parser<UpStreamMessageProto> parser() {
-      return DEFAULT_INSTANCE.getParserForType();
-    }
-  }
-
-  public interface DownStreamMessageProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:DownStreamMessageProto)
-      com.google.protobuf.MessageLiteOrBuilder {
-
-    /**
-     * <pre>
-     * 发送方uid
-     * </pre>
-     *
-     * <code>string fromUserId = 1;</code>
-     */
-    java.lang.String getFromUserId();
-    /**
-     * <pre>
-     * 发送方uid
-     * </pre>
-     *
-     * <code>string fromUserId = 1;</code>
-     */
-    com.google.protobuf.ByteString
+        /**
+         * <pre>
+         * 发送方uid
+         * </pre>
+         *
+         * <code>string fromUserId = 1;</code>
+         */
+        com.google.protobuf.ByteString
         getFromUserIdBytes();
 
-    /**
-     * <pre>
-     *消息类型
-     * </pre>
-     *
-     * <code>.MsgType type = 2;</code>
-     */
-    int getTypeValue();
-    /**
-     * <pre>
-     *消息类型
-     * </pre>
-     *
-     * <code>.MsgType type = 2;</code>
-     */
-    protobuf.protos.PrivateMessageProto.MsgType getType();
+        /**
+         * <pre>
+         * 消息类型
+         * </pre>
+         *
+         * <code>.MsgType type = 2;</code>
+         */
+        int getTypeValue();
 
-    /**
-     * <pre>
-     *如果是群消息那么指定群groupId
-     * </pre>
-     *
-     * <code>string groupId = 3;</code>
-     */
-    java.lang.String getGroupId();
-    /**
-     * <pre>
-     *如果是群消息那么指定群groupId
-     * </pre>
-     *
-     * <code>string groupId = 3;</code>
-     */
-    com.google.protobuf.ByteString
+        /**
+         * <pre>
+         * 消息类型
+         * </pre>
+         *
+         * <code>.MsgType type = 2;</code>
+         */
+        protobuf.protos.PrivateMessageProto.MsgType getType();
+
+        /**
+         * <pre>
+         * 如果是群消息那么指定群groupId
+         * </pre>
+         *
+         * <code>string groupId = 3;</code>
+         */
+        java.lang.String getGroupId();
+
+        /**
+         * <pre>
+         * 如果是群消息那么指定群groupId
+         * </pre>
+         *
+         * <code>string groupId = 3;</code>
+         */
+        com.google.protobuf.ByteString
         getGroupIdBytes();
 
-    /**
-     * <pre>
-     *内容对象类型名称
-     * </pre>
-     *
-     * <code>string classname = 4;</code>
-     */
-    java.lang.String getClassname();
-    /**
-     * <pre>
-     *内容对象类型名称
-     * </pre>
-     *
-     * <code>string classname = 4;</code>
-     */
-    com.google.protobuf.ByteString
+        /**
+         * <pre>
+         * 内容对象类型名称
+         * </pre>
+         *
+         * <code>string classname = 4;</code>
+         */
+        java.lang.String getClassname();
+
+        /**
+         * <pre>
+         * 内容对象类型名称
+         * </pre>
+         *
+         * <code>string classname = 4;</code>
+         */
+        com.google.protobuf.ByteString
         getClassnameBytes();
 
-    /**
-     * <pre>
-     *内容
-     * </pre>
-     *
-     * <code>bytes content = 5;</code>
-     */
-    com.google.protobuf.ByteString getContent();
+        /**
+         * <pre>
+         * 内容
+         * </pre>
+         *
+         * <code>bytes content = 5;</code>
+         */
+        com.google.protobuf.ByteString getContent();
 
-    /**
-     * <pre>
-     *消息时间
-     * </pre>
-     *
-     * <code>int64 sendtime = 6;</code>
-     */
-    long getSendtime();
+        /**
+         * <pre>
+         * 消息时间
+         * </pre>
+         *
+         * <code>int64 sendtime = 6;</code>
+         */
+        long getSendtime();
 
-    /**
-     * <pre>
-     *消息唯一标示
-     * </pre>
-     *
-     * <code>string msgId = 7;</code>
-     */
-    java.lang.String getMsgId();
-    /**
-     * <pre>
-     *消息唯一标示
-     * </pre>
-     *
-     * <code>string msgId = 7;</code>
-     */
-    com.google.protobuf.ByteString
+        /**
+         * <pre>
+         * 消息唯一标示
+         * </pre>
+         *
+         * <code>string msgId = 7;</code>
+         */
+        java.lang.String getMsgId();
+
+        /**
+         * <pre>
+         * 消息唯一标示
+         * </pre>
+         *
+         * <code>string msgId = 7;</code>
+         */
+        com.google.protobuf.ByteString
         getMsgIdBytes();
-  }
-  /**
-   * <pre>
-   *服务端发送即时消息
-   * </pre>
-   *
-   * Protobuf type {@code DownStreamMessageProto}
-   */
-  public  static final class DownStreamMessageProto extends
-      com.google.protobuf.GeneratedMessageLite<
-          DownStreamMessageProto, DownStreamMessageProto.Builder> implements
-      // @@protoc_insertion_point(message_implements:DownStreamMessageProto)
-      DownStreamMessageProtoOrBuilder {
-    private DownStreamMessageProto() {
-      fromUserId_ = "";
-      groupId_ = "";
-      classname_ = "";
-      content_ = com.google.protobuf.ByteString.EMPTY;
-      msgId_ = "";
-    }
-    public static final int FROMUSERID_FIELD_NUMBER = 1;
-    private java.lang.String fromUserId_;
-    /**
-     * <pre>
-     * 发送方uid
-     * </pre>
-     *
-     * <code>string fromUserId = 1;</code>
-     */
-    public java.lang.String getFromUserId() {
-      return fromUserId_;
-    }
-    /**
-     * <pre>
-     * 发送方uid
-     * </pre>
-     *
-     * <code>string fromUserId = 1;</code>
-     */
-    public com.google.protobuf.ByteString
-        getFromUserIdBytes() {
-      return com.google.protobuf.ByteString.copyFromUtf8(fromUserId_);
-    }
-    /**
-     * <pre>
-     * 发送方uid
-     * </pre>
-     *
-     * <code>string fromUserId = 1;</code>
-     */
-    private void setFromUserId(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
-      fromUserId_ = value;
-    }
-    /**
-     * <pre>
-     * 发送方uid
-     * </pre>
-     *
-     * <code>string fromUserId = 1;</code>
-     */
-    private void clearFromUserId() {
-      
-      fromUserId_ = getDefaultInstance().getFromUserId();
-    }
-    /**
-     * <pre>
-     * 发送方uid
-     * </pre>
-     *
-     * <code>string fromUserId = 1;</code>
-     */
-    private void setFromUserIdBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
-      fromUserId_ = value.toStringUtf8();
-    }
-
-    public static final int TYPE_FIELD_NUMBER = 2;
-    private int type_;
-    /**
-     * <pre>
-     *消息类型
-     * </pre>
-     *
-     * <code>.MsgType type = 2;</code>
-     */
-    public int getTypeValue() {
-      return type_;
-    }
-    /**
-     * <pre>
-     *消息类型
-     * </pre>
-     *
-     * <code>.MsgType type = 2;</code>
-     */
-    public protobuf.protos.PrivateMessageProto.MsgType getType() {
-      protobuf.protos.PrivateMessageProto.MsgType result = protobuf.protos.PrivateMessageProto.MsgType.forNumber(type_);
-      return result == null ? protobuf.protos.PrivateMessageProto.MsgType.UNRECOGNIZED : result;
-    }
-    /**
-     * <pre>
-     *消息类型
-     * </pre>
-     *
-     * <code>.MsgType type = 2;</code>
-     */
-    private void setTypeValue(int value) {
-        type_ = value;
-    }
-    /**
-     * <pre>
-     *消息类型
-     * </pre>
-     *
-     * <code>.MsgType type = 2;</code>
-     */
-    private void setType(protobuf.protos.PrivateMessageProto.MsgType value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      
-      type_ = value.getNumber();
-    }
-    /**
-     * <pre>
-     *消息类型
-     * </pre>
-     *
-     * <code>.MsgType type = 2;</code>
-     */
-    private void clearType() {
-      
-      type_ = 0;
-    }
-
-    public static final int GROUPID_FIELD_NUMBER = 3;
-    private java.lang.String groupId_;
-    /**
-     * <pre>
-     *如果是群消息那么指定群groupId
-     * </pre>
-     *
-     * <code>string groupId = 3;</code>
-     */
-    public java.lang.String getGroupId() {
-      return groupId_;
-    }
-    /**
-     * <pre>
-     *如果是群消息那么指定群groupId
-     * </pre>
-     *
-     * <code>string groupId = 3;</code>
-     */
-    public com.google.protobuf.ByteString
-        getGroupIdBytes() {
-      return com.google.protobuf.ByteString.copyFromUtf8(groupId_);
-    }
-    /**
-     * <pre>
-     *如果是群消息那么指定群groupId
-     * </pre>
-     *
-     * <code>string groupId = 3;</code>
-     */
-    private void setGroupId(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
-      groupId_ = value;
-    }
-    /**
-     * <pre>
-     *如果是群消息那么指定群groupId
-     * </pre>
-     *
-     * <code>string groupId = 3;</code>
-     */
-    private void clearGroupId() {
-      
-      groupId_ = getDefaultInstance().getGroupId();
-    }
-    /**
-     * <pre>
-     *如果是群消息那么指定群groupId
-     * </pre>
-     *
-     * <code>string groupId = 3;</code>
-     */
-    private void setGroupIdBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
-      groupId_ = value.toStringUtf8();
-    }
-
-    public static final int CLASSNAME_FIELD_NUMBER = 4;
-    private java.lang.String classname_;
-    /**
-     * <pre>
-     *内容对象类型名称
-     * </pre>
-     *
-     * <code>string classname = 4;</code>
-     */
-    public java.lang.String getClassname() {
-      return classname_;
-    }
-    /**
-     * <pre>
-     *内容对象类型名称
-     * </pre>
-     *
-     * <code>string classname = 4;</code>
-     */
-    public com.google.protobuf.ByteString
-        getClassnameBytes() {
-      return com.google.protobuf.ByteString.copyFromUtf8(classname_);
-    }
-    /**
-     * <pre>
-     *内容对象类型名称
-     * </pre>
-     *
-     * <code>string classname = 4;</code>
-     */
-    private void setClassname(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
-      classname_ = value;
-    }
-    /**
-     * <pre>
-     *内容对象类型名称
-     * </pre>
-     *
-     * <code>string classname = 4;</code>
-     */
-    private void clearClassname() {
-      
-      classname_ = getDefaultInstance().getClassname();
-    }
-    /**
-     * <pre>
-     *内容对象类型名称
-     * </pre>
-     *
-     * <code>string classname = 4;</code>
-     */
-    private void setClassnameBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
-      classname_ = value.toStringUtf8();
-    }
-
-    public static final int CONTENT_FIELD_NUMBER = 5;
-    private com.google.protobuf.ByteString content_;
-    /**
-     * <pre>
-     *内容
-     * </pre>
-     *
-     * <code>bytes content = 5;</code>
-     */
-    public com.google.protobuf.ByteString getContent() {
-      return content_;
-    }
-    /**
-     * <pre>
-     *内容
-     * </pre>
-     *
-     * <code>bytes content = 5;</code>
-     */
-    private void setContent(com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
-      content_ = value;
-    }
-    /**
-     * <pre>
-     *内容
-     * </pre>
-     *
-     * <code>bytes content = 5;</code>
-     */
-    private void clearContent() {
-      
-      content_ = getDefaultInstance().getContent();
-    }
-
-    public static final int SENDTIME_FIELD_NUMBER = 6;
-    private long sendtime_;
-    /**
-     * <pre>
-     *消息时间
-     * </pre>
-     *
-     * <code>int64 sendtime = 6;</code>
-     */
-    public long getSendtime() {
-      return sendtime_;
-    }
-    /**
-     * <pre>
-     *消息时间
-     * </pre>
-     *
-     * <code>int64 sendtime = 6;</code>
-     */
-    private void setSendtime(long value) {
-      
-      sendtime_ = value;
-    }
-    /**
-     * <pre>
-     *消息时间
-     * </pre>
-     *
-     * <code>int64 sendtime = 6;</code>
-     */
-    private void clearSendtime() {
-      
-      sendtime_ = 0L;
-    }
-
-    public static final int MSGID_FIELD_NUMBER = 7;
-    private java.lang.String msgId_;
-    /**
-     * <pre>
-     *消息唯一标示
-     * </pre>
-     *
-     * <code>string msgId = 7;</code>
-     */
-    public java.lang.String getMsgId() {
-      return msgId_;
-    }
-    /**
-     * <pre>
-     *消息唯一标示
-     * </pre>
-     *
-     * <code>string msgId = 7;</code>
-     */
-    public com.google.protobuf.ByteString
-        getMsgIdBytes() {
-      return com.google.protobuf.ByteString.copyFromUtf8(msgId_);
-    }
-    /**
-     * <pre>
-     *消息唯一标示
-     * </pre>
-     *
-     * <code>string msgId = 7;</code>
-     */
-    private void setMsgId(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
-      msgId_ = value;
-    }
-    /**
-     * <pre>
-     *消息唯一标示
-     * </pre>
-     *
-     * <code>string msgId = 7;</code>
-     */
-    private void clearMsgId() {
-      
-      msgId_ = getDefaultInstance().getMsgId();
-    }
-    /**
-     * <pre>
-     *消息唯一标示
-     * </pre>
-     *
-     * <code>string msgId = 7;</code>
-     */
-    private void setMsgIdBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
-      msgId_ = value.toStringUtf8();
-    }
-
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (!fromUserId_.isEmpty()) {
-        output.writeString(1, getFromUserId());
-      }
-      if (type_ != protobuf.protos.PrivateMessageProto.MsgType.PERSON.getNumber()) {
-        output.writeEnum(2, type_);
-      }
-      if (!groupId_.isEmpty()) {
-        output.writeString(3, getGroupId());
-      }
-      if (!classname_.isEmpty()) {
-        output.writeString(4, getClassname());
-      }
-      if (!content_.isEmpty()) {
-        output.writeBytes(5, content_);
-      }
-      if (sendtime_ != 0L) {
-        output.writeInt64(6, sendtime_);
-      }
-      if (!msgId_.isEmpty()) {
-        output.writeString(7, getMsgId());
-      }
-      unknownFields.writeTo(output);
-    }
-
-    public int getSerializedSize() {
-      int size = memoizedSerializedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (!fromUserId_.isEmpty()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(1, getFromUserId());
-      }
-      if (type_ != protobuf.protos.PrivateMessageProto.MsgType.PERSON.getNumber()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(2, type_);
-      }
-      if (!groupId_.isEmpty()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(3, getGroupId());
-      }
-      if (!classname_.isEmpty()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(4, getClassname());
-      }
-      if (!content_.isEmpty()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(5, content_);
-      }
-      if (sendtime_ != 0L) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(6, sendtime_);
-      }
-      if (!msgId_.isEmpty()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(7, getMsgId());
-      }
-      size += unknownFields.getSerializedSize();
-      memoizedSerializedSize = size;
-      return size;
-    }
-
-    public static protobuf.protos.PrivateMessageProto.DownStreamMessageProto parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, data);
-    }
-    public static protobuf.protos.PrivateMessageProto.DownStreamMessageProto parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, data, extensionRegistry);
-    }
-    public static protobuf.protos.PrivateMessageProto.DownStreamMessageProto parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, data);
-    }
-    public static protobuf.protos.PrivateMessageProto.DownStreamMessageProto parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, data, extensionRegistry);
-    }
-    public static protobuf.protos.PrivateMessageProto.DownStreamMessageProto parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, data);
-    }
-    public static protobuf.protos.PrivateMessageProto.DownStreamMessageProto parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, data, extensionRegistry);
-    }
-    public static protobuf.protos.PrivateMessageProto.DownStreamMessageProto parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, input);
-    }
-    public static protobuf.protos.PrivateMessageProto.DownStreamMessageProto parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, input, extensionRegistry);
-    }
-    public static protobuf.protos.PrivateMessageProto.DownStreamMessageProto parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return parseDelimitedFrom(DEFAULT_INSTANCE, input);
-    }
-    public static protobuf.protos.PrivateMessageProto.DownStreamMessageProto parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
-    }
-    public static protobuf.protos.PrivateMessageProto.DownStreamMessageProto parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, input);
-    }
-    public static protobuf.protos.PrivateMessageProto.DownStreamMessageProto parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, input, extensionRegistry);
-    }
-
-    public static Builder newBuilder() {
-      return (Builder) DEFAULT_INSTANCE.createBuilder();
-    }
-    public static Builder newBuilder(protobuf.protos.PrivateMessageProto.DownStreamMessageProto prototype) {
-      return (Builder) DEFAULT_INSTANCE.createBuilder(prototype);
     }
 
     /**
      * <pre>
-     *服务端发送即时消息
+     * 服务端发送即时消息
      * </pre>
      *
      * Protobuf type {@code DownStreamMessageProto}
      */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageLite.Builder<
-          protobuf.protos.PrivateMessageProto.DownStreamMessageProto, Builder> implements
-        // @@protoc_insertion_point(builder_implements:DownStreamMessageProto)
-        protobuf.protos.PrivateMessageProto.DownStreamMessageProtoOrBuilder {
-      // Construct using protobuf.protos.PrivateMessageProto.DownStreamMessageProto.newBuilder()
-      private Builder() {
-        super(DEFAULT_INSTANCE);
-      }
+    public static final class DownStreamMessageProto extends
+            com.google.protobuf.GeneratedMessageLite<
+                    DownStreamMessageProto, DownStreamMessageProto.Builder> implements
+            // @@protoc_insertion_point(message_implements:DownStreamMessageProto)
+            DownStreamMessageProtoOrBuilder {
 
-
-      /**
-       * <pre>
-       * 发送方uid
-       * </pre>
-       *
-       * <code>string fromUserId = 1;</code>
-       */
-      public java.lang.String getFromUserId() {
-        return instance.getFromUserId();
-      }
-      /**
-       * <pre>
-       * 发送方uid
-       * </pre>
-       *
-       * <code>string fromUserId = 1;</code>
-       */
-      public com.google.protobuf.ByteString
-          getFromUserIdBytes() {
-        return instance.getFromUserIdBytes();
-      }
-      /**
-       * <pre>
-       * 发送方uid
-       * </pre>
-       *
-       * <code>string fromUserId = 1;</code>
-       */
-      public Builder setFromUserId(
-          java.lang.String value) {
-        copyOnWrite();
-        instance.setFromUserId(value);
-        return this;
-      }
-      /**
-       * <pre>
-       * 发送方uid
-       * </pre>
-       *
-       * <code>string fromUserId = 1;</code>
-       */
-      public Builder clearFromUserId() {
-        copyOnWrite();
-        instance.clearFromUserId();
-        return this;
-      }
-      /**
-       * <pre>
-       * 发送方uid
-       * </pre>
-       *
-       * <code>string fromUserId = 1;</code>
-       */
-      public Builder setFromUserIdBytes(
-          com.google.protobuf.ByteString value) {
-        copyOnWrite();
-        instance.setFromUserIdBytes(value);
-        return this;
-      }
-
-      /**
-       * <pre>
-       *消息类型
-       * </pre>
-       *
-       * <code>.MsgType type = 2;</code>
-       */
-      public int getTypeValue() {
-        return instance.getTypeValue();
-      }
-      /**
-       * <pre>
-       *消息类型
-       * </pre>
-       *
-       * <code>.MsgType type = 2;</code>
-       */
-      public Builder setTypeValue(int value) {
-        copyOnWrite();
-        instance.setTypeValue(value);
-        return this;
-      }
-      /**
-       * <pre>
-       *消息类型
-       * </pre>
-       *
-       * <code>.MsgType type = 2;</code>
-       */
-      public protobuf.protos.PrivateMessageProto.MsgType getType() {
-        return instance.getType();
-      }
-      /**
-       * <pre>
-       *消息类型
-       * </pre>
-       *
-       * <code>.MsgType type = 2;</code>
-       */
-      public Builder setType(protobuf.protos.PrivateMessageProto.MsgType value) {
-        copyOnWrite();
-        instance.setType(value);
-        return this;
-      }
-      /**
-       * <pre>
-       *消息类型
-       * </pre>
-       *
-       * <code>.MsgType type = 2;</code>
-       */
-      public Builder clearType() {
-        copyOnWrite();
-        instance.clearType();
-        return this;
-      }
-
-      /**
-       * <pre>
-       *如果是群消息那么指定群groupId
-       * </pre>
-       *
-       * <code>string groupId = 3;</code>
-       */
-      public java.lang.String getGroupId() {
-        return instance.getGroupId();
-      }
-      /**
-       * <pre>
-       *如果是群消息那么指定群groupId
-       * </pre>
-       *
-       * <code>string groupId = 3;</code>
-       */
-      public com.google.protobuf.ByteString
-          getGroupIdBytes() {
-        return instance.getGroupIdBytes();
-      }
-      /**
-       * <pre>
-       *如果是群消息那么指定群groupId
-       * </pre>
-       *
-       * <code>string groupId = 3;</code>
-       */
-      public Builder setGroupId(
-          java.lang.String value) {
-        copyOnWrite();
-        instance.setGroupId(value);
-        return this;
-      }
-      /**
-       * <pre>
-       *如果是群消息那么指定群groupId
-       * </pre>
-       *
-       * <code>string groupId = 3;</code>
-       */
-      public Builder clearGroupId() {
-        copyOnWrite();
-        instance.clearGroupId();
-        return this;
-      }
-      /**
-       * <pre>
-       *如果是群消息那么指定群groupId
-       * </pre>
-       *
-       * <code>string groupId = 3;</code>
-       */
-      public Builder setGroupIdBytes(
-          com.google.protobuf.ByteString value) {
-        copyOnWrite();
-        instance.setGroupIdBytes(value);
-        return this;
-      }
-
-      /**
-       * <pre>
-       *内容对象类型名称
-       * </pre>
-       *
-       * <code>string classname = 4;</code>
-       */
-      public java.lang.String getClassname() {
-        return instance.getClassname();
-      }
-      /**
-       * <pre>
-       *内容对象类型名称
-       * </pre>
-       *
-       * <code>string classname = 4;</code>
-       */
-      public com.google.protobuf.ByteString
-          getClassnameBytes() {
-        return instance.getClassnameBytes();
-      }
-      /**
-       * <pre>
-       *内容对象类型名称
-       * </pre>
-       *
-       * <code>string classname = 4;</code>
-       */
-      public Builder setClassname(
-          java.lang.String value) {
-        copyOnWrite();
-        instance.setClassname(value);
-        return this;
-      }
-      /**
-       * <pre>
-       *内容对象类型名称
-       * </pre>
-       *
-       * <code>string classname = 4;</code>
-       */
-      public Builder clearClassname() {
-        copyOnWrite();
-        instance.clearClassname();
-        return this;
-      }
-      /**
-       * <pre>
-       *内容对象类型名称
-       * </pre>
-       *
-       * <code>string classname = 4;</code>
-       */
-      public Builder setClassnameBytes(
-          com.google.protobuf.ByteString value) {
-        copyOnWrite();
-        instance.setClassnameBytes(value);
-        return this;
-      }
-
-      /**
-       * <pre>
-       *内容
-       * </pre>
-       *
-       * <code>bytes content = 5;</code>
-       */
-      public com.google.protobuf.ByteString getContent() {
-        return instance.getContent();
-      }
-      /**
-       * <pre>
-       *内容
-       * </pre>
-       *
-       * <code>bytes content = 5;</code>
-       */
-      public Builder setContent(com.google.protobuf.ByteString value) {
-        copyOnWrite();
-        instance.setContent(value);
-        return this;
-      }
-      /**
-       * <pre>
-       *内容
-       * </pre>
-       *
-       * <code>bytes content = 5;</code>
-       */
-      public Builder clearContent() {
-        copyOnWrite();
-        instance.clearContent();
-        return this;
-      }
-
-      /**
-       * <pre>
-       *消息时间
-       * </pre>
-       *
-       * <code>int64 sendtime = 6;</code>
-       */
-      public long getSendtime() {
-        return instance.getSendtime();
-      }
-      /**
-       * <pre>
-       *消息时间
-       * </pre>
-       *
-       * <code>int64 sendtime = 6;</code>
-       */
-      public Builder setSendtime(long value) {
-        copyOnWrite();
-        instance.setSendtime(value);
-        return this;
-      }
-      /**
-       * <pre>
-       *消息时间
-       * </pre>
-       *
-       * <code>int64 sendtime = 6;</code>
-       */
-      public Builder clearSendtime() {
-        copyOnWrite();
-        instance.clearSendtime();
-        return this;
-      }
-
-      /**
-       * <pre>
-       *消息唯一标示
-       * </pre>
-       *
-       * <code>string msgId = 7;</code>
-       */
-      public java.lang.String getMsgId() {
-        return instance.getMsgId();
-      }
-      /**
-       * <pre>
-       *消息唯一标示
-       * </pre>
-       *
-       * <code>string msgId = 7;</code>
-       */
-      public com.google.protobuf.ByteString
-          getMsgIdBytes() {
-        return instance.getMsgIdBytes();
-      }
-      /**
-       * <pre>
-       *消息唯一标示
-       * </pre>
-       *
-       * <code>string msgId = 7;</code>
-       */
-      public Builder setMsgId(
-          java.lang.String value) {
-        copyOnWrite();
-        instance.setMsgId(value);
-        return this;
-      }
-      /**
-       * <pre>
-       *消息唯一标示
-       * </pre>
-       *
-       * <code>string msgId = 7;</code>
-       */
-      public Builder clearMsgId() {
-        copyOnWrite();
-        instance.clearMsgId();
-        return this;
-      }
-      /**
-       * <pre>
-       *消息唯一标示
-       * </pre>
-       *
-       * <code>string msgId = 7;</code>
-       */
-      public Builder setMsgIdBytes(
-          com.google.protobuf.ByteString value) {
-        copyOnWrite();
-        instance.setMsgIdBytes(value);
-        return this;
-      }
-
-      // @@protoc_insertion_point(builder_scope:DownStreamMessageProto)
-    }
-    @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
-    protected final java.lang.Object dynamicMethod(
-        com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
-        java.lang.Object arg0, java.lang.Object arg1) {
-      switch (method) {
-        case NEW_MUTABLE_INSTANCE: {
-          return new protobuf.protos.PrivateMessageProto.DownStreamMessageProto();
+        private DownStreamMessageProto() {
+            fromUserId_ = "";
+            groupId_ = "";
+            classname_ = "";
+            content_ = com.google.protobuf.ByteString.EMPTY;
+            msgId_ = "";
         }
-        case IS_INITIALIZED: {
-          return DEFAULT_INSTANCE;
+
+        public static final int FROMUSERID_FIELD_NUMBER = 1;
+        private java.lang.String fromUserId_;
+
+        /**
+         * <pre>
+         * 发送方uid
+         * </pre>
+         *
+         * <code>string fromUserId = 1;</code>
+         */
+        public java.lang.String getFromUserId() {
+            return fromUserId_;
         }
-        case MAKE_IMMUTABLE: {
-          return null;
+
+        /**
+         * <pre>
+         * 发送方uid
+         * </pre>
+         *
+         * <code>string fromUserId = 1;</code>
+         */
+        public com.google.protobuf.ByteString
+        getFromUserIdBytes() {
+            return com.google.protobuf.ByteString.copyFromUtf8(fromUserId_);
         }
-        case NEW_BUILDER: {
-          return new Builder();
-        }
-        case VISIT: {
-          Visitor visitor = (Visitor) arg0;
-          protobuf.protos.PrivateMessageProto.DownStreamMessageProto other = (protobuf.protos.PrivateMessageProto.DownStreamMessageProto) arg1;
-          fromUserId_ = visitor.visitString(!fromUserId_.isEmpty(), fromUserId_,
-              !other.fromUserId_.isEmpty(), other.fromUserId_);
-          type_ = visitor.visitInt(type_ != 0, type_,    other.type_ != 0, other.type_);
-          groupId_ = visitor.visitString(!groupId_.isEmpty(), groupId_,
-              !other.groupId_.isEmpty(), other.groupId_);
-          classname_ = visitor.visitString(!classname_.isEmpty(), classname_,
-              !other.classname_.isEmpty(), other.classname_);
-          content_ = visitor.visitByteString(content_ != com.google.protobuf.ByteString.EMPTY, content_,
-              other.content_ != com.google.protobuf.ByteString.EMPTY, other.content_);
-          sendtime_ = visitor.visitLong(sendtime_ != 0L, sendtime_,
-              other.sendtime_ != 0L, other.sendtime_);
-          msgId_ = visitor.visitString(!msgId_.isEmpty(), msgId_,
-              !other.msgId_.isEmpty(), other.msgId_);
-          if (visitor == com.google.protobuf.GeneratedMessageLite.MergeFromVisitor
-              .INSTANCE) {
-          }
-          return this;
-        }
-        case MERGE_FROM_STREAM: {
-          com.google.protobuf.CodedInputStream input =
-              (com.google.protobuf.CodedInputStream) arg0;
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry =
-              (com.google.protobuf.ExtensionRegistryLite) arg1;
-          if (extensionRegistry == null) {
-            throw new java.lang.NullPointerException();
-          }
-          try {
-            boolean done = false;
-            while (!done) {
-              int tag = input.readTag();
-              switch (tag) {
-                case 0:
-                  done = true;
-                  break;
-                default: {
-                  if (!parseUnknownField(tag, input)) {
-                    done = true;
-                  }
-                  break;
-                }
-                case 10: {
-                  java.lang.String s = input.readStringRequireUtf8();
 
-                  fromUserId_ = s;
-                  break;
-                }
-                case 16: {
-                  int rawValue = input.readEnum();
-
-                  type_ = rawValue;
-                  break;
-                }
-                case 26: {
-                  java.lang.String s = input.readStringRequireUtf8();
-
-                  groupId_ = s;
-                  break;
-                }
-                case 34: {
-                  java.lang.String s = input.readStringRequireUtf8();
-
-                  classname_ = s;
-                  break;
-                }
-                case 42: {
-
-                  content_ = input.readBytes();
-                  break;
-                }
-                case 48: {
-
-                  sendtime_ = input.readInt64();
-                  break;
-                }
-                case 58: {
-                  java.lang.String s = input.readStringRequireUtf8();
-
-                  msgId_ = s;
-                  break;
-                }
-              }
+        /**
+         * <pre>
+         * 发送方uid
+         * </pre>
+         *
+         * <code>string fromUserId = 1;</code>
+         */
+        private void setFromUserId(
+                java.lang.String value) {
+            if (value == null) {
+                throw new NullPointerException();
             }
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw new RuntimeException(e.setUnfinishedMessage(this));
-          } catch (java.io.IOException e) {
-            throw new RuntimeException(
-                new com.google.protobuf.InvalidProtocolBufferException(
-                    e.getMessage()).setUnfinishedMessage(this));
-          } finally {
-          }
+
+            fromUserId_ = value;
         }
-        // fall through
-        case GET_DEFAULT_INSTANCE: {
-          return DEFAULT_INSTANCE;
+
+        /**
+         * <pre>
+         * 发送方uid
+         * </pre>
+         *
+         * <code>string fromUserId = 1;</code>
+         */
+        private void clearFromUserId() {
+
+            fromUserId_ = getDefaultInstance().getFromUserId();
         }
-        case GET_PARSER: {
-          if (PARSER == null) {    synchronized (protobuf.protos.PrivateMessageProto.DownStreamMessageProto.class) {
-              if (PARSER == null) {
-                PARSER = new DefaultInstanceBasedParser(DEFAULT_INSTANCE);
-              }
+
+        /**
+         * <pre>
+         * 发送方uid
+         * </pre>
+         *
+         * <code>string fromUserId = 1;</code>
+         */
+        private void setFromUserIdBytes(
+                com.google.protobuf.ByteString value) {
+            if (value == null) {
+                throw new NullPointerException();
             }
-          }
-          return PARSER;
-      }
-      case GET_MEMOIZED_IS_INITIALIZED: {
-        return (byte) 1;
-      }
-      case SET_MEMOIZED_IS_INITIALIZED: {
-        return null;
-      }
-      }
-      throw new UnsupportedOperationException();
+            checkByteStringIsUtf8(value);
+
+            fromUserId_ = value.toStringUtf8();
+        }
+
+        public static final int TYPE_FIELD_NUMBER = 2;
+        private int type_;
+
+        /**
+         * <pre>
+         * 消息类型
+         * </pre>
+         *
+         * <code>.MsgType type = 2;</code>
+         */
+        public int getTypeValue() {
+            return type_;
+        }
+
+        /**
+         * <pre>
+         * 消息类型
+         * </pre>
+         *
+         * <code>.MsgType type = 2;</code>
+         */
+        public protobuf.protos.PrivateMessageProto.MsgType getType() {
+            protobuf.protos.PrivateMessageProto.MsgType result = protobuf.protos.PrivateMessageProto.MsgType
+                    .forNumber(type_);
+            return result == null ? protobuf.protos.PrivateMessageProto.MsgType.UNRECOGNIZED
+                    : result;
+        }
+
+        /**
+         * <pre>
+         * 消息类型
+         * </pre>
+         *
+         * <code>.MsgType type = 2;</code>
+         */
+        private void setTypeValue(int value) {
+            type_ = value;
+        }
+
+        /**
+         * <pre>
+         * 消息类型
+         * </pre>
+         *
+         * <code>.MsgType type = 2;</code>
+         */
+        private void setType(protobuf.protos.PrivateMessageProto.MsgType value) {
+            if (value == null) {
+                throw new NullPointerException();
+            }
+
+            type_ = value.getNumber();
+        }
+
+        /**
+         * <pre>
+         * 消息类型
+         * </pre>
+         *
+         * <code>.MsgType type = 2;</code>
+         */
+        private void clearType() {
+
+            type_ = 0;
+        }
+
+        public static final int GROUPID_FIELD_NUMBER = 3;
+        private java.lang.String groupId_;
+
+        /**
+         * <pre>
+         * 如果是群消息那么指定群groupId
+         * </pre>
+         *
+         * <code>string groupId = 3;</code>
+         */
+        public java.lang.String getGroupId() {
+            return groupId_;
+        }
+
+        /**
+         * <pre>
+         * 如果是群消息那么指定群groupId
+         * </pre>
+         *
+         * <code>string groupId = 3;</code>
+         */
+        public com.google.protobuf.ByteString
+        getGroupIdBytes() {
+            return com.google.protobuf.ByteString.copyFromUtf8(groupId_);
+        }
+
+        /**
+         * <pre>
+         * 如果是群消息那么指定群groupId
+         * </pre>
+         *
+         * <code>string groupId = 3;</code>
+         */
+        private void setGroupId(
+                java.lang.String value) {
+            if (value == null) {
+                throw new NullPointerException();
+            }
+
+            groupId_ = value;
+        }
+
+        /**
+         * <pre>
+         * 如果是群消息那么指定群groupId
+         * </pre>
+         *
+         * <code>string groupId = 3;</code>
+         */
+        private void clearGroupId() {
+
+            groupId_ = getDefaultInstance().getGroupId();
+        }
+
+        /**
+         * <pre>
+         * 如果是群消息那么指定群groupId
+         * </pre>
+         *
+         * <code>string groupId = 3;</code>
+         */
+        private void setGroupIdBytes(
+                com.google.protobuf.ByteString value) {
+            if (value == null) {
+                throw new NullPointerException();
+            }
+            checkByteStringIsUtf8(value);
+
+            groupId_ = value.toStringUtf8();
+        }
+
+        public static final int CLASSNAME_FIELD_NUMBER = 4;
+        private java.lang.String classname_;
+
+        /**
+         * <pre>
+         * 内容对象类型名称
+         * </pre>
+         *
+         * <code>string classname = 4;</code>
+         */
+        public java.lang.String getClassname() {
+            return classname_;
+        }
+
+        /**
+         * <pre>
+         * 内容对象类型名称
+         * </pre>
+         *
+         * <code>string classname = 4;</code>
+         */
+        public com.google.protobuf.ByteString
+        getClassnameBytes() {
+            return com.google.protobuf.ByteString.copyFromUtf8(classname_);
+        }
+
+        /**
+         * <pre>
+         * 内容对象类型名称
+         * </pre>
+         *
+         * <code>string classname = 4;</code>
+         */
+        private void setClassname(
+                java.lang.String value) {
+            if (value == null) {
+                throw new NullPointerException();
+            }
+
+            classname_ = value;
+        }
+
+        /**
+         * <pre>
+         * 内容对象类型名称
+         * </pre>
+         *
+         * <code>string classname = 4;</code>
+         */
+        private void clearClassname() {
+
+            classname_ = getDefaultInstance().getClassname();
+        }
+
+        /**
+         * <pre>
+         * 内容对象类型名称
+         * </pre>
+         *
+         * <code>string classname = 4;</code>
+         */
+        private void setClassnameBytes(
+                com.google.protobuf.ByteString value) {
+            if (value == null) {
+                throw new NullPointerException();
+            }
+            checkByteStringIsUtf8(value);
+
+            classname_ = value.toStringUtf8();
+        }
+
+        public static final int CONTENT_FIELD_NUMBER = 5;
+        private com.google.protobuf.ByteString content_;
+
+        /**
+         * <pre>
+         * 内容
+         * </pre>
+         *
+         * <code>bytes content = 5;</code>
+         */
+        public com.google.protobuf.ByteString getContent() {
+            return content_;
+        }
+
+        /**
+         * <pre>
+         * 内容
+         * </pre>
+         *
+         * <code>bytes content = 5;</code>
+         */
+        private void setContent(com.google.protobuf.ByteString value) {
+            if (value == null) {
+                throw new NullPointerException();
+            }
+
+            content_ = value;
+        }
+
+        /**
+         * <pre>
+         * 内容
+         * </pre>
+         *
+         * <code>bytes content = 5;</code>
+         */
+        private void clearContent() {
+
+            content_ = getDefaultInstance().getContent();
+        }
+
+        public static final int SENDTIME_FIELD_NUMBER = 6;
+        private long sendtime_;
+
+        /**
+         * <pre>
+         * 消息时间
+         * </pre>
+         *
+         * <code>int64 sendtime = 6;</code>
+         */
+        public long getSendtime() {
+            return sendtime_;
+        }
+
+        /**
+         * <pre>
+         * 消息时间
+         * </pre>
+         *
+         * <code>int64 sendtime = 6;</code>
+         */
+        private void setSendtime(long value) {
+
+            sendtime_ = value;
+        }
+
+        /**
+         * <pre>
+         * 消息时间
+         * </pre>
+         *
+         * <code>int64 sendtime = 6;</code>
+         */
+        private void clearSendtime() {
+
+            sendtime_ = 0L;
+        }
+
+        public static final int MSGID_FIELD_NUMBER = 7;
+        private java.lang.String msgId_;
+
+        /**
+         * <pre>
+         * 消息唯一标示
+         * </pre>
+         *
+         * <code>string msgId = 7;</code>
+         */
+        public java.lang.String getMsgId() {
+            return msgId_;
+        }
+
+        /**
+         * <pre>
+         * 消息唯一标示
+         * </pre>
+         *
+         * <code>string msgId = 7;</code>
+         */
+        public com.google.protobuf.ByteString
+        getMsgIdBytes() {
+            return com.google.protobuf.ByteString.copyFromUtf8(msgId_);
+        }
+
+        /**
+         * <pre>
+         * 消息唯一标示
+         * </pre>
+         *
+         * <code>string msgId = 7;</code>
+         */
+        private void setMsgId(
+                java.lang.String value) {
+            if (value == null) {
+                throw new NullPointerException();
+            }
+
+            msgId_ = value;
+        }
+
+        /**
+         * <pre>
+         * 消息唯一标示
+         * </pre>
+         *
+         * <code>string msgId = 7;</code>
+         */
+        private void clearMsgId() {
+
+            msgId_ = getDefaultInstance().getMsgId();
+        }
+
+        /**
+         * <pre>
+         * 消息唯一标示
+         * </pre>
+         *
+         * <code>string msgId = 7;</code>
+         */
+        private void setMsgIdBytes(
+                com.google.protobuf.ByteString value) {
+            if (value == null) {
+                throw new NullPointerException();
+            }
+            checkByteStringIsUtf8(value);
+
+            msgId_ = value.toStringUtf8();
+        }
+
+        public void writeTo(com.google.protobuf.CodedOutputStream output)
+                throws java.io.IOException {
+            if (!fromUserId_.isEmpty()) {
+                output.writeString(1, getFromUserId());
+            }
+            if (type_ != protobuf.protos.PrivateMessageProto.MsgType.PERSON.getNumber()) {
+                output.writeEnum(2, type_);
+            }
+            if (!groupId_.isEmpty()) {
+                output.writeString(3, getGroupId());
+            }
+            if (!classname_.isEmpty()) {
+                output.writeString(4, getClassname());
+            }
+            if (!content_.isEmpty()) {
+                output.writeBytes(5, content_);
+            }
+            if (sendtime_ != 0L) {
+                output.writeInt64(6, sendtime_);
+            }
+            if (!msgId_.isEmpty()) {
+                output.writeString(7, getMsgId());
+            }
+            unknownFields.writeTo(output);
+        }
+
+        public int getSerializedSize() {
+            int size = memoizedSerializedSize;
+            if (size != -1) {
+                return size;
+            }
+
+            size = 0;
+            if (!fromUserId_.isEmpty()) {
+                size += com.google.protobuf.CodedOutputStream
+                        .computeStringSize(1, getFromUserId());
+            }
+            if (type_ != protobuf.protos.PrivateMessageProto.MsgType.PERSON.getNumber()) {
+                size += com.google.protobuf.CodedOutputStream
+                        .computeEnumSize(2, type_);
+            }
+            if (!groupId_.isEmpty()) {
+                size += com.google.protobuf.CodedOutputStream
+                        .computeStringSize(3, getGroupId());
+            }
+            if (!classname_.isEmpty()) {
+                size += com.google.protobuf.CodedOutputStream
+                        .computeStringSize(4, getClassname());
+            }
+            if (!content_.isEmpty()) {
+                size += com.google.protobuf.CodedOutputStream
+                        .computeBytesSize(5, content_);
+            }
+            if (sendtime_ != 0L) {
+                size += com.google.protobuf.CodedOutputStream
+                        .computeInt64Size(6, sendtime_);
+            }
+            if (!msgId_.isEmpty()) {
+                size += com.google.protobuf.CodedOutputStream
+                        .computeStringSize(7, getMsgId());
+            }
+            size += unknownFields.getSerializedSize();
+            memoizedSerializedSize = size;
+            return size;
+        }
+
+        public static protobuf.protos.PrivateMessageProto.DownStreamMessageProto parseFrom(
+                java.nio.ByteBuffer data)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return com.google.protobuf.GeneratedMessageLite.parseFrom(
+                    DEFAULT_INSTANCE, data);
+        }
+
+        public static protobuf.protos.PrivateMessageProto.DownStreamMessageProto parseFrom(
+                java.nio.ByteBuffer data,
+                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return com.google.protobuf.GeneratedMessageLite.parseFrom(
+                    DEFAULT_INSTANCE, data, extensionRegistry);
+        }
+
+        public static protobuf.protos.PrivateMessageProto.DownStreamMessageProto parseFrom(
+                com.google.protobuf.ByteString data)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return com.google.protobuf.GeneratedMessageLite.parseFrom(
+                    DEFAULT_INSTANCE, data);
+        }
+
+        public static protobuf.protos.PrivateMessageProto.DownStreamMessageProto parseFrom(
+                com.google.protobuf.ByteString data,
+                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return com.google.protobuf.GeneratedMessageLite.parseFrom(
+                    DEFAULT_INSTANCE, data, extensionRegistry);
+        }
+
+        public static protobuf.protos.PrivateMessageProto.DownStreamMessageProto parseFrom(
+                byte[] data)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return com.google.protobuf.GeneratedMessageLite.parseFrom(
+                    DEFAULT_INSTANCE, data);
+        }
+
+        public static protobuf.protos.PrivateMessageProto.DownStreamMessageProto parseFrom(
+                byte[] data,
+                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return com.google.protobuf.GeneratedMessageLite.parseFrom(
+                    DEFAULT_INSTANCE, data, extensionRegistry);
+        }
+
+        public static protobuf.protos.PrivateMessageProto.DownStreamMessageProto parseFrom(
+                java.io.InputStream input)
+                throws java.io.IOException {
+            return com.google.protobuf.GeneratedMessageLite.parseFrom(
+                    DEFAULT_INSTANCE, input);
+        }
+
+        public static protobuf.protos.PrivateMessageProto.DownStreamMessageProto parseFrom(
+                java.io.InputStream input,
+                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws java.io.IOException {
+            return com.google.protobuf.GeneratedMessageLite.parseFrom(
+                    DEFAULT_INSTANCE, input, extensionRegistry);
+        }
+
+        public static protobuf.protos.PrivateMessageProto.DownStreamMessageProto parseDelimitedFrom(
+                java.io.InputStream input)
+                throws java.io.IOException {
+            return parseDelimitedFrom(DEFAULT_INSTANCE, input);
+        }
+
+        public static protobuf.protos.PrivateMessageProto.DownStreamMessageProto parseDelimitedFrom(
+                java.io.InputStream input,
+                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws java.io.IOException {
+            return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
+        }
+
+        public static protobuf.protos.PrivateMessageProto.DownStreamMessageProto parseFrom(
+                com.google.protobuf.CodedInputStream input)
+                throws java.io.IOException {
+            return com.google.protobuf.GeneratedMessageLite.parseFrom(
+                    DEFAULT_INSTANCE, input);
+        }
+
+        public static protobuf.protos.PrivateMessageProto.DownStreamMessageProto parseFrom(
+                com.google.protobuf.CodedInputStream input,
+                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws java.io.IOException {
+            return com.google.protobuf.GeneratedMessageLite.parseFrom(
+                    DEFAULT_INSTANCE, input, extensionRegistry);
+        }
+
+        public static Builder newBuilder() {
+            return (Builder) DEFAULT_INSTANCE.createBuilder();
+        }
+
+        public static Builder newBuilder(
+                protobuf.protos.PrivateMessageProto.DownStreamMessageProto prototype) {
+            return (Builder) DEFAULT_INSTANCE.createBuilder(prototype);
+        }
+
+        /**
+         * <pre>
+         * 服务端发送即时消息
+         * </pre>
+         *
+         * Protobuf type {@code DownStreamMessageProto}
+         */
+        public static final class Builder extends
+                com.google.protobuf.GeneratedMessageLite.Builder<
+                        protobuf.protos.PrivateMessageProto.DownStreamMessageProto, Builder> implements
+                // @@protoc_insertion_point(builder_implements:DownStreamMessageProto)
+                protobuf.protos.PrivateMessageProto.DownStreamMessageProtoOrBuilder {
+
+            // Construct using protobuf.protos.PrivateMessageProto.DownStreamMessageProto.newBuilder()
+            private Builder() {
+                super(DEFAULT_INSTANCE);
+            }
+
+
+            /**
+             * <pre>
+             * 发送方uid
+             * </pre>
+             *
+             * <code>string fromUserId = 1;</code>
+             */
+            public java.lang.String getFromUserId() {
+                return instance.getFromUserId();
+            }
+
+            /**
+             * <pre>
+             * 发送方uid
+             * </pre>
+             *
+             * <code>string fromUserId = 1;</code>
+             */
+            public com.google.protobuf.ByteString
+            getFromUserIdBytes() {
+                return instance.getFromUserIdBytes();
+            }
+
+            /**
+             * <pre>
+             * 发送方uid
+             * </pre>
+             *
+             * <code>string fromUserId = 1;</code>
+             */
+            public Builder setFromUserId(
+                    java.lang.String value) {
+                copyOnWrite();
+                instance.setFromUserId(value);
+                return this;
+            }
+
+            /**
+             * <pre>
+             * 发送方uid
+             * </pre>
+             *
+             * <code>string fromUserId = 1;</code>
+             */
+            public Builder clearFromUserId() {
+                copyOnWrite();
+                instance.clearFromUserId();
+                return this;
+            }
+
+            /**
+             * <pre>
+             * 发送方uid
+             * </pre>
+             *
+             * <code>string fromUserId = 1;</code>
+             */
+            public Builder setFromUserIdBytes(
+                    com.google.protobuf.ByteString value) {
+                copyOnWrite();
+                instance.setFromUserIdBytes(value);
+                return this;
+            }
+
+            /**
+             * <pre>
+             * 消息类型
+             * </pre>
+             *
+             * <code>.MsgType type = 2;</code>
+             */
+            public int getTypeValue() {
+                return instance.getTypeValue();
+            }
+
+            /**
+             * <pre>
+             * 消息类型
+             * </pre>
+             *
+             * <code>.MsgType type = 2;</code>
+             */
+            public Builder setTypeValue(int value) {
+                copyOnWrite();
+                instance.setTypeValue(value);
+                return this;
+            }
+
+            /**
+             * <pre>
+             * 消息类型
+             * </pre>
+             *
+             * <code>.MsgType type = 2;</code>
+             */
+            public protobuf.protos.PrivateMessageProto.MsgType getType() {
+                return instance.getType();
+            }
+
+            /**
+             * <pre>
+             * 消息类型
+             * </pre>
+             *
+             * <code>.MsgType type = 2;</code>
+             */
+            public Builder setType(protobuf.protos.PrivateMessageProto.MsgType value) {
+                copyOnWrite();
+                instance.setType(value);
+                return this;
+            }
+
+            /**
+             * <pre>
+             * 消息类型
+             * </pre>
+             *
+             * <code>.MsgType type = 2;</code>
+             */
+            public Builder clearType() {
+                copyOnWrite();
+                instance.clearType();
+                return this;
+            }
+
+            /**
+             * <pre>
+             * 如果是群消息那么指定群groupId
+             * </pre>
+             *
+             * <code>string groupId = 3;</code>
+             */
+            public java.lang.String getGroupId() {
+                return instance.getGroupId();
+            }
+
+            /**
+             * <pre>
+             * 如果是群消息那么指定群groupId
+             * </pre>
+             *
+             * <code>string groupId = 3;</code>
+             */
+            public com.google.protobuf.ByteString
+            getGroupIdBytes() {
+                return instance.getGroupIdBytes();
+            }
+
+            /**
+             * <pre>
+             * 如果是群消息那么指定群groupId
+             * </pre>
+             *
+             * <code>string groupId = 3;</code>
+             */
+            public Builder setGroupId(
+                    java.lang.String value) {
+                copyOnWrite();
+                instance.setGroupId(value);
+                return this;
+            }
+
+            /**
+             * <pre>
+             * 如果是群消息那么指定群groupId
+             * </pre>
+             *
+             * <code>string groupId = 3;</code>
+             */
+            public Builder clearGroupId() {
+                copyOnWrite();
+                instance.clearGroupId();
+                return this;
+            }
+
+            /**
+             * <pre>
+             * 如果是群消息那么指定群groupId
+             * </pre>
+             *
+             * <code>string groupId = 3;</code>
+             */
+            public Builder setGroupIdBytes(
+                    com.google.protobuf.ByteString value) {
+                copyOnWrite();
+                instance.setGroupIdBytes(value);
+                return this;
+            }
+
+            /**
+             * <pre>
+             * 内容对象类型名称
+             * </pre>
+             *
+             * <code>string classname = 4;</code>
+             */
+            public java.lang.String getClassname() {
+                return instance.getClassname();
+            }
+
+            /**
+             * <pre>
+             * 内容对象类型名称
+             * </pre>
+             *
+             * <code>string classname = 4;</code>
+             */
+            public com.google.protobuf.ByteString
+            getClassnameBytes() {
+                return instance.getClassnameBytes();
+            }
+
+            /**
+             * <pre>
+             * 内容对象类型名称
+             * </pre>
+             *
+             * <code>string classname = 4;</code>
+             */
+            public Builder setClassname(
+                    java.lang.String value) {
+                copyOnWrite();
+                instance.setClassname(value);
+                return this;
+            }
+
+            /**
+             * <pre>
+             * 内容对象类型名称
+             * </pre>
+             *
+             * <code>string classname = 4;</code>
+             */
+            public Builder clearClassname() {
+                copyOnWrite();
+                instance.clearClassname();
+                return this;
+            }
+
+            /**
+             * <pre>
+             * 内容对象类型名称
+             * </pre>
+             *
+             * <code>string classname = 4;</code>
+             */
+            public Builder setClassnameBytes(
+                    com.google.protobuf.ByteString value) {
+                copyOnWrite();
+                instance.setClassnameBytes(value);
+                return this;
+            }
+
+            /**
+             * <pre>
+             * 内容
+             * </pre>
+             *
+             * <code>bytes content = 5;</code>
+             */
+            public com.google.protobuf.ByteString getContent() {
+                return instance.getContent();
+            }
+
+            /**
+             * <pre>
+             * 内容
+             * </pre>
+             *
+             * <code>bytes content = 5;</code>
+             */
+            public Builder setContent(com.google.protobuf.ByteString value) {
+                copyOnWrite();
+                instance.setContent(value);
+                return this;
+            }
+
+            /**
+             * <pre>
+             * 内容
+             * </pre>
+             *
+             * <code>bytes content = 5;</code>
+             */
+            public Builder clearContent() {
+                copyOnWrite();
+                instance.clearContent();
+                return this;
+            }
+
+            /**
+             * <pre>
+             * 消息时间
+             * </pre>
+             *
+             * <code>int64 sendtime = 6;</code>
+             */
+            public long getSendtime() {
+                return instance.getSendtime();
+            }
+
+            /**
+             * <pre>
+             * 消息时间
+             * </pre>
+             *
+             * <code>int64 sendtime = 6;</code>
+             */
+            public Builder setSendtime(long value) {
+                copyOnWrite();
+                instance.setSendtime(value);
+                return this;
+            }
+
+            /**
+             * <pre>
+             * 消息时间
+             * </pre>
+             *
+             * <code>int64 sendtime = 6;</code>
+             */
+            public Builder clearSendtime() {
+                copyOnWrite();
+                instance.clearSendtime();
+                return this;
+            }
+
+            /**
+             * <pre>
+             * 消息唯一标示
+             * </pre>
+             *
+             * <code>string msgId = 7;</code>
+             */
+            public java.lang.String getMsgId() {
+                return instance.getMsgId();
+            }
+
+            /**
+             * <pre>
+             * 消息唯一标示
+             * </pre>
+             *
+             * <code>string msgId = 7;</code>
+             */
+            public com.google.protobuf.ByteString
+            getMsgIdBytes() {
+                return instance.getMsgIdBytes();
+            }
+
+            /**
+             * <pre>
+             * 消息唯一标示
+             * </pre>
+             *
+             * <code>string msgId = 7;</code>
+             */
+            public Builder setMsgId(
+                    java.lang.String value) {
+                copyOnWrite();
+                instance.setMsgId(value);
+                return this;
+            }
+
+            /**
+             * <pre>
+             * 消息唯一标示
+             * </pre>
+             *
+             * <code>string msgId = 7;</code>
+             */
+            public Builder clearMsgId() {
+                copyOnWrite();
+                instance.clearMsgId();
+                return this;
+            }
+
+            /**
+             * <pre>
+             * 消息唯一标示
+             * </pre>
+             *
+             * <code>string msgId = 7;</code>
+             */
+            public Builder setMsgIdBytes(
+                    com.google.protobuf.ByteString value) {
+                copyOnWrite();
+                instance.setMsgIdBytes(value);
+                return this;
+            }
+
+            // @@protoc_insertion_point(builder_scope:DownStreamMessageProto)
+        }
+
+        @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+        protected final java.lang.Object dynamicMethod(
+                com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+                java.lang.Object arg0, java.lang.Object arg1) {
+            switch (method) {
+                case NEW_MUTABLE_INSTANCE: {
+                    return new protobuf.protos.PrivateMessageProto.DownStreamMessageProto();
+                }
+                case IS_INITIALIZED: {
+                    return DEFAULT_INSTANCE;
+                }
+                case MAKE_IMMUTABLE: {
+                    return null;
+                }
+                case NEW_BUILDER: {
+                    return new Builder();
+                }
+                case VISIT: {
+                    Visitor visitor = (Visitor) arg0;
+                    protobuf.protos.PrivateMessageProto.DownStreamMessageProto other = (protobuf.protos.PrivateMessageProto.DownStreamMessageProto) arg1;
+                    fromUserId_ = visitor.visitString(!fromUserId_.isEmpty(), fromUserId_,
+                            !other.fromUserId_.isEmpty(), other.fromUserId_);
+                    type_ = visitor.visitInt(type_ != 0, type_, other.type_ != 0, other.type_);
+                    groupId_ = visitor.visitString(!groupId_.isEmpty(), groupId_,
+                            !other.groupId_.isEmpty(), other.groupId_);
+                    classname_ = visitor.visitString(!classname_.isEmpty(), classname_,
+                            !other.classname_.isEmpty(), other.classname_);
+                    content_ = visitor
+                            .visitByteString(content_ != com.google.protobuf.ByteString.EMPTY,
+                                    content_,
+                                    other.content_ != com.google.protobuf.ByteString.EMPTY,
+                                    other.content_);
+                    sendtime_ = visitor.visitLong(sendtime_ != 0L, sendtime_,
+                            other.sendtime_ != 0L, other.sendtime_);
+                    msgId_ = visitor.visitString(!msgId_.isEmpty(), msgId_,
+                            !other.msgId_.isEmpty(), other.msgId_);
+                    if (visitor == com.google.protobuf.GeneratedMessageLite.MergeFromVisitor
+                            .INSTANCE) {
+                    }
+                    return this;
+                }
+                case MERGE_FROM_STREAM: {
+                    com.google.protobuf.CodedInputStream input =
+                            (com.google.protobuf.CodedInputStream) arg0;
+                    com.google.protobuf.ExtensionRegistryLite extensionRegistry =
+                            (com.google.protobuf.ExtensionRegistryLite) arg1;
+                    if (extensionRegistry == null) {
+                        throw new java.lang.NullPointerException();
+                    }
+                    try {
+                        boolean done = false;
+                        while (!done) {
+                            int tag = input.readTag();
+                            switch (tag) {
+                                case 0:
+                                    done = true;
+                                    break;
+                                default: {
+                                    if (!parseUnknownField(tag, input)) {
+                                        done = true;
+                                    }
+                                    break;
+                                }
+                                case 10: {
+                                    java.lang.String s = input.readStringRequireUtf8();
+
+                                    fromUserId_ = s;
+                                    break;
+                                }
+                                case 16: {
+                                    int rawValue = input.readEnum();
+
+                                    type_ = rawValue;
+                                    break;
+                                }
+                                case 26: {
+                                    java.lang.String s = input.readStringRequireUtf8();
+
+                                    groupId_ = s;
+                                    break;
+                                }
+                                case 34: {
+                                    java.lang.String s = input.readStringRequireUtf8();
+
+                                    classname_ = s;
+                                    break;
+                                }
+                                case 42: {
+
+                                    content_ = input.readBytes();
+                                    break;
+                                }
+                                case 48: {
+
+                                    sendtime_ = input.readInt64();
+                                    break;
+                                }
+                                case 58: {
+                                    java.lang.String s = input.readStringRequireUtf8();
+
+                                    msgId_ = s;
+                                    break;
+                                }
+                            }
+                        }
+                    } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+                        throw new RuntimeException(e.setUnfinishedMessage(this));
+                    } catch (java.io.IOException e) {
+                        throw new RuntimeException(
+                                new com.google.protobuf.InvalidProtocolBufferException(
+                                        e.getMessage()).setUnfinishedMessage(this));
+                    } finally {
+                    }
+                }
+                // fall through
+                case GET_DEFAULT_INSTANCE: {
+                    return DEFAULT_INSTANCE;
+                }
+                case GET_PARSER: {
+                    if (PARSER == null) {
+                        synchronized (protobuf.protos.PrivateMessageProto.DownStreamMessageProto.class) {
+                            if (PARSER == null) {
+                                PARSER = new DefaultInstanceBasedParser(DEFAULT_INSTANCE);
+                            }
+                        }
+                    }
+                    return PARSER;
+                }
+                case GET_MEMOIZED_IS_INITIALIZED: {
+                    return (byte) 1;
+                }
+                case SET_MEMOIZED_IS_INITIALIZED: {
+                    return null;
+                }
+            }
+            throw new UnsupportedOperationException();
+        }
+
+
+        // @@protoc_insertion_point(class_scope:DownStreamMessageProto)
+        private static final protobuf.protos.PrivateMessageProto.DownStreamMessageProto DEFAULT_INSTANCE;
+
+        static {
+            DEFAULT_INSTANCE = new DownStreamMessageProto();
+            DEFAULT_INSTANCE.makeImmutable();
+        }
+
+        public static protobuf.protos.PrivateMessageProto.DownStreamMessageProto getDefaultInstance() {
+            return DEFAULT_INSTANCE;
+        }
+
+        private static volatile com.google.protobuf.Parser<DownStreamMessageProto> PARSER;
+
+        public static com.google.protobuf.Parser<DownStreamMessageProto> parser() {
+            return DEFAULT_INSTANCE.getParserForType();
+        }
     }
 
 
-    // @@protoc_insertion_point(class_scope:DownStreamMessageProto)
-    private static final protobuf.protos.PrivateMessageProto.DownStreamMessageProto DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new DownStreamMessageProto();
-      DEFAULT_INSTANCE.makeImmutable();
     }
 
-    public static protobuf.protos.PrivateMessageProto.DownStreamMessageProto getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    private static volatile com.google.protobuf.Parser<DownStreamMessageProto> PARSER;
-
-    public static com.google.protobuf.Parser<DownStreamMessageProto> parser() {
-      return DEFAULT_INSTANCE.getParserForType();
-    }
-  }
-
-
-  static {
-  }
-
-  // @@protoc_insertion_point(outer_class_scope)
+    // @@protoc_insertion_point(outer_class_scope)
 }

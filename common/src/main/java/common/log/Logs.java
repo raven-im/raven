@@ -15,7 +15,9 @@ public interface Logs {
     boolean logInit = init();
 
     static boolean init() {
-        if (logInit) return true;
+        if (logInit) {
+            return true;
+        }
         System.setProperty(CONFIG_FILE_PROPERTY, "tools/src/main/resources/logback.xml");
         return true;
     }

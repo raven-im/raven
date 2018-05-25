@@ -37,7 +37,8 @@ public class MessageServer {
                         ChannelPipeline pipeline = channel.pipeline();
                         pipeline.addLast("MessageDecoder", new MessageDecoder());
                         pipeline.addLast("MessageEncoder", new MessageEncoder());
-                        pipeline.addLast("MessageServerHandler", new BindUserHandler(new NettyConnectionManager()));
+                        pipeline.addLast("MessageServerHandler",
+                                new BindUserHandler(new NettyConnectionManager()));
                     }
                 });
         bindConnectionOptions(bootstrap);

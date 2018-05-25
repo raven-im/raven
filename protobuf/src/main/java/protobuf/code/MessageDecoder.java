@@ -48,7 +48,7 @@ public class MessageDecoder extends ByteToMessageDecoder {
             logger.info("GateServer Received Message: content length {}, ptoNum: {}", length,
                     ptoNum);
         } catch (Exception e) {
-            logger.error("{},decode failed:{}",ctx.channel().remoteAddress(), e);
+            logger.error("{},decode failed:{}", ctx.channel().remoteAddress(), e);
         }
     }
 }

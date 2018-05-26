@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
  * Created by win7 on 2016/3/5.
  */
 public class GreetHandler extends IMHandler {
+
     private static final Logger logger = LoggerFactory.getLogger(GreetHandler.class);
 
     public GreetHandler(String userid, long netid, Message msg, ChannelHandlerContext ctx) {

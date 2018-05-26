@@ -1,11 +1,11 @@
 package auth.utils;
 
 import auth.handler.AuthServerHandler;
+import com.google.protobuf.Internal;
 import io.netty.buffer.ByteBuf;
-import protobuf.MessageProtoNum;
-import protobuf.Utils;
-import protobuf.generate.cli2srv.login.Auth;
-import protobuf.generate.internal.Internal;
+import protobuf.utils.MessageProtoNum;
+import protobuf.utils.Utils;
+import protobuf.protos.Auth;
 
 /**
  * Created by win7 on 2016/3/3.
@@ -13,11 +13,11 @@ import protobuf.generate.internal.Internal;
 public class RouteUtil {
 
     public static void sendResponse(int code, String desc, long netId, String userId) {
-        Auth.SResponse.Builder sb = Auth.SResponse.newBuilder();
+        Auth.Response.Builder sb = Auth.Response.newBuilder();
         sb.setCode(code);
         sb.setDesc(desc);
         ByteBuf byteBuf = Utils
-                .pack2Server(sb.build(), MessageProtoNum.SRESPONSE, netId, Internal.Dest.Client,
+                .pack2Server(sb.build(), MessageProtoNum.RESPONSE, netId, Internal.Dest.Client,
                         userId);
         AuthServerHandler.getGateAuthConnection().writeAndFlush(byteBuf);
     }

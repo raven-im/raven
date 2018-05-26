@@ -9,10 +9,7 @@ import io.netty.channel.ChannelHandlerContext;
 import org.apache.thrift.TException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import protobuf.generate.cli2srv.login.Auth;
-import tools.redis.utils.UserUtils;
-import tools.thrift.generate.db.user.Account;
-import tools.thrift.utils.DBOperator;
+import protobuf.protos.Auth;
 
 /**
  * Created by win7 on 2016/3/3.
@@ -27,25 +24,25 @@ public class LoginHandler extends IMHandler {
 
     @Override
     protected void excute(Worker worker) throws TException {
-        Auth.CLogin msg = (Auth.CLogin) this.msg;
+        Auth.Login msg = (Auth.Login) this.msg;
         Account account;
-        if (!jedis.exists(UserUtils.genDBKey(userid))) {
-            RouteUtil.sendResponse(Common.ACCOUNT_INEXIST, "Account not exists", netid, userid);
-            logger.info("Account not exists, userid: {}", userid);
+        if (!jedis.exists(UserUtils.genDBKey(uid))) {
+            RouteUtil.sendResponse(Common.ACCOUNT_INEXIST, "Account not exists", netid, uid);
+            logger.info("Account not exists, userid: {}", uid);
             return;
         } else {
             byte[] userIdBytes = jedis
-                    .hget(UserUtils.genDBKey(userid), UserUtils.userFileds.Account.field);
+                    .hget(UserUtils.genDBKey(uid), UserUtils.userFileds.Account.field);
             account = DBOperator.Deserialize(new Account(), userIdBytes);
         }
-        if (account.getUserid().equals(userid) && account.getPasswd().equals(msg.getPasswd())) {
-            AuthServerHandler.putInUseridMap(userid, netid);
-            RouteUtil.sendResponse(Common.VERYFY_PASSED, "Verify passed", netid, userid);
-            logger.info("userid: {} verify passed", userid);
+        if (account.getUserid().equals(uid) && account.getPasswd().equals(msg.getPasswd())) {
+            AuthServerHandler.putInUseridMap(uid, netid);
+            RouteUtil.sendResponse(Common.VERYFY_PASSED, "Verify passed", netid, uid);
+            logger.info("userid: {} verify passed", uid);
         } else {
             RouteUtil.sendResponse(Common.VERYFY_ERROR, "Account not exist or passwd error", netid,
-                    userid);
-            logger.info("userid: {} verify failed", userid);
+                    uid);
+            logger.info("userid: {} verify failed", uid);
         }
     }
 }

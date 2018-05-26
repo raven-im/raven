@@ -1,7 +1,4 @@
 package auth;
-/**
- * Created by Qzy on 2016/1/28.
- */
 
 import auth.handler.AuthServerHandler;
 import io.netty.bootstrap.ServerBootstrap;
@@ -15,7 +12,7 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import java.net.InetSocketAddress;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import protobuf.ParseRegistryMap;
+import protobuf.utils.ParseRegistryMap;
 import protobuf.code.MessageDecoder;
 import protobuf.code.MessageEncoder;
 

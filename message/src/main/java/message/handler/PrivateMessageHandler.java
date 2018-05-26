@@ -1,42 +1,49 @@
 package message.handler;
 
-import com.google.protobuf.Message;
-import io.netty.buffer.ByteBuf;
+import com.google.protobuf.MessageLite;
+import common.connection.Connection;
+import common.connection.ConnectionManager;
 import io.netty.channel.ChannelHandlerContext;
-import message.IMHandler;
-import message.Worker;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import protobuf.MessageProtoNum;
-import protobuf.Utils;
-import protobuf.generate.cli2srv.chat.Chat;
-import protobuf.generate.cli2srv.login.Auth;
-import protobuf.generate.internal.Internal;
+import io.netty.channel.SimpleChannelInboundHandler;
+import java.util.List;
+import java.util.UUID;
+import protobuf.protos.PrivateMessageProto;
+import protobuf.protos.PrivateMessageProto.MsgType;
+import protobuf.utils.ProtoConstants;
 
 /**
- * Created by win7 on 2016/3/5.
+ * Author zxx
+ * Description 私聊消息handler
+ * Date Created on 2018/5/25
  */
-public class PrivateMessageHandler extends IMHandler {
+public class PrivateMessageHandler extends SimpleChannelInboundHandler<MessageLite> {
 
-    private static final Logger logger = LoggerFactory.getLogger(PrivateMessageHandler.class);
+    private final ConnectionManager connectionManager;
 
-    public PrivateMessageHandler(String userid, long netid, Message msg, ChannelHandlerContext ctx) {
-        super(userid, netid, msg, ctx);
+    public PrivateMessageHandler(ConnectionManager connectionManager) {
+        this.connectionManager = connectionManager;
     }
 
     @Override
-    protected void excute(Worker worker) {
-        Chat.CPrivateChat msg = (Chat.CPrivateChat) _msg;
-        ByteBuf byteBuf = null;
-        //转发给auth
-        byteBuf = Utils
-                .pack2Server(_msg, MessageProtoNum.CPRIVATECHAT, Internal.Dest.Auth, msg.getDest());
-        MessageServerHandler.getAuthMessageConnection().writeAndFlush(byteBuf);
-        //给发消息的人回应
-        Auth.SResponse.Builder sr = Auth.SResponse.newBuilder();
-        sr.setCode(300);
-        sr.setDesc("Server received message successed");
-        byteBuf = Utils.pack2Client(sr.build());
-        _ctx.writeAndFlush(byteBuf);
+    protected void channelRead0(ChannelHandlerContext channelHandlerContext,
+            MessageLite messageLite) throws Exception {
+        if (messageLite instanceof PrivateMessageProto.UpStreamMessageProto) {
+            PrivateMessageProto.UpStreamMessageProto upMessage = (PrivateMessageProto.UpStreamMessageProto) messageLite;
+            List<String> uids = upMessage.getToUIdList();
+            String fromUid = connectionManager.get(channelHandlerContext.channel()).getUid();
+            MessageLite dowmMessage = PrivateMessageProto.DownStreamMessageProto.newBuilder()
+                    .setFromUserId(fromUid)
+                    .setProtoNum(ProtoConstants.DOWNPRIVATEMESSAGE)
+                    .setContent(upMessage.getContentBytes())
+                    .setMsgId(UUID.randomUUID().toString())
+                    .setSendtime(upMessage.getSendtiime())
+                    .setType(MsgType.PERSON)
+                    .build();
+            uids.forEach(uid -> {
+                List<Connection> connections = connectionManager.getConnectionByUid(uid);
+                connections
+                        .forEach(connection -> connection.getChannel().writeAndFlush(dowmMessage));
+            });
+        }
     }
 }

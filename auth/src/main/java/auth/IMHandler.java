@@ -10,14 +10,14 @@ import redis.clients.jedis.Jedis;
  */
 public abstract class IMHandler {
 
-    protected final String userid;
+    protected final String uid;
     protected final long netid;
     protected final Message msg;
     protected ChannelHandlerContext ctx;
     protected Jedis jedis;
 
     public IMHandler(String userid, long netid, Message msg, ChannelHandlerContext ctx) {
-        this.userid = userid;
+        this.uid = userid;
         this.netid = netid;
         this.msg = msg;
         this.ctx = ctx;

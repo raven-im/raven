@@ -4,14 +4,12 @@ import com.google.protobuf.Message;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import protobuf.Utils;
-import protobuf.generate.cli2srv.chat.Chat;
-import protobuf.generate.cli2srv.login.Auth;
-
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicLong;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import protobuf.protos.Auth;
+import protobuf.protos.PrivateMessageProto;
 
 /**
  * Created by Dell on 2016/2/15.
@@ -37,18 +35,18 @@ public class ClientHandler extends SimpleChannelInboundHandler<Message> {
         sendCLogin(ctx, _userId, passwd);
     }
 
-    void sendCRegister(ChannelHandlerContext ctx, String userid, String passwd) {
-        Auth.CRegister.Builder cb = Auth.CRegister.newBuilder();
-        cb.setUserid(userid);
+    void sendCRegister(ChannelHandlerContext ctx, String username, String passwd) {
+        Auth.Register.Builder cb = Auth.Register.newBuilder();
+        cb.setUsername(username);
         cb.setPasswd(passwd);
         ByteBuf byteBuf = Utils.pack2Client(cb.build());
         ctx.writeAndFlush(byteBuf);
         logger.info("send CRegister userid:{}", _userId);
     }
 
-    void sendCLogin(ChannelHandlerContext ctx, String userid, String passwd) {
-        Auth.CLogin.Builder loginInfo = Auth.CLogin.newBuilder();
-        loginInfo.setUserid(userid);
+    void sendCLogin(ChannelHandlerContext ctx, String username, String passwd) {
+        Auth.Login.Builder loginInfo = Auth.Login.newBuilder();
+        loginInfo.setUsername(username);
         loginInfo.setPasswd(passwd);
         loginInfo.setPlatform("ios");
         loginInfo.setAppVersion("1.0.0");
@@ -61,8 +59,8 @@ public class ClientHandler extends SimpleChannelInboundHandler<Message> {
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, Message msg)
             throws Exception {
         logger.info("received message: {}", msg.getClass());
-        if (msg instanceof Auth.SResponse) {
-            Auth.SResponse sp = (Auth.SResponse) msg;
+        if (msg instanceof Auth.Response) {
+            Auth.Response sp = (Auth.Response) msg;
             int code = sp.getCode();
             String desc = sp.getDesc();
             switch (code) {
@@ -92,9 +90,9 @@ public class ClientHandler extends SimpleChannelInboundHandler<Message> {
                 default:
                     logger.info("Unknow code: {}", code);
             }
-        } else if (msg instanceof Chat.SPrivateChat) {
+        } else if (msg instanceof PrivateMessageProto.PrivateMessage) {
             logger.info("{} receiced chat message: {}.Total:{}", _userId,
-                    ((Chat.SPrivateChat) msg).getContent(), ++count);
+                    ((PrivateMessageProto.PrivateMessage) msg).getContent(), ++count);
         }
 
         //这样设置的原因是，防止两方都阻塞在输入上
@@ -110,10 +108,11 @@ public class ClientHandler extends SimpleChannelInboundHandler<Message> {
 //        String content = sc.nextLine();
         String content = "Hello, I am Tom!";
 //        logger.info("{} Send Message: {} to {}", _userId, content, _friend);
-        Chat.CPrivateChat.Builder cp = Chat.CPrivateChat.newBuilder();
+        PrivateMessageProto.PrivateMessage.Builder cp = PrivateMessageProto.PrivateMessage
+                .newBuilder();
         cp.setContent(content);
-        cp.setSelf(_userId);
-        cp.setDest(_userId);
+        cp.setFromUId(_userId);
+        cp.setToUId(_userId);
         ByteBuf byteBuf = Utils.pack2Client(cp.build());
         _gateClientConnection.writeAndFlush(byteBuf);
     }

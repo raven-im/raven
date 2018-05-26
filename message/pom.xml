@@ -17,6 +17,11 @@
             <artifactId>protobuf</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>common</groupId>
+            <artifactId>common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -33,7 +38,7 @@
                             <!--生成的manifest中classpath的前缀，因为要把第三方jar放到lib目录下，所以classpath的前缀是lib/-->
                             <classpathPrefix>lib/</classpathPrefix>
                             <!--应用的main class-->
-                            <mainClass>message.starter.MeaageStarter</mainClass>
+                            <mainClass>message.MeaageStarter</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

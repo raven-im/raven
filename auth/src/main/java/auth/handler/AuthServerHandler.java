@@ -7,18 +7,17 @@ package auth.handler;
 import auth.HandlerManager;
 import auth.IMHandler;
 import auth.Worker;
+import com.google.protobuf.Internal;
 import com.google.protobuf.Message;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import java.util.HashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import protobuf.analysis.ParseMap;
-import protobuf.generate.cli2srv.chat.Chat;
-import protobuf.generate.internal.Internal;
-
-import java.util.HashMap;
 
 public class AuthServerHandler extends SimpleChannelInboundHandler<Message> {
+
     private static final Logger logger = LoggerFactory.getLogger(AuthServerHandler.class);
     private static ChannelHandlerContext _gateAuthConnection;
 
@@ -27,7 +26,7 @@ public class AuthServerHandler extends SimpleChannelInboundHandler<Message> {
     }
 
     public static ChannelHandlerContext getGateAuthConnection() {
-        if(_gateAuthConnection != null) {
+        if (_gateAuthConnection != null) {
             return _gateAuthConnection;
         } else {
             return null;
@@ -41,17 +40,20 @@ public class AuthServerHandler extends SimpleChannelInboundHandler<Message> {
     }
 
     @Override
-    protected void channelRead0(ChannelHandlerContext channelHandlerContext, Message message) throws Exception {
-        Internal.GTransfer gt = (Internal.GTransfer) message;
+    protected void channelRead0(ChannelHandlerContext channelHandlerContext, Message message)
+            throws Exception {
+        Internal.Transfer gt = (Internal.Transfer) message;
         int ptoNum = gt.getPtoNum();
         Message msg = ParseMap.getMessage(ptoNum, gt.getMsg().toByteArray());
 
         IMHandler handler;
-        if(msg instanceof Internal.Greet) {
+        if (msg instanceof Internal.Greet) {
             //来自gate的连接请求
-            handler = HandlerManager.getHandler(ptoNum, gt.getUserId(), gt.getNetId(), msg, channelHandlerContext);
+            handler = HandlerManager
+                    .getHandler(ptoNum, gt.getUserId(), gt.getNetId(), msg, channelHandlerContext);
         } else {
-            handler = HandlerManager.getHandler(ptoNum, gt.getUserId(), gt.getNetId(), msg, getGateAuthConnection());
+            handler = HandlerManager.getHandler(ptoNum, gt.getUserId(), gt.getNetId(), msg,
+                    getGateAuthConnection());
         }
 
         Worker.dispatch(gt.getUserId(), handler);
@@ -70,7 +72,7 @@ public class AuthServerHandler extends SimpleChannelInboundHandler<Message> {
 
     public static Long getNetidByUserid(String userid) {
         Long netid = userid2netidMap.get(userid);
-        if( netid != null) {
+        if (netid != null) {
             return netid;
         } else {
             return null;

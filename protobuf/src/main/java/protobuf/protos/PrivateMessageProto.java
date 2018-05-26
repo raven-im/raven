@@ -108,44 +108,44 @@ public final class PrivateMessageProto {
      *消息目标的userid
      * </pre>
      *
-     * <code>repeated string toUId = 2;</code>
+     * <code>repeated string touid = 2;</code>
      */
     java.util.List<java.lang.String>
-        getToUIdList();
+        getTouidList();
     /**
      * <pre>
      *消息目标的userid
      * </pre>
      *
-     * <code>repeated string toUId = 2;</code>
+     * <code>repeated string touid = 2;</code>
      */
-    int getToUIdCount();
+    int getTouidCount();
     /**
      * <pre>
      *消息目标的userid
      * </pre>
      *
-     * <code>repeated string toUId = 2;</code>
+     * <code>repeated string touid = 2;</code>
      */
-    java.lang.String getToUId(int index);
+    java.lang.String getTouid(int index);
     /**
      * <pre>
      *消息目标的userid
      * </pre>
      *
-     * <code>repeated string toUId = 2;</code>
+     * <code>repeated string touid = 2;</code>
      */
     com.google.protobuf.ByteString
-        getToUIdBytes(int index);
+        getTouidBytes(int index);
 
     /**
      * <pre>
      *消息类型
      * </pre>
      *
-     * <code>uint32 protoNum = 3;</code>
+     * <code>uint32 protonum = 3;</code>
      */
-    int getProtoNum();
+    int getProtonum();
 
     /**
      * <pre>
@@ -170,9 +170,9 @@ public final class PrivateMessageProto {
      *发送时间
      * </pre>
      *
-     * <code>uint32 sendtiime = 5;</code>
+     * <code>uint64 sendtime = 5;</code>
      */
-    int getSendtiime();
+    long getSendtime();
   }
   /**
    * <pre>
@@ -187,58 +187,58 @@ public final class PrivateMessageProto {
       // @@protoc_insertion_point(message_implements:protobuf.protos.UpStreamMessageProto)
       UpStreamMessageProtoOrBuilder {
     private UpStreamMessageProto() {
-      toUId_ = com.google.protobuf.GeneratedMessageLite.emptyProtobufList();
+      touid_ = com.google.protobuf.GeneratedMessageLite.emptyProtobufList();
       content_ = "";
     }
     private int bitField0_;
     public static final int TOUID_FIELD_NUMBER = 2;
-    private com.google.protobuf.Internal.ProtobufList<java.lang.String> toUId_;
+    private com.google.protobuf.Internal.ProtobufList<java.lang.String> touid_;
     /**
      * <pre>
      *消息目标的userid
      * </pre>
      *
-     * <code>repeated string toUId = 2;</code>
+     * <code>repeated string touid = 2;</code>
      */
-    public java.util.List<java.lang.String> getToUIdList() {
-      return toUId_;
+    public java.util.List<java.lang.String> getTouidList() {
+      return touid_;
     }
     /**
      * <pre>
      *消息目标的userid
      * </pre>
      *
-     * <code>repeated string toUId = 2;</code>
+     * <code>repeated string touid = 2;</code>
      */
-    public int getToUIdCount() {
-      return toUId_.size();
+    public int getTouidCount() {
+      return touid_.size();
     }
     /**
      * <pre>
      *消息目标的userid
      * </pre>
      *
-     * <code>repeated string toUId = 2;</code>
+     * <code>repeated string touid = 2;</code>
      */
-    public java.lang.String getToUId(int index) {
-      return toUId_.get(index);
+    public java.lang.String getTouid(int index) {
+      return touid_.get(index);
     }
     /**
      * <pre>
      *消息目标的userid
      * </pre>
      *
-     * <code>repeated string toUId = 2;</code>
+     * <code>repeated string touid = 2;</code>
      */
     public com.google.protobuf.ByteString
-        getToUIdBytes(int index) {
+        getTouidBytes(int index) {
       return com.google.protobuf.ByteString.copyFromUtf8(
-          toUId_.get(index));
+          touid_.get(index));
     }
-    private void ensureToUIdIsMutable() {
-      if (!toUId_.isModifiable()) {
-        toUId_ =
-            com.google.protobuf.GeneratedMessageLite.mutableCopy(toUId_);
+    private void ensureTouidIsMutable() {
+      if (!touid_.isModifiable()) {
+        touid_ =
+            com.google.protobuf.GeneratedMessageLite.mutableCopy(touid_);
        }
     }
     /**
@@ -246,104 +246,104 @@ public final class PrivateMessageProto {
      *消息目标的userid
      * </pre>
      *
-     * <code>repeated string toUId = 2;</code>
+     * <code>repeated string touid = 2;</code>
      */
-    private void setToUId(
+    private void setTouid(
         int index, java.lang.String value) {
       if (value == null) {
     throw new NullPointerException();
   }
-  ensureToUIdIsMutable();
-      toUId_.set(index, value);
+  ensureTouidIsMutable();
+      touid_.set(index, value);
     }
     /**
      * <pre>
      *消息目标的userid
      * </pre>
      *
-     * <code>repeated string toUId = 2;</code>
+     * <code>repeated string touid = 2;</code>
      */
-    private void addToUId(
+    private void addTouid(
         java.lang.String value) {
       if (value == null) {
     throw new NullPointerException();
   }
-  ensureToUIdIsMutable();
-      toUId_.add(value);
+  ensureTouidIsMutable();
+      touid_.add(value);
     }
     /**
      * <pre>
      *消息目标的userid
      * </pre>
      *
-     * <code>repeated string toUId = 2;</code>
+     * <code>repeated string touid = 2;</code>
      */
-    private void addAllToUId(
+    private void addAllTouid(
         java.lang.Iterable<java.lang.String> values) {
-      ensureToUIdIsMutable();
+      ensureTouidIsMutable();
       com.google.protobuf.AbstractMessageLite.addAll(
-          values, toUId_);
+          values, touid_);
     }
     /**
      * <pre>
      *消息目标的userid
      * </pre>
      *
-     * <code>repeated string toUId = 2;</code>
+     * <code>repeated string touid = 2;</code>
      */
-    private void clearToUId() {
-      toUId_ = com.google.protobuf.GeneratedMessageLite.emptyProtobufList();
+    private void clearTouid() {
+      touid_ = com.google.protobuf.GeneratedMessageLite.emptyProtobufList();
     }
     /**
      * <pre>
      *消息目标的userid
      * </pre>
      *
-     * <code>repeated string toUId = 2;</code>
+     * <code>repeated string touid = 2;</code>
      */
-    private void addToUIdBytes(
+    private void addTouidBytes(
         com.google.protobuf.ByteString value) {
       if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
-      ensureToUIdIsMutable();
-      toUId_.add(value.toStringUtf8());
+      ensureTouidIsMutable();
+      touid_.add(value.toStringUtf8());
     }
 
     public static final int PROTONUM_FIELD_NUMBER = 3;
-    private int protoNum_;
+    private int protonum_;
     /**
      * <pre>
      *消息类型
      * </pre>
      *
-     * <code>uint32 protoNum = 3;</code>
+     * <code>uint32 protonum = 3;</code>
      */
-    public int getProtoNum() {
-      return protoNum_;
+    public int getProtonum() {
+      return protonum_;
     }
     /**
      * <pre>
      *消息类型
      * </pre>
      *
-     * <code>uint32 protoNum = 3;</code>
+     * <code>uint32 protonum = 3;</code>
      */
-    private void setProtoNum(int value) {
+    private void setProtonum(int value) {
       
-      protoNum_ = value;
+      protonum_ = value;
     }
     /**
      * <pre>
      *消息类型
      * </pre>
      *
-     * <code>uint32 protoNum = 3;</code>
+     * <code>uint32 protonum = 3;</code>
      */
-    private void clearProtoNum() {
+    private void clearProtonum() {
       
-      protoNum_ = 0;
+      protonum_ = 0;
     }
 
     public static final int CONTENT_FIELD_NUMBER = 4;
@@ -412,54 +412,54 @@ public final class PrivateMessageProto {
       content_ = value.toStringUtf8();
     }
 
-    public static final int SENDTIIME_FIELD_NUMBER = 5;
-    private int sendtiime_;
+    public static final int SENDTIME_FIELD_NUMBER = 5;
+    private long sendtime_;
     /**
      * <pre>
      *发送时间
      * </pre>
      *
-     * <code>uint32 sendtiime = 5;</code>
+     * <code>uint64 sendtime = 5;</code>
      */
-    public int getSendtiime() {
-      return sendtiime_;
+    public long getSendtime() {
+      return sendtime_;
     }
     /**
      * <pre>
      *发送时间
      * </pre>
      *
-     * <code>uint32 sendtiime = 5;</code>
+     * <code>uint64 sendtime = 5;</code>
      */
-    private void setSendtiime(int value) {
+    private void setSendtime(long value) {
       
-      sendtiime_ = value;
+      sendtime_ = value;
     }
     /**
      * <pre>
      *发送时间
      * </pre>
      *
-     * <code>uint32 sendtiime = 5;</code>
+     * <code>uint64 sendtime = 5;</code>
      */
-    private void clearSendtiime() {
+    private void clearSendtime() {
       
-      sendtiime_ = 0;
+      sendtime_ = 0L;
     }
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      for (int i = 0; i < toUId_.size(); i++) {
-        output.writeString(2, toUId_.get(i));
+      for (int i = 0; i < touid_.size(); i++) {
+        output.writeString(2, touid_.get(i));
       }
-      if (protoNum_ != 0) {
-        output.writeUInt32(3, protoNum_);
+      if (protonum_ != 0) {
+        output.writeUInt32(3, protonum_);
       }
       if (!content_.isEmpty()) {
         output.writeString(4, getContent());
       }
-      if (sendtiime_ != 0) {
-        output.writeUInt32(5, sendtiime_);
+      if (sendtime_ != 0L) {
+        output.writeUInt64(5, sendtime_);
       }
       unknownFields.writeTo(output);
     }
@@ -471,24 +471,24 @@ public final class PrivateMessageProto {
       size = 0;
       {
         int dataSize = 0;
-        for (int i = 0; i < toUId_.size(); i++) {
+        for (int i = 0; i < touid_.size(); i++) {
           dataSize += com.google.protobuf.CodedOutputStream
-            .computeStringSizeNoTag(toUId_.get(i));
+            .computeStringSizeNoTag(touid_.get(i));
         }
         size += dataSize;
-        size += 1 * getToUIdList().size();
+        size += 1 * getTouidList().size();
       }
-      if (protoNum_ != 0) {
+      if (protonum_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeUInt32Size(3, protoNum_);
+          .computeUInt32Size(3, protonum_);
       }
       if (!content_.isEmpty()) {
         size += com.google.protobuf.CodedOutputStream
           .computeStringSize(4, getContent());
       }
-      if (sendtiime_ != 0) {
+      if (sendtime_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-          .computeUInt32Size(5, sendtiime_);
+          .computeUInt64Size(5, sendtime_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSerializedSize = size;
@@ -599,55 +599,55 @@ public final class PrivateMessageProto {
        *消息目标的userid
        * </pre>
        *
-       * <code>repeated string toUId = 2;</code>
+       * <code>repeated string touid = 2;</code>
        */
       public java.util.List<java.lang.String>
-          getToUIdList() {
+          getTouidList() {
         return java.util.Collections.unmodifiableList(
-            instance.getToUIdList());
+            instance.getTouidList());
       }
       /**
        * <pre>
        *消息目标的userid
        * </pre>
        *
-       * <code>repeated string toUId = 2;</code>
+       * <code>repeated string touid = 2;</code>
        */
-      public int getToUIdCount() {
-        return instance.getToUIdCount();
+      public int getTouidCount() {
+        return instance.getTouidCount();
       }
       /**
        * <pre>
        *消息目标的userid
        * </pre>
        *
-       * <code>repeated string toUId = 2;</code>
+       * <code>repeated string touid = 2;</code>
        */
-      public java.lang.String getToUId(int index) {
-        return instance.getToUId(index);
+      public java.lang.String getTouid(int index) {
+        return instance.getTouid(index);
       }
       /**
        * <pre>
        *消息目标的userid
        * </pre>
        *
-       * <code>repeated string toUId = 2;</code>
+       * <code>repeated string touid = 2;</code>
        */
       public com.google.protobuf.ByteString
-          getToUIdBytes(int index) {
-        return instance.getToUIdBytes(index);
+          getTouidBytes(int index) {
+        return instance.getTouidBytes(index);
       }
       /**
        * <pre>
        *消息目标的userid
        * </pre>
        *
-       * <code>repeated string toUId = 2;</code>
+       * <code>repeated string touid = 2;</code>
        */
-      public Builder setToUId(
+      public Builder setTouid(
           int index, java.lang.String value) {
         copyOnWrite();
-        instance.setToUId(index, value);
+        instance.setTouid(index, value);
         return this;
       }
       /**
@@ -655,12 +655,12 @@ public final class PrivateMessageProto {
        *消息目标的userid
        * </pre>
        *
-       * <code>repeated string toUId = 2;</code>
+       * <code>repeated string touid = 2;</code>
        */
-      public Builder addToUId(
+      public Builder addTouid(
           java.lang.String value) {
         copyOnWrite();
-        instance.addToUId(value);
+        instance.addTouid(value);
         return this;
       }
       /**
@@ -668,12 +668,12 @@ public final class PrivateMessageProto {
        *消息目标的userid
        * </pre>
        *
-       * <code>repeated string toUId = 2;</code>
+       * <code>repeated string touid = 2;</code>
        */
-      public Builder addAllToUId(
+      public Builder addAllTouid(
           java.lang.Iterable<java.lang.String> values) {
         copyOnWrite();
-        instance.addAllToUId(values);
+        instance.addAllTouid(values);
         return this;
       }
       /**
@@ -681,11 +681,11 @@ public final class PrivateMessageProto {
        *消息目标的userid
        * </pre>
        *
-       * <code>repeated string toUId = 2;</code>
+       * <code>repeated string touid = 2;</code>
        */
-      public Builder clearToUId() {
+      public Builder clearTouid() {
         copyOnWrite();
-        instance.clearToUId();
+        instance.clearTouid();
         return this;
       }
       /**
@@ -693,12 +693,12 @@ public final class PrivateMessageProto {
        *消息目标的userid
        * </pre>
        *
-       * <code>repeated string toUId = 2;</code>
+       * <code>repeated string touid = 2;</code>
        */
-      public Builder addToUIdBytes(
+      public Builder addTouidBytes(
           com.google.protobuf.ByteString value) {
         copyOnWrite();
-        instance.addToUIdBytes(value);
+        instance.addTouidBytes(value);
         return this;
       }
 
@@ -707,21 +707,21 @@ public final class PrivateMessageProto {
        *消息类型
        * </pre>
        *
-       * <code>uint32 protoNum = 3;</code>
+       * <code>uint32 protonum = 3;</code>
        */
-      public int getProtoNum() {
-        return instance.getProtoNum();
+      public int getProtonum() {
+        return instance.getProtonum();
       }
       /**
        * <pre>
        *消息类型
        * </pre>
        *
-       * <code>uint32 protoNum = 3;</code>
+       * <code>uint32 protonum = 3;</code>
        */
-      public Builder setProtoNum(int value) {
+      public Builder setProtonum(int value) {
         copyOnWrite();
-        instance.setProtoNum(value);
+        instance.setProtonum(value);
         return this;
       }
       /**
@@ -729,11 +729,11 @@ public final class PrivateMessageProto {
        *消息类型
        * </pre>
        *
-       * <code>uint32 protoNum = 3;</code>
+       * <code>uint32 protonum = 3;</code>
        */
-      public Builder clearProtoNum() {
+      public Builder clearProtonum() {
         copyOnWrite();
-        instance.clearProtoNum();
+        instance.clearProtonum();
         return this;
       }
 
@@ -802,21 +802,21 @@ public final class PrivateMessageProto {
        *发送时间
        * </pre>
        *
-       * <code>uint32 sendtiime = 5;</code>
+       * <code>uint64 sendtime = 5;</code>
        */
-      public int getSendtiime() {
-        return instance.getSendtiime();
+      public long getSendtime() {
+        return instance.getSendtime();
       }
       /**
        * <pre>
        *发送时间
        * </pre>
        *
-       * <code>uint32 sendtiime = 5;</code>
+       * <code>uint64 sendtime = 5;</code>
        */
-      public Builder setSendtiime(int value) {
+      public Builder setSendtime(long value) {
         copyOnWrite();
-        instance.setSendtiime(value);
+        instance.setSendtime(value);
         return this;
       }
       /**
@@ -824,11 +824,11 @@ public final class PrivateMessageProto {
        *发送时间
        * </pre>
        *
-       * <code>uint32 sendtiime = 5;</code>
+       * <code>uint64 sendtime = 5;</code>
        */
-      public Builder clearSendtiime() {
+      public Builder clearSendtime() {
         copyOnWrite();
-        instance.clearSendtiime();
+        instance.clearSendtime();
         return this;
       }
 
@@ -846,7 +846,7 @@ public final class PrivateMessageProto {
           return DEFAULT_INSTANCE;
         }
         case MAKE_IMMUTABLE: {
-          toUId_.makeImmutable();
+          touid_.makeImmutable();
           return null;
         }
         case NEW_BUILDER: {
@@ -855,13 +855,13 @@ public final class PrivateMessageProto {
         case VISIT: {
           Visitor visitor = (Visitor) arg0;
           protobuf.protos.PrivateMessageProto.UpStreamMessageProto other = (protobuf.protos.PrivateMessageProto.UpStreamMessageProto) arg1;
-          toUId_= visitor.visitList(toUId_, other.toUId_);
-          protoNum_ = visitor.visitInt(protoNum_ != 0, protoNum_,
-              other.protoNum_ != 0, other.protoNum_);
+          touid_= visitor.visitList(touid_, other.touid_);
+          protonum_ = visitor.visitInt(protonum_ != 0, protonum_,
+              other.protonum_ != 0, other.protonum_);
           content_ = visitor.visitString(!content_.isEmpty(), content_,
               !other.content_.isEmpty(), other.content_);
-          sendtiime_ = visitor.visitInt(sendtiime_ != 0, sendtiime_,
-              other.sendtiime_ != 0, other.sendtiime_);
+          sendtime_ = visitor.visitLong(sendtime_ != 0L, sendtime_,
+              other.sendtime_ != 0L, other.sendtime_);
           if (visitor == com.google.protobuf.GeneratedMessageLite.MergeFromVisitor
               .INSTANCE) {
             bitField0_ |= other.bitField0_;
@@ -892,16 +892,16 @@ public final class PrivateMessageProto {
                 }
                 case 18: {
                   java.lang.String s = input.readStringRequireUtf8();
-                  if (!toUId_.isModifiable()) {
-                    toUId_ =
-                        com.google.protobuf.GeneratedMessageLite.mutableCopy(toUId_);
+                  if (!touid_.isModifiable()) {
+                    touid_ =
+                        com.google.protobuf.GeneratedMessageLite.mutableCopy(touid_);
                   }
-                  toUId_.add(s);
+                  touid_.add(s);
                   break;
                 }
                 case 24: {
 
-                  protoNum_ = input.readUInt32();
+                  protonum_ = input.readUInt32();
                   break;
                 }
                 case 34: {
@@ -912,7 +912,7 @@ public final class PrivateMessageProto {
                 }
                 case 40: {
 
-                  sendtiime_ = input.readUInt32();
+                  sendtime_ = input.readUInt64();
                   break;
                 }
               }
@@ -977,18 +977,18 @@ public final class PrivateMessageProto {
      * 发送方uid
      * </pre>
      *
-     * <code>string fromUserId = 1;</code>
+     * <code>string fromuid = 1;</code>
      */
-    java.lang.String getFromUserId();
+    java.lang.String getFromuid();
     /**
      * <pre>
      * 发送方uid
      * </pre>
      *
-     * <code>string fromUserId = 1;</code>
+     * <code>string fromuid = 1;</code>
      */
     com.google.protobuf.ByteString
-        getFromUserIdBytes();
+        getFromuidBytes();
 
     /**
      * <pre>
@@ -1012,27 +1012,27 @@ public final class PrivateMessageProto {
      *如果是群消息那么指定群groupId
      * </pre>
      *
-     * <code>string groupId = 3;</code>
+     * <code>string groupuid = 3;</code>
      */
-    java.lang.String getGroupId();
+    java.lang.String getGroupuid();
     /**
      * <pre>
      *如果是群消息那么指定群groupId
      * </pre>
      *
-     * <code>string groupId = 3;</code>
+     * <code>string groupuid = 3;</code>
      */
     com.google.protobuf.ByteString
-        getGroupIdBytes();
+        getGroupuidBytes();
 
     /**
      * <pre>
      *消息类型
      * </pre>
      *
-     * <code>uint32 protoNum = 4;</code>
+     * <code>uint32 protonum = 4;</code>
      */
-    int getProtoNum();
+    int getProtonum();
 
     /**
      * <pre>
@@ -1048,7 +1048,7 @@ public final class PrivateMessageProto {
      *消息时间
      * </pre>
      *
-     * <code>int64 sendtime = 6;</code>
+     * <code>uint64 sendtime = 6;</code>
      */
     long getSendtime();
 
@@ -1057,18 +1057,18 @@ public final class PrivateMessageProto {
      *消息唯一标示
      * </pre>
      *
-     * <code>string msgId = 7;</code>
+     * <code>string msgid = 7;</code>
      */
-    java.lang.String getMsgId();
+    java.lang.String getMsgid();
     /**
      * <pre>
      *消息唯一标示
      * </pre>
      *
-     * <code>string msgId = 7;</code>
+     * <code>string msgid = 7;</code>
      */
     com.google.protobuf.ByteString
-        getMsgIdBytes();
+        getMsgidBytes();
   }
   /**
    * <pre>
@@ -1083,75 +1083,75 @@ public final class PrivateMessageProto {
       // @@protoc_insertion_point(message_implements:protobuf.protos.DownStreamMessageProto)
       DownStreamMessageProtoOrBuilder {
     private DownStreamMessageProto() {
-      fromUserId_ = "";
-      groupId_ = "";
+      fromuid_ = "";
+      groupuid_ = "";
       content_ = com.google.protobuf.ByteString.EMPTY;
-      msgId_ = "";
+      msgid_ = "";
     }
-    public static final int FROMUSERID_FIELD_NUMBER = 1;
-    private java.lang.String fromUserId_;
+    public static final int FROMUID_FIELD_NUMBER = 1;
+    private java.lang.String fromuid_;
     /**
      * <pre>
      * 发送方uid
      * </pre>
      *
-     * <code>string fromUserId = 1;</code>
+     * <code>string fromuid = 1;</code>
      */
-    public java.lang.String getFromUserId() {
-      return fromUserId_;
+    public java.lang.String getFromuid() {
+      return fromuid_;
     }
     /**
      * <pre>
      * 发送方uid
      * </pre>
      *
-     * <code>string fromUserId = 1;</code>
+     * <code>string fromuid = 1;</code>
      */
     public com.google.protobuf.ByteString
-        getFromUserIdBytes() {
-      return com.google.protobuf.ByteString.copyFromUtf8(fromUserId_);
+        getFromuidBytes() {
+      return com.google.protobuf.ByteString.copyFromUtf8(fromuid_);
     }
     /**
      * <pre>
      * 发送方uid
      * </pre>
      *
-     * <code>string fromUserId = 1;</code>
+     * <code>string fromuid = 1;</code>
      */
-    private void setFromUserId(
+    private void setFromuid(
         java.lang.String value) {
       if (value == null) {
     throw new NullPointerException();
   }
   
-      fromUserId_ = value;
+      fromuid_ = value;
     }
     /**
      * <pre>
      * 发送方uid
      * </pre>
      *
-     * <code>string fromUserId = 1;</code>
+     * <code>string fromuid = 1;</code>
      */
-    private void clearFromUserId() {
+    private void clearFromuid() {
       
-      fromUserId_ = getDefaultInstance().getFromUserId();
+      fromuid_ = getDefaultInstance().getFromuid();
     }
     /**
      * <pre>
      * 发送方uid
      * </pre>
      *
-     * <code>string fromUserId = 1;</code>
+     * <code>string fromuid = 1;</code>
      */
-    private void setFromUserIdBytes(
+    private void setFromuidBytes(
         com.google.protobuf.ByteString value) {
       if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
       
-      fromUserId_ = value.toStringUtf8();
+      fromuid_ = value.toStringUtf8();
     }
 
     public static final int TYPE_FIELD_NUMBER = 2;
@@ -1213,105 +1213,105 @@ public final class PrivateMessageProto {
       type_ = 0;
     }
 
-    public static final int GROUPID_FIELD_NUMBER = 3;
-    private java.lang.String groupId_;
+    public static final int GROUPUID_FIELD_NUMBER = 3;
+    private java.lang.String groupuid_;
     /**
      * <pre>
      *如果是群消息那么指定群groupId
      * </pre>
      *
-     * <code>string groupId = 3;</code>
+     * <code>string groupuid = 3;</code>
      */
-    public java.lang.String getGroupId() {
-      return groupId_;
+    public java.lang.String getGroupuid() {
+      return groupuid_;
     }
     /**
      * <pre>
      *如果是群消息那么指定群groupId
      * </pre>
      *
-     * <code>string groupId = 3;</code>
+     * <code>string groupuid = 3;</code>
      */
     public com.google.protobuf.ByteString
-        getGroupIdBytes() {
-      return com.google.protobuf.ByteString.copyFromUtf8(groupId_);
+        getGroupuidBytes() {
+      return com.google.protobuf.ByteString.copyFromUtf8(groupuid_);
     }
     /**
      * <pre>
      *如果是群消息那么指定群groupId
      * </pre>
      *
-     * <code>string groupId = 3;</code>
+     * <code>string groupuid = 3;</code>
      */
-    private void setGroupId(
+    private void setGroupuid(
         java.lang.String value) {
       if (value == null) {
     throw new NullPointerException();
   }
   
-      groupId_ = value;
+      groupuid_ = value;
     }
     /**
      * <pre>
      *如果是群消息那么指定群groupId
      * </pre>
      *
-     * <code>string groupId = 3;</code>
+     * <code>string groupuid = 3;</code>
      */
-    private void clearGroupId() {
+    private void clearGroupuid() {
       
-      groupId_ = getDefaultInstance().getGroupId();
+      groupuid_ = getDefaultInstance().getGroupuid();
     }
     /**
      * <pre>
      *如果是群消息那么指定群groupId
      * </pre>
      *
-     * <code>string groupId = 3;</code>
+     * <code>string groupuid = 3;</code>
      */
-    private void setGroupIdBytes(
+    private void setGroupuidBytes(
         com.google.protobuf.ByteString value) {
       if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
       
-      groupId_ = value.toStringUtf8();
+      groupuid_ = value.toStringUtf8();
     }
 
     public static final int PROTONUM_FIELD_NUMBER = 4;
-    private int protoNum_;
+    private int protonum_;
     /**
      * <pre>
      *消息类型
      * </pre>
      *
-     * <code>uint32 protoNum = 4;</code>
+     * <code>uint32 protonum = 4;</code>
      */
-    public int getProtoNum() {
-      return protoNum_;
+    public int getProtonum() {
+      return protonum_;
     }
     /**
      * <pre>
      *消息类型
      * </pre>
      *
-     * <code>uint32 protoNum = 4;</code>
+     * <code>uint32 protonum = 4;</code>
      */
-    private void setProtoNum(int value) {
+    private void setProtonum(int value) {
       
-      protoNum_ = value;
+      protonum_ = value;
     }
     /**
      * <pre>
      *消息类型
      * </pre>
      *
-     * <code>uint32 protoNum = 4;</code>
+     * <code>uint32 protonum = 4;</code>
      */
-    private void clearProtoNum() {
+    private void clearProtonum() {
       
-      protoNum_ = 0;
+      protonum_ = 0;
     }
 
     public static final int CONTENT_FIELD_NUMBER = 5;
@@ -1359,7 +1359,7 @@ public final class PrivateMessageProto {
      *消息时间
      * </pre>
      *
-     * <code>int64 sendtime = 6;</code>
+     * <code>uint64 sendtime = 6;</code>
      */
     public long getSendtime() {
       return sendtime_;
@@ -1369,7 +1369,7 @@ public final class PrivateMessageProto {
      *消息时间
      * </pre>
      *
-     * <code>int64 sendtime = 6;</code>
+     * <code>uint64 sendtime = 6;</code>
      */
     private void setSendtime(long value) {
       
@@ -1380,7 +1380,7 @@ public final class PrivateMessageProto {
      *消息时间
      * </pre>
      *
-     * <code>int64 sendtime = 6;</code>
+     * <code>uint64 sendtime = 6;</code>
      */
     private void clearSendtime() {
       
@@ -1388,93 +1388,93 @@ public final class PrivateMessageProto {
     }
 
     public static final int MSGID_FIELD_NUMBER = 7;
-    private java.lang.String msgId_;
+    private java.lang.String msgid_;
     /**
      * <pre>
      *消息唯一标示
      * </pre>
      *
-     * <code>string msgId = 7;</code>
+     * <code>string msgid = 7;</code>
      */
-    public java.lang.String getMsgId() {
-      return msgId_;
+    public java.lang.String getMsgid() {
+      return msgid_;
     }
     /**
      * <pre>
      *消息唯一标示
      * </pre>
      *
-     * <code>string msgId = 7;</code>
+     * <code>string msgid = 7;</code>
      */
     public com.google.protobuf.ByteString
-        getMsgIdBytes() {
-      return com.google.protobuf.ByteString.copyFromUtf8(msgId_);
+        getMsgidBytes() {
+      return com.google.protobuf.ByteString.copyFromUtf8(msgid_);
     }
     /**
      * <pre>
      *消息唯一标示
      * </pre>
      *
-     * <code>string msgId = 7;</code>
+     * <code>string msgid = 7;</code>
      */
-    private void setMsgId(
+    private void setMsgid(
         java.lang.String value) {
       if (value == null) {
     throw new NullPointerException();
   }
   
-      msgId_ = value;
+      msgid_ = value;
     }
     /**
      * <pre>
      *消息唯一标示
      * </pre>
      *
-     * <code>string msgId = 7;</code>
+     * <code>string msgid = 7;</code>
      */
-    private void clearMsgId() {
+    private void clearMsgid() {
       
-      msgId_ = getDefaultInstance().getMsgId();
+      msgid_ = getDefaultInstance().getMsgid();
     }
     /**
      * <pre>
      *消息唯一标示
      * </pre>
      *
-     * <code>string msgId = 7;</code>
+     * <code>string msgid = 7;</code>
      */
-    private void setMsgIdBytes(
+    private void setMsgidBytes(
         com.google.protobuf.ByteString value) {
       if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
       
-      msgId_ = value.toStringUtf8();
+      msgid_ = value.toStringUtf8();
     }
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (!fromUserId_.isEmpty()) {
-        output.writeString(1, getFromUserId());
+      if (!fromuid_.isEmpty()) {
+        output.writeString(1, getFromuid());
       }
       if (type_ != protobuf.protos.PrivateMessageProto.MsgType.PERSON.getNumber()) {
         output.writeEnum(2, type_);
       }
-      if (!groupId_.isEmpty()) {
-        output.writeString(3, getGroupId());
+      if (!groupuid_.isEmpty()) {
+        output.writeString(3, getGroupuid());
       }
-      if (protoNum_ != 0) {
-        output.writeUInt32(4, protoNum_);
+      if (protonum_ != 0) {
+        output.writeUInt32(4, protonum_);
       }
       if (!content_.isEmpty()) {
         output.writeBytes(5, content_);
       }
       if (sendtime_ != 0L) {
-        output.writeInt64(6, sendtime_);
+        output.writeUInt64(6, sendtime_);
       }
-      if (!msgId_.isEmpty()) {
-        output.writeString(7, getMsgId());
+      if (!msgid_.isEmpty()) {
+        output.writeString(7, getMsgid());
       }
       unknownFields.writeTo(output);
     }
@@ -1484,21 +1484,21 @@ public final class PrivateMessageProto {
       if (size != -1) return size;
 
       size = 0;
-      if (!fromUserId_.isEmpty()) {
+      if (!fromuid_.isEmpty()) {
         size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(1, getFromUserId());
+          .computeStringSize(1, getFromuid());
       }
       if (type_ != protobuf.protos.PrivateMessageProto.MsgType.PERSON.getNumber()) {
         size += com.google.protobuf.CodedOutputStream
           .computeEnumSize(2, type_);
       }
-      if (!groupId_.isEmpty()) {
+      if (!groupuid_.isEmpty()) {
         size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(3, getGroupId());
+          .computeStringSize(3, getGroupuid());
       }
-      if (protoNum_ != 0) {
+      if (protonum_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeUInt32Size(4, protoNum_);
+          .computeUInt32Size(4, protonum_);
       }
       if (!content_.isEmpty()) {
         size += com.google.protobuf.CodedOutputStream
@@ -1506,11 +1506,11 @@ public final class PrivateMessageProto {
       }
       if (sendtime_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(6, sendtime_);
+          .computeUInt64Size(6, sendtime_);
       }
-      if (!msgId_.isEmpty()) {
+      if (!msgid_.isEmpty()) {
         size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(7, getMsgId());
+          .computeStringSize(7, getMsgid());
       }
       size += unknownFields.getSerializedSize();
       memoizedSerializedSize = size;
@@ -1621,33 +1621,33 @@ public final class PrivateMessageProto {
        * 发送方uid
        * </pre>
        *
-       * <code>string fromUserId = 1;</code>
+       * <code>string fromuid = 1;</code>
        */
-      public java.lang.String getFromUserId() {
-        return instance.getFromUserId();
+      public java.lang.String getFromuid() {
+        return instance.getFromuid();
       }
       /**
        * <pre>
        * 发送方uid
        * </pre>
        *
-       * <code>string fromUserId = 1;</code>
+       * <code>string fromuid = 1;</code>
        */
       public com.google.protobuf.ByteString
-          getFromUserIdBytes() {
-        return instance.getFromUserIdBytes();
+          getFromuidBytes() {
+        return instance.getFromuidBytes();
       }
       /**
        * <pre>
        * 发送方uid
        * </pre>
        *
-       * <code>string fromUserId = 1;</code>
+       * <code>string fromuid = 1;</code>
        */
-      public Builder setFromUserId(
+      public Builder setFromuid(
           java.lang.String value) {
         copyOnWrite();
-        instance.setFromUserId(value);
+        instance.setFromuid(value);
         return this;
       }
       /**
@@ -1655,11 +1655,11 @@ public final class PrivateMessageProto {
        * 发送方uid
        * </pre>
        *
-       * <code>string fromUserId = 1;</code>
+       * <code>string fromuid = 1;</code>
        */
-      public Builder clearFromUserId() {
+      public Builder clearFromuid() {
         copyOnWrite();
-        instance.clearFromUserId();
+        instance.clearFromuid();
         return this;
       }
       /**
@@ -1667,12 +1667,12 @@ public final class PrivateMessageProto {
        * 发送方uid
        * </pre>
        *
-       * <code>string fromUserId = 1;</code>
+       * <code>string fromuid = 1;</code>
        */
-      public Builder setFromUserIdBytes(
+      public Builder setFromuidBytes(
           com.google.protobuf.ByteString value) {
         copyOnWrite();
-        instance.setFromUserIdBytes(value);
+        instance.setFromuidBytes(value);
         return this;
       }
 
@@ -1738,33 +1738,33 @@ public final class PrivateMessageProto {
        *如果是群消息那么指定群groupId
        * </pre>
        *
-       * <code>string groupId = 3;</code>
+       * <code>string groupuid = 3;</code>
        */
-      public java.lang.String getGroupId() {
-        return instance.getGroupId();
+      public java.lang.String getGroupuid() {
+        return instance.getGroupuid();
       }
       /**
        * <pre>
        *如果是群消息那么指定群groupId
        * </pre>
        *
-       * <code>string groupId = 3;</code>
+       * <code>string groupuid = 3;</code>
        */
       public com.google.protobuf.ByteString
-          getGroupIdBytes() {
-        return instance.getGroupIdBytes();
+          getGroupuidBytes() {
+        return instance.getGroupuidBytes();
       }
       /**
        * <pre>
        *如果是群消息那么指定群groupId
        * </pre>
        *
-       * <code>string groupId = 3;</code>
+       * <code>string groupuid = 3;</code>
        */
-      public Builder setGroupId(
+      public Builder setGroupuid(
           java.lang.String value) {
         copyOnWrite();
-        instance.setGroupId(value);
+        instance.setGroupuid(value);
         return this;
       }
       /**
@@ -1772,11 +1772,11 @@ public final class PrivateMessageProto {
        *如果是群消息那么指定群groupId
        * </pre>
        *
-       * <code>string groupId = 3;</code>
+       * <code>string groupuid = 3;</code>
        */
-      public Builder clearGroupId() {
+      public Builder clearGroupuid() {
         copyOnWrite();
-        instance.clearGroupId();
+        instance.clearGroupuid();
         return this;
       }
       /**
@@ -1784,12 +1784,12 @@ public final class PrivateMessageProto {
        *如果是群消息那么指定群groupId
        * </pre>
        *
-       * <code>string groupId = 3;</code>
+       * <code>string groupuid = 3;</code>
        */
-      public Builder setGroupIdBytes(
+      public Builder setGroupuidBytes(
           com.google.protobuf.ByteString value) {
         copyOnWrite();
-        instance.setGroupIdBytes(value);
+        instance.setGroupuidBytes(value);
         return this;
       }
 
@@ -1798,21 +1798,21 @@ public final class PrivateMessageProto {
        *消息类型
        * </pre>
        *
-       * <code>uint32 protoNum = 4;</code>
+       * <code>uint32 protonum = 4;</code>
        */
-      public int getProtoNum() {
-        return instance.getProtoNum();
+      public int getProtonum() {
+        return instance.getProtonum();
       }
       /**
        * <pre>
        *消息类型
        * </pre>
        *
-       * <code>uint32 protoNum = 4;</code>
+       * <code>uint32 protonum = 4;</code>
        */
-      public Builder setProtoNum(int value) {
+      public Builder setProtonum(int value) {
         copyOnWrite();
-        instance.setProtoNum(value);
+        instance.setProtonum(value);
         return this;
       }
       /**
@@ -1820,11 +1820,11 @@ public final class PrivateMessageProto {
        *消息类型
        * </pre>
        *
-       * <code>uint32 protoNum = 4;</code>
+       * <code>uint32 protonum = 4;</code>
        */
-      public Builder clearProtoNum() {
+      public Builder clearProtonum() {
         copyOnWrite();
-        instance.clearProtoNum();
+        instance.clearProtonum();
         return this;
       }
 
@@ -1868,7 +1868,7 @@ public final class PrivateMessageProto {
        *消息时间
        * </pre>
        *
-       * <code>int64 sendtime = 6;</code>
+       * <code>uint64 sendtime = 6;</code>
        */
       public long getSendtime() {
         return instance.getSendtime();
@@ -1878,7 +1878,7 @@ public final class PrivateMessageProto {
        *消息时间
        * </pre>
        *
-       * <code>int64 sendtime = 6;</code>
+       * <code>uint64 sendtime = 6;</code>
        */
       public Builder setSendtime(long value) {
         copyOnWrite();
@@ -1890,7 +1890,7 @@ public final class PrivateMessageProto {
        *消息时间
        * </pre>
        *
-       * <code>int64 sendtime = 6;</code>
+       * <code>uint64 sendtime = 6;</code>
        */
       public Builder clearSendtime() {
         copyOnWrite();
@@ -1903,33 +1903,33 @@ public final class PrivateMessageProto {
        *消息唯一标示
        * </pre>
        *
-       * <code>string msgId = 7;</code>
+       * <code>string msgid = 7;</code>
        */
-      public java.lang.String getMsgId() {
-        return instance.getMsgId();
+      public java.lang.String getMsgid() {
+        return instance.getMsgid();
       }
       /**
        * <pre>
        *消息唯一标示
        * </pre>
        *
-       * <code>string msgId = 7;</code>
+       * <code>string msgid = 7;</code>
        */
       public com.google.protobuf.ByteString
-          getMsgIdBytes() {
-        return instance.getMsgIdBytes();
+          getMsgidBytes() {
+        return instance.getMsgidBytes();
       }
       /**
        * <pre>
        *消息唯一标示
        * </pre>
        *
-       * <code>string msgId = 7;</code>
+       * <code>string msgid = 7;</code>
        */
-      public Builder setMsgId(
+      public Builder setMsgid(
           java.lang.String value) {
         copyOnWrite();
-        instance.setMsgId(value);
+        instance.setMsgid(value);
         return this;
       }
       /**
@@ -1937,11 +1937,11 @@ public final class PrivateMessageProto {
        *消息唯一标示
        * </pre>
        *
-       * <code>string msgId = 7;</code>
+       * <code>string msgid = 7;</code>
        */
-      public Builder clearMsgId() {
+      public Builder clearMsgid() {
         copyOnWrite();
-        instance.clearMsgId();
+        instance.clearMsgid();
         return this;
       }
       /**
@@ -1949,12 +1949,12 @@ public final class PrivateMessageProto {
        *消息唯一标示
        * </pre>
        *
-       * <code>string msgId = 7;</code>
+       * <code>string msgid = 7;</code>
        */
-      public Builder setMsgIdBytes(
+      public Builder setMsgidBytes(
           com.google.protobuf.ByteString value) {
         copyOnWrite();
-        instance.setMsgIdBytes(value);
+        instance.setMsgidBytes(value);
         return this;
       }
 
@@ -1980,19 +1980,19 @@ public final class PrivateMessageProto {
         case VISIT: {
           Visitor visitor = (Visitor) arg0;
           protobuf.protos.PrivateMessageProto.DownStreamMessageProto other = (protobuf.protos.PrivateMessageProto.DownStreamMessageProto) arg1;
-          fromUserId_ = visitor.visitString(!fromUserId_.isEmpty(), fromUserId_,
-              !other.fromUserId_.isEmpty(), other.fromUserId_);
+          fromuid_ = visitor.visitString(!fromuid_.isEmpty(), fromuid_,
+              !other.fromuid_.isEmpty(), other.fromuid_);
           type_ = visitor.visitInt(type_ != 0, type_,    other.type_ != 0, other.type_);
-          groupId_ = visitor.visitString(!groupId_.isEmpty(), groupId_,
-              !other.groupId_.isEmpty(), other.groupId_);
-          protoNum_ = visitor.visitInt(protoNum_ != 0, protoNum_,
-              other.protoNum_ != 0, other.protoNum_);
+          groupuid_ = visitor.visitString(!groupuid_.isEmpty(), groupuid_,
+              !other.groupuid_.isEmpty(), other.groupuid_);
+          protonum_ = visitor.visitInt(protonum_ != 0, protonum_,
+              other.protonum_ != 0, other.protonum_);
           content_ = visitor.visitByteString(content_ != com.google.protobuf.ByteString.EMPTY, content_,
               other.content_ != com.google.protobuf.ByteString.EMPTY, other.content_);
           sendtime_ = visitor.visitLong(sendtime_ != 0L, sendtime_,
               other.sendtime_ != 0L, other.sendtime_);
-          msgId_ = visitor.visitString(!msgId_.isEmpty(), msgId_,
-              !other.msgId_.isEmpty(), other.msgId_);
+          msgid_ = visitor.visitString(!msgid_.isEmpty(), msgid_,
+              !other.msgid_.isEmpty(), other.msgid_);
           if (visitor == com.google.protobuf.GeneratedMessageLite.MergeFromVisitor
               .INSTANCE) {
           }
@@ -2023,7 +2023,7 @@ public final class PrivateMessageProto {
                 case 10: {
                   java.lang.String s = input.readStringRequireUtf8();
 
-                  fromUserId_ = s;
+                  fromuid_ = s;
                   break;
                 }
                 case 16: {
@@ -2035,12 +2035,12 @@ public final class PrivateMessageProto {
                 case 26: {
                   java.lang.String s = input.readStringRequireUtf8();
 
-                  groupId_ = s;
+                  groupuid_ = s;
                   break;
                 }
                 case 32: {
 
-                  protoNum_ = input.readUInt32();
+                  protonum_ = input.readUInt32();
                   break;
                 }
                 case 42: {
@@ -2050,13 +2050,13 @@ public final class PrivateMessageProto {
                 }
                 case 48: {
 
-                  sendtime_ = input.readInt64();
+                  sendtime_ = input.readUInt64();
                   break;
                 }
                 case 58: {
                   java.lang.String s = input.readStringRequireUtf8();
 
-                  msgId_ = s;
+                  msgid_ = s;
                   break;
                 }
               }

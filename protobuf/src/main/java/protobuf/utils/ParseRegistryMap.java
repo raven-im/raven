@@ -1,6 +1,5 @@
 package protobuf.utils;
 
-import protobuf.analysis.ParseMap;
 import protobuf.protos.Auth;
 import protobuf.protos.PrivateMessageProto;
 

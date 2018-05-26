@@ -26,7 +26,7 @@ public final class NettyConnectionManager implements ConnectionManager {
     }
 
     @Override
-    public Connection get(Channel channel) {
+    public Connection getConnection(Channel channel) {
         return connections.get(channel.id().asShortText());
     }
 
@@ -36,7 +36,7 @@ public final class NettyConnectionManager implements ConnectionManager {
     }
 
     @Override
-    public void add(Connection connection) {
+    public void addConnection(Connection connection) {
         connections.putIfAbsent(connection.getChannel().id().asShortText(), connection);
     }
 
@@ -57,15 +57,15 @@ public final class NettyConnectionManager implements ConnectionManager {
     }
 
     @Override
-    public void addUid(String uid, Channel channel) {
+    public void addUid2Connection(String uid, Channel channel) {
         if (uidConnections.get(uid) == null) {
             List<Connection> list = new ArrayList<>();
-            list.add(get(channel).setUid(uid));
+            list.add(getConnection(channel).setUid(uid));
             uidConnections.put(uid, list);
             return;
         }
         List<Connection> list = uidConnections.get(uid);
-        list.add(get(channel).setUid(uid));
+        list.add(getConnection(channel).setUid(uid));
     }
 
     private NettyConnectionManager() {

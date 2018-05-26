@@ -14,7 +14,7 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import java.util.HashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import protobuf.analysis.ParseMap;
+import protobuf.utils.ParseMap;
 
 public class AuthServerHandler extends SimpleChannelInboundHandler<Message> {
 

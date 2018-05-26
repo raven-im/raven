@@ -6,6 +6,8 @@ option optimize_for = LITE_RUNTIME; //SPEED;
 
 message Login {
   string token = 1; // 标识
+  uint32 protonum = 2; //消息类型
+
 }
 
 /*
@@ -14,7 +16,8 @@ code：
 400 -- error
 */
 message Response {
-  int32 code = 1; //返回码
-  string desc = 2; //描述
+  uint32 protonum = 1; //消息类型
+  int32 code = 2; //返回码
+  string msg = 3; //描述
 }
 

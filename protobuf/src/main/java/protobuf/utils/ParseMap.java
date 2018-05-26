@@ -1,4 +1,4 @@
-package protobuf.analysis;
+package protobuf.utils;
 
 import com.google.protobuf.MessageLite;
 import java.io.IOException;
@@ -19,7 +19,6 @@ public class ParseMap {
 
         MessageLite process(byte[] bytes) throws IOException;
     }
-
 
     public static void register(int ptoNum, ParseMap.Parsing parse, Class<?> cla) {
         if (parseMap.get(ptoNum) == null) {
@@ -42,7 +41,6 @@ public class ParseMap {
             logger.error("UnKnown Protocol Num: {}", ptoNum);
         }
         MessageLite msg = parser.process(bytes);
-
         return msg;
     }
 

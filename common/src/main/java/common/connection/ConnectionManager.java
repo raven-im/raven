@@ -5,11 +5,11 @@ import java.util.List;
 
 public interface ConnectionManager {
 
-    Connection get(Channel channel);
+    Connection getConnection(Channel channel);
 
     Connection removeAndClose(Channel channel);
 
-    void add(Connection connection);
+    void addConnection(Connection connection);
 
     int getConnNum();
 
@@ -17,5 +17,5 @@ public interface ConnectionManager {
 
     List<Connection> getConnectionByUid(String uid);
 
-    void addUid(String uid, Channel channel);
+    void addUid2Connection(String uid, Channel channel);
 }

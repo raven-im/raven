@@ -6,10 +6,10 @@ option optimize_for = LITE_RUNTIME; //SPEED;
 
 //客户端发送单聊消息
 message UpStreamMessageProto {
-  repeated string toUId = 2; //消息目标的userid
-  uint32 protoNum = 3; //消息类型
+  repeated string touid = 2; //消息目标的userid
+  uint32 protonum = 3; //消息类型
   string content = 4; //内容
-  uint32 sendtiime = 5; //发送时间
+  uint64 sendtime = 5; //发送时间
 }
 
 //消息类型
@@ -20,13 +20,13 @@ enum MsgType {
 
 //服务端发送消息
 message DownStreamMessageProto {
-  string fromUserId = 1; // 发送方uid
+  string fromuid = 1; // 发送方uid
   MsgType type = 2; //消息类型
-  string groupId = 3; //如果是群消息那么指定群groupId
-  uint32 protoNum = 4; //消息类型
+  string groupuid = 3; //如果是群消息那么指定群groupId
+  uint32 protonum = 4; //消息类型
   bytes content = 5; //内容
-  int64 sendtime = 6; //消息时间
-  string msgId = 7; //消息唯一标示
+  uint64 sendtime = 6; //消息时间
+  string msgid = 7; //消息唯一标示
 }
 
 

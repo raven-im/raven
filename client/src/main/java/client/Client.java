@@ -1,15 +1,18 @@
 package client;
 
 import io.netty.bootstrap.Bootstrap;
-import io.netty.channel.*;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelOption;
+import io.netty.channel.ChannelPipeline;
+import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import protobuf.utils.ParseRegistryMap;
 import protobuf.code.MessageDecoder;
 import protobuf.code.MessageEncoder;
+import protobuf.utils.ParseRegistryMap;
 
 /**
  * Created by Dell on 2016/2/15.
@@ -17,10 +20,9 @@ import protobuf.code.MessageEncoder;
  */
 public class Client {
 
-    static final String HOST = System.getProperty("host", "127.0.0.1");
-    static final int PORT = Integer.parseInt(System.getProperty("port", "9090"));
-    public static final int clientNum = Integer.parseInt(System.getProperty("size", "10"));
-    public static final int frequency = 100;  //ms
+    private static final String HOST = "127.0.0.1";
+    private static final int PORT = 7070;
+    private static final int clientNum = 10;
 
     private static final Logger logger = LoggerFactory.getLogger(Client.class);
 
@@ -43,26 +45,23 @@ public class Client {
                         p.addLast(new ClientHandler());
                     }
                 });
-        // Start the client.
+        // Start the client
+        ParseRegistryMap.initRegistry();
         for (int i = 1; i <= clientNum; i++) {
             startConnection(b, i);
         }
     }
 
     private static void startConnection(Bootstrap b, int index) {
-        b.connect(HOST, PORT).addListener(new ChannelFutureListener() {
-            @Override
-            public void operationComplete(ChannelFuture future)
-                    throws Exception {
-                if (future.isSuccess()) {
-                    //init registry
-                    ParseRegistryMap.initRegistry();
-                    logger.info("Client[{}] connected Gate Successed...", index);
-                } else {
-                    logger.error("Client[{}] connected Gate Failed", index);
-                }
+        b.connect(HOST, PORT).addListener(future -> {
+            if (future.isSuccess()) {
+                //init registry
+                logger.info("Client:{} connected MessageServer Successed...", index);
+            } else {
+                logger.error("Client:{} connected MessageServer Failed", index);
             }
         });
     }
+
 }
 

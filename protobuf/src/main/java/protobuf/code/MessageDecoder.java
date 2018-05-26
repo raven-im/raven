@@ -8,7 +8,7 @@ import io.netty.handler.codec.ByteToMessageDecoder;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import protobuf.analysis.ParseMap;
+import protobuf.utils.ParseMap;
 
 
 public class MessageDecoder extends ByteToMessageDecoder {
@@ -30,8 +30,6 @@ public class MessageDecoder extends ByteToMessageDecoder {
             return;
         }
         if (length > in.readableBytes() - 4) {
-            //注意！编解码器加这种in.readInt()日志，在大并发的情况下很可能会抛数组越界异常！
-            //logger.error("message received is incomplete,ptoNum:{}, length:{}, readable:{}", in.readInt(), length, in.readableBytes());
             in.resetReaderIndex();
             return;
         }
@@ -39,13 +37,11 @@ public class MessageDecoder extends ByteToMessageDecoder {
         ByteBuf byteBuf = Unpooled.buffer(length);
         in.readBytes(byteBuf);
         try {
-            /* 解密消息体
-            ThreeDES des = ctx.channel().attr(ClientAttr.ENCRYPT).get();
-            byte[] bareByte = des.decrypt(inByte);*/
             byte[] body = byteBuf.array();
             MessageLite msg = ParseMap.getMessage(ptoNum, body);
             out.add(msg);
-            logger.info("GateServer Received Message: content length {}, ptoNum: {}", length,
+            logger.info("Received Message remoteAddress:{}, content:{}, ptoNum:{}",
+                    ctx.channel().remoteAddress(), msg.toString(),
                     ptoNum);
         } catch (Exception e) {
             logger.error("{},decode failed:{}", ctx.channel().remoteAddress(), e);

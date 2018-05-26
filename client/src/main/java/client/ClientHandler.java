@@ -1,130 +1,75 @@
 package client;
 
-import com.google.protobuf.Message;
+import com.google.protobuf.MessageLite;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import protobuf.protos.Auth;
 import protobuf.protos.PrivateMessageProto;
+import protobuf.utils.ProtoConstants;
 
 /**
  * Created by Dell on 2016/2/15.
  * 模拟客户端聊天：自己给自己发消息
  */
-public class ClientHandler extends SimpleChannelInboundHandler<Message> {
+public class ClientHandler extends SimpleChannelInboundHandler<MessageLite> {
 
-    public static ChannelHandlerContext _gateClientConnection;
+    private ChannelHandlerContext messageConnectionCtx;
 
     private static final Logger logger = LoggerFactory.getLogger(ClientHandler.class);
-    String _userId = "";
-    boolean _verify = false;
-    private static int count = 0;
-
-    public static AtomicLong increased = new AtomicLong(1);
+    private String uid = "";
+    private static AtomicLong increased = new AtomicLong(1);
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws IOException {
-        _gateClientConnection = ctx;
-        String passwd = "123";
-        _userId = Long.toString(increased.getAndIncrement());
-        sendCRegister(ctx, _userId, passwd);
-        sendCLogin(ctx, _userId, passwd);
+        messageConnectionCtx = ctx;
+        uid = Long.toString(increased.getAndIncrement());
+        sendLogin(ctx, uid);
     }
 
-    void sendCRegister(ChannelHandlerContext ctx, String username, String passwd) {
-        Auth.Register.Builder cb = Auth.Register.newBuilder();
-        cb.setUsername(username);
-        cb.setPasswd(passwd);
-        ByteBuf byteBuf = Utils.pack2Client(cb.build());
+    private void sendLogin(ChannelHandlerContext ctx, String uid) {
+        Auth.Login.Builder login = Auth.Login.newBuilder();
+        login.setToken(uid);
+        login.setProtonum(ProtoConstants.LOGIN);
+        ByteBuf byteBuf = Utils.pack2Client(login.build());
         ctx.writeAndFlush(byteBuf);
-        logger.info("send CRegister userid:{}", _userId);
-    }
-
-    void sendCLogin(ChannelHandlerContext ctx, String username, String passwd) {
-        Auth.Login.Builder loginInfo = Auth.Login.newBuilder();
-        loginInfo.setUsername(username);
-        loginInfo.setPasswd(passwd);
-        loginInfo.setPlatform("ios");
-        loginInfo.setAppVersion("1.0.0");
-        ByteBuf byteBuf = Utils.pack2Client(loginInfo.build());
-        ctx.writeAndFlush(byteBuf);
-        logger.info("send CLogin userid:{}", _userId);
     }
 
     @Override
-    protected void channelRead0(ChannelHandlerContext channelHandlerContext, Message msg)
+    protected void channelRead0(ChannelHandlerContext channelHandlerContext, MessageLite msg)
             throws Exception {
-        logger.info("received message: {}", msg.getClass());
         if (msg instanceof Auth.Response) {
-            Auth.Response sp = (Auth.Response) msg;
-            int code = sp.getCode();
-            String desc = sp.getDesc();
-            switch (code) {
-                //登录成功
-                case Common.VERYFY_PASSED:
-                    logger.info("Login succeed, description: {}", desc);
-                    _verify = true;
-                    break;
-                //登录账号不存在
-                case Common.ACCOUNT_INEXIST:
-                    logger.info("Account inexsit, description: {}", desc);
-                    break;
-                //登录账号或密码错误
-                case Common.VERYFY_ERROR:
-                    logger.info("Account or passwd Error, description: {}", desc);
-                    break;
-                //账号已被注册
-                case Common.ACCOUNT_DUMPLICATED:
-                    logger.info("Dumplicated registry, description: {}", desc);
-                    break;
-                //注册成功
-                case Common.REGISTER_OK:
-                    logger.info("User registerd successd, description: {}", desc);
-                    break;
-                case Common.Msg_SendSuccess:
-                    logger.info("Chat Message Send Successed, description: {}", desc);
-                default:
-                    logger.info("Unknow code: {}", code);
-            }
-        } else if (msg instanceof PrivateMessageProto.PrivateMessage) {
-            logger.info("{} receiced chat message: {}.Total:{}", _userId,
-                    ((PrivateMessageProto.PrivateMessage) msg).getContent(), ++count);
-        }
-
-        //这样设置的原因是，防止两方都阻塞在输入上
-        if (_verify) {
-            sendMessage();
-            Thread.sleep(Client.frequency);
+            Thread.sleep(2000);
+            sendPrivateMessage();
         }
     }
 
-    void sendMessage() {
-//        logger.info("WelCome To Face2face Chat Room, You Can Say Something Now: ");
-//        Scanner sc = new Scanner(System.in);
-//        String content = sc.nextLine();
-        String content = "Hello, I am Tom!";
-//        logger.info("{} Send Message: {} to {}", _userId, content, _friend);
-        PrivateMessageProto.PrivateMessage.Builder cp = PrivateMessageProto.PrivateMessage
+    private void sendPrivateMessage() {
+        String content = "Hello World!";
+        PrivateMessageProto.UpStreamMessageProto.Builder msg = PrivateMessageProto.UpStreamMessageProto
                 .newBuilder();
-        cp.setContent(content);
-        cp.setFromUId(_userId);
-        cp.setToUId(_userId);
-        ByteBuf byteBuf = Utils.pack2Client(cp.build());
-        _gateClientConnection.writeAndFlush(byteBuf);
+        msg.setContent(content);
+        List<String> uids = new ArrayList<>();
+        uids.add(String.valueOf((int)(Math.random()*10)%10+1));
+        msg.addAllTouid(uids);
+        msg.setProtonum(ProtoConstants.UPPRIVATEMESSAGE);
+        msg.setSendtime(System.currentTimeMillis());
+        ByteBuf byteBuf = Utils.pack2Client(msg.build());
+        messageConnectionCtx.channel().writeAndFlush(byteBuf);
     }
 
     @Override
     public void channelReadComplete(ChannelHandlerContext ctx) {
-        //ctx.flush();
     }
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-        // Close the connection when an exception is raised.
         cause.printStackTrace();
         ctx.close();
     }

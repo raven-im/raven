@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import protobuf.utils.MessageProtoNum;
 import protobuf.utils.Utils;
-import protobuf.analysis.ParseMap;
+import protobuf.utils.ParseMap;
 import protobuf.protos.PrivateMessageProto;
 
 /**

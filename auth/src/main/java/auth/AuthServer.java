@@ -12,7 +12,7 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import java.net.InetSocketAddress;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import protobuf.ParseRegistryMap;
+import protobuf.utils.ParseRegistryMap;
 import protobuf.code.MessageDecoder;
 import protobuf.code.MessageEncoder;
 

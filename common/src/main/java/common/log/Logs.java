@@ -1,4 +1,4 @@
-package tools.log;
+package common.log;
 
 import static ch.qos.logback.classic.util.ContextInitializer.CONFIG_FILE_PROPERTY;
 
@@ -18,7 +18,7 @@ public interface Logs {
         if (logInit) {
             return true;
         }
-        System.setProperty(CONFIG_FILE_PROPERTY, "tools/src/main/resources/logback.xml");
+        System.setProperty(CONFIG_FILE_PROPERTY, "common/src/main/resources/logback.xml");
         return true;
     }
 

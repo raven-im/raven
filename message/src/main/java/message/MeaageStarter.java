@@ -1,26 +1,17 @@
 package message;
 
-/**
- * Created by Dell on 2016/2/2.
- */
-
+import common.redis.RedisPoolManager;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
-/**
- * Created by Qzy on 2016/1/28.
- */
-
 public class MeaageStarter {
 
     private static final Logger logger = LoggerFactory.getLogger(MeaageStarter.class);
     private static String cfg = "message/src/main/resources/message.properties";
     public static RedisPoolManager redisPoolManager;
-    public static int workNum = 1;
 
     public static void main(String[] args) throws Exception {
         configAndStart();

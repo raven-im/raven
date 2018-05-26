@@ -29,7 +29,7 @@ public class MessageEncoder extends MessageToByteEncoder<MessageLite> {
         buf.writeInt(ptoNum);
         buf.writeBytes(bytes);
         out.writeBytes(buf);
-        logger.info("GateServer Send Message, remoteAddress: {}, content length {}, ptoNum: {}",
+        logger.info("Send Message, remoteAddress: {}, content length {}, ptoNum: {}",
                 ctx.channel().remoteAddress(), length, ptoNum);
 
     }

@@ -10,10 +10,11 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import java.net.InetSocketAddress;
 import message.handler.BindUserHandler;
+import message.handler.PrivateMessageHandler;
 import message.utils.NettyConnectionManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import protobuf.ParseRegistryMap;
+import protobuf.utils.ParseRegistryMap;
 import protobuf.code.MessageDecoder;
 import protobuf.code.MessageEncoder;
 
@@ -38,7 +39,9 @@ public class MessageServer {
                         pipeline.addLast("MessageDecoder", new MessageDecoder());
                         pipeline.addLast("MessageEncoder", new MessageEncoder());
                         pipeline.addLast("MessageServerHandler",
-                                new BindUserHandler(new NettyConnectionManager()));
+                                new BindUserHandler(NettyConnectionManager.getInstance()));
+                        pipeline.addLast("PrivateMessageHandler",
+                                new PrivateMessageHandler(NettyConnectionManager.getInstance()));
                     }
                 });
         bindConnectionOptions(bootstrap);
@@ -59,6 +62,5 @@ public class MessageServer {
         bootstrap.childOption(ChannelOption.SO_REUSEADDR, true); //调试用
         bootstrap.childOption(ChannelOption.SO_KEEPALIVE, true); //心跳机制暂时使用TCP选项，之后再自己实现
     }
-
 
 }

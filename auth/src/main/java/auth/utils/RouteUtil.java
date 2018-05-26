@@ -3,8 +3,8 @@ package auth.utils;
 import auth.handler.AuthServerHandler;
 import com.google.protobuf.Internal;
 import io.netty.buffer.ByteBuf;
-import protobuf.MessageProtoNum;
-import protobuf.Utils;
+import protobuf.utils.MessageProtoNum;
+import protobuf.utils.Utils;
 import protobuf.protos.Auth;
 
 /**

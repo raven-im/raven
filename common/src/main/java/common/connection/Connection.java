@@ -1,18 +1,20 @@
-package message.utils;
+package common.connection;
 
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 
-
+/**
+ * 连接抽象
+ */
 public interface Connection {
 
-    byte STATUS_NEW = 0;
-    byte STATUS_CONNECTED = 1;
-    byte STATUS_DISCONNECTED = 2;
+    String getUid();
 
     void init(Channel channel);
 
     String getId();
+
+    Connection setUid(String uid);
 
     ChannelFuture close();
 

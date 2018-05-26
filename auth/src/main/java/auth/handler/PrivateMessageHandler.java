@@ -8,8 +8,8 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import protobuf.MessageProtoNum;
-import protobuf.Utils;
+import protobuf.utils.MessageProtoNum;
+import protobuf.utils.Utils;
 import protobuf.protos.PrivateMessageProto;
 
 /**

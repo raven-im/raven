@@ -1,4 +1,4 @@
-package protobuf;
+package client;
 
 import com.google.protobuf.MessageLite;
 import io.netty.buffer.ByteBuf;

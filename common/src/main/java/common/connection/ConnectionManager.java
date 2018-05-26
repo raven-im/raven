@@ -1,4 +1,4 @@
-package message.utils;
+package common.connection;
 
 import io.netty.channel.Channel;
 import java.util.List;
@@ -13,11 +13,9 @@ public interface ConnectionManager {
 
     int getConnNum();
 
-    void init();
-
     void destroy();
 
-    List getConnectionByUid(String uid);
+    List<Connection> getConnectionByUid(String uid);
 
     void addUid(String uid, Channel channel);
 }

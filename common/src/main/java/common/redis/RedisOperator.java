@@ -1,4 +1,4 @@
-package tools.redis;
+package common.redis;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

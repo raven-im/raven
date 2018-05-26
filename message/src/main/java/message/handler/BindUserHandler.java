@@ -1,15 +1,18 @@
 package message.handler;
 
 import com.google.protobuf.MessageLite;
+import common.connection.Connection;
+import common.connection.ConnectionManager;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import message.utils.Connection;
-import message.utils.ConnectionManager;
 import message.utils.NettyConnection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import protobuf.protos.Auth;
 
+/**
+ * 绑定用户与连接
+ */
 public class BindUserHandler extends SimpleChannelInboundHandler<MessageLite> {
 
     private static final Logger logger = LoggerFactory.getLogger(BindUserHandler.class);

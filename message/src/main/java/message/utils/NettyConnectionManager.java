@@ -1,46 +1,48 @@
 package message.utils;
 
+import common.connection.Connection;
+import common.connection.ConnectionManager;
 import io.netty.channel.Channel;
-import io.netty.channel.ChannelId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 /**
- * Created by ohun on 2016/12/27.
- *
- * @author ohun@live.cn (夜色)
+ * netty连接管理器
  */
 public final class NettyConnectionManager implements ConnectionManager {
 
-    private final ConcurrentMap<ChannelId, Connection> connections = new ConcurrentHashMap<>();
+    private final ConcurrentMap<String, Connection> connections = new ConcurrentHashMap<>();
     private final ConcurrentMap<String, List<Connection>> uidConnections = new ConcurrentHashMap<>();
 
+    private static NettyConnectionManager connectionManager;
+
+    public static synchronized NettyConnectionManager getInstance() {
+        if (connectionManager == null) {
+            connectionManager = new NettyConnectionManager();
+        }
+        return connectionManager;
+    }
 
     @Override
     public Connection get(Channel channel) {
-        return connections.get(channel.id());
+        return connections.get(channel.id().asShortText());
     }
 
     @Override
     public Connection removeAndClose(Channel channel) {
-        return connections.remove(channel.id());
+        return connections.remove(channel.id().asShortText());
     }
 
     @Override
     public void add(Connection connection) {
-        connections.putIfAbsent(connection.getChannel().id(), connection);
+        connections.putIfAbsent(connection.getChannel().id().asShortText(), connection);
     }
 
     @Override
     public int getConnNum() {
         return connections.size();
-    }
-
-    @Override
-    public void init() {
-
     }
 
     @Override
@@ -50,7 +52,7 @@ public final class NettyConnectionManager implements ConnectionManager {
     }
 
     @Override
-    public List getConnectionByUid(String uid) {
+    public List<Connection> getConnectionByUid(String uid) {
         return uidConnections.get(uid);
     }
 
@@ -58,10 +60,14 @@ public final class NettyConnectionManager implements ConnectionManager {
     public void addUid(String uid, Channel channel) {
         if (uidConnections.get(uid) == null) {
             List<Connection> list = new ArrayList<>();
-            list.add(get(channel));
+            list.add(get(channel).setUid(uid));
             uidConnections.put(uid, list);
+            return;
         }
         List<Connection> list = uidConnections.get(uid);
-        list.add(get(channel));
+        list.add(get(channel).setUid(uid));
+    }
+
+    private NettyConnectionManager() {
     }
 }

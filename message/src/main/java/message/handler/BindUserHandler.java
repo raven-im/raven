@@ -5,15 +5,19 @@ import common.connection.Connection;
 import common.connection.ConnectionManager;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import message.MessageStarter;
 import message.utils.NettyConnection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import protobuf.protos.Auth;
+import protobuf.protos.Auth.Login;
+import protobuf.protos.Auth.Response;
 import protobuf.protos.ResponseEnum;
 import protobuf.utils.ProtoConstants;
 
 /**
- * 绑定用户与连接
+ * Author zxx
+ * Description 登录验证、绑定连接
+ * Date Created on 2018/5/25
  */
 public class BindUserHandler extends SimpleChannelInboundHandler<MessageLite> {
 
@@ -39,14 +43,15 @@ public class BindUserHandler extends SimpleChannelInboundHandler<MessageLite> {
     protected void channelRead0(ChannelHandlerContext channelHandlerContext,
             MessageLite messageLite) throws Exception {
         // uid映射connection
-        if (messageLite instanceof Auth.Login) {
-            String uid = ((Auth.Login) messageLite).getToken();
+        if (messageLite instanceof Login) {
+            String uid = ((Login) messageLite).getToken();
             // todo 校验uid
             connectionManager.addUid2Connection(uid, channelHandlerContext.channel());
-            Auth.Response response = Auth.Response.newBuilder()
+            Response response = Response.newBuilder()
                     .setCode(ResponseEnum.SUCCESS.code)
                     .setMsg(ResponseEnum.SUCCESS.msg)
                     .setProtonum(ProtoConstants.RESPONSE)
+                    .setMsgid(MessageStarter.SnowFlake.nextId())
                     .build();
             channelHandlerContext.channel().writeAndFlush(response);
         }

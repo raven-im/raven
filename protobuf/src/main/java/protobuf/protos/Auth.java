@@ -526,6 +526,15 @@ public final class Auth {
      */
     com.google.protobuf.ByteString
         getMsgBytes();
+
+    /**
+     * <pre>
+     *消息唯一标示
+     * </pre>
+     *
+     * <code>uint64 msgid = 4;</code>
+     */
+    long getMsgid();
   }
   /**
    * <pre>
@@ -680,6 +689,41 @@ public final class Auth {
       msg_ = value.toStringUtf8();
     }
 
+    public static final int MSGID_FIELD_NUMBER = 4;
+    private long msgid_;
+    /**
+     * <pre>
+     *消息唯一标示
+     * </pre>
+     *
+     * <code>uint64 msgid = 4;</code>
+     */
+    public long getMsgid() {
+      return msgid_;
+    }
+    /**
+     * <pre>
+     *消息唯一标示
+     * </pre>
+     *
+     * <code>uint64 msgid = 4;</code>
+     */
+    private void setMsgid(long value) {
+      
+      msgid_ = value;
+    }
+    /**
+     * <pre>
+     *消息唯一标示
+     * </pre>
+     *
+     * <code>uint64 msgid = 4;</code>
+     */
+    private void clearMsgid() {
+      
+      msgid_ = 0L;
+    }
+
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (protonum_ != 0) {
@@ -690,6 +734,9 @@ public final class Auth {
       }
       if (!msg_.isEmpty()) {
         output.writeString(3, getMsg());
+      }
+      if (msgid_ != 0L) {
+        output.writeUInt64(4, msgid_);
       }
       unknownFields.writeTo(output);
     }
@@ -710,6 +757,10 @@ public final class Auth {
       if (!msg_.isEmpty()) {
         size += com.google.protobuf.CodedOutputStream
           .computeStringSize(3, getMsg());
+      }
+      if (msgid_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt64Size(4, msgid_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSerializedSize = size;
@@ -947,6 +998,41 @@ public final class Auth {
         return this;
       }
 
+      /**
+       * <pre>
+       *消息唯一标示
+       * </pre>
+       *
+       * <code>uint64 msgid = 4;</code>
+       */
+      public long getMsgid() {
+        return instance.getMsgid();
+      }
+      /**
+       * <pre>
+       *消息唯一标示
+       * </pre>
+       *
+       * <code>uint64 msgid = 4;</code>
+       */
+      public Builder setMsgid(long value) {
+        copyOnWrite();
+        instance.setMsgid(value);
+        return this;
+      }
+      /**
+       * <pre>
+       *消息唯一标示
+       * </pre>
+       *
+       * <code>uint64 msgid = 4;</code>
+       */
+      public Builder clearMsgid() {
+        copyOnWrite();
+        instance.clearMsgid();
+        return this;
+      }
+
       // @@protoc_insertion_point(builder_scope:protobuf.protos.Response)
     }
     @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
@@ -975,6 +1061,8 @@ public final class Auth {
               other.code_ != 0, other.code_);
           msg_ = visitor.visitString(!msg_.isEmpty(), msg_,
               !other.msg_.isEmpty(), other.msg_);
+          msgid_ = visitor.visitLong(msgid_ != 0L, msgid_,
+              other.msgid_ != 0L, other.msgid_);
           if (visitor == com.google.protobuf.GeneratedMessageLite.MergeFromVisitor
               .INSTANCE) {
           }
@@ -1016,6 +1104,11 @@ public final class Auth {
                   java.lang.String s = input.readStringRequireUtf8();
 
                   msg_ = s;
+                  break;
+                }
+                case 32: {
+
+                  msgid_ = input.readUInt64();
                   break;
                 }
               }

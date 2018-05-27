@@ -19,7 +19,9 @@ import protobuf.code.MessageDecoder;
 import protobuf.code.MessageEncoder;
 
 /**
- * Created by Dell on 2016/2/2.
+ * Author zxx
+ * Description 消息服务
+ * Date Created on 2018/5/25
  */
 public class MessageServer {
 

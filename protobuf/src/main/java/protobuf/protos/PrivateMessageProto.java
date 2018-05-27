@@ -1057,18 +1057,9 @@ public final class PrivateMessageProto {
      *消息唯一标示
      * </pre>
      *
-     * <code>string msgid = 7;</code>
+     * <code>uint64 msgid = 7;</code>
      */
-    java.lang.String getMsgid();
-    /**
-     * <pre>
-     *消息唯一标示
-     * </pre>
-     *
-     * <code>string msgid = 7;</code>
-     */
-    com.google.protobuf.ByteString
-        getMsgidBytes();
+    long getMsgid();
   }
   /**
    * <pre>
@@ -1086,7 +1077,6 @@ public final class PrivateMessageProto {
       fromuid_ = "";
       groupuid_ = "";
       content_ = com.google.protobuf.ByteString.EMPTY;
-      msgid_ = "";
     }
     public static final int FROMUID_FIELD_NUMBER = 1;
     private java.lang.String fromuid_;
@@ -1388,15 +1378,15 @@ public final class PrivateMessageProto {
     }
 
     public static final int MSGID_FIELD_NUMBER = 7;
-    private java.lang.String msgid_;
+    private long msgid_;
     /**
      * <pre>
      *消息唯一标示
      * </pre>
      *
-     * <code>string msgid = 7;</code>
+     * <code>uint64 msgid = 7;</code>
      */
-    public java.lang.String getMsgid() {
+    public long getMsgid() {
       return msgid_;
     }
     /**
@@ -1404,25 +1394,10 @@ public final class PrivateMessageProto {
      *消息唯一标示
      * </pre>
      *
-     * <code>string msgid = 7;</code>
+     * <code>uint64 msgid = 7;</code>
      */
-    public com.google.protobuf.ByteString
-        getMsgidBytes() {
-      return com.google.protobuf.ByteString.copyFromUtf8(msgid_);
-    }
-    /**
-     * <pre>
-     *消息唯一标示
-     * </pre>
-     *
-     * <code>string msgid = 7;</code>
-     */
-    private void setMsgid(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
+    private void setMsgid(long value) {
+      
       msgid_ = value;
     }
     /**
@@ -1430,27 +1405,11 @@ public final class PrivateMessageProto {
      *消息唯一标示
      * </pre>
      *
-     * <code>string msgid = 7;</code>
+     * <code>uint64 msgid = 7;</code>
      */
     private void clearMsgid() {
       
-      msgid_ = getDefaultInstance().getMsgid();
-    }
-    /**
-     * <pre>
-     *消息唯一标示
-     * </pre>
-     *
-     * <code>string msgid = 7;</code>
-     */
-    private void setMsgidBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
-      msgid_ = value.toStringUtf8();
+      msgid_ = 0L;
     }
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
@@ -1473,8 +1432,8 @@ public final class PrivateMessageProto {
       if (sendtime_ != 0L) {
         output.writeUInt64(6, sendtime_);
       }
-      if (!msgid_.isEmpty()) {
-        output.writeString(7, getMsgid());
+      if (msgid_ != 0L) {
+        output.writeUInt64(7, msgid_);
       }
       unknownFields.writeTo(output);
     }
@@ -1508,9 +1467,9 @@ public final class PrivateMessageProto {
         size += com.google.protobuf.CodedOutputStream
           .computeUInt64Size(6, sendtime_);
       }
-      if (!msgid_.isEmpty()) {
+      if (msgid_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(7, getMsgid());
+          .computeUInt64Size(7, msgid_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSerializedSize = size;
@@ -1903,9 +1862,9 @@ public final class PrivateMessageProto {
        *消息唯一标示
        * </pre>
        *
-       * <code>string msgid = 7;</code>
+       * <code>uint64 msgid = 7;</code>
        */
-      public java.lang.String getMsgid() {
+      public long getMsgid() {
         return instance.getMsgid();
       }
       /**
@@ -1913,21 +1872,9 @@ public final class PrivateMessageProto {
        *消息唯一标示
        * </pre>
        *
-       * <code>string msgid = 7;</code>
+       * <code>uint64 msgid = 7;</code>
        */
-      public com.google.protobuf.ByteString
-          getMsgidBytes() {
-        return instance.getMsgidBytes();
-      }
-      /**
-       * <pre>
-       *消息唯一标示
-       * </pre>
-       *
-       * <code>string msgid = 7;</code>
-       */
-      public Builder setMsgid(
-          java.lang.String value) {
+      public Builder setMsgid(long value) {
         copyOnWrite();
         instance.setMsgid(value);
         return this;
@@ -1937,24 +1884,11 @@ public final class PrivateMessageProto {
        *消息唯一标示
        * </pre>
        *
-       * <code>string msgid = 7;</code>
+       * <code>uint64 msgid = 7;</code>
        */
       public Builder clearMsgid() {
         copyOnWrite();
         instance.clearMsgid();
-        return this;
-      }
-      /**
-       * <pre>
-       *消息唯一标示
-       * </pre>
-       *
-       * <code>string msgid = 7;</code>
-       */
-      public Builder setMsgidBytes(
-          com.google.protobuf.ByteString value) {
-        copyOnWrite();
-        instance.setMsgidBytes(value);
         return this;
       }
 
@@ -1991,8 +1925,8 @@ public final class PrivateMessageProto {
               other.content_ != com.google.protobuf.ByteString.EMPTY, other.content_);
           sendtime_ = visitor.visitLong(sendtime_ != 0L, sendtime_,
               other.sendtime_ != 0L, other.sendtime_);
-          msgid_ = visitor.visitString(!msgid_.isEmpty(), msgid_,
-              !other.msgid_.isEmpty(), other.msgid_);
+          msgid_ = visitor.visitLong(msgid_ != 0L, msgid_,
+              other.msgid_ != 0L, other.msgid_);
           if (visitor == com.google.protobuf.GeneratedMessageLite.MergeFromVisitor
               .INSTANCE) {
           }
@@ -2053,10 +1987,9 @@ public final class PrivateMessageProto {
                   sendtime_ = input.readUInt64();
                   break;
                 }
-                case 58: {
-                  java.lang.String s = input.readStringRequireUtf8();
+                case 56: {
 
-                  msgid_ = s;
+                  msgid_ = input.readUInt64();
                   break;
                 }
               }

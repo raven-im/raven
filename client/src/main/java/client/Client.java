@@ -15,8 +15,9 @@ import protobuf.code.MessageEncoder;
 import protobuf.utils.ParseRegistryMap;
 
 /**
- * Created by Dell on 2016/2/15.
- * Simple client for module test
+ * Author zxx
+ * Description 客户端
+ * Date Created on 2018/5/25
  */
 public class Client {
 

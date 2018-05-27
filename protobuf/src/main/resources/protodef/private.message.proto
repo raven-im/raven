@@ -4,7 +4,7 @@ package protobuf.protos;
 option java_outer_classname = "PrivateMessageProto";
 option optimize_for = LITE_RUNTIME; //SPEED;
 
-//客户端发送单聊消息
+//上行单聊消息
 message UpStreamMessageProto {
   repeated string touid = 2; //消息目标的userid
   uint32 protonum = 3; //消息类型
@@ -26,7 +26,7 @@ message DownStreamMessageProto {
   uint32 protonum = 4; //消息类型
   bytes content = 5; //内容
   uint64 sendtime = 6; //消息时间
-  string msgid = 7; //消息唯一标示
+  uint64 msgid = 7; //消息唯一标示
 }
 
 

@@ -15,8 +15,9 @@ import protobuf.protos.PrivateMessageProto;
 import protobuf.utils.ProtoConstants;
 
 /**
- * Created by Dell on 2016/2/15.
- * 模拟客户端聊天：自己给自己发消息
+ * Author zxx
+ * Description 客户端模拟
+ * Date Created on 2018/5/25
  */
 public class ClientHandler extends SimpleChannelInboundHandler<MessageLite> {
 

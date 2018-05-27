@@ -6,11 +6,12 @@ import common.connection.ConnectionManager;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import java.util.List;
-import java.util.UUID;
+import message.MessageStarter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import protobuf.protos.PrivateMessageProto;
+import protobuf.protos.PrivateMessageProto.DownStreamMessageProto;
 import protobuf.protos.PrivateMessageProto.MsgType;
+import protobuf.protos.PrivateMessageProto.UpStreamMessageProto;
 import protobuf.utils.ProtoConstants;
 
 /**
@@ -31,16 +32,16 @@ public class PrivateMessageHandler extends SimpleChannelInboundHandler<MessageLi
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext,
             MessageLite messageLite) throws Exception {
-        if (messageLite instanceof PrivateMessageProto.UpStreamMessageProto) {
-            PrivateMessageProto.UpStreamMessageProto upMessage = (PrivateMessageProto.UpStreamMessageProto) messageLite;
+        if (messageLite instanceof UpStreamMessageProto) {
+            UpStreamMessageProto upMessage = (UpStreamMessageProto) messageLite;
             List<String> uids = upMessage.getTouidList();
             String fromUid = connectionManager.getConnection(channelHandlerContext.channel()).getUid();
             logger.debug("fromUid:{}", fromUid);
-            MessageLite dowmMessage = PrivateMessageProto.DownStreamMessageProto.newBuilder()
+            MessageLite dowmMessage = DownStreamMessageProto.newBuilder()
                     .setFromuid(fromUid)
                     .setProtonum(ProtoConstants.DOWNPRIVATEMESSAGE)
                     .setContent(upMessage.getContentBytes())
-                    .setMsgid(UUID.randomUUID().toString())
+                    .setMsgid(MessageStarter.SnowFlake.nextId())
                     .setSendtime(upMessage.getSendtime())
                     .setType(MsgType.PERSON)
                     .build();

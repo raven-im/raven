@@ -19,5 +19,6 @@ message Response {
   uint32 protonum = 1; //消息类型
   int32 code = 2; //返回码
   string msg = 3; //描述
+  uint64 msgid = 4; //消息唯一标示
 }
 

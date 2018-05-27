@@ -6,9 +6,12 @@
 * spring boot
 * redis
 * mysql
+g
 ##架构图
+
 ![](IMServer架构.png)
 
 ##服务调用
+
 ![](调用时序图.png)
 

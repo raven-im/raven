@@ -15,7 +15,9 @@ import protobuf.code.MessageEncoder;
 import protobuf.utils.ParseRegistryMap;
 
 /**
- * Author zxx Description 客户端 Date Created on 2018/5/25
+ * Author zxx 
+ * Description Simple client for module test 
+ * Date Created on 2018/5/25
  */
 public class Client {
 

@@ -1,11 +1,11 @@
-package message.utils;
+package message.channel;
 
-import common.connection.ChannelManager;
 import io.netty.channel.Channel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import message.common.ChannelManager;
 
 /**
  * netty连接管理器

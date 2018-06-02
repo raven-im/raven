@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import protobuf.protos.Auth;
-import protobuf.protos.PrivateMessageProto;
+import protobuf.protos.MessageProto;
 import protobuf.utils.ProtoConstants;
 
 /**
@@ -51,7 +51,7 @@ public class ClientHandler extends SimpleChannelInboundHandler<MessageLite> {
 
     private void sendPrivateMessage() {
         String content = "Hello World!";
-        PrivateMessageProto.UpStreamMessageProto.Builder msg = PrivateMessageProto.UpStreamMessageProto
+        MessageProto.UpStreamMessageProto.Builder msg = MessageProto.UpStreamMessageProto
             .newBuilder();
         msg.setContent(content);
         List<String> uids = new ArrayList<>();

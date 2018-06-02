@@ -9,9 +9,9 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import java.net.InetSocketAddress;
-import message.handler.BindUserHandler;
+import message.handler.LoginAuthHandler;
 import message.handler.PrivateMessageHandler;
-import message.utils.NettyChannelManager;
+import message.channel.NettyChannelManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import protobuf.code.MessageDecoder;
@@ -39,7 +39,7 @@ public class MessageServer {
                     pipeline.addLast("MessageDecoder", new MessageDecoder());
                     pipeline.addLast("MessageEncoder", new MessageEncoder());
                     pipeline.addLast("MessageServerHandler",
-                        new BindUserHandler(NettyChannelManager.getInstance()));
+                        new LoginAuthHandler(NettyChannelManager.getInstance()));
                     pipeline.addLast("PrivateMessageHandler",
                         new PrivateMessageHandler(NettyChannelManager.getInstance()));
                 }

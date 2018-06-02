@@ -1,7 +1,9 @@
 package common.utils;
 
 /**
- * Author zxx Description twitter的雪花算法 生成唯一自增ID Date Created on 2018/5/27
+ * Author zxx
+ * Description twitter的雪花算法 生成唯一自增ID
+ * Date Created on 2018/5/27
  */
 public class SnowFlake {
 

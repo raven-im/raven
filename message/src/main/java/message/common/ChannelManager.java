@@ -1,4 +1,4 @@
-package common.connection;
+package message.common;
 
 import io.netty.channel.Channel;
 import java.util.List;

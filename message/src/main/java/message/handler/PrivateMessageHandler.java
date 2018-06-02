@@ -1,21 +1,18 @@
 package message.handler;
 
 import com.google.protobuf.MessageLite;
-import common.connection.ChannelManager;
-import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import java.util.List;
-import message.MessageStarter;
+import message.chat.PrivateMessageProcessor;
+import message.common.ChannelManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import protobuf.protos.PrivateMessageProto.DownStreamMessageProto;
-import protobuf.protos.PrivateMessageProto.MsgType;
-import protobuf.protos.PrivateMessageProto.UpStreamMessageProto;
-import protobuf.utils.ProtoConstants;
+import protobuf.protos.MessageProto.UpStreamMessageProto;
 
 /**
- * Author zxx Description 私聊消息handler Date Created on 2018/5/25
+ * Author zxx
+ * Description
+ * 单聊聊消息handler Date Created on 2018/5/25
  */
 public class PrivateMessageHandler extends SimpleChannelInboundHandler<MessageLite> {
 
@@ -31,25 +28,7 @@ public class PrivateMessageHandler extends SimpleChannelInboundHandler<MessageLi
     protected void channelRead0(ChannelHandlerContext channelHandlerContext,
         MessageLite messageLite) throws Exception {
         if (messageLite instanceof UpStreamMessageProto) {
-            UpStreamMessageProto upMessage = (UpStreamMessageProto) messageLite;
-            List<String> uids = upMessage.getTouidList();
-            String fromUid = connectionManager.getUidByChannel(channelHandlerContext.channel());
-            logger.debug("fromUid:{}", fromUid);
-            MessageLite dowmMessage = DownStreamMessageProto.newBuilder()
-                .setFromuid(fromUid)
-                .setProtonum(ProtoConstants.DOWNPRIVATEMESSAGE)
-                .setContent(upMessage.getContentBytes())
-                .setMsgid(MessageStarter.SnowFlake.nextId())
-                .setSendtime(upMessage.getSendtime())
-                .setType(MsgType.PERSON)
-                .build();
-            uids.forEach(uid -> {
-                List<Channel> channels = connectionManager.getChannelByUid(uid);
-                if (null != channels) {
-                    channels
-                        .forEach(channel -> channel.writeAndFlush(dowmMessage));
-                }
-            });
+            PrivateMessageProcessor.getInstance().process(messageLite, channelHandlerContext);
         }
     }
 }

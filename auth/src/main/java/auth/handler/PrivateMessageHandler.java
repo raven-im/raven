@@ -8,9 +8,9 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import protobuf.protos.PrivateMessageProto;
 import protobuf.utils.MessageProtoNum;
 import protobuf.utils.Utils;
-import protobuf.protos.PrivateMessageProto;
 
 /**
  * Created by win7 on 2016/3/5.
@@ -20,7 +20,7 @@ public class PrivateMessageHandler extends IMHandler {
     private static final Logger logger = LoggerFactory.getLogger(PrivateMessageHandler.class);
 
     public PrivateMessageHandler(String userid, long netid, Message msg,
-            ChannelHandlerContext ctx) {
+        ChannelHandlerContext ctx) {
         super(userid, netid, msg, ctx);
     }
 
@@ -35,11 +35,11 @@ public class PrivateMessageHandler extends IMHandler {
             return;
         }
         PrivateMessageProto.PrivateMessage.Builder sp = PrivateMessageProto.PrivateMessage
-                .newBuilder();
+            .newBuilder();
         sp.setContent(msg.getContent());
         byteBuf = Utils
-                .pack2Server(sp.build(), MessageProtoNum.PRIVATEMESSAGE, netid, Internal.Dest.Gate,
-                        dest);
+            .pack2Server(sp.build(), MessageProtoNum.PRIVATEMESSAGE, netid, Internal.Dest.Gate,
+                dest);
         ctx.writeAndFlush(byteBuf);
         logger.info("message has send from {} to {}", msg.getFromUId(), msg.getToUId());
     }

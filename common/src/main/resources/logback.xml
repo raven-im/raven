@@ -13,7 +13,7 @@
             <!-- rollover daily 配置日志所生成的目录以及生成文件名的规则 -->
             <fileNamePattern>logs/IMServer-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy
-                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+              class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <!-- 单个日志文件最大100 MB -->
                 <maxFileSize>100MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>

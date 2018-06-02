@@ -1,8 +1,8 @@
 package message.handler;
 
 import com.google.protobuf.MessageLite;
-import common.connection.Connection;
-import common.connection.ConnectionManager;
+import common.connection.ChannelManager;
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import java.util.List;
@@ -15,41 +15,39 @@ import protobuf.protos.PrivateMessageProto.UpStreamMessageProto;
 import protobuf.utils.ProtoConstants;
 
 /**
- * Author zxx
- * Description 私聊消息handler
- * Date Created on 2018/5/25
+ * Author zxx Description 私聊消息handler Date Created on 2018/5/25
  */
 public class PrivateMessageHandler extends SimpleChannelInboundHandler<MessageLite> {
 
     private static final Logger logger = LoggerFactory.getLogger(PrivateMessageHandler.class);
 
-    private final ConnectionManager connectionManager;
+    private final ChannelManager connectionManager;
 
-    public PrivateMessageHandler(ConnectionManager connectionManager) {
+    public PrivateMessageHandler(ChannelManager connectionManager) {
         this.connectionManager = connectionManager;
     }
 
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext,
-            MessageLite messageLite) throws Exception {
+        MessageLite messageLite) throws Exception {
         if (messageLite instanceof UpStreamMessageProto) {
             UpStreamMessageProto upMessage = (UpStreamMessageProto) messageLite;
             List<String> uids = upMessage.getTouidList();
-            String fromUid = connectionManager.getConnection(channelHandlerContext.channel()).getUid();
+            String fromUid = connectionManager.getUidByChannel(channelHandlerContext.channel());
             logger.debug("fromUid:{}", fromUid);
             MessageLite dowmMessage = DownStreamMessageProto.newBuilder()
-                    .setFromuid(fromUid)
-                    .setProtonum(ProtoConstants.DOWNPRIVATEMESSAGE)
-                    .setContent(upMessage.getContentBytes())
-                    .setMsgid(MessageStarter.SnowFlake.nextId())
-                    .setSendtime(upMessage.getSendtime())
-                    .setType(MsgType.PERSON)
-                    .build();
+                .setFromuid(fromUid)
+                .setProtonum(ProtoConstants.DOWNPRIVATEMESSAGE)
+                .setContent(upMessage.getContentBytes())
+                .setMsgid(MessageStarter.SnowFlake.nextId())
+                .setSendtime(upMessage.getSendtime())
+                .setType(MsgType.PERSON)
+                .build();
             uids.forEach(uid -> {
-                List<Connection> connections = connectionManager.getConnectionByUid(uid);
-                if (null != connections) {
-                    connections
-                            .forEach(connection -> connection.getChannel().writeAndFlush(dowmMessage));
+                List<Channel> channels = connectionManager.getChannelByUid(uid);
+                if (null != channels) {
+                    channels
+                        .forEach(channel -> channel.writeAndFlush(dowmMessage));
                 }
             });
         }

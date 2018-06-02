@@ -1,9 +1,7 @@
 package protobuf.protos;
 
 /**
- * Author zxx
- * Description 登录响应
- * Date Created on 2018/5/26
+ * Author zxx Description 登录响应 Date Created on 2018/5/26
  */
 public enum ResponseEnum {
 

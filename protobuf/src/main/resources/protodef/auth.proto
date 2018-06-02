@@ -5,8 +5,8 @@ option java_outer_classname = "Auth";
 option optimize_for = LITE_RUNTIME; //SPEED;
 
 message Login {
-  string token = 1; // 标识
-  uint32 protonum = 2; //消息类型
+    string token = 1; // 标识
+    uint32 protonum = 2; //消息类型
 
 }
 
@@ -16,9 +16,9 @@ code：
 400 -- error
 */
 message Response {
-  uint32 protonum = 1; //消息类型
-  int32 code = 2; //返回码
-  string msg = 3; //描述
-  uint64 msgid = 4; //消息唯一标示
+    uint32 protonum = 1; //消息类型
+    int32 code = 2; //返回码
+    string msg = 3; //描述
+    uint64 msgid = 4; //消息唯一标示
 }
 

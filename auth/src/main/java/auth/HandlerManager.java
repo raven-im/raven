@@ -13,9 +13,9 @@ import java.util.HashMap;
 import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import protobuf.utils.ParseMap;
 import protobuf.protos.Auth;
 import protobuf.protos.PrivateMessageProto;
+import protobuf.utils.ParseMap;
 
 
 /**
@@ -31,8 +31,8 @@ public class HandlerManager {
         int num = ParseMap.getPtoNum(msg);
         try {
             Constructor<? extends IMHandler> constructor = handler
-                    .getConstructor(String.class, long.class, Message.class,
-                            ChannelHandlerContext.class);
+                .getConstructor(String.class, long.class, Message.class,
+                    ChannelHandlerContext.class);
             _handlers.put(num, constructor);
         } catch (NoSuchMethodException e) {
             throw new RuntimeException(e);
@@ -40,8 +40,8 @@ public class HandlerManager {
     }
 
     public static IMHandler getHandler(int msgNum, String userId, long netId,
-            Message msg, ChannelHandlerContext ctx)
-            throws IllegalAccessException, InvocationTargetException, InstantiationException {
+        Message msg, ChannelHandlerContext ctx)
+        throws IllegalAccessException, InvocationTargetException, InstantiationException {
         Constructor<? extends IMHandler> constructor = _handlers.get(msgNum);
         if (constructor == null) {
             logger.error("handler not exist, Message Number: {}", msgNum);
@@ -56,7 +56,7 @@ public class HandlerManager {
         HandlerManager.register(Auth.Login.class, LoginHandler.class);
         HandlerManager.register(Auth.Register.class, RegisterHandler.class);
         HandlerManager
-                .register(PrivateMessageProto.PrivateMessage.class, PrivateMessageHandler.class);
+            .register(PrivateMessageProto.PrivateMessage.class, PrivateMessageHandler.class);
 
     }
 }

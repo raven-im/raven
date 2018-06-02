@@ -1,9 +1,7 @@
 package common.utils;
 
 /**
- * Author zxx
- * Description twitter的雪花算法 生成唯一自增ID
- * Date Created on 2018/5/27
+ * Author zxx Description twitter的雪花算法 生成唯一自增ID Date Created on 2018/5/27
  */
 public class SnowFlake {
 
@@ -40,10 +38,12 @@ public class SnowFlake {
 
     public SnowFlake(long datacenterId, long machineId) {
         if (datacenterId > MAX_DATACENTER_NUM || datacenterId < 0) {
-            throw new IllegalArgumentException("datacenterId can't be greater than MAX_DATACENTER_NUM or less than 0");
+            throw new IllegalArgumentException(
+                "datacenterId can't be greater than MAX_DATACENTER_NUM or less than 0");
         }
         if (machineId > MAX_MACHINE_NUM || machineId < 0) {
-            throw new IllegalArgumentException("machineId can't be greater than MAX_MACHINE_NUM or less than 0");
+            throw new IllegalArgumentException(
+                "machineId can't be greater than MAX_MACHINE_NUM or less than 0");
         }
         this.datacenterId = datacenterId;
         this.machineId = machineId;
@@ -51,8 +51,6 @@ public class SnowFlake {
 
     /**
      * 产生下一个ID
-     *
-     * @return
      */
     public synchronized long nextId() {
         long currStmp = getNewstmp();
@@ -75,9 +73,9 @@ public class SnowFlake {
         lastStmp = currStmp;
 
         return (currStmp - START_STMP) << TIMESTMP_LEFT //时间戳部分
-                | datacenterId << DATACENTER_LEFT       //数据中心部分
-                | machineId << MACHINE_LEFT             //机器标识部分
-                | sequence;                             //序列号部分
+            | datacenterId << DATACENTER_LEFT       //数据中心部分
+            | machineId << MACHINE_LEFT             //机器标识部分
+            | sequence;                             //序列号部分
     }
 
     private long getNextMill() {

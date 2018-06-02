@@ -6,9 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Author zxx
- * Description
- * Date Created on 2018/5/12
+ * Author zxx Description Date Created on 2018/5/12
  */
 public interface Logs {
 

@@ -15,9 +15,7 @@ import protobuf.code.MessageEncoder;
 import protobuf.utils.ParseRegistryMap;
 
 /**
- * Author zxx
- * Description 客户端
- * Date Created on 2018/5/25
+ * Author zxx Description 客户端 Date Created on 2018/5/25
  */
 public class Client {
 
@@ -35,17 +33,17 @@ public class Client {
         EventLoopGroup group = new NioEventLoopGroup();
         Bootstrap b = new Bootstrap();
         b.group(group)
-                .channel(NioSocketChannel.class)
-                .option(ChannelOption.TCP_NODELAY, true)
-                .handler(new ChannelInitializer<SocketChannel>() {
-                    @Override
-                    public void initChannel(SocketChannel ch) throws Exception {
-                        ChannelPipeline p = ch.pipeline();
-                        p.addLast("MessageDecoder", new MessageDecoder());
-                        p.addLast("MessageEncoder", new MessageEncoder());
-                        p.addLast(new ClientHandler());
-                    }
-                });
+            .channel(NioSocketChannel.class)
+            .option(ChannelOption.TCP_NODELAY, true)
+            .handler(new ChannelInitializer<SocketChannel>() {
+                @Override
+                public void initChannel(SocketChannel ch) throws Exception {
+                    ChannelPipeline p = ch.pipeline();
+                    p.addLast("MessageDecoder", new MessageDecoder());
+                    p.addLast("MessageEncoder", new MessageEncoder());
+                    p.addLast(new ClientHandler());
+                }
+            });
         // Start the client
         ParseRegistryMap.initRegistry();
         for (int i = 1; i <= clientNum; i++) {

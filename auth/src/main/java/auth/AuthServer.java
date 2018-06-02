@@ -12,9 +12,9 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import java.net.InetSocketAddress;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import protobuf.utils.ParseRegistryMap;
 import protobuf.code.MessageDecoder;
 import protobuf.code.MessageEncoder;
+import protobuf.utils.ParseRegistryMap;
 
 
 public class AuthServer {
@@ -25,17 +25,17 @@ public class AuthServer {
         EventLoopGroup bossGroup = new NioEventLoopGroup();
         EventLoopGroup workGroup = new NioEventLoopGroup();
         ServerBootstrap bootstrap = new ServerBootstrap()
-                .group(bossGroup, workGroup)
-                .channel(NioServerSocketChannel.class)
-                .childHandler(new ChannelInitializer<SocketChannel>() {
-                    @Override
-                    protected void initChannel(SocketChannel channel) {
-                        ChannelPipeline pipeline = channel.pipeline();
-                        pipeline.addLast("MessageDecoder", new MessageDecoder());
-                        pipeline.addLast("MessageEncoder", new MessageEncoder());
-                        pipeline.addLast("AuthServerHandler", new AuthServerHandler());
-                    }
-                });
+            .group(bossGroup, workGroup)
+            .channel(NioServerSocketChannel.class)
+            .childHandler(new ChannelInitializer<SocketChannel>() {
+                @Override
+                protected void initChannel(SocketChannel channel) {
+                    ChannelPipeline pipeline = channel.pipeline();
+                    pipeline.addLast("MessageDecoder", new MessageDecoder());
+                    pipeline.addLast("MessageEncoder", new MessageEncoder());
+                    pipeline.addLast("AuthServerHandler", new AuthServerHandler());
+                }
+            });
         bindConnectionOptions(bootstrap);
         bootstrap.bind(new InetSocketAddress(port)).addListener(future -> {
             if (future.isSuccess()) {

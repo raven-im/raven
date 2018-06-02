@@ -1,9 +1,7 @@
 package protobuf.utils;
 
 /**
- * Author zxx
- * Description 消息协议号
- * Date Created on 2018/5/12
+ * Author zxx Description 消息协议号 Date Created on 2018/5/12
  */
 public class ProtoConstants {
 

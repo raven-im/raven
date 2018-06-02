@@ -15,9 +15,7 @@ import protobuf.protos.PrivateMessageProto;
 import protobuf.utils.ProtoConstants;
 
 /**
- * Author zxx
- * Description 客户端模拟
- * Date Created on 2018/5/25
+ * Author zxx Description 客户端模拟 Date Created on 2018/5/25
  */
 public class ClientHandler extends SimpleChannelInboundHandler<MessageLite> {
 
@@ -44,7 +42,7 @@ public class ClientHandler extends SimpleChannelInboundHandler<MessageLite> {
 
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, MessageLite msg)
-            throws Exception {
+        throws Exception {
         if (msg instanceof Auth.Response) {
             Thread.sleep(2000);
             sendPrivateMessage();
@@ -54,10 +52,10 @@ public class ClientHandler extends SimpleChannelInboundHandler<MessageLite> {
     private void sendPrivateMessage() {
         String content = "Hello World!";
         PrivateMessageProto.UpStreamMessageProto.Builder msg = PrivateMessageProto.UpStreamMessageProto
-                .newBuilder();
+            .newBuilder();
         msg.setContent(content);
         List<String> uids = new ArrayList<>();
-        uids.add(String.valueOf((int)(Math.random()*10)%10+1));
+        uids.add(String.valueOf((int) (Math.random() * 10) % 10 + 1));
         msg.addAllTouid(uids);
         msg.setProtonum(ProtoConstants.UPPRIVATEMESSAGE);
         msg.setSendtime(System.currentTimeMillis());

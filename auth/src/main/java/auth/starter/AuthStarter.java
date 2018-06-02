@@ -47,6 +47,6 @@ public class AuthStarter {
         //Now Start Servers
         new Thread(() -> AuthServer.startAuthServer(authListenPort)).start();
         new Thread(() -> AuthMessageConnection.startAuthMessageConnection(messageIp, messagePort))
-                .start();
+            .start();
     }
 }

@@ -11,10 +11,10 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import protobuf.utils.MessageProtoNum;
-import protobuf.utils.Utils;
-import protobuf.utils.ParseMap;
 import protobuf.protos.PrivateMessageProto;
+import protobuf.utils.MessageProtoNum;
+import protobuf.utils.ParseMap;
+import protobuf.utils.Utils;
 
 /**
  * Created by win7 on 2016/3/5.
@@ -22,7 +22,7 @@ import protobuf.protos.PrivateMessageProto;
 public class AuthMessageConnectionHandler extends SimpleChannelInboundHandler<MessageLite> {
 
     private static final Logger logger = LoggerFactory
-            .getLogger(AuthMessageConnectionHandler.class);
+        .getLogger(AuthMessageConnectionHandler.class);
 
     private static ChannelHandlerContext _authLogicConnection;
 
@@ -34,14 +34,14 @@ public class AuthMessageConnectionHandler extends SimpleChannelInboundHandler<Me
 
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, MessageLite message)
-            throws Exception {
+        throws Exception {
         Internal.Transfer gt = (Internal.Transfer) message;
         int ptoNum = gt.getPtoNum();
         Message msg = ParseMap.getMessage(ptoNum, gt.getMsg().toByteArray());
         IMHandler handler = null;
         if (msg instanceof PrivateMessageProto.PrivateMessage) {
             handler = HandlerManager.getHandler(ptoNum, gt.getUserId(), -1L, msg,
-                    AuthServerHandler.getGateAuthConnection());
+                AuthServerHandler.getGateAuthConnection());
         } else {
             logger.error("Error Messgae Type: {}", msg.getClass());
             return;
@@ -53,7 +53,7 @@ public class AuthMessageConnectionHandler extends SimpleChannelInboundHandler<Me
         Internal.Greet.Builder ig = Internal.Greet.newBuilder();
         ig.setFrom(Internal.Greet.From.Auth);
         ByteBuf out = Utils
-                .pack2Server(ig.build(), MessageProtoNum.GREET, -1, Internal.Dest.Message, "admin");
+            .pack2Server(ig.build(), MessageProtoNum.GREET, -1, Internal.Dest.Message, "admin");
         getAuthLogicConnection().writeAndFlush(out);
         logger.info("Auth send Green to Logic.");
     }

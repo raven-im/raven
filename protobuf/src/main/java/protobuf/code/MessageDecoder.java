@@ -43,8 +43,8 @@ public class MessageDecoder extends ByteToMessageDecoder {
             MessageLite msg = ParseMap.getMessage(ptoNum, body);
             out.add(msg);
             logger.info("Received Message remoteAddress:{}, content:{}, ptoNum:{}",
-                    ctx.channel().remoteAddress(), msg.toString(),
-                    ptoNum);
+                ctx.channel().remoteAddress(), msg.toString(),
+                ptoNum);
         } catch (Exception e) {
             logger.error("{},decode failed:{}", ctx.channel().remoteAddress(), e);
         }

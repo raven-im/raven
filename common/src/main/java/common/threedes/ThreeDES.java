@@ -4,7 +4,6 @@ import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESedeKeySpec;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,7 +28,7 @@ public class ThreeDES {
         try {
             DESedeKeySpec dks = new DESedeKeySpec(key.getBytes("UTF-8"));
             SecretKeyFactory keyFactory = SecretKeyFactory
-                    .getInstance("DESede");
+                .getInstance("DESede");
             SecretKey securekey = keyFactory.generateSecret(dks);
 
             Cipher cipher = Cipher.getInstance("DESede/ECB/PKCS5Padding");
@@ -53,7 +52,7 @@ public class ThreeDES {
         try {
             DESedeKeySpec dks = new DESedeKeySpec(key.getBytes("UTF-8"));
             SecretKeyFactory keyFactory = SecretKeyFactory
-                    .getInstance("DESede");
+                .getInstance("DESede");
             SecretKey securekey = keyFactory.generateSecret(dks);
 
             Cipher cipher = Cipher.getInstance("DESede/ECB/PKCS5Padding");
@@ -72,25 +71,25 @@ public class ThreeDES {
 
         ThreeDES method = new ThreeDES();
         System.out.println("原始数据[" + b1.length + "]：");
-		for (byte b : b1) {
-			System.out.print(b + " ");
-		}
+        for (byte b : b1) {
+            System.out.print(b + " ");
+        }
         System.out.println();
 
         byte[] encode = method.encrypt(b1);
 
         System.out.println("加密数据[" + encode.length + "]：");
-		for (byte b : encode) {
-			System.out.print(b + " ");
-		}
+        for (byte b : encode) {
+            System.out.print(b + " ");
+        }
         System.out.println();
 
         byte[] decode = method.decrypt(encode);
 
         System.out.println("解密数据[" + decode.length + "]：");
-		for (byte b : decode) {
-			System.out.print(b + " ");
-		}
+        for (byte b : decode) {
+            System.out.print(b + " ");
+        }
         System.out.println();
 
     }

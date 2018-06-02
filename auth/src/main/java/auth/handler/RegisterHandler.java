@@ -34,11 +34,11 @@ public class RegisterHandler extends IMHandler {
         //todo 写数据库要加锁
         if (jedis.exists(UserUtils.genDBKey(username))) {
             RouteUtil.sendResponse(Common.ACCOUNT_DUMPLICATED, "Account already exists", netid,
-                    username);
+                username);
             logger.info("Account already exists, userid: {}", username);
         } else {
             jedis.hset(UserUtils.genDBKey(username), UserUtils.userFileds.Account.field,
-                    DBOperator.Serialize(account));
+                DBOperator.Serialize(account));
             RouteUtil.sendResponse(Common.REGISTER_OK, "User registerd successd", netid, username);
             logger.info("User registerd successd, userid: {}", username);
         }

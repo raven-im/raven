@@ -41,7 +41,7 @@ public class AuthServerHandler extends SimpleChannelInboundHandler<Message> {
 
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, Message message)
-            throws Exception {
+        throws Exception {
         Internal.Transfer gt = (Internal.Transfer) message;
         int ptoNum = gt.getPtoNum();
         Message msg = ParseMap.getMessage(ptoNum, gt.getMsg().toByteArray());
@@ -50,10 +50,10 @@ public class AuthServerHandler extends SimpleChannelInboundHandler<Message> {
         if (msg instanceof Internal.Greet) {
             //来自gate的连接请求
             handler = HandlerManager
-                    .getHandler(ptoNum, gt.getUserId(), gt.getNetId(), msg, channelHandlerContext);
+                .getHandler(ptoNum, gt.getUserId(), gt.getNetId(), msg, channelHandlerContext);
         } else {
             handler = HandlerManager.getHandler(ptoNum, gt.getUserId(), gt.getNetId(), msg,
-                    getGateAuthConnection());
+                getGateAuthConnection());
         }
 
         Worker.dispatch(gt.getUserId(), handler);
@@ -61,7 +61,7 @@ public class AuthServerHandler extends SimpleChannelInboundHandler<Message> {
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause)
-            throws Exception {
+        throws Exception {
         // super.exceptionCaught(ctx, cause);
         logger.error("An Exception Caught");
     }

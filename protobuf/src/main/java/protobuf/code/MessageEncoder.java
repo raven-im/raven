@@ -18,7 +18,7 @@ public class MessageEncoder extends MessageToByteEncoder<MessageLite> {
 
     @Override
     protected void encode(ChannelHandlerContext ctx, MessageLite msg, ByteBuf out)
-            throws Exception {
+        throws Exception {
         byte[] bytes = msg.toByteArray();// 将对象转换为byte
         int ptoNum = ParseMap.msg2ptoNum.get(msg.getClass());
         int length = bytes.length;
@@ -28,7 +28,7 @@ public class MessageEncoder extends MessageToByteEncoder<MessageLite> {
         buf.writeBytes(bytes);
         out.writeBytes(buf);
         logger.info("Send Message, remoteAddress:{}, content:{}, ptoNum:{}",
-                ctx.channel().remoteAddress(), msg.toString(), ptoNum);
+            ctx.channel().remoteAddress(), msg.toString(), ptoNum);
 
     }
 }

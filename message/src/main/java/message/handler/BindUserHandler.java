@@ -1,12 +1,10 @@
 package message.handler;
 
 import com.google.protobuf.MessageLite;
-import common.connection.Connection;
-import common.connection.ConnectionManager;
+import common.connection.ChannelManager;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import message.MessageStarter;
-import message.utils.NettyConnection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import protobuf.protos.Auth.Login;
@@ -15,17 +13,15 @@ import protobuf.protos.ResponseEnum;
 import protobuf.utils.ProtoConstants;
 
 /**
- * Author zxx
- * Description 登录验证、绑定连接
- * Date Created on 2018/5/25
+ * Author zxx Description 登录验证、绑定连接 Date Created on 2018/5/25
  */
 public class BindUserHandler extends SimpleChannelInboundHandler<MessageLite> {
 
     private static final Logger logger = LoggerFactory.getLogger(BindUserHandler.class);
 
-    private final ConnectionManager connectionManager;
+    private final ChannelManager connectionManager;
 
-    public BindUserHandler(ConnectionManager connectionManager) {
+    public BindUserHandler(ChannelManager connectionManager) {
         this.connectionManager = connectionManager;
     }
 
@@ -33,26 +29,23 @@ public class BindUserHandler extends SimpleChannelInboundHandler<MessageLite> {
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         // channelId映射connection
         logger.info("client connected remote address:{},id:{}", ctx.channel().remoteAddress(),
-                ctx.channel().id().asShortText());
-        Connection connection = new NettyConnection();
-        connection.init(ctx.channel());
-        connectionManager.addConnection(connection);
+            ctx.channel().id().asShortText());
     }
 
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext,
-            MessageLite messageLite) throws Exception {
+        MessageLite messageLite) throws Exception {
         // uid映射connection
         if (messageLite instanceof Login) {
-            String uid = ((Login) messageLite).getToken();
-            // todo 校验uid
-            connectionManager.addUid2Connection(uid, channelHandlerContext.channel());
+            String token = ((Login) messageLite).getToken();
+            // todo 校验token
+            connectionManager.addUid2Channel(token, channelHandlerContext.channel());
             Response response = Response.newBuilder()
-                    .setCode(ResponseEnum.SUCCESS.code)
-                    .setMsg(ResponseEnum.SUCCESS.msg)
-                    .setProtonum(ProtoConstants.RESPONSE)
-                    .setMsgid(MessageStarter.SnowFlake.nextId())
-                    .build();
+                .setCode(ResponseEnum.SUCCESS.code)
+                .setMsg(ResponseEnum.SUCCESS.msg)
+                .setProtonum(ProtoConstants.RESPONSE)
+                .setMsgid(MessageStarter.SnowFlake.nextId())
+                .build();
             channelHandlerContext.channel().writeAndFlush(response);
         }
         channelHandlerContext.fireChannelRead(messageLite);
@@ -60,15 +53,24 @@ public class BindUserHandler extends SimpleChannelInboundHandler<MessageLite> {
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-        Connection connection = connectionManager.getConnection(ctx.channel());
-        logger.error("caught an ex, channelId:{}, uid:{},ex:{}", ctx.channel().id().asShortText(), connection.getUid(), cause);
+        String uid = connectionManager.getUidByChannel(ctx.channel());
+        logger.error("caught an ex, channelId:{}, uid:{},ex:{}", ctx.channel().id().asShortText(),
+            uid, cause);
         ctx.close();
+
     }
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-        Connection connection = connectionManager.removeAndClose(ctx.channel());
-        logger.info("client disconnected channelId:{},uid:{}", ctx.channel().id().asShortText(),connection.getUid());
+        String uid = connectionManager.getUidByChannel(ctx.channel());
+        logger.info("client disconnected channelId:{},uid:{}", ctx.channel().id().asShortText(),
+            uid);
+    }
+
+    @Override
+    public void handlerRemoved(ChannelHandlerContext ctx) throws Exception {
+        connectionManager.removeChannel(ctx.channel());
+        super.handlerRemoved(ctx);
     }
 }
 

@@ -11,17 +11,15 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import java.net.InetSocketAddress;
 import message.handler.BindUserHandler;
 import message.handler.PrivateMessageHandler;
-import message.utils.NettyConnectionManager;
+import message.utils.NettyChannelManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import protobuf.utils.ParseRegistryMap;
 import protobuf.code.MessageDecoder;
 import protobuf.code.MessageEncoder;
+import protobuf.utils.ParseRegistryMap;
 
 /**
- * Author zxx
- * Description 消息服务
- * Date Created on 2018/5/25
+ * Author zxx Description 消息服务 Date Created on 2018/5/25
  */
 public class MessageServer {
 
@@ -31,21 +29,21 @@ public class MessageServer {
         EventLoopGroup bossGroup = new NioEventLoopGroup();
         EventLoopGroup workGroup = new NioEventLoopGroup();
         ServerBootstrap bootstrap = new ServerBootstrap()
-                .group(bossGroup, workGroup)
-                .channel(NioServerSocketChannel.class)
-                .childHandler(new ChannelInitializer<SocketChannel>() {
-                    @Override
-                    protected void initChannel(SocketChannel channel)
-                            throws Exception {
-                        ChannelPipeline pipeline = channel.pipeline();
-                        pipeline.addLast("MessageDecoder", new MessageDecoder());
-                        pipeline.addLast("MessageEncoder", new MessageEncoder());
-                        pipeline.addLast("MessageServerHandler",
-                                new BindUserHandler(NettyConnectionManager.getInstance()));
-                        pipeline.addLast("PrivateMessageHandler",
-                                new PrivateMessageHandler(NettyConnectionManager.getInstance()));
-                    }
-                });
+            .group(bossGroup, workGroup)
+            .channel(NioServerSocketChannel.class)
+            .childHandler(new ChannelInitializer<SocketChannel>() {
+                @Override
+                protected void initChannel(SocketChannel channel)
+                    throws Exception {
+                    ChannelPipeline pipeline = channel.pipeline();
+                    pipeline.addLast("MessageDecoder", new MessageDecoder());
+                    pipeline.addLast("MessageEncoder", new MessageEncoder());
+                    pipeline.addLast("MessageServerHandler",
+                        new BindUserHandler(NettyChannelManager.getInstance()));
+                    pipeline.addLast("PrivateMessageHandler",
+                        new PrivateMessageHandler(NettyChannelManager.getInstance()));
+                }
+            });
         bindConnectionOptions(bootstrap);
         bootstrap.bind(new InetSocketAddress(port)).addListener(future -> {
             if (future.isSuccess()) {

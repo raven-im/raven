@@ -32,7 +32,7 @@ public class LoginHandler extends IMHandler {
             return;
         } else {
             byte[] userIdBytes = jedis
-                    .hget(UserUtils.genDBKey(uid), UserUtils.userFileds.Account.field);
+                .hget(UserUtils.genDBKey(uid), UserUtils.userFileds.Account.field);
             account = DBOperator.Deserialize(new Account(), userIdBytes);
         }
         if (account.getUserid().equals(uid) && account.getPasswd().equals(msg.getPasswd())) {
@@ -41,7 +41,7 @@ public class LoginHandler extends IMHandler {
             logger.info("userid: {} verify passed", uid);
         } else {
             RouteUtil.sendResponse(Common.VERYFY_ERROR, "Account not exist or passwd error", netid,
-                    uid);
+                uid);
             logger.info("userid: {} verify failed", uid);
         }
     }

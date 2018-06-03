@@ -24,6 +24,8 @@ public final class NettyChannelManager implements ChannelManager {
         return connectionManager;
     }
 
+    private NettyChannelManager() {
+    }
 
     @Override
     public void addUid2Channel(String uid, Channel channel) {

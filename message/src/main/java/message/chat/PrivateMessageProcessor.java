@@ -32,6 +32,9 @@ public class PrivateMessageProcessor implements BaseMessageProcessor {
         return privateMessageProcessor;
     }
 
+    private PrivateMessageProcessor() {
+    }
+
     @Override
     public void process(MessageLite messageLite, ChannelHandlerContext context) {
         UpStreamMessageProto upMessage = (UpStreamMessageProto) messageLite;

@@ -27,6 +27,9 @@ public class LoginAuthProcessor implements BaseMessageProcessor {
         return loginAuth;
     }
 
+    private LoginAuthProcessor() {
+    }
+
     @Override
     public void process(MessageLite messageLite, ChannelHandlerContext context) {
         String token = ((Login) messageLite).getToken();

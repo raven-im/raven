@@ -9,7 +9,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Author zxx Description 消息服务启动器 Date Created on 2018/5/25
+ * Author zxx D
+ * escription 消息服务启动器
+ * Date Created on 2018/5/25
  */
 public class MessageStarter {
 
@@ -36,7 +38,6 @@ public class MessageStarter {
         redisPoolManager = new RedisPoolManager();
         redisPoolManager.REDIS_SERVER = prop.getProperty("redis.ip");
         redisPoolManager.REDIS_PORT = Integer.parseInt(prop.getProperty("redis.port"));
-        redisPoolManager.returnJedis(redisPoolManager.getJedis());
         logger.info("Redis init successed");
         SnowFlake = new SnowFlake(1, 1);
         // Start Servers

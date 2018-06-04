@@ -48,9 +48,4 @@ public class LoginAuthProcessor implements BaseMessageProcessor {
         channel.writeAndFlush(response);
     }
 
-    @Override
-    public void storeOfflineMsg(MessageLite messageLite, String uid) {
-
-    }
-
 }

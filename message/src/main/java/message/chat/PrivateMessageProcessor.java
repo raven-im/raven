@@ -1,6 +1,8 @@
 package message.chat;
 
 import com.google.protobuf.MessageLite;
+import common.utils.Constants;
+import common.utils.GsonHelper;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import java.util.List;
@@ -13,6 +15,7 @@ import protobuf.protos.MessageProto.DownStreamMessageProto;
 import protobuf.protos.MessageProto.MsgType;
 import protobuf.protos.MessageProto.UpStreamMessageProto;
 import protobuf.utils.ProtoConstants;
+import redis.clients.jedis.Jedis;
 
 /**
  * Author zxx
@@ -55,13 +58,15 @@ public class PrivateMessageProcessor implements BaseMessageProcessor {
                 channels
                     .forEach(channel -> channel.writeAndFlush(dowmMessage));
             } else {
-                // TODO 离线消息存储
+                storeOfflineMsg(dowmMessage, uid);
             }
         });
     }
 
-    @Override
-    public void storeOfflineMsg(MessageLite messageLite, String uid) {
-
+    private void storeOfflineMsg(MessageLite messageLite, String uid) {
+        Jedis jedis = MessageStarter.redisPoolManager.getJedis();
+        DownStreamMessageProto downMessage = (DownStreamMessageProto) messageLite;
+        jedis.zadd(Constants.OFF_MSG_KEY + uid, downMessage.getMsgid(),
+            GsonHelper.getGson().toJson(downMessage));
     }
 }

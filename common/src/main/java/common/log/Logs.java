@@ -2,11 +2,10 @@ package common.log;
 
 import static ch.qos.logback.classic.util.ContextInitializer.CONFIG_FILE_PROPERTY;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
- * Author zxx Description Date Created on 2018/5/12
+ * Author zxx
+ * Description log配置
+ * Date Created on 2018/5/12
  */
 public interface Logs {
 
@@ -19,7 +18,5 @@ public interface Logs {
         System.setProperty(CONFIG_FILE_PROPERTY, "common/src/main/resources/logback.xml");
         return true;
     }
-
-    Logger Console = LoggerFactory.getLogger("console");
 
 }

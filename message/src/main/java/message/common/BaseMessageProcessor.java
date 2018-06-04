@@ -12,7 +12,4 @@ public interface BaseMessageProcessor {
 
     void process(MessageLite messageLite, ChannelHandlerContext context);
 
-    void storeOfflineMsg(MessageLite messageLite, String uid);
-
-
 }

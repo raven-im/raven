@@ -7,14 +7,16 @@ import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
 /**
- * Redis连接池管理器
+ * Author zxx
+ * Description Redis连接池管理器
+ * Date Created on 2018/5/25
  */
 public class RedisPoolManager {
 
     private static final Logger logger = LoggerFactory.getLogger(RedisPoolManager.class);
 
     public String REDIS_SERVER = "localhost";
-    public int REDIS_PORT = 6666;
+    public int REDIS_PORT = 3306;
     private JedisPool pool = null;
 
     private JedisPool getInstance() {
@@ -22,10 +24,8 @@ public class RedisPoolManager {
             JedisPoolConfig config = new JedisPoolConfig();
             config.setMaxTotal(1000);
             config.setMaxIdle(20);
-            config.setMaxWaitMillis(10 * 1000l);
+            config.setMaxWaitMillis(10 * 1000);
             config.setTestOnBorrow(true);
-            config.setTestOnReturn(true);
-
             pool = new JedisPool(config, REDIS_SERVER, REDIS_PORT, 10);
         }
         return pool;
@@ -38,45 +38,9 @@ public class RedisPoolManager {
         Jedis jedis = null;
         try {
             jedis = getInstance().getResource();
-            // jedis.auth(REDIS_AUTH);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }
-
         return jedis;
-
-    }
-
-    /**
-     * 返回jedis
-     */
-    public void returnJedis(Jedis jedis) {
-        try {
-            if (jedis != null) {
-                getInstance().returnResource(jedis);
-            }
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-        }
-    }
-
-    /**
-     * 返回关闭的redis
-     */
-    public void returnBrokenJedis(Jedis jedis) {
-        try {
-            if (jedis != null) {
-                getInstance().returnBrokenResource(jedis);
-            }
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-        }
-    }
-
-    /**
-     * 释放jedis
-     */
-    public void releaseJedis(Jedis jedis) {
-        pool.returnResource(jedis);
     }
 }

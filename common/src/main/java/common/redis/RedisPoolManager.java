@@ -16,7 +16,7 @@ public class RedisPoolManager {
     private static final Logger logger = LoggerFactory.getLogger(RedisPoolManager.class);
 
     public String REDIS_SERVER = "localhost";
-    public int REDIS_PORT = 3306;
+    public int REDIS_PORT = 6379;
     private JedisPool pool = null;
 
     private JedisPool getInstance() {

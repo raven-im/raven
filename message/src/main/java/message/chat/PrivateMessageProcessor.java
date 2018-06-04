@@ -44,7 +44,7 @@ public class PrivateMessageProcessor implements BaseMessageProcessor {
         List<String> uids = upMessage.getTouidList();
         String fromUid = NettyChannelManager.getInstance().getUidByChannel(context.channel());
         logger.debug("fromUid:{}", fromUid);
-        MessageLite dowmMessage = DownStreamMessageProto.newBuilder()
+        DownStreamMessageProto dowmMessage = DownStreamMessageProto.newBuilder()
             .setFromuid(fromUid)
             .setProtonum(ProtoConstants.DOWNPRIVATEMESSAGE)
             .setContent(upMessage.getContentBytes())
@@ -57,15 +57,15 @@ public class PrivateMessageProcessor implements BaseMessageProcessor {
             if (null != channels) {
                 channels
                     .forEach(channel -> channel.writeAndFlush(dowmMessage));
+                storeOfflineMsg(dowmMessage, uid);
             } else {
                 storeOfflineMsg(dowmMessage, uid);
             }
         });
     }
 
-    private void storeOfflineMsg(MessageLite messageLite, String uid) {
+    private void storeOfflineMsg(DownStreamMessageProto downMessage, String uid) {
         Jedis jedis = MessageStarter.redisPoolManager.getJedis();
-        DownStreamMessageProto downMessage = (DownStreamMessageProto) messageLite;
         jedis.zadd(Constants.OFF_MSG_KEY + uid, downMessage.getMsgid(),
             GsonHelper.getGson().toJson(downMessage));
     }

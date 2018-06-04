@@ -38,7 +38,7 @@ public class MessageStarter {
         redisPoolManager = new RedisPoolManager();
         redisPoolManager.REDIS_SERVER = prop.getProperty("redis.ip");
         redisPoolManager.REDIS_PORT = Integer.parseInt(prop.getProperty("redis.port"));
-        logger.info("Redis init successed");
+        redisPoolManager.getJedis();
         SnowFlake = new SnowFlake(1, 1);
         // Start Servers
         new Thread(() -> MessageServer.startMessageServer(messageListenPort)).start();

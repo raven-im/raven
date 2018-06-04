@@ -8,7 +8,7 @@
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
-        <module>auth</module>
+        <module>logic</module>
         <module>message</module>
         <module>protobuf</module>
         <module>common</module>

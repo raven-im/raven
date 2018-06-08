@@ -9,5 +9,7 @@ public class ProtoConstants {
     public static final int RESPONSE = 1001;
     public static final int UPPRIVATEMESSAGE = 1002;
     public static final int DOWNPRIVATEMESSAGE = 1003;
+    public static final int MESSAGERES = 1004;
+    public static final int BEAT = 1005;
 
 }

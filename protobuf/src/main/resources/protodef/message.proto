@@ -6,10 +6,10 @@ option optimize_for = LITE_RUNTIME; //SPEED;
 
 //上行单聊消息
 message UpStreamMessageProto {
-    repeated string touid = 2; //消息目标的userid
-    uint32 protonum = 3; //消息类型
-    string content = 4; //内容
-    uint64 sendtime = 5; //发送时间
+    repeated string touid = 1; //消息目标的userid
+    uint32 protonum = 2; //消息类型
+    string content = 3; //内容
+    uint64 sendtime = 4; //发送时间
 }
 
 //消息类型

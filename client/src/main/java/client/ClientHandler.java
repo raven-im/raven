@@ -7,11 +7,15 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicLong;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import protobuf.protos.Auth;
-import protobuf.protos.MessageProto;
+import protobuf.protos.Auth.Login;
+import protobuf.protos.HeartBeat.Beat;
+import protobuf.protos.MessageProto.UpStreamMessageProto;
 import protobuf.utils.ProtoConstants;
 
 /**
@@ -33,10 +37,11 @@ public class ClientHandler extends SimpleChannelInboundHandler<MessageLite> {
     }
 
     private void sendLogin(ChannelHandlerContext ctx, String uid) {
-        Auth.Login.Builder login = Auth.Login.newBuilder();
-        login.setToken(uid);
-        login.setProtonum(ProtoConstants.LOGIN);
-        ByteBuf byteBuf = Utils.pack2Client(login.build());
+        Login login = Login.newBuilder()
+            .setToken(uid)
+            .setProtonum(ProtoConstants.LOGIN)
+            .build();
+        ByteBuf byteBuf = Utils.pack2Client(login);
         ctx.writeAndFlush(byteBuf);
     }
 
@@ -46,20 +51,23 @@ public class ClientHandler extends SimpleChannelInboundHandler<MessageLite> {
         if (msg instanceof Auth.Response) {
             Thread.sleep(2000);
             sendPrivateMessage();
+            Timer timer = new Timer();
+            timer.schedule(new HeartBeatTask(), 20*1000, 20*1000);
         }
     }
 
     private void sendPrivateMessage() {
         String content = "Hello World!";
-        MessageProto.UpStreamMessageProto.Builder msg = MessageProto.UpStreamMessageProto
-            .newBuilder();
-        msg.setContent(content);
         List<String> uids = new ArrayList<>();
         uids.add(String.valueOf((int) (Math.random() * 10) % 10 + 1));
-        msg.addAllTouid(uids);
-        msg.setProtonum(ProtoConstants.UPPRIVATEMESSAGE);
-        msg.setSendtime(System.currentTimeMillis());
-        ByteBuf byteBuf = Utils.pack2Client(msg.build());
+        UpStreamMessageProto msg = UpStreamMessageProto
+            .newBuilder()
+            .setContent(content)
+            .addAllTouid(uids)
+            .setProtonum(ProtoConstants.UPPRIVATEMESSAGE)
+            .setSendtime(System.currentTimeMillis())
+            .build();
+        ByteBuf byteBuf = Utils.pack2Client(msg);
         messageConnectionCtx.channel().writeAndFlush(byteBuf);
     }
 
@@ -71,5 +79,15 @@ public class ClientHandler extends SimpleChannelInboundHandler<MessageLite> {
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
         cause.printStackTrace();
         ctx.close();
+    }
+
+    class HeartBeatTask extends TimerTask {
+
+        @Override
+        public void run() {
+            Beat beat = Beat.newBuilder().setHeartbeat("HeartBeat").build();
+            ByteBuf byteBuf = Utils.pack2Client(beat);
+            messageConnectionCtx.channel().writeAndFlush(byteBuf);
+        }
     }
 }

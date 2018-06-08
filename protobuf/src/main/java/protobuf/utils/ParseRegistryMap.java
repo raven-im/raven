@@ -1,10 +1,14 @@
 package protobuf.utils;
 
+import protobuf.protos.Ack;
 import protobuf.protos.Auth;
+import protobuf.protos.HeartBeat;
 import protobuf.protos.MessageProto;
 
 /**
- * Author zxx Description 注册消息协议号与消息转化方法和类型 Date Created on 2018/5/12
+ * Author zxx
+ * Description 注册消息协议号与消息转化方法和类型
+ * Date Created on 2018/5/12
  */
 public class ParseRegistryMap {
 
@@ -17,5 +21,8 @@ public class ParseRegistryMap {
         ParseMap.register(ProtoConstants.DOWNPRIVATEMESSAGE,
             MessageProto.DownStreamMessageProto::parseFrom,
             MessageProto.DownStreamMessageProto.class);
+        ParseMap.register(ProtoConstants.MESSAGERES, Ack.MessageRes::parseFrom, Ack.MessageRes.class);
+        ParseMap.register(ProtoConstants.BEAT, HeartBeat.Beat::parseFrom, HeartBeat.Beat.class);
+
     }
 }

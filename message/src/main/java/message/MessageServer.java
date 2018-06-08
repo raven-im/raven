@@ -8,10 +8,12 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.timeout.IdleStateHandler;
 import java.net.InetSocketAddress;
+import java.util.concurrent.TimeUnit;
+import message.channel.NettyChannelManager;
 import message.handler.LoginAuthHandler;
 import message.handler.PrivateMessageHandler;
-import message.channel.NettyChannelManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import protobuf.code.MessageDecoder;
@@ -36,12 +38,17 @@ public class MessageServer {
                 protected void initChannel(SocketChannel channel)
                     throws Exception {
                     ChannelPipeline pipeline = channel.pipeline();
+                    pipeline
+                        .addLast("IdleStateHandler",
+                            new IdleStateHandler(25, 0, 0, TimeUnit.SECONDS));
                     pipeline.addLast("MessageDecoder", new MessageDecoder());
                     pipeline.addLast("MessageEncoder", new MessageEncoder());
                     pipeline.addLast("MessageServerHandler",
                         new LoginAuthHandler(NettyChannelManager.getInstance()));
                     pipeline.addLast("PrivateMessageHandler",
-                        new PrivateMessageHandler(NettyChannelManager.getInstance()));
+                        new PrivateMessageHandler());
+
+
                 }
             });
         bindConnectionOptions(bootstrap);
@@ -60,7 +67,6 @@ public class MessageServer {
         bootstrap.childOption(ChannelOption.SO_LINGER, 0);
         bootstrap.childOption(ChannelOption.TCP_NODELAY, true);
         bootstrap.childOption(ChannelOption.SO_REUSEADDR, true); //调试用
-        bootstrap.childOption(ChannelOption.SO_KEEPALIVE, true); //心跳机制暂时使用TCP选项，之后再自己实现
     }
 
 }

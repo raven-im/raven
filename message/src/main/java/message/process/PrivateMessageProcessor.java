@@ -1,4 +1,4 @@
-package message.chat;
+package message.process;
 
 import com.google.protobuf.MessageLite;
 import common.utils.Constants;
@@ -55,9 +55,9 @@ public class PrivateMessageProcessor implements BaseMessageProcessor {
         uids.forEach(uid -> {
             List<Channel> channels = NettyChannelManager.getInstance().getChannelByUid(uid);
             if (null != channels) {
+                storeOfflineMsg(dowmMessage, uid);
                 channels
                     .forEach(channel -> channel.writeAndFlush(dowmMessage));
-                storeOfflineMsg(dowmMessage, uid);
             } else {
                 storeOfflineMsg(dowmMessage, uid);
             }

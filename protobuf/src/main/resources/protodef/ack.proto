@@ -1,0 +1,10 @@
+syntax = "proto3";
+package protobuf.protos;
+
+option java_outer_classname = "Ack";
+option optimize_for = LITE_RUNTIME; //SPEED;
+
+message MessageRes {
+    uint64 msgid = 1; //消息唯一标示
+    uint64 sendtime = 2; //消息时间
+}

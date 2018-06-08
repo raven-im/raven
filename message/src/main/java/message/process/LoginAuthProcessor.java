@@ -1,4 +1,4 @@
-package message.login;
+package message.process;
 
 import com.google.protobuf.MessageLite;
 import io.netty.channel.Channel;
@@ -18,13 +18,13 @@ import protobuf.utils.ProtoConstants;
  */
 public class LoginAuthProcessor implements BaseMessageProcessor {
 
-    private static LoginAuthProcessor loginAuth;
+    private static LoginAuthProcessor loginAuthProcessor;
 
     public static synchronized LoginAuthProcessor getInstance() {
-        if (loginAuth == null) {
-            loginAuth = new LoginAuthProcessor();
+        if (loginAuthProcessor == null) {
+            loginAuthProcessor = new LoginAuthProcessor();
         }
-        return loginAuth;
+        return loginAuthProcessor;
     }
 
     private LoginAuthProcessor() {
@@ -34,8 +34,8 @@ public class LoginAuthProcessor implements BaseMessageProcessor {
     public void process(MessageLite messageLite, ChannelHandlerContext context) {
         String token = ((Login) messageLite).getToken();
         // todo 校验token
-        pulishMsg(ResponseEnum.SUCCESS, context.channel());
         NettyChannelManager.getInstance().addUid2Channel(token, context.channel());
+        pulishMsg(ResponseEnum.SUCCESS, context.channel());
     }
 
     private void pulishMsg(ResponseEnum responseEnum, Channel channel) {

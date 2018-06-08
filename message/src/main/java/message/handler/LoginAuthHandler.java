@@ -3,8 +3,10 @@ package message.handler;
 import com.google.protobuf.MessageLite;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.handler.timeout.IdleState;
+import io.netty.handler.timeout.IdleStateEvent;
 import message.common.ChannelManager;
-import message.login.LoginAuthProcessor;
+import message.process.LoginAuthProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import protobuf.protos.Auth.Login;
@@ -57,5 +59,18 @@ public class LoginAuthHandler extends SimpleChannelInboundHandler<MessageLite> {
         connectionManager.removeChannel(ctx.channel());
     }
 
+    // 心跳
+    @Override
+    public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
+        if (evt instanceof IdleStateEvent) {
+            if (((IdleStateEvent) evt).state() == IdleState.READER_IDLE) {
+                String uid = connectionManager.getUidByChannel(ctx.channel());
+                logger.info("uid:{} read idle", uid);
+                ctx.channel().close();
+            }
+        } else {
+            super.userEventTriggered(ctx, evt);
+        }
+    }
 }
 

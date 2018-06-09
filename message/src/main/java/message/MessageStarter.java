@@ -9,8 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Author zxx D
- * escription 消息服务启动器
+ * Author zxx
+ * Description 消息服务启动器
  * Date Created on 2018/5/25
  */
 public class MessageStarter {

@@ -11,7 +11,6 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.timeout.IdleStateHandler;
 import java.net.InetSocketAddress;
 import java.util.concurrent.TimeUnit;
-import message.channel.NettyChannelManager;
 import message.handler.LoginAuthHandler;
 import message.handler.PrivateMessageHandler;
 import org.slf4j.Logger;
@@ -38,17 +37,12 @@ public class MessageServer {
                 protected void initChannel(SocketChannel channel)
                     throws Exception {
                     ChannelPipeline pipeline = channel.pipeline();
-                    pipeline
-                        .addLast("IdleStateHandler",
-                            new IdleStateHandler(25, 0, 0, TimeUnit.SECONDS));
+                    pipeline.addLast("IdleStateHandler",
+                        new IdleStateHandler(25, 0, 0, TimeUnit.SECONDS));
                     pipeline.addLast("MessageDecoder", new MessageDecoder());
                     pipeline.addLast("MessageEncoder", new MessageEncoder());
-                    pipeline.addLast("MessageServerHandler",
-                        new LoginAuthHandler(NettyChannelManager.getInstance()));
-                    pipeline.addLast("PrivateMessageHandler",
-                        new PrivateMessageHandler());
-
-
+                    pipeline.addLast("MessageServerHandler", new LoginAuthHandler());
+                    pipeline.addLast("PrivateMessageHandler", new PrivateMessageHandler());
                 }
             });
         bindConnectionOptions(bootstrap);

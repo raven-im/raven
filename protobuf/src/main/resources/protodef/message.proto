@@ -10,6 +10,7 @@ message UpStreamMessageProto {
     uint32 protonum = 2; //消息类型
     string content = 3; //内容
     uint64 sendtime = 4; //发送时间
+    uint64 msgid = 5; //消息唯一标示
 }
 
 //消息类型

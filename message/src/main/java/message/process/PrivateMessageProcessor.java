@@ -48,7 +48,8 @@ public class PrivateMessageProcessor implements BaseMessageProcessor {
             .setFromuid(fromUid)
             .setProtonum(ProtoConstants.DOWNPRIVATEMESSAGE)
             .setContent(upMessage.getContentBytes())
-            .setMsgid(MessageStarter.SnowFlake.nextId())
+            .setMsgid(upMessage.getMsgid() == 0 ? MessageStarter.SnowFlake.nextId()
+                : upMessage.getMsgid())
             .setSendtime(upMessage.getSendtime())
             .setType(MsgType.PERSON)
             .build();

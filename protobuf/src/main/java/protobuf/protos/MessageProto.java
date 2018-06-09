@@ -173,6 +173,15 @@ public final class MessageProto {
      * <code>uint64 sendtime = 4;</code>
      */
     long getSendtime();
+
+    /**
+     * <pre>
+     *消息唯一标示
+     * </pre>
+     *
+     * <code>uint64 msgid = 5;</code>
+     */
+    long getMsgid();
   }
   /**
    * <pre>
@@ -447,6 +456,41 @@ public final class MessageProto {
       sendtime_ = 0L;
     }
 
+    public static final int MSGID_FIELD_NUMBER = 5;
+    private long msgid_;
+    /**
+     * <pre>
+     *消息唯一标示
+     * </pre>
+     *
+     * <code>uint64 msgid = 5;</code>
+     */
+    public long getMsgid() {
+      return msgid_;
+    }
+    /**
+     * <pre>
+     *消息唯一标示
+     * </pre>
+     *
+     * <code>uint64 msgid = 5;</code>
+     */
+    private void setMsgid(long value) {
+      
+      msgid_ = value;
+    }
+    /**
+     * <pre>
+     *消息唯一标示
+     * </pre>
+     *
+     * <code>uint64 msgid = 5;</code>
+     */
+    private void clearMsgid() {
+      
+      msgid_ = 0L;
+    }
+
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       for (int i = 0; i < touid_.size(); i++) {
@@ -460,6 +504,9 @@ public final class MessageProto {
       }
       if (sendtime_ != 0L) {
         output.writeUInt64(4, sendtime_);
+      }
+      if (msgid_ != 0L) {
+        output.writeUInt64(5, msgid_);
       }
       unknownFields.writeTo(output);
     }
@@ -489,6 +536,10 @@ public final class MessageProto {
       if (sendtime_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
           .computeUInt64Size(4, sendtime_);
+      }
+      if (msgid_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt64Size(5, msgid_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSerializedSize = size;
@@ -832,6 +883,41 @@ public final class MessageProto {
         return this;
       }
 
+      /**
+       * <pre>
+       *消息唯一标示
+       * </pre>
+       *
+       * <code>uint64 msgid = 5;</code>
+       */
+      public long getMsgid() {
+        return instance.getMsgid();
+      }
+      /**
+       * <pre>
+       *消息唯一标示
+       * </pre>
+       *
+       * <code>uint64 msgid = 5;</code>
+       */
+      public Builder setMsgid(long value) {
+        copyOnWrite();
+        instance.setMsgid(value);
+        return this;
+      }
+      /**
+       * <pre>
+       *消息唯一标示
+       * </pre>
+       *
+       * <code>uint64 msgid = 5;</code>
+       */
+      public Builder clearMsgid() {
+        copyOnWrite();
+        instance.clearMsgid();
+        return this;
+      }
+
       // @@protoc_insertion_point(builder_scope:protobuf.protos.UpStreamMessageProto)
     }
     @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
@@ -862,6 +948,8 @@ public final class MessageProto {
               !other.content_.isEmpty(), other.content_);
           sendtime_ = visitor.visitLong(sendtime_ != 0L, sendtime_,
               other.sendtime_ != 0L, other.sendtime_);
+          msgid_ = visitor.visitLong(msgid_ != 0L, msgid_,
+              other.msgid_ != 0L, other.msgid_);
           if (visitor == com.google.protobuf.GeneratedMessageLite.MergeFromVisitor
               .INSTANCE) {
             bitField0_ |= other.bitField0_;
@@ -913,6 +1001,11 @@ public final class MessageProto {
                 case 32: {
 
                   sendtime_ = input.readUInt64();
+                  break;
+                }
+                case 40: {
+
+                  msgid_ = input.readUInt64();
                   break;
                 }
               }

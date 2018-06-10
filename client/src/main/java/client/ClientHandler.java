@@ -10,8 +10,6 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicLong;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import protobuf.protos.Auth;
 import protobuf.protos.Auth.Login;
 import protobuf.protos.HeartBeat.Beat;
@@ -25,7 +23,6 @@ public class ClientHandler extends SimpleChannelInboundHandler<MessageLite> {
 
     private ChannelHandlerContext messageConnectionCtx;
 
-    private static final Logger logger = LoggerFactory.getLogger(ClientHandler.class);
     private String uid = "";
     private static AtomicLong increased = new AtomicLong(1);
 
@@ -52,7 +49,7 @@ public class ClientHandler extends SimpleChannelInboundHandler<MessageLite> {
             Thread.sleep(2000);
             sendPrivateMessage();
             Timer timer = new Timer();
-            timer.schedule(new HeartBeatTask(), 20*1000, 20*1000);
+            timer.schedule(new HeartBeatTask(), 20 * 1000, 20 * 1000);
         }
     }
 

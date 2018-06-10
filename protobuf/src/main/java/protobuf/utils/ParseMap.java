@@ -3,13 +3,13 @@ package protobuf.utils;
 import com.google.protobuf.MessageLite;
 import java.io.IOException;
 import java.util.HashMap;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 public class ParseMap {
 
-    private static final Logger logger = LoggerFactory.getLogger(ParseMap.class);
+    private static final Logger logger = LogManager.getLogger(ParseMap.class);
 
     public static HashMap<Integer, ParseMap.Parsing> parseMap = new HashMap<>();
     public static HashMap<Class<?>, Integer> msg2ptoNum = new HashMap<>();

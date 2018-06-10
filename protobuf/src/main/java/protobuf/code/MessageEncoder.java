@@ -5,8 +5,8 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import protobuf.utils.ParseMap;
 
 /**
@@ -14,7 +14,7 @@ import protobuf.utils.ParseMap;
  */
 public class MessageEncoder extends MessageToByteEncoder<MessageLite> {
 
-    private static final Logger logger = LoggerFactory.getLogger(MessageEncoder.class);
+    private static final Logger logger = LogManager.getLogger(MessageEncoder.class);
 
     @Override
     protected void encode(ChannelHandlerContext ctx, MessageLite msg, ByteBuf out)

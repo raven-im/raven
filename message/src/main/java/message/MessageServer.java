@@ -13,18 +13,20 @@ import java.net.InetSocketAddress;
 import java.util.concurrent.TimeUnit;
 import message.handler.LoginAuthHandler;
 import message.handler.PrivateMessageHandler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import protobuf.code.MessageDecoder;
 import protobuf.code.MessageEncoder;
 import protobuf.utils.ParseRegistryMap;
 
 /**
- * Author zxx Description 消息服务 Date Created on 2018/5/25
+ * Author zxx
+ * Description 消息服务
+ * Date Created on 2018/5/25
  */
 public class MessageServer {
 
-    private static final Logger logger = LoggerFactory.getLogger(MessageServer.class);
+    private static final Logger logger = LogManager.getLogger(MessageServer.class);
 
     public static void startMessageServer(int port) {
         EventLoopGroup bossGroup = new NioEventLoopGroup();

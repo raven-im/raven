@@ -1,7 +1,7 @@
 package common.redis;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
@@ -13,7 +13,7 @@ import redis.clients.jedis.JedisPoolConfig;
  */
 public class RedisPoolManager {
 
-    private static final Logger logger = LoggerFactory.getLogger(RedisPoolManager.class);
+    private static final Logger logger = LogManager.getLogger(RedisPoolManager.class);
 
     public String REDIS_SERVER = "localhost";
     public int REDIS_PORT = 6379;

@@ -1,0 +1,12 @@
+  _    _      _ _         _______ _
+ | |  | |    | | |       |__   __(_)
+ | |__| | ___| | | ___      | |   _ _ __ ___  _ __ ___  _   _
+ |  __  |/ _ \ | |/ _ \     | |  | | '_ ` _ \| '_ ` _ \| | | |
+ | |  | |  __/ | | (_) |    | |  | | | | | | | | | | | | |_| |
+ |_|  |_|\___|_|_|\___/     |_|  |_|_| |_| |_|_| |_| |_|\__, |
+                                                         __/ |
+                                                        |___/
+ ${AnsiColor.BLUE}
+ Application Version: ${application.version}
+ Spring Boot Version: ${spring-boot.version}
+ ${AnsiColor.BLACK}

@@ -8,8 +8,8 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import protobuf.code.MessageDecoder;
 import protobuf.code.MessageEncoder;
 import protobuf.utils.ParseRegistryMap;
@@ -25,7 +25,7 @@ public class Client {
     private static final int PORT = 7070;
     private static final int clientNum = 10;
 
-    private static final Logger logger = LoggerFactory.getLogger(Client.class);
+    private static final Logger logger = LogManager.getLogger(Client.class);
 
     public static void main(String[] args) throws Exception {
         beginPressTest();

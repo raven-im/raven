@@ -5,8 +5,8 @@ import common.utils.SnowFlake;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.Properties;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Author zxx
@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  */
 public class MessageStarter {
 
-    private static final Logger logger = LoggerFactory.getLogger(MessageStarter.class);
+    private static final Logger logger = LogManager.getLogger(MessageStarter.class);
     private static String cfg = "message/src/main/resources/message.properties";
     public static RedisPoolManager redisPoolManager;
     public static SnowFlake SnowFlake;

@@ -1,0 +1,43 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/imdb?useUnicode=true
+    username: root
+    password: 123456
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      initial-size: 10
+      max-active: 20
+      min-idle: 5
+      max-wait: 30000
+      validation-query: SELECT 1 FROM DUAL
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      time-between-eviction-runs-millis: 60000
+      time-between-connect-error-millis: 500
+      min-evictable-idle-time-millis: 300000
+      max-evictable-idle-time-millis: 600000
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      filters: stat,wall
+      connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+
+
+server:
+  contextPath: /timmy
+  session:
+    persistent: true
+
+# Mybatis
+mybatis:
+  mapperLocations: classpath:mapper/*Mapper.xml
+  config-location: classpath:mybatis-config.xml
+
+#通用mapper
+#mappers 多个接口时逗号隔开
+mapper:
+  mappers: logic.common.base.BaseMapper
+  not-empty: true
+  before: true
+  identity: mysql

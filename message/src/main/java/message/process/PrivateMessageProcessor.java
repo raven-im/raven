@@ -9,8 +9,8 @@ import java.util.List;
 import message.MessageStarter;
 import message.channel.NettyChannelManager;
 import message.common.BaseMessageProcessor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import protobuf.protos.MessageProto.DownStreamMessageProto;
 import protobuf.protos.MessageProto.MsgType;
 import protobuf.protos.MessageProto.UpStreamMessageProto;
@@ -24,7 +24,8 @@ import redis.clients.jedis.Jedis;
  */
 public class PrivateMessageProcessor implements BaseMessageProcessor {
 
-    private static final Logger logger = LoggerFactory.getLogger(PrivateMessageProcessor.class);
+    private static final Logger logger = LogManager.getLogger(
+        PrivateMessageProcessor.class);
 
     private static PrivateMessageProcessor privateMessageProcessor;
 

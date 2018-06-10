@@ -1,11 +1,11 @@
-package logic.pro.service.impl;
+package logic.user.service.impl;
 
-import logic.pro.service.ProService;
+import logic.group.service.GroupService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class ProServiceImpl implements ProService {
+public class UserServiceImpl implements GroupService {
 
 }

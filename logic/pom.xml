@@ -5,12 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.timmy</groupId>
     <artifactId>logic</artifactId>
-    <version>1.0.0-RELEASE</version>
-    <packaging>pom</packaging>
+    <version>1.0.0.RELEASE</version>
+    <packaging>jar</packaging>
     <parent>
         <groupId>com.github.timmy</groupId>
         <artifactId>timmy</artifactId>
-        <version>1.0.0-RELEASE</version>
+        <version>1.0.0.RELEASE</version>
     </parent>
     <dependencyManagement>
         <dependencies>

@@ -9,4 +9,4 @@
  ${AnsiColor.BLUE}
  Application Version: ${application.version}
  Spring Boot Version: ${spring-boot.version}
- ${AnsiColor.BLACK}
+ ${AnsiColor.WHITE}

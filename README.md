@@ -10,6 +10,7 @@
 * redis
 * mysql
 * flyway
+* spring boot
 
 ## 架构图
 

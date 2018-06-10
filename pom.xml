@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.timmy</groupId>
     <artifactId>timmy</artifactId>
-    <version>1.0.0-RELEASE</version>
+    <version>1.0.0.RELEASE</version>
     <packaging>pom</packaging>
     <modules>
         <module>logic</module>
@@ -37,17 +37,17 @@
             <dependency>
                 <groupId>com.github.timmy</groupId>
                 <artifactId>protobuf</artifactId>
-                <version>1.0.0-RELEASE</version>
+                <version>1.0.0.RELEASE</version>
             </dependency>
             <dependency>
                 <groupId>com.github.timmy</groupId>
                 <artifactId>common</artifactId>
-                <version>1.0.0-RELEASE</version>
+                <version>1.0.0.RELEASE</version>
             </dependency>
             <dependency>
                 <groupId>com.github.timmy</groupId>
                 <artifactId>message</artifactId>
-                <version>1.0.0-RELEASE</version>
+                <version>1.0.0.RELEASE</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

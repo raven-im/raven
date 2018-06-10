@@ -23,7 +23,6 @@ spring:
       filters: stat,wall
       connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
 
-
 server:
   contextPath: /timmy
   session:

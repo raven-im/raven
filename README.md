@@ -6,11 +6,10 @@
 
 * netty
 * protobuf
-* spring boot
+* spring boox相关
 * redis
 * mysql
 * flyway
-* spring boot
 
 ## 架构图
 

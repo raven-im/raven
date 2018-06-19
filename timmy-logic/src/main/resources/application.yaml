@@ -13,14 +13,20 @@ spring:
       validation-query: SELECT 1 FROM DUAL
       time-between-eviction-runs-millis: 60000
       min-evictable-idle-time-millis: 300000
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    pool:
+      max-active: 20
+      max-wait: 60000
+      max-idle: 5
+      min-idle: 1
+
 
 server:
   port: 8080
   servlet:
     contextPath: /timmy
-  session:
-    persistent: true
-
 # Mybatis
 mybatis:
   mapperLocations: classpath:mapper/*Mapper.xml

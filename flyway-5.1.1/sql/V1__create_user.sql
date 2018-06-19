@@ -4,7 +4,6 @@ CREATE TABLE IF NOT EXISTS `t_user` (
   `password` varchar(64) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '登录密码',
   `create_dt` datetime(3) DEFAULT NULL,
   `update_dt` datetime(3) DEFAULT NULL,
-  `pwdsalt` varchar(36) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '密码加密用的salt',
   `mobile` varchar(16) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '电话',
   `email` varchar(64) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '邮箱',
   `name` varchar(16) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '名字',

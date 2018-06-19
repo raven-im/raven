@@ -26,8 +26,6 @@ public class UserModel implements Serializable {
     @Column
     private Date update_dt;
     @Column
-    private String pwdsalt;
-    @Column
     private String mobile;
     @Column
     private String email;
@@ -76,14 +74,6 @@ public class UserModel implements Serializable {
 
     public void setUpdate_dt(Date update_dt) {
         this.update_dt = update_dt;
-    }
-
-    public String getPwdsalt() {
-        return pwdsalt;
-    }
-
-    public void setPwdsalt(String pwdsalt) {
-        this.pwdsalt = pwdsalt;
     }
 
     public String getMobile() {

@@ -12,9 +12,6 @@ public class DateTimeUtils {
 
     public static Date currentUTC() {
         Calendar cal = Calendar.getInstance();
-        int zoneOffset = cal.get(Calendar.ZONE_OFFSET);
-//        int dstOffset = cal.get(Calendar.DST_OFFSET);
-//        cal.add(Calendar.MILLISECOND, -(zoneOffset));
         return cal.getTime();
     }
 

@@ -1,10 +1,10 @@
 syntax = "proto3";
-package protobuf.protos;
+package cn.timmy.proto.protos;
 
 option java_outer_classname = "Ack";
 option optimize_for = LITE_RUNTIME; //SPEED;
 
 message MessageRes {
     uint64 msgid = 1; //消息唯一标示
-    uint64 sendtime = 2; //消息时间
+    int32 status = 2; //消息状态 0：接收成功 1：非好友拒绝
 }

@@ -1,4 +1,4 @@
-package cn.timmy.logic.user.bean;
+package cn.timmy.logic.user.bean.param;
 
 /**
  * Author zxx

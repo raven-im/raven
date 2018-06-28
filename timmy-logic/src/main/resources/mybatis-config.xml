@@ -7,8 +7,8 @@
     <typeAliases>
         <package name="java.lang"/>
         <package name="java.util"/>
-        <package name="cn.timmy.logic.group.bean"/>
-        <package name="cn.timmy.logic.group.bean"/>
+        <package name="cn.timmy.logic.user.bean.model"/>
+        <package name="cn.timmy.logic.friend.bean.model"/>
     </typeAliases>
 </configuration>
 

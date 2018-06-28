@@ -1,8 +1,9 @@
-package cn.timmy.logic.user.bean;
+package cn.timmy.logic.user.bean.model;
 
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -16,7 +17,10 @@ public class UserModel implements Serializable {
 
     private static final long serialVersionUID = -9163785798194244528L;
     @Id
-    private Long uid;
+    @GeneratedValue(generator = "JDBC")
+    private Long id;
+    @Column
+    private String uid;
     @Column
     private String username;
     @Column
@@ -35,14 +39,6 @@ public class UserModel implements Serializable {
     private String portrait_url;
     @Column
     private Integer status;
-
-    public Long getUid() {
-        return uid;
-    }
-
-    public void setUid(Long uid) {
-        this.uid = uid;
-    }
 
     public String getUsername() {
         return username;
@@ -114,5 +110,21 @@ public class UserModel implements Serializable {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 }

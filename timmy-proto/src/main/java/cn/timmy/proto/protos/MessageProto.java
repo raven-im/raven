@@ -13,7 +13,7 @@ public final class MessageProto {
    *消息类型
    * </pre>
    *
-   * Protobuf enum {@code protobuf.protos.MsgType}
+   * Protobuf enum {@code cn.timmy.proto.protos.MsgType}
    */
   public enum MsgType
       implements com.google.protobuf.Internal.EnumLite {
@@ -96,11 +96,11 @@ public final class MessageProto {
       this.value = value;
     }
 
-    // @@protoc_insertion_point(enum_scope:protobuf.protos.MsgType)
+    // @@protoc_insertion_point(enum_scope:cn.timmy.proto.protos.MsgType)
   }
 
   public interface UpStreamMessageProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:protobuf.protos.UpStreamMessageProto)
+      // @@protoc_insertion_point(interface_extends:cn.timmy.proto.protos.UpStreamMessageProto)
       com.google.protobuf.MessageLiteOrBuilder {
 
     /**
@@ -188,12 +188,12 @@ public final class MessageProto {
    *上行单聊消息
    * </pre>
    *
-   * Protobuf type {@code protobuf.protos.UpStreamMessageProto}
+   * Protobuf type {@code cn.timmy.proto.protos.UpStreamMessageProto}
    */
   public  static final class UpStreamMessageProto extends
       com.google.protobuf.GeneratedMessageLite<
           UpStreamMessageProto, UpStreamMessageProto.Builder> implements
-      // @@protoc_insertion_point(message_implements:protobuf.protos.UpStreamMessageProto)
+      // @@protoc_insertion_point(message_implements:cn.timmy.proto.protos.UpStreamMessageProto)
       UpStreamMessageProtoOrBuilder {
     private UpStreamMessageProto() {
       touid_ = com.google.protobuf.GeneratedMessageLite.emptyProtobufList();
@@ -546,73 +546,73 @@ public final class MessageProto {
       return size;
     }
 
-    public static MessageProto.UpStreamMessageProto parseFrom(
+    public static cn.timmy.proto.protos.MessageProto.UpStreamMessageProto parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, data);
     }
-    public static MessageProto.UpStreamMessageProto parseFrom(
+    public static cn.timmy.proto.protos.MessageProto.UpStreamMessageProto parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, data, extensionRegistry);
     }
-    public static MessageProto.UpStreamMessageProto parseFrom(
+    public static cn.timmy.proto.protos.MessageProto.UpStreamMessageProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, data);
     }
-    public static MessageProto.UpStreamMessageProto parseFrom(
+    public static cn.timmy.proto.protos.MessageProto.UpStreamMessageProto parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, data, extensionRegistry);
     }
-    public static MessageProto.UpStreamMessageProto parseFrom(byte[] data)
+    public static cn.timmy.proto.protos.MessageProto.UpStreamMessageProto parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, data);
     }
-    public static MessageProto.UpStreamMessageProto parseFrom(
+    public static cn.timmy.proto.protos.MessageProto.UpStreamMessageProto parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, data, extensionRegistry);
     }
-    public static MessageProto.UpStreamMessageProto parseFrom(java.io.InputStream input)
+    public static cn.timmy.proto.protos.MessageProto.UpStreamMessageProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, input);
     }
-    public static MessageProto.UpStreamMessageProto parseFrom(
+    public static cn.timmy.proto.protos.MessageProto.UpStreamMessageProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, input, extensionRegistry);
     }
-    public static MessageProto.UpStreamMessageProto parseDelimitedFrom(java.io.InputStream input)
+    public static cn.timmy.proto.protos.MessageProto.UpStreamMessageProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return parseDelimitedFrom(DEFAULT_INSTANCE, input);
     }
-    public static MessageProto.UpStreamMessageProto parseDelimitedFrom(
+    public static cn.timmy.proto.protos.MessageProto.UpStreamMessageProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
     }
-    public static MessageProto.UpStreamMessageProto parseFrom(
+    public static cn.timmy.proto.protos.MessageProto.UpStreamMessageProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, input);
     }
-    public static MessageProto.UpStreamMessageProto parseFrom(
+    public static cn.timmy.proto.protos.MessageProto.UpStreamMessageProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -623,7 +623,7 @@ public final class MessageProto {
     public static Builder newBuilder() {
       return (Builder) DEFAULT_INSTANCE.createBuilder();
     }
-    public static Builder newBuilder(MessageProto.UpStreamMessageProto prototype) {
+    public static Builder newBuilder(cn.timmy.proto.protos.MessageProto.UpStreamMessageProto prototype) {
       return (Builder) DEFAULT_INSTANCE.createBuilder(prototype);
     }
 
@@ -632,14 +632,14 @@ public final class MessageProto {
      *上行单聊消息
      * </pre>
      *
-     * Protobuf type {@code protobuf.protos.UpStreamMessageProto}
+     * Protobuf type {@code cn.timmy.proto.protos.UpStreamMessageProto}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageLite.Builder<
-          MessageProto.UpStreamMessageProto, Builder> implements
-        // @@protoc_insertion_point(builder_implements:protobuf.protos.UpStreamMessageProto)
-        MessageProto.UpStreamMessageProtoOrBuilder {
-      // Construct using protobuf.protos.MessageProto.UpStreamMessageProto.newBuilder()
+          cn.timmy.proto.protos.MessageProto.UpStreamMessageProto, Builder> implements
+        // @@protoc_insertion_point(builder_implements:cn.timmy.proto.protos.UpStreamMessageProto)
+        cn.timmy.proto.protos.MessageProto.UpStreamMessageProtoOrBuilder {
+      // Construct using cn.timmy.proto.protos.MessageProto.UpStreamMessageProto.newBuilder()
       private Builder() {
         super(DEFAULT_INSTANCE);
       }
@@ -918,7 +918,7 @@ public final class MessageProto {
         return this;
       }
 
-      // @@protoc_insertion_point(builder_scope:protobuf.protos.UpStreamMessageProto)
+      // @@protoc_insertion_point(builder_scope:cn.timmy.proto.protos.UpStreamMessageProto)
     }
     @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
     protected final java.lang.Object dynamicMethod(
@@ -926,7 +926,7 @@ public final class MessageProto {
         java.lang.Object arg0, java.lang.Object arg1) {
       switch (method) {
         case NEW_MUTABLE_INSTANCE: {
-          return new MessageProto.UpStreamMessageProto();
+          return new cn.timmy.proto.protos.MessageProto.UpStreamMessageProto();
         }
         case IS_INITIALIZED: {
           return DEFAULT_INSTANCE;
@@ -940,7 +940,7 @@ public final class MessageProto {
         }
         case VISIT: {
           Visitor visitor = (Visitor) arg0;
-          MessageProto.UpStreamMessageProto other = (MessageProto.UpStreamMessageProto) arg1;
+          cn.timmy.proto.protos.MessageProto.UpStreamMessageProto other = (cn.timmy.proto.protos.MessageProto.UpStreamMessageProto) arg1;
           touid_= visitor.visitList(touid_, other.touid_);
           protonum_ = visitor.visitInt(protonum_ != 0, protonum_,
               other.protonum_ != 0, other.protonum_);
@@ -1024,7 +1024,7 @@ public final class MessageProto {
           return DEFAULT_INSTANCE;
         }
         case GET_PARSER: {
-          if (PARSER == null) {    synchronized (MessageProto.UpStreamMessageProto.class) {
+          if (PARSER == null) {    synchronized (cn.timmy.proto.protos.MessageProto.UpStreamMessageProto.class) {
               if (PARSER == null) {
                 PARSER = new DefaultInstanceBasedParser(DEFAULT_INSTANCE);
               }
@@ -1043,14 +1043,14 @@ public final class MessageProto {
     }
 
 
-    // @@protoc_insertion_point(class_scope:protobuf.protos.UpStreamMessageProto)
-    private static final MessageProto.UpStreamMessageProto DEFAULT_INSTANCE;
+    // @@protoc_insertion_point(class_scope:cn.timmy.proto.protos.UpStreamMessageProto)
+    private static final cn.timmy.proto.protos.MessageProto.UpStreamMessageProto DEFAULT_INSTANCE;
     static {
       DEFAULT_INSTANCE = new UpStreamMessageProto();
       DEFAULT_INSTANCE.makeImmutable();
     }
 
-    public static MessageProto.UpStreamMessageProto getDefaultInstance() {
+    public static cn.timmy.proto.protos.MessageProto.UpStreamMessageProto getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
@@ -1062,7 +1062,7 @@ public final class MessageProto {
   }
 
   public interface DownStreamMessageProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:protobuf.protos.DownStreamMessageProto)
+      // @@protoc_insertion_point(interface_extends:cn.timmy.proto.protos.DownStreamMessageProto)
       com.google.protobuf.MessageLiteOrBuilder {
 
     /**
@@ -1088,7 +1088,7 @@ public final class MessageProto {
      *消息类型
      * </pre>
      *
-     * <code>.protobuf.protos.MsgType type = 2;</code>
+     * <code>.cn.timmy.proto.protos.MsgType type = 2;</code>
      */
     int getTypeValue();
     /**
@@ -1096,13 +1096,13 @@ public final class MessageProto {
      *消息类型
      * </pre>
      *
-     * <code>.protobuf.protos.MsgType type = 2;</code>
+     * <code>.cn.timmy.proto.protos.MsgType type = 2;</code>
      */
-    MessageProto.MsgType getType();
+    cn.timmy.proto.protos.MessageProto.MsgType getType();
 
     /**
      * <pre>
-     *如果是群消息那么指定群groupId
+     *如果是群消息那么指定群Id
      * </pre>
      *
      * <code>string groupuid = 3;</code>
@@ -1110,7 +1110,7 @@ public final class MessageProto {
     java.lang.String getGroupuid();
     /**
      * <pre>
-     *如果是群消息那么指定群groupId
+     *如果是群消息那么指定群Id
      * </pre>
      *
      * <code>string groupuid = 3;</code>
@@ -1159,12 +1159,12 @@ public final class MessageProto {
    *服务端发送消息
    * </pre>
    *
-   * Protobuf type {@code protobuf.protos.DownStreamMessageProto}
+   * Protobuf type {@code cn.timmy.proto.protos.DownStreamMessageProto}
    */
   public  static final class DownStreamMessageProto extends
       com.google.protobuf.GeneratedMessageLite<
           DownStreamMessageProto, DownStreamMessageProto.Builder> implements
-      // @@protoc_insertion_point(message_implements:protobuf.protos.DownStreamMessageProto)
+      // @@protoc_insertion_point(message_implements:cn.timmy.proto.protos.DownStreamMessageProto)
       DownStreamMessageProtoOrBuilder {
     private DownStreamMessageProto() {
       fromuid_ = "";
@@ -1244,7 +1244,7 @@ public final class MessageProto {
      *消息类型
      * </pre>
      *
-     * <code>.protobuf.protos.MsgType type = 2;</code>
+     * <code>.cn.timmy.proto.protos.MsgType type = 2;</code>
      */
     public int getTypeValue() {
       return type_;
@@ -1254,18 +1254,18 @@ public final class MessageProto {
      *消息类型
      * </pre>
      *
-     * <code>.protobuf.protos.MsgType type = 2;</code>
+     * <code>.cn.timmy.proto.protos.MsgType type = 2;</code>
      */
-    public MessageProto.MsgType getType() {
-      MessageProto.MsgType result = MessageProto.MsgType.forNumber(type_);
-      return result == null ? MessageProto.MsgType.UNRECOGNIZED : result;
+    public cn.timmy.proto.protos.MessageProto.MsgType getType() {
+      cn.timmy.proto.protos.MessageProto.MsgType result = cn.timmy.proto.protos.MessageProto.MsgType.forNumber(type_);
+      return result == null ? cn.timmy.proto.protos.MessageProto.MsgType.UNRECOGNIZED : result;
     }
     /**
      * <pre>
      *消息类型
      * </pre>
      *
-     * <code>.protobuf.protos.MsgType type = 2;</code>
+     * <code>.cn.timmy.proto.protos.MsgType type = 2;</code>
      */
     private void setTypeValue(int value) {
         type_ = value;
@@ -1275,9 +1275,9 @@ public final class MessageProto {
      *消息类型
      * </pre>
      *
-     * <code>.protobuf.protos.MsgType type = 2;</code>
+     * <code>.cn.timmy.proto.protos.MsgType type = 2;</code>
      */
-    private void setType(MessageProto.MsgType value) {
+    private void setType(cn.timmy.proto.protos.MessageProto.MsgType value) {
       if (value == null) {
         throw new NullPointerException();
       }
@@ -1289,7 +1289,7 @@ public final class MessageProto {
      *消息类型
      * </pre>
      *
-     * <code>.protobuf.protos.MsgType type = 2;</code>
+     * <code>.cn.timmy.proto.protos.MsgType type = 2;</code>
      */
     private void clearType() {
       
@@ -1300,7 +1300,7 @@ public final class MessageProto {
     private java.lang.String groupuid_;
     /**
      * <pre>
-     *如果是群消息那么指定群groupId
+     *如果是群消息那么指定群Id
      * </pre>
      *
      * <code>string groupuid = 3;</code>
@@ -1310,7 +1310,7 @@ public final class MessageProto {
     }
     /**
      * <pre>
-     *如果是群消息那么指定群groupId
+     *如果是群消息那么指定群Id
      * </pre>
      *
      * <code>string groupuid = 3;</code>
@@ -1321,7 +1321,7 @@ public final class MessageProto {
     }
     /**
      * <pre>
-     *如果是群消息那么指定群groupId
+     *如果是群消息那么指定群Id
      * </pre>
      *
      * <code>string groupuid = 3;</code>
@@ -1336,7 +1336,7 @@ public final class MessageProto {
     }
     /**
      * <pre>
-     *如果是群消息那么指定群groupId
+     *如果是群消息那么指定群Id
      * </pre>
      *
      * <code>string groupuid = 3;</code>
@@ -1347,7 +1347,7 @@ public final class MessageProto {
     }
     /**
      * <pre>
-     *如果是群消息那么指定群groupId
+     *如果是群消息那么指定群Id
      * </pre>
      *
      * <code>string groupuid = 3;</code>
@@ -1510,7 +1510,7 @@ public final class MessageProto {
       if (!fromuid_.isEmpty()) {
         output.writeString(1, getFromuid());
       }
-      if (type_ != MessageProto.MsgType.PERSON.getNumber()) {
+      if (type_ != cn.timmy.proto.protos.MessageProto.MsgType.PERSON.getNumber()) {
         output.writeEnum(2, type_);
       }
       if (!groupuid_.isEmpty()) {
@@ -1540,7 +1540,7 @@ public final class MessageProto {
         size += com.google.protobuf.CodedOutputStream
           .computeStringSize(1, getFromuid());
       }
-      if (type_ != MessageProto.MsgType.PERSON.getNumber()) {
+      if (type_ != cn.timmy.proto.protos.MessageProto.MsgType.PERSON.getNumber()) {
         size += com.google.protobuf.CodedOutputStream
           .computeEnumSize(2, type_);
       }
@@ -1569,73 +1569,73 @@ public final class MessageProto {
       return size;
     }
 
-    public static MessageProto.DownStreamMessageProto parseFrom(
+    public static cn.timmy.proto.protos.MessageProto.DownStreamMessageProto parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, data);
     }
-    public static MessageProto.DownStreamMessageProto parseFrom(
+    public static cn.timmy.proto.protos.MessageProto.DownStreamMessageProto parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, data, extensionRegistry);
     }
-    public static MessageProto.DownStreamMessageProto parseFrom(
+    public static cn.timmy.proto.protos.MessageProto.DownStreamMessageProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, data);
     }
-    public static MessageProto.DownStreamMessageProto parseFrom(
+    public static cn.timmy.proto.protos.MessageProto.DownStreamMessageProto parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, data, extensionRegistry);
     }
-    public static MessageProto.DownStreamMessageProto parseFrom(byte[] data)
+    public static cn.timmy.proto.protos.MessageProto.DownStreamMessageProto parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, data);
     }
-    public static MessageProto.DownStreamMessageProto parseFrom(
+    public static cn.timmy.proto.protos.MessageProto.DownStreamMessageProto parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, data, extensionRegistry);
     }
-    public static MessageProto.DownStreamMessageProto parseFrom(java.io.InputStream input)
+    public static cn.timmy.proto.protos.MessageProto.DownStreamMessageProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, input);
     }
-    public static MessageProto.DownStreamMessageProto parseFrom(
+    public static cn.timmy.proto.protos.MessageProto.DownStreamMessageProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, input, extensionRegistry);
     }
-    public static MessageProto.DownStreamMessageProto parseDelimitedFrom(java.io.InputStream input)
+    public static cn.timmy.proto.protos.MessageProto.DownStreamMessageProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return parseDelimitedFrom(DEFAULT_INSTANCE, input);
     }
-    public static MessageProto.DownStreamMessageProto parseDelimitedFrom(
+    public static cn.timmy.proto.protos.MessageProto.DownStreamMessageProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
     }
-    public static MessageProto.DownStreamMessageProto parseFrom(
+    public static cn.timmy.proto.protos.MessageProto.DownStreamMessageProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, input);
     }
-    public static MessageProto.DownStreamMessageProto parseFrom(
+    public static cn.timmy.proto.protos.MessageProto.DownStreamMessageProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -1646,7 +1646,7 @@ public final class MessageProto {
     public static Builder newBuilder() {
       return (Builder) DEFAULT_INSTANCE.createBuilder();
     }
-    public static Builder newBuilder(MessageProto.DownStreamMessageProto prototype) {
+    public static Builder newBuilder(cn.timmy.proto.protos.MessageProto.DownStreamMessageProto prototype) {
       return (Builder) DEFAULT_INSTANCE.createBuilder(prototype);
     }
 
@@ -1655,14 +1655,14 @@ public final class MessageProto {
      *服务端发送消息
      * </pre>
      *
-     * Protobuf type {@code protobuf.protos.DownStreamMessageProto}
+     * Protobuf type {@code cn.timmy.proto.protos.DownStreamMessageProto}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageLite.Builder<
-          MessageProto.DownStreamMessageProto, Builder> implements
-        // @@protoc_insertion_point(builder_implements:protobuf.protos.DownStreamMessageProto)
-        MessageProto.DownStreamMessageProtoOrBuilder {
-      // Construct using protobuf.protos.MessageProto.DownStreamMessageProto.newBuilder()
+          cn.timmy.proto.protos.MessageProto.DownStreamMessageProto, Builder> implements
+        // @@protoc_insertion_point(builder_implements:cn.timmy.proto.protos.DownStreamMessageProto)
+        cn.timmy.proto.protos.MessageProto.DownStreamMessageProtoOrBuilder {
+      // Construct using cn.timmy.proto.protos.MessageProto.DownStreamMessageProto.newBuilder()
       private Builder() {
         super(DEFAULT_INSTANCE);
       }
@@ -1733,7 +1733,7 @@ public final class MessageProto {
        *消息类型
        * </pre>
        *
-       * <code>.protobuf.protos.MsgType type = 2;</code>
+       * <code>.cn.timmy.proto.protos.MsgType type = 2;</code>
        */
       public int getTypeValue() {
         return instance.getTypeValue();
@@ -1743,7 +1743,7 @@ public final class MessageProto {
        *消息类型
        * </pre>
        *
-       * <code>.protobuf.protos.MsgType type = 2;</code>
+       * <code>.cn.timmy.proto.protos.MsgType type = 2;</code>
        */
       public Builder setTypeValue(int value) {
         copyOnWrite();
@@ -1755,9 +1755,9 @@ public final class MessageProto {
        *消息类型
        * </pre>
        *
-       * <code>.protobuf.protos.MsgType type = 2;</code>
+       * <code>.cn.timmy.proto.protos.MsgType type = 2;</code>
        */
-      public MessageProto.MsgType getType() {
+      public cn.timmy.proto.protos.MessageProto.MsgType getType() {
         return instance.getType();
       }
       /**
@@ -1765,9 +1765,9 @@ public final class MessageProto {
        *消息类型
        * </pre>
        *
-       * <code>.protobuf.protos.MsgType type = 2;</code>
+       * <code>.cn.timmy.proto.protos.MsgType type = 2;</code>
        */
-      public Builder setType(MessageProto.MsgType value) {
+      public Builder setType(cn.timmy.proto.protos.MessageProto.MsgType value) {
         copyOnWrite();
         instance.setType(value);
         return this;
@@ -1777,7 +1777,7 @@ public final class MessageProto {
        *消息类型
        * </pre>
        *
-       * <code>.protobuf.protos.MsgType type = 2;</code>
+       * <code>.cn.timmy.proto.protos.MsgType type = 2;</code>
        */
       public Builder clearType() {
         copyOnWrite();
@@ -1787,7 +1787,7 @@ public final class MessageProto {
 
       /**
        * <pre>
-       *如果是群消息那么指定群groupId
+       *如果是群消息那么指定群Id
        * </pre>
        *
        * <code>string groupuid = 3;</code>
@@ -1797,7 +1797,7 @@ public final class MessageProto {
       }
       /**
        * <pre>
-       *如果是群消息那么指定群groupId
+       *如果是群消息那么指定群Id
        * </pre>
        *
        * <code>string groupuid = 3;</code>
@@ -1808,7 +1808,7 @@ public final class MessageProto {
       }
       /**
        * <pre>
-       *如果是群消息那么指定群groupId
+       *如果是群消息那么指定群Id
        * </pre>
        *
        * <code>string groupuid = 3;</code>
@@ -1821,7 +1821,7 @@ public final class MessageProto {
       }
       /**
        * <pre>
-       *如果是群消息那么指定群groupId
+       *如果是群消息那么指定群Id
        * </pre>
        *
        * <code>string groupuid = 3;</code>
@@ -1833,7 +1833,7 @@ public final class MessageProto {
       }
       /**
        * <pre>
-       *如果是群消息那么指定群groupId
+       *如果是群消息那么指定群Id
        * </pre>
        *
        * <code>string groupuid = 3;</code>
@@ -1985,7 +1985,7 @@ public final class MessageProto {
         return this;
       }
 
-      // @@protoc_insertion_point(builder_scope:protobuf.protos.DownStreamMessageProto)
+      // @@protoc_insertion_point(builder_scope:cn.timmy.proto.protos.DownStreamMessageProto)
     }
     @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
     protected final java.lang.Object dynamicMethod(
@@ -1993,7 +1993,7 @@ public final class MessageProto {
         java.lang.Object arg0, java.lang.Object arg1) {
       switch (method) {
         case NEW_MUTABLE_INSTANCE: {
-          return new MessageProto.DownStreamMessageProto();
+          return new cn.timmy.proto.protos.MessageProto.DownStreamMessageProto();
         }
         case IS_INITIALIZED: {
           return DEFAULT_INSTANCE;
@@ -2006,7 +2006,7 @@ public final class MessageProto {
         }
         case VISIT: {
           Visitor visitor = (Visitor) arg0;
-          MessageProto.DownStreamMessageProto other = (MessageProto.DownStreamMessageProto) arg1;
+          cn.timmy.proto.protos.MessageProto.DownStreamMessageProto other = (cn.timmy.proto.protos.MessageProto.DownStreamMessageProto) arg1;
           fromuid_ = visitor.visitString(!fromuid_.isEmpty(), fromuid_,
               !other.fromuid_.isEmpty(), other.fromuid_);
           type_ = visitor.visitInt(type_ != 0, type_,    other.type_ != 0, other.type_);
@@ -2101,7 +2101,7 @@ public final class MessageProto {
           return DEFAULT_INSTANCE;
         }
         case GET_PARSER: {
-          if (PARSER == null) {    synchronized (MessageProto.DownStreamMessageProto.class) {
+          if (PARSER == null) {    synchronized (cn.timmy.proto.protos.MessageProto.DownStreamMessageProto.class) {
               if (PARSER == null) {
                 PARSER = new DefaultInstanceBasedParser(DEFAULT_INSTANCE);
               }
@@ -2120,14 +2120,14 @@ public final class MessageProto {
     }
 
 
-    // @@protoc_insertion_point(class_scope:protobuf.protos.DownStreamMessageProto)
-    private static final MessageProto.DownStreamMessageProto DEFAULT_INSTANCE;
+    // @@protoc_insertion_point(class_scope:cn.timmy.proto.protos.DownStreamMessageProto)
+    private static final cn.timmy.proto.protos.MessageProto.DownStreamMessageProto DEFAULT_INSTANCE;
     static {
       DEFAULT_INSTANCE = new DownStreamMessageProto();
       DEFAULT_INSTANCE.makeImmutable();
     }
 
-    public static MessageProto.DownStreamMessageProto getDefaultInstance() {
+    public static cn.timmy.proto.protos.MessageProto.DownStreamMessageProto getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 

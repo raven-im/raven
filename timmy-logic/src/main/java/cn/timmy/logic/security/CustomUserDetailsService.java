@@ -1,6 +1,6 @@
 package cn.timmy.logic.security;
 
-import cn.timmy.logic.user.bean.UserModel;
+import cn.timmy.logic.user.bean.model.UserModel;
 import cn.timmy.logic.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;

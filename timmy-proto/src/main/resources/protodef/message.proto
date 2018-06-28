@@ -1,5 +1,5 @@
 syntax = "proto3";
-package protobuf.protos;
+package cn.timmy.proto.protos;
 
 option java_outer_classname = "MessageProto";
 option optimize_for = LITE_RUNTIME; //SPEED;
@@ -23,7 +23,7 @@ enum MsgType {
 message DownStreamMessageProto {
     string fromuid = 1; // 发送方uid
     MsgType type = 2; //消息类型
-    string groupuid = 3; //如果是群消息那么指定群groupId
+    string groupuid = 3; //如果是群消息那么指定群Id
     uint32 protonum = 4; //消息类型
     bytes content = 5; //内容
     uint64 sendtime = 6; //消息时间

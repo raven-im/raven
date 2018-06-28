@@ -9,7 +9,7 @@ public final class HeartBeat {
       com.google.protobuf.ExtensionRegistryLite registry) {
   }
   public interface BeatOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:protobuf.protos.Beat)
+      // @@protoc_insertion_point(interface_extends:cn.timmy.proto.protos.Beat)
       com.google.protobuf.MessageLiteOrBuilder {
 
     /**
@@ -23,12 +23,12 @@ public final class HeartBeat {
         getHeartbeatBytes();
   }
   /**
-   * Protobuf type {@code protobuf.protos.Beat}
+   * Protobuf type {@code cn.timmy.proto.protos.Beat}
    */
   public  static final class Beat extends
       com.google.protobuf.GeneratedMessageLite<
           Beat, Beat.Builder> implements
-      // @@protoc_insertion_point(message_implements:protobuf.protos.Beat)
+      // @@protoc_insertion_point(message_implements:cn.timmy.proto.protos.Beat)
       BeatOrBuilder {
     private Beat() {
       heartbeat_ = "";
@@ -101,73 +101,73 @@ public final class HeartBeat {
       return size;
     }
 
-    public static HeartBeat.Beat parseFrom(
+    public static cn.timmy.proto.protos.HeartBeat.Beat parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, data);
     }
-    public static HeartBeat.Beat parseFrom(
+    public static cn.timmy.proto.protos.HeartBeat.Beat parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, data, extensionRegistry);
     }
-    public static HeartBeat.Beat parseFrom(
+    public static cn.timmy.proto.protos.HeartBeat.Beat parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, data);
     }
-    public static HeartBeat.Beat parseFrom(
+    public static cn.timmy.proto.protos.HeartBeat.Beat parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, data, extensionRegistry);
     }
-    public static HeartBeat.Beat parseFrom(byte[] data)
+    public static cn.timmy.proto.protos.HeartBeat.Beat parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, data);
     }
-    public static HeartBeat.Beat parseFrom(
+    public static cn.timmy.proto.protos.HeartBeat.Beat parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, data, extensionRegistry);
     }
-    public static HeartBeat.Beat parseFrom(java.io.InputStream input)
+    public static cn.timmy.proto.protos.HeartBeat.Beat parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, input);
     }
-    public static HeartBeat.Beat parseFrom(
+    public static cn.timmy.proto.protos.HeartBeat.Beat parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, input, extensionRegistry);
     }
-    public static HeartBeat.Beat parseDelimitedFrom(java.io.InputStream input)
+    public static cn.timmy.proto.protos.HeartBeat.Beat parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return parseDelimitedFrom(DEFAULT_INSTANCE, input);
     }
-    public static HeartBeat.Beat parseDelimitedFrom(
+    public static cn.timmy.proto.protos.HeartBeat.Beat parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
     }
-    public static HeartBeat.Beat parseFrom(
+    public static cn.timmy.proto.protos.HeartBeat.Beat parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, input);
     }
-    public static HeartBeat.Beat parseFrom(
+    public static cn.timmy.proto.protos.HeartBeat.Beat parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -178,19 +178,19 @@ public final class HeartBeat {
     public static Builder newBuilder() {
       return (Builder) DEFAULT_INSTANCE.createBuilder();
     }
-    public static Builder newBuilder(HeartBeat.Beat prototype) {
+    public static Builder newBuilder(cn.timmy.proto.protos.HeartBeat.Beat prototype) {
       return (Builder) DEFAULT_INSTANCE.createBuilder(prototype);
     }
 
     /**
-     * Protobuf type {@code protobuf.protos.Beat}
+     * Protobuf type {@code cn.timmy.proto.protos.Beat}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageLite.Builder<
-          HeartBeat.Beat, Builder> implements
-        // @@protoc_insertion_point(builder_implements:protobuf.protos.Beat)
-        HeartBeat.BeatOrBuilder {
-      // Construct using protobuf.protos.HeartBeat.Beat.newBuilder()
+          cn.timmy.proto.protos.HeartBeat.Beat, Builder> implements
+        // @@protoc_insertion_point(builder_implements:cn.timmy.proto.protos.Beat)
+        cn.timmy.proto.protos.HeartBeat.BeatOrBuilder {
+      // Construct using cn.timmy.proto.protos.HeartBeat.Beat.newBuilder()
       private Builder() {
         super(DEFAULT_INSTANCE);
       }
@@ -236,7 +236,7 @@ public final class HeartBeat {
         return this;
       }
 
-      // @@protoc_insertion_point(builder_scope:protobuf.protos.Beat)
+      // @@protoc_insertion_point(builder_scope:cn.timmy.proto.protos.Beat)
     }
     @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
     protected final java.lang.Object dynamicMethod(
@@ -244,7 +244,7 @@ public final class HeartBeat {
         java.lang.Object arg0, java.lang.Object arg1) {
       switch (method) {
         case NEW_MUTABLE_INSTANCE: {
-          return new HeartBeat.Beat();
+          return new cn.timmy.proto.protos.HeartBeat.Beat();
         }
         case IS_INITIALIZED: {
           return DEFAULT_INSTANCE;
@@ -257,7 +257,7 @@ public final class HeartBeat {
         }
         case VISIT: {
           Visitor visitor = (Visitor) arg0;
-          HeartBeat.Beat other = (HeartBeat.Beat) arg1;
+          cn.timmy.proto.protos.HeartBeat.Beat other = (cn.timmy.proto.protos.HeartBeat.Beat) arg1;
           heartbeat_ = visitor.visitString(!heartbeat_.isEmpty(), heartbeat_,
               !other.heartbeat_.isEmpty(), other.heartbeat_);
           if (visitor == com.google.protobuf.GeneratedMessageLite.MergeFromVisitor
@@ -309,7 +309,7 @@ public final class HeartBeat {
           return DEFAULT_INSTANCE;
         }
         case GET_PARSER: {
-          if (PARSER == null) {    synchronized (HeartBeat.Beat.class) {
+          if (PARSER == null) {    synchronized (cn.timmy.proto.protos.HeartBeat.Beat.class) {
               if (PARSER == null) {
                 PARSER = new DefaultInstanceBasedParser(DEFAULT_INSTANCE);
               }
@@ -328,14 +328,14 @@ public final class HeartBeat {
     }
 
 
-    // @@protoc_insertion_point(class_scope:protobuf.protos.Beat)
-    private static final HeartBeat.Beat DEFAULT_INSTANCE;
+    // @@protoc_insertion_point(class_scope:cn.timmy.proto.protos.Beat)
+    private static final cn.timmy.proto.protos.HeartBeat.Beat DEFAULT_INSTANCE;
     static {
       DEFAULT_INSTANCE = new Beat();
       DEFAULT_INSTANCE.makeImmutable();
     }
 
-    public static HeartBeat.Beat getDefaultInstance() {
+    public static cn.timmy.proto.protos.HeartBeat.Beat getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 

@@ -9,7 +9,7 @@ public final class Ack {
       com.google.protobuf.ExtensionRegistryLite registry) {
   }
   public interface MessageResOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:protobuf.protos.MessageRes)
+      // @@protoc_insertion_point(interface_extends:cn.timmy.proto.protos.MessageRes)
       com.google.protobuf.MessageLiteOrBuilder {
 
     /**
@@ -23,20 +23,20 @@ public final class Ack {
 
     /**
      * <pre>
-     *消息时间
+     *消息状态 0：接收成功 1：非好友拒绝
      * </pre>
      *
-     * <code>uint64 sendtime = 2;</code>
+     * <code>int32 status = 2;</code>
      */
-    long getSendtime();
+    int getStatus();
   }
   /**
-   * Protobuf type {@code protobuf.protos.MessageRes}
+   * Protobuf type {@code cn.timmy.proto.protos.MessageRes}
    */
   public  static final class MessageRes extends
       com.google.protobuf.GeneratedMessageLite<
           MessageRes, MessageRes.Builder> implements
-      // @@protoc_insertion_point(message_implements:protobuf.protos.MessageRes)
+      // @@protoc_insertion_point(message_implements:cn.timmy.proto.protos.MessageRes)
       MessageResOrBuilder {
     private MessageRes() {
     }
@@ -75,39 +75,39 @@ public final class Ack {
       msgid_ = 0L;
     }
 
-    public static final int SENDTIME_FIELD_NUMBER = 2;
-    private long sendtime_;
+    public static final int STATUS_FIELD_NUMBER = 2;
+    private int status_;
     /**
      * <pre>
-     *消息时间
+     *消息状态 0：接收成功 1：非好友拒绝
      * </pre>
      *
-     * <code>uint64 sendtime = 2;</code>
+     * <code>int32 status = 2;</code>
      */
-    public long getSendtime() {
-      return sendtime_;
+    public int getStatus() {
+      return status_;
     }
     /**
      * <pre>
-     *消息时间
+     *消息状态 0：接收成功 1：非好友拒绝
      * </pre>
      *
-     * <code>uint64 sendtime = 2;</code>
+     * <code>int32 status = 2;</code>
      */
-    private void setSendtime(long value) {
+    private void setStatus(int value) {
       
-      sendtime_ = value;
+      status_ = value;
     }
     /**
      * <pre>
-     *消息时间
+     *消息状态 0：接收成功 1：非好友拒绝
      * </pre>
      *
-     * <code>uint64 sendtime = 2;</code>
+     * <code>int32 status = 2;</code>
      */
-    private void clearSendtime() {
+    private void clearStatus() {
       
-      sendtime_ = 0L;
+      status_ = 0;
     }
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
@@ -115,8 +115,8 @@ public final class Ack {
       if (msgid_ != 0L) {
         output.writeUInt64(1, msgid_);
       }
-      if (sendtime_ != 0L) {
-        output.writeUInt64(2, sendtime_);
+      if (status_ != 0) {
+        output.writeInt32(2, status_);
       }
       unknownFields.writeTo(output);
     }
@@ -130,82 +130,82 @@ public final class Ack {
         size += com.google.protobuf.CodedOutputStream
           .computeUInt64Size(1, msgid_);
       }
-      if (sendtime_ != 0L) {
+      if (status_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeUInt64Size(2, sendtime_);
+          .computeInt32Size(2, status_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSerializedSize = size;
       return size;
     }
 
-    public static Ack.MessageRes parseFrom(
+    public static cn.timmy.proto.protos.Ack.MessageRes parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, data);
     }
-    public static Ack.MessageRes parseFrom(
+    public static cn.timmy.proto.protos.Ack.MessageRes parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, data, extensionRegistry);
     }
-    public static Ack.MessageRes parseFrom(
+    public static cn.timmy.proto.protos.Ack.MessageRes parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, data);
     }
-    public static Ack.MessageRes parseFrom(
+    public static cn.timmy.proto.protos.Ack.MessageRes parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, data, extensionRegistry);
     }
-    public static Ack.MessageRes parseFrom(byte[] data)
+    public static cn.timmy.proto.protos.Ack.MessageRes parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, data);
     }
-    public static Ack.MessageRes parseFrom(
+    public static cn.timmy.proto.protos.Ack.MessageRes parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, data, extensionRegistry);
     }
-    public static Ack.MessageRes parseFrom(java.io.InputStream input)
+    public static cn.timmy.proto.protos.Ack.MessageRes parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, input);
     }
-    public static Ack.MessageRes parseFrom(
+    public static cn.timmy.proto.protos.Ack.MessageRes parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, input, extensionRegistry);
     }
-    public static Ack.MessageRes parseDelimitedFrom(java.io.InputStream input)
+    public static cn.timmy.proto.protos.Ack.MessageRes parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return parseDelimitedFrom(DEFAULT_INSTANCE, input);
     }
-    public static Ack.MessageRes parseDelimitedFrom(
+    public static cn.timmy.proto.protos.Ack.MessageRes parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
     }
-    public static Ack.MessageRes parseFrom(
+    public static cn.timmy.proto.protos.Ack.MessageRes parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, input);
     }
-    public static Ack.MessageRes parseFrom(
+    public static cn.timmy.proto.protos.Ack.MessageRes parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -216,19 +216,19 @@ public final class Ack {
     public static Builder newBuilder() {
       return (Builder) DEFAULT_INSTANCE.createBuilder();
     }
-    public static Builder newBuilder(Ack.MessageRes prototype) {
+    public static Builder newBuilder(cn.timmy.proto.protos.Ack.MessageRes prototype) {
       return (Builder) DEFAULT_INSTANCE.createBuilder(prototype);
     }
 
     /**
-     * Protobuf type {@code protobuf.protos.MessageRes}
+     * Protobuf type {@code cn.timmy.proto.protos.MessageRes}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageLite.Builder<
-          Ack.MessageRes, Builder> implements
-        // @@protoc_insertion_point(builder_implements:protobuf.protos.MessageRes)
-        Ack.MessageResOrBuilder {
-      // Construct using protobuf.protos.Ack.MessageRes.newBuilder()
+          cn.timmy.proto.protos.Ack.MessageRes, Builder> implements
+        // @@protoc_insertion_point(builder_implements:cn.timmy.proto.protos.MessageRes)
+        cn.timmy.proto.protos.Ack.MessageResOrBuilder {
+      // Construct using cn.timmy.proto.protos.Ack.MessageRes.newBuilder()
       private Builder() {
         super(DEFAULT_INSTANCE);
       }
@@ -271,40 +271,40 @@ public final class Ack {
 
       /**
        * <pre>
-       *消息时间
+       *消息状态 0：接收成功 1：非好友拒绝
        * </pre>
        *
-       * <code>uint64 sendtime = 2;</code>
+       * <code>int32 status = 2;</code>
        */
-      public long getSendtime() {
-        return instance.getSendtime();
+      public int getStatus() {
+        return instance.getStatus();
       }
       /**
        * <pre>
-       *消息时间
+       *消息状态 0：接收成功 1：非好友拒绝
        * </pre>
        *
-       * <code>uint64 sendtime = 2;</code>
+       * <code>int32 status = 2;</code>
        */
-      public Builder setSendtime(long value) {
+      public Builder setStatus(int value) {
         copyOnWrite();
-        instance.setSendtime(value);
+        instance.setStatus(value);
         return this;
       }
       /**
        * <pre>
-       *消息时间
+       *消息状态 0：接收成功 1：非好友拒绝
        * </pre>
        *
-       * <code>uint64 sendtime = 2;</code>
+       * <code>int32 status = 2;</code>
        */
-      public Builder clearSendtime() {
+      public Builder clearStatus() {
         copyOnWrite();
-        instance.clearSendtime();
+        instance.clearStatus();
         return this;
       }
 
-      // @@protoc_insertion_point(builder_scope:protobuf.protos.MessageRes)
+      // @@protoc_insertion_point(builder_scope:cn.timmy.proto.protos.MessageRes)
     }
     @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
     protected final java.lang.Object dynamicMethod(
@@ -312,7 +312,7 @@ public final class Ack {
         java.lang.Object arg0, java.lang.Object arg1) {
       switch (method) {
         case NEW_MUTABLE_INSTANCE: {
-          return new Ack.MessageRes();
+          return new cn.timmy.proto.protos.Ack.MessageRes();
         }
         case IS_INITIALIZED: {
           return DEFAULT_INSTANCE;
@@ -325,11 +325,11 @@ public final class Ack {
         }
         case VISIT: {
           Visitor visitor = (Visitor) arg0;
-          Ack.MessageRes other = (Ack.MessageRes) arg1;
+          cn.timmy.proto.protos.Ack.MessageRes other = (cn.timmy.proto.protos.Ack.MessageRes) arg1;
           msgid_ = visitor.visitLong(msgid_ != 0L, msgid_,
               other.msgid_ != 0L, other.msgid_);
-          sendtime_ = visitor.visitLong(sendtime_ != 0L, sendtime_,
-              other.sendtime_ != 0L, other.sendtime_);
+          status_ = visitor.visitInt(status_ != 0, status_,
+              other.status_ != 0, other.status_);
           if (visitor == com.google.protobuf.GeneratedMessageLite.MergeFromVisitor
               .INSTANCE) {
           }
@@ -364,7 +364,7 @@ public final class Ack {
                 }
                 case 16: {
 
-                  sendtime_ = input.readUInt64();
+                  status_ = input.readInt32();
                   break;
                 }
               }
@@ -383,7 +383,7 @@ public final class Ack {
           return DEFAULT_INSTANCE;
         }
         case GET_PARSER: {
-          if (PARSER == null) {    synchronized (Ack.MessageRes.class) {
+          if (PARSER == null) {    synchronized (cn.timmy.proto.protos.Ack.MessageRes.class) {
               if (PARSER == null) {
                 PARSER = new DefaultInstanceBasedParser(DEFAULT_INSTANCE);
               }
@@ -402,14 +402,14 @@ public final class Ack {
     }
 
 
-    // @@protoc_insertion_point(class_scope:protobuf.protos.MessageRes)
-    private static final Ack.MessageRes DEFAULT_INSTANCE;
+    // @@protoc_insertion_point(class_scope:cn.timmy.proto.protos.MessageRes)
+    private static final cn.timmy.proto.protos.Ack.MessageRes DEFAULT_INSTANCE;
     static {
       DEFAULT_INSTANCE = new MessageRes();
       DEFAULT_INSTANCE.makeImmutable();
     }
 
-    public static Ack.MessageRes getDefaultInstance() {
+    public static cn.timmy.proto.protos.Ack.MessageRes getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 

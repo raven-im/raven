@@ -14,7 +14,7 @@ public class UserLoginDetail extends User implements Serializable {
 
     private String pwdsalt;
 
-    private Long uid;
+    private String uid;
 
     public UserLoginDetail(String username, String password,
         Collection<? extends GrantedAuthority> authorities) {
@@ -29,11 +29,11 @@ public class UserLoginDetail extends User implements Serializable {
         this.pwdsalt = pwdsalt;
     }
 
-    public Long getUid() {
+    public String getUid() {
         return uid;
     }
 
-    public void setUid(Long uid) {
+    public void setUid(String uid) {
         this.uid = uid;
     }
 }

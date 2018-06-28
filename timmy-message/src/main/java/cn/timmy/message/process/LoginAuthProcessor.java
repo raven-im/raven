@@ -8,7 +8,7 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import cn.timmy.proto.protos.Auth.Login;
 import cn.timmy.proto.protos.Auth.Response;
-import cn.timmy.proto.protos.ResponseEnum;
+import cn.timmy.message.common.ResponseEnum;
 import cn.timmy.proto.utils.ProtoConstants;
 
 /**

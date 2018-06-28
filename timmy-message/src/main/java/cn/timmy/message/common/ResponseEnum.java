@@ -1,12 +1,14 @@
-package cn.timmy.proto.protos;
+package cn.timmy.message.common;
 
 /**
- * Author zxx Description 登录响应 Date Created on 2018/5/26
+ * Author zxx
+ * Description 登录响应
+ * Date Created on 2018/5/26
  */
 public enum ResponseEnum {
 
     SUCCESS(200, "success"),
-    FAIL(400, "fail");
+    FAIL(500, "fail");
 
     ResponseEnum(int code, String msg) {
         this.code = code;

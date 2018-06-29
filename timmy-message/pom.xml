@@ -20,5 +20,15 @@
             <groupId>cn.timmy</groupId>
             <artifactId>timmy-common</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+            <version>${version.netty}</version>
+        </dependency>
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>${version.jedis}</version>
+        </dependency>
     </dependencies>
 </project>

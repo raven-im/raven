@@ -1,9 +1,10 @@
-package cn.timmy.proto.utils;
+package cn.timmy.common.utils;
 
-import cn.timmy.proto.protos.Ack;
-import cn.timmy.proto.protos.Auth;
-import cn.timmy.proto.protos.HeartBeat;
-import cn.timmy.proto.protos.MessageProto;
+
+import cn.timmy.common.protos.Ack;
+import cn.timmy.common.protos.Auth;
+import cn.timmy.common.protos.HeartBeat;
+import cn.timmy.common.protos.MessageProto;
 
 /**
  * Author zxx

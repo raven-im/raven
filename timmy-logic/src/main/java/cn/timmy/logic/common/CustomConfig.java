@@ -6,8 +6,6 @@ import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
@@ -51,12 +49,6 @@ public class CustomConfig {
         serializer.setDomainNamePattern("^.+?\\.(\\w+\\.[a-z]+)$");
         serializer.setCookieMaxAge(24 * 60 * 60);
         return serializer;
-    }
-
-    @Bean
-    public RedisConnectionFactory redisConnectionFactory() {
-        JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory();
-        return jedisConnectionFactory;
     }
 
 }

@@ -1,4 +1,4 @@
-package cn.timmy.proto.utils;
+package cn.timmy.common.utils;
 
 /**
  * Author zxx

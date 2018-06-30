@@ -1,5 +1,10 @@
 package cn.timmy.client;
 
+import cn.timmy.common.protos.Auth;
+import cn.timmy.common.protos.Auth.Login;
+import cn.timmy.common.protos.HeartBeat.Beat;
+import cn.timmy.common.protos.MessageProto.UpStreamMessageProto;
+import cn.timmy.common.utils.ProtoConstants;
 import com.google.protobuf.MessageLite;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
@@ -10,11 +15,6 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicLong;
-import cn.timmy.proto.protos.Auth;
-import cn.timmy.proto.protos.Auth.Login;
-import cn.timmy.proto.protos.HeartBeat.Beat;
-import cn.timmy.proto.protos.MessageProto.UpStreamMessageProto;
-import cn.timmy.proto.utils.ProtoConstants;
 
 /**
  * Author zxx Description 客户端模拟 Date Created on 2018/5/25

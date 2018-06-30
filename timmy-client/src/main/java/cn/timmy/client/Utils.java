@@ -1,11 +1,11 @@
 package cn.timmy.client;
 
+import cn.timmy.common.utils.ParseMap;
 import com.google.protobuf.MessageLite;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import cn.timmy.proto.utils.ParseMap;
 
 public class Utils {
 

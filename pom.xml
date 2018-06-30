@@ -10,7 +10,6 @@
     <modules>
         <module>timmy-logic</module>
         <module>timmy-message</module>
-        <module>timmy-proto</module>
         <module>timmy-common</module>
         <module>timmy-client</module>
     </modules>
@@ -35,17 +34,17 @@
         <dependencies>
             <dependency>
                 <groupId>cn.timmy</groupId>
-                <artifactId>timmy-proto</artifactId>
-                <version>1.0.0.RELEASE</version>
-            </dependency>
-            <dependency>
-                <groupId>cn.timmy</groupId>
                 <artifactId>timmy-common</artifactId>
                 <version>1.0.0.RELEASE</version>
             </dependency>
             <dependency>
                 <groupId>cn.timmy</groupId>
                 <artifactId>timmy-message</artifactId>
+                <version>1.0.0.RELEASE</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.timmy</groupId>
+                <artifactId>timmy-logic</artifactId>
                 <version>1.0.0.RELEASE</version>
             </dependency>
         </dependencies>

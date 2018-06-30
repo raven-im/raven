@@ -12,6 +12,7 @@
         <artifactId>server</artifactId>
         <version>1.0.0.RELEASE</version>
     </parent>
+    <!--自定义parent 不继承spring boot parent 使用以下方式-->
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -26,15 +27,7 @@
     <dependencies>
         <dependency>
             <groupId>cn.timmy</groupId>
-            <artifactId>timmy-message</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>cn.timmy</groupId>
             <artifactId>timmy-common</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>cn.timmy</groupId>
-            <artifactId>timmy-proto</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

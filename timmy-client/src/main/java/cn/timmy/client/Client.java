@@ -1,5 +1,8 @@
 package cn.timmy.client;
 
+import cn.timmy.common.code.MessageDecoder;
+import cn.timmy.common.code.MessageEncoder;
+import cn.timmy.common.utils.ParseRegistryMap;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -10,9 +13,6 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import cn.timmy.proto.code.MessageDecoder;
-import cn.timmy.proto.code.MessageEncoder;
-import cn.timmy.proto.utils.ParseRegistryMap;
 
 /**
  * Author zxx 

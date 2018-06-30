@@ -1,4 +1,4 @@
-package cn.timmy.proto.utils;
+package cn.timmy.common.utils;
 
 import com.google.protobuf.MessageLite;
 import java.io.IOException;

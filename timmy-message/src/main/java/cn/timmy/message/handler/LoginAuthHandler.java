@@ -1,25 +1,34 @@
 package cn.timmy.message.handler;
 
-import com.google.protobuf.MessageLite;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.SimpleChannelInboundHandler;
-import io.netty.handler.timeout.IdleState;
-import io.netty.handler.timeout.IdleStateEvent;
+import cn.timmy.common.protos.Auth.Login;
 import cn.timmy.message.channel.NettyChannelManager;
 import cn.timmy.message.process.LoginAuthProcessor;
+import com.google.protobuf.MessageLite;
+import io.netty.channel.ChannelHandler.Sharable;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.SimpleChannelInboundHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import cn.timmy.proto.protos.Auth.Login;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * Author zxx
  * Description 登录验证、绑定连接
  * Date Created on 2018/5/25
  */
+@Component
+@Sharable
 public class LoginAuthHandler extends SimpleChannelInboundHandler<MessageLite> {
 
     private static final Logger logger = LogManager.getLogger(
         LoginAuthHandler.class);
+
+    @Autowired
+    private LoginAuthProcessor loginAuthProcessor;
+
+    @Autowired
+    private NettyChannelManager nettyChannelManager;
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
@@ -31,41 +40,17 @@ public class LoginAuthHandler extends SimpleChannelInboundHandler<MessageLite> {
     protected void channelRead0(ChannelHandlerContext channelHandlerContext,
         MessageLite messageLite) throws Exception {
         if (messageLite instanceof Login) {
-            LoginAuthProcessor.getInstance().process(messageLite, channelHandlerContext);
+            loginAuthProcessor.process(messageLite, channelHandlerContext);
         }
         channelHandlerContext.fireChannelRead(messageLite);
     }
 
     @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-        String uid = NettyChannelManager.getInstance().getUidByChannel(ctx.channel());
-        logger.error("caught an ex, channelId:{}, uid:{},ex:{}", ctx.channel().id().asShortText(),
-            uid, cause);
-        NettyChannelManager.getInstance().removeChannel(ctx.channel());
-        ctx.close();
-
-    }
-
-    @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-        String uid = NettyChannelManager.getInstance().getUidByChannel(ctx.channel());
+        String uid = nettyChannelManager.getUidByChannel(ctx.channel());
         logger.info("client disconnected channelId:{},uid:{}", ctx.channel().id().asShortText(),
             uid);
-        NettyChannelManager.getInstance().removeChannel(ctx.channel());
-    }
-
-    // 心跳
-    @Override
-    public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
-        if (evt instanceof IdleStateEvent) {
-            if (((IdleStateEvent) evt).state() == IdleState.READER_IDLE) {
-                String uid = NettyChannelManager.getInstance().getUidByChannel(ctx.channel());
-                logger.info("uid:{} read idle", uid);
-                ctx.channel().close();
-            }
-        } else {
-            super.userEventTriggered(ctx, evt);
-        }
+        nettyChannelManager.removeChannel(ctx.channel());
     }
 }
 

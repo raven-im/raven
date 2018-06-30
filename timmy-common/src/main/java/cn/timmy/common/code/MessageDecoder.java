@@ -1,5 +1,6 @@
-package cn.timmy.proto.code;
+package cn.timmy.common.code;
 
+import cn.timmy.common.utils.ParseMap;
 import com.google.protobuf.MessageLite;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -8,7 +9,6 @@ import io.netty.handler.codec.ByteToMessageDecoder;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import cn.timmy.proto.utils.ParseMap;
 
 /**
  * 解码器
@@ -42,7 +42,7 @@ public class MessageDecoder extends ByteToMessageDecoder {
             byte[] body = byteBuf.array();
             MessageLite msg = ParseMap.getMessage(ptoNum, body);
             out.add(msg);
-            logger.info("Received Message remoteAddress:{}, content:{}, ptoNum:{}",
+            logger.info("Received Message remoteAddress:{}, content:{}",
                 ctx.channel().remoteAddress(), msg.toString(),
                 ptoNum);
         } catch (Exception e) {

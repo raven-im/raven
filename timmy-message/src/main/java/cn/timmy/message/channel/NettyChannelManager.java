@@ -6,26 +6,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import org.springframework.stereotype.Component;
 
 /**
  * netty连接管理器
  */
+@Component
 public final class NettyChannelManager implements ChannelManager {
 
     private final ConcurrentMap<String, List<Channel>> uidChannels = new ConcurrentHashMap<>();
     private final ConcurrentMap<Channel, String> channelUid = new ConcurrentHashMap<>();
-
-    private static NettyChannelManager connectionManager;
-
-    public static synchronized NettyChannelManager getInstance() {
-        if (connectionManager == null) {
-            connectionManager = new NettyChannelManager();
-        }
-        return connectionManager;
-    }
-
-    private NettyChannelManager() {
-    }
 
     @Override
     public void addUid2Channel(String uid, Channel channel) {

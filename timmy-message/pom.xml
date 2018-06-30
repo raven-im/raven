@@ -2,33 +2,47 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>cn.timmy</groupId>
+    <artifactId>timmy-message</artifactId>
+    <version>1.0.0.RELEASE</version>
     <parent>
         <groupId>cn.timmy</groupId>
         <artifactId>server</artifactId>
         <version>1.0.0.RELEASE</version>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>cn.timmy</groupId>
-    <artifactId>timmy-message</artifactId>
-    <version>1.0.0.RELEASE</version>
+    <!--自定义parent 不继承spring boot parent 使用以下方式-->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${version.spring.boot}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
     <dependencies>
-        <dependency>
-            <groupId>cn.timmy</groupId>
-            <artifactId>timmy-proto</artifactId>
-        </dependency>
         <dependency>
             <groupId>cn.timmy</groupId>
             <artifactId>timmy-common</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.netty</groupId>
-            <artifactId>netty-all</artifactId>
-            <version>${version.netty}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+            <version>${version.spring.boot}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
-            <groupId>redis.clients</groupId>
-            <artifactId>jedis</artifactId>
-            <version>${version.jedis}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+            <version>${version.spring.boot}</version>
         </dependency>
     </dependencies>
 </project>

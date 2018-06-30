@@ -7,7 +7,8 @@ spring:
       max-wait: 60000
       max-idle: 5
       min-idle: 1
-
+  main:
+      banner-mode: log
 netty:
   server:
     port: 7070

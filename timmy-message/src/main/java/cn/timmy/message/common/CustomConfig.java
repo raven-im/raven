@@ -13,7 +13,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
  * Date Created on 2018/6/30
  */
 @Configuration
-public class RedisConfiguration {
+public class CustomConfig {
 
     @Bean
     @ConditionalOnMissingBean(name = "redisTemplate")

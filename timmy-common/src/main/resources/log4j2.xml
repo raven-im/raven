@@ -1,26 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration status="WARN" monitorInterval="30">
+    <Properties>
+        <Property name="LOG_PATTERN">%d{HH:mm:ss.SSS}{UTC} %-5level %class{36} %L%M-%msg%xEx%n
+        </Property>
+    </Properties>
+
     <appenders>
         <Console name="Console" target="SYSTEM_OUT">
             <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
-            <PatternLayout pattern="%d{HH:mm:ss.SSS}{UTC} %-5level %class{36} %L %M - %msg%xEx%n"/>
+            <PatternLayout pattern="${LOG_PATTERN}"/>
         </Console>
-        <RollingFile name="RollingFile" fileName="logs/timmy.log"
-          filePattern="logs/$${date:yyyy-MM}{UTC}/timmy-%d{MM-dd-yyyy}{UTC}-%i.log">
-            <PatternLayout
-              pattern="%d{yyyy-MM-dd 'at' HH:mm:ss.SSS}{UTC} %-5level %class{36} %L %M - %msg%xEx%n"/>
+        <RollingFile name="RollingFileLog" fileName="logs/timmy.log"
+          filePattern="logs/${date:yyyy-MM}{UTC}/timmy-%d{MM-dd-yyyy}{UTC}-%i.log">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <SizeBasedTriggeringPolicy size="50MB"/>
+            <DefaultRolloverStrategy max="20"/>
+        </RollingFile>
+        <RollingFile name="LogicLog" fileName="logs/timmy-logic.log"
+          filePattern="logs/${date:yyyy-MM}{UTC}/timmy-logic-%d{MM-dd-yyyy}{UTC}-%i.log">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <SizeBasedTriggeringPolicy size="50MB"/>
+            <DefaultRolloverStrategy max="20"/>
+        </RollingFile>
+        <RollingFile name="MessageLog" fileName="logs/timmy-message.log"
+          filePattern="logs/${date:yyyy-MM}{UTC}/timmy-message-%d{MM-dd-yyyy}{UTC}-%i.log">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <SizeBasedTriggeringPolicy size="50MB"/>
+            <DefaultRolloverStrategy max="20"/>
+        </RollingFile>
+        <RollingFile name="ClientLog" fileName="logs/timmy-client.log"
+          filePattern="logs/${date:yyyy-MM}{UTC}/timmy-client-%d{MM-dd-yyyy}{UTC}-%i.log">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
             <SizeBasedTriggeringPolicy size="50MB"/>
             <DefaultRolloverStrategy max="20"/>
         </RollingFile>
     </appenders>
     <loggers>
-        <Logger name="org.springframework.web.servlet" level="WARN" additivity="true">
-            <appender-ref ref="RollingFile"/>
+        <Logger name="org.springframework.web.servlet" level="WARN" additivity="false">
+            <appender-ref ref="RollingFileLog"/>
             <appender-ref ref="Console"/>
         </Logger>
+        <Logger name="cn.timmy.logic" level="INFO" additivity="true">
+            <appender-ref ref="LogicLog"/>
+            <appender-ref ref="RollingFileLog"/>
+        </Logger>
+        <Logger name="cn.timmy.message" level="INFO" additivity="true">
+            <appender-ref ref="MessageLog"/>
+            <appender-ref ref="RollingFileLog"/>
+        </Logger>
+        <Logger name="cn.timmy.client" level="INFO" additivity="true">
+            <appender-ref ref="ClientLog"/>
+            <appender-ref ref="RollingFileLog"/>
+        </Logger>
         <root level="INFO">
-            <appender-ref ref="RollingFile"/>
             <appender-ref ref="Console"/>
+            <appender-ref ref="RollingFileLog"/>
         </root>
     </loggers>
 </configuration>

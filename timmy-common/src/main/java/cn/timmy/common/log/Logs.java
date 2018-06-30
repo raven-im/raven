@@ -1,5 +1,8 @@
 package cn.timmy.common.log;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Author zxx
  * Description log配置
@@ -17,5 +20,11 @@ public interface Logs {
             "cn/timmy/common/src/main/resources/logback.xml");
         return true;
     }
+
+    Logger LOGIC = LoggerFactory.getLogger("cn.timmt.logic"),
+
+    MESSAGE = LoggerFactory.getLogger("cn.timmy.message"),
+
+    CLIENT = LoggerFactory.getLogger("cn.timmy.client");
 
 }

@@ -6,7 +6,5 @@
     |_|  |_|_| |_| |_|_| |_| |_|\__, | |______\___/ \__, |_|\___|
                                  __/ |               __/ |
                                 |___/               |___/
- ${AnsiColor.BLUE}
  Application Version: ${application.version}
  Spring Boot Version: ${spring-boot.version}
- ${AnsiColor.WHITE}

@@ -1,6 +1,7 @@
 package cn.timmy.logic.friend.bean.param;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,6 +22,10 @@ public class FriendsOutParam {
         public String portrait_url;
 
         public int state;
+
+        public Date create_dt;
+
+        public Date update_dt;
 
     }
 

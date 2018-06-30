@@ -10,7 +10,7 @@ public interface FriendService {
 
     Result friendRequest(FriendRequestParam param);
 
-    Result acceptRequest(int id);
+    Result acceptRequest(Integer requestId);
 
     Result replytRequest(RequestReplyParam param);
 

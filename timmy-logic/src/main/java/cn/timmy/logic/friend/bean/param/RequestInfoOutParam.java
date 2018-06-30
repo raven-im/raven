@@ -25,6 +25,8 @@ public class RequestInfoOutParam {
 
         public Date create_dt;
 
+        public Date update_dt;
+
         public List<RequestMsgInfo> msgInfos = new ArrayList<>();
 
     }

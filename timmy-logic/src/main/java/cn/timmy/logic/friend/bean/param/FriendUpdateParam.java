@@ -11,6 +11,8 @@ public class FriendUpdateParam {
 
     private String uid;
 
+    private Integer state;
+
     public String getAlias() {
         return alias;
     }
@@ -25,5 +27,13 @@ public class FriendUpdateParam {
 
     public void setUid(String uid) {
         this.uid = uid;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
     }
 }

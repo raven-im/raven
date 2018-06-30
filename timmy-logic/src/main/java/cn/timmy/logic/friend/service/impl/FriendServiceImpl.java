@@ -73,6 +73,7 @@ public class FriendServiceImpl implements FriendService {
         model.setFrom_uid(SecurityUtils.getUid());
         model.setTo_uid(param.getTo_uid());
         model.setCreate_dt(DateTimeUtils.currentUTC());
+        model.setUpdate_dt(DateTimeUtils.currentUTC());
         friendRequestMapper.insertSelective(model);
         if (!StringUtils.isEmpty(param.getMessage())) {
             FriendRequestMsgModel msgModel = new FriendRequestMsgModel();
@@ -80,6 +81,7 @@ public class FriendServiceImpl implements FriendService {
             msgModel.setTo_uid(param.getTo_uid());
             msgModel.setMessage(param.getMessage());
             msgModel.setCreate_dt(DateTimeUtils.currentUTC());
+            msgModel.setUpdate_dt(DateTimeUtils.currentUTC());
             msgModel.setRequest_id(model.getId());
             friendRequestMsgMapper.insertSelective(msgModel);
         }
@@ -87,24 +89,25 @@ public class FriendServiceImpl implements FriendService {
     }
 
     @Override
-    public Result acceptRequest(int id) {
-        FriendRequestModel requestModel = friendRequestMapper.selectByPrimaryKey(id);
+    public Result acceptRequest(Integer requestId) {
+        FriendRequestModel requestModel = friendRequestMapper.selectByPrimaryKey(requestId);
         if (null == requestModel) {
             return Result.failure(ResultCode.ERROR, "friend request not found");
         }
-        Example example = new Example(FriendRequestMsgModel.class);
-        example.createCriteria().andEqualTo("request_id", id);
-        friendRequestMsgMapper.deleteByExample(example);
-        friendRequestMapper.deleteByPrimaryKey(id);
         FriendModel friendModel = new FriendModel();
         friendModel.setUid(requestModel.getFrom_uid());
         friendModel.setFriend_uid(requestModel.getTo_uid());
         friendModel.setCreate_dt(DateTimeUtils.currentUTC());
+        friendModel.setUpdate_dt(DateTimeUtils.currentUTC());
         friendModel.setState(FriendStateEnum.NORMAL.getState());
         friendMapper.insert(friendModel);
         friendModel.setUid(requestModel.getTo_uid());
         friendModel.setFriend_uid(requestModel.getFrom_uid());
         friendMapper.insert(friendModel);
+        Example example = new Example(FriendRequestMsgModel.class);
+        example.createCriteria().andEqualTo("request_id", requestId);
+        friendRequestMsgMapper.deleteByExample(example);
+        friendRequestMapper.deleteByPrimaryKey(requestId);
         return null;
     }
 
@@ -123,7 +126,10 @@ public class FriendServiceImpl implements FriendService {
         msgModel.setTo_uid(requestModel.getTo_uid());
         msgModel.setMessage(param.getMessage());
         msgModel.setCreate_dt(DateTimeUtils.currentUTC());
+        msgModel.setUpdate_dt(DateTimeUtils.currentUTC());
         friendRequestMsgMapper.insertSelective(msgModel);
+        requestModel.setUpdate_dt(DateTimeUtils.currentUTC());
+        friendRequestMapper.updateByPrimaryKeySelective(requestModel);
         return null;
     }
 
@@ -143,6 +149,7 @@ public class FriendServiceImpl implements FriendService {
         requestModels.forEach(requestModel -> {
             RequestInfo requestInfo = new RequestInfo();
             requestInfo.create_dt = requestModel.getCreate_dt();
+            requestInfo.update_dt = requestModel.getUpdate_dt();
             requestInfo.from_uid = requestModel.getFrom_uid();
             requestInfo.id = requestModel.getId();
             UserModel user = userService.getUserByUid(requestModel.getFrom_uid());
@@ -180,6 +187,8 @@ public class FriendServiceImpl implements FriendService {
             info.uid = friendModel.getFriend_uid();
             info.portrait_url = userService.getUserByUid(friendModel.getFriend_uid())
                 .getPortrait_url();
+            info.create_dt = friendModel.getCreate_dt();
+            info.update_dt = friendModel.getUpdate_dt();
             outParam.getFriends().add(info);
         });
         return Result.success(outParam);
@@ -197,6 +206,8 @@ public class FriendServiceImpl implements FriendService {
         outParam.uid = friendModel.getFriend_uid();
         outParam.state = friendModel.getState();
         outParam.alias = friendModel.getAlias();
+        outParam.create_dt = friendModel.getCreate_dt();
+        outParam.update_dt = friendModel.getUpdate_dt();
         return Result.success(outParam);
     }
 
@@ -221,7 +232,12 @@ public class FriendServiceImpl implements FriendService {
         if (null == friendModel) {
             return Result.failure(ResultCode.ERROR, "friend not found");
         }
-        friendModel.setAlias(param.getAlias());
+        if (!StringUtils.isEmpty(param.getAlias())) {
+            friendModel.setAlias(param.getAlias());
+        }
+        if (null != param.getState()) {
+            friendModel.setState(param.getState());
+        }
         friendModel.setUpdate_dt(DateTimeUtils.currentUTC());
         friendMapper.updateByPrimaryKeySelective(friendModel);
         return Result.success();

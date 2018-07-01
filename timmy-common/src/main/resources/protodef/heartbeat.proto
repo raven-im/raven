@@ -1,5 +1,5 @@
 syntax = "proto3";
-package cn.timmy.proto.protos;
+package cn.timmy.common.protos;
 
 option java_outer_classname = "HeartBeat";
 option optimize_for = LITE_RUNTIME; //SPEED;

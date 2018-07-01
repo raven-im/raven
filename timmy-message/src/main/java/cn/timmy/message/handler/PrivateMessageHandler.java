@@ -1,6 +1,6 @@
 package cn.timmy.message.handler;
 
-import cn.timmy.common.protos.MessageProto.UpStreamMessageProto;
+import cn.timmy.common.protos.Message.UpStreamMessage;
 import cn.timmy.message.channel.NettyChannelManager;
 import cn.timmy.message.process.PrivateMessageProcessor;
 import com.google.protobuf.MessageLite;
@@ -33,7 +33,7 @@ public class PrivateMessageHandler extends SimpleChannelInboundHandler<MessageLi
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext,
         MessageLite messageLite) {
-        if (messageLite instanceof UpStreamMessageProto) {
+        if (messageLite instanceof UpStreamMessage) {
             privateMessageProcessor.process(messageLite, channelHandlerContext);
         }
         channelHandlerContext.fireChannelRead(messageLite);

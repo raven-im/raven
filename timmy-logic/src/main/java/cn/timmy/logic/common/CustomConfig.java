@@ -54,6 +54,7 @@ public class CustomConfig {
         serializer.setCookieMaxAge(24 * 60 * 60);
         return serializer;
     }
+
     @Bean
     @ConditionalOnMissingBean(name = "redisTemplate")
     public RedisTemplate<Object, Object> redisTemplate(

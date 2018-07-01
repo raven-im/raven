@@ -4,6 +4,7 @@ import cn.timmy.common.utils.DateTimeUtils;
 import cn.timmy.common.utils.UidUtil;
 import cn.timmy.logic.common.Result;
 import cn.timmy.logic.common.ResultCode;
+import cn.timmy.logic.notify.MsgProducer;
 import cn.timmy.logic.security.SecurityUtils;
 import cn.timmy.logic.user.bean.model.UserModel;
 import cn.timmy.logic.user.bean.param.ChangePasswordParam;
@@ -40,6 +41,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    @Autowired
+    private MsgProducer msgProducer;
+
     @Override
     @Transactional(rollbackFor = Throwable.class)
     public Result register(RegisterParam param) {
@@ -47,7 +51,7 @@ public class UserServiceImpl implements UserService {
         example.createCriteria().andEqualTo("username", param.getUsername());
         List<UserModel> models = userMapper.selectByExample(example);
         if (!models.isEmpty()) {
-            return Result.failure(ResultCode.ERROR,"username exits");
+            return Result.failure(ResultCode.ERROR, "username exits");
         }
         String salt = BCrypt.gensalt();
         String password = BCrypt.hashpw(param.getPassword(), salt);
@@ -94,20 +98,21 @@ public class UserServiceImpl implements UserService {
     @Override
     public Result changePassword(ChangePasswordParam param) {
         UserModel user = getUserByUid(SecurityUtils.getUid());
-        Boolean check = BCrypt.checkpw(param.getOldPassword(), user.getPassword());
+        Boolean check = BCrypt.checkpw(param.getOld_password(), user.getPassword());
         if (!check) {
             return Result.failure(ResultCode.ERROR, "wrong old password");
         }
-        if (StringUtils.isEmpty(param.getNewPassword())) {
+        if (StringUtils.isEmpty(param.getNew_password())) {
             return Result.failure(ResultCode.ERROR, "invalid new password");
         }
         String salt = BCrypt.gensalt();
-        String password = BCrypt.hashpw(param.getNewPassword(), salt);
+        String password = BCrypt.hashpw(param.getNew_password(), salt);
         UserModel updateUser = new UserModel();
         updateUser.setPassword(password);
         updateUser.setUid(user.getUid());
         updateUser.setUpdate_dt(DateTimeUtils.currentUTC());
         userMapper.updateByPrimaryKeySelective(updateUser);
+        msgProducer.pwdChanged(user.getUid(), user.getUid());
         return Result.success();
     }
 

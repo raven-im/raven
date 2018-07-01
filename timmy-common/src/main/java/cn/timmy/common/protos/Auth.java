@@ -9,7 +9,7 @@ public final class Auth {
       com.google.protobuf.ExtensionRegistryLite registry) {
   }
   public interface LoginOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:cn.timmy.proto.protos.Login)
+      // @@protoc_insertion_point(interface_extends:cn.timmy.common.protos.Login)
       com.google.protobuf.MessageLiteOrBuilder {
 
     /**
@@ -19,7 +19,7 @@ public final class Auth {
      *
      * <code>string token = 1;</code>
      */
-    String getToken();
+    java.lang.String getToken();
     /**
      * <pre>
      * 标识
@@ -40,18 +40,18 @@ public final class Auth {
     int getProtonum();
   }
   /**
-   * Protobuf type {@code cn.timmy.proto.protos.Login}
+   * Protobuf type {@code cn.timmy.common.protos.Login}
    */
   public  static final class Login extends
       com.google.protobuf.GeneratedMessageLite<
           Login, Login.Builder> implements
-      // @@protoc_insertion_point(message_implements:cn.timmy.proto.protos.Login)
+      // @@protoc_insertion_point(message_implements:cn.timmy.common.protos.Login)
       LoginOrBuilder {
     private Login() {
       token_ = "";
     }
     public static final int TOKEN_FIELD_NUMBER = 1;
-    private String token_;
+    private java.lang.String token_;
     /**
      * <pre>
      * 标识
@@ -59,7 +59,7 @@ public final class Auth {
      *
      * <code>string token = 1;</code>
      */
-    public String getToken() {
+    public java.lang.String getToken() {
       return token_;
     }
     /**
@@ -81,11 +81,11 @@ public final class Auth {
      * <code>string token = 1;</code>
      */
     private void setToken(
-        String value) {
+        java.lang.String value) {
       if (value == null) {
     throw new NullPointerException();
   }
-
+  
       token_ = value;
     }
     /**
@@ -96,7 +96,7 @@ public final class Auth {
      * <code>string token = 1;</code>
      */
     private void clearToken() {
-
+      
       token_ = getDefaultInstance().getToken();
     }
     /**
@@ -112,7 +112,7 @@ public final class Auth {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
-
+      
       token_ = value.toStringUtf8();
     }
 
@@ -136,7 +136,7 @@ public final class Auth {
      * <code>uint32 protonum = 2;</code>
      */
     private void setProtonum(int value) {
-
+      
       protonum_ = value;
     }
     /**
@@ -147,7 +147,7 @@ public final class Auth {
      * <code>uint32 protonum = 2;</code>
      */
     private void clearProtonum() {
-
+      
       protonum_ = 0;
     }
 
@@ -180,73 +180,73 @@ public final class Auth {
       return size;
     }
 
-    public static Auth.Login parseFrom(
+    public static cn.timmy.common.protos.Auth.Login parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, data);
     }
-    public static Auth.Login parseFrom(
+    public static cn.timmy.common.protos.Auth.Login parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, data, extensionRegistry);
     }
-    public static Auth.Login parseFrom(
+    public static cn.timmy.common.protos.Auth.Login parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, data);
     }
-    public static Auth.Login parseFrom(
+    public static cn.timmy.common.protos.Auth.Login parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, data, extensionRegistry);
     }
-    public static Auth.Login parseFrom(byte[] data)
+    public static cn.timmy.common.protos.Auth.Login parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, data);
     }
-    public static Auth.Login parseFrom(
+    public static cn.timmy.common.protos.Auth.Login parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, data, extensionRegistry);
     }
-    public static Auth.Login parseFrom(java.io.InputStream input)
+    public static cn.timmy.common.protos.Auth.Login parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, input);
     }
-    public static Auth.Login parseFrom(
+    public static cn.timmy.common.protos.Auth.Login parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, input, extensionRegistry);
     }
-    public static Auth.Login parseDelimitedFrom(java.io.InputStream input)
+    public static cn.timmy.common.protos.Auth.Login parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return parseDelimitedFrom(DEFAULT_INSTANCE, input);
     }
-    public static Auth.Login parseDelimitedFrom(
+    public static cn.timmy.common.protos.Auth.Login parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
     }
-    public static Auth.Login parseFrom(
+    public static cn.timmy.common.protos.Auth.Login parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, input);
     }
-    public static Auth.Login parseFrom(
+    public static cn.timmy.common.protos.Auth.Login parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -257,19 +257,19 @@ public final class Auth {
     public static Builder newBuilder() {
       return (Builder) DEFAULT_INSTANCE.createBuilder();
     }
-    public static Builder newBuilder(Auth.Login prototype) {
+    public static Builder newBuilder(cn.timmy.common.protos.Auth.Login prototype) {
       return (Builder) DEFAULT_INSTANCE.createBuilder(prototype);
     }
 
     /**
-     * Protobuf type {@code cn.timmy.proto.protos.Login}
+     * Protobuf type {@code cn.timmy.common.protos.Login}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageLite.Builder<
-          Auth.Login, Builder> implements
-        // @@protoc_insertion_point(builder_implements:cn.timmy.proto.protos.Login)
-        Auth.LoginOrBuilder {
-      // Construct using cn.timmy.proto.protos.Auth.Login.newBuilder()
+          cn.timmy.common.protos.Auth.Login, Builder> implements
+        // @@protoc_insertion_point(builder_implements:cn.timmy.common.protos.Login)
+        cn.timmy.common.protos.Auth.LoginOrBuilder {
+      // Construct using cn.timmy.common.protos.Auth.Login.newBuilder()
       private Builder() {
         super(DEFAULT_INSTANCE);
       }
@@ -282,7 +282,7 @@ public final class Auth {
        *
        * <code>string token = 1;</code>
        */
-      public String getToken() {
+      public java.lang.String getToken() {
         return instance.getToken();
       }
       /**
@@ -304,7 +304,7 @@ public final class Auth {
        * <code>string token = 1;</code>
        */
       public Builder setToken(
-          String value) {
+          java.lang.String value) {
         copyOnWrite();
         instance.setToken(value);
         return this;
@@ -370,15 +370,15 @@ public final class Auth {
         return this;
       }
 
-      // @@protoc_insertion_point(builder_scope:cn.timmy.proto.protos.Login)
+      // @@protoc_insertion_point(builder_scope:cn.timmy.common.protos.Login)
     }
-    @SuppressWarnings({"unchecked", "fallthrough"})
-    protected final Object dynamicMethod(
-        MethodToInvoke method,
-        Object arg0, Object arg1) {
+    @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+    protected final java.lang.Object dynamicMethod(
+        com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+        java.lang.Object arg0, java.lang.Object arg1) {
       switch (method) {
         case NEW_MUTABLE_INSTANCE: {
-          return new Auth.Login();
+          return new cn.timmy.common.protos.Auth.Login();
         }
         case IS_INITIALIZED: {
           return DEFAULT_INSTANCE;
@@ -391,12 +391,12 @@ public final class Auth {
         }
         case VISIT: {
           Visitor visitor = (Visitor) arg0;
-          Auth.Login other = (Auth.Login) arg1;
+          cn.timmy.common.protos.Auth.Login other = (cn.timmy.common.protos.Auth.Login) arg1;
           token_ = visitor.visitString(!token_.isEmpty(), token_,
               !other.token_.isEmpty(), other.token_);
           protonum_ = visitor.visitInt(protonum_ != 0, protonum_,
               other.protonum_ != 0, other.protonum_);
-          if (visitor == MergeFromVisitor
+          if (visitor == com.google.protobuf.GeneratedMessageLite.MergeFromVisitor
               .INSTANCE) {
           }
           return this;
@@ -407,7 +407,7 @@ public final class Auth {
           com.google.protobuf.ExtensionRegistryLite extensionRegistry =
               (com.google.protobuf.ExtensionRegistryLite) arg1;
           if (extensionRegistry == null) {
-            throw new NullPointerException();
+            throw new java.lang.NullPointerException();
           }
           try {
             boolean done = false;
@@ -424,7 +424,7 @@ public final class Auth {
                   break;
                 }
                 case 10: {
-                  String s = input.readStringRequireUtf8();
+                  java.lang.String s = input.readStringRequireUtf8();
 
                   token_ = s;
                   break;
@@ -450,7 +450,7 @@ public final class Auth {
           return DEFAULT_INSTANCE;
         }
         case GET_PARSER: {
-          if (PARSER == null) {    synchronized (Auth.Login.class) {
+          if (PARSER == null) {    synchronized (cn.timmy.common.protos.Auth.Login.class) {
               if (PARSER == null) {
                 PARSER = new DefaultInstanceBasedParser(DEFAULT_INSTANCE);
               }
@@ -469,14 +469,14 @@ public final class Auth {
     }
 
 
-    // @@protoc_insertion_point(class_scope:cn.timmy.proto.protos.Login)
-    private static final Auth.Login DEFAULT_INSTANCE;
+    // @@protoc_insertion_point(class_scope:cn.timmy.common.protos.Login)
+    private static final cn.timmy.common.protos.Auth.Login DEFAULT_INSTANCE;
     static {
       DEFAULT_INSTANCE = new Login();
       DEFAULT_INSTANCE.makeImmutable();
     }
 
-    public static Auth.Login getDefaultInstance() {
+    public static cn.timmy.common.protos.Auth.Login getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
@@ -488,7 +488,7 @@ public final class Auth {
   }
 
   public interface ResponseOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:cn.timmy.proto.protos.Response)
+      // @@protoc_insertion_point(interface_extends:cn.timmy.common.protos.Response)
       com.google.protobuf.MessageLiteOrBuilder {
 
     /**
@@ -516,7 +516,7 @@ public final class Auth {
      *
      * <code>string msg = 3;</code>
      */
-    String getMsg();
+    java.lang.String getMsg();
     /**
      * <pre>
      *描述
@@ -535,6 +535,15 @@ public final class Auth {
      * <code>uint64 msgid = 4;</code>
      */
     long getMsgid();
+
+    /**
+     * <pre>
+     *消息时间
+     * </pre>
+     *
+     * <code>uint64 sendtime = 5;</code>
+     */
+    long getSendtime();
   }
   /**
    * <pre>
@@ -543,12 +552,12 @@ public final class Auth {
    *400 -- error
    * </pre>
    *
-   * Protobuf type {@code cn.timmy.proto.protos.Response}
+   * Protobuf type {@code cn.timmy.common.protos.Response}
    */
   public  static final class Response extends
       com.google.protobuf.GeneratedMessageLite<
           Response, Response.Builder> implements
-      // @@protoc_insertion_point(message_implements:cn.timmy.proto.protos.Response)
+      // @@protoc_insertion_point(message_implements:cn.timmy.common.protos.Response)
       ResponseOrBuilder {
     private Response() {
       msg_ = "";
@@ -573,7 +582,7 @@ public final class Auth {
      * <code>uint32 protonum = 1;</code>
      */
     private void setProtonum(int value) {
-
+      
       protonum_ = value;
     }
     /**
@@ -584,7 +593,7 @@ public final class Auth {
      * <code>uint32 protonum = 1;</code>
      */
     private void clearProtonum() {
-
+      
       protonum_ = 0;
     }
 
@@ -608,7 +617,7 @@ public final class Auth {
      * <code>int32 code = 2;</code>
      */
     private void setCode(int value) {
-
+      
       code_ = value;
     }
     /**
@@ -619,12 +628,12 @@ public final class Auth {
      * <code>int32 code = 2;</code>
      */
     private void clearCode() {
-
+      
       code_ = 0;
     }
 
     public static final int MSG_FIELD_NUMBER = 3;
-    private String msg_;
+    private java.lang.String msg_;
     /**
      * <pre>
      *描述
@@ -632,7 +641,7 @@ public final class Auth {
      *
      * <code>string msg = 3;</code>
      */
-    public String getMsg() {
+    public java.lang.String getMsg() {
       return msg_;
     }
     /**
@@ -654,11 +663,11 @@ public final class Auth {
      * <code>string msg = 3;</code>
      */
     private void setMsg(
-        String value) {
+        java.lang.String value) {
       if (value == null) {
     throw new NullPointerException();
   }
-
+  
       msg_ = value;
     }
     /**
@@ -669,7 +678,7 @@ public final class Auth {
      * <code>string msg = 3;</code>
      */
     private void clearMsg() {
-
+      
       msg_ = getDefaultInstance().getMsg();
     }
     /**
@@ -685,7 +694,7 @@ public final class Auth {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
-
+      
       msg_ = value.toStringUtf8();
     }
 
@@ -709,7 +718,7 @@ public final class Auth {
      * <code>uint64 msgid = 4;</code>
      */
     private void setMsgid(long value) {
-
+      
       msgid_ = value;
     }
     /**
@@ -720,8 +729,43 @@ public final class Auth {
      * <code>uint64 msgid = 4;</code>
      */
     private void clearMsgid() {
-
+      
       msgid_ = 0L;
+    }
+
+    public static final int SENDTIME_FIELD_NUMBER = 5;
+    private long sendtime_;
+    /**
+     * <pre>
+     *消息时间
+     * </pre>
+     *
+     * <code>uint64 sendtime = 5;</code>
+     */
+    public long getSendtime() {
+      return sendtime_;
+    }
+    /**
+     * <pre>
+     *消息时间
+     * </pre>
+     *
+     * <code>uint64 sendtime = 5;</code>
+     */
+    private void setSendtime(long value) {
+      
+      sendtime_ = value;
+    }
+    /**
+     * <pre>
+     *消息时间
+     * </pre>
+     *
+     * <code>uint64 sendtime = 5;</code>
+     */
+    private void clearSendtime() {
+      
+      sendtime_ = 0L;
     }
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
@@ -737,6 +781,9 @@ public final class Auth {
       }
       if (msgid_ != 0L) {
         output.writeUInt64(4, msgid_);
+      }
+      if (sendtime_ != 0L) {
+        output.writeUInt64(5, sendtime_);
       }
       unknownFields.writeTo(output);
     }
@@ -762,78 +809,82 @@ public final class Auth {
         size += com.google.protobuf.CodedOutputStream
           .computeUInt64Size(4, msgid_);
       }
+      if (sendtime_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt64Size(5, sendtime_);
+      }
       size += unknownFields.getSerializedSize();
       memoizedSerializedSize = size;
       return size;
     }
 
-    public static Auth.Response parseFrom(
+    public static cn.timmy.common.protos.Auth.Response parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, data);
     }
-    public static Auth.Response parseFrom(
+    public static cn.timmy.common.protos.Auth.Response parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, data, extensionRegistry);
     }
-    public static Auth.Response parseFrom(
+    public static cn.timmy.common.protos.Auth.Response parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, data);
     }
-    public static Auth.Response parseFrom(
+    public static cn.timmy.common.protos.Auth.Response parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, data, extensionRegistry);
     }
-    public static Auth.Response parseFrom(byte[] data)
+    public static cn.timmy.common.protos.Auth.Response parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, data);
     }
-    public static Auth.Response parseFrom(
+    public static cn.timmy.common.protos.Auth.Response parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, data, extensionRegistry);
     }
-    public static Auth.Response parseFrom(java.io.InputStream input)
+    public static cn.timmy.common.protos.Auth.Response parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, input);
     }
-    public static Auth.Response parseFrom(
+    public static cn.timmy.common.protos.Auth.Response parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, input, extensionRegistry);
     }
-    public static Auth.Response parseDelimitedFrom(java.io.InputStream input)
+    public static cn.timmy.common.protos.Auth.Response parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return parseDelimitedFrom(DEFAULT_INSTANCE, input);
     }
-    public static Auth.Response parseDelimitedFrom(
+    public static cn.timmy.common.protos.Auth.Response parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
     }
-    public static Auth.Response parseFrom(
+    public static cn.timmy.common.protos.Auth.Response parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, input);
     }
-    public static Auth.Response parseFrom(
+    public static cn.timmy.common.protos.Auth.Response parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -844,7 +895,7 @@ public final class Auth {
     public static Builder newBuilder() {
       return (Builder) DEFAULT_INSTANCE.createBuilder();
     }
-    public static Builder newBuilder(Auth.Response prototype) {
+    public static Builder newBuilder(cn.timmy.common.protos.Auth.Response prototype) {
       return (Builder) DEFAULT_INSTANCE.createBuilder(prototype);
     }
 
@@ -855,14 +906,14 @@ public final class Auth {
      *400 -- error
      * </pre>
      *
-     * Protobuf type {@code cn.timmy.proto.protos.Response}
+     * Protobuf type {@code cn.timmy.common.protos.Response}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageLite.Builder<
-          Auth.Response, Builder> implements
-        // @@protoc_insertion_point(builder_implements:cn.timmy.proto.protos.Response)
-        Auth.ResponseOrBuilder {
-      // Construct using cn.timmy.proto.protos.Auth.Response.newBuilder()
+          cn.timmy.common.protos.Auth.Response, Builder> implements
+        // @@protoc_insertion_point(builder_implements:cn.timmy.common.protos.Response)
+        cn.timmy.common.protos.Auth.ResponseOrBuilder {
+      // Construct using cn.timmy.common.protos.Auth.Response.newBuilder()
       private Builder() {
         super(DEFAULT_INSTANCE);
       }
@@ -945,7 +996,7 @@ public final class Auth {
        *
        * <code>string msg = 3;</code>
        */
-      public String getMsg() {
+      public java.lang.String getMsg() {
         return instance.getMsg();
       }
       /**
@@ -967,7 +1018,7 @@ public final class Auth {
        * <code>string msg = 3;</code>
        */
       public Builder setMsg(
-          String value) {
+          java.lang.String value) {
         copyOnWrite();
         instance.setMsg(value);
         return this;
@@ -1033,15 +1084,50 @@ public final class Auth {
         return this;
       }
 
-      // @@protoc_insertion_point(builder_scope:cn.timmy.proto.protos.Response)
+      /**
+       * <pre>
+       *消息时间
+       * </pre>
+       *
+       * <code>uint64 sendtime = 5;</code>
+       */
+      public long getSendtime() {
+        return instance.getSendtime();
+      }
+      /**
+       * <pre>
+       *消息时间
+       * </pre>
+       *
+       * <code>uint64 sendtime = 5;</code>
+       */
+      public Builder setSendtime(long value) {
+        copyOnWrite();
+        instance.setSendtime(value);
+        return this;
+      }
+      /**
+       * <pre>
+       *消息时间
+       * </pre>
+       *
+       * <code>uint64 sendtime = 5;</code>
+       */
+      public Builder clearSendtime() {
+        copyOnWrite();
+        instance.clearSendtime();
+        return this;
+      }
+
+      // @@protoc_insertion_point(builder_scope:cn.timmy.common.protos.Response)
     }
-    @SuppressWarnings({"unchecked", "fallthrough"})
-    protected final Object dynamicMethod(
-        MethodToInvoke method,
-        Object arg0, Object arg1) {
+    @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+    protected final java.lang.Object dynamicMethod(
+        com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+        java.lang.Object arg0, java.lang.Object arg1) {
       switch (method) {
         case NEW_MUTABLE_INSTANCE: {
-          return new Auth.Response();
+          return new cn.timmy.common.protos.Auth.Response();
         }
         case IS_INITIALIZED: {
           return DEFAULT_INSTANCE;
@@ -1054,7 +1140,7 @@ public final class Auth {
         }
         case VISIT: {
           Visitor visitor = (Visitor) arg0;
-          Auth.Response other = (Auth.Response) arg1;
+          cn.timmy.common.protos.Auth.Response other = (cn.timmy.common.protos.Auth.Response) arg1;
           protonum_ = visitor.visitInt(protonum_ != 0, protonum_,
               other.protonum_ != 0, other.protonum_);
           code_ = visitor.visitInt(code_ != 0, code_,
@@ -1063,7 +1149,9 @@ public final class Auth {
               !other.msg_.isEmpty(), other.msg_);
           msgid_ = visitor.visitLong(msgid_ != 0L, msgid_,
               other.msgid_ != 0L, other.msgid_);
-          if (visitor == MergeFromVisitor
+          sendtime_ = visitor.visitLong(sendtime_ != 0L, sendtime_,
+              other.sendtime_ != 0L, other.sendtime_);
+          if (visitor == com.google.protobuf.GeneratedMessageLite.MergeFromVisitor
               .INSTANCE) {
           }
           return this;
@@ -1074,7 +1162,7 @@ public final class Auth {
           com.google.protobuf.ExtensionRegistryLite extensionRegistry =
               (com.google.protobuf.ExtensionRegistryLite) arg1;
           if (extensionRegistry == null) {
-            throw new NullPointerException();
+            throw new java.lang.NullPointerException();
           }
           try {
             boolean done = false;
@@ -1101,7 +1189,7 @@ public final class Auth {
                   break;
                 }
                 case 26: {
-                  String s = input.readStringRequireUtf8();
+                  java.lang.String s = input.readStringRequireUtf8();
 
                   msg_ = s;
                   break;
@@ -1109,6 +1197,11 @@ public final class Auth {
                 case 32: {
 
                   msgid_ = input.readUInt64();
+                  break;
+                }
+                case 40: {
+
+                  sendtime_ = input.readUInt64();
                   break;
                 }
               }
@@ -1127,7 +1220,7 @@ public final class Auth {
           return DEFAULT_INSTANCE;
         }
         case GET_PARSER: {
-          if (PARSER == null) {    synchronized (Auth.Response.class) {
+          if (PARSER == null) {    synchronized (cn.timmy.common.protos.Auth.Response.class) {
               if (PARSER == null) {
                 PARSER = new DefaultInstanceBasedParser(DEFAULT_INSTANCE);
               }
@@ -1146,14 +1239,14 @@ public final class Auth {
     }
 
 
-    // @@protoc_insertion_point(class_scope:cn.timmy.proto.protos.Response)
-    private static final Auth.Response DEFAULT_INSTANCE;
+    // @@protoc_insertion_point(class_scope:cn.timmy.common.protos.Response)
+    private static final cn.timmy.common.protos.Auth.Response DEFAULT_INSTANCE;
     static {
       DEFAULT_INSTANCE = new Response();
       DEFAULT_INSTANCE.makeImmutable();
     }
 
-    public static Auth.Response getDefaultInstance() {
+    public static cn.timmy.common.protos.Auth.Response getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 

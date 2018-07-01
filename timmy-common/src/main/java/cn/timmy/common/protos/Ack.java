@@ -8,8 +8,8 @@ public final class Ack {
   public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistryLite registry) {
   }
-  public interface MessageResOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:cn.timmy.proto.protos.MessageRes)
+  public interface AckMessageOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:cn.timmy.common.protos.AckMessage)
       com.google.protobuf.MessageLiteOrBuilder {
 
     /**
@@ -31,14 +31,14 @@ public final class Ack {
     int getStatus();
   }
   /**
-   * Protobuf type {@code cn.timmy.proto.protos.MessageRes}
+   * Protobuf type {@code cn.timmy.common.protos.AckMessage}
    */
-  public  static final class MessageRes extends
+  public  static final class AckMessage extends
       com.google.protobuf.GeneratedMessageLite<
-          MessageRes, MessageRes.Builder> implements
-      // @@protoc_insertion_point(message_implements:cn.timmy.proto.protos.MessageRes)
-      MessageResOrBuilder {
-    private MessageRes() {
+          AckMessage, AckMessage.Builder> implements
+      // @@protoc_insertion_point(message_implements:cn.timmy.common.protos.AckMessage)
+      AckMessageOrBuilder {
+    private AckMessage() {
     }
     public static final int MSGID_FIELD_NUMBER = 1;
     private long msgid_;
@@ -139,73 +139,73 @@ public final class Ack {
       return size;
     }
 
-    public static Ack.MessageRes parseFrom(
+    public static cn.timmy.common.protos.Ack.AckMessage parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, data);
     }
-    public static Ack.MessageRes parseFrom(
+    public static cn.timmy.common.protos.Ack.AckMessage parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, data, extensionRegistry);
     }
-    public static Ack.MessageRes parseFrom(
+    public static cn.timmy.common.protos.Ack.AckMessage parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, data);
     }
-    public static Ack.MessageRes parseFrom(
+    public static cn.timmy.common.protos.Ack.AckMessage parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, data, extensionRegistry);
     }
-    public static Ack.MessageRes parseFrom(byte[] data)
+    public static cn.timmy.common.protos.Ack.AckMessage parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, data);
     }
-    public static Ack.MessageRes parseFrom(
+    public static cn.timmy.common.protos.Ack.AckMessage parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, data, extensionRegistry);
     }
-    public static Ack.MessageRes parseFrom(java.io.InputStream input)
+    public static cn.timmy.common.protos.Ack.AckMessage parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, input);
     }
-    public static Ack.MessageRes parseFrom(
+    public static cn.timmy.common.protos.Ack.AckMessage parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, input, extensionRegistry);
     }
-    public static Ack.MessageRes parseDelimitedFrom(java.io.InputStream input)
+    public static cn.timmy.common.protos.Ack.AckMessage parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return parseDelimitedFrom(DEFAULT_INSTANCE, input);
     }
-    public static Ack.MessageRes parseDelimitedFrom(
+    public static cn.timmy.common.protos.Ack.AckMessage parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
     }
-    public static Ack.MessageRes parseFrom(
+    public static cn.timmy.common.protos.Ack.AckMessage parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, input);
     }
-    public static Ack.MessageRes parseFrom(
+    public static cn.timmy.common.protos.Ack.AckMessage parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -216,19 +216,19 @@ public final class Ack {
     public static Builder newBuilder() {
       return (Builder) DEFAULT_INSTANCE.createBuilder();
     }
-    public static Builder newBuilder(Ack.MessageRes prototype) {
+    public static Builder newBuilder(cn.timmy.common.protos.Ack.AckMessage prototype) {
       return (Builder) DEFAULT_INSTANCE.createBuilder(prototype);
     }
 
     /**
-     * Protobuf type {@code cn.timmy.proto.protos.MessageRes}
+     * Protobuf type {@code cn.timmy.common.protos.AckMessage}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageLite.Builder<
-          Ack.MessageRes, Builder> implements
-        // @@protoc_insertion_point(builder_implements:cn.timmy.proto.protos.MessageRes)
-        Ack.MessageResOrBuilder {
-      // Construct using cn.timmy.proto.protos.Ack.MessageRes.newBuilder()
+          cn.timmy.common.protos.Ack.AckMessage, Builder> implements
+        // @@protoc_insertion_point(builder_implements:cn.timmy.common.protos.AckMessage)
+        cn.timmy.common.protos.Ack.AckMessageOrBuilder {
+      // Construct using cn.timmy.common.protos.Ack.AckMessage.newBuilder()
       private Builder() {
         super(DEFAULT_INSTANCE);
       }
@@ -304,15 +304,15 @@ public final class Ack {
         return this;
       }
 
-      // @@protoc_insertion_point(builder_scope:cn.timmy.proto.protos.MessageRes)
+      // @@protoc_insertion_point(builder_scope:cn.timmy.common.protos.AckMessage)
     }
-    @SuppressWarnings({"unchecked", "fallthrough"})
-    protected final Object dynamicMethod(
-        MethodToInvoke method,
-        Object arg0, Object arg1) {
+    @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
+    protected final java.lang.Object dynamicMethod(
+        com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
+        java.lang.Object arg0, java.lang.Object arg1) {
       switch (method) {
         case NEW_MUTABLE_INSTANCE: {
-          return new Ack.MessageRes();
+          return new cn.timmy.common.protos.Ack.AckMessage();
         }
         case IS_INITIALIZED: {
           return DEFAULT_INSTANCE;
@@ -325,12 +325,12 @@ public final class Ack {
         }
         case VISIT: {
           Visitor visitor = (Visitor) arg0;
-          Ack.MessageRes other = (Ack.MessageRes) arg1;
+          cn.timmy.common.protos.Ack.AckMessage other = (cn.timmy.common.protos.Ack.AckMessage) arg1;
           msgid_ = visitor.visitLong(msgid_ != 0L, msgid_,
               other.msgid_ != 0L, other.msgid_);
           status_ = visitor.visitInt(status_ != 0, status_,
               other.status_ != 0, other.status_);
-          if (visitor == MergeFromVisitor
+          if (visitor == com.google.protobuf.GeneratedMessageLite.MergeFromVisitor
               .INSTANCE) {
           }
           return this;
@@ -341,7 +341,7 @@ public final class Ack {
           com.google.protobuf.ExtensionRegistryLite extensionRegistry =
               (com.google.protobuf.ExtensionRegistryLite) arg1;
           if (extensionRegistry == null) {
-            throw new NullPointerException();
+            throw new java.lang.NullPointerException();
           }
           try {
             boolean done = false;
@@ -383,7 +383,7 @@ public final class Ack {
           return DEFAULT_INSTANCE;
         }
         case GET_PARSER: {
-          if (PARSER == null) {    synchronized (Ack.MessageRes.class) {
+          if (PARSER == null) {    synchronized (cn.timmy.common.protos.Ack.AckMessage.class) {
               if (PARSER == null) {
                 PARSER = new DefaultInstanceBasedParser(DEFAULT_INSTANCE);
               }
@@ -402,20 +402,20 @@ public final class Ack {
     }
 
 
-    // @@protoc_insertion_point(class_scope:cn.timmy.proto.protos.MessageRes)
-    private static final Ack.MessageRes DEFAULT_INSTANCE;
+    // @@protoc_insertion_point(class_scope:cn.timmy.common.protos.AckMessage)
+    private static final cn.timmy.common.protos.Ack.AckMessage DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new MessageRes();
+      DEFAULT_INSTANCE = new AckMessage();
       DEFAULT_INSTANCE.makeImmutable();
     }
 
-    public static Ack.MessageRes getDefaultInstance() {
+    public static cn.timmy.common.protos.Ack.AckMessage getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static volatile com.google.protobuf.Parser<MessageRes> PARSER;
+    private static volatile com.google.protobuf.Parser<AckMessage> PARSER;
 
-    public static com.google.protobuf.Parser<MessageRes> parser() {
+    public static com.google.protobuf.Parser<AckMessage> parser() {
       return DEFAULT_INSTANCE.getParserForType();
     }
   }

@@ -7,23 +7,23 @@ package cn.timmy.logic.user.bean.param;
  */
 public class ChangePasswordParam {
 
-    private String oldPassword;
+    private String old_password;
 
-    private String newPassword;
+    private String new_password;
 
-    public String getOldPassword() {
-        return oldPassword;
+    public String getOld_password() {
+        return old_password;
     }
 
-    public void setOldPassword(String oldPassword) {
-        this.oldPassword = oldPassword;
+    public void setOld_password(String old_password) {
+        this.old_password = old_password;
     }
 
-    public String getNewPassword() {
-        return newPassword;
+    public String getNew_password() {
+        return new_password;
     }
 
-    public void setNewPassword(String newPassword) {
-        this.newPassword = newPassword;
+    public void setNew_password(String new_password) {
+        this.new_password = new_password;
     }
 }

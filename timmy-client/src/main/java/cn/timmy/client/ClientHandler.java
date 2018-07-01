@@ -3,7 +3,7 @@ package cn.timmy.client;
 import cn.timmy.common.protos.Auth;
 import cn.timmy.common.protos.Auth.Login;
 import cn.timmy.common.protos.HeartBeat.Beat;
-import cn.timmy.common.protos.MessageProto.UpStreamMessageProto;
+import cn.timmy.common.protos.Message.UpStreamMessage;
 import cn.timmy.common.utils.ProtoConstants;
 import com.google.protobuf.MessageLite;
 import io.netty.buffer.ByteBuf;
@@ -57,11 +57,11 @@ public class ClientHandler extends SimpleChannelInboundHandler<MessageLite> {
         String content = "Hello World!";
         List<String> uids = new ArrayList<>();
         uids.add(String.valueOf((int) (Math.random() * 10) % 10 + 1));
-        UpStreamMessageProto msg = UpStreamMessageProto
+        UpStreamMessage msg = UpStreamMessage
             .newBuilder()
             .setContent(content)
             .addAllTouid(uids)
-            .setProtonum(ProtoConstants.UPPRIVATEMESSAGE)
+            .setProtonum(ProtoConstants.UPSTREAMMESSAGE)
             .setSendtime(System.currentTimeMillis())
             .build();
         ByteBuf byteBuf = Utils.pack2Client(msg);

@@ -11,7 +11,7 @@ public class ParseMap {
 
     private static final Logger logger = LogManager.getLogger(ParseMap.class);
 
-    public static HashMap<Integer, ParseMap.Parsing> parseMap = new HashMap<>();
+    private static HashMap<Integer, ParseMap.Parsing> parseMap = new HashMap<>();
     public static HashMap<Class<?>, Integer> msg2ptoNum = new HashMap<>();
 
     @FunctionalInterface
@@ -40,15 +40,15 @@ public class ParseMap {
         if (parser == null) {
             logger.error("UnKnown Protocol Num: {}", ptoNum);
         }
-        MessageLite msg = parser.process(bytes);
-        return msg;
+        assert parser != null;
+        return parser.process(bytes);
     }
 
     public static Integer getPtoNum(MessageLite msg) {
         return getPtoNum(msg.getClass());
     }
 
-    public static Integer getPtoNum(Class<?> clz) {
+    private static Integer getPtoNum(Class<?> clz) {
         return msg2ptoNum.get(clz);
     }
 

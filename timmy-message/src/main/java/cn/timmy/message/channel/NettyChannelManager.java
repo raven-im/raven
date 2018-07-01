@@ -31,16 +31,25 @@ public final class NettyChannelManager implements ChannelManager {
 
     @Override
     public List<Channel> getChannelByUid(String uid) {
-        return uidChannels.get(uid);
+        if (uidChannels.containsKey(uid)) {
+            return uidChannels.get(uid);
+        }
+        return new ArrayList<>();
     }
 
     @Override
     public String getUidByChannel(Channel channel) {
+        if (channelUid.containsKey(channel)) {
+            return channelUid.get(channel);
+        }
         return channelUid.get(channel);
     }
 
     @Override
     public void removeChannel(Channel channel) {
+        if (!channelUid.containsKey(channel)) {
+            return;
+        }
         String uid = channelUid.get(channel);
         List<Channel> channels = uidChannels.get(uid);
         channels.remove(channel);

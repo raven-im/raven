@@ -20,6 +20,7 @@ import cn.timmy.logic.friend.mapper.FriendMapper;
 import cn.timmy.logic.friend.mapper.FriendRequestMapper;
 import cn.timmy.logic.friend.mapper.FriendRequestMsgMapper;
 import cn.timmy.logic.friend.service.FriendService;
+import cn.timmy.logic.notify.MsgProducer;
 import cn.timmy.logic.security.SecurityUtils;
 import cn.timmy.logic.user.bean.model.UserModel;
 import cn.timmy.logic.user.service.UserService;
@@ -53,6 +54,9 @@ public class FriendServiceImpl implements FriendService {
     @Autowired
     private FriendRequestMsgMapper friendRequestMsgMapper;
 
+    @Autowired
+    private MsgProducer msgProducer;
+
     @Override
     public Result friendRequest(FriendRequestParam param) {
         UserModel user = userService.getUserByUid(param.getTo_uid());
@@ -85,6 +89,7 @@ public class FriendServiceImpl implements FriendService {
             msgModel.setRequest_id(model.getId());
             friendRequestMsgMapper.insertSelective(msgModel);
         }
+        msgProducer.newFriendRequest(SecurityUtils.getUid(), param.getTo_uid(), model.getId());
         return Result.success();
     }
 
@@ -93,6 +98,9 @@ public class FriendServiceImpl implements FriendService {
         FriendRequestModel requestModel = friendRequestMapper.selectByPrimaryKey(requestId);
         if (null == requestModel) {
             return Result.failure(ResultCode.ERROR, "friend request not found");
+        }
+        if (!SecurityUtils.getUid().equals(requestModel.getTo_uid())) {
+            return Result.failure(ResultCode.ERROR, "current uid not equals request's to_uid");
         }
         FriendModel friendModel = new FriendModel();
         friendModel.setUid(requestModel.getFrom_uid());
@@ -108,7 +116,9 @@ public class FriendServiceImpl implements FriendService {
         example.createCriteria().andEqualTo("request_id", requestId);
         friendRequestMsgMapper.deleteByExample(example);
         friendRequestMapper.deleteByPrimaryKey(requestId);
-        return null;
+        msgProducer.friendRequestAccept(SecurityUtils.getUid(), requestModel.getFrom_uid(),
+            requestModel.getId());
+        return Result.success();
     }
 
     @Override
@@ -120,17 +130,24 @@ public class FriendServiceImpl implements FriendService {
         if (StringUtils.isEmpty(param.getMessage())) {
             return Result.failure(ResultCode.ERROR, "message can not be null");
         }
+        String to_uid;
+        if (SecurityUtils.getUid().equals(requestModel.getFrom_uid())) {
+            to_uid = requestModel.getTo_uid();
+        } else {
+            to_uid = requestModel.getFrom_uid();
+        }
         FriendRequestMsgModel msgModel = new FriendRequestMsgModel();
         msgModel.setRequest_id(requestModel.getId());
-        msgModel.setFrom_uid(requestModel.getFrom_uid());
-        msgModel.setTo_uid(requestModel.getTo_uid());
+        msgModel.setFrom_uid(SecurityUtils.getUid());
+        msgModel.setTo_uid(to_uid);
         msgModel.setMessage(param.getMessage());
         msgModel.setCreate_dt(DateTimeUtils.currentUTC());
         msgModel.setUpdate_dt(DateTimeUtils.currentUTC());
         friendRequestMsgMapper.insertSelective(msgModel);
         requestModel.setUpdate_dt(DateTimeUtils.currentUTC());
         friendRequestMapper.updateByPrimaryKeySelective(requestModel);
-        return null;
+        msgProducer.newRequestReply(SecurityUtils.getUid(), to_uid, requestModel.getId());
+        return Result.success();
     }
 
     @Override

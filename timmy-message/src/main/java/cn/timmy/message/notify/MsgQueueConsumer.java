@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
  * Date Created on 2018/6/30
  */
 @Component
-@RabbitListener(queues = Constants.MSG_QUEUE_NAME)
+@RabbitListener(queues = Constants.RABBIT_QUEUE_NOTIFY_LOGIC)
 public class MsgQueueConsumer extends BaseConsumer {
 
     private static final Logger logger = LogManager.getLogger(

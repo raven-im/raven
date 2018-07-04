@@ -1,7 +1,14 @@
 package cn.timmy.logic.common;
 
+import cn.timmy.common.utils.Constants;
 import java.util.ArrayList;
 import java.util.Collection;
+import org.springframework.amqp.core.Binding;
+import org.springframework.amqp.core.BindingBuilder;
+import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.TopicExchange;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -70,6 +77,33 @@ public class CustomConfig {
         StringRedisTemplate template = new StringRedisTemplate();
         template.setConnectionFactory(redisConnectionFactory);
         return template;
+    }
+
+    @Bean
+    public RabbitAdmin rabbitAdmin(ConnectionFactory connectionFactory) {
+        return new RabbitAdmin(connectionFactory);
+    }
+
+    @Bean
+    public Queue logicNotifyQueue(RabbitAdmin rabbitAdmin) {
+        Queue logicNotifyQueue = new Queue(Constants.RABBIT_QUEUE_NOTIFY_LOGIC, true);
+        rabbitAdmin.declareQueue(logicNotifyQueue);
+        return logicNotifyQueue;
+    }
+
+    @Bean
+    public TopicExchange notifyExchange(RabbitAdmin rabbitAdmin) {
+        TopicExchange notifyExchange = new TopicExchange(Constants.RABBIT_EXCHANGE_NOTIFY);
+        rabbitAdmin.declareExchange(notifyExchange);
+        return notifyExchange;
+    }
+
+    @Bean
+    public Binding binding(Queue logicNotifyQueue, TopicExchange notifyExchange,RabbitAdmin rabbitAdmin) {
+        Binding binding = BindingBuilder.bind(logicNotifyQueue).to(notifyExchange)
+            .with(Constants.RABBIT_ROUTKEY_NOTIFY_LOGIC);
+        rabbitAdmin.declareBinding(binding);
+        return binding;
     }
 
 }

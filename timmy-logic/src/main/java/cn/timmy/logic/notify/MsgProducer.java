@@ -27,7 +27,7 @@ public class MsgProducer {
         baseMessage.setType(Constants.NOTIFY_TYPE_USER);
         baseMessage.setContent(notifyMsg.toString());
         baseMessage.setSend_time(DateTimeUtils.currentUTC().getTime());
-        sender.send2Queue(Constants.MSG_QUEUE_NAME, baseMessage);
+        sender.send2Queue(Constants.RABBIT_ROUTKEY_NOTIFY_LOGIC, baseMessage);
     }
 
     public void newFriendRequest(String fromUid, String toUid, Integer requestId) {
@@ -37,7 +37,7 @@ public class MsgProducer {
         baseMessage.setType(Constants.NOTIFY_TYPE_FRIEND);
         baseMessage.setContent(notifyMsg.toString());
         baseMessage.setSend_time(DateTimeUtils.currentUTC().getTime());
-        sender.send2Queue(Constants.MSG_QUEUE_NAME, baseMessage);
+        sender.send2Queue(Constants.RABBIT_ROUTKEY_NOTIFY_LOGIC, baseMessage);
     }
 
     public void newRequestReply(String fromUid, String toUid, Integer requestId) {
@@ -47,7 +47,7 @@ public class MsgProducer {
         baseMessage.setType(Constants.NOTIFY_TYPE_FRIEND);
         baseMessage.setContent(notifyMsg.toString());
         baseMessage.setSend_time(DateTimeUtils.currentUTC().getTime());
-        sender.send2Queue(Constants.MSG_QUEUE_NAME, baseMessage);
+        sender.send2Queue(Constants.RABBIT_ROUTKEY_NOTIFY_LOGIC, baseMessage);
     }
 
     public void friendRequestAccept(String fromUid, String toUid, Integer requestId) {
@@ -57,7 +57,7 @@ public class MsgProducer {
         baseMessage.setType(Constants.NOTIFY_TYPE_FRIEND);
         baseMessage.setContent(notifyMsg.toString());
         baseMessage.setSend_time(DateTimeUtils.currentUTC().getTime());
-        sender.send2Queue(Constants.MSG_QUEUE_NAME, baseMessage);
+        sender.send2Queue(Constants.RABBIT_ROUTKEY_NOTIFY_LOGIC, baseMessage);
     }
 
 }

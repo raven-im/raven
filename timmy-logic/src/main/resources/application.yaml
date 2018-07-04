@@ -28,6 +28,8 @@ spring:
     port: 5672
     username: guest
     password: guest
+    publisher-confirms: true
+    virtual-host: /
 
 server:
   port: 8080

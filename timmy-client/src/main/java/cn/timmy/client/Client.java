@@ -3,6 +3,7 @@ package cn.timmy.client;
 import cn.timmy.common.code.MessageDecoder;
 import cn.timmy.common.code.MessageEncoder;
 import cn.timmy.common.utils.ParseRegistryMap;
+import cn.timmy.common.utils.SnowFlake;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -15,15 +16,14 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * Author zxx 
- * Description Simple client for module test 
- * Date Created on 2018/5/25
+ * Author zxx Description Simple client for module test Date Created on 2018/5/25
  */
 public class Client {
 
     private static final String HOST = "127.0.0.1";
     private static final int PORT = 7070;
     private static final int clientNum = 10;
+    public static SnowFlake snowFlake = new SnowFlake(1, 2);
 
     private static final Logger logger = LogManager.getLogger(Client.class);
 

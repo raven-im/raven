@@ -2,7 +2,6 @@ syntax = "proto3";
 package cn.timmy.common.protos;
 
 option java_outer_classname = "Message";
-option optimize_for = LITE_RUNTIME; //SPEED;
 
 //上行单聊消息
 message UpStreamMessage {
@@ -10,6 +9,7 @@ message UpStreamMessage {
     uint32 protonum = 2; //消息类型
     string content = 3; //内容
     uint64 sendtime = 4; //发送时间
+    string msgid = 5; //消息唯一标示
 }
 
 //消息类型
@@ -26,7 +26,7 @@ message DownStreamMessage {
     uint32 protonum = 4; //消息类型
     string content = 5; //内容
     uint64 sendtime = 6; //消息时间
-    uint64 msgid = 7; //消息唯一标示
+    string msgid = 7; //消息唯一标示
 }
 
 

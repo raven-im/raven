@@ -10,11 +10,6 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-/**
- * Author zxx
- * Description 
- * Date Created on 2018/6/30
- */
 @Component
 @RabbitListener(queues = Constants.RABBIT_QUEUE_NOTIFY_LOGIC)
 public class MsgQueueConsumer extends BaseConsumer {

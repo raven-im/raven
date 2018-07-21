@@ -8,6 +8,12 @@ public final class Message {
   public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistryLite registry) {
   }
+
+  public static void registerAllExtensions(
+      com.google.protobuf.ExtensionRegistry registry) {
+    registerAllExtensions(
+        (com.google.protobuf.ExtensionRegistryLite) registry);
+  }
   /**
    * <pre>
    *消息类型
@@ -16,7 +22,7 @@ public final class Message {
    * Protobuf enum {@code cn.timmy.common.protos.MsgType}
    */
   public enum MsgType
-      implements com.google.protobuf.Internal.EnumLite {
+      implements com.google.protobuf.ProtocolMessageEnum {
     /**
      * <pre>
      *单人会话
@@ -90,6 +96,33 @@ public final class Message {
             }
           };
 
+    public final com.google.protobuf.Descriptors.EnumValueDescriptor
+        getValueDescriptor() {
+      return getDescriptor().getValues().get(ordinal());
+    }
+    public final com.google.protobuf.Descriptors.EnumDescriptor
+        getDescriptorForType() {
+      return getDescriptor();
+    }
+    public static final com.google.protobuf.Descriptors.EnumDescriptor
+        getDescriptor() {
+      return cn.timmy.common.protos.Message.getDescriptor().getEnumTypes().get(0);
+    }
+
+    private static final MsgType[] VALUES = values();
+
+    public static MsgType valueOf(
+        com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+      if (desc.getType() != getDescriptor()) {
+        throw new java.lang.IllegalArgumentException(
+          "EnumValueDescriptor is not for this type.");
+      }
+      if (desc.getIndex() == -1) {
+        return UNRECOGNIZED;
+      }
+      return VALUES[desc.getIndex()];
+    }
+
     private final int value;
 
     private MsgType(int value) {
@@ -101,7 +134,7 @@ public final class Message {
 
   public interface UpStreamMessageOrBuilder extends
       // @@protoc_insertion_point(interface_extends:cn.timmy.common.protos.UpStreamMessage)
-      com.google.protobuf.MessageLiteOrBuilder {
+      com.google.protobuf.MessageOrBuilder {
 
     /**
      * <pre>
@@ -173,6 +206,24 @@ public final class Message {
      * <code>uint64 sendtime = 4;</code>
      */
     long getSendtime();
+
+    /**
+     * <pre>
+     *消息唯一标示
+     * </pre>
+     *
+     * <code>string msgid = 5;</code>
+     */
+    java.lang.String getMsgid();
+    /**
+     * <pre>
+     *消息唯一标示
+     * </pre>
+     *
+     * <code>string msgid = 5;</code>
+     */
+    com.google.protobuf.ByteString
+        getMsgidBytes();
   }
   /**
    * <pre>
@@ -182,17 +233,115 @@ public final class Message {
    * Protobuf type {@code cn.timmy.common.protos.UpStreamMessage}
    */
   public  static final class UpStreamMessage extends
-      com.google.protobuf.GeneratedMessageLite<
-          UpStreamMessage, UpStreamMessage.Builder> implements
+      com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:cn.timmy.common.protos.UpStreamMessage)
       UpStreamMessageOrBuilder {
-    private UpStreamMessage() {
-      touid_ = com.google.protobuf.GeneratedMessageLite.emptyProtobufList();
-      content_ = "";
+  private static final long serialVersionUID = 0L;
+    // Use UpStreamMessage.newBuilder() to construct.
+    private UpStreamMessage(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
     }
+    private UpStreamMessage() {
+      touid_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      protonum_ = 0;
+      content_ = "";
+      sendtime_ = 0L;
+      msgid_ = "";
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private UpStreamMessage(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10: {
+              java.lang.String s = input.readStringRequireUtf8();
+              if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+                touid_ = new com.google.protobuf.LazyStringArrayList();
+                mutable_bitField0_ |= 0x00000001;
+              }
+              touid_.add(s);
+              break;
+            }
+            case 16: {
+
+              protonum_ = input.readUInt32();
+              break;
+            }
+            case 26: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              content_ = s;
+              break;
+            }
+            case 32: {
+
+              sendtime_ = input.readUInt64();
+              break;
+            }
+            case 42: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              msgid_ = s;
+              break;
+            }
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+          touid_ = touid_.getUnmodifiableView();
+        }
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return cn.timmy.common.protos.Message.internal_static_cn_timmy_common_protos_UpStreamMessage_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return cn.timmy.common.protos.Message.internal_static_cn_timmy_common_protos_UpStreamMessage_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              cn.timmy.common.protos.Message.UpStreamMessage.class, cn.timmy.common.protos.Message.UpStreamMessage.Builder.class);
+    }
+
     private int bitField0_;
     public static final int TOUID_FIELD_NUMBER = 1;
-    private com.google.protobuf.Internal.ProtobufList<java.lang.String> touid_;
+    private com.google.protobuf.LazyStringList touid_;
     /**
      * <pre>
      *消息目标的userid
@@ -200,7 +349,8 @@ public final class Message {
      *
      * <code>repeated string touid = 1;</code>
      */
-    public java.util.List<java.lang.String> getTouidList() {
+    public com.google.protobuf.ProtocolStringList
+        getTouidList() {
       return touid_;
     }
     /**
@@ -232,83 +382,7 @@ public final class Message {
      */
     public com.google.protobuf.ByteString
         getTouidBytes(int index) {
-      return com.google.protobuf.ByteString.copyFromUtf8(
-          touid_.get(index));
-    }
-    private void ensureTouidIsMutable() {
-      if (!touid_.isModifiable()) {
-        touid_ =
-            com.google.protobuf.GeneratedMessageLite.mutableCopy(touid_);
-       }
-    }
-    /**
-     * <pre>
-     *消息目标的userid
-     * </pre>
-     *
-     * <code>repeated string touid = 1;</code>
-     */
-    private void setTouid(
-        int index, java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  ensureTouidIsMutable();
-      touid_.set(index, value);
-    }
-    /**
-     * <pre>
-     *消息目标的userid
-     * </pre>
-     *
-     * <code>repeated string touid = 1;</code>
-     */
-    private void addTouid(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  ensureTouidIsMutable();
-      touid_.add(value);
-    }
-    /**
-     * <pre>
-     *消息目标的userid
-     * </pre>
-     *
-     * <code>repeated string touid = 1;</code>
-     */
-    private void addAllTouid(
-        java.lang.Iterable<java.lang.String> values) {
-      ensureTouidIsMutable();
-      com.google.protobuf.AbstractMessageLite.addAll(
-          values, touid_);
-    }
-    /**
-     * <pre>
-     *消息目标的userid
-     * </pre>
-     *
-     * <code>repeated string touid = 1;</code>
-     */
-    private void clearTouid() {
-      touid_ = com.google.protobuf.GeneratedMessageLite.emptyProtobufList();
-    }
-    /**
-     * <pre>
-     *消息目标的userid
-     * </pre>
-     *
-     * <code>repeated string touid = 1;</code>
-     */
-    private void addTouidBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      ensureTouidIsMutable();
-      touid_.add(value.toStringUtf8());
+      return touid_.getByteString(index);
     }
 
     public static final int PROTONUM_FIELD_NUMBER = 2;
@@ -323,31 +397,9 @@ public final class Message {
     public int getProtonum() {
       return protonum_;
     }
-    /**
-     * <pre>
-     *消息类型
-     * </pre>
-     *
-     * <code>uint32 protonum = 2;</code>
-     */
-    private void setProtonum(int value) {
-      
-      protonum_ = value;
-    }
-    /**
-     * <pre>
-     *消息类型
-     * </pre>
-     *
-     * <code>uint32 protonum = 2;</code>
-     */
-    private void clearProtonum() {
-      
-      protonum_ = 0;
-    }
 
     public static final int CONTENT_FIELD_NUMBER = 3;
-    private java.lang.String content_;
+    private volatile java.lang.Object content_;
     /**
      * <pre>
      *内容
@@ -356,7 +408,16 @@ public final class Message {
      * <code>string content = 3;</code>
      */
     public java.lang.String getContent() {
-      return content_;
+      java.lang.Object ref = content_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        content_ = s;
+        return s;
+      }
     }
     /**
      * <pre>
@@ -367,49 +428,16 @@ public final class Message {
      */
     public com.google.protobuf.ByteString
         getContentBytes() {
-      return com.google.protobuf.ByteString.copyFromUtf8(content_);
-    }
-    /**
-     * <pre>
-     *内容
-     * </pre>
-     *
-     * <code>string content = 3;</code>
-     */
-    private void setContent(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
-      content_ = value;
-    }
-    /**
-     * <pre>
-     *内容
-     * </pre>
-     *
-     * <code>string content = 3;</code>
-     */
-    private void clearContent() {
-      
-      content_ = getDefaultInstance().getContent();
-    }
-    /**
-     * <pre>
-     *内容
-     * </pre>
-     *
-     * <code>string content = 3;</code>
-     */
-    private void setContentBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
-      content_ = value.toStringUtf8();
+      java.lang.Object ref = content_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        content_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
     }
 
     public static final int SENDTIME_FIELD_NUMBER = 4;
@@ -424,56 +452,91 @@ public final class Message {
     public long getSendtime() {
       return sendtime_;
     }
+
+    public static final int MSGID_FIELD_NUMBER = 5;
+    private volatile java.lang.Object msgid_;
     /**
      * <pre>
-     *发送时间
+     *消息唯一标示
      * </pre>
      *
-     * <code>uint64 sendtime = 4;</code>
+     * <code>string msgid = 5;</code>
      */
-    private void setSendtime(long value) {
-      
-      sendtime_ = value;
+    public java.lang.String getMsgid() {
+      java.lang.Object ref = msgid_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        msgid_ = s;
+        return s;
+      }
     }
     /**
      * <pre>
-     *发送时间
+     *消息唯一标示
      * </pre>
      *
-     * <code>uint64 sendtime = 4;</code>
+     * <code>string msgid = 5;</code>
      */
-    private void clearSendtime() {
-      
-      sendtime_ = 0L;
+    public com.google.protobuf.ByteString
+        getMsgidBytes() {
+      java.lang.Object ref = msgid_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        msgid_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
     }
 
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       for (int i = 0; i < touid_.size(); i++) {
-        output.writeString(1, touid_.get(i));
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, touid_.getRaw(i));
       }
       if (protonum_ != 0) {
         output.writeUInt32(2, protonum_);
       }
-      if (!content_.isEmpty()) {
-        output.writeString(3, getContent());
+      if (!getContentBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, content_);
       }
       if (sendtime_ != 0L) {
         output.writeUInt64(4, sendtime_);
       }
+      if (!getMsgidBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 5, msgid_);
+      }
       unknownFields.writeTo(output);
     }
 
+    @java.lang.Override
     public int getSerializedSize() {
-      int size = memoizedSerializedSize;
+      int size = memoizedSize;
       if (size != -1) return size;
 
       size = 0;
       {
         int dataSize = 0;
         for (int i = 0; i < touid_.size(); i++) {
-          dataSize += com.google.protobuf.CodedOutputStream
-            .computeStringSizeNoTag(touid_.get(i));
+          dataSize += computeStringSizeNoTag(touid_.getRaw(i));
         }
         size += dataSize;
         size += 1 * getTouidList().size();
@@ -482,100 +545,161 @@ public final class Message {
         size += com.google.protobuf.CodedOutputStream
           .computeUInt32Size(2, protonum_);
       }
-      if (!content_.isEmpty()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(3, getContent());
+      if (!getContentBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, content_);
       }
       if (sendtime_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
           .computeUInt64Size(4, sendtime_);
       }
+      if (!getMsgidBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, msgid_);
+      }
       size += unknownFields.getSerializedSize();
-      memoizedSerializedSize = size;
+      memoizedSize = size;
       return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof cn.timmy.common.protos.Message.UpStreamMessage)) {
+        return super.equals(obj);
+      }
+      cn.timmy.common.protos.Message.UpStreamMessage other = (cn.timmy.common.protos.Message.UpStreamMessage) obj;
+
+      boolean result = true;
+      result = result && getTouidList()
+          .equals(other.getTouidList());
+      result = result && (getProtonum()
+          == other.getProtonum());
+      result = result && getContent()
+          .equals(other.getContent());
+      result = result && (getSendtime()
+          == other.getSendtime());
+      result = result && getMsgid()
+          .equals(other.getMsgid());
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      if (getTouidCount() > 0) {
+        hash = (37 * hash) + TOUID_FIELD_NUMBER;
+        hash = (53 * hash) + getTouidList().hashCode();
+      }
+      hash = (37 * hash) + PROTONUM_FIELD_NUMBER;
+      hash = (53 * hash) + getProtonum();
+      hash = (37 * hash) + CONTENT_FIELD_NUMBER;
+      hash = (53 * hash) + getContent().hashCode();
+      hash = (37 * hash) + SENDTIME_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getSendtime());
+      hash = (37 * hash) + MSGID_FIELD_NUMBER;
+      hash = (53 * hash) + getMsgid().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
     }
 
     public static cn.timmy.common.protos.Message.UpStreamMessage parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, data);
+      return PARSER.parseFrom(data);
     }
     public static cn.timmy.common.protos.Message.UpStreamMessage parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, data, extensionRegistry);
+      return PARSER.parseFrom(data, extensionRegistry);
     }
     public static cn.timmy.common.protos.Message.UpStreamMessage parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, data);
+      return PARSER.parseFrom(data);
     }
     public static cn.timmy.common.protos.Message.UpStreamMessage parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, data, extensionRegistry);
+      return PARSER.parseFrom(data, extensionRegistry);
     }
     public static cn.timmy.common.protos.Message.UpStreamMessage parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, data);
+      return PARSER.parseFrom(data);
     }
     public static cn.timmy.common.protos.Message.UpStreamMessage parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, data, extensionRegistry);
+      return PARSER.parseFrom(data, extensionRegistry);
     }
     public static cn.timmy.common.protos.Message.UpStreamMessage parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, input);
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
     }
     public static cn.timmy.common.protos.Message.UpStreamMessage parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, input, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
     }
     public static cn.timmy.common.protos.Message.UpStreamMessage parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return parseDelimitedFrom(DEFAULT_INSTANCE, input);
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
     }
     public static cn.timmy.common.protos.Message.UpStreamMessage parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
     public static cn.timmy.common.protos.Message.UpStreamMessage parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, input);
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
     }
     public static cn.timmy.common.protos.Message.UpStreamMessage parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, input, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
-      return (Builder) DEFAULT_INSTANCE.createBuilder();
+      return DEFAULT_INSTANCE.toBuilder();
     }
     public static Builder newBuilder(cn.timmy.common.protos.Message.UpStreamMessage prototype) {
-      return (Builder) DEFAULT_INSTANCE.createBuilder(prototype);
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
     }
 
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
     /**
      * <pre>
      *上行单聊消息
@@ -584,16 +708,197 @@ public final class Message {
      * Protobuf type {@code cn.timmy.common.protos.UpStreamMessage}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageLite.Builder<
-          cn.timmy.common.protos.Message.UpStreamMessage, Builder> implements
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
         // @@protoc_insertion_point(builder_implements:cn.timmy.common.protos.UpStreamMessage)
         cn.timmy.common.protos.Message.UpStreamMessageOrBuilder {
-      // Construct using cn.timmy.common.protos.Message.UpStreamMessage.newBuilder()
-      private Builder() {
-        super(DEFAULT_INSTANCE);
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return cn.timmy.common.protos.Message.internal_static_cn_timmy_common_protos_UpStreamMessage_descriptor;
       }
 
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return cn.timmy.common.protos.Message.internal_static_cn_timmy_common_protos_UpStreamMessage_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                cn.timmy.common.protos.Message.UpStreamMessage.class, cn.timmy.common.protos.Message.UpStreamMessage.Builder.class);
+      }
 
+      // Construct using cn.timmy.common.protos.Message.UpStreamMessage.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        touid_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000001);
+        protonum_ = 0;
+
+        content_ = "";
+
+        sendtime_ = 0L;
+
+        msgid_ = "";
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return cn.timmy.common.protos.Message.internal_static_cn_timmy_common_protos_UpStreamMessage_descriptor;
+      }
+
+      @java.lang.Override
+      public cn.timmy.common.protos.Message.UpStreamMessage getDefaultInstanceForType() {
+        return cn.timmy.common.protos.Message.UpStreamMessage.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public cn.timmy.common.protos.Message.UpStreamMessage build() {
+        cn.timmy.common.protos.Message.UpStreamMessage result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public cn.timmy.common.protos.Message.UpStreamMessage buildPartial() {
+        cn.timmy.common.protos.Message.UpStreamMessage result = new cn.timmy.common.protos.Message.UpStreamMessage(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((bitField0_ & 0x00000001) == 0x00000001)) {
+          touid_ = touid_.getUnmodifiableView();
+          bitField0_ = (bitField0_ & ~0x00000001);
+        }
+        result.touid_ = touid_;
+        result.protonum_ = protonum_;
+        result.content_ = content_;
+        result.sendtime_ = sendtime_;
+        result.msgid_ = msgid_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof cn.timmy.common.protos.Message.UpStreamMessage) {
+          return mergeFrom((cn.timmy.common.protos.Message.UpStreamMessage)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(cn.timmy.common.protos.Message.UpStreamMessage other) {
+        if (other == cn.timmy.common.protos.Message.UpStreamMessage.getDefaultInstance()) return this;
+        if (!other.touid_.isEmpty()) {
+          if (touid_.isEmpty()) {
+            touid_ = other.touid_;
+            bitField0_ = (bitField0_ & ~0x00000001);
+          } else {
+            ensureTouidIsMutable();
+            touid_.addAll(other.touid_);
+          }
+          onChanged();
+        }
+        if (other.getProtonum() != 0) {
+          setProtonum(other.getProtonum());
+        }
+        if (!other.getContent().isEmpty()) {
+          content_ = other.content_;
+          onChanged();
+        }
+        if (other.getSendtime() != 0L) {
+          setSendtime(other.getSendtime());
+        }
+        if (!other.getMsgid().isEmpty()) {
+          msgid_ = other.msgid_;
+          onChanged();
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        cn.timmy.common.protos.Message.UpStreamMessage parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (cn.timmy.common.protos.Message.UpStreamMessage) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private com.google.protobuf.LazyStringList touid_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      private void ensureTouidIsMutable() {
+        if (!((bitField0_ & 0x00000001) == 0x00000001)) {
+          touid_ = new com.google.protobuf.LazyStringArrayList(touid_);
+          bitField0_ |= 0x00000001;
+         }
+      }
       /**
        * <pre>
        *消息目标的userid
@@ -601,10 +906,9 @@ public final class Message {
        *
        * <code>repeated string touid = 1;</code>
        */
-      public java.util.List<java.lang.String>
+      public com.google.protobuf.ProtocolStringList
           getTouidList() {
-        return java.util.Collections.unmodifiableList(
-            instance.getTouidList());
+        return touid_.getUnmodifiableView();
       }
       /**
        * <pre>
@@ -614,7 +918,7 @@ public final class Message {
        * <code>repeated string touid = 1;</code>
        */
       public int getTouidCount() {
-        return instance.getTouidCount();
+        return touid_.size();
       }
       /**
        * <pre>
@@ -624,7 +928,7 @@ public final class Message {
        * <code>repeated string touid = 1;</code>
        */
       public java.lang.String getTouid(int index) {
-        return instance.getTouid(index);
+        return touid_.get(index);
       }
       /**
        * <pre>
@@ -635,7 +939,7 @@ public final class Message {
        */
       public com.google.protobuf.ByteString
           getTouidBytes(int index) {
-        return instance.getTouidBytes(index);
+        return touid_.getByteString(index);
       }
       /**
        * <pre>
@@ -646,8 +950,12 @@ public final class Message {
        */
       public Builder setTouid(
           int index, java.lang.String value) {
-        copyOnWrite();
-        instance.setTouid(index, value);
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureTouidIsMutable();
+        touid_.set(index, value);
+        onChanged();
         return this;
       }
       /**
@@ -659,8 +967,12 @@ public final class Message {
        */
       public Builder addTouid(
           java.lang.String value) {
-        copyOnWrite();
-        instance.addTouid(value);
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureTouidIsMutable();
+        touid_.add(value);
+        onChanged();
         return this;
       }
       /**
@@ -672,8 +984,10 @@ public final class Message {
        */
       public Builder addAllTouid(
           java.lang.Iterable<java.lang.String> values) {
-        copyOnWrite();
-        instance.addAllTouid(values);
+        ensureTouidIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, touid_);
+        onChanged();
         return this;
       }
       /**
@@ -684,8 +998,9 @@ public final class Message {
        * <code>repeated string touid = 1;</code>
        */
       public Builder clearTouid() {
-        copyOnWrite();
-        instance.clearTouid();
+        touid_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000001);
+        onChanged();
         return this;
       }
       /**
@@ -697,11 +1012,17 @@ public final class Message {
        */
       public Builder addTouidBytes(
           com.google.protobuf.ByteString value) {
-        copyOnWrite();
-        instance.addTouidBytes(value);
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        ensureTouidIsMutable();
+        touid_.add(value);
+        onChanged();
         return this;
       }
 
+      private int protonum_ ;
       /**
        * <pre>
        *消息类型
@@ -710,7 +1031,7 @@ public final class Message {
        * <code>uint32 protonum = 2;</code>
        */
       public int getProtonum() {
-        return instance.getProtonum();
+        return protonum_;
       }
       /**
        * <pre>
@@ -720,8 +1041,9 @@ public final class Message {
        * <code>uint32 protonum = 2;</code>
        */
       public Builder setProtonum(int value) {
-        copyOnWrite();
-        instance.setProtonum(value);
+        
+        protonum_ = value;
+        onChanged();
         return this;
       }
       /**
@@ -732,11 +1054,13 @@ public final class Message {
        * <code>uint32 protonum = 2;</code>
        */
       public Builder clearProtonum() {
-        copyOnWrite();
-        instance.clearProtonum();
+        
+        protonum_ = 0;
+        onChanged();
         return this;
       }
 
+      private java.lang.Object content_ = "";
       /**
        * <pre>
        *内容
@@ -745,7 +1069,16 @@ public final class Message {
        * <code>string content = 3;</code>
        */
       public java.lang.String getContent() {
-        return instance.getContent();
+        java.lang.Object ref = content_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          content_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
       }
       /**
        * <pre>
@@ -756,7 +1089,16 @@ public final class Message {
        */
       public com.google.protobuf.ByteString
           getContentBytes() {
-        return instance.getContentBytes();
+        java.lang.Object ref = content_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          content_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
       }
       /**
        * <pre>
@@ -767,8 +1109,12 @@ public final class Message {
        */
       public Builder setContent(
           java.lang.String value) {
-        copyOnWrite();
-        instance.setContent(value);
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        content_ = value;
+        onChanged();
         return this;
       }
       /**
@@ -779,8 +1125,9 @@ public final class Message {
        * <code>string content = 3;</code>
        */
       public Builder clearContent() {
-        copyOnWrite();
-        instance.clearContent();
+        
+        content_ = getDefaultInstance().getContent();
+        onChanged();
         return this;
       }
       /**
@@ -792,11 +1139,17 @@ public final class Message {
        */
       public Builder setContentBytes(
           com.google.protobuf.ByteString value) {
-        copyOnWrite();
-        instance.setContentBytes(value);
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        content_ = value;
+        onChanged();
         return this;
       }
 
+      private long sendtime_ ;
       /**
        * <pre>
        *发送时间
@@ -805,7 +1158,7 @@ public final class Message {
        * <code>uint64 sendtime = 4;</code>
        */
       public long getSendtime() {
-        return instance.getSendtime();
+        return sendtime_;
       }
       /**
        * <pre>
@@ -815,8 +1168,9 @@ public final class Message {
        * <code>uint64 sendtime = 4;</code>
        */
       public Builder setSendtime(long value) {
-        copyOnWrite();
-        instance.setSendtime(value);
+        
+        sendtime_ = value;
+        onChanged();
         return this;
       }
       /**
@@ -827,150 +1181,156 @@ public final class Message {
        * <code>uint64 sendtime = 4;</code>
        */
       public Builder clearSendtime() {
-        copyOnWrite();
-        instance.clearSendtime();
+        
+        sendtime_ = 0L;
+        onChanged();
         return this;
       }
 
+      private java.lang.Object msgid_ = "";
+      /**
+       * <pre>
+       *消息唯一标示
+       * </pre>
+       *
+       * <code>string msgid = 5;</code>
+       */
+      public java.lang.String getMsgid() {
+        java.lang.Object ref = msgid_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          msgid_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <pre>
+       *消息唯一标示
+       * </pre>
+       *
+       * <code>string msgid = 5;</code>
+       */
+      public com.google.protobuf.ByteString
+          getMsgidBytes() {
+        java.lang.Object ref = msgid_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          msgid_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       *消息唯一标示
+       * </pre>
+       *
+       * <code>string msgid = 5;</code>
+       */
+      public Builder setMsgid(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        msgid_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *消息唯一标示
+       * </pre>
+       *
+       * <code>string msgid = 5;</code>
+       */
+      public Builder clearMsgid() {
+        
+        msgid_ = getDefaultInstance().getMsgid();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *消息唯一标示
+       * </pre>
+       *
+       * <code>string msgid = 5;</code>
+       */
+      public Builder setMsgidBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        msgid_ = value;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
       // @@protoc_insertion_point(builder_scope:cn.timmy.common.protos.UpStreamMessage)
     }
-    @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
-    protected final java.lang.Object dynamicMethod(
-        com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
-        java.lang.Object arg0, java.lang.Object arg1) {
-      switch (method) {
-        case NEW_MUTABLE_INSTANCE: {
-          return new cn.timmy.common.protos.Message.UpStreamMessage();
-        }
-        case IS_INITIALIZED: {
-          return DEFAULT_INSTANCE;
-        }
-        case MAKE_IMMUTABLE: {
-          touid_.makeImmutable();
-          return null;
-        }
-        case NEW_BUILDER: {
-          return new Builder();
-        }
-        case VISIT: {
-          Visitor visitor = (Visitor) arg0;
-          cn.timmy.common.protos.Message.UpStreamMessage other = (cn.timmy.common.protos.Message.UpStreamMessage) arg1;
-          touid_= visitor.visitList(touid_, other.touid_);
-          protonum_ = visitor.visitInt(protonum_ != 0, protonum_,
-              other.protonum_ != 0, other.protonum_);
-          content_ = visitor.visitString(!content_.isEmpty(), content_,
-              !other.content_.isEmpty(), other.content_);
-          sendtime_ = visitor.visitLong(sendtime_ != 0L, sendtime_,
-              other.sendtime_ != 0L, other.sendtime_);
-          if (visitor == com.google.protobuf.GeneratedMessageLite.MergeFromVisitor
-              .INSTANCE) {
-            bitField0_ |= other.bitField0_;
-          }
-          return this;
-        }
-        case MERGE_FROM_STREAM: {
-          com.google.protobuf.CodedInputStream input =
-              (com.google.protobuf.CodedInputStream) arg0;
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry =
-              (com.google.protobuf.ExtensionRegistryLite) arg1;
-          if (extensionRegistry == null) {
-            throw new java.lang.NullPointerException();
-          }
-          try {
-            boolean done = false;
-            while (!done) {
-              int tag = input.readTag();
-              switch (tag) {
-                case 0:
-                  done = true;
-                  break;
-                default: {
-                  if (!parseUnknownField(tag, input)) {
-                    done = true;
-                  }
-                  break;
-                }
-                case 10: {
-                  java.lang.String s = input.readStringRequireUtf8();
-                  if (!touid_.isModifiable()) {
-                    touid_ =
-                        com.google.protobuf.GeneratedMessageLite.mutableCopy(touid_);
-                  }
-                  touid_.add(s);
-                  break;
-                }
-                case 16: {
-
-                  protonum_ = input.readUInt32();
-                  break;
-                }
-                case 26: {
-                  java.lang.String s = input.readStringRequireUtf8();
-
-                  content_ = s;
-                  break;
-                }
-                case 32: {
-
-                  sendtime_ = input.readUInt64();
-                  break;
-                }
-              }
-            }
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw new RuntimeException(e.setUnfinishedMessage(this));
-          } catch (java.io.IOException e) {
-            throw new RuntimeException(
-                new com.google.protobuf.InvalidProtocolBufferException(
-                    e.getMessage()).setUnfinishedMessage(this));
-          } finally {
-          }
-        }
-        // fall through
-        case GET_DEFAULT_INSTANCE: {
-          return DEFAULT_INSTANCE;
-        }
-        case GET_PARSER: {
-          if (PARSER == null) {    synchronized (cn.timmy.common.protos.Message.UpStreamMessage.class) {
-              if (PARSER == null) {
-                PARSER = new DefaultInstanceBasedParser(DEFAULT_INSTANCE);
-              }
-            }
-          }
-          return PARSER;
-      }
-      case GET_MEMOIZED_IS_INITIALIZED: {
-        return (byte) 1;
-      }
-      case SET_MEMOIZED_IS_INITIALIZED: {
-        return null;
-      }
-      }
-      throw new UnsupportedOperationException();
-    }
-
 
     // @@protoc_insertion_point(class_scope:cn.timmy.common.protos.UpStreamMessage)
     private static final cn.timmy.common.protos.Message.UpStreamMessage DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new UpStreamMessage();
-      DEFAULT_INSTANCE.makeImmutable();
+      DEFAULT_INSTANCE = new cn.timmy.common.protos.Message.UpStreamMessage();
     }
 
     public static cn.timmy.common.protos.Message.UpStreamMessage getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static volatile com.google.protobuf.Parser<UpStreamMessage> PARSER;
+    private static final com.google.protobuf.Parser<UpStreamMessage>
+        PARSER = new com.google.protobuf.AbstractParser<UpStreamMessage>() {
+      @java.lang.Override
+      public UpStreamMessage parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new UpStreamMessage(input, extensionRegistry);
+      }
+    };
 
     public static com.google.protobuf.Parser<UpStreamMessage> parser() {
-      return DEFAULT_INSTANCE.getParserForType();
+      return PARSER;
     }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<UpStreamMessage> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public cn.timmy.common.protos.Message.UpStreamMessage getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
   }
 
   public interface DownStreamMessageOrBuilder extends
       // @@protoc_insertion_point(interface_extends:cn.timmy.common.protos.DownStreamMessage)
-      com.google.protobuf.MessageLiteOrBuilder {
+      com.google.protobuf.MessageOrBuilder {
 
     /**
      * <pre>
@@ -1066,9 +1426,18 @@ public final class Message {
      *消息唯一标示
      * </pre>
      *
-     * <code>uint64 msgid = 7;</code>
+     * <code>string msgid = 7;</code>
      */
-    long getMsgid();
+    java.lang.String getMsgid();
+    /**
+     * <pre>
+     *消息唯一标示
+     * </pre>
+     *
+     * <code>string msgid = 7;</code>
+     */
+    com.google.protobuf.ByteString
+        getMsgidBytes();
   }
   /**
    * <pre>
@@ -1078,17 +1447,122 @@ public final class Message {
    * Protobuf type {@code cn.timmy.common.protos.DownStreamMessage}
    */
   public  static final class DownStreamMessage extends
-      com.google.protobuf.GeneratedMessageLite<
-          DownStreamMessage, DownStreamMessage.Builder> implements
+      com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:cn.timmy.common.protos.DownStreamMessage)
       DownStreamMessageOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use DownStreamMessage.newBuilder() to construct.
+    private DownStreamMessage(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
     private DownStreamMessage() {
       fromuid_ = "";
+      type_ = 0;
       groupuid_ = "";
+      protonum_ = 0;
       content_ = "";
+      sendtime_ = 0L;
+      msgid_ = "";
     }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private DownStreamMessage(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              fromuid_ = s;
+              break;
+            }
+            case 16: {
+              int rawValue = input.readEnum();
+
+              type_ = rawValue;
+              break;
+            }
+            case 26: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              groupuid_ = s;
+              break;
+            }
+            case 32: {
+
+              protonum_ = input.readUInt32();
+              break;
+            }
+            case 42: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              content_ = s;
+              break;
+            }
+            case 48: {
+
+              sendtime_ = input.readUInt64();
+              break;
+            }
+            case 58: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              msgid_ = s;
+              break;
+            }
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return cn.timmy.common.protos.Message.internal_static_cn_timmy_common_protos_DownStreamMessage_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return cn.timmy.common.protos.Message.internal_static_cn_timmy_common_protos_DownStreamMessage_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              cn.timmy.common.protos.Message.DownStreamMessage.class, cn.timmy.common.protos.Message.DownStreamMessage.Builder.class);
+    }
+
     public static final int FROMUID_FIELD_NUMBER = 1;
-    private java.lang.String fromuid_;
+    private volatile java.lang.Object fromuid_;
     /**
      * <pre>
      * 发送方uid
@@ -1097,7 +1571,16 @@ public final class Message {
      * <code>string fromuid = 1;</code>
      */
     public java.lang.String getFromuid() {
-      return fromuid_;
+      java.lang.Object ref = fromuid_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        fromuid_ = s;
+        return s;
+      }
     }
     /**
      * <pre>
@@ -1108,49 +1591,16 @@ public final class Message {
      */
     public com.google.protobuf.ByteString
         getFromuidBytes() {
-      return com.google.protobuf.ByteString.copyFromUtf8(fromuid_);
-    }
-    /**
-     * <pre>
-     * 发送方uid
-     * </pre>
-     *
-     * <code>string fromuid = 1;</code>
-     */
-    private void setFromuid(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
-      fromuid_ = value;
-    }
-    /**
-     * <pre>
-     * 发送方uid
-     * </pre>
-     *
-     * <code>string fromuid = 1;</code>
-     */
-    private void clearFromuid() {
-      
-      fromuid_ = getDefaultInstance().getFromuid();
-    }
-    /**
-     * <pre>
-     * 发送方uid
-     * </pre>
-     *
-     * <code>string fromuid = 1;</code>
-     */
-    private void setFromuidBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
-      fromuid_ = value.toStringUtf8();
+      java.lang.Object ref = fromuid_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        fromuid_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
     }
 
     public static final int TYPE_FIELD_NUMBER = 2;
@@ -1173,47 +1623,13 @@ public final class Message {
      * <code>.cn.timmy.common.protos.MsgType type = 2;</code>
      */
     public cn.timmy.common.protos.Message.MsgType getType() {
-      cn.timmy.common.protos.Message.MsgType result = cn.timmy.common.protos.Message.MsgType.forNumber(type_);
+      @SuppressWarnings("deprecation")
+      cn.timmy.common.protos.Message.MsgType result = cn.timmy.common.protos.Message.MsgType.valueOf(type_);
       return result == null ? cn.timmy.common.protos.Message.MsgType.UNRECOGNIZED : result;
-    }
-    /**
-     * <pre>
-     *消息类型
-     * </pre>
-     *
-     * <code>.cn.timmy.common.protos.MsgType type = 2;</code>
-     */
-    private void setTypeValue(int value) {
-        type_ = value;
-    }
-    /**
-     * <pre>
-     *消息类型
-     * </pre>
-     *
-     * <code>.cn.timmy.common.protos.MsgType type = 2;</code>
-     */
-    private void setType(cn.timmy.common.protos.Message.MsgType value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      
-      type_ = value.getNumber();
-    }
-    /**
-     * <pre>
-     *消息类型
-     * </pre>
-     *
-     * <code>.cn.timmy.common.protos.MsgType type = 2;</code>
-     */
-    private void clearType() {
-      
-      type_ = 0;
     }
 
     public static final int GROUPUID_FIELD_NUMBER = 3;
-    private java.lang.String groupuid_;
+    private volatile java.lang.Object groupuid_;
     /**
      * <pre>
      *如果是群消息那么指定群Id
@@ -1222,7 +1638,16 @@ public final class Message {
      * <code>string groupuid = 3;</code>
      */
     public java.lang.String getGroupuid() {
-      return groupuid_;
+      java.lang.Object ref = groupuid_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        groupuid_ = s;
+        return s;
+      }
     }
     /**
      * <pre>
@@ -1233,49 +1658,16 @@ public final class Message {
      */
     public com.google.protobuf.ByteString
         getGroupuidBytes() {
-      return com.google.protobuf.ByteString.copyFromUtf8(groupuid_);
-    }
-    /**
-     * <pre>
-     *如果是群消息那么指定群Id
-     * </pre>
-     *
-     * <code>string groupuid = 3;</code>
-     */
-    private void setGroupuid(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
-      groupuid_ = value;
-    }
-    /**
-     * <pre>
-     *如果是群消息那么指定群Id
-     * </pre>
-     *
-     * <code>string groupuid = 3;</code>
-     */
-    private void clearGroupuid() {
-      
-      groupuid_ = getDefaultInstance().getGroupuid();
-    }
-    /**
-     * <pre>
-     *如果是群消息那么指定群Id
-     * </pre>
-     *
-     * <code>string groupuid = 3;</code>
-     */
-    private void setGroupuidBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
-      groupuid_ = value.toStringUtf8();
+      java.lang.Object ref = groupuid_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        groupuid_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
     }
 
     public static final int PROTONUM_FIELD_NUMBER = 4;
@@ -1290,31 +1682,9 @@ public final class Message {
     public int getProtonum() {
       return protonum_;
     }
-    /**
-     * <pre>
-     *消息类型
-     * </pre>
-     *
-     * <code>uint32 protonum = 4;</code>
-     */
-    private void setProtonum(int value) {
-      
-      protonum_ = value;
-    }
-    /**
-     * <pre>
-     *消息类型
-     * </pre>
-     *
-     * <code>uint32 protonum = 4;</code>
-     */
-    private void clearProtonum() {
-      
-      protonum_ = 0;
-    }
 
     public static final int CONTENT_FIELD_NUMBER = 5;
-    private java.lang.String content_;
+    private volatile java.lang.Object content_;
     /**
      * <pre>
      *内容
@@ -1323,7 +1693,16 @@ public final class Message {
      * <code>string content = 5;</code>
      */
     public java.lang.String getContent() {
-      return content_;
+      java.lang.Object ref = content_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        content_ = s;
+        return s;
+      }
     }
     /**
      * <pre>
@@ -1334,49 +1713,16 @@ public final class Message {
      */
     public com.google.protobuf.ByteString
         getContentBytes() {
-      return com.google.protobuf.ByteString.copyFromUtf8(content_);
-    }
-    /**
-     * <pre>
-     *内容
-     * </pre>
-     *
-     * <code>string content = 5;</code>
-     */
-    private void setContent(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
-      content_ = value;
-    }
-    /**
-     * <pre>
-     *内容
-     * </pre>
-     *
-     * <code>string content = 5;</code>
-     */
-    private void clearContent() {
-      
-      content_ = getDefaultInstance().getContent();
-    }
-    /**
-     * <pre>
-     *内容
-     * </pre>
-     *
-     * <code>string content = 5;</code>
-     */
-    private void setContentBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
-      content_ = value.toStringUtf8();
+      java.lang.Object ref = content_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        content_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
     }
 
     public static final int SENDTIME_FIELD_NUMBER = 6;
@@ -1391,209 +1737,267 @@ public final class Message {
     public long getSendtime() {
       return sendtime_;
     }
-    /**
-     * <pre>
-     *消息时间
-     * </pre>
-     *
-     * <code>uint64 sendtime = 6;</code>
-     */
-    private void setSendtime(long value) {
-      
-      sendtime_ = value;
-    }
-    /**
-     * <pre>
-     *消息时间
-     * </pre>
-     *
-     * <code>uint64 sendtime = 6;</code>
-     */
-    private void clearSendtime() {
-      
-      sendtime_ = 0L;
-    }
 
     public static final int MSGID_FIELD_NUMBER = 7;
-    private long msgid_;
+    private volatile java.lang.Object msgid_;
     /**
      * <pre>
      *消息唯一标示
      * </pre>
      *
-     * <code>uint64 msgid = 7;</code>
+     * <code>string msgid = 7;</code>
      */
-    public long getMsgid() {
-      return msgid_;
+    public java.lang.String getMsgid() {
+      java.lang.Object ref = msgid_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        msgid_ = s;
+        return s;
+      }
     }
     /**
      * <pre>
      *消息唯一标示
      * </pre>
      *
-     * <code>uint64 msgid = 7;</code>
+     * <code>string msgid = 7;</code>
      */
-    private void setMsgid(long value) {
-      
-      msgid_ = value;
-    }
-    /**
-     * <pre>
-     *消息唯一标示
-     * </pre>
-     *
-     * <code>uint64 msgid = 7;</code>
-     */
-    private void clearMsgid() {
-      
-      msgid_ = 0L;
+    public com.google.protobuf.ByteString
+        getMsgidBytes() {
+      java.lang.Object ref = msgid_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        msgid_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
     }
 
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (!fromuid_.isEmpty()) {
-        output.writeString(1, getFromuid());
+      if (!getFromuidBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, fromuid_);
       }
       if (type_ != cn.timmy.common.protos.Message.MsgType.PERSON.getNumber()) {
         output.writeEnum(2, type_);
       }
-      if (!groupuid_.isEmpty()) {
-        output.writeString(3, getGroupuid());
+      if (!getGroupuidBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, groupuid_);
       }
       if (protonum_ != 0) {
         output.writeUInt32(4, protonum_);
       }
-      if (!content_.isEmpty()) {
-        output.writeString(5, getContent());
+      if (!getContentBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 5, content_);
       }
       if (sendtime_ != 0L) {
         output.writeUInt64(6, sendtime_);
       }
-      if (msgid_ != 0L) {
-        output.writeUInt64(7, msgid_);
+      if (!getMsgidBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 7, msgid_);
       }
       unknownFields.writeTo(output);
     }
 
+    @java.lang.Override
     public int getSerializedSize() {
-      int size = memoizedSerializedSize;
+      int size = memoizedSize;
       if (size != -1) return size;
 
       size = 0;
-      if (!fromuid_.isEmpty()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(1, getFromuid());
+      if (!getFromuidBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, fromuid_);
       }
       if (type_ != cn.timmy.common.protos.Message.MsgType.PERSON.getNumber()) {
         size += com.google.protobuf.CodedOutputStream
           .computeEnumSize(2, type_);
       }
-      if (!groupuid_.isEmpty()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(3, getGroupuid());
+      if (!getGroupuidBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, groupuid_);
       }
       if (protonum_ != 0) {
         size += com.google.protobuf.CodedOutputStream
           .computeUInt32Size(4, protonum_);
       }
-      if (!content_.isEmpty()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(5, getContent());
+      if (!getContentBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, content_);
       }
       if (sendtime_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
           .computeUInt64Size(6, sendtime_);
       }
-      if (msgid_ != 0L) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeUInt64Size(7, msgid_);
+      if (!getMsgidBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(7, msgid_);
       }
       size += unknownFields.getSerializedSize();
-      memoizedSerializedSize = size;
+      memoizedSize = size;
       return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof cn.timmy.common.protos.Message.DownStreamMessage)) {
+        return super.equals(obj);
+      }
+      cn.timmy.common.protos.Message.DownStreamMessage other = (cn.timmy.common.protos.Message.DownStreamMessage) obj;
+
+      boolean result = true;
+      result = result && getFromuid()
+          .equals(other.getFromuid());
+      result = result && type_ == other.type_;
+      result = result && getGroupuid()
+          .equals(other.getGroupuid());
+      result = result && (getProtonum()
+          == other.getProtonum());
+      result = result && getContent()
+          .equals(other.getContent());
+      result = result && (getSendtime()
+          == other.getSendtime());
+      result = result && getMsgid()
+          .equals(other.getMsgid());
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + FROMUID_FIELD_NUMBER;
+      hash = (53 * hash) + getFromuid().hashCode();
+      hash = (37 * hash) + TYPE_FIELD_NUMBER;
+      hash = (53 * hash) + type_;
+      hash = (37 * hash) + GROUPUID_FIELD_NUMBER;
+      hash = (53 * hash) + getGroupuid().hashCode();
+      hash = (37 * hash) + PROTONUM_FIELD_NUMBER;
+      hash = (53 * hash) + getProtonum();
+      hash = (37 * hash) + CONTENT_FIELD_NUMBER;
+      hash = (53 * hash) + getContent().hashCode();
+      hash = (37 * hash) + SENDTIME_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getSendtime());
+      hash = (37 * hash) + MSGID_FIELD_NUMBER;
+      hash = (53 * hash) + getMsgid().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
     }
 
     public static cn.timmy.common.protos.Message.DownStreamMessage parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, data);
+      return PARSER.parseFrom(data);
     }
     public static cn.timmy.common.protos.Message.DownStreamMessage parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, data, extensionRegistry);
+      return PARSER.parseFrom(data, extensionRegistry);
     }
     public static cn.timmy.common.protos.Message.DownStreamMessage parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, data);
+      return PARSER.parseFrom(data);
     }
     public static cn.timmy.common.protos.Message.DownStreamMessage parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, data, extensionRegistry);
+      return PARSER.parseFrom(data, extensionRegistry);
     }
     public static cn.timmy.common.protos.Message.DownStreamMessage parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, data);
+      return PARSER.parseFrom(data);
     }
     public static cn.timmy.common.protos.Message.DownStreamMessage parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, data, extensionRegistry);
+      return PARSER.parseFrom(data, extensionRegistry);
     }
     public static cn.timmy.common.protos.Message.DownStreamMessage parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, input);
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
     }
     public static cn.timmy.common.protos.Message.DownStreamMessage parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, input, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
     }
     public static cn.timmy.common.protos.Message.DownStreamMessage parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return parseDelimitedFrom(DEFAULT_INSTANCE, input);
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
     }
     public static cn.timmy.common.protos.Message.DownStreamMessage parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return parseDelimitedFrom(DEFAULT_INSTANCE, input, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
     public static cn.timmy.common.protos.Message.DownStreamMessage parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, input);
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
     }
     public static cn.timmy.common.protos.Message.DownStreamMessage parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageLite.parseFrom(
-          DEFAULT_INSTANCE, input, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
-      return (Builder) DEFAULT_INSTANCE.createBuilder();
+      return DEFAULT_INSTANCE.toBuilder();
     }
     public static Builder newBuilder(cn.timmy.common.protos.Message.DownStreamMessage prototype) {
-      return (Builder) DEFAULT_INSTANCE.createBuilder(prototype);
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
     }
 
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
     /**
      * <pre>
      *下行消息
@@ -1602,16 +2006,190 @@ public final class Message {
      * Protobuf type {@code cn.timmy.common.protos.DownStreamMessage}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageLite.Builder<
-          cn.timmy.common.protos.Message.DownStreamMessage, Builder> implements
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
         // @@protoc_insertion_point(builder_implements:cn.timmy.common.protos.DownStreamMessage)
         cn.timmy.common.protos.Message.DownStreamMessageOrBuilder {
-      // Construct using cn.timmy.common.protos.Message.DownStreamMessage.newBuilder()
-      private Builder() {
-        super(DEFAULT_INSTANCE);
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return cn.timmy.common.protos.Message.internal_static_cn_timmy_common_protos_DownStreamMessage_descriptor;
       }
 
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return cn.timmy.common.protos.Message.internal_static_cn_timmy_common_protos_DownStreamMessage_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                cn.timmy.common.protos.Message.DownStreamMessage.class, cn.timmy.common.protos.Message.DownStreamMessage.Builder.class);
+      }
 
+      // Construct using cn.timmy.common.protos.Message.DownStreamMessage.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        fromuid_ = "";
+
+        type_ = 0;
+
+        groupuid_ = "";
+
+        protonum_ = 0;
+
+        content_ = "";
+
+        sendtime_ = 0L;
+
+        msgid_ = "";
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return cn.timmy.common.protos.Message.internal_static_cn_timmy_common_protos_DownStreamMessage_descriptor;
+      }
+
+      @java.lang.Override
+      public cn.timmy.common.protos.Message.DownStreamMessage getDefaultInstanceForType() {
+        return cn.timmy.common.protos.Message.DownStreamMessage.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public cn.timmy.common.protos.Message.DownStreamMessage build() {
+        cn.timmy.common.protos.Message.DownStreamMessage result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public cn.timmy.common.protos.Message.DownStreamMessage buildPartial() {
+        cn.timmy.common.protos.Message.DownStreamMessage result = new cn.timmy.common.protos.Message.DownStreamMessage(this);
+        result.fromuid_ = fromuid_;
+        result.type_ = type_;
+        result.groupuid_ = groupuid_;
+        result.protonum_ = protonum_;
+        result.content_ = content_;
+        result.sendtime_ = sendtime_;
+        result.msgid_ = msgid_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof cn.timmy.common.protos.Message.DownStreamMessage) {
+          return mergeFrom((cn.timmy.common.protos.Message.DownStreamMessage)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(cn.timmy.common.protos.Message.DownStreamMessage other) {
+        if (other == cn.timmy.common.protos.Message.DownStreamMessage.getDefaultInstance()) return this;
+        if (!other.getFromuid().isEmpty()) {
+          fromuid_ = other.fromuid_;
+          onChanged();
+        }
+        if (other.type_ != 0) {
+          setTypeValue(other.getTypeValue());
+        }
+        if (!other.getGroupuid().isEmpty()) {
+          groupuid_ = other.groupuid_;
+          onChanged();
+        }
+        if (other.getProtonum() != 0) {
+          setProtonum(other.getProtonum());
+        }
+        if (!other.getContent().isEmpty()) {
+          content_ = other.content_;
+          onChanged();
+        }
+        if (other.getSendtime() != 0L) {
+          setSendtime(other.getSendtime());
+        }
+        if (!other.getMsgid().isEmpty()) {
+          msgid_ = other.msgid_;
+          onChanged();
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        cn.timmy.common.protos.Message.DownStreamMessage parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (cn.timmy.common.protos.Message.DownStreamMessage) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private java.lang.Object fromuid_ = "";
       /**
        * <pre>
        * 发送方uid
@@ -1620,7 +2198,16 @@ public final class Message {
        * <code>string fromuid = 1;</code>
        */
       public java.lang.String getFromuid() {
-        return instance.getFromuid();
+        java.lang.Object ref = fromuid_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          fromuid_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
       }
       /**
        * <pre>
@@ -1631,7 +2218,16 @@ public final class Message {
        */
       public com.google.protobuf.ByteString
           getFromuidBytes() {
-        return instance.getFromuidBytes();
+        java.lang.Object ref = fromuid_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          fromuid_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
       }
       /**
        * <pre>
@@ -1642,8 +2238,12 @@ public final class Message {
        */
       public Builder setFromuid(
           java.lang.String value) {
-        copyOnWrite();
-        instance.setFromuid(value);
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        fromuid_ = value;
+        onChanged();
         return this;
       }
       /**
@@ -1654,8 +2254,9 @@ public final class Message {
        * <code>string fromuid = 1;</code>
        */
       public Builder clearFromuid() {
-        copyOnWrite();
-        instance.clearFromuid();
+        
+        fromuid_ = getDefaultInstance().getFromuid();
+        onChanged();
         return this;
       }
       /**
@@ -1667,11 +2268,17 @@ public final class Message {
        */
       public Builder setFromuidBytes(
           com.google.protobuf.ByteString value) {
-        copyOnWrite();
-        instance.setFromuidBytes(value);
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        fromuid_ = value;
+        onChanged();
         return this;
       }
 
+      private int type_ = 0;
       /**
        * <pre>
        *消息类型
@@ -1680,7 +2287,7 @@ public final class Message {
        * <code>.cn.timmy.common.protos.MsgType type = 2;</code>
        */
       public int getTypeValue() {
-        return instance.getTypeValue();
+        return type_;
       }
       /**
        * <pre>
@@ -1690,8 +2297,8 @@ public final class Message {
        * <code>.cn.timmy.common.protos.MsgType type = 2;</code>
        */
       public Builder setTypeValue(int value) {
-        copyOnWrite();
-        instance.setTypeValue(value);
+        type_ = value;
+        onChanged();
         return this;
       }
       /**
@@ -1702,7 +2309,9 @@ public final class Message {
        * <code>.cn.timmy.common.protos.MsgType type = 2;</code>
        */
       public cn.timmy.common.protos.Message.MsgType getType() {
-        return instance.getType();
+        @SuppressWarnings("deprecation")
+        cn.timmy.common.protos.Message.MsgType result = cn.timmy.common.protos.Message.MsgType.valueOf(type_);
+        return result == null ? cn.timmy.common.protos.Message.MsgType.UNRECOGNIZED : result;
       }
       /**
        * <pre>
@@ -1712,8 +2321,12 @@ public final class Message {
        * <code>.cn.timmy.common.protos.MsgType type = 2;</code>
        */
       public Builder setType(cn.timmy.common.protos.Message.MsgType value) {
-        copyOnWrite();
-        instance.setType(value);
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        
+        type_ = value.getNumber();
+        onChanged();
         return this;
       }
       /**
@@ -1724,11 +2337,13 @@ public final class Message {
        * <code>.cn.timmy.common.protos.MsgType type = 2;</code>
        */
       public Builder clearType() {
-        copyOnWrite();
-        instance.clearType();
+        
+        type_ = 0;
+        onChanged();
         return this;
       }
 
+      private java.lang.Object groupuid_ = "";
       /**
        * <pre>
        *如果是群消息那么指定群Id
@@ -1737,7 +2352,16 @@ public final class Message {
        * <code>string groupuid = 3;</code>
        */
       public java.lang.String getGroupuid() {
-        return instance.getGroupuid();
+        java.lang.Object ref = groupuid_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          groupuid_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
       }
       /**
        * <pre>
@@ -1748,7 +2372,16 @@ public final class Message {
        */
       public com.google.protobuf.ByteString
           getGroupuidBytes() {
-        return instance.getGroupuidBytes();
+        java.lang.Object ref = groupuid_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          groupuid_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
       }
       /**
        * <pre>
@@ -1759,8 +2392,12 @@ public final class Message {
        */
       public Builder setGroupuid(
           java.lang.String value) {
-        copyOnWrite();
-        instance.setGroupuid(value);
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        groupuid_ = value;
+        onChanged();
         return this;
       }
       /**
@@ -1771,8 +2408,9 @@ public final class Message {
        * <code>string groupuid = 3;</code>
        */
       public Builder clearGroupuid() {
-        copyOnWrite();
-        instance.clearGroupuid();
+        
+        groupuid_ = getDefaultInstance().getGroupuid();
+        onChanged();
         return this;
       }
       /**
@@ -1784,11 +2422,17 @@ public final class Message {
        */
       public Builder setGroupuidBytes(
           com.google.protobuf.ByteString value) {
-        copyOnWrite();
-        instance.setGroupuidBytes(value);
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        groupuid_ = value;
+        onChanged();
         return this;
       }
 
+      private int protonum_ ;
       /**
        * <pre>
        *消息类型
@@ -1797,7 +2441,7 @@ public final class Message {
        * <code>uint32 protonum = 4;</code>
        */
       public int getProtonum() {
-        return instance.getProtonum();
+        return protonum_;
       }
       /**
        * <pre>
@@ -1807,8 +2451,9 @@ public final class Message {
        * <code>uint32 protonum = 4;</code>
        */
       public Builder setProtonum(int value) {
-        copyOnWrite();
-        instance.setProtonum(value);
+        
+        protonum_ = value;
+        onChanged();
         return this;
       }
       /**
@@ -1819,11 +2464,13 @@ public final class Message {
        * <code>uint32 protonum = 4;</code>
        */
       public Builder clearProtonum() {
-        copyOnWrite();
-        instance.clearProtonum();
+        
+        protonum_ = 0;
+        onChanged();
         return this;
       }
 
+      private java.lang.Object content_ = "";
       /**
        * <pre>
        *内容
@@ -1832,7 +2479,16 @@ public final class Message {
        * <code>string content = 5;</code>
        */
       public java.lang.String getContent() {
-        return instance.getContent();
+        java.lang.Object ref = content_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          content_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
       }
       /**
        * <pre>
@@ -1843,7 +2499,16 @@ public final class Message {
        */
       public com.google.protobuf.ByteString
           getContentBytes() {
-        return instance.getContentBytes();
+        java.lang.Object ref = content_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          content_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
       }
       /**
        * <pre>
@@ -1854,8 +2519,12 @@ public final class Message {
        */
       public Builder setContent(
           java.lang.String value) {
-        copyOnWrite();
-        instance.setContent(value);
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        content_ = value;
+        onChanged();
         return this;
       }
       /**
@@ -1866,8 +2535,9 @@ public final class Message {
        * <code>string content = 5;</code>
        */
       public Builder clearContent() {
-        copyOnWrite();
-        instance.clearContent();
+        
+        content_ = getDefaultInstance().getContent();
+        onChanged();
         return this;
       }
       /**
@@ -1879,11 +2549,17 @@ public final class Message {
        */
       public Builder setContentBytes(
           com.google.protobuf.ByteString value) {
-        copyOnWrite();
-        instance.setContentBytes(value);
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        content_ = value;
+        onChanged();
         return this;
       }
 
+      private long sendtime_ ;
       /**
        * <pre>
        *消息时间
@@ -1892,7 +2568,7 @@ public final class Message {
        * <code>uint64 sendtime = 6;</code>
        */
       public long getSendtime() {
-        return instance.getSendtime();
+        return sendtime_;
       }
       /**
        * <pre>
@@ -1902,8 +2578,9 @@ public final class Message {
        * <code>uint64 sendtime = 6;</code>
        */
       public Builder setSendtime(long value) {
-        copyOnWrite();
-        instance.setSendtime(value);
+        
+        sendtime_ = value;
+        onChanged();
         return this;
       }
       /**
@@ -1914,31 +2591,67 @@ public final class Message {
        * <code>uint64 sendtime = 6;</code>
        */
       public Builder clearSendtime() {
-        copyOnWrite();
-        instance.clearSendtime();
+        
+        sendtime_ = 0L;
+        onChanged();
         return this;
       }
 
+      private java.lang.Object msgid_ = "";
       /**
        * <pre>
        *消息唯一标示
        * </pre>
        *
-       * <code>uint64 msgid = 7;</code>
+       * <code>string msgid = 7;</code>
        */
-      public long getMsgid() {
-        return instance.getMsgid();
+      public java.lang.String getMsgid() {
+        java.lang.Object ref = msgid_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          msgid_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
       }
       /**
        * <pre>
        *消息唯一标示
        * </pre>
        *
-       * <code>uint64 msgid = 7;</code>
+       * <code>string msgid = 7;</code>
        */
-      public Builder setMsgid(long value) {
-        copyOnWrite();
-        instance.setMsgid(value);
+      public com.google.protobuf.ByteString
+          getMsgidBytes() {
+        java.lang.Object ref = msgid_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          msgid_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       *消息唯一标示
+       * </pre>
+       *
+       * <code>string msgid = 7;</code>
+       */
+      public Builder setMsgid(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        msgid_ = value;
+        onChanged();
         return this;
       }
       /**
@@ -1946,170 +2659,139 @@ public final class Message {
        *消息唯一标示
        * </pre>
        *
-       * <code>uint64 msgid = 7;</code>
+       * <code>string msgid = 7;</code>
        */
       public Builder clearMsgid() {
-        copyOnWrite();
-        instance.clearMsgid();
+        
+        msgid_ = getDefaultInstance().getMsgid();
+        onChanged();
         return this;
       }
+      /**
+       * <pre>
+       *消息唯一标示
+       * </pre>
+       *
+       * <code>string msgid = 7;</code>
+       */
+      public Builder setMsgidBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        msgid_ = value;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
 
       // @@protoc_insertion_point(builder_scope:cn.timmy.common.protos.DownStreamMessage)
     }
-    @java.lang.SuppressWarnings({"unchecked", "fallthrough"})
-    protected final java.lang.Object dynamicMethod(
-        com.google.protobuf.GeneratedMessageLite.MethodToInvoke method,
-        java.lang.Object arg0, java.lang.Object arg1) {
-      switch (method) {
-        case NEW_MUTABLE_INSTANCE: {
-          return new cn.timmy.common.protos.Message.DownStreamMessage();
-        }
-        case IS_INITIALIZED: {
-          return DEFAULT_INSTANCE;
-        }
-        case MAKE_IMMUTABLE: {
-          return null;
-        }
-        case NEW_BUILDER: {
-          return new Builder();
-        }
-        case VISIT: {
-          Visitor visitor = (Visitor) arg0;
-          cn.timmy.common.protos.Message.DownStreamMessage other = (cn.timmy.common.protos.Message.DownStreamMessage) arg1;
-          fromuid_ = visitor.visitString(!fromuid_.isEmpty(), fromuid_,
-              !other.fromuid_.isEmpty(), other.fromuid_);
-          type_ = visitor.visitInt(type_ != 0, type_,    other.type_ != 0, other.type_);
-          groupuid_ = visitor.visitString(!groupuid_.isEmpty(), groupuid_,
-              !other.groupuid_.isEmpty(), other.groupuid_);
-          protonum_ = visitor.visitInt(protonum_ != 0, protonum_,
-              other.protonum_ != 0, other.protonum_);
-          content_ = visitor.visitString(!content_.isEmpty(), content_,
-              !other.content_.isEmpty(), other.content_);
-          sendtime_ = visitor.visitLong(sendtime_ != 0L, sendtime_,
-              other.sendtime_ != 0L, other.sendtime_);
-          msgid_ = visitor.visitLong(msgid_ != 0L, msgid_,
-              other.msgid_ != 0L, other.msgid_);
-          if (visitor == com.google.protobuf.GeneratedMessageLite.MergeFromVisitor
-              .INSTANCE) {
-          }
-          return this;
-        }
-        case MERGE_FROM_STREAM: {
-          com.google.protobuf.CodedInputStream input =
-              (com.google.protobuf.CodedInputStream) arg0;
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry =
-              (com.google.protobuf.ExtensionRegistryLite) arg1;
-          if (extensionRegistry == null) {
-            throw new java.lang.NullPointerException();
-          }
-          try {
-            boolean done = false;
-            while (!done) {
-              int tag = input.readTag();
-              switch (tag) {
-                case 0:
-                  done = true;
-                  break;
-                default: {
-                  if (!parseUnknownField(tag, input)) {
-                    done = true;
-                  }
-                  break;
-                }
-                case 10: {
-                  java.lang.String s = input.readStringRequireUtf8();
-
-                  fromuid_ = s;
-                  break;
-                }
-                case 16: {
-                  int rawValue = input.readEnum();
-
-                  type_ = rawValue;
-                  break;
-                }
-                case 26: {
-                  java.lang.String s = input.readStringRequireUtf8();
-
-                  groupuid_ = s;
-                  break;
-                }
-                case 32: {
-
-                  protonum_ = input.readUInt32();
-                  break;
-                }
-                case 42: {
-                  java.lang.String s = input.readStringRequireUtf8();
-
-                  content_ = s;
-                  break;
-                }
-                case 48: {
-
-                  sendtime_ = input.readUInt64();
-                  break;
-                }
-                case 56: {
-
-                  msgid_ = input.readUInt64();
-                  break;
-                }
-              }
-            }
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw new RuntimeException(e.setUnfinishedMessage(this));
-          } catch (java.io.IOException e) {
-            throw new RuntimeException(
-                new com.google.protobuf.InvalidProtocolBufferException(
-                    e.getMessage()).setUnfinishedMessage(this));
-          } finally {
-          }
-        }
-        // fall through
-        case GET_DEFAULT_INSTANCE: {
-          return DEFAULT_INSTANCE;
-        }
-        case GET_PARSER: {
-          if (PARSER == null) {    synchronized (cn.timmy.common.protos.Message.DownStreamMessage.class) {
-              if (PARSER == null) {
-                PARSER = new DefaultInstanceBasedParser(DEFAULT_INSTANCE);
-              }
-            }
-          }
-          return PARSER;
-      }
-      case GET_MEMOIZED_IS_INITIALIZED: {
-        return (byte) 1;
-      }
-      case SET_MEMOIZED_IS_INITIALIZED: {
-        return null;
-      }
-      }
-      throw new UnsupportedOperationException();
-    }
-
 
     // @@protoc_insertion_point(class_scope:cn.timmy.common.protos.DownStreamMessage)
     private static final cn.timmy.common.protos.Message.DownStreamMessage DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new DownStreamMessage();
-      DEFAULT_INSTANCE.makeImmutable();
+      DEFAULT_INSTANCE = new cn.timmy.common.protos.Message.DownStreamMessage();
     }
 
     public static cn.timmy.common.protos.Message.DownStreamMessage getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static volatile com.google.protobuf.Parser<DownStreamMessage> PARSER;
+    private static final com.google.protobuf.Parser<DownStreamMessage>
+        PARSER = new com.google.protobuf.AbstractParser<DownStreamMessage>() {
+      @java.lang.Override
+      public DownStreamMessage parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new DownStreamMessage(input, extensionRegistry);
+      }
+    };
 
     public static com.google.protobuf.Parser<DownStreamMessage> parser() {
-      return DEFAULT_INSTANCE.getParserForType();
+      return PARSER;
     }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<DownStreamMessage> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public cn.timmy.common.protos.Message.DownStreamMessage getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
   }
 
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_cn_timmy_common_protos_UpStreamMessage_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_cn_timmy_common_protos_UpStreamMessage_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_cn_timmy_common_protos_DownStreamMessage_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_cn_timmy_common_protos_DownStreamMessage_fieldAccessorTable;
 
+  public static com.google.protobuf.Descriptors.FileDescriptor
+      getDescriptor() {
+    return descriptor;
+  }
+  private static  com.google.protobuf.Descriptors.FileDescriptor
+      descriptor;
   static {
+    java.lang.String[] descriptorData = {
+      "\n\rmessage.proto\022\026cn.timmy.common.protos\"" +
+      "d\n\017UpStreamMessage\022\r\n\005touid\030\001 \003(\t\022\020\n\010pro" +
+      "tonum\030\002 \001(\r\022\017\n\007content\030\003 \001(\t\022\020\n\010sendtime" +
+      "\030\004 \001(\004\022\r\n\005msgid\030\005 \001(\t\"\251\001\n\021DownStreamMess" +
+      "age\022\017\n\007fromuid\030\001 \001(\t\022-\n\004type\030\002 \001(\0162\037.cn." +
+      "timmy.common.protos.MsgType\022\020\n\010groupuid\030" +
+      "\003 \001(\t\022\020\n\010protonum\030\004 \001(\r\022\017\n\007content\030\005 \001(\t" +
+      "\022\020\n\010sendtime\030\006 \001(\004\022\r\n\005msgid\030\007 \001(\t* \n\007Msg" +
+      "Type\022\n\n\006PERSON\020\000\022\t\n\005GROUP\020\001B\tB\007Messageb\006" +
+      "proto3"
+    };
+    com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
+        new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
+          public com.google.protobuf.ExtensionRegistry assignDescriptors(
+              com.google.protobuf.Descriptors.FileDescriptor root) {
+            descriptor = root;
+            return null;
+          }
+        };
+    com.google.protobuf.Descriptors.FileDescriptor
+      .internalBuildGeneratedFileFrom(descriptorData,
+        new com.google.protobuf.Descriptors.FileDescriptor[] {
+        }, assigner);
+    internal_static_cn_timmy_common_protos_UpStreamMessage_descriptor =
+      getDescriptor().getMessageTypes().get(0);
+    internal_static_cn_timmy_common_protos_UpStreamMessage_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_cn_timmy_common_protos_UpStreamMessage_descriptor,
+        new java.lang.String[] { "Touid", "Protonum", "Content", "Sendtime", "Msgid", });
+    internal_static_cn_timmy_common_protos_DownStreamMessage_descriptor =
+      getDescriptor().getMessageTypes().get(1);
+    internal_static_cn_timmy_common_protos_DownStreamMessage_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_cn_timmy_common_protos_DownStreamMessage_descriptor,
+        new java.lang.String[] { "Fromuid", "Type", "Groupuid", "Protonum", "Content", "Sendtime", "Msgid", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

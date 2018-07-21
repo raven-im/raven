@@ -13,11 +13,6 @@ import io.netty.channel.ChannelHandlerContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-/**
- * Author zxx
- * Description 登录验证
- * Date Created on 2018/6/2
- */
 @Component
 public class LoginAuthProcessor implements BaseMessageProcessor {
 
@@ -37,7 +32,7 @@ public class LoginAuthProcessor implements BaseMessageProcessor {
             .setCode(responseEnum.code)
             .setMsg(responseEnum.msg)
             .setProtonum(ProtoConstants.RESPONSE)
-            .setMsgid(TcpMessageServer.snowFlake.nextId())
+            .setMsgid(String.valueOf(TcpMessageServer.snowFlake.nextId()))
             .build();
         channel.writeAndFlush(response);
     }

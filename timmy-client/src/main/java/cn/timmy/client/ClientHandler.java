@@ -16,9 +16,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicLong;
 
-/**
- * Author zxx Description 客户端模拟 Date Created on 2018/5/25
- */
 public class ClientHandler extends SimpleChannelInboundHandler<MessageLite> {
 
     private ChannelHandlerContext messageConnectionCtx;
@@ -63,6 +60,7 @@ public class ClientHandler extends SimpleChannelInboundHandler<MessageLite> {
             .addAllTouid(uids)
             .setProtonum(ProtoConstants.UPSTREAMMESSAGE)
             .setSendtime(System.currentTimeMillis())
+            .setMsgid(uid.concat(String.valueOf(Client.snowFlake.nextId())))
             .build();
         ByteBuf byteBuf = Utils.pack2Client(msg);
         messageConnectionCtx.channel().writeAndFlush(byteBuf);

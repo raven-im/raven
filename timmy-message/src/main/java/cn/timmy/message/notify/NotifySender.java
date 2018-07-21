@@ -12,11 +12,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-/**
- * Author zxx
- * Description 
- * Date Created on 2018/7/1
- */
 @Component
 public class NotifySender {
 
@@ -31,14 +26,14 @@ public class NotifySender {
             .setFromuid(baseMessage.getFrom_uid())
             .setProtonum(ProtoConstants.NOTIFY)
             .setContent(baseMessage.getContent())
-            .setMsgid(TcpMessageServer.snowFlake.nextId())
+            .setMsgid(String.valueOf(TcpMessageServer.snowFlake.nextId()))
             .setSendtime(DateTimeUtils.currentUTC().getTime())
             .setType(baseMessage.getType())
             .build();
         List<Channel> channels = nettyChannelManager.getChannelByUid(baseMessage.getTo_uid());
         if (channels.isEmpty()) {
             offLineMsgService.storeOfflineNotify(baseMessage.getTo_uid(), notifyMessage,
-                notifyMessage.getMsgid());
+                notifyMessage.getMsgid(),notifyMessage.getSendtime());
         } else {
             channels
                 .forEach(channel -> channel.writeAndFlush(notifyMessage));

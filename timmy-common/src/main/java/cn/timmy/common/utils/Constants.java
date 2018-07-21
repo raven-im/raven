@@ -7,7 +7,11 @@ package cn.timmy.common.utils;
  */
 public class Constants {
 
-    public static final String OFF_MSG_KEY = "off_msg_";
+    public static final String OFF_USER_MSG_KEY = "offline_user_msg_";
+
+    public static final String TIMMY_OFFLINE_MESSAGE = "timmy_offline_message";
+
+    public static final String TIMMY_WAIT_ACK_MESSAGE = "timmy_offline_message";
 
     public static final String OFF_NOTIFY_KEY = "off_notify_";
 

@@ -1,0 +1,24 @@
+syntax = "proto3";
+package com.tim.common.protos;
+
+option java_outer_classname = "Auth";
+
+message Login {
+    string token = 1; // 标识
+    uint32 protonum = 2; //消息类型
+
+}
+
+/*
+code：
+200 -- ok
+400 -- error
+*/
+message Response {
+    uint32 protonum = 1; //消息类型
+    int32 code = 2; //返回码
+    string msg = 3; //描述
+    string msgid = 4; //消息唯一标示
+    uint64 sendtime = 5; //消息时间
+}
+

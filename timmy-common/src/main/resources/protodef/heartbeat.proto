@@ -1,8 +1,0 @@
-syntax = "proto3";
-package cn.timmy.common.protos;
-
-option java_outer_classname = "HeartBeat";
-
-message Beat {
-    string heartbeat = 1;
-}

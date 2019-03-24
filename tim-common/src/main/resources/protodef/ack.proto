@@ -1,0 +1,10 @@
+syntax = "proto3";
+package com.tim.common.protos;
+
+option java_outer_classname = "Ack";
+
+message AckMessage {
+  string msgid = 2; //消息唯一标示
+  uint64 sendtime = 3; //发送时间
+  int32 status = 4; //消息状态 0：接收成功 1：拒绝
+}

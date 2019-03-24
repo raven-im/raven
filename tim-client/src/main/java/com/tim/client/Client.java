@@ -17,7 +17,6 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * Author zxx Description Simple client for module test Date Created on 2018/5/25
  */
-@Slf4j
 public class Client {
 
     private static final String HOST = "127.0.0.1";

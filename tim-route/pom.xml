@@ -10,9 +10,9 @@
 
     <parent>
         <groupId>com.github.tim</groupId>
-        <artifactId>tim</artifactId>
+        <artifactId>tim-parent</artifactId>
         <version>1.0.0-SNAPSHOT</version>
-        <relativePath></relativePath>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <dependencies>

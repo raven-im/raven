@@ -19,6 +19,8 @@
         <module>tim-server</module>
         <module>tim-common</module>
         <module>tim-client</module>
+        <module>tim-access</module>
+        <module>tim-admin</module>
     </modules>
 
     <properties>

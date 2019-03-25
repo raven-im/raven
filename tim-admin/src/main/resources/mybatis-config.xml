@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!-- 全局别名 -->
+    <typeAliases>
+        <package name="com.tim.admin.bean"/>
+        <package name="java.lang"/>
+        <package name="java.util"/>
+        <!-- typeAlias alias="" type="" / -->
+    </typeAliases>
+    <!-- mapping 文件路径配置 -->
+    <!--mappers> <mapper resource="com/boot/xxx.xml" /> </mappers -->
+</configuration>

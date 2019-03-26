@@ -24,16 +24,16 @@ public class ExceptionController {
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public Result handleException(Exception exception) {
-        log.error("handle excption:{}", exception.getClass().getName());
-        return Result.failure(ResultCode.ERROR, exception.getMessage());
+        log.error("handle exception:{}", exception.getClass().getName());
+        return Result.failure(ResultCode.COMMON_ERROR, exception.getMessage());
     }
 
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(RuntimeException.class)
     @ResponseBody
     public Result handleRuntimeException(RuntimeException exception) {
-        log.error("handle excption:{}", exception.getClass().getName());
-        return Result.failure(ResultCode.ERROR, exception.getMessage());
+        log.error("handle exception:{}", exception.getClass().getName());
+        return Result.failure(ResultCode.COMMON_ERROR, exception.getMessage());
     }
 
 }

@@ -60,10 +60,10 @@ public class FriendServiceImpl implements FriendService {
     public Result friendRequest(FriendRequestParam param) {
         UserModel user = userService.getUserByUid(param.getTo_uid());
         if (null == user) {
-            return Result.failure(ResultCode.ERROR, "user not found");
+            return Result.failure(ResultCode.COMMON_ERROR, "user not found");
         }
         if (user.getUid().equals(SecurityUtils.getUid())) {
-            return Result.failure(ResultCode.ERROR, "can not add self");
+            return Result.failure(ResultCode.COMMON_ERROR, "can not add self");
         }
         Example example = new Example(FriendRequestModel.class);
         example.createCriteria().andEqualTo("from_uid", SecurityUtils.getUid())
@@ -96,10 +96,10 @@ public class FriendServiceImpl implements FriendService {
     public Result acceptRequest(Integer requestId) {
         FriendRequestModel requestModel = friendRequestMapper.selectByPrimaryKey(requestId);
         if (null == requestModel) {
-            return Result.failure(ResultCode.ERROR, "friend request not found");
+            return Result.failure(ResultCode.COMMON_ERROR, "friend request not found");
         }
         if (!SecurityUtils.getUid().equals(requestModel.getTo_uid())) {
-            return Result.failure(ResultCode.ERROR, "current uid not equals request's to_uid");
+            return Result.failure(ResultCode.COMMON_ERROR, "current uid not equals request's to_uid");
         }
         FriendModel friendModel = new FriendModel();
         friendModel.setUid(requestModel.getFrom_uid());
@@ -124,10 +124,10 @@ public class FriendServiceImpl implements FriendService {
     public Result replytRequest(RequestReplyParam param) {
         FriendRequestModel requestModel = friendRequestMapper.selectByPrimaryKey(param.getId());
         if (null == requestModel) {
-            return Result.failure(ResultCode.ERROR, "friend request not found");
+            return Result.failure(ResultCode.COMMON_ERROR, "friend request not found");
         }
         if (StringUtils.isEmpty(param.getMessage())) {
-            return Result.failure(ResultCode.ERROR, "message can not be null");
+            return Result.failure(ResultCode.COMMON_ERROR, "message can not be null");
         }
         String to_uid;
         if (SecurityUtils.getUid().equals(requestModel.getFrom_uid())) {
@@ -152,14 +152,14 @@ public class FriendServiceImpl implements FriendService {
     @Override
     public Result getRequestsInfo(RequestInfoParam param) {
         if (param.getIds().isEmpty()) {
-            return Result.failure(ResultCode.ERROR, "id list can not be empty");
+            return Result.failure(ResultCode.COMMON_ERROR, "id list can not be empty");
         }
         Example example = new Example(FriendRequestModel.class);
         example.createCriteria().andIn("id", param.getIds());
         example.setOrderByClause("create_dt DESC");
         List<FriendRequestModel> requestModels = friendRequestMapper.selectByExample(example);
         if (requestModels.isEmpty()) {
-            return Result.failure(ResultCode.ERROR, "no friend request");
+            return Result.failure(ResultCode.COMMON_ERROR, "no friend request");
         }
         RequestInfoOutParam outParam = new RequestInfoOutParam();
         requestModels.forEach(requestModel -> {
@@ -239,14 +239,14 @@ public class FriendServiceImpl implements FriendService {
     @Override
     public Result updateFriend(FriendUpdateParam param) {
         if (StringUtils.isEmpty(param.getAlias())) {
-            return Result.failure(ResultCode.ERROR, "alias can not be null");
+            return Result.failure(ResultCode.COMMON_ERROR, "alias can not be null");
         }
         Example example = new Example(FriendModel.class);
         example.createCriteria().andEqualTo("uid", SecurityUtils.getUid())
             .andEqualTo("friend_uid", param.getUid());
         FriendModel friendModel = friendMapper.selectOneByExample(example);
         if (null == friendModel) {
-            return Result.failure(ResultCode.ERROR, "friend not found");
+            return Result.failure(ResultCode.COMMON_ERROR, "friend not found");
         }
         if (!StringUtils.isEmpty(param.getAlias())) {
             friendModel.setAlias(param.getAlias());

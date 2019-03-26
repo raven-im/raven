@@ -1,6 +1,5 @@
 package com.tim.route.config.web;
 
-
 import com.tim.route.config.interceptor.AdminInterceptor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +25,7 @@ public class WebMvcConfig extends WebMvcConfigurationSupport implements Environm
 
     @Override
     protected void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(interceptor).addPathPatterns("/admin");
+        registry.addInterceptor(interceptor).addPathPatterns("/**");
         super.addInterceptors(registry);
     }
 }

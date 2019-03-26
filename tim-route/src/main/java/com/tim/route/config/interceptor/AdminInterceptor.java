@@ -56,13 +56,13 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
                             return true;
                         }
                     }
-                    response.setContentType(APPLICATION_JSON_VALUE);
-                    OutputStream out = response.getOutputStream();
-                    Result result = Result.failure(ResultCode.COMMON_SIGN_ERROR);
-                    out.write(GsonHelper.getGson().toJson(result).getBytes());
-                    out.flush();
-                    return false;
                 }
+                response.setContentType(APPLICATION_JSON_VALUE);
+                OutputStream out = response.getOutputStream();
+                Result result = Result.failure(ResultCode.COMMON_SIGN_ERROR);
+                out.write(GsonHelper.getGson().toJson(result).getBytes());
+                out.flush();
+                return false;
             }
         }
         return true;

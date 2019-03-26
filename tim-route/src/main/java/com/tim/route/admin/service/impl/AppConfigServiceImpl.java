@@ -1,5 +1,7 @@
 package com.tim.route.admin.service.impl;
 
+import com.tim.common.utils.DateTimeUtils;
+import com.tim.common.utils.UidUtil;
 import com.tim.route.admin.bean.model.AppConfigModel;
 import com.tim.route.admin.mapper.AppConfigMapper;
 import com.tim.route.admin.service.AppConfigService;
@@ -22,22 +24,26 @@ public class AppConfigServiceImpl implements AppConfigService {
 
     @Override
     public AppConfigModel createApp() {
-        AppConfigModel bean = new AppConfigModel();
-        mapper.insert(bean);
-        return bean;
+        AppConfigModel model = new AppConfigModel();
+        model.setUid(UidUtil.uuid());
+        model.setSecret(UidUtil.uuid());
+        model.setCreate_dt(DateTimeUtils.currentUTC());
+        model.setUpdate_dt(DateTimeUtils.currentUTC());
+        mapper.insert(model);
+        return model;
     }
 
     @Override
-    public AppConfigModel getApp(String key) {
-        AppConfigModel bean = new AppConfigModel();
-        bean.setKey(key);
-        return mapper.selectOne(bean);
+    public AppConfigModel getApp(String uid) {
+        AppConfigModel model = new AppConfigModel();
+        model.setUid(uid);
+        return mapper.selectOne(model);
     }
 
     @Override
-    public void delApp(String key) {
-        AppConfigModel bean = new AppConfigModel();
-        bean.setKey(key);
-        mapper.delete(bean);
+    public void delApp(String uid) {
+        AppConfigModel model = new AppConfigModel();
+        model.setUid(uid);
+        mapper.delete(model);
     }
 }

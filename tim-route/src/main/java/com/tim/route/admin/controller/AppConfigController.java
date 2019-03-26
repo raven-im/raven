@@ -1,5 +1,7 @@
 package com.tim.route.admin.controller;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
 import com.tim.common.result.ResultCode;
 import com.tim.common.result.Result;
 import com.tim.route.admin.bean.model.AppConfigModel;
@@ -16,7 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path="/app")
+@RequestMapping(path="/admin/app", produces = APPLICATION_JSON_VALUE)
 @Slf4j
 public class AppConfigController {
 
@@ -28,14 +30,14 @@ public class AppConfigController {
     }
 
     @PutMapping
-    public @ResponseBody
-    Result createApp() {
+    public @ResponseBody Result createApp() {
+        log.info("admin app create.");
         return Result.success(new AppConfigOutParam(service.createApp()));
     }
 
     @DeleteMapping("/{uid}")
-    public @ResponseBody
-    Result deleteApp(@PathVariable("uid") String uid) {
+    public @ResponseBody Result deleteApp(@PathVariable("uid") String uid) {
+        log.info("admin app delete . uid {}", uid);
         service.delApp(uid);
         return Result.success();
     }
@@ -43,10 +45,11 @@ public class AppConfigController {
     @GetMapping("/{uid}")
     public @ResponseBody
     Result getApp(@PathVariable("uid") String uid) {
+        log.info("admin app query . uid {}", uid);
         AppConfigModel model = service.getApp(uid);
         if (model == null) {
             return Result.failure(ResultCode.COMMON_INVALID_PARAMETER);
         }
-        return Result.success(model);
+        return Result.success(new AppConfigOutParam(model));
     }
 }

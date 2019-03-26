@@ -15,7 +15,7 @@ public class AppConfigModel implements Serializable {
     private Long id;
 
     @Column
-    private String key;
+    private String uid;
 
 	@Column
     private String secret;
@@ -35,12 +35,12 @@ public class AppConfigModel implements Serializable {
         this.id = id;
     }
 
-    public String getKey() {
-        return key;
+    public String getUid() {
+        return uid;
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     public String getSecret() {

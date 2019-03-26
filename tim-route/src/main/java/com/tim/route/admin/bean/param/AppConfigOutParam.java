@@ -26,7 +26,7 @@ public class AppConfigOutParam {
     }
 
     public AppConfigOutParam(AppConfigModel model) {
-        this.key = model.getKey();
+        this.key = model.getUid();
         this.secret = model.getSecret();
     }
 }

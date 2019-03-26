@@ -41,6 +41,7 @@ public class Result implements Serializable {
     public static Result failure(ResultCode resultCode) {
         Result result = new Result();
         result.setResultCode(resultCode);
+        result.setMsg(resultCode.getMsg());
         return result;
     }
 

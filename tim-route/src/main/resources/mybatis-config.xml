@@ -9,7 +9,6 @@
         <package name="java.util"/>
         <package name="com.tim.route.admin.bean.model"/>
         <package name="com.tim.route.user.bean.model"/>
-        <package name="com.tim.route.friend.bean.model"/>
         <package name="com.tim.route.group.bean.model"/>
     </typeAliases>
 </configuration>

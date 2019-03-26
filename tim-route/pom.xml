@@ -66,6 +66,12 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>${version.mysql.connector}</version>
         </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.12</version>
+        </dependency>
+
     </dependencies>
     <build>
         <finalName>${project.artifactId}</finalName>

@@ -3,6 +3,7 @@ package com.tim.route.admin.bean.model;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -12,6 +13,7 @@ public class AppConfigModel implements Serializable {
     private static final long serialVersionUID = 9129371215147758834L;
 
     @Id
+    @GeneratedValue(generator = "JDBC")
     private Long id;
 
     @Column

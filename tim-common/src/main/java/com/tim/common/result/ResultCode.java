@@ -13,6 +13,7 @@ public enum ResultCode {
     COMMON_INVALID_PARAMETER(10003, "invalid parameter."),
     COMMON_NOT_FOUND(10004, "not found"),
     COMMON_METHOD_NOT_SUPPORT(10005, "http method not support."),
+    COMMON_SIGN_ERROR(10006, "signature not passed."),
 
     COMMON_ERROR(500, "error");
     private int code;

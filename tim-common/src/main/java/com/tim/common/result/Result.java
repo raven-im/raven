@@ -64,4 +64,20 @@ public class Result implements Serializable {
     public void setMsg(String msg) {
         this.msg = msg;
     }
+
+    public Integer getCode() {
+        return code;
+    }
+
+    public void setCode(Integer code) {
+        this.code = code;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public Object getData() {
+        return data;
+    }
 }

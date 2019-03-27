@@ -1,7 +1,7 @@
-package com.tim.route.admin.mapper;
+package com.tim.admin.mapper;
 
-import com.tim.route.admin.bean.model.AppConfigModel;
-import com.tim.route.config.BaseMapper;
+import com.tim.admin.bean.model.AppConfigModel;
+import com.tim.common.config.BaseMapper;
 import org.springframework.stereotype.Repository;
 
 @Repository

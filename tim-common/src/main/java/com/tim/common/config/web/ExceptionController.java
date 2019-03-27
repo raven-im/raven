@@ -1,10 +1,8 @@
-package com.tim.route.config.web;
+package com.tim.common.config.web;
 
 import com.tim.common.result.Result;
 import com.tim.common.result.ResultCode;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

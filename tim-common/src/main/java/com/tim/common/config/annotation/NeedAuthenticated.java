@@ -1,4 +1,4 @@
-package com.tim.route.config.annotation;
+package com.tim.common.config.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

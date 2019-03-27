@@ -1,10 +1,10 @@
-package com.tim.route.admin.service.impl;
+package com.tim.admin.service.impl;
 
 import com.tim.common.utils.DateTimeUtils;
 import com.tim.common.utils.UidUtil;
-import com.tim.route.admin.bean.model.AppConfigModel;
-import com.tim.route.admin.mapper.AppConfigMapper;
-import com.tim.route.admin.service.AppConfigService;
+import com.tim.admin.bean.model.AppConfigModel;
+import com.tim.admin.mapper.AppConfigMapper;
+import com.tim.admin.service.AppConfigService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

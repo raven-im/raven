@@ -1,7 +1,7 @@
-package com.tim.route.admin.bean.param;
+package com.tim.admin.bean.param;
 
 
-import com.tim.route.admin.bean.model.AppConfigModel;
+import com.tim.admin.bean.model.AppConfigModel;
 
 public class AppConfigOutParam {
 

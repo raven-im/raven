@@ -1,13 +1,13 @@
-package com.tim.route.admin.controller;
+package com.tim.admin.controller;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
-import com.tim.common.result.ResultCode;
 import com.tim.common.result.Result;
-import com.tim.route.admin.bean.model.AppConfigModel;
-import com.tim.route.admin.bean.param.AppConfigOutParam;
-import com.tim.route.admin.service.AppConfigService;
-import com.tim.route.config.annotation.NeedAuthenticated;
+import com.tim.common.result.ResultCode;
+import com.tim.admin.bean.model.AppConfigModel;
+import com.tim.admin.bean.param.AppConfigOutParam;
+import com.tim.admin.service.AppConfigService;
+import com.tim.common.config.annotation.NeedAuthenticated;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path="/admin/app", produces = APPLICATION_JSON_VALUE)
+@RequestMapping(path="/app", produces = APPLICATION_JSON_VALUE)
 @Slf4j
 public class AppConfigController {
 
@@ -46,7 +46,7 @@ public class AppConfigController {
     }
 
     @GetMapping("/{uid}")
-    @NeedAuthenticated
+//    @NeedAuthenticated
     public @ResponseBody Result getApp(@PathVariable("uid") String uid) {
         log.info("admin app query . uid {}", uid);
         AppConfigModel model = service.getApp(uid);

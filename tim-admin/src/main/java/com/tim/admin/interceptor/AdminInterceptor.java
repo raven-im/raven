@@ -1,11 +1,17 @@
-package com.tim.route.config.interceptor;
+package com.tim.admin.interceptor;
+
+import static com.tim.common.utils.Constants.AUTH_APP_KEY;
+import static com.tim.common.utils.Constants.AUTH_NONCE;
+import static com.tim.common.utils.Constants.AUTH_SIGNITURE;
+import static com.tim.common.utils.Constants.AUTH_TIMESTAMP;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 import com.tim.common.result.Result;
 import com.tim.common.result.ResultCode;
 import com.tim.common.utils.GsonHelper;
-import com.tim.route.admin.bean.model.AppConfigModel;
-import com.tim.route.admin.service.AppConfigService;
-import com.tim.route.config.annotation.NeedAuthenticated;
+import com.tim.admin.bean.model.AppConfigModel;
+import com.tim.admin.service.AppConfigService;
+import com.tim.common.config.annotation.NeedAuthenticated;
 import java.io.OutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,8 +22,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-import static com.tim.common.utils.Constants.*;
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 /**
  * @author: bbpatience

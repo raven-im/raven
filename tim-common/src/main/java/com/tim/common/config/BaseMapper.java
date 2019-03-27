@@ -1,4 +1,4 @@
-package com.tim.route.config;
+package com.tim.common.config;
 
 import tk.mybatis.mapper.common.Mapper;
 import tk.mybatis.mapper.common.MySqlMapper;

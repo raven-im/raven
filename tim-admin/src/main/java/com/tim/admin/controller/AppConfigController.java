@@ -46,7 +46,7 @@ public class AppConfigController {
     }
 
     @GetMapping("/{uid}")
-//    @NeedAuthenticated
+    @NeedAuthenticated
     public @ResponseBody Result getApp(@PathVariable("uid") String uid) {
         log.info("admin app query . uid {}", uid);
         AppConfigModel model = service.getApp(uid);

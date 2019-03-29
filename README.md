@@ -6,8 +6,8 @@
 
 * netty
 * protobuf
-* spring boot相关
 * redis
 * mysql
 * flyway
-
+* spring boot
+* spring cloud

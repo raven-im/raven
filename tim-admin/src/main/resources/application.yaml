@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: tim-admin
   autoconfigure:
     exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
   datasource:
@@ -35,3 +37,9 @@ mapper:
   before: true
   identity: mysql
 
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true

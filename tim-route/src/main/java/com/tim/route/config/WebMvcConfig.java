@@ -1,4 +1,4 @@
-package com.tim.admin.config;
+package com.tim.route.config;
 
 /**
  * @author: bbpatience
@@ -6,13 +6,14 @@ package com.tim.admin.config;
  * @description: WebMvcConfig
  **/
 
-import com.tim.admin.interceptor.AdminInterceptor;
+
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
-
+import com.tim.route.config.interceptor.AdminInterceptor;
 
 @Configuration
 @Slf4j

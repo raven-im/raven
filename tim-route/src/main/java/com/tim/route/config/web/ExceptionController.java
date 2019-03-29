@@ -3,8 +3,6 @@ package com.tim.route.config.web;
 import com.tim.common.result.Result;
 import com.tim.common.result.ResultCode;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -24,16 +22,16 @@ public class ExceptionController {
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public Result handleException(Exception exception) {
-        log.error("handle excption:{}", exception.getClass().getName());
-        return Result.failure(ResultCode.ERROR, exception.getMessage());
+        log.error("handle exception:{}", exception.getClass().getName());
+        return Result.failure(ResultCode.COMMON_ERROR, exception.getMessage());
     }
 
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(RuntimeException.class)
     @ResponseBody
     public Result handleRuntimeException(RuntimeException exception) {
-        log.error("handle excption:{}", exception.getClass().getName());
-        return Result.failure(ResultCode.ERROR, exception.getMessage());
+        log.error("handle exception:{}", exception.getClass().getName());
+        return Result.failure(ResultCode.COMMON_ERROR, exception.getMessage());
     }
 
 }

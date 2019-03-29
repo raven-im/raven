@@ -1,6 +1,8 @@
 spring:
   application:
-    name: tim-route
+    name: tim-admin
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/imdb?useUnicode=true
@@ -15,21 +17,13 @@ spring:
       validation-query: SELECT 1 FROM DUAL
       time-between-eviction-runs-millis: 60000
       min-evictable-idle-time-millis: 300000
-  redis:
-    host: 127.0.0.1
-    port: 6379
-    pool:
-      max-active: 20
-      max-wait: 60000
-      max-idle: 5
-      min-idle: 1
   main:
     banner-mode: log
 
 server:
-  port: 8080
+  port: 7080
   servlet:
-    contextPath: /tim
+    contextPath: /admin
 # Mybatis
 mybatis:
   mapperLocations: classpath:mapper/*Mapper.xml
@@ -49,4 +43,3 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
   instance:
     prefer-ip-address: true
-

@@ -24,7 +24,7 @@ public class UnauthorizedHandler implements AccessDeniedHandler {
         throws IOException, ServletException {
         httpServletResponse.setContentType("application/json");
         OutputStream out = httpServletResponse.getOutputStream();
-        Result result = Result.failure(ResultCode.ERROR, e.getMessage());
+        Result result = Result.failure(ResultCode.COMMON_ERROR, e.getMessage());
         out.write(GsonHelper.getGson().toJson(result).getBytes());
         out.flush();
     }

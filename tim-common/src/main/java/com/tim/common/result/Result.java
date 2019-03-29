@@ -27,13 +27,13 @@ public class Result implements Serializable {
 
     public static Result success() {
         Result result = new Result();
-        result.setResultCode(ResultCode.SUCCESS);
+        result.setResultCode(ResultCode.COMMON_SUCCESS);
         return result;
     }
 
     public static Result success(Object data) {
         Result result = new Result();
-        result.setResultCode(ResultCode.SUCCESS);
+        result.setResultCode(ResultCode.COMMON_SUCCESS);
         result.setData(data);
         return result;
     }
@@ -41,6 +41,7 @@ public class Result implements Serializable {
     public static Result failure(ResultCode resultCode) {
         Result result = new Result();
         result.setResultCode(resultCode);
+        result.setMsg(resultCode.getMsg());
         return result;
     }
 
@@ -52,8 +53,8 @@ public class Result implements Serializable {
     }
 
     private void setResultCode(ResultCode code) {
-        this.code = code.code();
-        this.msg = code.message();
+        this.code = code.getCode();
+        this.msg = code.getMsg();
     }
 
     private void setData(Object data) {
@@ -62,5 +63,21 @@ public class Result implements Serializable {
 
     public void setMsg(String msg) {
         this.msg = msg;
+    }
+
+    public Integer getCode() {
+        return code;
+    }
+
+    public void setCode(Integer code) {
+        this.code = code;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public Object getData() {
+        return data;
     }
 }

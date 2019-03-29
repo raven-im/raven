@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
         example.createCriteria().andEqualTo("username", param.getUsername());
         List<UserModel> models = userMapper.selectByExample(example);
         if (!models.isEmpty()) {
-            return Result.failure(ResultCode.ERROR, "username exits");
+            return Result.failure(ResultCode.COMMON_ERROR, "username exits");
         }
         String salt = BCrypt.gensalt();
         String password = BCrypt.hashpw(param.getPassword(), salt);
@@ -99,10 +99,10 @@ public class UserServiceImpl implements UserService {
         UserModel user = getUserByUid(SecurityUtils.getUid());
         Boolean check = BCrypt.checkpw(param.getOld_password(), user.getPassword());
         if (!check) {
-            return Result.failure(ResultCode.ERROR, "wrong old password");
+            return Result.failure(ResultCode.COMMON_ERROR, "wrong old password");
         }
         if (StringUtils.isEmpty(param.getNew_password())) {
-            return Result.failure(ResultCode.ERROR, "invalid new password");
+            return Result.failure(ResultCode.COMMON_ERROR, "invalid new password");
         }
         String salt = BCrypt.gensalt();
         String password = BCrypt.hashpw(param.getNew_password(), salt);
@@ -119,7 +119,7 @@ public class UserServiceImpl implements UserService {
     public Result getUserInfo(String uid) {
         UserModel model = getUserByUid(uid);
         if (null == model) {
-            return Result.failure(ResultCode.ERROR, "user not found");
+            return Result.failure(ResultCode.COMMON_ERROR, "user not found");
         }
         UserInfoOutParam param = new UserInfoOutParam();
         param.setName(model.getName());

@@ -25,4 +25,11 @@ public class Constants {
 
     public static final String NOTIFY_TYPE_USER = "notify_user";
 
+    /*
+    * Authentication.
+    * */
+    public static final String AUTH_APP_KEY = "AppKey";
+    public static final String AUTH_NONCE = "Nonce";
+    public static final String AUTH_TIMESTAMP = "Timestamp";
+    public static final String AUTH_SIGNITURE = "Sign";
 }

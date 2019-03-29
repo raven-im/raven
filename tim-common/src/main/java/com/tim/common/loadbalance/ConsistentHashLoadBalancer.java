@@ -26,7 +26,6 @@ public class ConsistentHashLoadBalancer implements LoadBalancer {
         HashCode hashCode = hashFunction.hashString(hashKey, charset);
         TreeMap<Integer, Server> ring = buildConsistentHashRing(servers);
         Server server = locate(ring, hashCode.asInt());
-        ;
         return server;
     }
 

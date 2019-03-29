@@ -24,11 +24,11 @@ public class AppConfigModel implements Serializable {
 	@Column
     private String secret;
 
-    @Column
-	private Date create_dt;
+    @Column(name = "create_dt")
+	private Date createDate;
 
-    @Column
-    private Date update_dt;
+    @Column(name = "update_dt")
+    private Date updateDate;
 
 }
 

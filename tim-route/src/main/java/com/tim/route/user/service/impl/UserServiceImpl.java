@@ -57,7 +57,8 @@ public class UserServiceImpl implements UserService {
         UserModel model = new UserModel();
         model.setUsername(param.getUsername());
         model.setPassword(password);
-        model.setCreate_dt(DateTimeUtils.currentUTC());
+        model.setCreateDate(DateTimeUtils.currentUTC());
+        model.setUpdateDate(DateTimeUtils.currentUTC());
         model.setName(param.getName());
         model.setUid(UidUtil.uuid());
         userMapper.insertSelective(model);
@@ -109,7 +110,7 @@ public class UserServiceImpl implements UserService {
         UserModel updateUser = new UserModel();
         updateUser.setPassword(password);
         updateUser.setUid(user.getUid());
-        updateUser.setUpdate_dt(DateTimeUtils.currentUTC());
+        updateUser.setUpdateDate(DateTimeUtils.currentUTC());
         userMapper.updateByPrimaryKeySelective(updateUser);
         msgProducer.pwdChanged(user.getUid(), user.getUid());
         return Result.success();

@@ -27,10 +27,10 @@ public class UserModel implements Serializable {
     private String username;
     @Column
     private String password;
-    @Column
-    private Date create_dt;
-    @Column
-    private Date update_dt;
+    @Column(name = "create_dt")
+    private Date createDate;
+    @Column(name = "update_dt")
+    private Date updateDate;
     @Column
     private String mobile;
     @Column

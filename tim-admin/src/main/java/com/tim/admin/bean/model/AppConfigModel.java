@@ -53,19 +53,19 @@ public class AppConfigModel implements Serializable {
         this.secret = secret;
     }
 
-    public Date getCreate_dt() {
+    public Date getCreateDate() {
         return create_dt;
     }
 
-    public void setCreate_dt(Date create_dt) {
+    public void setCreateDate(Date create_dt) {
         this.create_dt = create_dt;
     }
 
-    public Date getUpdate_dt() {
+    public Date getUpdateDate() {
         return update_dt;
     }
 
-    public void setUpdate_dt(Date update_dt) {
+    public void setUpdateDate(Date update_dt) {
         this.update_dt = update_dt;
     }
 }

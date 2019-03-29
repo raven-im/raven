@@ -27,8 +27,8 @@ public class AppConfigServiceImpl implements AppConfigService {
         AppConfigModel model = new AppConfigModel();
         model.setUid(UidUtil.uuid());
         model.setSecret(UidUtil.uuid());
-        model.setCreate_dt(DateTimeUtils.currentUTC());
-        model.setUpdate_dt(DateTimeUtils.currentUTC());
+        model.setCreateDate(DateTimeUtils.currentUTC());
+        model.setUpdateDate(DateTimeUtils.currentUTC());
         mapper.insert(model);
         return model;
     }

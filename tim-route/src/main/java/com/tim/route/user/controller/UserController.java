@@ -3,7 +3,6 @@ package com.tim.route.user.controller;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 import com.tim.common.result.Result;
-import com.tim.route.config.annotation.NeedAuthenticated;
 import com.tim.route.config.security.SecurityUtils;
 import com.tim.route.user.bean.param.ChangePasswordParam;
 import com.tim.route.user.bean.param.LoginInputParam;

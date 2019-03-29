@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: tim-eureka-server
+server:
+  port: 8761
+eureka:
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://localhost:${server.port}/eureka/

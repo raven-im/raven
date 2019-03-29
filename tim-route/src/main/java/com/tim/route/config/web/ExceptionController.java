@@ -1,4 +1,4 @@
-package com.tim.common.config.web;
+package com.tim.route.config.web;
 
 import com.tim.common.result.Result;
 import com.tim.common.result.ResultCode;

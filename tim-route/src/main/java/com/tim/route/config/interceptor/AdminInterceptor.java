@@ -1,4 +1,4 @@
-package com.tim.admin.interceptor;
+package com.tim.route.config.interceptor;
 
 import static com.tim.common.utils.Constants.AUTH_APP_KEY;
 import static com.tim.common.utils.Constants.AUTH_NONCE;
@@ -9,9 +9,9 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import com.tim.common.result.Result;
 import com.tim.common.result.ResultCode;
 import com.tim.common.utils.GsonHelper;
-import com.tim.admin.bean.model.AppConfigModel;
-import com.tim.admin.service.AppConfigService;
-import com.tim.common.config.annotation.NeedAuthenticated;
+import com.tim.route.config.annotation.NeedAuthenticated;
+import com.tim.route.config.mapper.AppConfigMapper;
+import com.tim.route.config.model.AppConfigModel;
 import java.io.OutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,7 +34,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 public class AdminInterceptor extends HandlerInterceptorAdapter {
 
     @Autowired
-    private AppConfigService service;
+    private AppConfigMapper mapper;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
@@ -53,7 +53,7 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
                     // calculate the hash.
                     log.info("calculate the hash. key {} nonce {} timestamp {} sign {}", key, nonce,
                         timestamp, sign);
-                    AppConfigModel app = service.getApp(key);
+                    AppConfigModel app = getApp(key);
                     if (app != null) {
                         String toSign = app.getSecret() + nonce + timestamp;
                         if (sign.equalsIgnoreCase(DigestUtils.sha1DigestAsHex(toSign))) {
@@ -70,5 +70,11 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
             }
         }
         return true;
+    }
+
+    private AppConfigModel getApp(String uid) {
+        AppConfigModel model = new AppConfigModel();
+        model.setUid(uid);
+        return mapper.selectOne(model);
     }
 }

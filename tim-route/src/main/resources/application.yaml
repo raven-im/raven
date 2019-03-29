@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: tim-route
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/imdb?useUnicode=true
@@ -40,4 +42,11 @@ mapper:
   not-empty: true
   before: true
   identity: mysql
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
 

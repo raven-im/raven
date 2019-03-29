@@ -7,7 +7,6 @@ import com.tim.common.result.ResultCode;
 import com.tim.admin.bean.model.AppConfigModel;
 import com.tim.admin.bean.param.AppConfigOutParam;
 import com.tim.admin.service.AppConfigService;
-import com.tim.common.config.annotation.NeedAuthenticated;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,14 +30,12 @@ public class AppConfigController {
     }
 
     @PutMapping
-    @NeedAuthenticated
     public @ResponseBody Result createApp() {
         log.info("admin app create.");
         return Result.success(new AppConfigOutParam(service.createApp()));
     }
 
     @DeleteMapping("/{uid}")
-    @NeedAuthenticated
     public @ResponseBody Result deleteApp(@PathVariable("uid") String uid) {
         log.info("admin app delete . uid {}", uid);
         service.delApp(uid);
@@ -46,7 +43,6 @@ public class AppConfigController {
     }
 
     @GetMapping("/{uid}")
-    @NeedAuthenticated
     public @ResponseBody Result getApp(@PathVariable("uid") String uid) {
         log.info("admin app query . uid {}", uid);
         AppConfigModel model = service.getApp(uid);

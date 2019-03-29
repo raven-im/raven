@@ -1,20 +1,6 @@
 spring:
   application:
     name: tim-eureka-server
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/imdb?useUnicode=true
-    username: root
-    password: 123456
-    type: com.alibaba.druid.pool.DruidDataSource
-    druid:
-      initial-size: 10
-      max-active: 20
-      min-idle: 5
-      max-wait: 60000
-      validation-query: SELECT 1 FROM DUAL
-      time-between-eviction-runs-millis: 60000
-      min-evictable-idle-time-millis: 300000
 server:
   port: 8761
 eureka:

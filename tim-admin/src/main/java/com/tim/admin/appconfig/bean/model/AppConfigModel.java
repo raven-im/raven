@@ -1,4 +1,4 @@
-package com.tim.route.config.model;
+package com.tim.admin.appconfig.bean.model;
 
 import java.io.Serializable;
 import java.util.Date;

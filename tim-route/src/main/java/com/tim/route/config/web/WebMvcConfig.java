@@ -24,9 +24,4 @@ public class WebMvcConfig extends WebMvcConfigurationSupport implements Environm
     }
 
 
-    @Override
-    protected void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(interceptor).addPathPatterns("/**");
-        super.addInterceptors(registry);
-    }
 }

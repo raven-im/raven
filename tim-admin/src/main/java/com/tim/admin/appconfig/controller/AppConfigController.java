@@ -1,12 +1,12 @@
-package com.tim.admin.controller;
+package com.tim.admin.appconfig.controller;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 import com.tim.common.result.Result;
 import com.tim.common.result.ResultCode;
-import com.tim.admin.bean.model.AppConfigModel;
-import com.tim.admin.bean.param.AppConfigOutParam;
-import com.tim.admin.service.AppConfigService;
+import com.tim.admin.appconfig.bean.model.AppConfigModel;
+import com.tim.admin.appconfig.bean.param.AppConfigOutParam;
+import com.tim.admin.appconfig.service.AppConfigService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;

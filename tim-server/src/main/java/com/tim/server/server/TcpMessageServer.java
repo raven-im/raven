@@ -2,7 +2,6 @@ package com.tim.server.server;
 
 import com.tim.common.code.MessageDecoder;
 import com.tim.common.code.MessageEncoder;
-import com.tim.common.utils.ParseRegistryMap;
 import com.tim.common.utils.SnowFlake;
 import com.tim.server.handler.HeartBeatHandler;
 import com.tim.server.handler.LoginAuthHandler;
@@ -28,9 +27,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 /**
- * Author zxx
- * Description 消息服务
- * Date Created on 2018/5/25
+ * Author zxx Description 消息服务 Date Created on 2018/5/25
  */
 @Component
 @Order(1)
@@ -80,7 +77,6 @@ public class TcpMessageServer {
         bindConnectionOptions(bootstrap);
         bootstrap.bind(new InetSocketAddress(nettyServerPort)).addListener(future -> {
             if (future.isSuccess()) {
-                ParseRegistryMap.initRegistry();
                 log.info("MeaageServer Started Success,port:{}", nettyServerPort);
             } else {
                 log.error("MeaageServer Started Failed!");

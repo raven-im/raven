@@ -5,12 +5,12 @@ option java_outer_classname = "Notify";
 
 //通知消息
 message NotifyMessage {
-    string fromuid = 1; // 发送方uid
-    uint32 protonum = 2; //消息类型
-    string type = 3; // 通知类型
-    string content = 4; // 通知内容
-    uint64 sendtime = 5; //消息时间
-    string msgid = 6; //消息唯一标示
+    string id = 1; //消息唯一标示
+    string type = 2; // 通知类型
+    string uid = 3; // 接收方uid
+    string group_id = 4; // 接收方id
+    string content = 5; // 通知内容
+    uint64 timestamp = 6; //消息时间
 }
 
 

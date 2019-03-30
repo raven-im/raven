@@ -14,10 +14,10 @@ public class Utils {
     public static ByteBuf pack2Client(MessageLite msg) {
         byte[] bytes = msg.toByteArray();
         int length = bytes.length;
-        int ptoNum = ParseMap.getPtoNum(msg);
+        int messageType = ParseMap.getMessageType(msg);
         ByteBuf buf = Unpooled.buffer(8 + length);
         buf.writeInt(length);
-        buf.writeInt(ptoNum);
+        buf.writeInt(messageType);
         buf.writeBytes(bytes);
         log.info("Send Message, msg:{}", msg.toString());
         return buf;

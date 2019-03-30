@@ -1,7 +1,7 @@
-package com.tim.admin.service;
+package com.tim.admin.appconfig.service;
 
 
-import com.tim.admin.bean.model.AppConfigModel;
+import com.tim.admin.appconfig.bean.model.AppConfigModel;
 
 public interface AppConfigService {
 

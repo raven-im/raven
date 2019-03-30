@@ -4,29 +4,50 @@ package com.tim.common.protos;
 option java_outer_classname = "Message";
 
 //上行单聊消息
-message UpStreamMessage {
-    repeated string touid = 1; //消息目标的userid
-    uint32 protonum = 2; //消息类型
+message UpSingle {
+    string id = 1; //消息唯一标示
+    string to_uid = 2; //接收方uid
     string content = 3; //内容
-    uint64 sendtime = 4; //发送时间
-    string msgid = 5; //消息唯一标示
-}
+    uint64 timestamp = 4; //发送时间
 
-//消息类型
-enum MsgType {
-    PERSON = 0; //单人会话
-    GROUP = 1; //群消息
 }
 
 //下行消息
-message DownStreamMessage {
-    string fromuid = 1; // 发送方uid
-    MsgType type = 2; //消息类型
-    string groupuid = 3; //如果是群消息那么指定群Id
-    uint32 protonum = 4; //消息类型
-    string content = 5; //内容
-    uint64 sendtime = 6; //消息时间
-    string msgid = 7; //消息唯一标示
+message DownSingle {
+    string id = 1; //消息唯一标示
+    string from_uid = 2; // 发送方uid
+    string content = 3; //内容
+    uint64 timestamp = 4; //消息时间
+
+}
+
+//上行群聊消息
+message UpGroup {
+    string id = 1; //消息唯一标示
+    string group_id = 2; // 接收群ID
+    string content = 3; //内容
+    uint64 timestamp = 4; //发送时间
 }
 
 
+//下行消息
+message DownGroup {
+    string id = 1; //消息唯一标示
+    string from_uid = 2; // 发送方uid
+    string group_id = 3; // 接收群id
+    string content = 4; //内容
+    uint64 timestamp = 5; //消息时间
+}
+
+// 心跳
+message HeartBeat {
+    string id = 1; //消息唯一标示
+    string content = 2;
+}
+
+// 消息ACK
+message MessageAck {
+    string id = 1; //消息唯一标示
+    uint64 timestamp = 2; //发送时间
+    uint32 status = 3; //消息状态 1:接收成功
+}

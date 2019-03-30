@@ -1,6 +1,6 @@
 spring:
   application:
-    name: tim-eureka-server
+    name: tim-eureka
 server:
   port: 8761
 eureka:

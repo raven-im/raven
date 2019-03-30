@@ -1,6 +1,6 @@
 package com.tim.server.process;
 
-import com.tim.common.protos.Ack.AckMessage;
+import com.tim.common.protos.Message.MessageAck;
 import com.tim.server.channel.NettyChannelManager;
 import com.tim.server.common.BaseMessageProcessor;
 import com.tim.server.common.OfflineMsgService;
@@ -22,11 +22,11 @@ public class AckMeaasgeProcessor implements BaseMessageProcessor {
 
     @Override
     public void process(MessageLite messageLite, ChannelHandlerContext context) {
-        AckMessage ackMessage = (AckMessage) messageLite;
+        MessageAck ackMessage = (MessageAck) messageLite;
         String fromUid = nettyChannelManager.getUidByChannel(context.channel());
         log.info("fromUid:{}", fromUid);
-        offLineMsgService.deleteAckMessage(fromUid, ackMessage.getMsgid(),
-            ackMessage.getSendtime());
+        offLineMsgService.deleteAckMessage(fromUid, ackMessage.getId(),
+            ackMessage.getTimestamp());
     }
 
 

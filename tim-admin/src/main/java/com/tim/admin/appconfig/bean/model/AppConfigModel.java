@@ -1,4 +1,4 @@
-package com.tim.admin.bean.model;
+package com.tim.admin.appconfig.bean.model;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -25,7 +25,7 @@ public class AppConfigModel implements Serializable {
     private String secret;
 
     @Column(name = "create_dt")
-    private Date createDate;
+	private Date createDate;
 
     @Column(name = "update_dt")
     private Date updateDate;

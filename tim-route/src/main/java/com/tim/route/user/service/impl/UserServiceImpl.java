@@ -5,7 +5,6 @@ import com.tim.common.result.ResultCode;
 import com.tim.common.utils.DateTimeUtils;
 import com.tim.common.utils.UidUtil;
 import com.tim.route.config.security.SecurityUtils;
-import com.tim.route.notify.MsgProducer;
 import com.tim.route.user.bean.model.UserModel;
 import com.tim.route.user.bean.param.ChangePasswordParam;
 import com.tim.route.user.bean.param.LoginInputParam;
@@ -39,9 +38,6 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private MsgProducer msgProducer;
 
     @Override
     @Transactional(rollbackFor = Throwable.class)
@@ -112,7 +108,6 @@ public class UserServiceImpl implements UserService {
         updateUser.setUid(user.getUid());
         updateUser.setUpdateDate(DateTimeUtils.currentUTC());
         userMapper.updateByPrimaryKeySelective(updateUser);
-        msgProducer.pwdChanged(user.getUid(), user.getUid());
         return Result.success();
     }
 

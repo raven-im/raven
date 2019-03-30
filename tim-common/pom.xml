@@ -6,6 +6,7 @@
     <groupId>com.github.tim</groupId>
     <artifactId>tim-common</artifactId>
     <version>1.0.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
     <parent>
         <groupId>com.github.tim</groupId>
         <artifactId>tim-parent</artifactId>
@@ -13,11 +14,6 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-logging</artifactId>
-            <version>${version.spring.boot}</version>
-        </dependency>
         <dependency>
             <groupId>com.google.protobuf</groupId>
             <artifactId>protobuf-java</artifactId>

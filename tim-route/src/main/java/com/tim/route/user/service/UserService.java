@@ -23,4 +23,6 @@ public interface UserService {
     Result changePassword(ChangePasswordParam param);
 
     Result getUserInfo(String uid);
+
+    Result getToken(String uid, String appKey);
 }

@@ -1,10 +1,11 @@
 package com.tim.route.user.controller;
 
+import static com.tim.common.utils.Constants.AUTH_APP_KEY;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-
 import com.tim.common.result.Result;
 import com.tim.route.config.security.SecurityUtils;
 import com.tim.route.user.bean.param.ChangePasswordParam;
+import com.tim.route.user.bean.param.GetTokenParam;
 import com.tim.route.user.bean.param.LoginInputParam;
 import com.tim.route.user.bean.param.RegisterParam;
 import com.tim.route.user.service.UserService;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -79,4 +81,22 @@ public class UserController {
         return userService.getUserInfo(uid);
     }
 
+    /**
+     * 获取用户登录合法token
+     * @param appKey
+     * @param uid
+     * @return
+     */
+
+    @GetMapping("/token")
+    public Result getToken(@RequestHeader(AUTH_APP_KEY) String appKey, @PathVariable("uid") String uid) {
+        log.info("getToken, app key {}, uid {}", appKey, uid);
+        return userService.getToken(uid, appKey);
+    }
+
+    @PostMapping("/token")
+    public Result getToken(@RequestBody GetTokenParam param) {
+        log.info("getToken, app key {}, uid {}", param.getAppKey(), param.getUid());
+        return userService.getToken(param.getUid(), param.getAppKey());
+    }
 }

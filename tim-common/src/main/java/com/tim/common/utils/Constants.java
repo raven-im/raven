@@ -26,5 +26,10 @@ public class Constants {
 
     public static final String AUTH_TIMESTAMP = "Timestamp";
 
-    public static final String AUTH_SIGNITURE = "Sign";
+    public static final String AUTH_SIGNATURE = "Sign";
+
+    /**
+     * Default cipher algorithm
+     */
+    public static final String DEFAULT_CIPHER_ALGORITHM = "DES";
 }

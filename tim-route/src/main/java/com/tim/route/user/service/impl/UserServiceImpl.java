@@ -123,4 +123,9 @@ public class UserServiceImpl implements UserService {
         param.setUsername(model.getUsername());
         return Result.success(param);
     }
+
+    @Override
+    public Result getToken(String uid, String appKey) {
+        return null;
+    }
 }

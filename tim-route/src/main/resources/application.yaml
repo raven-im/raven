@@ -2,7 +2,7 @@ spring:
   application:
     name: tim-route
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/imdb?useUnicode=true
     username: root
     password: 123456
@@ -28,8 +28,7 @@ spring:
 
 server:
   port: 8080
-  servlet:
-    contextPath: /tim
+
 # Mybatis
 mybatis:
   mapperLocations: classpath:mapper/*Mapper.xml
@@ -38,7 +37,7 @@ mybatis:
 #通用mapper
 #mappers 多个接口时逗号隔开
 mapper:
-  mappers: com.tim.common.config.BaseMapper
+  mappers: com.tim.route.config.BaseMapper
   not-empty: true
   before: true
   identity: mysql
@@ -49,4 +48,21 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
   instance:
     prefer-ip-address: true
+
+# actuator相关配置
+management:
+  security:
+    enabled: false
+  endpoint:
+    health:
+      show-details: always
+      enabled: true
+    prometheus:
+      enabled: true
+    shutdown:
+      enabled: false
+  endpoints:
+    web:
+      exposure:
+        include: '*' #开放所有监控接口
 

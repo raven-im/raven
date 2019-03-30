@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: tim-server
   redis:
     host: 127.0.0.1
     port: 6379
@@ -7,6 +9,8 @@ spring:
       max-wait: 60000
       max-idle: 5
       min-idle: 1
+  main:
+    banner-mode: log
 
 netty:
   server:

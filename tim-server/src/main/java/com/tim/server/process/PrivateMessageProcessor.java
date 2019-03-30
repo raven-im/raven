@@ -1,11 +1,10 @@
 package com.tim.server.process;
 
 import com.tim.common.enums.AckMessageStatus;
-import com.tim.common.protos.Ack.AckMessage;
-import com.tim.common.protos.Message.DownStreamMessage;
-import com.tim.common.protos.Message.MsgType;
-import com.tim.common.protos.Message.UpStreamMessage;
-import com.tim.common.utils.ProtoConstants;
+import com.tim.common.protos.Message.DownSingle;
+import com.tim.common.protos.Message.MessageAck;
+import com.tim.common.protos.Message.UpSingle;
+import com.tim.common.utils.MessageTypeConstants;
 import com.tim.server.channel.NettyChannelManager;
 import com.tim.server.common.BaseMessageProcessor;
 import com.tim.server.common.OfflineMsgService;
@@ -14,8 +13,6 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -31,47 +28,43 @@ public class PrivateMessageProcessor implements BaseMessageProcessor {
 
     @Override
     public void process(MessageLite messageLite, ChannelHandlerContext context) {
-        UpStreamMessage upMessage = (UpStreamMessage) messageLite;
-        senAck(context, upMessage);
-        DownStreamMessage dowmMessage = buildMessage(context, upMessage);
-        List<String> uids = upMessage.getTouidList();
-        uids.forEach(uid -> {
-            List<Channel> channels = nettyChannelManager.getChannelByUid(uid);
-            if (channels.isEmpty()) {
-                offLineMsgService.storeOfflineMsg(uid, dowmMessage, dowmMessage.getMsgid(),
-                    dowmMessage.getSendtime());
-            } else {
-                offLineMsgService.storeWaitAckMessage(uid, dowmMessage, dowmMessage.getMsgid(),
-                    dowmMessage.getSendtime());
-                channels.forEach(channel ->
-                    channel.writeAndFlush(dowmMessage).addListener(future -> {
-                        if (!future.isSuccess()) {
-                            offLineMsgService
-                                .storeOfflineMsg(uid, dowmMessage, dowmMessage.getMsgid(),
-                                    dowmMessage.getSendtime());
-                        }
-                    }));
-            }
-        });
+        UpSingle upMessage = (UpSingle) messageLite;
+        sendAck(context, upMessage);
+        DownSingle dowmMessage = buildMessage(context, upMessage);
+        String uid = upMessage.getToUid();
+        List<Channel> channels = nettyChannelManager.getChannelByUid(uid);
+        if (channels.isEmpty()) {
+            offLineMsgService.storeOfflineMsg(uid, dowmMessage, dowmMessage.getId(),
+                dowmMessage.getTimestamp());
+        } else {
+            offLineMsgService.storeWaitAckMessage(uid, dowmMessage, dowmMessage.getId(),
+                dowmMessage.getTimestamp());
+            channels.forEach(channel ->
+                channel.writeAndFlush(dowmMessage).addListener(future -> {
+                    if (!future.isSuccess()) {
+                        offLineMsgService
+                            .storeOfflineMsg(uid, dowmMessage, dowmMessage.getId(),
+                                dowmMessage.getTimestamp());
+                    }
+                }));
+        }
     }
 
-    private DownStreamMessage buildMessage(ChannelHandlerContext context,
-        UpStreamMessage upMessage) {
+    private DownSingle buildMessage(ChannelHandlerContext context,
+        UpSingle upMessage) {
         String fromUid = nettyChannelManager.getUidByChannel(context.channel());
-        DownStreamMessage dowmMessage = DownStreamMessage.newBuilder()
-            .setFromuid(fromUid)
-            .setProtonum(ProtoConstants.DOWNSTREAMMESSAGE)
+        DownSingle dowmMessage = DownSingle.newBuilder()
+            .setFromUid(fromUid)
             .setContent(upMessage.getContent())
-            .setMsgid(upMessage.getMsgid())
-            .setSendtime(upMessage.getSendtime())
-            .setType(MsgType.PERSON)
+            .setId(upMessage.getId())
+            .setTimestamp(upMessage.getTimestamp())
             .build();
         return dowmMessage;
     }
 
-    private void senAck(ChannelHandlerContext context, UpStreamMessage upMessage) {
-        AckMessage ackMessage = AckMessage.newBuilder().setMsgid(upMessage.getMsgid())
-            .setSendtime(upMessage.getSendtime()).setStatus(AckMessageStatus.SUCCESS.getStatus())
+    private void sendAck(ChannelHandlerContext context, UpSingle upMessage) {
+        MessageAck ackMessage = MessageAck.newBuilder().setId(upMessage.getId())
+            .setTimestamp(upMessage.getTimestamp()).setStatus(AckMessageStatus.SUCCESS.getStatus())
             .build();
         context.channel().writeAndFlush(ackMessage);
     }

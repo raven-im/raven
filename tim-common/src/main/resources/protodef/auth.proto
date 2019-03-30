@@ -4,8 +4,10 @@ package com.tim.common.protos;
 option java_outer_classname = "Auth";
 
 message Login {
-    string token = 1; // 标识
-    uint32 protonum = 2; //消息类型
+  string id = 1; //消息唯一标示
+  string uid = 2;
+  string token = 3; // token
+
 
 }
 
@@ -14,11 +16,10 @@ code：
 200 -- ok
 400 -- error
 */
-message Response {
-    uint32 protonum = 1; //消息类型
-    int32 code = 2; //返回码
-    string msg = 3; //描述
-    string msgid = 4; //消息唯一标示
-    uint64 sendtime = 5; //消息时间
+message LoginAck {
+  string id = 1; //消息唯一标示
+  uint32 code = 2; //返回码
+  string msg = 3; //描述
+  uint64 timestamp = 4; //消息时间
 }
 

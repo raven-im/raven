@@ -1,11 +1,12 @@
 package com.tim.client;
 
+import com.google.protobuf.MessageLite;
 import com.tim.common.protos.Auth;
 import com.tim.common.protos.Auth.Login;
-import com.tim.common.protos.HeartBeat.Beat;
-import com.tim.common.protos.Message.UpStreamMessage;
-import com.tim.common.utils.ProtoConstants;
-import com.google.protobuf.MessageLite;
+import com.tim.common.protos.Message;
+import com.tim.common.protos.Message.HeartBeat;
+import com.tim.common.protos.Message.UpSingle;
+import com.tim.common.utils.MessageTypeConstants;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -32,8 +33,7 @@ public class ClientHandler extends SimpleChannelInboundHandler<MessageLite> {
 
     private void sendLogin(ChannelHandlerContext ctx, String uid) {
         Login login = Login.newBuilder()
-            .setToken(uid)
-            .setProtonum(ProtoConstants.LOGIN)
+            .setUid(uid)
             .build();
         ByteBuf byteBuf = Utils.pack2Client(login);
         ctx.writeAndFlush(byteBuf);
@@ -42,7 +42,7 @@ public class ClientHandler extends SimpleChannelInboundHandler<MessageLite> {
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, MessageLite msg)
         throws Exception {
-        if (msg instanceof Auth.Response) {
+        if (msg instanceof Auth.LoginAck) {
             Thread.sleep(2000);
             sendPrivateMessage();
             Timer timer = new Timer();
@@ -54,16 +54,17 @@ public class ClientHandler extends SimpleChannelInboundHandler<MessageLite> {
         String content = "Hello World!";
         List<String> uids = new ArrayList<>();
         uids.add(String.valueOf((int) (Math.random() * 10) % 10 + 1));
-        UpStreamMessage msg = UpStreamMessage
-            .newBuilder()
-            .setContent(content)
-            .addAllTouid(uids)
-            .setProtonum(ProtoConstants.UPSTREAMMESSAGE)
-            .setSendtime(System.currentTimeMillis())
-            .setMsgid(uid.concat(String.valueOf(Client.snowFlake.nextId())))
-            .build();
-        ByteBuf byteBuf = Utils.pack2Client(msg);
-        messageConnectionCtx.channel().writeAndFlush(byteBuf);
+        uids.forEach(uid -> {
+            UpSingle msg = Message.UpSingle
+                .newBuilder()
+                .setContent(content)
+                .setToUid(uid)
+                .setId(uid.concat(String.valueOf(Client.snowFlake.nextId())))
+                .build();
+            ByteBuf byteBuf = Utils.pack2Client(msg);
+            messageConnectionCtx.channel().writeAndFlush(byteBuf);
+        });
+
     }
 
     @Override
@@ -80,7 +81,7 @@ public class ClientHandler extends SimpleChannelInboundHandler<MessageLite> {
 
         @Override
         public void run() {
-            Beat beat = Beat.newBuilder().setHeartbeat("HeartBeat").build();
+            HeartBeat beat = HeartBeat.newBuilder().setContent("PING").build();
             ByteBuf byteBuf = Utils.pack2Client(beat);
             messageConnectionCtx.channel().writeAndFlush(byteBuf);
         }

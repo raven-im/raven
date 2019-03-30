@@ -1,6 +1,6 @@
 package com.tim.route.user.mapper;
 
-import com.tim.common.config.BaseMapper;
+import com.tim.route.config.mapper.BaseMapper;
 import com.tim.route.user.bean.model.UserModel;
 
 /**

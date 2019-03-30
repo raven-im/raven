@@ -6,7 +6,7 @@ import java.util.UUID;
 
 /**
  * Author zxx
- * Description 
+ * Description  uuid生成工具
  * Date Created on 2018/6/28
  */
 public class UidUtil {

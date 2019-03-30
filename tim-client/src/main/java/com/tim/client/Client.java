@@ -2,7 +2,6 @@ package com.tim.client;
 
 import com.tim.common.code.MessageDecoder;
 import com.tim.common.code.MessageEncoder;
-import com.tim.common.utils.ParseRegistryMap;
 import com.tim.common.utils.SnowFlake;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelInitializer;
@@ -44,8 +43,6 @@ public class Client {
                     p.addLast(new ClientHandler());
                 }
             });
-        // Start the client
-        ParseRegistryMap.initRegistry();
         for (int i = 1; i <= clientNum; i++) {
             startConnection(b, i);
         }

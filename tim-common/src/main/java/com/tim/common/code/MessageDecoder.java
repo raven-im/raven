@@ -37,16 +37,15 @@ public class MessageDecoder extends ByteToMessageDecoder {
             in.resetReaderIndex();
             return;
         }
-        int ptoNum = in.readInt();
+        int messageType = in.readInt();
         ByteBuf byteBuf = Unpooled.buffer(length);
         in.readBytes(byteBuf);
         try {
             byte[] body = byteBuf.array();
-            MessageLite msg = ParseMap.getMessage(ptoNum, body);
+            MessageLite msg = ParseMap.getMessage(messageType, body);
             out.add(msg);
-            log.info("Received Message remoteAddress:{}, content:{}",
-                ctx.channel().remoteAddress(), msg.toString(),
-                ptoNum);
+            log.debug("Received Message remoteAddress:{}, content:{}",
+                ctx.channel().remoteAddress(), msg.toString());
         } catch (Exception e) {
             log.error("{},decode failed:{}", ctx.channel().remoteAddress(), e);
         }

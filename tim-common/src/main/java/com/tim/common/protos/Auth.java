@@ -20,30 +20,49 @@ public final class Auth {
 
     /**
      * <pre>
-     * 标识
+     *消息唯一标示
      * </pre>
      *
-     * <code>string token = 1;</code>
+     * <code>string id = 1;</code>
+     */
+    java.lang.String getId();
+    /**
+     * <pre>
+     *消息唯一标示
+     * </pre>
+     *
+     * <code>string id = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getIdBytes();
+
+    /**
+     * <code>string uid = 2;</code>
+     */
+    java.lang.String getUid();
+    /**
+     * <code>string uid = 2;</code>
+     */
+    com.google.protobuf.ByteString
+        getUidBytes();
+
+    /**
+     * <pre>
+     * token
+     * </pre>
+     *
+     * <code>string token = 3;</code>
      */
     java.lang.String getToken();
     /**
      * <pre>
-     * 标识
+     * token
      * </pre>
      *
-     * <code>string token = 1;</code>
+     * <code>string token = 3;</code>
      */
     com.google.protobuf.ByteString
         getTokenBytes();
-
-    /**
-     * <pre>
-     *消息类型
-     * </pre>
-     *
-     * <code>uint32 protonum = 2;</code>
-     */
-    int getProtonum();
   }
   /**
    * Protobuf type {@code com.tim.common.protos.Login}
@@ -58,8 +77,9 @@ public final class Auth {
       super(builder);
     }
     private Login() {
+      id_ = "";
+      uid_ = "";
       token_ = "";
-      protonum_ = 0;
     }
 
     @java.lang.Override
@@ -89,12 +109,19 @@ public final class Auth {
             case 10: {
               java.lang.String s = input.readStringRequireUtf8();
 
-              token_ = s;
+              id_ = s;
               break;
             }
-            case 16: {
+            case 18: {
+              java.lang.String s = input.readStringRequireUtf8();
 
-              protonum_ = input.readUInt32();
+              uid_ = s;
+              break;
+            }
+            case 26: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              token_ = s;
               break;
             }
             default: {
@@ -129,14 +156,90 @@ public final class Auth {
               com.tim.common.protos.Auth.Login.class, com.tim.common.protos.Auth.Login.Builder.class);
     }
 
-    public static final int TOKEN_FIELD_NUMBER = 1;
+    public static final int ID_FIELD_NUMBER = 1;
+    private volatile java.lang.Object id_;
+    /**
+     * <pre>
+     *消息唯一标示
+     * </pre>
+     *
+     * <code>string id = 1;</code>
+     */
+    public java.lang.String getId() {
+      java.lang.Object ref = id_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        id_ = s;
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     *消息唯一标示
+     * </pre>
+     *
+     * <code>string id = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getIdBytes() {
+      java.lang.Object ref = id_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        id_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int UID_FIELD_NUMBER = 2;
+    private volatile java.lang.Object uid_;
+    /**
+     * <code>string uid = 2;</code>
+     */
+    public java.lang.String getUid() {
+      java.lang.Object ref = uid_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        uid_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string uid = 2;</code>
+     */
+    public com.google.protobuf.ByteString
+        getUidBytes() {
+      java.lang.Object ref = uid_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        uid_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int TOKEN_FIELD_NUMBER = 3;
     private volatile java.lang.Object token_;
     /**
      * <pre>
-     * 标识
+     * token
      * </pre>
      *
-     * <code>string token = 1;</code>
+     * <code>string token = 3;</code>
      */
     public java.lang.String getToken() {
       java.lang.Object ref = token_;
@@ -152,10 +255,10 @@ public final class Auth {
     }
     /**
      * <pre>
-     * 标识
+     * token
      * </pre>
      *
-     * <code>string token = 1;</code>
+     * <code>string token = 3;</code>
      */
     public com.google.protobuf.ByteString
         getTokenBytes() {
@@ -169,19 +272,6 @@ public final class Auth {
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
-    }
-
-    public static final int PROTONUM_FIELD_NUMBER = 2;
-    private int protonum_;
-    /**
-     * <pre>
-     *消息类型
-     * </pre>
-     *
-     * <code>uint32 protonum = 2;</code>
-     */
-    public int getProtonum() {
-      return protonum_;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -198,11 +288,14 @@ public final class Auth {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (!getTokenBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, token_);
+      if (!getIdBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, id_);
       }
-      if (protonum_ != 0) {
-        output.writeUInt32(2, protonum_);
+      if (!getUidBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, uid_);
+      }
+      if (!getTokenBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, token_);
       }
       unknownFields.writeTo(output);
     }
@@ -213,12 +306,14 @@ public final class Auth {
       if (size != -1) return size;
 
       size = 0;
-      if (!getTokenBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, token_);
+      if (!getIdBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, id_);
       }
-      if (protonum_ != 0) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeUInt32Size(2, protonum_);
+      if (!getUidBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, uid_);
+      }
+      if (!getTokenBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, token_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -236,10 +331,12 @@ public final class Auth {
       com.tim.common.protos.Auth.Login other = (com.tim.common.protos.Auth.Login) obj;
 
       boolean result = true;
+      result = result && getId()
+          .equals(other.getId());
+      result = result && getUid()
+          .equals(other.getUid());
       result = result && getToken()
           .equals(other.getToken());
-      result = result && (getProtonum()
-          == other.getProtonum());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -251,10 +348,12 @@ public final class Auth {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + ID_FIELD_NUMBER;
+      hash = (53 * hash) + getId().hashCode();
+      hash = (37 * hash) + UID_FIELD_NUMBER;
+      hash = (53 * hash) + getUid().hashCode();
       hash = (37 * hash) + TOKEN_FIELD_NUMBER;
       hash = (53 * hash) + getToken().hashCode();
-      hash = (37 * hash) + PROTONUM_FIELD_NUMBER;
-      hash = (53 * hash) + getProtonum();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -388,9 +487,11 @@ public final class Auth {
       @java.lang.Override
       public Builder clear() {
         super.clear();
-        token_ = "";
+        id_ = "";
 
-        protonum_ = 0;
+        uid_ = "";
+
+        token_ = "";
 
         return this;
       }
@@ -418,8 +519,9 @@ public final class Auth {
       @java.lang.Override
       public com.tim.common.protos.Auth.Login buildPartial() {
         com.tim.common.protos.Auth.Login result = new com.tim.common.protos.Auth.Login(this);
+        result.id_ = id_;
+        result.uid_ = uid_;
         result.token_ = token_;
-        result.protonum_ = protonum_;
         onBuilt();
         return result;
       }
@@ -468,12 +570,17 @@ public final class Auth {
 
       public Builder mergeFrom(com.tim.common.protos.Auth.Login other) {
         if (other == com.tim.common.protos.Auth.Login.getDefaultInstance()) return this;
+        if (!other.getId().isEmpty()) {
+          id_ = other.id_;
+          onChanged();
+        }
+        if (!other.getUid().isEmpty()) {
+          uid_ = other.uid_;
+          onChanged();
+        }
         if (!other.getToken().isEmpty()) {
           token_ = other.token_;
           onChanged();
-        }
-        if (other.getProtonum() != 0) {
-          setProtonum(other.getProtonum());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -504,13 +611,171 @@ public final class Auth {
         return this;
       }
 
+      private java.lang.Object id_ = "";
+      /**
+       * <pre>
+       *消息唯一标示
+       * </pre>
+       *
+       * <code>string id = 1;</code>
+       */
+      public java.lang.String getId() {
+        java.lang.Object ref = id_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          id_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <pre>
+       *消息唯一标示
+       * </pre>
+       *
+       * <code>string id = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getIdBytes() {
+        java.lang.Object ref = id_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          id_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       *消息唯一标示
+       * </pre>
+       *
+       * <code>string id = 1;</code>
+       */
+      public Builder setId(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        id_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *消息唯一标示
+       * </pre>
+       *
+       * <code>string id = 1;</code>
+       */
+      public Builder clearId() {
+        
+        id_ = getDefaultInstance().getId();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *消息唯一标示
+       * </pre>
+       *
+       * <code>string id = 1;</code>
+       */
+      public Builder setIdBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        id_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object uid_ = "";
+      /**
+       * <code>string uid = 2;</code>
+       */
+      public java.lang.String getUid() {
+        java.lang.Object ref = uid_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          uid_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string uid = 2;</code>
+       */
+      public com.google.protobuf.ByteString
+          getUidBytes() {
+        java.lang.Object ref = uid_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          uid_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string uid = 2;</code>
+       */
+      public Builder setUid(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        uid_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string uid = 2;</code>
+       */
+      public Builder clearUid() {
+        
+        uid_ = getDefaultInstance().getUid();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string uid = 2;</code>
+       */
+      public Builder setUidBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        uid_ = value;
+        onChanged();
+        return this;
+      }
+
       private java.lang.Object token_ = "";
       /**
        * <pre>
-       * 标识
+       * token
        * </pre>
        *
-       * <code>string token = 1;</code>
+       * <code>string token = 3;</code>
        */
       public java.lang.String getToken() {
         java.lang.Object ref = token_;
@@ -526,10 +791,10 @@ public final class Auth {
       }
       /**
        * <pre>
-       * 标识
+       * token
        * </pre>
        *
-       * <code>string token = 1;</code>
+       * <code>string token = 3;</code>
        */
       public com.google.protobuf.ByteString
           getTokenBytes() {
@@ -546,10 +811,10 @@ public final class Auth {
       }
       /**
        * <pre>
-       * 标识
+       * token
        * </pre>
        *
-       * <code>string token = 1;</code>
+       * <code>string token = 3;</code>
        */
       public Builder setToken(
           java.lang.String value) {
@@ -563,10 +828,10 @@ public final class Auth {
       }
       /**
        * <pre>
-       * 标识
+       * token
        * </pre>
        *
-       * <code>string token = 1;</code>
+       * <code>string token = 3;</code>
        */
       public Builder clearToken() {
         
@@ -576,10 +841,10 @@ public final class Auth {
       }
       /**
        * <pre>
-       * 标识
+       * token
        * </pre>
        *
-       * <code>string token = 1;</code>
+       * <code>string token = 3;</code>
        */
       public Builder setTokenBytes(
           com.google.protobuf.ByteString value) {
@@ -589,44 +854,6 @@ public final class Auth {
   checkByteStringIsUtf8(value);
         
         token_ = value;
-        onChanged();
-        return this;
-      }
-
-      private int protonum_ ;
-      /**
-       * <pre>
-       *消息类型
-       * </pre>
-       *
-       * <code>uint32 protonum = 2;</code>
-       */
-      public int getProtonum() {
-        return protonum_;
-      }
-      /**
-       * <pre>
-       *消息类型
-       * </pre>
-       *
-       * <code>uint32 protonum = 2;</code>
-       */
-      public Builder setProtonum(int value) {
-        
-        protonum_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       *消息类型
-       * </pre>
-       *
-       * <code>uint32 protonum = 2;</code>
-       */
-      public Builder clearProtonum() {
-        
-        protonum_ = 0;
         onChanged();
         return this;
       }
@@ -683,25 +910,34 @@ public final class Auth {
 
   }
 
-  public interface ResponseOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.tim.common.protos.Response)
+  public interface LoginAckOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:com.tim.common.protos.LoginAck)
       com.google.protobuf.MessageOrBuilder {
 
     /**
      * <pre>
-     *消息类型
+     *消息唯一标示
      * </pre>
      *
-     * <code>uint32 protonum = 1;</code>
+     * <code>string id = 1;</code>
      */
-    int getProtonum();
+    java.lang.String getId();
+    /**
+     * <pre>
+     *消息唯一标示
+     * </pre>
+     *
+     * <code>string id = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getIdBytes();
 
     /**
      * <pre>
      *返回码
      * </pre>
      *
-     * <code>int32 code = 2;</code>
+     * <code>uint32 code = 2;</code>
      */
     int getCode();
 
@@ -725,30 +961,12 @@ public final class Auth {
 
     /**
      * <pre>
-     *消息唯一标示
-     * </pre>
-     *
-     * <code>string msgid = 4;</code>
-     */
-    java.lang.String getMsgid();
-    /**
-     * <pre>
-     *消息唯一标示
-     * </pre>
-     *
-     * <code>string msgid = 4;</code>
-     */
-    com.google.protobuf.ByteString
-        getMsgidBytes();
-
-    /**
-     * <pre>
      *消息时间
      * </pre>
      *
-     * <code>uint64 sendtime = 5;</code>
+     * <code>uint64 timestamp = 4;</code>
      */
-    long getSendtime();
+    long getTimestamp();
   }
   /**
    * <pre>
@@ -757,23 +975,22 @@ public final class Auth {
    *400 -- error
    * </pre>
    *
-   * Protobuf type {@code com.tim.common.protos.Response}
+   * Protobuf type {@code com.tim.common.protos.LoginAck}
    */
-  public  static final class Response extends
+  public  static final class LoginAck extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:com.tim.common.protos.Response)
-      ResponseOrBuilder {
+      // @@protoc_insertion_point(message_implements:com.tim.common.protos.LoginAck)
+      LoginAckOrBuilder {
   private static final long serialVersionUID = 0L;
-    // Use Response.newBuilder() to construct.
-    private Response(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    // Use LoginAck.newBuilder() to construct.
+    private LoginAck(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-    private Response() {
-      protonum_ = 0;
+    private LoginAck() {
+      id_ = "";
       code_ = 0;
       msg_ = "";
-      msgid_ = "";
-      sendtime_ = 0L;
+      timestamp_ = 0L;
     }
 
     @java.lang.Override
@@ -781,7 +998,7 @@ public final class Auth {
     getUnknownFields() {
       return this.unknownFields;
     }
-    private Response(
+    private LoginAck(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -800,14 +1017,15 @@ public final class Auth {
             case 0:
               done = true;
               break;
-            case 8: {
+            case 10: {
+              java.lang.String s = input.readStringRequireUtf8();
 
-              protonum_ = input.readUInt32();
+              id_ = s;
               break;
             }
             case 16: {
 
-              code_ = input.readInt32();
+              code_ = input.readUInt32();
               break;
             }
             case 26: {
@@ -816,15 +1034,9 @@ public final class Auth {
               msg_ = s;
               break;
             }
-            case 34: {
-              java.lang.String s = input.readStringRequireUtf8();
+            case 32: {
 
-              msgid_ = s;
-              break;
-            }
-            case 40: {
-
-              sendtime_ = input.readUInt64();
+              timestamp_ = input.readUInt64();
               break;
             }
             default: {
@@ -848,28 +1060,57 @@ public final class Auth {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.tim.common.protos.Auth.internal_static_com_tim_common_protos_Response_descriptor;
+      return com.tim.common.protos.Auth.internal_static_com_tim_common_protos_LoginAck_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.tim.common.protos.Auth.internal_static_com_tim_common_protos_Response_fieldAccessorTable
+      return com.tim.common.protos.Auth.internal_static_com_tim_common_protos_LoginAck_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.tim.common.protos.Auth.Response.class, com.tim.common.protos.Auth.Response.Builder.class);
+              com.tim.common.protos.Auth.LoginAck.class, com.tim.common.protos.Auth.LoginAck.Builder.class);
     }
 
-    public static final int PROTONUM_FIELD_NUMBER = 1;
-    private int protonum_;
+    public static final int ID_FIELD_NUMBER = 1;
+    private volatile java.lang.Object id_;
     /**
      * <pre>
-     *消息类型
+     *消息唯一标示
      * </pre>
      *
-     * <code>uint32 protonum = 1;</code>
+     * <code>string id = 1;</code>
      */
-    public int getProtonum() {
-      return protonum_;
+    public java.lang.String getId() {
+      java.lang.Object ref = id_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        id_ = s;
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     *消息唯一标示
+     * </pre>
+     *
+     * <code>string id = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getIdBytes() {
+      java.lang.Object ref = id_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        id_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
     }
 
     public static final int CODE_FIELD_NUMBER = 2;
@@ -879,7 +1120,7 @@ public final class Auth {
      *返回码
      * </pre>
      *
-     * <code>int32 code = 2;</code>
+     * <code>uint32 code = 2;</code>
      */
     public int getCode() {
       return code_;
@@ -927,59 +1168,17 @@ public final class Auth {
       }
     }
 
-    public static final int MSGID_FIELD_NUMBER = 4;
-    private volatile java.lang.Object msgid_;
-    /**
-     * <pre>
-     *消息唯一标示
-     * </pre>
-     *
-     * <code>string msgid = 4;</code>
-     */
-    public java.lang.String getMsgid() {
-      java.lang.Object ref = msgid_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        msgid_ = s;
-        return s;
-      }
-    }
-    /**
-     * <pre>
-     *消息唯一标示
-     * </pre>
-     *
-     * <code>string msgid = 4;</code>
-     */
-    public com.google.protobuf.ByteString
-        getMsgidBytes() {
-      java.lang.Object ref = msgid_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        msgid_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    public static final int SENDTIME_FIELD_NUMBER = 5;
-    private long sendtime_;
+    public static final int TIMESTAMP_FIELD_NUMBER = 4;
+    private long timestamp_;
     /**
      * <pre>
      *消息时间
      * </pre>
      *
-     * <code>uint64 sendtime = 5;</code>
+     * <code>uint64 timestamp = 4;</code>
      */
-    public long getSendtime() {
-      return sendtime_;
+    public long getTimestamp() {
+      return timestamp_;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -996,20 +1195,17 @@ public final class Auth {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (protonum_ != 0) {
-        output.writeUInt32(1, protonum_);
+      if (!getIdBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, id_);
       }
       if (code_ != 0) {
-        output.writeInt32(2, code_);
+        output.writeUInt32(2, code_);
       }
       if (!getMsgBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 3, msg_);
       }
-      if (!getMsgidBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, msgid_);
-      }
-      if (sendtime_ != 0L) {
-        output.writeUInt64(5, sendtime_);
+      if (timestamp_ != 0L) {
+        output.writeUInt64(4, timestamp_);
       }
       unknownFields.writeTo(output);
     }
@@ -1020,23 +1216,19 @@ public final class Auth {
       if (size != -1) return size;
 
       size = 0;
-      if (protonum_ != 0) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeUInt32Size(1, protonum_);
+      if (!getIdBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, id_);
       }
       if (code_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(2, code_);
+          .computeUInt32Size(2, code_);
       }
       if (!getMsgBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, msg_);
       }
-      if (!getMsgidBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, msgid_);
-      }
-      if (sendtime_ != 0L) {
+      if (timestamp_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-          .computeUInt64Size(5, sendtime_);
+          .computeUInt64Size(4, timestamp_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -1048,22 +1240,20 @@ public final class Auth {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof com.tim.common.protos.Auth.Response)) {
+      if (!(obj instanceof com.tim.common.protos.Auth.LoginAck)) {
         return super.equals(obj);
       }
-      com.tim.common.protos.Auth.Response other = (com.tim.common.protos.Auth.Response) obj;
+      com.tim.common.protos.Auth.LoginAck other = (com.tim.common.protos.Auth.LoginAck) obj;
 
       boolean result = true;
-      result = result && (getProtonum()
-          == other.getProtonum());
+      result = result && getId()
+          .equals(other.getId());
       result = result && (getCode()
           == other.getCode());
       result = result && getMsg()
           .equals(other.getMsg());
-      result = result && getMsgid()
-          .equals(other.getMsgid());
-      result = result && (getSendtime()
-          == other.getSendtime());
+      result = result && (getTimestamp()
+          == other.getTimestamp());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -1075,85 +1265,83 @@ public final class Auth {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + PROTONUM_FIELD_NUMBER;
-      hash = (53 * hash) + getProtonum();
+      hash = (37 * hash) + ID_FIELD_NUMBER;
+      hash = (53 * hash) + getId().hashCode();
       hash = (37 * hash) + CODE_FIELD_NUMBER;
       hash = (53 * hash) + getCode();
       hash = (37 * hash) + MSG_FIELD_NUMBER;
       hash = (53 * hash) + getMsg().hashCode();
-      hash = (37 * hash) + MSGID_FIELD_NUMBER;
-      hash = (53 * hash) + getMsgid().hashCode();
-      hash = (37 * hash) + SENDTIME_FIELD_NUMBER;
+      hash = (37 * hash) + TIMESTAMP_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-          getSendtime());
+          getTimestamp());
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static com.tim.common.protos.Auth.Response parseFrom(
+    public static com.tim.common.protos.Auth.LoginAck parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.tim.common.protos.Auth.Response parseFrom(
+    public static com.tim.common.protos.Auth.LoginAck parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.tim.common.protos.Auth.Response parseFrom(
+    public static com.tim.common.protos.Auth.LoginAck parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.tim.common.protos.Auth.Response parseFrom(
+    public static com.tim.common.protos.Auth.LoginAck parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.tim.common.protos.Auth.Response parseFrom(byte[] data)
+    public static com.tim.common.protos.Auth.LoginAck parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.tim.common.protos.Auth.Response parseFrom(
+    public static com.tim.common.protos.Auth.LoginAck parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.tim.common.protos.Auth.Response parseFrom(java.io.InputStream input)
+    public static com.tim.common.protos.Auth.LoginAck parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static com.tim.common.protos.Auth.Response parseFrom(
+    public static com.tim.common.protos.Auth.LoginAck parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static com.tim.common.protos.Auth.Response parseDelimitedFrom(java.io.InputStream input)
+    public static com.tim.common.protos.Auth.LoginAck parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
-    public static com.tim.common.protos.Auth.Response parseDelimitedFrom(
+    public static com.tim.common.protos.Auth.LoginAck parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static com.tim.common.protos.Auth.Response parseFrom(
+    public static com.tim.common.protos.Auth.LoginAck parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static com.tim.common.protos.Auth.Response parseFrom(
+    public static com.tim.common.protos.Auth.LoginAck parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -1166,7 +1354,7 @@ public final class Auth {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(com.tim.common.protos.Auth.Response prototype) {
+    public static Builder newBuilder(com.tim.common.protos.Auth.LoginAck prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     @java.lang.Override
@@ -1188,26 +1376,26 @@ public final class Auth {
      *400 -- error
      * </pre>
      *
-     * Protobuf type {@code com.tim.common.protos.Response}
+     * Protobuf type {@code com.tim.common.protos.LoginAck}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.tim.common.protos.Response)
-        com.tim.common.protos.Auth.ResponseOrBuilder {
+        // @@protoc_insertion_point(builder_implements:com.tim.common.protos.LoginAck)
+        com.tim.common.protos.Auth.LoginAckOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.tim.common.protos.Auth.internal_static_com_tim_common_protos_Response_descriptor;
+        return com.tim.common.protos.Auth.internal_static_com_tim_common_protos_LoginAck_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.tim.common.protos.Auth.internal_static_com_tim_common_protos_Response_fieldAccessorTable
+        return com.tim.common.protos.Auth.internal_static_com_tim_common_protos_LoginAck_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                com.tim.common.protos.Auth.Response.class, com.tim.common.protos.Auth.Response.Builder.class);
+                com.tim.common.protos.Auth.LoginAck.class, com.tim.common.protos.Auth.LoginAck.Builder.class);
       }
 
-      // Construct using com.tim.common.protos.Auth.Response.newBuilder()
+      // Construct using com.tim.common.protos.Auth.LoginAck.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -1225,15 +1413,13 @@ public final class Auth {
       @java.lang.Override
       public Builder clear() {
         super.clear();
-        protonum_ = 0;
+        id_ = "";
 
         code_ = 0;
 
         msg_ = "";
 
-        msgid_ = "";
-
-        sendtime_ = 0L;
+        timestamp_ = 0L;
 
         return this;
       }
@@ -1241,17 +1427,17 @@ public final class Auth {
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.tim.common.protos.Auth.internal_static_com_tim_common_protos_Response_descriptor;
+        return com.tim.common.protos.Auth.internal_static_com_tim_common_protos_LoginAck_descriptor;
       }
 
       @java.lang.Override
-      public com.tim.common.protos.Auth.Response getDefaultInstanceForType() {
-        return com.tim.common.protos.Auth.Response.getDefaultInstance();
+      public com.tim.common.protos.Auth.LoginAck getDefaultInstanceForType() {
+        return com.tim.common.protos.Auth.LoginAck.getDefaultInstance();
       }
 
       @java.lang.Override
-      public com.tim.common.protos.Auth.Response build() {
-        com.tim.common.protos.Auth.Response result = buildPartial();
+      public com.tim.common.protos.Auth.LoginAck build() {
+        com.tim.common.protos.Auth.LoginAck result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
@@ -1259,13 +1445,12 @@ public final class Auth {
       }
 
       @java.lang.Override
-      public com.tim.common.protos.Auth.Response buildPartial() {
-        com.tim.common.protos.Auth.Response result = new com.tim.common.protos.Auth.Response(this);
-        result.protonum_ = protonum_;
+      public com.tim.common.protos.Auth.LoginAck buildPartial() {
+        com.tim.common.protos.Auth.LoginAck result = new com.tim.common.protos.Auth.LoginAck(this);
+        result.id_ = id_;
         result.code_ = code_;
         result.msg_ = msg_;
-        result.msgid_ = msgid_;
-        result.sendtime_ = sendtime_;
+        result.timestamp_ = timestamp_;
         onBuilt();
         return result;
       }
@@ -1304,18 +1489,19 @@ public final class Auth {
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.tim.common.protos.Auth.Response) {
-          return mergeFrom((com.tim.common.protos.Auth.Response)other);
+        if (other instanceof com.tim.common.protos.Auth.LoginAck) {
+          return mergeFrom((com.tim.common.protos.Auth.LoginAck)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(com.tim.common.protos.Auth.Response other) {
-        if (other == com.tim.common.protos.Auth.Response.getDefaultInstance()) return this;
-        if (other.getProtonum() != 0) {
-          setProtonum(other.getProtonum());
+      public Builder mergeFrom(com.tim.common.protos.Auth.LoginAck other) {
+        if (other == com.tim.common.protos.Auth.LoginAck.getDefaultInstance()) return this;
+        if (!other.getId().isEmpty()) {
+          id_ = other.id_;
+          onChanged();
         }
         if (other.getCode() != 0) {
           setCode(other.getCode());
@@ -1324,12 +1510,8 @@ public final class Auth {
           msg_ = other.msg_;
           onChanged();
         }
-        if (!other.getMsgid().isEmpty()) {
-          msgid_ = other.msgid_;
-          onChanged();
-        }
-        if (other.getSendtime() != 0L) {
-          setSendtime(other.getSendtime());
+        if (other.getTimestamp() != 0L) {
+          setTimestamp(other.getTimestamp());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -1346,11 +1528,11 @@ public final class Auth {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        com.tim.common.protos.Auth.Response parsedMessage = null;
+        com.tim.common.protos.Auth.LoginAck parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (com.tim.common.protos.Auth.Response) e.getUnfinishedMessage();
+          parsedMessage = (com.tim.common.protos.Auth.LoginAck) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -1360,40 +1542,91 @@ public final class Auth {
         return this;
       }
 
-      private int protonum_ ;
+      private java.lang.Object id_ = "";
       /**
        * <pre>
-       *消息类型
+       *消息唯一标示
        * </pre>
        *
-       * <code>uint32 protonum = 1;</code>
+       * <code>string id = 1;</code>
        */
-      public int getProtonum() {
-        return protonum_;
+      public java.lang.String getId() {
+        java.lang.Object ref = id_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          id_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
       }
       /**
        * <pre>
-       *消息类型
+       *消息唯一标示
        * </pre>
        *
-       * <code>uint32 protonum = 1;</code>
+       * <code>string id = 1;</code>
        */
-      public Builder setProtonum(int value) {
-        
-        protonum_ = value;
+      public com.google.protobuf.ByteString
+          getIdBytes() {
+        java.lang.Object ref = id_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          id_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       *消息唯一标示
+       * </pre>
+       *
+       * <code>string id = 1;</code>
+       */
+      public Builder setId(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        id_ = value;
         onChanged();
         return this;
       }
       /**
        * <pre>
-       *消息类型
+       *消息唯一标示
        * </pre>
        *
-       * <code>uint32 protonum = 1;</code>
+       * <code>string id = 1;</code>
        */
-      public Builder clearProtonum() {
+      public Builder clearId() {
         
-        protonum_ = 0;
+        id_ = getDefaultInstance().getId();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *消息唯一标示
+       * </pre>
+       *
+       * <code>string id = 1;</code>
+       */
+      public Builder setIdBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        id_ = value;
         onChanged();
         return this;
       }
@@ -1404,7 +1637,7 @@ public final class Auth {
        *返回码
        * </pre>
        *
-       * <code>int32 code = 2;</code>
+       * <code>uint32 code = 2;</code>
        */
       public int getCode() {
         return code_;
@@ -1414,7 +1647,7 @@ public final class Auth {
        *返回码
        * </pre>
        *
-       * <code>int32 code = 2;</code>
+       * <code>uint32 code = 2;</code>
        */
       public Builder setCode(int value) {
         
@@ -1427,7 +1660,7 @@ public final class Auth {
        *返回码
        * </pre>
        *
-       * <code>int32 code = 2;</code>
+       * <code>uint32 code = 2;</code>
        */
       public Builder clearCode() {
         
@@ -1525,116 +1758,27 @@ public final class Auth {
         return this;
       }
 
-      private java.lang.Object msgid_ = "";
-      /**
-       * <pre>
-       *消息唯一标示
-       * </pre>
-       *
-       * <code>string msgid = 4;</code>
-       */
-      public java.lang.String getMsgid() {
-        java.lang.Object ref = msgid_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          msgid_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <pre>
-       *消息唯一标示
-       * </pre>
-       *
-       * <code>string msgid = 4;</code>
-       */
-      public com.google.protobuf.ByteString
-          getMsgidBytes() {
-        java.lang.Object ref = msgid_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          msgid_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <pre>
-       *消息唯一标示
-       * </pre>
-       *
-       * <code>string msgid = 4;</code>
-       */
-      public Builder setMsgid(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        msgid_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       *消息唯一标示
-       * </pre>
-       *
-       * <code>string msgid = 4;</code>
-       */
-      public Builder clearMsgid() {
-        
-        msgid_ = getDefaultInstance().getMsgid();
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       *消息唯一标示
-       * </pre>
-       *
-       * <code>string msgid = 4;</code>
-       */
-      public Builder setMsgidBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        msgid_ = value;
-        onChanged();
-        return this;
-      }
-
-      private long sendtime_ ;
+      private long timestamp_ ;
       /**
        * <pre>
        *消息时间
        * </pre>
        *
-       * <code>uint64 sendtime = 5;</code>
+       * <code>uint64 timestamp = 4;</code>
        */
-      public long getSendtime() {
-        return sendtime_;
+      public long getTimestamp() {
+        return timestamp_;
       }
       /**
        * <pre>
        *消息时间
        * </pre>
        *
-       * <code>uint64 sendtime = 5;</code>
+       * <code>uint64 timestamp = 4;</code>
        */
-      public Builder setSendtime(long value) {
+      public Builder setTimestamp(long value) {
         
-        sendtime_ = value;
+        timestamp_ = value;
         onChanged();
         return this;
       }
@@ -1643,11 +1787,11 @@ public final class Auth {
        *消息时间
        * </pre>
        *
-       * <code>uint64 sendtime = 5;</code>
+       * <code>uint64 timestamp = 4;</code>
        */
-      public Builder clearSendtime() {
+      public Builder clearTimestamp() {
         
-        sendtime_ = 0L;
+        timestamp_ = 0L;
         onChanged();
         return this;
       }
@@ -1664,41 +1808,41 @@ public final class Auth {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:com.tim.common.protos.Response)
+      // @@protoc_insertion_point(builder_scope:com.tim.common.protos.LoginAck)
     }
 
-    // @@protoc_insertion_point(class_scope:com.tim.common.protos.Response)
-    private static final com.tim.common.protos.Auth.Response DEFAULT_INSTANCE;
+    // @@protoc_insertion_point(class_scope:com.tim.common.protos.LoginAck)
+    private static final com.tim.common.protos.Auth.LoginAck DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new com.tim.common.protos.Auth.Response();
+      DEFAULT_INSTANCE = new com.tim.common.protos.Auth.LoginAck();
     }
 
-    public static com.tim.common.protos.Auth.Response getDefaultInstance() {
+    public static com.tim.common.protos.Auth.LoginAck getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<Response>
-        PARSER = new com.google.protobuf.AbstractParser<Response>() {
+    private static final com.google.protobuf.Parser<LoginAck>
+        PARSER = new com.google.protobuf.AbstractParser<LoginAck>() {
       @java.lang.Override
-      public Response parsePartialFrom(
+      public LoginAck parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return new Response(input, extensionRegistry);
+        return new LoginAck(input, extensionRegistry);
       }
     };
 
-    public static com.google.protobuf.Parser<Response> parser() {
+    public static com.google.protobuf.Parser<LoginAck> parser() {
       return PARSER;
     }
 
     @java.lang.Override
-    public com.google.protobuf.Parser<Response> getParserForType() {
+    public com.google.protobuf.Parser<LoginAck> getParserForType() {
       return PARSER;
     }
 
     @java.lang.Override
-    public com.tim.common.protos.Auth.Response getDefaultInstanceForType() {
+    public com.tim.common.protos.Auth.LoginAck getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -1710,10 +1854,10 @@ public final class Auth {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_com_tim_common_protos_Login_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_com_tim_common_protos_Response_descriptor;
+    internal_static_com_tim_common_protos_LoginAck_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_com_tim_common_protos_Response_fieldAccessorTable;
+      internal_static_com_tim_common_protos_LoginAck_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -1723,11 +1867,11 @@ public final class Auth {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\nauth.proto\022\025com.tim.common.protos\"(\n\005L" +
-      "ogin\022\r\n\005token\030\001 \001(\t\022\020\n\010protonum\030\002 \001(\r\"X\n" +
-      "\010Response\022\020\n\010protonum\030\001 \001(\r\022\014\n\004code\030\002 \001(" +
-      "\005\022\013\n\003msg\030\003 \001(\t\022\r\n\005msgid\030\004 \001(\t\022\020\n\010sendtim" +
-      "e\030\005 \001(\004B\006B\004Authb\006proto3"
+      "\n\nauth.proto\022\025com.tim.common.protos\"/\n\005L" +
+      "ogin\022\n\n\002id\030\001 \001(\t\022\013\n\003uid\030\002 \001(\t\022\r\n\005token\030\003" +
+      " \001(\t\"D\n\010LoginAck\022\n\n\002id\030\001 \001(\t\022\014\n\004code\030\002 \001" +
+      "(\r\022\013\n\003msg\030\003 \001(\t\022\021\n\ttimestamp\030\004 \001(\004B\006B\004Au" +
+      "thb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -1746,13 +1890,13 @@ public final class Auth {
     internal_static_com_tim_common_protos_Login_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_tim_common_protos_Login_descriptor,
-        new java.lang.String[] { "Token", "Protonum", });
-    internal_static_com_tim_common_protos_Response_descriptor =
+        new java.lang.String[] { "Id", "Uid", "Token", });
+    internal_static_com_tim_common_protos_LoginAck_descriptor =
       getDescriptor().getMessageTypes().get(1);
-    internal_static_com_tim_common_protos_Response_fieldAccessorTable = new
+    internal_static_com_tim_common_protos_LoginAck_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_com_tim_common_protos_Response_descriptor,
-        new java.lang.String[] { "Protonum", "Code", "Msg", "Msgid", "Sendtime", });
+        internal_static_com_tim_common_protos_LoginAck_descriptor,
+        new java.lang.String[] { "Id", "Code", "Msg", "Timestamp", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

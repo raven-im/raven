@@ -49,10 +49,5 @@
             <artifactId>jackson-core</artifactId>
             <version>${version.jackson}</version>
         </dependency>
-        <dependency>
-            <groupId>tk.mybatis</groupId>
-            <artifactId>mapper-spring-boot-starter</artifactId>
-            <version>${version.mybatis.mapper}</version>
-        </dependency>
     </dependencies>
 </project>

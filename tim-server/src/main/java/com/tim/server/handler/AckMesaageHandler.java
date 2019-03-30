@@ -1,6 +1,6 @@
 package com.tim.server.handler;
 
-import com.tim.common.protos.Ack.AckMessage;
+import com.tim.common.protos.Message.MessageAck;
 import com.tim.server.channel.NettyChannelManager;
 import com.google.protobuf.MessageLite;
 import io.netty.channel.ChannelHandlerContext;
@@ -25,7 +25,7 @@ public class AckMesaageHandler  extends SimpleChannelInboundHandler<MessageLite>
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext,
         MessageLite messageLite) throws Exception {
-        if (messageLite instanceof AckMessage) {
+        if (messageLite instanceof MessageAck) {
 
         }
         channelHandlerContext.fireChannelRead(messageLite);

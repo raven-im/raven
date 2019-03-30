@@ -1,8 +1,8 @@
 package com.tim.server.process;
 
 import com.tim.common.protos.Auth.Login;
-import com.tim.common.protos.Auth.Response;
-import com.tim.common.utils.ProtoConstants;
+import com.tim.common.protos.Auth.LoginAck;
+import com.tim.common.utils.MessageTypeConstants;
 import com.tim.server.channel.NettyChannelManager;
 import com.tim.server.common.BaseMessageProcessor;
 import com.tim.server.common.ResponseEnum;
@@ -28,11 +28,10 @@ public class LoginAuthProcessor implements BaseMessageProcessor {
     }
 
     private void pulishMsg(ResponseEnum responseEnum, Channel channel) {
-        Response response = Response.newBuilder()
+        LoginAck response = LoginAck.newBuilder()
             .setCode(responseEnum.code)
             .setMsg(responseEnum.msg)
-            .setProtonum(ProtoConstants.RESPONSE)
-            .setMsgid(String.valueOf(TcpMessageServer.snowFlake.nextId()))
+            .setId(String.valueOf(TcpMessageServer.snowFlake.nextId()))
             .build();
         channel.writeAndFlush(response);
     }

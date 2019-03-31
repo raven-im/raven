@@ -19,12 +19,6 @@
             <version>${version.spring.boot}</version>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-configuration-processor</artifactId>
-            <version>${version.spring.boot}</version>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
             <groupId>com.github.tim</groupId>
             <artifactId>tim-common</artifactId>
         </dependency>

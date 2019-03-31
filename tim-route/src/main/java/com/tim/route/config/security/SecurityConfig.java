@@ -39,11 +39,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             SessionCreationPolicy.IF_REQUIRED).maximumSessions(4)
             .sessionRegistry(sessionRegistry());
         http.csrf().disable();
-//        http.authorizeRequests()
-//            .antMatchers("/user/login", "/user/register").permitAll()
-//            .anyRequest().authenticated()
-//            .and().exceptionHandling().accessDeniedHandler(accessDeniedHandler())
-//            .authenticationEntryPoint(unauthorizedEntryPoint());
+        http.authorizeRequests()
+            .antMatchers("/**").permitAll() //暂时所有服务非认证即可访问
+            .anyRequest().authenticated()
+            .and().exceptionHandling().accessDeniedHandler(accessDeniedHandler())
+            .authenticationEntryPoint(unauthorizedEntryPoint());
     }
 
     @Bean

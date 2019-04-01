@@ -7,7 +7,7 @@
     <typeAliases>
         <package name="java.lang"/>
         <package name="java.util"/>
-        <package name="com.tim.route.user.bean.model"/>
+        <package name="com.tim.single.restful.single.bean.model"/>
     </typeAliases>
 </configuration>
 

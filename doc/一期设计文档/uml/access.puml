@@ -1,0 +1,18 @@
+@startuml
+
+actor "foo1" as client
+participant "app-server" as app
+participant "router" as border
+participant "access"
+
+autonumber
+client --> app: req token
+app --> border: req token
+border --> app: rsp(token)
+app --> client: rsp(token)
+client --> border: req access(token)
+border --> client: rsp(access node)
+client --> access: login init(token)
+access --> client: login done
+
+@enduml

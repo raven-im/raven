@@ -1,0 +1,20 @@
+@startuml
+
+actor "foo1" as client1
+
+participant "access" as access1
+participant "single-server" as single
+database "storage" as db
+participant "access" as access2
+actor "foo2" as client2
+
+autonumber
+client1 --> access1 : msg publish
+access1 --> single: msg up stream
+single --> db: save msg
+single --> access1: msg up stream ack
+access1 --> client1 : publish ack(msg_id, sent_time)
+single --> access2: msg down stream
+access2 --> client2: msg notify
+client2 --> access2: notify ack
+@enduml

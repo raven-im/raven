@@ -149,9 +149,8 @@ public class UserServiceImpl implements UserService {
             String token = new Token(uid, appKey).getToken(getAppSecret(appKey));
 
             // cache token to redis.
-            String key = appKey + DEFAULT_SEPARATES_SIGN + uid
-                    + DEFAULT_SEPARATES_SIGN + AUTH_TOKEN;
-            redisTemplate.opsForValue().set(key, token, TOKEN_CACHE_DURATION, TimeUnit.DAYS);
+            String key = appKey + DEFAULT_SEPARATES_SIGN + uid;
+            redisTemplate.opsForValue().set(token, key, TOKEN_CACHE_DURATION, TimeUnit.DAYS);
 
             return Result.success(new TokenInfoOutParam(appKey, uid, token));
         } catch (TokenException e) {

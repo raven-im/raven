@@ -28,8 +28,6 @@ public class Constants {
 
     public static final String AUTH_SIGNATURE = "Sign";
 
-    public static final String AUTH_TOKEN = "token";
-
     public static final long TOKEN_CACHE_DURATION = 7; // 7 days
 
     /**

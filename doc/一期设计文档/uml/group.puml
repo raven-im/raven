@@ -10,11 +10,12 @@ actor "foo2" as client2
 
 autonumber
 client1 --> access1 : msg publish
-access1 --> group: validation
-group --> access1: validation ack
-access1 --> db: save msg
-access1 --> client1 : publish ack(msg_id, sent_time)
 access1 --> group: msg up stream
+group --> group: validation
+group --> db: save msg
+group --> access1: msg up ACK
+access1 --> client1 : publish ack(msg_id, sent_time)
+
 group --> access2: msg down stream
 access2 --> client2: msg notify
 client2 --> access2: notify ack

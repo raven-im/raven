@@ -2,11 +2,10 @@ package com.tim.server.process;
 
 import com.tim.common.protos.Auth.Login;
 import com.tim.common.protos.Auth.LoginAck;
-import com.tim.common.utils.MessageTypeConstants;
 import com.tim.server.channel.NettyChannelManager;
 import com.tim.server.common.BaseMessageProcessor;
 import com.tim.server.common.ResponseEnum;
-import com.tim.server.server.TcpMessageServer;
+import com.tim.server.server.BaseTcpMessageServer;
 import com.google.protobuf.MessageLite;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
@@ -31,7 +30,7 @@ public class LoginAuthProcessor implements BaseMessageProcessor {
         LoginAck response = LoginAck.newBuilder()
             .setCode(responseEnum.code)
             .setMsg(responseEnum.msg)
-            .setId(String.valueOf(TcpMessageServer.snowFlake.nextId()))
+            .setId(String.valueOf(BaseTcpMessageServer.snowFlake.nextId()))
             .build();
         channel.writeAndFlush(response);
     }

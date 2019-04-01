@@ -3,10 +3,8 @@ package com.tim.server.server;
 import com.tim.common.code.MessageDecoder;
 import com.tim.common.code.MessageEncoder;
 import com.tim.common.utils.SnowFlake;
-import com.tim.server.handler.HeartBeatHandler;
-import com.tim.server.handler.LoginAuthHandler;
-import com.tim.server.handler.PrivateMessageHandler;
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.ChannelPipeline;
@@ -16,42 +14,28 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.timeout.IdleStateHandler;
 import java.net.InetSocketAddress;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.TimeUnit;
-import javax.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.annotation.Order;
-import org.springframework.stereotype.Component;
 
 /**
  * Author zxx Description 消息服务 Date Created on 2018/5/25
  */
-@Component
-@Order(1)
 @Slf4j
-public class TcpMessageServer {
+public class BaseTcpMessageServer {
 
     @Value("${netty.server.port}")
     private int nettyServerPort;
 
     public static SnowFlake snowFlake;
 
-    @Autowired
-    private HeartBeatHandler heartBeatHandler;
+    private ConcurrentMap<String, ChannelHandler> specificHandler = new ConcurrentHashMap<>();
 
-    @Autowired
-    private LoginAuthHandler loginAuthHandler;
-
-    @Autowired
-    private PrivateMessageHandler privateMessageHandler;
-
-    @PostConstruct
-    public void startServer() {
+    protected void startServer(long dcId, long machineId) {
         startMessageServer();
-        snowFlake = new SnowFlake(1, 1);
+        snowFlake = new SnowFlake(dcId, machineId);
     }
 
     private void startMessageServer() {
@@ -69,17 +53,15 @@ public class TcpMessageServer {
                         new IdleStateHandler(25, 0, 0, TimeUnit.SECONDS));
                     pipeline.addLast("MessageDecoder", new MessageDecoder());
                     pipeline.addLast("MessageEncoder", new MessageEncoder());
-                    pipeline.addLast("HeartBeatHandler", heartBeatHandler);
-                    pipeline.addLast("MessageServerHandler", loginAuthHandler);
-                    pipeline.addLast("PrivateMessageHandler", privateMessageHandler);
+                    specificHandler.keySet().forEach(key -> pipeline.addLast(key, specificHandler.get(key)));
                 }
             });
         bindConnectionOptions(bootstrap);
         bootstrap.bind(new InetSocketAddress(nettyServerPort)).addListener(future -> {
             if (future.isSuccess()) {
-                log.info("MeaageServer Started Success,port:{}", nettyServerPort);
+                log.info("MessageServer Started Success,port:{}", nettyServerPort);
             } else {
-                log.error("MeaageServer Started Failed!");
+                log.error("MessageServer Started Failed!");
             }
         });
     }
@@ -91,4 +73,7 @@ public class TcpMessageServer {
         bootstrap.childOption(ChannelOption.SO_REUSEADDR, true); //调试用
     }
 
+    protected void addHandler(String key, ChannelHandler handler) {
+        specificHandler.putIfAbsent(key, handler);
+    }
 }

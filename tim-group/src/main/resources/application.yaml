@@ -1,0 +1,48 @@
+spring:
+  application:
+    name: tim-group
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    pool:
+      max-active: 20
+      max-wait: 60000
+      max-idle: 5
+      min-idle: 1
+  main:
+    banner-mode: log
+
+netty:
+  server:
+    port: 7071
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+
+# actuator相关配置
+management:
+  security:
+    enabled: false
+  endpoint:
+    health:
+      show-details: always
+      enabled: true
+    prometheus:
+      enabled: true
+    shutdown:
+      enabled: false
+  endpoints:
+    web:
+      exposure:
+        include: '*' #开放所有监控接口
+
+node:
+  data-center-id: 1
+  machine-id: 2
+
+server:
+  port: 7171

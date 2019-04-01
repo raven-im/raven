@@ -8,7 +8,7 @@
             <charset>UTF-8</charset> <!-- 此处设置字符集 -->
         </encoder>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>logs/tim-server-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <fileNamePattern>logs/tim-group-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy
                     class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <maxFileSize>100MB</maxFileSize>
@@ -26,7 +26,7 @@
         </encoder>
     </appender>
 
-    <logger name="com.tim.server" level="DEBUG"></logger>
+    <logger name="com.tim.group" level="DEBUG"></logger>
     <root level="INFO">
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="FILE"/>

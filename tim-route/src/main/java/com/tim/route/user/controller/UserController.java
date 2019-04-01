@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -89,7 +90,7 @@ public class UserController {
      */
 
     @GetMapping("/token")
-    public Result getToken(@RequestHeader(AUTH_APP_KEY) String appKey, @PathVariable("uid") String uid) {
+    public Result getToken(@RequestHeader(AUTH_APP_KEY) String appKey, @RequestParam("uid") String uid) {
         log.info("getToken, app key {}, uid {}", appKey, uid);
         return userService.getToken(uid, appKey);
     }

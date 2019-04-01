@@ -6,13 +6,12 @@ option java_outer_classname = "Message";
 //上行单聊消息
 message UpSingle {
     string id = 1; //消息唯一标示
-    string to_uid = 2; //接收方uid
+    string targetid = 2; //接收方uid
     string content = 3; //内容
-    uint64 timestamp = 4; //发送时间
 
 }
 
-//下行消息
+//下行单聊消息
 message DownSingle {
     string id = 1; //消息唯一标示
     string from_uid = 2; // 发送方uid
@@ -24,17 +23,16 @@ message DownSingle {
 //上行群聊消息
 message UpGroup {
     string id = 1; //消息唯一标示
-    string group_id = 2; // 接收群ID
+    string targetid = 2; // 接收群ID
     string content = 3; //内容
-    uint64 timestamp = 4; //发送时间
 }
 
 
-//下行消息
+//下行群聊消息
 message DownGroup {
     string id = 1; //消息唯一标示
-    string from_uid = 2; // 发送方uid
-    string group_id = 3; // 接收群id
+    string uid = 2; // 发送方uid
+    string targetid = 3; // 接收群id
     string content = 4; //内容
     uint64 timestamp = 5; //消息时间
 }

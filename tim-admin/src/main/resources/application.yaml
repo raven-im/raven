@@ -1,8 +1,11 @@
 spring:
   application:
     name: tim-admin
-  autoconfigure:
-    exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+  http:
+    encoding:
+      charset: UTF-8
+      force: true
+      enabled: true
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/imdb?useUnicode=true
@@ -21,7 +24,7 @@ spring:
     banner-mode: log
 
 server:
-  port: 7080
+  port: 8010
 # Mybatis
 mybatis:
   mapperLocations: classpath:mapper/*Mapper.xml

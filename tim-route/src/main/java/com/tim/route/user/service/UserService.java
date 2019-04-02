@@ -25,4 +25,6 @@ public interface UserService {
     Result getUserInfo(String uid);
 
     Result getToken(String uid, String appKey);
+
+    Result getAccessInfo(String appKey, String token);
 }

@@ -6,6 +6,10 @@ import com.tim.common.result.ResultCode;
 import com.tim.common.utils.DateTimeUtils;
 import com.tim.common.utils.UidUtil;
 import com.tim.route.config.security.SecurityUtils;
+import com.tim.route.config.validator.AppKeyValidator;
+import com.tim.route.config.validator.TokenValidator;
+import com.tim.route.config.validator.UserValidator;
+import com.tim.route.config.validator.Validator;
 import com.tim.route.user.bean.model.AppConfigModel;
 import com.tim.route.user.bean.model.UserModel;
 import com.tim.route.user.bean.param.*;
@@ -16,7 +20,6 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import com.tim.route.utils.Token;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +51,15 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private AppKeyValidator appKeyValidator;
+
+    @Autowired
+    private TokenValidator tokenValidator;
+
+    @Autowired
+    private UserValidator userValidator;
 
     @Override
     @Transactional(rollbackFor = Throwable.class)
@@ -137,12 +149,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public Result getToken(String uid, String appKey) {
         // check app key validation.
-        if (!isAppKeyInvalid(appKey)) {
-            return Result.failure(ResultCode.APP_ERROR_KEY_INVALID);
+        if (!appKeyValidator.validate(appKey)) {
+            return Result.failure(appKeyValidator.errorCode());
         }
         // check uid validation.
-        if (!isUidInvalid(uid)) {
-            return Result.failure(ResultCode.USER_ERROR_UID_NOT_EXISTS);
+        if (!userValidator.validate(uid)) {
+            return Result.failure(userValidator.errorCode());
         }
         //  uid:timestamp:appkey => DES(appSecret) => BASE64 => token
         try {
@@ -158,11 +170,22 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    private boolean isAppKeyInvalid(String key) {
-        Example example = new Example(AppConfigModel.class);
-        example.createCriteria().andEqualTo("uid", key);
-        List<AppConfigModel> models = configMapper.selectByExample(example);
-        return !models.isEmpty();
+    @Override
+    public Result getAccessInfo(String key, String token) {
+        // check app key validation.
+        if (!appKeyValidator.validate(key)) {
+            return Result.failure(appKeyValidator.errorCode());
+        }
+        // check token validation.
+        if (!tokenValidator.validate(token)) {
+            return Result.failure(tokenValidator.errorCode());
+        }
+        // decode the token.
+//        String secret = getAppSecret(key);
+        String uid = redisTemplate.opsForValue().get(token).split(DEFAULT_SEPARATES_SIGN)[1];
+
+
+        return null;
     }
 
     private String getAppSecret(String key) {
@@ -170,10 +193,5 @@ public class UserServiceImpl implements UserService {
         model.setUid(key);
         AppConfigModel app = configMapper.selectOne(model);
         return app.getSecret();
-    }
-
-    private boolean isUidInvalid(String uid) {
-        // TODO 1 check if uid exist in APP. 2 check if uid is blocked.
-        return true;
     }
 }

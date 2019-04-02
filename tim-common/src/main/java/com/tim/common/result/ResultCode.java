@@ -32,6 +32,7 @@ public enum ResultCode {
     APP_ERROR_COMMON_ERROR(13000, "app module common error."),
     APP_ERROR_KEY_INVALID(13001, "app key is invalid."),
     APP_ERROR_TOKEN_CREATE_ERROR(13002, "token cannot be made."),
+    APP_ERROR_TOKEN_INVALID(13003, "token is invalid."),
 
     COMMON_ERROR(500, "error");
     private int code;

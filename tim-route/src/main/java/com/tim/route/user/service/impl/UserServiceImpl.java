@@ -1,6 +1,11 @@
 package com.tim.route.user.service.impl;
 
+import com.netflix.appinfo.InstanceInfo;
+import com.netflix.discovery.EurekaClient;
 import com.tim.common.exception.TokenException;
+import com.tim.common.loadbalance.ConsistentHashLoadBalancer;
+import com.tim.common.loadbalance.LoadBalancer;
+import com.tim.common.loadbalance.Server;
 import com.tim.common.result.Result;
 import com.tim.common.result.ResultCode;
 import com.tim.common.utils.DateTimeUtils;
@@ -9,7 +14,6 @@ import com.tim.route.config.security.SecurityUtils;
 import com.tim.route.config.validator.AppKeyValidator;
 import com.tim.route.config.validator.TokenValidator;
 import com.tim.route.config.validator.UserValidator;
-import com.tim.route.config.validator.Validator;
 import com.tim.route.user.bean.model.AppConfigModel;
 import com.tim.route.user.bean.model.UserModel;
 import com.tim.route.user.bean.param.*;
@@ -18,6 +22,7 @@ import com.tim.route.user.mapper.UserMapper;
 import com.tim.route.user.service.UserService;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.tim.route.utils.Token;
@@ -60,6 +65,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserValidator userValidator;
+
+    @Autowired
+    private EurekaClient eurekaClient;
 
     @Override
     @Transactional(rollbackFor = Throwable.class)
@@ -180,12 +188,15 @@ public class UserServiceImpl implements UserService {
         if (!tokenValidator.validate(token)) {
             return Result.failure(tokenValidator.errorCode());
         }
-        // decode the token.
-//        String secret = getAppSecret(key);
         String uid = redisTemplate.opsForValue().get(token).split(DEFAULT_SEPARATES_SIGN)[1];
 
-
-        return null;
+        List<InstanceInfo> instances = eurekaClient.getApplication("TIM-ACCESS").getInstances();
+        List<Server> servers = instances.stream()
+            .map((x) -> new Server(x.getIPAddr(), x.getPort()))
+            .collect(Collectors.toList());
+        LoadBalancer lb = new ConsistentHashLoadBalancer();
+        Server origin = lb.select(servers, key + DEFAULT_SEPARATES_SIGN + uid);
+        return Result.success(new ServerInfoOutParam(key, uid, origin.getIp(), origin.getPort()));
     }
 
     private String getAppSecret(String key) {

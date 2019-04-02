@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Date Created on 2018/6/12
  */
 @RestController
-@RequestMapping(value = "/user", produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/user", produces = APPLICATION_JSON_VALUE)
 @Slf4j
 public class UserController {
 

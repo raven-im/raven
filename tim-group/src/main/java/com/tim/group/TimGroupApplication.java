@@ -8,10 +8,7 @@ import tk.mybatis.spring.annotation.MapperScan;
 
 @EnableDiscoveryClient
 @EnableTransactionManagement
-@SpringBootApplication(exclude = {
-    org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration.class,
-    org.springframework.boot.actuate.autoconfigure.security.servlet.ManagementWebSecurityAutoConfiguration.class}
-)
+@SpringBootApplication
 @MapperScan("com.tim.group.restful.*.mapper")
 public class TimGroupApplication {
 

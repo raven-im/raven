@@ -15,12 +15,13 @@
 
     <modules>
         <module>tim-route</module>
-        <module>tim-server</module>
         <module>tim-common</module>
         <module>tim-client</module>
         <module>tim-access</module>
         <module>tim-admin</module>
         <module>tim-eureka</module>
+        <module>tim-single</module>
+        <module>tim-group</module>
     </modules>
 
     <properties>
@@ -47,11 +48,6 @@
             <dependency>
                 <groupId>com.github.tim</groupId>
                 <artifactId>tim-common</artifactId>
-                <version>1.0.0-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>com.github.tim</groupId>
-                <artifactId>tim-server</artifactId>
                 <version>1.0.0-SNAPSHOT</version>
             </dependency>
             <dependency>

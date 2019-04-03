@@ -1,10 +1,11 @@
 package com.tim.route.user.controller;
 
-import static com.tim.common.utils.Constants.AUTH_APP_KEY;
+import static com.tim.common.utils.Constants.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import com.tim.common.result.Result;
 import com.tim.route.config.security.SecurityUtils;
 import com.tim.route.user.bean.param.ChangePasswordParam;
+import com.tim.route.user.bean.param.GetAccessParam;
 import com.tim.route.user.bean.param.GetTokenParam;
 import com.tim.route.user.bean.param.LoginInputParam;
 import com.tim.route.user.bean.param.RegisterParam;
@@ -29,7 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Date Created on 2018/6/12
  */
 @RestController
-@RequestMapping(value = "/user", produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/user", produces = APPLICATION_JSON_VALUE)
 @Slf4j
 public class UserController {
 
@@ -99,5 +100,23 @@ public class UserController {
     public Result getToken(@RequestBody GetTokenParam param) {
         log.info("getToken, app key {}, uid {}", param.getAppKey(), param.getUid());
         return userService.getToken(param.getUid(), param.getAppKey());
+    }
+
+    /**
+     * 获取用户登录接入点
+     * @param appKey
+     * @param token
+     * @return
+     */
+    @GetMapping("/access")
+    public Result getAccessInfo(@RequestHeader(AUTH_APP_KEY) String appKey, @RequestHeader(AUTH_TOKEN) String token) {
+        log.info("getToken, app key {}, token {}", appKey, token);
+        return userService.getAccessInfo(appKey, token);
+    }
+
+    @PostMapping("/access")
+    public Result getAccessInfo(@RequestBody GetAccessParam param) {
+        log.info("getToken, app key {}, token {}", param.getAppKey(), param.getToken());
+        return userService.getAccessInfo(param.getAppKey(), param.getToken());
     }
 }

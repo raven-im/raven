@@ -65,7 +65,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     // 没有权限访问相关资源自定义处理
     @Bean
     public AccessDeniedHandler accessDeniedHandler() throws Exception {
-        return new UnauthorizedHandler();
+        return new AccessDeniedCustomHandler();
     }
 
     /**

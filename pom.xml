@@ -14,6 +14,7 @@
     </parent>
 
     <modules>
+        <module>tim-zuul</module>
         <module>tim-route</module>
         <module>tim-common</module>
         <module>tim-client</module>
@@ -30,7 +31,6 @@
         <java.version>1.8</java.version>
         <version.netty>4.1.21.Final</version.netty>
         <version.jedis>2.9.0</version.jedis>
-        <version.gson>2.8.2</version.gson>
         <version.alibaba.druid>1.1.9</version.alibaba.druid>
         <version.mysql.connector>5.1.30</version.mysql.connector>
         <version.google.protobuf>3.5.1</version.google.protobuf>

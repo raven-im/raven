@@ -1,9 +1,7 @@
 package com.tim.common.result;
 
 /**
- * Author zxx
- * Description 返回参数
- * Date Created on 2018/6/12
+ * Author zxx Description 返回参数 Date Created on 2018/6/12
  */
 public enum ResultCode {
 
@@ -14,6 +12,8 @@ public enum ResultCode {
     COMMON_NOT_FOUND(10004, "not found"),
     COMMON_METHOD_NOT_SUPPORT(10005, "http method not support."),
     COMMON_SIGN_ERROR(10006, "signature not passed."),
+    COMMON_UNAUTHORIZED_ERROR(10007, "unauthorized."),
+    COMMON_NO_ACCESS_ERROR(10008, "no access."),
 
     /*
      * USER PART ERROR.  [11000, 12000)

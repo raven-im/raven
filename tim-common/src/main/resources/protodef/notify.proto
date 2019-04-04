@@ -9,7 +9,7 @@ message NotifyMessage {
     string type = 2; // 通知类型
     string targetid = 3; // 接收id
     string content = 4; // 通知内容
-    uint64 timestamp = 5; //消息时间
+    uint64 time = 5; //消息时间
 }
 
 

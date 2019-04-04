@@ -4,11 +4,10 @@ import static com.tim.common.utils.Constants.AUTH_APP_KEY;
 import static com.tim.common.utils.Constants.AUTH_NONCE;
 import static com.tim.common.utils.Constants.AUTH_SIGNATURE;
 import static com.tim.common.utils.Constants.AUTH_TIMESTAMP;
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 import com.tim.common.result.Result;
 import com.tim.common.result.ResultCode;
-import com.tim.common.utils.GsonHelper;
+import com.tim.common.utils.JsonHelper;
 import com.tim.route.user.bean.model.AppConfigModel;
 import com.tim.route.user.mapper.AppConfigMapper;
 import java.io.IOException;
@@ -24,6 +23,8 @@ import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.script.DigestUtils;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.util.StringUtils;
 
 /**
@@ -43,25 +44,23 @@ public class AuthFilter implements Filter {
         FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-
         String key = request.getHeader(AUTH_APP_KEY);
         String nonce = request.getHeader(AUTH_NONCE);
         String timestamp = request.getHeader(AUTH_TIMESTAMP);
         String sign = request.getHeader(AUTH_SIGNATURE);
-
         if (isAuthPass(key, nonce, timestamp, sign)) {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
-            response.setContentType(APPLICATION_JSON_VALUE);
-            OutputStream out = response.getOutputStream();
             Result result = Result.failure(ResultCode.COMMON_SIGN_ERROR);
-            out.write(GsonHelper.getGson().toJson(result).getBytes());
-            out.flush();
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
+            response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
+            response.getWriter().println(JsonHelper.toJsonString(result));
         }
     }
 
     private boolean isAuthPass(String key, String nonce, String timestamp, String sign) {
-        if (!StringUtils.isEmpty(key) && !StringUtils.isEmpty(nonce) && !StringUtils.isEmpty(timestamp)
+        if (!StringUtils.isEmpty(key) && !StringUtils.isEmpty(nonce) && !StringUtils
+            .isEmpty(timestamp)
             && !StringUtils.isEmpty(sign)) {
             // calculate the hash.
             log.info("calculate the hash. key {} nonce {} timestamp {} sign {}", key, nonce,

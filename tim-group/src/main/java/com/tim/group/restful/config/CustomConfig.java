@@ -21,14 +21,6 @@ import org.springframework.http.converter.json.GsonHttpMessageConverter;
 public class CustomConfig {
 
     @Bean
-    public HttpMessageConverters customConverters() {
-        Collection<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
-        GsonHttpMessageConverter gsonHttpMessageConverter = new GsonHttpMessageConverter();
-        messageConverters.add(gsonHttpMessageConverter);
-        return new HttpMessageConverters(true, messageConverters);
-    }
-
-    @Bean
     @ConditionalOnMissingBean(name = "redisTemplate")
     public RedisTemplate<Object, Object> redisTemplate(
         RedisConnectionFactory redisConnectionFactory) {

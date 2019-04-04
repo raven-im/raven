@@ -1,6 +1,5 @@
 package com.tim.single.tcp.handler;
 
-import com.tim.common.protos.Message.UpSingle;
 import com.tim.single.tcp.channel.NettyChannelManager;
 import com.tim.single.tcp.process.PrivateMessageProcessor;
 import com.google.protobuf.MessageLite;
@@ -25,9 +24,6 @@ public class PrivateMessageHandler extends SimpleChannelInboundHandler<MessageLi
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext,
         MessageLite messageLite) {
-        if (messageLite instanceof UpSingle) {
-            privateMessageProcessor.process(messageLite, channelHandlerContext);
-        }
         channelHandlerContext.fireChannelRead(messageLite);
     }
 

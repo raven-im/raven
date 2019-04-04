@@ -1,51 +1,31 @@
 syntax = "proto3";
 package com.tim.common.protos;
+import "common.proto";
 
 option java_outer_classname = "Message";
 
-//上行单聊消息
-message UpSingle {
-    string id = 1; //消息唯一标示
-    string targetid = 2; //接收方uid
-    string content = 3; //内容
-
-}
-
-//下行单聊消息
-message DownSingle {
-    string id = 1; //消息唯一标示
-    string from_uid = 2; // 发送方uid
-    string content = 3; //内容
-    uint64 timestamp = 4; //消息时间
-
-}
-
-//上行群聊消息
-message UpGroup {
-    string id = 1; //消息唯一标示
-    string targetid = 2; // 接收群ID
-    string content = 3; //内容
-}
-
-
-//下行群聊消息
-message DownGroup {
-    string id = 1; //消息唯一标示
-    string uid = 2; // 发送方uid
-    string targetid = 3; // 接收群id
-    string content = 4; //内容
-    uint64 timestamp = 5; //消息时间
+//上下行消息
+message UpDownMessage {
+  ConversationType conversationType = 1; // 会话类型
+  string fromUid = 2; // 发送者uid 用于Ack路由使用
+  string conversasionId = 3; // 会话id
+  MessageContent content = 4; // 内容
 }
 
 // 心跳
 message HeartBeat {
-    string id = 1; //消息唯一标示
-    string content = 2;
+  string id = 1; // 消息ID
+  HeartBeatType heartBeatType = 2;
+}
+
+enum HeartBeatType {
+  PING = 0;
+  PONG = 1;
 }
 
 // 消息ACK
 message MessageAck {
-    string id = 1; //消息唯一标示
-    uint64 timestamp = 2; //发送时间
-    uint32 status = 3; //消息状态 1:接收成功
+  string id = 1; // 对应收到的消息ID
+  uint64 time = 2; // 发送时间
+  Code code = 3; // 返回码
 }

@@ -27,12 +27,6 @@ public class LoginAuthProcessor implements BaseMessageProcessor {
     }
 
     private void publishMsg(ResponseEnum responseEnum, Channel channel) {
-        LoginAck response = LoginAck.newBuilder()
-            .setCode(responseEnum.code)
-            .setMsg(responseEnum.msg)
-            .setId(String.valueOf(GroupTcpMessageServer.snowFlake.nextId()))
-            .build();
-        channel.writeAndFlush(response);
     }
 
 }

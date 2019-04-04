@@ -23,8 +23,6 @@ public class AckMeaasgeProcessor implements BaseMessageProcessor {
         MessageAck ackMessage = (MessageAck) messageLite;
         String fromUid = nettyChannelManager.getUidByChannel(context.channel());
         log.info("fromUid:{}", fromUid);
-        offLineMsgService.deleteAckMessage(fromUid, ackMessage.getId(),
-            ackMessage.getTimestamp());
     }
 
 

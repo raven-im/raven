@@ -5,7 +5,7 @@ import com.tim.common.protos.Auth;
 import com.tim.common.protos.Auth.Login;
 import com.tim.common.protos.Message;
 import com.tim.common.protos.Message.HeartBeat;
-import com.tim.common.protos.Message.UpSingle;
+import com.tim.common.protos.Message.HeartBeatType;
 import com.tim.common.utils.MessageTypeConstants;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
@@ -54,16 +54,6 @@ public class ClientHandler extends SimpleChannelInboundHandler<MessageLite> {
         String content = "Hello World!";
         List<String> uids = new ArrayList<>();
         uids.add(String.valueOf((int) (Math.random() * 10) % 10 + 1));
-        uids.forEach(uid -> {
-            UpSingle msg = Message.UpSingle
-                .newBuilder()
-                .setContent(content)
-                .setToUid(uid)
-                .setId(uid.concat(String.valueOf(Client.snowFlake.nextId())))
-                .build();
-            ByteBuf byteBuf = Utils.pack2Client(msg);
-            messageConnectionCtx.channel().writeAndFlush(byteBuf);
-        });
 
     }
 
@@ -81,7 +71,7 @@ public class ClientHandler extends SimpleChannelInboundHandler<MessageLite> {
 
         @Override
         public void run() {
-            HeartBeat beat = HeartBeat.newBuilder().setContent("PING").build();
+            HeartBeat beat = HeartBeat.newBuilder().setHeartBeatType(HeartBeatType.PING).build();
             ByteBuf byteBuf = Utils.pack2Client(beat);
             messageConnectionCtx.channel().writeAndFlush(byteBuf);
         }

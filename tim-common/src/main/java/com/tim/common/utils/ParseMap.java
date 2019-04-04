@@ -2,6 +2,8 @@ package com.tim.common.utils;
 
 import com.google.protobuf.MessageLite;
 import com.tim.common.protos.Auth;
+import com.tim.common.protos.Conversation;
+import com.tim.common.protos.History;
 import com.tim.common.protos.Message;
 import com.tim.common.protos.Notify;
 import java.io.IOException;
@@ -19,19 +21,25 @@ public class ParseMap {
     public static final HashMap<Class<?>, Integer> msg2ptoNum = new HashMap<>();
 
     static {
-        register(MessageTypeConstants.LOGIN, Auth.Login::parseFrom, Auth.Login.class);
-        register(MessageTypeConstants.LOGINACK, Auth.LoginAck::parseFrom, Auth.LoginAck.class);
-        register(MessageTypeConstants.UPSINGLE, Message.UpSingle::parseFrom,
-            Message.UpSingle.class);
-        register(MessageTypeConstants.DOWNSINGLE, Message.DownSingle::parseFrom,
-            Message.DownSingle.class);
-        register(MessageTypeConstants.UPGROUP, Message.UpGroup::parseFrom, Message.UpGroup.class);
-        register(MessageTypeConstants.DOWNGROUP, Message.DownGroup::parseFrom,
-            Message.DownGroup.class);
-        register(MessageTypeConstants.MESSAGEACK, Message.MessageAck::parseFrom,
-            Message.MessageAck.class);
         register(MessageTypeConstants.HEARTBEAT, Message.HeartBeat::parseFrom,
             Message.HeartBeat.class);
+        register(MessageTypeConstants.LOGIN, Auth.Login::parseFrom, Auth.Login.class);
+        register(MessageTypeConstants.LOGINACK, Auth.LoginAck::parseFrom, Auth.LoginAck.class);
+        register(MessageTypeConstants.UPDOWNMESSAGE, Message.UpDownMessage::parseFrom,
+            Message.UpDownMessage.class);
+        register(MessageTypeConstants.MESSAGEACK, Message.MessageAck::parseFrom,
+            Message.MessageAck.class);
+        register(MessageTypeConstants.CONVERSATIONREQ, Conversation.ConversationReq::parseFrom,
+            Conversation.ConversationReq.class);
+        register(MessageTypeConstants.CONVERSATIONACK, Conversation.ConversationAck::parseFrom,
+            Conversation.ConversationAck.class);
+        register(MessageTypeConstants.CONVERSATIONDETAIL,
+            Conversation.ConversationDetail::parseFrom,
+            Conversation.ConversationDetail.class);
+        register(MessageTypeConstants.HISMESSAGESREQ, History.HisMessagesReq::parseFrom,
+            History.HisMessagesReq.class);
+        register(MessageTypeConstants.HISMESSAGESACK, History.HisMessagesAck::parseFrom,
+            History.HisMessagesAck.class);
         register(MessageTypeConstants.NOTIFY, Notify.NotifyMessage::parseFrom,
             Notify.NotifyMessage.class);
     }

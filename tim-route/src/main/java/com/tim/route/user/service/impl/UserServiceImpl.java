@@ -1,7 +1,5 @@
 package com.tim.route.user.service.impl;
 
-import com.netflix.appinfo.InstanceInfo;
-import com.netflix.discovery.EurekaClient;
 import com.tim.common.exception.TokenException;
 import com.tim.common.loadbalance.ConsistentHashLoadBalancer;
 import com.tim.common.loadbalance.LoadBalancer;
@@ -65,9 +63,6 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserValidator userValidator;
-
-    @Autowired
-    private EurekaClient eurekaClient;
 
     @Override
     @Transactional(rollbackFor = Throwable.class)
@@ -190,13 +185,14 @@ public class UserServiceImpl implements UserService {
         }
         String uid = redisTemplate.opsForValue().get(token).split(DEFAULT_SEPARATES_SIGN)[1];
 
-        List<InstanceInfo> instances = eurekaClient.getApplication("TIM-ACCESS").getInstances();
-        List<Server> servers = instances.stream()
-            .map((x) -> new Server(x.getIPAddr(), x.getPort()))
-            .collect(Collectors.toList());
-        LoadBalancer lb = new ConsistentHashLoadBalancer();
-        Server origin = lb.select(servers, key + DEFAULT_SEPARATES_SIGN + uid);
-        return Result.success(new ServerInfoOutParam(key, uid, origin.getIp(), origin.getPort()));
+//        List<InstanceInfo> instances = eurekaClient.getApplication("TIM-ACCESS").getInstances();
+//        List<Server> servers = instances.stream()
+//            .map((x) -> new Server(x.getIPAddr(), x.getPort()))
+//            .collect(Collectors.toList());
+//        LoadBalancer lb = new ConsistentHashLoadBalancer();
+//        Server origin = lb.select(servers, key + DEFAULT_SEPARATES_SIGN + uid);
+//        return Result.success(new ServerInfoOutParam(key, uid, origin.getIp(), origin.getPort()));
+        return Result.success();
     }
 
     private String getAppSecret(String key) {

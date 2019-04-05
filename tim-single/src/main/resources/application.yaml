@@ -2,10 +2,10 @@ spring:
   application:
     name: tim-single
   http:
-        encoding:
-          charset: UTF-8
-          force: true
-          enabled: true
+    encoding:
+      charset: UTF-8
+      force: true
+      enabled: true
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/imdb?useUnicode=true
@@ -30,6 +30,9 @@ spring:
       min-idle: 1
   main:
     banner-mode: log
+  cloud:
+    zookeeper:
+      connect-string: localhost:2181
 
 netty:
   server:

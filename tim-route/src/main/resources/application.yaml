@@ -33,6 +33,8 @@ spring:
   cloud:
     zookeeper:
       connect-string: localhost:2181
+    discovery:
+      prefer-ip-address: true
 
 server:
   port: 8080

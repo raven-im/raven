@@ -23,18 +23,9 @@ public final class Notify {
      *消息唯一标示
      * </pre>
      *
-     * <code>string id = 1;</code>
+     * <code>int64 id = 1;</code>
      */
-    java.lang.String getId();
-    /**
-     * <pre>
-     *消息唯一标示
-     * </pre>
-     *
-     * <code>string id = 1;</code>
-     */
-    com.google.protobuf.ByteString
-        getIdBytes();
+    long getId();
 
     /**
      * <pre>
@@ -116,7 +107,7 @@ public final class Notify {
       super(builder);
     }
     private NotifyMessage() {
-      id_ = "";
+      id_ = 0L;
       type_ = "";
       targetid_ = "";
       content_ = "";
@@ -147,10 +138,9 @@ public final class Notify {
             case 0:
               done = true;
               break;
-            case 10: {
-              java.lang.String s = input.readStringRequireUtf8();
+            case 8: {
 
-              id_ = s;
+              id_ = input.readInt64();
               break;
             }
             case 18: {
@@ -209,45 +199,16 @@ public final class Notify {
     }
 
     public static final int ID_FIELD_NUMBER = 1;
-    private volatile java.lang.Object id_;
+    private long id_;
     /**
      * <pre>
      *消息唯一标示
      * </pre>
      *
-     * <code>string id = 1;</code>
+     * <code>int64 id = 1;</code>
      */
-    public java.lang.String getId() {
-      java.lang.Object ref = id_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        id_ = s;
-        return s;
-      }
-    }
-    /**
-     * <pre>
-     *消息唯一标示
-     * </pre>
-     *
-     * <code>string id = 1;</code>
-     */
-    public com.google.protobuf.ByteString
-        getIdBytes() {
-      java.lang.Object ref = id_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        id_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+    public long getId() {
+      return id_;
     }
 
     public static final int TYPE_FIELD_NUMBER = 2;
@@ -403,8 +364,8 @@ public final class Notify {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (!getIdBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, id_);
+      if (id_ != 0L) {
+        output.writeInt64(1, id_);
       }
       if (!getTypeBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 2, type_);
@@ -427,8 +388,9 @@ public final class Notify {
       if (size != -1) return size;
 
       size = 0;
-      if (!getIdBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, id_);
+      if (id_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(1, id_);
       }
       if (!getTypeBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, type_);
@@ -459,8 +421,8 @@ public final class Notify {
       com.tim.common.protos.Notify.NotifyMessage other = (com.tim.common.protos.Notify.NotifyMessage) obj;
 
       boolean result = true;
-      result = result && getId()
-          .equals(other.getId());
+      result = result && (getId()
+          == other.getId());
       result = result && getType()
           .equals(other.getType());
       result = result && getTargetid()
@@ -481,7 +443,8 @@ public final class Notify {
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + ID_FIELD_NUMBER;
-      hash = (53 * hash) + getId().hashCode();
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getId());
       hash = (37 * hash) + TYPE_FIELD_NUMBER;
       hash = (53 * hash) + getType().hashCode();
       hash = (37 * hash) + TARGETID_FIELD_NUMBER;
@@ -628,7 +591,7 @@ public final class Notify {
       @java.lang.Override
       public Builder clear() {
         super.clear();
-        id_ = "";
+        id_ = 0L;
 
         type_ = "";
 
@@ -717,9 +680,8 @@ public final class Notify {
 
       public Builder mergeFrom(com.tim.common.protos.Notify.NotifyMessage other) {
         if (other == com.tim.common.protos.Notify.NotifyMessage.getDefaultInstance()) return this;
-        if (!other.getId().isEmpty()) {
-          id_ = other.id_;
-          onChanged();
+        if (other.getId() != 0L) {
+          setId(other.getId());
         }
         if (!other.getType().isEmpty()) {
           type_ = other.type_;
@@ -765,59 +727,26 @@ public final class Notify {
         return this;
       }
 
-      private java.lang.Object id_ = "";
+      private long id_ ;
       /**
        * <pre>
        *消息唯一标示
        * </pre>
        *
-       * <code>string id = 1;</code>
+       * <code>int64 id = 1;</code>
        */
-      public java.lang.String getId() {
-        java.lang.Object ref = id_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          id_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+      public long getId() {
+        return id_;
       }
       /**
        * <pre>
        *消息唯一标示
        * </pre>
        *
-       * <code>string id = 1;</code>
+       * <code>int64 id = 1;</code>
        */
-      public com.google.protobuf.ByteString
-          getIdBytes() {
-        java.lang.Object ref = id_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          id_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <pre>
-       *消息唯一标示
-       * </pre>
-       *
-       * <code>string id = 1;</code>
-       */
-      public Builder setId(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
+      public Builder setId(long value) {
+        
         id_ = value;
         onChanged();
         return this;
@@ -827,29 +756,11 @@ public final class Notify {
        *消息唯一标示
        * </pre>
        *
-       * <code>string id = 1;</code>
+       * <code>int64 id = 1;</code>
        */
       public Builder clearId() {
         
-        id_ = getDefaultInstance().getId();
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       *消息唯一标示
-       * </pre>
-       *
-       * <code>string id = 1;</code>
-       */
-      public Builder setIdBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        id_ = value;
+        id_ = 0L;
         onChanged();
         return this;
       }
@@ -1226,7 +1137,7 @@ public final class Notify {
   static {
     java.lang.String[] descriptorData = {
       "\n\014notify.proto\022\025com.tim.common.protos\"Z\n" +
-      "\rNotifyMessage\022\n\n\002id\030\001 \001(\t\022\014\n\004type\030\002 \001(\t" +
+      "\rNotifyMessage\022\n\n\002id\030\001 \001(\003\022\014\n\004type\030\002 \001(\t" +
       "\022\020\n\010targetid\030\003 \001(\t\022\017\n\007content\030\004 \001(\t\022\014\n\004t" +
       "ime\030\005 \001(\004B\010B\006Notifyb\006proto3"
     };

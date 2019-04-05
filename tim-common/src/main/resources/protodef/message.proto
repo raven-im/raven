@@ -14,7 +14,7 @@ message UpDownMessage {
 
 // 心跳
 message HeartBeat {
-  string id = 1; // 消息ID
+  int64 id = 1; // 消息ID
   HeartBeatType heartBeatType = 2;
 }
 
@@ -25,7 +25,7 @@ enum HeartBeatType {
 
 // 消息ACK
 message MessageAck {
-  string id = 1; // 对应收到的消息ID
+  int64 id = 1; // 对应收到的消息ID
   uint64 time = 2; // 发送时间
   Code code = 3; // 返回码
 }

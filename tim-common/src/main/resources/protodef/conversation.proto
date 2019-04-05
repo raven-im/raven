@@ -5,7 +5,7 @@ option java_outer_classname = "Conversation";
 
 // 会话操作请求
 message ConversationReq {
-  string id = 1; // 消息ID
+  int64 id = 1; // 消息ID
   ConversationType type = 2; // 会话类型
   string targetid = 3; // 单聊会话 用户ID 群会话 群ID
   Operation operation = 4;
@@ -20,7 +20,7 @@ enum Operation {
 
 // 会话操作结果
 message ConversationAck {
-  string id = 1; // 对应收到的消息ID
+  int64 id = 1; // 对应收到的消息ID
   Code code = 2; // 返回码
   uint64 time = 3; // 时间
   string conversasionId = 4; // 会话ID

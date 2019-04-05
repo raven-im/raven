@@ -1,4 +1,4 @@
-package com.tim.single.tcp.common;
+package com.tim.common.netty;
 
 import io.netty.channel.Channel;
 import java.util.List;

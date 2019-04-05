@@ -1,4 +1,4 @@
-package com.tim.single.tcp.common;
+package com.tim.common.netty;
 
 import com.google.protobuf.MessageLite;
 import io.netty.channel.ChannelHandlerContext;

@@ -1,4 +1,4 @@
-package com.tim.group.tcp.common;
+package com.tim.access.offline;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.tim.common.utils.Constants;

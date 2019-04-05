@@ -1,6 +1,6 @@
-package com.tim.single.tcp.channel;
+package com.tim.access.channel;
 
-import com.tim.single.tcp.common.ChannelManager;
+import com.tim.common.netty.ChannelManager;
 import io.netty.channel.Channel;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +20,7 @@ public final class NettyChannelManager implements ChannelManager {
     @Override
     public void addUid2Channel(String uid, Channel channel) {
         channelUid.put(channel, uid);
-        if (null == uidChannels.get(uid)) {
+        if (!channelUid.containsKey(channel)) {
             List<Channel> channels = new ArrayList<>();
             channels.add(channel);
             uidChannels.put(uid, channels);
@@ -42,7 +42,7 @@ public final class NettyChannelManager implements ChannelManager {
         if (channelUid.containsKey(channel)) {
             return channelUid.get(channel);
         }
-        return channelUid.get(channel);
+        return null;
     }
 
     @Override

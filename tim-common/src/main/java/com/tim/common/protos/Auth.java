@@ -23,18 +23,9 @@ public final class Auth {
      *消息ID
      * </pre>
      *
-     * <code>string id = 1;</code>
+     * <code>int64 id = 1;</code>
      */
-    java.lang.String getId();
-    /**
-     * <pre>
-     *消息ID
-     * </pre>
-     *
-     * <code>string id = 1;</code>
-     */
-    com.google.protobuf.ByteString
-        getIdBytes();
+    long getId();
 
     /**
      * <code>string uid = 2;</code>
@@ -77,7 +68,7 @@ public final class Auth {
       super(builder);
     }
     private Login() {
-      id_ = "";
+      id_ = 0L;
       uid_ = "";
       token_ = "";
     }
@@ -106,10 +97,9 @@ public final class Auth {
             case 0:
               done = true;
               break;
-            case 10: {
-              java.lang.String s = input.readStringRequireUtf8();
+            case 8: {
 
-              id_ = s;
+              id_ = input.readInt64();
               break;
             }
             case 18: {
@@ -157,45 +147,16 @@ public final class Auth {
     }
 
     public static final int ID_FIELD_NUMBER = 1;
-    private volatile java.lang.Object id_;
+    private long id_;
     /**
      * <pre>
      *消息ID
      * </pre>
      *
-     * <code>string id = 1;</code>
+     * <code>int64 id = 1;</code>
      */
-    public java.lang.String getId() {
-      java.lang.Object ref = id_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        id_ = s;
-        return s;
-      }
-    }
-    /**
-     * <pre>
-     *消息ID
-     * </pre>
-     *
-     * <code>string id = 1;</code>
-     */
-    public com.google.protobuf.ByteString
-        getIdBytes() {
-      java.lang.Object ref = id_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        id_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+    public long getId() {
+      return id_;
     }
 
     public static final int UID_FIELD_NUMBER = 2;
@@ -288,8 +249,8 @@ public final class Auth {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (!getIdBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, id_);
+      if (id_ != 0L) {
+        output.writeInt64(1, id_);
       }
       if (!getUidBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 2, uid_);
@@ -306,8 +267,9 @@ public final class Auth {
       if (size != -1) return size;
 
       size = 0;
-      if (!getIdBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, id_);
+      if (id_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(1, id_);
       }
       if (!getUidBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, uid_);
@@ -331,8 +293,8 @@ public final class Auth {
       com.tim.common.protos.Auth.Login other = (com.tim.common.protos.Auth.Login) obj;
 
       boolean result = true;
-      result = result && getId()
-          .equals(other.getId());
+      result = result && (getId()
+          == other.getId());
       result = result && getUid()
           .equals(other.getUid());
       result = result && getToken()
@@ -349,7 +311,8 @@ public final class Auth {
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + ID_FIELD_NUMBER;
-      hash = (53 * hash) + getId().hashCode();
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getId());
       hash = (37 * hash) + UID_FIELD_NUMBER;
       hash = (53 * hash) + getUid().hashCode();
       hash = (37 * hash) + TOKEN_FIELD_NUMBER;
@@ -487,7 +450,7 @@ public final class Auth {
       @java.lang.Override
       public Builder clear() {
         super.clear();
-        id_ = "";
+        id_ = 0L;
 
         uid_ = "";
 
@@ -570,9 +533,8 @@ public final class Auth {
 
       public Builder mergeFrom(com.tim.common.protos.Auth.Login other) {
         if (other == com.tim.common.protos.Auth.Login.getDefaultInstance()) return this;
-        if (!other.getId().isEmpty()) {
-          id_ = other.id_;
-          onChanged();
+        if (other.getId() != 0L) {
+          setId(other.getId());
         }
         if (!other.getUid().isEmpty()) {
           uid_ = other.uid_;
@@ -611,59 +573,26 @@ public final class Auth {
         return this;
       }
 
-      private java.lang.Object id_ = "";
+      private long id_ ;
       /**
        * <pre>
        *消息ID
        * </pre>
        *
-       * <code>string id = 1;</code>
+       * <code>int64 id = 1;</code>
        */
-      public java.lang.String getId() {
-        java.lang.Object ref = id_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          id_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+      public long getId() {
+        return id_;
       }
       /**
        * <pre>
        *消息ID
        * </pre>
        *
-       * <code>string id = 1;</code>
+       * <code>int64 id = 1;</code>
        */
-      public com.google.protobuf.ByteString
-          getIdBytes() {
-        java.lang.Object ref = id_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          id_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <pre>
-       *消息ID
-       * </pre>
-       *
-       * <code>string id = 1;</code>
-       */
-      public Builder setId(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
+      public Builder setId(long value) {
+        
         id_ = value;
         onChanged();
         return this;
@@ -673,29 +602,11 @@ public final class Auth {
        *消息ID
        * </pre>
        *
-       * <code>string id = 1;</code>
+       * <code>int64 id = 1;</code>
        */
       public Builder clearId() {
         
-        id_ = getDefaultInstance().getId();
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       *消息ID
-       * </pre>
-       *
-       * <code>string id = 1;</code>
-       */
-      public Builder setIdBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        id_ = value;
+        id_ = 0L;
         onChanged();
         return this;
       }
@@ -919,18 +830,9 @@ public final class Auth {
      *消息ID
      * </pre>
      *
-     * <code>string id = 1;</code>
+     * <code>int64 id = 1;</code>
      */
-    java.lang.String getId();
-    /**
-     * <pre>
-     *消息ID
-     * </pre>
-     *
-     * <code>string id = 1;</code>
-     */
-    com.google.protobuf.ByteString
-        getIdBytes();
+    long getId();
 
     /**
      * <pre>
@@ -989,7 +891,7 @@ public final class Auth {
       super(builder);
     }
     private LoginAck() {
-      id_ = "";
+      id_ = 0L;
       code_ = 0;
       msg_ = "";
       time_ = 0L;
@@ -1019,10 +921,9 @@ public final class Auth {
             case 0:
               done = true;
               break;
-            case 10: {
-              java.lang.String s = input.readStringRequireUtf8();
+            case 8: {
 
-              id_ = s;
+              id_ = input.readInt64();
               break;
             }
             case 16: {
@@ -1075,45 +976,16 @@ public final class Auth {
     }
 
     public static final int ID_FIELD_NUMBER = 1;
-    private volatile java.lang.Object id_;
+    private long id_;
     /**
      * <pre>
      *消息ID
      * </pre>
      *
-     * <code>string id = 1;</code>
+     * <code>int64 id = 1;</code>
      */
-    public java.lang.String getId() {
-      java.lang.Object ref = id_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        id_ = s;
-        return s;
-      }
-    }
-    /**
-     * <pre>
-     *消息ID
-     * </pre>
-     *
-     * <code>string id = 1;</code>
-     */
-    public com.google.protobuf.ByteString
-        getIdBytes() {
-      java.lang.Object ref = id_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        id_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+    public long getId() {
+      return id_;
     }
 
     public static final int CODE_FIELD_NUMBER = 2;
@@ -1210,8 +1082,8 @@ public final class Auth {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (!getIdBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, id_);
+      if (id_ != 0L) {
+        output.writeInt64(1, id_);
       }
       if (code_ != com.tim.common.protos.Common.Code.SUCCESS.getNumber()) {
         output.writeEnum(2, code_);
@@ -1231,8 +1103,9 @@ public final class Auth {
       if (size != -1) return size;
 
       size = 0;
-      if (!getIdBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, id_);
+      if (id_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(1, id_);
       }
       if (code_ != com.tim.common.protos.Common.Code.SUCCESS.getNumber()) {
         size += com.google.protobuf.CodedOutputStream
@@ -1261,8 +1134,8 @@ public final class Auth {
       com.tim.common.protos.Auth.LoginAck other = (com.tim.common.protos.Auth.LoginAck) obj;
 
       boolean result = true;
-      result = result && getId()
-          .equals(other.getId());
+      result = result && (getId()
+          == other.getId());
       result = result && code_ == other.code_;
       result = result && getMsg()
           .equals(other.getMsg());
@@ -1280,7 +1153,8 @@ public final class Auth {
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + ID_FIELD_NUMBER;
-      hash = (53 * hash) + getId().hashCode();
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getId());
       hash = (37 * hash) + CODE_FIELD_NUMBER;
       hash = (53 * hash) + code_;
       hash = (37 * hash) + MSG_FIELD_NUMBER;
@@ -1421,7 +1295,7 @@ public final class Auth {
       @java.lang.Override
       public Builder clear() {
         super.clear();
-        id_ = "";
+        id_ = 0L;
 
         code_ = 0;
 
@@ -1507,9 +1381,8 @@ public final class Auth {
 
       public Builder mergeFrom(com.tim.common.protos.Auth.LoginAck other) {
         if (other == com.tim.common.protos.Auth.LoginAck.getDefaultInstance()) return this;
-        if (!other.getId().isEmpty()) {
-          id_ = other.id_;
-          onChanged();
+        if (other.getId() != 0L) {
+          setId(other.getId());
         }
         if (other.code_ != 0) {
           setCodeValue(other.getCodeValue());
@@ -1550,59 +1423,26 @@ public final class Auth {
         return this;
       }
 
-      private java.lang.Object id_ = "";
+      private long id_ ;
       /**
        * <pre>
        *消息ID
        * </pre>
        *
-       * <code>string id = 1;</code>
+       * <code>int64 id = 1;</code>
        */
-      public java.lang.String getId() {
-        java.lang.Object ref = id_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          id_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+      public long getId() {
+        return id_;
       }
       /**
        * <pre>
        *消息ID
        * </pre>
        *
-       * <code>string id = 1;</code>
+       * <code>int64 id = 1;</code>
        */
-      public com.google.protobuf.ByteString
-          getIdBytes() {
-        java.lang.Object ref = id_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          id_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <pre>
-       *消息ID
-       * </pre>
-       *
-       * <code>string id = 1;</code>
-       */
-      public Builder setId(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
+      public Builder setId(long value) {
+        
         id_ = value;
         onChanged();
         return this;
@@ -1612,29 +1452,11 @@ public final class Auth {
        *消息ID
        * </pre>
        *
-       * <code>string id = 1;</code>
+       * <code>int64 id = 1;</code>
        */
       public Builder clearId() {
         
-        id_ = getDefaultInstance().getId();
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       *消息ID
-       * </pre>
-       *
-       * <code>string id = 1;</code>
-       */
-      public Builder setIdBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        id_ = value;
+        id_ = 0L;
         onChanged();
         return this;
       }
@@ -1903,9 +1725,9 @@ public final class Auth {
   static {
     java.lang.String[] descriptorData = {
       "\n\nauth.proto\022\025com.tim.common.protos\032\014com" +
-      "mon.proto\"/\n\005Login\022\n\n\002id\030\001 \001(\t\022\013\n\003uid\030\002 " +
+      "mon.proto\"/\n\005Login\022\n\n\002id\030\001 \001(\003\022\013\n\003uid\030\002 " +
       "\001(\t\022\r\n\005token\030\003 \001(\t\"\\\n\010LoginAck\022\n\n\002id\030\001 \001" +
-      "(\t\022)\n\004code\030\002 \001(\0162\033.com.tim.common.protos" +
+      "(\003\022)\n\004code\030\002 \001(\0162\033.com.tim.common.protos" +
       ".Code\022\013\n\003msg\030\003 \001(\t\022\014\n\004time\030\004 \001(\004B\006B\004Auth" +
       "b\006proto3"
     };

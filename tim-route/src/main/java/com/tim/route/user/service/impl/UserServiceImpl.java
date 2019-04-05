@@ -26,6 +26,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.tim.route.utils.Token;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -63,6 +65,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserValidator userValidator;
+
+    @Autowired
+    private DiscoveryClient discoveryClient;
 
     @Override
     @Transactional(rollbackFor = Throwable.class)
@@ -185,14 +190,13 @@ public class UserServiceImpl implements UserService {
         }
         String uid = redisTemplate.opsForValue().get(token).split(DEFAULT_SEPARATES_SIGN)[1];
 
-//        List<InstanceInfo> instances = eurekaClient.getApplication("TIM-ACCESS").getInstances();
-//        List<Server> servers = instances.stream()
-//            .map((x) -> new Server(x.getIPAddr(), x.getPort()))
-//            .collect(Collectors.toList());
-//        LoadBalancer lb = new ConsistentHashLoadBalancer();
-//        Server origin = lb.select(servers, key + DEFAULT_SEPARATES_SIGN + uid);
-//        return Result.success(new ServerInfoOutParam(key, uid, origin.getIp(), origin.getPort()));
-        return Result.success();
+        List<ServiceInstance> instances = discoveryClient.getInstances("tim-admin");
+        List<Server> servers = instances.stream()
+            .map((x) -> new Server(x.getHost(), x.getPort()))
+            .collect(Collectors.toList());
+        LoadBalancer lb = new ConsistentHashLoadBalancer();
+        Server origin = lb.select(servers, key + DEFAULT_SEPARATES_SIGN + uid);
+        return Result.success(new ServerInfoOutParam(key, uid, origin.getIp(), origin.getPort()));
     }
 
     private String getAppSecret(String key) {

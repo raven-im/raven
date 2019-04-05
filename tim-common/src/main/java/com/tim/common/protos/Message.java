@@ -1272,18 +1272,9 @@ public final class Message {
      * 消息ID
      * </pre>
      *
-     * <code>string id = 1;</code>
+     * <code>int64 id = 1;</code>
      */
-    java.lang.String getId();
-    /**
-     * <pre>
-     * 消息ID
-     * </pre>
-     *
-     * <code>string id = 1;</code>
-     */
-    com.google.protobuf.ByteString
-        getIdBytes();
+    long getId();
 
     /**
      * <code>.com.tim.common.protos.HeartBeatType heartBeatType = 2;</code>
@@ -1311,7 +1302,7 @@ public final class Message {
       super(builder);
     }
     private HeartBeat() {
-      id_ = "";
+      id_ = 0L;
       heartBeatType_ = 0;
     }
 
@@ -1339,10 +1330,9 @@ public final class Message {
             case 0:
               done = true;
               break;
-            case 10: {
-              java.lang.String s = input.readStringRequireUtf8();
+            case 8: {
 
-              id_ = s;
+              id_ = input.readInt64();
               break;
             }
             case 16: {
@@ -1384,45 +1374,16 @@ public final class Message {
     }
 
     public static final int ID_FIELD_NUMBER = 1;
-    private volatile java.lang.Object id_;
+    private long id_;
     /**
      * <pre>
      * 消息ID
      * </pre>
      *
-     * <code>string id = 1;</code>
+     * <code>int64 id = 1;</code>
      */
-    public java.lang.String getId() {
-      java.lang.Object ref = id_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        id_ = s;
-        return s;
-      }
-    }
-    /**
-     * <pre>
-     * 消息ID
-     * </pre>
-     *
-     * <code>string id = 1;</code>
-     */
-    public com.google.protobuf.ByteString
-        getIdBytes() {
-      java.lang.Object ref = id_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        id_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+    public long getId() {
+      return id_;
     }
 
     public static final int HEARTBEATTYPE_FIELD_NUMBER = 2;
@@ -1456,8 +1417,8 @@ public final class Message {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (!getIdBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, id_);
+      if (id_ != 0L) {
+        output.writeInt64(1, id_);
       }
       if (heartBeatType_ != com.tim.common.protos.Message.HeartBeatType.PING.getNumber()) {
         output.writeEnum(2, heartBeatType_);
@@ -1471,8 +1432,9 @@ public final class Message {
       if (size != -1) return size;
 
       size = 0;
-      if (!getIdBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, id_);
+      if (id_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(1, id_);
       }
       if (heartBeatType_ != com.tim.common.protos.Message.HeartBeatType.PING.getNumber()) {
         size += com.google.protobuf.CodedOutputStream
@@ -1494,8 +1456,8 @@ public final class Message {
       com.tim.common.protos.Message.HeartBeat other = (com.tim.common.protos.Message.HeartBeat) obj;
 
       boolean result = true;
-      result = result && getId()
-          .equals(other.getId());
+      result = result && (getId()
+          == other.getId());
       result = result && heartBeatType_ == other.heartBeatType_;
       result = result && unknownFields.equals(other.unknownFields);
       return result;
@@ -1509,7 +1471,8 @@ public final class Message {
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + ID_FIELD_NUMBER;
-      hash = (53 * hash) + getId().hashCode();
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getId());
       hash = (37 * hash) + HEARTBEATTYPE_FIELD_NUMBER;
       hash = (53 * hash) + heartBeatType_;
       hash = (29 * hash) + unknownFields.hashCode();
@@ -1649,7 +1612,7 @@ public final class Message {
       @java.lang.Override
       public Builder clear() {
         super.clear();
-        id_ = "";
+        id_ = 0L;
 
         heartBeatType_ = 0;
 
@@ -1729,9 +1692,8 @@ public final class Message {
 
       public Builder mergeFrom(com.tim.common.protos.Message.HeartBeat other) {
         if (other == com.tim.common.protos.Message.HeartBeat.getDefaultInstance()) return this;
-        if (!other.getId().isEmpty()) {
-          id_ = other.id_;
-          onChanged();
+        if (other.getId() != 0L) {
+          setId(other.getId());
         }
         if (other.heartBeatType_ != 0) {
           setHeartBeatTypeValue(other.getHeartBeatTypeValue());
@@ -1765,59 +1727,26 @@ public final class Message {
         return this;
       }
 
-      private java.lang.Object id_ = "";
+      private long id_ ;
       /**
        * <pre>
        * 消息ID
        * </pre>
        *
-       * <code>string id = 1;</code>
+       * <code>int64 id = 1;</code>
        */
-      public java.lang.String getId() {
-        java.lang.Object ref = id_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          id_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+      public long getId() {
+        return id_;
       }
       /**
        * <pre>
        * 消息ID
        * </pre>
        *
-       * <code>string id = 1;</code>
+       * <code>int64 id = 1;</code>
        */
-      public com.google.protobuf.ByteString
-          getIdBytes() {
-        java.lang.Object ref = id_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          id_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <pre>
-       * 消息ID
-       * </pre>
-       *
-       * <code>string id = 1;</code>
-       */
-      public Builder setId(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
+      public Builder setId(long value) {
+        
         id_ = value;
         onChanged();
         return this;
@@ -1827,29 +1756,11 @@ public final class Message {
        * 消息ID
        * </pre>
        *
-       * <code>string id = 1;</code>
+       * <code>int64 id = 1;</code>
        */
       public Builder clearId() {
         
-        id_ = getDefaultInstance().getId();
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * 消息ID
-       * </pre>
-       *
-       * <code>string id = 1;</code>
-       */
-      public Builder setIdBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        id_ = value;
+        id_ = 0L;
         onChanged();
         return this;
       }
@@ -1960,18 +1871,9 @@ public final class Message {
      * 对应收到的消息ID
      * </pre>
      *
-     * <code>string id = 1;</code>
+     * <code>int64 id = 1;</code>
      */
-    java.lang.String getId();
-    /**
-     * <pre>
-     * 对应收到的消息ID
-     * </pre>
-     *
-     * <code>string id = 1;</code>
-     */
-    com.google.protobuf.ByteString
-        getIdBytes();
+    long getId();
 
     /**
      * <pre>
@@ -2016,7 +1918,7 @@ public final class Message {
       super(builder);
     }
     private MessageAck() {
-      id_ = "";
+      id_ = 0L;
       time_ = 0L;
       code_ = 0;
     }
@@ -2045,10 +1947,9 @@ public final class Message {
             case 0:
               done = true;
               break;
-            case 10: {
-              java.lang.String s = input.readStringRequireUtf8();
+            case 8: {
 
-              id_ = s;
+              id_ = input.readInt64();
               break;
             }
             case 16: {
@@ -2095,45 +1996,16 @@ public final class Message {
     }
 
     public static final int ID_FIELD_NUMBER = 1;
-    private volatile java.lang.Object id_;
+    private long id_;
     /**
      * <pre>
      * 对应收到的消息ID
      * </pre>
      *
-     * <code>string id = 1;</code>
+     * <code>int64 id = 1;</code>
      */
-    public java.lang.String getId() {
-      java.lang.Object ref = id_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        id_ = s;
-        return s;
-      }
-    }
-    /**
-     * <pre>
-     * 对应收到的消息ID
-     * </pre>
-     *
-     * <code>string id = 1;</code>
-     */
-    public com.google.protobuf.ByteString
-        getIdBytes() {
-      java.lang.Object ref = id_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        id_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+    public long getId() {
+      return id_;
     }
 
     public static final int TIME_FIELD_NUMBER = 2;
@@ -2188,8 +2060,8 @@ public final class Message {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (!getIdBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, id_);
+      if (id_ != 0L) {
+        output.writeInt64(1, id_);
       }
       if (time_ != 0L) {
         output.writeUInt64(2, time_);
@@ -2206,8 +2078,9 @@ public final class Message {
       if (size != -1) return size;
 
       size = 0;
-      if (!getIdBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, id_);
+      if (id_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(1, id_);
       }
       if (time_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
@@ -2233,8 +2106,8 @@ public final class Message {
       com.tim.common.protos.Message.MessageAck other = (com.tim.common.protos.Message.MessageAck) obj;
 
       boolean result = true;
-      result = result && getId()
-          .equals(other.getId());
+      result = result && (getId()
+          == other.getId());
       result = result && (getTime()
           == other.getTime());
       result = result && code_ == other.code_;
@@ -2250,7 +2123,8 @@ public final class Message {
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + ID_FIELD_NUMBER;
-      hash = (53 * hash) + getId().hashCode();
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getId());
       hash = (37 * hash) + TIME_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           getTime());
@@ -2393,7 +2267,7 @@ public final class Message {
       @java.lang.Override
       public Builder clear() {
         super.clear();
-        id_ = "";
+        id_ = 0L;
 
         time_ = 0L;
 
@@ -2476,9 +2350,8 @@ public final class Message {
 
       public Builder mergeFrom(com.tim.common.protos.Message.MessageAck other) {
         if (other == com.tim.common.protos.Message.MessageAck.getDefaultInstance()) return this;
-        if (!other.getId().isEmpty()) {
-          id_ = other.id_;
-          onChanged();
+        if (other.getId() != 0L) {
+          setId(other.getId());
         }
         if (other.getTime() != 0L) {
           setTime(other.getTime());
@@ -2515,59 +2388,26 @@ public final class Message {
         return this;
       }
 
-      private java.lang.Object id_ = "";
+      private long id_ ;
       /**
        * <pre>
        * 对应收到的消息ID
        * </pre>
        *
-       * <code>string id = 1;</code>
+       * <code>int64 id = 1;</code>
        */
-      public java.lang.String getId() {
-        java.lang.Object ref = id_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          id_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+      public long getId() {
+        return id_;
       }
       /**
        * <pre>
        * 对应收到的消息ID
        * </pre>
        *
-       * <code>string id = 1;</code>
+       * <code>int64 id = 1;</code>
        */
-      public com.google.protobuf.ByteString
-          getIdBytes() {
-        java.lang.Object ref = id_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          id_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <pre>
-       * 对应收到的消息ID
-       * </pre>
-       *
-       * <code>string id = 1;</code>
-       */
-      public Builder setId(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
+      public Builder setId(long value) {
+        
         id_ = value;
         onChanged();
         return this;
@@ -2577,29 +2417,11 @@ public final class Message {
        * 对应收到的消息ID
        * </pre>
        *
-       * <code>string id = 1;</code>
+       * <code>int64 id = 1;</code>
        */
       public Builder clearId() {
         
-        id_ = getDefaultInstance().getId();
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * 对应收到的消息ID
-       * </pre>
-       *
-       * <code>string id = 1;</code>
-       */
-      public Builder setIdBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        id_ = value;
+        id_ = 0L;
         onChanged();
         return this;
       }
@@ -2789,9 +2611,9 @@ public final class Message {
       ".ConversationType\022\017\n\007fromUid\030\002 \001(\t\022\026\n\016co" +
       "nversasionId\030\003 \001(\t\0226\n\007content\030\004 \001(\0132%.co" +
       "m.tim.common.protos.MessageContent\"T\n\tHe" +
-      "artBeat\022\n\n\002id\030\001 \001(\t\022;\n\rheartBeatType\030\002 \001" +
+      "artBeat\022\n\n\002id\030\001 \001(\003\022;\n\rheartBeatType\030\002 \001" +
       "(\0162$.com.tim.common.protos.HeartBeatType" +
-      "\"Q\n\nMessageAck\022\n\n\002id\030\001 \001(\t\022\014\n\004time\030\002 \001(\004" +
+      "\"Q\n\nMessageAck\022\n\n\002id\030\001 \001(\003\022\014\n\004time\030\002 \001(\004" +
       "\022)\n\004code\030\003 \001(\0162\033.com.tim.common.protos.C" +
       "ode*#\n\rHeartBeatType\022\010\n\004PING\020\000\022\010\n\004PONG\020\001" +
       "B\tB\007Messageb\006proto3"

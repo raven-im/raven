@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: tim-access
   redis:
     host: 127.0.0.1
     port: 6379
@@ -7,7 +9,22 @@ spring:
       max-wait: 60000
       max-idle: 5
       min-idle: 1
+  main:
+    banner-mode: log
+  cloud:
+    zookeeper:
+      connect-string: localhost:2181
+      discovery:
+        prefer-ip-address: true
+        instance-port: 7070
 
 netty:
   server:
     port: 7070
+
+node:
+  data-center-id: 1
+  machine-id: 1
+
+
+

@@ -6,13 +6,13 @@ option java_outer_classname = "History";
 
 // 历史消息请求
 message HisMessagesReq {
-  string id = 1; // 消息ID
+  int64 id = 1; // 消息ID
   string conversasionId = 2; // 会话id
 }
 
 // 历史消息
 message HisMessagesAck {
-  string id = 1; // 消息ID
+  int64 id = 1; // 消息ID
   string conversasionId = 2; // 会话id
   repeated MessageContent messageList = 3;
 }

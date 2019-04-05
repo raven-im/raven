@@ -22,11 +22,6 @@
             <groupId>com.github.tim</groupId>
             <artifactId>tim-common</artifactId>
         </dependency>
-        <dependency>
-            <groupId>io.netty</groupId>
-            <artifactId>netty-all</artifactId>
-            <version>${version.netty}</version>
-        </dependency>
     </dependencies>
 
 </project>

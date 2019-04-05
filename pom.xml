@@ -20,7 +20,6 @@
         <module>tim-client</module>
         <module>tim-access</module>
         <module>tim-admin</module>
-        <module>tim-eureka</module>
         <module>tim-single</module>
         <module>tim-group</module>
     </modules>

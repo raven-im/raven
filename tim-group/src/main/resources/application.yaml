@@ -30,17 +30,11 @@ spring:
       min-idle: 1
   main:
     banner-mode: log
-
-netty:
-  server:
-    port: 7071
-
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
-  instance:
-    prefer-ip-address: true
+  cloud:
+    zookeeper:
+      connect-string: localhost:2181
+    discovery:
+      prefer-ip-address: true
 
 # actuator相关配置
 management:
@@ -58,10 +52,6 @@ management:
     web:
       exposure:
         include: '*' #开放所有监控接口
-
-node:
-  data-center-id: 1
-  machine-id: 2
 
 server:
   port: 7171

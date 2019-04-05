@@ -130,18 +130,9 @@ public final class Conversation {
      * 消息ID
      * </pre>
      *
-     * <code>string id = 1;</code>
+     * <code>int64 id = 1;</code>
      */
-    java.lang.String getId();
-    /**
-     * <pre>
-     * 消息ID
-     * </pre>
-     *
-     * <code>string id = 1;</code>
-     */
-    com.google.protobuf.ByteString
-        getIdBytes();
+    long getId();
 
     /**
      * <pre>
@@ -222,7 +213,7 @@ public final class Conversation {
       super(builder);
     }
     private ConversationReq() {
-      id_ = "";
+      id_ = 0L;
       type_ = 0;
       targetid_ = "";
       operation_ = 0;
@@ -253,10 +244,9 @@ public final class Conversation {
             case 0:
               done = true;
               break;
-            case 10: {
-              java.lang.String s = input.readStringRequireUtf8();
+            case 8: {
 
-              id_ = s;
+              id_ = input.readInt64();
               break;
             }
             case 16: {
@@ -316,45 +306,16 @@ public final class Conversation {
     }
 
     public static final int ID_FIELD_NUMBER = 1;
-    private volatile java.lang.Object id_;
+    private long id_;
     /**
      * <pre>
      * 消息ID
      * </pre>
      *
-     * <code>string id = 1;</code>
+     * <code>int64 id = 1;</code>
      */
-    public java.lang.String getId() {
-      java.lang.Object ref = id_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        id_ = s;
-        return s;
-      }
-    }
-    /**
-     * <pre>
-     * 消息ID
-     * </pre>
-     *
-     * <code>string id = 1;</code>
-     */
-    public com.google.protobuf.ByteString
-        getIdBytes() {
-      java.lang.Object ref = id_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        id_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+    public long getId() {
+      return id_;
     }
 
     public static final int TYPE_FIELD_NUMBER = 2;
@@ -497,8 +458,8 @@ public final class Conversation {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (!getIdBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, id_);
+      if (id_ != 0L) {
+        output.writeInt64(1, id_);
       }
       if (type_ != com.tim.common.protos.Common.ConversationType.SINGLE.getNumber()) {
         output.writeEnum(2, type_);
@@ -521,8 +482,9 @@ public final class Conversation {
       if (size != -1) return size;
 
       size = 0;
-      if (!getIdBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, id_);
+      if (id_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(1, id_);
       }
       if (type_ != com.tim.common.protos.Common.ConversationType.SINGLE.getNumber()) {
         size += com.google.protobuf.CodedOutputStream
@@ -554,8 +516,8 @@ public final class Conversation {
       com.tim.common.protos.Conversation.ConversationReq other = (com.tim.common.protos.Conversation.ConversationReq) obj;
 
       boolean result = true;
-      result = result && getId()
-          .equals(other.getId());
+      result = result && (getId()
+          == other.getId());
       result = result && type_ == other.type_;
       result = result && getTargetid()
           .equals(other.getTargetid());
@@ -574,7 +536,8 @@ public final class Conversation {
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + ID_FIELD_NUMBER;
-      hash = (53 * hash) + getId().hashCode();
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getId());
       hash = (37 * hash) + TYPE_FIELD_NUMBER;
       hash = (53 * hash) + type_;
       hash = (37 * hash) + TARGETID_FIELD_NUMBER;
@@ -720,7 +683,7 @@ public final class Conversation {
       @java.lang.Override
       public Builder clear() {
         super.clear();
-        id_ = "";
+        id_ = 0L;
 
         type_ = 0;
 
@@ -809,9 +772,8 @@ public final class Conversation {
 
       public Builder mergeFrom(com.tim.common.protos.Conversation.ConversationReq other) {
         if (other == com.tim.common.protos.Conversation.ConversationReq.getDefaultInstance()) return this;
-        if (!other.getId().isEmpty()) {
-          id_ = other.id_;
-          onChanged();
+        if (other.getId() != 0L) {
+          setId(other.getId());
         }
         if (other.type_ != 0) {
           setTypeValue(other.getTypeValue());
@@ -856,59 +818,26 @@ public final class Conversation {
         return this;
       }
 
-      private java.lang.Object id_ = "";
+      private long id_ ;
       /**
        * <pre>
        * 消息ID
        * </pre>
        *
-       * <code>string id = 1;</code>
+       * <code>int64 id = 1;</code>
        */
-      public java.lang.String getId() {
-        java.lang.Object ref = id_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          id_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+      public long getId() {
+        return id_;
       }
       /**
        * <pre>
        * 消息ID
        * </pre>
        *
-       * <code>string id = 1;</code>
+       * <code>int64 id = 1;</code>
        */
-      public com.google.protobuf.ByteString
-          getIdBytes() {
-        java.lang.Object ref = id_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          id_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <pre>
-       * 消息ID
-       * </pre>
-       *
-       * <code>string id = 1;</code>
-       */
-      public Builder setId(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
+      public Builder setId(long value) {
+        
         id_ = value;
         onChanged();
         return this;
@@ -918,29 +847,11 @@ public final class Conversation {
        * 消息ID
        * </pre>
        *
-       * <code>string id = 1;</code>
+       * <code>int64 id = 1;</code>
        */
       public Builder clearId() {
         
-        id_ = getDefaultInstance().getId();
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * 消息ID
-       * </pre>
-       *
-       * <code>string id = 1;</code>
-       */
-      public Builder setIdBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        id_ = value;
+        id_ = 0L;
         onChanged();
         return this;
       }
@@ -1294,18 +1205,9 @@ public final class Conversation {
      * 对应收到的消息ID
      * </pre>
      *
-     * <code>string id = 1;</code>
+     * <code>int64 id = 1;</code>
      */
-    java.lang.String getId();
-    /**
-     * <pre>
-     * 对应收到的消息ID
-     * </pre>
-     *
-     * <code>string id = 1;</code>
-     */
-    com.google.protobuf.ByteString
-        getIdBytes();
+    long getId();
 
     /**
      * <pre>
@@ -1405,7 +1307,7 @@ public final class Conversation {
       super(builder);
     }
     private ConversationAck() {
-      id_ = "";
+      id_ = 0L;
       code_ = 0;
       time_ = 0L;
       conversasionId_ = "";
@@ -1436,10 +1338,9 @@ public final class Conversation {
             case 0:
               done = true;
               break;
-            case 10: {
-              java.lang.String s = input.readStringRequireUtf8();
+            case 8: {
 
-              id_ = s;
+              id_ = input.readInt64();
               break;
             }
             case 16: {
@@ -1518,45 +1419,16 @@ public final class Conversation {
 
     private int bitField0_;
     public static final int ID_FIELD_NUMBER = 1;
-    private volatile java.lang.Object id_;
+    private long id_;
     /**
      * <pre>
      * 对应收到的消息ID
      * </pre>
      *
-     * <code>string id = 1;</code>
+     * <code>int64 id = 1;</code>
      */
-    public java.lang.String getId() {
-      java.lang.Object ref = id_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        id_ = s;
-        return s;
-      }
-    }
-    /**
-     * <pre>
-     * 对应收到的消息ID
-     * </pre>
-     *
-     * <code>string id = 1;</code>
-     */
-    public com.google.protobuf.ByteString
-        getIdBytes() {
-      java.lang.Object ref = id_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        id_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+    public long getId() {
+      return id_;
     }
 
     public static final int CODE_FIELD_NUMBER = 2;
@@ -1709,8 +1581,8 @@ public final class Conversation {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (!getIdBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, id_);
+      if (id_ != 0L) {
+        output.writeInt64(1, id_);
       }
       if (code_ != com.tim.common.protos.Common.Code.SUCCESS.getNumber()) {
         output.writeEnum(2, code_);
@@ -1736,8 +1608,9 @@ public final class Conversation {
       if (size != -1) return size;
 
       size = 0;
-      if (!getIdBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, id_);
+      if (id_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(1, id_);
       }
       if (code_ != com.tim.common.protos.Common.Code.SUCCESS.getNumber()) {
         size += com.google.protobuf.CodedOutputStream
@@ -1774,8 +1647,8 @@ public final class Conversation {
       com.tim.common.protos.Conversation.ConversationAck other = (com.tim.common.protos.Conversation.ConversationAck) obj;
 
       boolean result = true;
-      result = result && getId()
-          .equals(other.getId());
+      result = result && (getId()
+          == other.getId());
       result = result && code_ == other.code_;
       result = result && (getTime()
           == other.getTime());
@@ -1800,7 +1673,8 @@ public final class Conversation {
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + ID_FIELD_NUMBER;
-      hash = (53 * hash) + getId().hashCode();
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getId());
       hash = (37 * hash) + CODE_FIELD_NUMBER;
       hash = (53 * hash) + code_;
       hash = (37 * hash) + TIME_FIELD_NUMBER;
@@ -1954,7 +1828,7 @@ public final class Conversation {
       @java.lang.Override
       public Builder clear() {
         super.clear();
-        id_ = "";
+        id_ = 0L;
 
         code_ = 0;
 
@@ -2069,9 +1943,8 @@ public final class Conversation {
 
       public Builder mergeFrom(com.tim.common.protos.Conversation.ConversationAck other) {
         if (other == com.tim.common.protos.Conversation.ConversationAck.getDefaultInstance()) return this;
-        if (!other.getId().isEmpty()) {
-          id_ = other.id_;
-          onChanged();
+        if (other.getId() != 0L) {
+          setId(other.getId());
         }
         if (other.code_ != 0) {
           setCodeValue(other.getCodeValue());
@@ -2142,59 +2015,26 @@ public final class Conversation {
       }
       private int bitField0_;
 
-      private java.lang.Object id_ = "";
+      private long id_ ;
       /**
        * <pre>
        * 对应收到的消息ID
        * </pre>
        *
-       * <code>string id = 1;</code>
+       * <code>int64 id = 1;</code>
        */
-      public java.lang.String getId() {
-        java.lang.Object ref = id_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          id_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+      public long getId() {
+        return id_;
       }
       /**
        * <pre>
        * 对应收到的消息ID
        * </pre>
        *
-       * <code>string id = 1;</code>
+       * <code>int64 id = 1;</code>
        */
-      public com.google.protobuf.ByteString
-          getIdBytes() {
-        java.lang.Object ref = id_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          id_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <pre>
-       * 对应收到的消息ID
-       * </pre>
-       *
-       * <code>string id = 1;</code>
-       */
-      public Builder setId(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
+      public Builder setId(long value) {
+        
         id_ = value;
         onChanged();
         return this;
@@ -2204,29 +2044,11 @@ public final class Conversation {
        * 对应收到的消息ID
        * </pre>
        *
-       * <code>string id = 1;</code>
+       * <code>int64 id = 1;</code>
        */
       public Builder clearId() {
         
-        id_ = getDefaultInstance().getId();
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * 对应收到的消息ID
-       * </pre>
-       *
-       * <code>string id = 1;</code>
-       */
-      public Builder setIdBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        id_ = value;
+        id_ = 0L;
         onChanged();
         return this;
       }
@@ -4266,11 +4088,11 @@ public final class Conversation {
     java.lang.String[] descriptorData = {
       "\n\022conversation.proto\022\025com.tim.common.pro" +
       "tos\032\014common.proto\"\263\001\n\017ConversationReq\022\n\n" +
-      "\002id\030\001 \001(\t\0225\n\004type\030\002 \001(\0162\'.com.tim.common" +
+      "\002id\030\001 \001(\003\0225\n\004type\030\002 \001(\0162\'.com.tim.common" +
       ".protos.ConversationType\022\020\n\010targetid\030\003 \001" +
       "(\t\0223\n\toperation\030\004 \001(\0162 .com.tim.common.p" +
       "rotos.Operation\022\026\n\016conversasionId\030\005 \001(\t\"" +
-      "\372\001\n\017ConversationAck\022\n\n\002id\030\001 \001(\t\022)\n\004code\030" +
+      "\372\001\n\017ConversationAck\022\n\n\002id\030\001 \001(\003\022)\n\004code\030" +
       "\002 \001(\0162\033.com.tim.common.protos.Code\022\014\n\004ti" +
       "me\030\003 \001(\004\022\026\n\016conversasionId\030\004 \001(\t\022E\n\022conv" +
       "ersationDetail\030\005 \001(\0132).com.tim.common.pr" +

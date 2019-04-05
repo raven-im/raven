@@ -190,13 +190,17 @@ public class UserServiceImpl implements UserService {
         }
         String uid = redisTemplate.opsForValue().get(token).split(DEFAULT_SEPARATES_SIGN)[1];
 
-        List<ServiceInstance> instances = discoveryClient.getInstances("tim-admin");
-        List<Server> servers = instances.stream()
-            .map((x) -> new Server(x.getHost(), x.getPort()))
-            .collect(Collectors.toList());
-        LoadBalancer lb = new ConsistentHashLoadBalancer();
-        Server origin = lb.select(servers, key + DEFAULT_SEPARATES_SIGN + uid);
-        return Result.success(new ServerInfoOutParam(key, uid, origin.getIp(), origin.getPort()));
+        List<ServiceInstance> instances = discoveryClient.getInstances("tim-access");
+        if (!instances.isEmpty()) {
+            List<Server> servers = instances.stream()
+                .map((x) -> new Server(x.getHost(), x.getPort()))
+                .collect(Collectors.toList());
+            LoadBalancer lb = new ConsistentHashLoadBalancer();
+            Server origin = lb.select(servers, key + DEFAULT_SEPARATES_SIGN + uid);
+            return Result
+                .success(new ServerInfoOutParam(key, uid, origin.getIp(), origin.getPort()));
+        }
+        return Result.failure(ResultCode.COMMON_NO_ACCESS_ERROR);
     }
 
     private String getAppSecret(String key) {

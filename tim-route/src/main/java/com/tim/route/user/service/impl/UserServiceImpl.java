@@ -195,7 +195,7 @@ public class UserServiceImpl implements UserService {
         String uid = tokenStr.split(DEFAULT_SEPARATES_SIGN)[1];
 
         // check if there is already a Access server.  if yes , dispatch to that server.
-        String serverAddress = (String) redisTemplate.boundHashOps(Constants.USER_ROUTE_KEY).get(uid);
+        String serverAddress = (String) redisTemplate.boundHashOps(USER_ROUTE_KEY).get(uid);
 
         if (!StringUtils.isEmpty(serverAddress)) {
             String[] array = serverAddress.split(DEFAULT_SEPARATES_SIGN);

@@ -23,7 +23,7 @@ public final class History {
      * 消息ID
      * </pre>
      *
-     * <code>int64 id = 1;</code>
+     * <code>uint64 id = 1;</code>
      */
     long getId();
 
@@ -47,7 +47,7 @@ public final class History {
   }
   /**
    * <pre>
-   * 历史消息请求
+   * 历史消息请求  消息ID使用客户端生成
    * </pre>
    *
    * Protobuf type {@code com.tim.common.protos.HisMessagesReq}
@@ -92,7 +92,7 @@ public final class History {
               break;
             case 8: {
 
-              id_ = input.readInt64();
+              id_ = input.readUInt64();
               break;
             }
             case 18: {
@@ -140,7 +140,7 @@ public final class History {
      * 消息ID
      * </pre>
      *
-     * <code>int64 id = 1;</code>
+     * <code>uint64 id = 1;</code>
      */
     public long getId() {
       return id_;
@@ -203,7 +203,7 @@ public final class History {
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (id_ != 0L) {
-        output.writeInt64(1, id_);
+        output.writeUInt64(1, id_);
       }
       if (!getConversasionIdBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 2, conversasionId_);
@@ -219,7 +219,7 @@ public final class History {
       size = 0;
       if (id_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(1, id_);
+          .computeUInt64Size(1, id_);
       }
       if (!getConversasionIdBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, conversasionId_);
@@ -357,7 +357,7 @@ public final class History {
     }
     /**
      * <pre>
-     * 历史消息请求
+     * 历史消息请求  消息ID使用客户端生成
      * </pre>
      *
      * Protobuf type {@code com.tim.common.protos.HisMessagesReq}
@@ -519,7 +519,7 @@ public final class History {
        * 消息ID
        * </pre>
        *
-       * <code>int64 id = 1;</code>
+       * <code>uint64 id = 1;</code>
        */
       public long getId() {
         return id_;
@@ -529,7 +529,7 @@ public final class History {
        * 消息ID
        * </pre>
        *
-       * <code>int64 id = 1;</code>
+       * <code>uint64 id = 1;</code>
        */
       public Builder setId(long value) {
         
@@ -542,7 +542,7 @@ public final class History {
        * 消息ID
        * </pre>
        *
-       * <code>int64 id = 1;</code>
+       * <code>uint64 id = 1;</code>
        */
       public Builder clearId() {
         
@@ -701,7 +701,7 @@ public final class History {
      * 消息ID
      * </pre>
      *
-     * <code>int64 id = 1;</code>
+     * <code>uint64 id = 1;</code>
      */
     long getId();
 
@@ -795,7 +795,7 @@ public final class History {
               break;
             case 8: {
 
-              id_ = input.readInt64();
+              id_ = input.readUInt64();
               break;
             }
             case 18: {
@@ -856,7 +856,7 @@ public final class History {
      * 消息ID
      * </pre>
      *
-     * <code>int64 id = 1;</code>
+     * <code>uint64 id = 1;</code>
      */
     public long getId() {
       return id_;
@@ -954,7 +954,7 @@ public final class History {
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (id_ != 0L) {
-        output.writeInt64(1, id_);
+        output.writeUInt64(1, id_);
       }
       if (!getConversasionIdBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 2, conversasionId_);
@@ -973,7 +973,7 @@ public final class History {
       size = 0;
       if (id_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(1, id_);
+          .computeUInt64Size(1, id_);
       }
       if (!getConversasionIdBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, conversasionId_);
@@ -1329,7 +1329,7 @@ public final class History {
        * 消息ID
        * </pre>
        *
-       * <code>int64 id = 1;</code>
+       * <code>uint64 id = 1;</code>
        */
       public long getId() {
         return id_;
@@ -1339,7 +1339,7 @@ public final class History {
        * 消息ID
        * </pre>
        *
-       * <code>int64 id = 1;</code>
+       * <code>uint64 id = 1;</code>
        */
       public Builder setId(long value) {
         
@@ -1352,7 +1352,7 @@ public final class History {
        * 消息ID
        * </pre>
        *
-       * <code>int64 id = 1;</code>
+       * <code>uint64 id = 1;</code>
        */
       public Builder clearId() {
         
@@ -1763,8 +1763,8 @@ public final class History {
     java.lang.String[] descriptorData = {
       "\n\rhistory.proto\022\025com.tim.common.protos\032\014" +
       "common.proto\"4\n\016HisMessagesReq\022\n\n\002id\030\001 \001" +
-      "(\003\022\026\n\016conversasionId\030\002 \001(\t\"p\n\016HisMessage" +
-      "sAck\022\n\n\002id\030\001 \001(\003\022\026\n\016conversasionId\030\002 \001(\t" +
+      "(\004\022\026\n\016conversasionId\030\002 \001(\t\"p\n\016HisMessage" +
+      "sAck\022\n\n\002id\030\001 \001(\004\022\026\n\016conversasionId\030\002 \001(\t" +
       "\022:\n\013messageList\030\003 \003(\0132%.com.tim.common.p" +
       "rotos.MessageContentB\tB\007Historyb\006proto3"
     };

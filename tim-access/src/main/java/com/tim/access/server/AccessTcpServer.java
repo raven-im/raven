@@ -1,7 +1,10 @@
 package com.tim.access.server;
 
+import com.tim.access.handler.ConversationHandler;
 import com.tim.access.handler.HeartBeatHandler;
+import com.tim.access.handler.HistoryHandler;
 import com.tim.access.handler.LoginAuthHandler;
+import com.tim.access.handler.MesaageHandler;
 import com.tim.common.code.MessageDecoder;
 import com.tim.common.code.MessageEncoder;
 import com.tim.common.utils.SnowFlake;
@@ -67,8 +70,12 @@ public class AccessTcpServer {
                     pipeline.addLast(
                         new ProtobufVarint32LengthFieldPrepender());// 对protobuf协议的消息头上加上一个长度为32的整形字段
                     pipeline.addLast(new MessageEncoder());
-                    pipeline.addLast(new HeartBeatHandler());
                     pipeline.addLast(new LoginAuthHandler());
+                    pipeline.addLast(new HeartBeatHandler());
+                    pipeline.addLast(new MesaageHandler());
+                    pipeline.addLast(new ConversationHandler());
+                    pipeline.addLast(new HistoryHandler());
+
                 }
             });
         bindConnectionOptions(bootstrap);

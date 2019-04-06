@@ -343,7 +343,7 @@ public final class Common {
      * 消息ID
      * </pre>
      *
-     * <code>int64 id = 1;</code>
+     * <code>uint64 id = 1;</code>
      */
     long getId();
 
@@ -451,7 +451,7 @@ public final class Common {
               break;
             case 8: {
 
-              id_ = input.readInt64();
+              id_ = input.readUInt64();
               break;
             }
             case 18: {
@@ -516,7 +516,7 @@ public final class Common {
      * 消息ID
      * </pre>
      *
-     * <code>int64 id = 1;</code>
+     * <code>uint64 id = 1;</code>
      */
     public long getId() {
       return id_;
@@ -651,7 +651,7 @@ public final class Common {
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (id_ != 0L) {
-        output.writeInt64(1, id_);
+        output.writeUInt64(1, id_);
       }
       if (!getUidBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 2, uid_);
@@ -676,7 +676,7 @@ public final class Common {
       size = 0;
       if (id_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(1, id_);
+          .computeUInt64Size(1, id_);
       }
       if (!getUidBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, uid_);
@@ -1018,7 +1018,7 @@ public final class Common {
        * 消息ID
        * </pre>
        *
-       * <code>int64 id = 1;</code>
+       * <code>uint64 id = 1;</code>
        */
       public long getId() {
         return id_;
@@ -1028,7 +1028,7 @@ public final class Common {
        * 消息ID
        * </pre>
        *
-       * <code>int64 id = 1;</code>
+       * <code>uint64 id = 1;</code>
        */
       public Builder setId(long value) {
         
@@ -1041,7 +1041,7 @@ public final class Common {
        * 消息ID
        * </pre>
        *
-       * <code>int64 id = 1;</code>
+       * <code>uint64 id = 1;</code>
        */
       public Builder clearId() {
         
@@ -1378,7 +1378,7 @@ public final class Common {
   static {
     java.lang.String[] descriptorData = {
       "\n\014common.proto\022\025com.tim.common.protos\"z\n" +
-      "\016MessageContent\022\n\n\002id\030\001 \001(\003\022\013\n\003uid\030\002 \001(\t" +
+      "\016MessageContent\022\n\n\002id\030\001 \001(\004\022\013\n\003uid\030\002 \001(\t" +
       "\0220\n\004type\030\003 \001(\0162\".com.tim.common.protos.M" +
       "essageType\022\017\n\007content\030\004 \001(\t\022\014\n\004time\030\005 \001(" +
       "\004*\035\n\004Code\022\013\n\007SUCCESS\020\000\022\010\n\004FAIL\020\001*)\n\020Conv" +

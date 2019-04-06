@@ -37,4 +37,9 @@ public class Constants {
      * Default separate sign.
      */
     public static final String DEFAULT_SEPARATES_SIGN = ":";
+
+    /**
+     * Global config.
+     */
+    public static final String CONFIG_NETTY_PORT = "netty-port";
 }

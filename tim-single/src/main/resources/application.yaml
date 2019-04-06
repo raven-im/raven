@@ -35,6 +35,8 @@ spring:
       connect-string: localhost:2181
       discovery:
         prefer-ip-address: true
+        metadata:
+          netty-port: ${netty.server.port}
 
 # actuator相关配置
 management:
@@ -68,4 +70,8 @@ mapper:
   not-empty: true
   before: true
   identity: mysql
+
+netty:
+  server:
+    port: 7270
 

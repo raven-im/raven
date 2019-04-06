@@ -1,8 +1,12 @@
 package com.tim.route.user.service.impl;
 
 import com.tim.common.exception.TokenException;
+import com.tim.common.loadbalance.ConsistentHashLoadBalancer;
+import com.tim.common.loadbalance.LoadBalancer;
+import com.tim.common.loadbalance.Server;
 import com.tim.common.result.Result;
 import com.tim.common.result.ResultCode;
+import com.tim.common.utils.Constants;
 import com.tim.common.utils.DateTimeUtils;
 import com.tim.common.utils.UidUtil;
 import com.tim.route.config.security.SecurityUtils;
@@ -17,6 +21,7 @@ import com.tim.route.user.mapper.UserMapper;
 import com.tim.route.user.service.UserService;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.tim.route.utils.Token;
@@ -24,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
-import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -48,9 +53,6 @@ public class UserServiceImpl implements UserService {
     private AppConfigMapper configMapper;
 
     @Autowired
-    private StringRedisTemplate redisTemplate;
-
-    @Autowired
     private AuthenticationManager authenticationManager;
 
     @Autowired
@@ -64,6 +66,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private DiscoveryClient discoveryClient;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     @Override
     @Transactional(rollbackFor = Throwable.class)
@@ -166,7 +171,9 @@ public class UserServiceImpl implements UserService {
 
             // cache token to redis.
             String key = appKey + DEFAULT_SEPARATES_SIGN + uid;
-            redisTemplate.opsForValue().set(token, key, TOKEN_CACHE_DURATION, TimeUnit.DAYS);
+            redisTemplate.boundHashOps(token).put(token, key);
+            redisTemplate.boundHashOps(token).expire(TOKEN_CACHE_DURATION, TimeUnit.DAYS);
+//            redisTemplate.opsForValue().set(token, key, TOKEN_CACHE_DURATION, TimeUnit.DAYS);
 
             return Result.success(new TokenInfoOutParam(appKey, uid, token));
         } catch (TokenException e) {
@@ -184,17 +191,35 @@ public class UserServiceImpl implements UserService {
         if (!tokenValidator.validate(token)) {
             return Result.failure(tokenValidator.errorCode());
         }
-        String uid = redisTemplate.opsForValue().get(token).split(DEFAULT_SEPARATES_SIGN)[1];
+        String tokenStr = (String) redisTemplate.boundHashOps(token).get(token);
+        String uid = tokenStr.split(DEFAULT_SEPARATES_SIGN)[1];
 
-        List<ServiceInstance> instances = discoveryClient.getInstances("tim-access");
-        if (!instances.isEmpty()) {
-            List<Server> servers = instances.stream()
-                .map((x) -> new Server(x.getHost(), x.getPort()))
-                .collect(Collectors.toList());
-            LoadBalancer lb = new ConsistentHashLoadBalancer();
-            Server origin = lb.select(servers, key + DEFAULT_SEPARATES_SIGN + uid);
-            return Result
-                .success(new ServerInfoOutParam(key, uid, origin.getIp(), origin.getPort()));
+        // check if there is already a Access server.  if yes , dispatch to that server.
+        String serverAddress = (String) redisTemplate.boundHashOps(Constants.USER_ROUTE_KEY).get(uid);
+
+        if (!StringUtils.isEmpty(serverAddress)) {
+            String[] array = serverAddress.split(DEFAULT_SEPARATES_SIGN);
+            String ip = array[0];
+            long port = Long.parseLong(array[1]);
+            return Result.success(new ServerInfoOutParam(key, uid, ip, port));
+        } else {
+            List<ServiceInstance> instances = discoveryClient.getInstances("tim-access");
+            if (!instances.isEmpty()) {
+                List<Server> servers = instances.stream()
+                    .map((x) -> {
+                        if (x.getMetadata().containsKey(CONFIG_NETTY_PORT)) {
+                            int nettyPort = Integer.valueOf(x.getMetadata().get(CONFIG_NETTY_PORT));
+                            return new Server(x.getHost(), nettyPort);
+                        } else {
+                            return new Server(x.getHost(), x.getPort());
+                        }
+                    })
+                    .collect(Collectors.toList());
+                LoadBalancer lb = new ConsistentHashLoadBalancer();
+                Server origin = lb.select(servers, uid);
+                return Result
+                    .success(new ServerInfoOutParam(key, uid, origin.getIp(), origin.getPort()));
+            }
         }
         return Result.failure(ResultCode.COMMON_NO_ACCESS_ERROR);
     }

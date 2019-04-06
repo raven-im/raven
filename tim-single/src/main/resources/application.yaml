@@ -56,7 +56,7 @@ management:
         include: '*' #开放所有监控接口
 
 server:
-  port: 8050
+  port: 8270
 
 # Mybatis
 mybatis:
@@ -74,4 +74,8 @@ mapper:
 netty:
   server:
     port: 7270
+
+node:
+  data-center-id: 1
+  machine-id: 1
 

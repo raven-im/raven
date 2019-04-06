@@ -1,12 +1,11 @@
 package com.tim.access.handler;
 
 import com.google.protobuf.MessageLite;
-import com.tim.access.channel.NettyChannelManager;
 import com.tim.access.server.AccessTcpServer;
+import com.tim.common.netty.ChannelManager;
 import com.tim.common.netty.NettyAttrUtil;
 import com.tim.common.protos.Message.HeartBeat;
 import com.tim.common.protos.Message.HeartBeatType;
-import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -16,13 +15,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-@Component
 @Sharable
 @Slf4j
 public class HeartBeatHandler extends SimpleChannelInboundHandler<MessageLite> {
 
     @Autowired
-    private NettyChannelManager nettyChannelManager;
+    private ChannelManager uidChannelManager;
 
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext,
@@ -48,7 +46,7 @@ public class HeartBeatHandler extends SimpleChannelInboundHandler<MessageLite> {
     public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
         if (evt instanceof IdleStateEvent) {
             if (((IdleStateEvent) evt).state() == IdleState.READER_IDLE) {
-                String uid = nettyChannelManager.getUidByChannel(ctx.channel());
+                String uid = uidChannelManager.getIdByChannel(ctx.channel());
                 HeartBeat heartBeat = HeartBeat.newBuilder()
                     .setId(AccessTcpServer.snowFlake.nextId())
                     .setHeartBeatType(HeartBeatType.PONG)

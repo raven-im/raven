@@ -54,7 +54,7 @@ management:
         include: '*' #开放所有监控接口
 
 server:
-  port: 7170
+  port: 8050
 
 # Mybatis
 mybatis:

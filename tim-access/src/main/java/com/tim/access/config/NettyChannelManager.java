@@ -1,4 +1,4 @@
-package com.tim.access.channel;
+package com.tim.access.config;
 
 import com.tim.common.netty.ChannelManager;
 import io.netty.channel.Channel;
@@ -9,36 +9,36 @@ import java.util.concurrent.ConcurrentMap;
 import org.springframework.stereotype.Component;
 
 /**
- * netty连接管理器
+ * channel管理器
  */
-@Component
+@Component(value = "uidChannelManager")
 public final class NettyChannelManager implements ChannelManager {
 
     private final ConcurrentMap<String, List<Channel>> uidChannels = new ConcurrentHashMap<>();
     private final ConcurrentMap<Channel, String> channelUid = new ConcurrentHashMap<>();
 
     @Override
-    public void addUid2Channel(String uid, Channel channel) {
-        channelUid.put(channel, uid);
+    public void addId2Channel(String id, Channel channel) {
+        channelUid.put(channel, id);
         if (!channelUid.containsKey(channel)) {
             List<Channel> channels = new ArrayList<>();
             channels.add(channel);
-            uidChannels.put(uid, channels);
+            uidChannels.put(id, channels);
             return;
         }
-        uidChannels.get(uid).add(channel);
+        uidChannels.get(id).add(channel);
     }
 
     @Override
-    public List<Channel> getChannelByUid(String uid) {
-        if (uidChannels.containsKey(uid)) {
-            return uidChannels.get(uid);
+    public List<Channel> getChannelsById(String id) {
+        if (uidChannels.containsKey(id)) {
+            return uidChannels.get(id);
         }
         return new ArrayList<>();
     }
 
     @Override
-    public String getUidByChannel(Channel channel) {
+    public String getIdByChannel(Channel channel) {
         if (channelUid.containsKey(channel)) {
             return channelUid.get(channel);
         }

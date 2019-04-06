@@ -121,17 +121,17 @@ public final class Message {
      * 会话类型
      * </pre>
      *
-     * <code>.com.tim.common.protos.ConversationType conversationType = 1;</code>
+     * <code>.com.tim.common.protos.ConversationType type = 1;</code>
      */
-    int getConversationTypeValue();
+    int getTypeValue();
     /**
      * <pre>
      * 会话类型
      * </pre>
      *
-     * <code>.com.tim.common.protos.ConversationType conversationType = 1;</code>
+     * <code>.com.tim.common.protos.ConversationType type = 1;</code>
      */
-    com.tim.common.protos.Common.ConversationType getConversationType();
+    com.tim.common.protos.Common.ConversationType getType();
 
     /**
      * <pre>
@@ -211,7 +211,7 @@ public final class Message {
       super(builder);
     }
     private UpDownMessage() {
-      conversationType_ = 0;
+      type_ = 0;
       fromUid_ = "";
       conversasionId_ = "";
     }
@@ -243,7 +243,7 @@ public final class Message {
             case 8: {
               int rawValue = input.readEnum();
 
-              conversationType_ = rawValue;
+              type_ = rawValue;
               break;
             }
             case 18: {
@@ -303,28 +303,28 @@ public final class Message {
               com.tim.common.protos.Message.UpDownMessage.class, com.tim.common.protos.Message.UpDownMessage.Builder.class);
     }
 
-    public static final int CONVERSATIONTYPE_FIELD_NUMBER = 1;
-    private int conversationType_;
+    public static final int TYPE_FIELD_NUMBER = 1;
+    private int type_;
     /**
      * <pre>
      * 会话类型
      * </pre>
      *
-     * <code>.com.tim.common.protos.ConversationType conversationType = 1;</code>
+     * <code>.com.tim.common.protos.ConversationType type = 1;</code>
      */
-    public int getConversationTypeValue() {
-      return conversationType_;
+    public int getTypeValue() {
+      return type_;
     }
     /**
      * <pre>
      * 会话类型
      * </pre>
      *
-     * <code>.com.tim.common.protos.ConversationType conversationType = 1;</code>
+     * <code>.com.tim.common.protos.ConversationType type = 1;</code>
      */
-    public com.tim.common.protos.Common.ConversationType getConversationType() {
+    public com.tim.common.protos.Common.ConversationType getType() {
       @SuppressWarnings("deprecation")
-      com.tim.common.protos.Common.ConversationType result = com.tim.common.protos.Common.ConversationType.valueOf(conversationType_);
+      com.tim.common.protos.Common.ConversationType result = com.tim.common.protos.Common.ConversationType.valueOf(type_);
       return result == null ? com.tim.common.protos.Common.ConversationType.UNRECOGNIZED : result;
     }
 
@@ -459,8 +459,8 @@ public final class Message {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (conversationType_ != com.tim.common.protos.Common.ConversationType.SINGLE.getNumber()) {
-        output.writeEnum(1, conversationType_);
+      if (type_ != com.tim.common.protos.Common.ConversationType.SINGLE.getNumber()) {
+        output.writeEnum(1, type_);
       }
       if (!getFromUidBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 2, fromUid_);
@@ -480,9 +480,9 @@ public final class Message {
       if (size != -1) return size;
 
       size = 0;
-      if (conversationType_ != com.tim.common.protos.Common.ConversationType.SINGLE.getNumber()) {
+      if (type_ != com.tim.common.protos.Common.ConversationType.SINGLE.getNumber()) {
         size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(1, conversationType_);
+          .computeEnumSize(1, type_);
       }
       if (!getFromUidBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, fromUid_);
@@ -510,7 +510,7 @@ public final class Message {
       com.tim.common.protos.Message.UpDownMessage other = (com.tim.common.protos.Message.UpDownMessage) obj;
 
       boolean result = true;
-      result = result && conversationType_ == other.conversationType_;
+      result = result && type_ == other.type_;
       result = result && getFromUid()
           .equals(other.getFromUid());
       result = result && getConversasionId()
@@ -531,8 +531,8 @@ public final class Message {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + CONVERSATIONTYPE_FIELD_NUMBER;
-      hash = (53 * hash) + conversationType_;
+      hash = (37 * hash) + TYPE_FIELD_NUMBER;
+      hash = (53 * hash) + type_;
       hash = (37 * hash) + FROMUID_FIELD_NUMBER;
       hash = (53 * hash) + getFromUid().hashCode();
       hash = (37 * hash) + CONVERSASIONID_FIELD_NUMBER;
@@ -678,7 +678,7 @@ public final class Message {
       @java.lang.Override
       public Builder clear() {
         super.clear();
-        conversationType_ = 0;
+        type_ = 0;
 
         fromUid_ = "";
 
@@ -716,7 +716,7 @@ public final class Message {
       @java.lang.Override
       public com.tim.common.protos.Message.UpDownMessage buildPartial() {
         com.tim.common.protos.Message.UpDownMessage result = new com.tim.common.protos.Message.UpDownMessage(this);
-        result.conversationType_ = conversationType_;
+        result.type_ = type_;
         result.fromUid_ = fromUid_;
         result.conversasionId_ = conversasionId_;
         if (contentBuilder_ == null) {
@@ -772,8 +772,8 @@ public final class Message {
 
       public Builder mergeFrom(com.tim.common.protos.Message.UpDownMessage other) {
         if (other == com.tim.common.protos.Message.UpDownMessage.getDefaultInstance()) return this;
-        if (other.conversationType_ != 0) {
-          setConversationTypeValue(other.getConversationTypeValue());
+        if (other.type_ != 0) {
+          setTypeValue(other.getTypeValue());
         }
         if (!other.getFromUid().isEmpty()) {
           fromUid_ = other.fromUid_;
@@ -815,26 +815,26 @@ public final class Message {
         return this;
       }
 
-      private int conversationType_ = 0;
+      private int type_ = 0;
       /**
        * <pre>
        * 会话类型
        * </pre>
        *
-       * <code>.com.tim.common.protos.ConversationType conversationType = 1;</code>
+       * <code>.com.tim.common.protos.ConversationType type = 1;</code>
        */
-      public int getConversationTypeValue() {
-        return conversationType_;
+      public int getTypeValue() {
+        return type_;
       }
       /**
        * <pre>
        * 会话类型
        * </pre>
        *
-       * <code>.com.tim.common.protos.ConversationType conversationType = 1;</code>
+       * <code>.com.tim.common.protos.ConversationType type = 1;</code>
        */
-      public Builder setConversationTypeValue(int value) {
-        conversationType_ = value;
+      public Builder setTypeValue(int value) {
+        type_ = value;
         onChanged();
         return this;
       }
@@ -843,11 +843,11 @@ public final class Message {
        * 会话类型
        * </pre>
        *
-       * <code>.com.tim.common.protos.ConversationType conversationType = 1;</code>
+       * <code>.com.tim.common.protos.ConversationType type = 1;</code>
        */
-      public com.tim.common.protos.Common.ConversationType getConversationType() {
+      public com.tim.common.protos.Common.ConversationType getType() {
         @SuppressWarnings("deprecation")
-        com.tim.common.protos.Common.ConversationType result = com.tim.common.protos.Common.ConversationType.valueOf(conversationType_);
+        com.tim.common.protos.Common.ConversationType result = com.tim.common.protos.Common.ConversationType.valueOf(type_);
         return result == null ? com.tim.common.protos.Common.ConversationType.UNRECOGNIZED : result;
       }
       /**
@@ -855,14 +855,14 @@ public final class Message {
        * 会话类型
        * </pre>
        *
-       * <code>.com.tim.common.protos.ConversationType conversationType = 1;</code>
+       * <code>.com.tim.common.protos.ConversationType type = 1;</code>
        */
-      public Builder setConversationType(com.tim.common.protos.Common.ConversationType value) {
+      public Builder setType(com.tim.common.protos.Common.ConversationType value) {
         if (value == null) {
           throw new NullPointerException();
         }
         
-        conversationType_ = value.getNumber();
+        type_ = value.getNumber();
         onChanged();
         return this;
       }
@@ -871,11 +871,11 @@ public final class Message {
        * 会话类型
        * </pre>
        *
-       * <code>.com.tim.common.protos.ConversationType conversationType = 1;</code>
+       * <code>.com.tim.common.protos.ConversationType type = 1;</code>
        */
-      public Builder clearConversationType() {
+      public Builder clearType() {
         
-        conversationType_ = 0;
+        type_ = 0;
         onChanged();
         return this;
       }
@@ -2606,17 +2606,17 @@ public final class Message {
   static {
     java.lang.String[] descriptorData = {
       "\n\rmessage.proto\022\025com.tim.common.protos\032\014" +
-      "common.proto\"\263\001\n\rUpDownMessage\022A\n\020conver" +
-      "sationType\030\001 \001(\0162\'.com.tim.common.protos" +
-      ".ConversationType\022\017\n\007fromUid\030\002 \001(\t\022\026\n\016co" +
-      "nversasionId\030\003 \001(\t\0226\n\007content\030\004 \001(\0132%.co" +
-      "m.tim.common.protos.MessageContent\"T\n\tHe" +
-      "artBeat\022\n\n\002id\030\001 \001(\003\022;\n\rheartBeatType\030\002 \001" +
-      "(\0162$.com.tim.common.protos.HeartBeatType" +
-      "\"Q\n\nMessageAck\022\n\n\002id\030\001 \001(\003\022\014\n\004time\030\002 \001(\004" +
-      "\022)\n\004code\030\003 \001(\0162\033.com.tim.common.protos.C" +
-      "ode*#\n\rHeartBeatType\022\010\n\004PING\020\000\022\010\n\004PONG\020\001" +
-      "B\tB\007Messageb\006proto3"
+      "common.proto\"\247\001\n\rUpDownMessage\0225\n\004type\030\001" +
+      " \001(\0162\'.com.tim.common.protos.Conversatio" +
+      "nType\022\017\n\007fromUid\030\002 \001(\t\022\026\n\016conversasionId" +
+      "\030\003 \001(\t\0226\n\007content\030\004 \001(\0132%.com.tim.common" +
+      ".protos.MessageContent\"T\n\tHeartBeat\022\n\n\002i" +
+      "d\030\001 \001(\003\022;\n\rheartBeatType\030\002 \001(\0162$.com.tim" +
+      ".common.protos.HeartBeatType\"Q\n\nMessageA" +
+      "ck\022\n\n\002id\030\001 \001(\003\022\014\n\004time\030\002 \001(\004\022)\n\004code\030\003 \001" +
+      "(\0162\033.com.tim.common.protos.Code*#\n\rHeart" +
+      "BeatType\022\010\n\004PING\020\000\022\010\n\004PONG\020\001B\tB\007Messageb" +
+      "\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -2636,7 +2636,7 @@ public final class Message {
     internal_static_com_tim_common_protos_UpDownMessage_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_tim_common_protos_UpDownMessage_descriptor,
-        new java.lang.String[] { "ConversationType", "FromUid", "ConversasionId", "Content", });
+        new java.lang.String[] { "Type", "FromUid", "ConversasionId", "Content", });
     internal_static_com_tim_common_protos_HeartBeat_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_com_tim_common_protos_HeartBeat_fieldAccessorTable = new

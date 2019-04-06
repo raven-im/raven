@@ -2,7 +2,7 @@ package com.tim.route.validator;
 
 import com.tim.common.result.ResultCode;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -15,11 +15,11 @@ import org.springframework.util.StringUtils;
 public class TokenValidator implements Validator {
 
     @Autowired
-    private StringRedisTemplate redisTemplate;
+    private RedisTemplate redisTemplate;
 
     @Override
     public boolean validate(String key) {
-        String value = redisTemplate.opsForValue().get(key);
+        String value = (String) redisTemplate.boundHashOps(key).get(key);
         return !StringUtils.isEmpty(value);
     }
 

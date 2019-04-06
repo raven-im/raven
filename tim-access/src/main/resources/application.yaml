@@ -16,7 +16,8 @@ spring:
       connect-string: localhost:2181
       discovery:
         prefer-ip-address: true
-        instance-port: 7010
+        metadata:
+          netty-port: ${netty.server.port}
 server:
   port: 8010
 

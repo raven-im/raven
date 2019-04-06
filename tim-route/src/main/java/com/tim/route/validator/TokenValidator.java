@@ -1,4 +1,4 @@
-package com.tim.route.config.validator;
+package com.tim.route.validator;
 
 import com.tim.common.result.ResultCode;
 import org.springframework.beans.factory.annotation.Autowired;

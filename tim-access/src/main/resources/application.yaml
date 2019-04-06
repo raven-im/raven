@@ -16,11 +16,13 @@ spring:
       connect-string: localhost:2181
       discovery:
         prefer-ip-address: true
-        instance-port: 7070
+        instance-port: 7010
+server:
+  port: 8010
 
 netty:
   server:
-    port: 7070
+    port: 7010
 
 node:
   data-center-id: 1

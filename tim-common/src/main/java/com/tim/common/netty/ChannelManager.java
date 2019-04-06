@@ -5,11 +5,11 @@ import java.util.List;
 
 public interface ChannelManager {
 
-    void addUid2Channel(String uid, Channel channel);
+    void addId2Channel(String id, Channel channel);
 
-    List<Channel> getChannelByUid(String uid);
+    List<Channel> getChannelsById(String id);
 
-    String getUidByChannel(Channel channel);
+    String getIdByChannel(Channel channel);
 
     void removeChannel(Channel channel);
 }

@@ -14,7 +14,7 @@ message ConversationReq {
 
 enum Operation {
   CREATE = 0;
-  DETAIL = 1;
+  DELETE = 1;
   ALL = 2;
 }
 
@@ -24,8 +24,9 @@ message ConversationAck {
   Code code = 2; // 返回码
   uint64 time = 3; // 时间
   string conversasionId = 4; // 会话ID
-  ConversationDetail conversationDetail = 5;
-  repeated ConversationDetail conversationList = 6;
+  Operation operation = 5;
+  ConversationDetail conversationDetail = 6;
+  repeated ConversationDetail conversationList = 7;
 
 }
 

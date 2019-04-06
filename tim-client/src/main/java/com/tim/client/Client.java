@@ -57,6 +57,7 @@ public class Client {
                 log.error("Client:{} connected MessageServer Failed", index);
             }
         });
+        b.connect(HOST, PORT);
     }
 
 }

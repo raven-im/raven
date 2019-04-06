@@ -5,17 +5,13 @@ package com.tim.common.utils;
  */
 public class Constants {
 
-    public static final String OFF_USER_MSG_KEY = "offline_user_msg_";
+    /**
+     * redis key
+     */
+    public static final String USER_ROUTE_KEY = "user_route_key";
 
-    public static final String TIM_OFFLINE_MESSAGE = "tim_offline_message_";
+    public static final String ACCESS_SERVER_ROUTE_KEY = "access_server_route_key_";
 
-    public static final String TIM_WAIT_ACK_MESSAGE = "tim_wait_ack_message_";
-
-    public static final String OFF_NOTIFY_KEY = "off_notify_";
-
-    public static final String NOTIFY_TYPE_USER = "notify_user_";
-
-    public static final String NOTIFY_TYPE_GROUP = "notify_group_";
 
     /*
      * Authentication.

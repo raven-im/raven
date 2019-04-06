@@ -31,12 +31,6 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class AccessTcpServer {
 
-    @Autowired
-    private HeartBeatHandler heartBeatHandler;
-
-    @Autowired
-    private LoginAuthHandler loginAuthHandler;
-
     @Value("${node.data-center-id}")
     private int dataCenterId;
 
@@ -44,7 +38,7 @@ public class AccessTcpServer {
     private int machineId;
 
     @Value("${netty.server.port}")
-    private int nettyServerPort;
+    public static int nettyServerPort;
 
     public static SnowFlake snowFlake;
 
@@ -73,8 +67,8 @@ public class AccessTcpServer {
                     pipeline.addLast(
                         new ProtobufVarint32LengthFieldPrepender());// 对protobuf协议的消息头上加上一个长度为32的整形字段
                     pipeline.addLast(new MessageEncoder());
-                    pipeline.addLast(heartBeatHandler);
-                    pipeline.addLast(loginAuthHandler);
+                    pipeline.addLast(new HeartBeatHandler());
+                    pipeline.addLast(new LoginAuthHandler());
                 }
             });
         bindConnectionOptions(bootstrap);

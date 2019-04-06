@@ -1,17 +1,14 @@
 package com.tim.route.user.service.impl;
 
 import com.tim.common.exception.TokenException;
-import com.tim.common.loadbalance.ConsistentHashLoadBalancer;
-import com.tim.common.loadbalance.LoadBalancer;
-import com.tim.common.loadbalance.Server;
 import com.tim.common.result.Result;
 import com.tim.common.result.ResultCode;
 import com.tim.common.utils.DateTimeUtils;
 import com.tim.common.utils.UidUtil;
 import com.tim.route.config.security.SecurityUtils;
-import com.tim.route.config.validator.AppKeyValidator;
-import com.tim.route.config.validator.TokenValidator;
-import com.tim.route.config.validator.UserValidator;
+import com.tim.route.validator.AppKeyValidator;
+import com.tim.route.validator.TokenValidator;
+import com.tim.route.validator.UserValidator;
 import com.tim.route.user.bean.model.AppConfigModel;
 import com.tim.route.user.bean.model.UserModel;
 import com.tim.route.user.bean.param.*;
@@ -20,7 +17,6 @@ import com.tim.route.user.mapper.UserMapper;
 import com.tim.route.user.service.UserService;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.tim.route.utils.Token;

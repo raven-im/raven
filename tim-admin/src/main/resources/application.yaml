@@ -25,11 +25,11 @@ spring:
   cloud:
     zookeeper:
       connect-string: localhost:2181
-    discovery:
-      prefer-ip-address: true
+      discovery:
+        prefer-ip-address: true
 
 server:
-  port: 8010
+  port: 8020
 # Mybatis
 mybatis:
   mapperLocations: classpath:mapper/*Mapper.xml

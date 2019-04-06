@@ -13,7 +13,7 @@ spring:
         prefer-ip-address: true
 
 server:
-  port: 8000
+  port: 8060
 
 zuul:
   ignored-services: '*'

@@ -6,7 +6,7 @@ option java_outer_classname = "Message";
 
 //上下行消息
 message UpDownMessage {
-  ConversationType conversationType = 1; // 会话类型
+  ConversationType type = 1; // 会话类型
   string fromUid = 2; // 发送者uid 用于Ack路由使用
   string conversasionId = 3; // 会话id
   MessageContent content = 4; // 内容

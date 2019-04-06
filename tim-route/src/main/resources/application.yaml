@@ -33,11 +33,11 @@ spring:
   cloud:
     zookeeper:
       connect-string: localhost:2181
-    discovery:
-      prefer-ip-address: true
+      discovery:
+        prefer-ip-address: true
 
 server:
-  port: 8080
+  port: 8040
 
 # Mybatis
 mybatis:

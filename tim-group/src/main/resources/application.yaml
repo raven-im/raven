@@ -33,8 +33,8 @@ spring:
   cloud:
     zookeeper:
       connect-string: localhost:2181
-    discovery:
-      prefer-ip-address: true
+      discovery:
+        prefer-ip-address: true
 
 # actuator相关配置
 management:
@@ -54,7 +54,7 @@ management:
         include: '*' #开放所有监控接口
 
 server:
-  port: 7171
+  port: 8030
 
 # Mybatis
 mybatis:

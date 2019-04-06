@@ -4,13 +4,13 @@ import "common.proto";
 option java_outer_classname = "Auth";
 
 message Login {
-  int64 id = 1; //消息ID
+  uint64 id = 1; //消息ID
   string uid = 2;
   string token = 3; // token
 }
 
 message LoginAck {
-  int64 id = 1; //消息ID
+  uint64 id = 1; //消息ID
   Code code = 2; //返回码
   string msg = 3; //描述
   uint64 time = 4; //消息时间

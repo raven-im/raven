@@ -3,30 +3,25 @@ package com.tim.common.protos;
 import "common.proto";
 option java_outer_classname = "Conversation";
 
-// 会话操作请求
+// 会话操作请求  消息ID使用客户端生成
 message ConversationReq {
-  int64 id = 1; // 消息ID
-  ConversationType type = 2; // 会话类型
-  string targetid = 3; // 单聊会话 用户ID 群会话 群ID
-  Operation operation = 4;
-  string conversasionId = 5; // 会话ID
+  uint64 id = 1; // 消息ID
+  OperationType type = 2;
+  string conversasionId = 3; // 会话ID
 }
 
-enum Operation {
-  CREATE = 0;
-  DELETE = 1;
-  ALL = 2;
+enum OperationType {
+  DETAIL = 0;
+  ALL = 1;
 }
 
 // 会话操作结果
 message ConversationAck {
-  int64 id = 1; // 对应收到的消息ID
-  Code code = 2; // 返回码
-  uint64 time = 3; // 时间
-  string conversasionId = 4; // 会话ID
-  Operation operation = 5;
-  ConversationDetail conversationDetail = 6;
-  repeated ConversationDetail conversationList = 7;
+  uint64 id = 1; // 消息ID
+  Code code = 3; // 返回码
+  uint64 time = 4; // 时间
+  ConversationDetail conversation = 5;
+  repeated ConversationDetail conversationList = 6;
 
 }
 
@@ -34,10 +29,9 @@ message ConversationAck {
 message ConversationDetail {
   string conversasionId = 1; // 会话ID
   ConversationType type = 2; // 会话类型
-  string targetid = 3; // 单聊会话 用户ID 群会话 群ID
-  string portraitUrl = 4; // 会话头像
+  string targetId = 3; // 单聊会话 用户ID 群会话 群ID
   uint64 unreadCount = 5; // 未读数
-  MessageContent lastContent = 6; // 最后一条消息时间
+  MessageContent lastContent = 6; // 最后一条消息
 }
 
 

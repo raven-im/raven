@@ -4,17 +4,20 @@ import "common.proto";
 
 option java_outer_classname = "Message";
 
-//上下行消息
+// 上下行消息
 message UpDownMessage {
-  ConversationType type = 1; // 会话类型
-  string fromUid = 2; // 发送者uid 用于Ack路由使用
-  string conversasionId = 3; // 会话id
-  MessageContent content = 4; // 内容
+  uint64 id = 1; // 服务端生成消息ID
+  uint64 clientId = 2; // 客户端消息ID
+  string targetId = 3; // 单聊会话 用户ID 群会话 群ID
+  string conversasionId = 4; // 会话id
+  ConversationType conversationType = 5; // 会话类型
+  Direction direction = 6; // 消息方向
+  MessageContent content = 7; // 内容
 }
 
 // 心跳
 message HeartBeat {
-  int64 id = 1; // 消息ID
+  uint64 id = 1; // 消息ID
   HeartBeatType heartBeatType = 2;
 }
 
@@ -23,9 +26,18 @@ enum HeartBeatType {
   PONG = 1;
 }
 
+enum Direction {
+  CS = 0;
+  SS = 1;
+  SC = 2;
+}
+
 // 消息ACK
 message MessageAck {
-  int64 id = 1; // 对应收到的消息ID
-  uint64 time = 2; // 发送时间
-  Code code = 3; // 返回码
+  uint64 id = 1; // 服务端生成消息ID
+  uint64 clientId = 2; // 对应收到的消息ID
+  string targetId = 3; // 用户ID
+  string conversasionId = 4; // 会话id
+  uint64 time = 5; // 发送时间
+  Code code = 6; // 返回码
 }

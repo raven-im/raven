@@ -23,7 +23,7 @@ public final class Auth {
      *消息ID
      * </pre>
      *
-     * <code>int64 id = 1;</code>
+     * <code>uint64 id = 1;</code>
      */
     long getId();
 
@@ -99,7 +99,7 @@ public final class Auth {
               break;
             case 8: {
 
-              id_ = input.readInt64();
+              id_ = input.readUInt64();
               break;
             }
             case 18: {
@@ -153,7 +153,7 @@ public final class Auth {
      *消息ID
      * </pre>
      *
-     * <code>int64 id = 1;</code>
+     * <code>uint64 id = 1;</code>
      */
     public long getId() {
       return id_;
@@ -250,7 +250,7 @@ public final class Auth {
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (id_ != 0L) {
-        output.writeInt64(1, id_);
+        output.writeUInt64(1, id_);
       }
       if (!getUidBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 2, uid_);
@@ -269,7 +269,7 @@ public final class Auth {
       size = 0;
       if (id_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(1, id_);
+          .computeUInt64Size(1, id_);
       }
       if (!getUidBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, uid_);
@@ -579,7 +579,7 @@ public final class Auth {
        *消息ID
        * </pre>
        *
-       * <code>int64 id = 1;</code>
+       * <code>uint64 id = 1;</code>
        */
       public long getId() {
         return id_;
@@ -589,7 +589,7 @@ public final class Auth {
        *消息ID
        * </pre>
        *
-       * <code>int64 id = 1;</code>
+       * <code>uint64 id = 1;</code>
        */
       public Builder setId(long value) {
         
@@ -602,7 +602,7 @@ public final class Auth {
        *消息ID
        * </pre>
        *
-       * <code>int64 id = 1;</code>
+       * <code>uint64 id = 1;</code>
        */
       public Builder clearId() {
         
@@ -830,7 +830,7 @@ public final class Auth {
      *消息ID
      * </pre>
      *
-     * <code>int64 id = 1;</code>
+     * <code>uint64 id = 1;</code>
      */
     long getId();
 
@@ -923,7 +923,7 @@ public final class Auth {
               break;
             case 8: {
 
-              id_ = input.readInt64();
+              id_ = input.readUInt64();
               break;
             }
             case 16: {
@@ -982,7 +982,7 @@ public final class Auth {
      *消息ID
      * </pre>
      *
-     * <code>int64 id = 1;</code>
+     * <code>uint64 id = 1;</code>
      */
     public long getId() {
       return id_;
@@ -1083,7 +1083,7 @@ public final class Auth {
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (id_ != 0L) {
-        output.writeInt64(1, id_);
+        output.writeUInt64(1, id_);
       }
       if (code_ != com.tim.common.protos.Common.Code.SUCCESS.getNumber()) {
         output.writeEnum(2, code_);
@@ -1105,7 +1105,7 @@ public final class Auth {
       size = 0;
       if (id_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(1, id_);
+          .computeUInt64Size(1, id_);
       }
       if (code_ != com.tim.common.protos.Common.Code.SUCCESS.getNumber()) {
         size += com.google.protobuf.CodedOutputStream
@@ -1429,7 +1429,7 @@ public final class Auth {
        *消息ID
        * </pre>
        *
-       * <code>int64 id = 1;</code>
+       * <code>uint64 id = 1;</code>
        */
       public long getId() {
         return id_;
@@ -1439,7 +1439,7 @@ public final class Auth {
        *消息ID
        * </pre>
        *
-       * <code>int64 id = 1;</code>
+       * <code>uint64 id = 1;</code>
        */
       public Builder setId(long value) {
         
@@ -1452,7 +1452,7 @@ public final class Auth {
        *消息ID
        * </pre>
        *
-       * <code>int64 id = 1;</code>
+       * <code>uint64 id = 1;</code>
        */
       public Builder clearId() {
         
@@ -1725,9 +1725,9 @@ public final class Auth {
   static {
     java.lang.String[] descriptorData = {
       "\n\nauth.proto\022\025com.tim.common.protos\032\014com" +
-      "mon.proto\"/\n\005Login\022\n\n\002id\030\001 \001(\003\022\013\n\003uid\030\002 " +
+      "mon.proto\"/\n\005Login\022\n\n\002id\030\001 \001(\004\022\013\n\003uid\030\002 " +
       "\001(\t\022\r\n\005token\030\003 \001(\t\"\\\n\010LoginAck\022\n\n\002id\030\001 \001" +
-      "(\003\022)\n\004code\030\002 \001(\0162\033.com.tim.common.protos" +
+      "(\004\022)\n\004code\030\002 \001(\0162\033.com.tim.common.protos" +
       ".Code\022\013\n\003msg\030\003 \001(\t\022\014\n\004time\030\004 \001(\004B\006B\004Auth" +
       "b\006proto3"
     };

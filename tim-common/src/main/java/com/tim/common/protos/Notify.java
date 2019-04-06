@@ -20,10 +20,10 @@ public final class Notify {
 
     /**
      * <pre>
-     *消息唯一标示
+     *消息ID
      * </pre>
      *
-     * <code>int64 id = 1;</code>
+     * <code>uint64 id = 1;</code>
      */
     long getId();
 
@@ -140,7 +140,7 @@ public final class Notify {
               break;
             case 8: {
 
-              id_ = input.readInt64();
+              id_ = input.readUInt64();
               break;
             }
             case 18: {
@@ -202,10 +202,10 @@ public final class Notify {
     private long id_;
     /**
      * <pre>
-     *消息唯一标示
+     *消息ID
      * </pre>
      *
-     * <code>int64 id = 1;</code>
+     * <code>uint64 id = 1;</code>
      */
     public long getId() {
       return id_;
@@ -365,7 +365,7 @@ public final class Notify {
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (id_ != 0L) {
-        output.writeInt64(1, id_);
+        output.writeUInt64(1, id_);
       }
       if (!getTypeBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 2, type_);
@@ -390,7 +390,7 @@ public final class Notify {
       size = 0;
       if (id_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(1, id_);
+          .computeUInt64Size(1, id_);
       }
       if (!getTypeBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, type_);
@@ -730,20 +730,20 @@ public final class Notify {
       private long id_ ;
       /**
        * <pre>
-       *消息唯一标示
+       *消息ID
        * </pre>
        *
-       * <code>int64 id = 1;</code>
+       * <code>uint64 id = 1;</code>
        */
       public long getId() {
         return id_;
       }
       /**
        * <pre>
-       *消息唯一标示
+       *消息ID
        * </pre>
        *
-       * <code>int64 id = 1;</code>
+       * <code>uint64 id = 1;</code>
        */
       public Builder setId(long value) {
         
@@ -753,10 +753,10 @@ public final class Notify {
       }
       /**
        * <pre>
-       *消息唯一标示
+       *消息ID
        * </pre>
        *
-       * <code>int64 id = 1;</code>
+       * <code>uint64 id = 1;</code>
        */
       public Builder clearId() {
         
@@ -1137,7 +1137,7 @@ public final class Notify {
   static {
     java.lang.String[] descriptorData = {
       "\n\014notify.proto\022\025com.tim.common.protos\"Z\n" +
-      "\rNotifyMessage\022\n\n\002id\030\001 \001(\003\022\014\n\004type\030\002 \001(\t" +
+      "\rNotifyMessage\022\n\n\002id\030\001 \001(\004\022\014\n\004type\030\002 \001(\t" +
       "\022\020\n\010targetid\030\003 \001(\t\022\017\n\007content\030\004 \001(\t\022\014\n\004t" +
       "ime\030\005 \001(\004B\010B\006Notifyb\006proto3"
     };

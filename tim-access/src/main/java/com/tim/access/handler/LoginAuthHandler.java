@@ -39,7 +39,7 @@ public class LoginAuthHandler extends SimpleChannelInboundHandler<MessageLite> {
     }
 
     @Override
-    protected void channelRead0(ChannelHandlerContext channelHandlerContext,
+    protected void channelRead0(ChannelHandlerContext ctx,
         MessageLite messageLite) throws Exception {
         if (messageLite instanceof Login) {
             Login loginMesaage = (Login) messageLite;
@@ -50,15 +50,18 @@ public class LoginAuthHandler extends SimpleChannelInboundHandler<MessageLite> {
                 .putIfAbsent(loginMesaage.getUid(), getLocalAddress());
             redisTemplate.boundSetOps(Constants.ACCESS_SERVER_ROUTE_KEY + getLocalAddress())
                 .add(loginMesaage.getUid());
-            uidChannelManager.addId2Channel(token, channelHandlerContext.channel());
+            uidChannelManager.addId2Channel(token, ctx.channel());
             LoginAck loginAck = LoginAck.newBuilder()
                 .setId(loginMesaage.getId())
                 .setCode(Code.SUCCESS)
                 .setTime(System.currentTimeMillis())
                 .build();
-            channelHandlerContext.writeAndFlush(loginAck);
+            ctx.writeAndFlush(loginAck);
         } else {
-            channelHandlerContext.fireChannelRead(messageLite);
+            if (null == uidChannelManager.getIdByChannel(ctx.channel())) {
+                ctx.close();
+            }
+            ctx.fireChannelRead(messageLite);
         }
     }
 
@@ -86,6 +89,14 @@ public class LoginAuthHandler extends SimpleChannelInboundHandler<MessageLite> {
         }
         address = address + ":" + AccessTcpServer.nettyServerPort;
         return address;
+    }
+
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
+        if ("Connection reset by peer".equals(cause.getMessage())) {
+            return;
+        }
+        log.error(cause.getMessage(), cause);
     }
 
 

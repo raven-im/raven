@@ -4,15 +4,15 @@ import "common.proto";
 
 option java_outer_classname = "History";
 
-// 历史消息请求
+// 历史消息请求  消息ID使用客户端生成
 message HisMessagesReq {
-  int64 id = 1; // 消息ID
+  uint64 id = 1; // 消息ID
   string conversasionId = 2; // 会话id
 }
 
 // 历史消息
 message HisMessagesAck {
-  int64 id = 1; // 消息ID
+  uint64 id = 1; // 消息ID
   string conversasionId = 2; // 会话id
   repeated MessageContent messageList = 3;
 }

@@ -15,7 +15,7 @@ enum ConversationType {
 
 // 消息内容
 message MessageContent {
-  int64 id = 1; // 消息ID
+  uint64 id = 1; // 消息ID
   string uid = 2; // 发送方uid
   MessageType type = 3;
   string content = 4; // 内容

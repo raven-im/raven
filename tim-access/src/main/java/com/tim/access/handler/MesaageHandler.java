@@ -2,11 +2,12 @@ package com.tim.access.handler;
 
 import com.google.protobuf.MessageLite;
 import com.tim.access.server.AccessTcpServer;
-import com.tim.common.netty.ChannelManager;
+import com.tim.common.netty.ServerChannelManager;
 import com.tim.common.protos.Common.Code;
 import com.tim.common.protos.Common.ConversationType;
 import com.tim.common.protos.Message.MessageAck;
 import com.tim.common.protos.Message.UpDownMessage;
+import com.tim.common.utils.SnowFlake;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -18,16 +19,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class MesaageHandler extends SimpleChannelInboundHandler<MessageLite> {
 
     @Autowired
-    private ChannelManager uidChannelManager;
+    private ServerChannelManager uidChannelManager;
+
+    @Autowired
+    private SnowFlake snowFlake;
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx,
         MessageLite messageLite) throws Exception {
         if (messageLite instanceof UpDownMessage) {
             UpDownMessage message = (UpDownMessage) messageLite;
-            message.toBuilder().setId(AccessTcpServer.snowFlake.nextId())
+            message.toBuilder().setId(snowFlake.nextId())
                 .getContent().toBuilder().setTime(System.currentTimeMillis());
-            // TODO 转发单聊消息
+                // TODO 转发单聊消息
             if (message.getConversationType() == ConversationType.SINGLE) {
                 // TODO 转发群聊消息
             } else if (message.getConversationType() == ConversationType.GROUP) {

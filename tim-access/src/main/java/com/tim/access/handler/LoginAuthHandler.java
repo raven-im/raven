@@ -2,7 +2,7 @@ package com.tim.access.handler;
 
 import com.google.protobuf.MessageLite;
 import com.tim.access.server.AccessTcpServer;
-import com.tim.common.netty.ChannelManager;
+import com.tim.common.netty.ServerChannelManager;
 import com.tim.common.protos.Auth.Login;
 import com.tim.common.protos.Auth.LoginAck;
 import com.tim.common.protos.Common.Code;
@@ -12,12 +12,11 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import java.net.InetAddress;
 import java.net.SocketException;
-import java.rmi.server.UID;
 import java.util.Collection;
-import javax.sound.sampled.Port;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.curator.x.discovery.ServiceInstanceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.CollectionUtils;
 
@@ -27,10 +26,13 @@ public class LoginAuthHandler extends SimpleChannelInboundHandler<MessageLite> {
 
 
     @Autowired
-    private ChannelManager uidChannelManager;
+    private ServerChannelManager uidChannelManager;
 
     @Autowired
     private RedisTemplate redisTemplate;
+
+    @Value("${netty.server.port}")
+    private int nettyServerPort;
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
@@ -87,7 +89,7 @@ public class LoginAuthHandler extends SimpleChannelInboundHandler<MessageLite> {
         if (ips.size() > 0) {
             address = ips.iterator().next().getHostAddress();   // 参考zk注册代码
         }
-        address = address + ":" + AccessTcpServer.nettyServerPort;
+        address = address + ":" + nettyServerPort;
         return address;
     }
 

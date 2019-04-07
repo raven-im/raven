@@ -1,6 +1,6 @@
 package com.tim.access.config;
 
-import com.tim.common.netty.ChannelManager;
+import com.tim.common.netty.ServerChannelManager;
 import io.netty.channel.Channel;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 /**
  * channel管理器
  */
-@Component(value = "uidChannelManager")
-public final class NettyChannelManager implements ChannelManager {
+@Component
+public final class UidChannelManager implements ServerChannelManager {
 
     private final ConcurrentMap<String, List<Channel>> uidChannels = new ConcurrentHashMap<>();
     private final ConcurrentMap<Channel, String> channelUid = new ConcurrentHashMap<>();

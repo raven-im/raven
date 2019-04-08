@@ -15,14 +15,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @Sharable
 @Slf4j
-public class MesaageHandler extends SimpleChannelInboundHandler<MessageLite> {
+public class MessageHandler extends SimpleChannelInboundHandler<MessageLite> {
 
     @Autowired
     private ChannelManager uidChannelManager;
 
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx,
-        MessageLite messageLite) throws Exception {
+    protected void channelRead0(ChannelHandlerContext ctx, MessageLite messageLite) throws Exception {
         if (messageLite instanceof UpDownMessage) {
             UpDownMessage message = (UpDownMessage) messageLite;
             message.toBuilder().setId(SingleTcpServer.snowFlake.nextId())

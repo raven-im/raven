@@ -3,6 +3,7 @@ package com.tim.single.tcp.server;
 import com.tim.common.code.MessageDecoder;
 import com.tim.common.code.MessageEncoder;
 import com.tim.common.utils.SnowFlake;
+import com.tim.single.tcp.handler.MessageHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -32,7 +33,7 @@ public class SingleTcpServer {
     private int machineId;
 
     @Value("${netty.server.port}")
-    public static int nettyServerPort;
+    private int nettyServerPort;
 
     public static SnowFlake snowFlake;
 
@@ -56,12 +57,12 @@ public class SingleTcpServer {
                     throws Exception {
                     ChannelPipeline pipeline = channel.pipeline();
                     pipeline.addLast(new IdleStateHandler(10, 10, 15));
-                    pipeline.addLast(new ProtobufVarint32FrameDecoder());// 处理半包消息的解码类
+//                    pipeline.addLast(new ProtobufVarint32FrameDecoder());// 处理半包消息的解码类
                     pipeline.addLast(new MessageDecoder());
                     pipeline.addLast(
                         new ProtobufVarint32LengthFieldPrepender());// 对protobuf协议的消息头上加上一个长度为32的整形字段
                     pipeline.addLast(new MessageEncoder());
-
+                    pipeline.addLast(new MessageHandler());
                 }
             });
         bindConnectionOptions(bootstrap);

@@ -2,6 +2,8 @@ package com.tim.common.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
+import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -21,7 +23,11 @@ public class JsonHelper {
     }
 
     public static byte[] toJsonBytes(Object object) throws JsonProcessingException {
-        return  mapper.writeValueAsBytes(object);
+        return mapper.writeValueAsBytes(object);
+    }
+
+    public static Map<String, Object> strToMap(String str) throws IOException {
+        return mapper.readValue(str, Map.class);
     }
 
 }

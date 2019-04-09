@@ -34,16 +34,8 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class AccessTcpServer {
 
-    @Value("${node.data-center-id}")
-    private int dataCenterId;
-
-    @Value("${node.machine-id}")
-    private int machineId;
-
     @Value("${netty.server.port}")
-    public static int nettyServerPort;
-
-    public static SnowFlake snowFlake;
+    private int nettyServerPort;
 
     private EventLoopGroup bossGroup = new NioEventLoopGroup();
 
@@ -52,7 +44,6 @@ public class AccessTcpServer {
     @PostConstruct
     public void startServer() {
         startMessageServer();
-        snowFlake = new SnowFlake(dataCenterId, machineId);
     }
 
     private void startMessageServer() {
@@ -65,10 +56,11 @@ public class AccessTcpServer {
                     throws Exception {
                     ChannelPipeline pipeline = channel.pipeline();
                     pipeline.addLast(new IdleStateHandler(10, 10, 15));
-                    pipeline.addLast(new ProtobufVarint32FrameDecoder());// 处理半包消息的解码类
+                    // 处理半包消息的解码类
+                    pipeline.addLast(new ProtobufVarint32FrameDecoder());
                     pipeline.addLast(new MessageDecoder());
-                    pipeline.addLast(
-                        new ProtobufVarint32LengthFieldPrepender());// 对protobuf协议的消息头上加上一个长度为32的整形字段
+                    // 对protobuf协议的消息头上加上一个长度为32的整形字段
+                    pipeline.addLast(new ProtobufVarint32LengthFieldPrepender());
                     pipeline.addLast(new MessageEncoder());
                     pipeline.addLast(new LoginAuthHandler());
                     pipeline.addLast(new HeartBeatHandler());

@@ -3,7 +3,7 @@ package com.tim.common.netty;
 import io.netty.channel.Channel;
 import java.util.List;
 
-public interface ChannelManager {
+public interface ServerChannelManager {
 
     void addId2Channel(String id, Channel channel);
 

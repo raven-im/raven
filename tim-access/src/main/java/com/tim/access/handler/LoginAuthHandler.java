@@ -1,8 +1,9 @@
 package com.tim.access.handler;
 
+import static com.tim.common.utils.Constants.TOKEN_CACHE_DURATION;
+
 import com.google.protobuf.MessageLite;
-import com.tim.access.server.AccessTcpServer;
-import com.tim.common.netty.ChannelManager;
+import com.tim.common.netty.ServerChannelManager;
 import com.tim.common.protos.Auth.Login;
 import com.tim.common.protos.Auth.LoginAck;
 import com.tim.common.protos.Common.Code;
@@ -12,12 +13,12 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import java.net.InetAddress;
 import java.net.SocketException;
-import java.rmi.server.UID;
 import java.util.Collection;
-import javax.sound.sampled.Port;
+import java.util.concurrent.TimeUnit;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.curator.x.discovery.ServiceInstanceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.CollectionUtils;
 
@@ -25,12 +26,14 @@ import org.springframework.util.CollectionUtils;
 @Slf4j
 public class LoginAuthHandler extends SimpleChannelInboundHandler<MessageLite> {
 
-
     @Autowired
-    private ChannelManager uidChannelManager;
+    private ServerChannelManager uidChannelManager;
 
     @Autowired
     private RedisTemplate redisTemplate;
+
+    @Value("${netty.server.port}")
+    private int nettyServerPort;
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
@@ -44,7 +47,14 @@ public class LoginAuthHandler extends SimpleChannelInboundHandler<MessageLite> {
         if (messageLite instanceof Login) {
             Login loginMesaage = (Login) messageLite;
             String token = loginMesaage.getToken();
-            // TODO 校验token
+            if (!verifyToken(token)) {
+                LoginAck loginAck = LoginAck.newBuilder()
+                    .setId(loginMesaage.getId())
+                    .setCode(Code.FAIL)
+                    .setTime(System.currentTimeMillis())
+                    .build();
+                ctx.writeAndFlush(loginAck);
+            }
             // 增加路由
             redisTemplate.boundHashOps(Constants.USER_ROUTE_KEY)
                 .putIfAbsent(loginMesaage.getUid(), getLocalAddress());
@@ -87,7 +97,7 @@ public class LoginAuthHandler extends SimpleChannelInboundHandler<MessageLite> {
         if (ips.size() > 0) {
             address = ips.iterator().next().getHostAddress();   // 参考zk注册代码
         }
-        address = address + ":" + AccessTcpServer.nettyServerPort;
+        address = address + ":" + nettyServerPort;
         return address;
     }
 
@@ -97,6 +107,10 @@ public class LoginAuthHandler extends SimpleChannelInboundHandler<MessageLite> {
             return;
         }
         log.error(cause.getMessage(), cause);
+    }
+
+    private boolean verifyToken(String token) {
+        return redisTemplate.hasKey(token);
     }
 
 

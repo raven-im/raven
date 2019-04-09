@@ -22,6 +22,7 @@ public class MessageHandler extends SimpleChannelInboundHandler<MessageLite> {
             if (message.getConversationType() == ConversationType.SINGLE) {
                 log.info("received msg id:{}", message.getId());
                 // access server ACK.
+                // TODO  produces CONVERSATION ID.
                 MessageAck messageAck = MessageAck.newBuilder()
                     .setId(message.getId())
                     .setTargetId(message.getFromId())
@@ -33,11 +34,11 @@ public class MessageHandler extends SimpleChannelInboundHandler<MessageLite> {
 
                 //TODO  redis save.
 
-                //TODO route the message to target ACCESS.
+                //TODO message direction  SS  -> SC
                 SenderManager.addMessage(message);
             }
         } else {
-            ctx.fireChannelRead(messageLite);
+            log.error("illegal Message type.");
         }
     }
 

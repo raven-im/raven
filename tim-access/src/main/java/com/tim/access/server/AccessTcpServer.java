@@ -41,7 +41,7 @@ public class AccessTcpServer {
     private int machineId;
 
     @Value("${netty.server.port}")
-    public static int nettyServerPort;
+    private int nettyServerPort;
 
     public static SnowFlake snowFlake;
 

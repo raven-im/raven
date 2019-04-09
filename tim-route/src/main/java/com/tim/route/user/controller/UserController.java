@@ -2,13 +2,10 @@ package com.tim.route.user.controller;
 
 import static com.tim.common.utils.Constants.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
 import com.tim.common.result.Result;
-import com.tim.route.config.security.SecurityUtils;
-import com.tim.route.user.bean.param.ChangePasswordParam;
 import com.tim.route.user.bean.param.GetAccessParam;
 import com.tim.route.user.bean.param.GetTokenParam;
-import com.tim.route.user.bean.param.LoginInputParam;
-import com.tim.route.user.bean.param.RegisterParam;
 import com.tim.route.user.service.UserService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,9 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Author zxx
- * Description 用户接口
- * Date Created on 2018/6/12
+ * Author zxx Description 用户接口 Date Created on 2018/6/12
  */
 @RestController
 @RequestMapping(value = "/user", produces = APPLICATION_JSON_VALUE)
@@ -38,60 +33,12 @@ public class UserController {
     private UserService userService;
 
     /**
-     * 注册
-     */
-    @PostMapping("/register")
-    public Result register(@RequestBody RegisterParam param) {
-        log.info("name:{} register username:{}", param.getName(), param.getUsername());
-        return userService.register(param);
-    }
-
-    /**
-     * 登录
-     */
-    @PostMapping("/login")
-    public Result login(HttpServletRequest request, HttpServletResponse response,
-        @RequestBody LoginInputParam param) {
-        log.info("username:{} login", param.getUsername());
-        return userService.login(request, response, param);
-    }
-
-    /**
-     * 登出
-     */
-    @PostMapping("/logout")
-    public Result logout(HttpServletRequest request, HttpServletResponse response) {
-        log.info("uid:{} logout", SecurityUtils.getUid());
-        return userService.logout(request, response);
-    }
-
-    /**
-     * 修改密码
-     */
-    @PutMapping("/password")
-    public Result changePassword(@RequestBody ChangePasswordParam param) {
-        log.info("uid:{} change password", SecurityUtils.getUid());
-        return userService.changePassword(param);
-    }
-
-    /**
-     * 获取用户信息
-     */
-    @GetMapping("/{uid}")
-    public Result getUserInfo(@PathVariable("uid") String uid) {
-        log.info("uid:{} get uid:{} info", SecurityUtils.getUid(), uid);
-        return userService.getUserInfo(uid);
-    }
-
-    /**
      * 获取用户登录合法token
-     * @param appKey
-     * @param uid
-     * @return
      */
 
     @GetMapping("/token")
-    public Result getToken(@RequestHeader(AUTH_APP_KEY) String appKey, @RequestParam("uid") String uid) {
+    public Result getToken(@RequestHeader(AUTH_APP_KEY) String appKey,
+        @RequestParam("uid") String uid) {
         log.info("getToken, app key {}, uid {}", appKey, uid);
         return userService.getToken(uid, appKey);
     }
@@ -104,12 +51,10 @@ public class UserController {
 
     /**
      * 获取用户登录接入点
-     * @param appKey
-     * @param token
-     * @return
      */
     @GetMapping("/access")
-    public Result getAccessInfo(@RequestHeader(AUTH_APP_KEY) String appKey, @RequestHeader(AUTH_TOKEN) String token) {
+    public Result getAccessInfo(@RequestHeader(AUTH_APP_KEY) String appKey,
+        @RequestHeader(AUTH_TOKEN) String token) {
         log.info("getToken, app key {}, token {}", appKey, token);
         return userService.getAccessInfo(appKey, token);
     }

@@ -25,15 +25,6 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 @Slf4j
 public class CustomConfig {
 
-    @Autowired
-    private DiscoveryClient discovery;
-
-    @Value("${discovery.single-server-name}")
-    private String singleServerName;
-
-    @Value("${discovery.group-server-name}")
-    private String groupServerName;
-
     @Value("${node.data-center-id}")
     private int dataCenterId;
 
@@ -55,29 +46,6 @@ public class CustomConfig {
         StringRedisTemplate template = new StringRedisTemplate();
         template.setConnectionFactory(redisConnectionFactory);
         return template;
-    }
-
-    @Bean(name = "singleServerList")
-    public List<Server> singleServerList() {
-        discovery.getServices().forEach(x -> log.info("###############:" + x));
-        List<ServiceInstance> serviceInstances = discovery.getInstances(singleServerName);
-        List<Server> servers = serviceInstances.stream()
-            .map((x) -> {
-                int nettyPort = Integer.valueOf(x.getMetadata().get(CONFIG_NETTY_PORT));
-                return new Server(x.getHost(), nettyPort);
-            }).collect(Collectors.toList());
-        return servers;
-    }
-
-    @Bean(name = "groupServerList")
-    public List<Server> groupServerList() {
-        List<ServiceInstance> serviceInstances = discovery.getInstances(groupServerName);
-        List<Server> servers = serviceInstances.stream()
-            .map((x) -> {
-                int nettyPort = Integer.valueOf(x.getMetadata().get(CONFIG_NETTY_PORT));
-                return new Server(x.getHost(), nettyPort);
-            }).collect(Collectors.toList());
-        return servers;
     }
 
     @Bean

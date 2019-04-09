@@ -1,7 +1,6 @@
 package com.tim.route.validator;
 
 import com.tim.common.result.ResultCode;
-import com.tim.route.user.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,8 +12,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserValidator implements Validator {
 
-    @Autowired
-    private UserMapper userMapper;
 
     @Override
     public boolean validate(String key) {

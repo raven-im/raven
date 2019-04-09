@@ -1,7 +1,8 @@
 package com.tim.access.handler;
 
+import static com.tim.common.utils.Constants.TOKEN_CACHE_DURATION;
+
 import com.google.protobuf.MessageLite;
-import com.tim.access.server.AccessTcpServer;
 import com.tim.common.netty.ServerChannelManager;
 import com.tim.common.protos.Auth.Login;
 import com.tim.common.protos.Auth.LoginAck;
@@ -13,6 +14,7 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.util.Collection;
+import java.util.concurrent.TimeUnit;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.curator.x.discovery.ServiceInstanceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +25,6 @@ import org.springframework.util.CollectionUtils;
 @Sharable
 @Slf4j
 public class LoginAuthHandler extends SimpleChannelInboundHandler<MessageLite> {
-
 
     @Autowired
     private ServerChannelManager uidChannelManager;
@@ -46,7 +47,14 @@ public class LoginAuthHandler extends SimpleChannelInboundHandler<MessageLite> {
         if (messageLite instanceof Login) {
             Login loginMesaage = (Login) messageLite;
             String token = loginMesaage.getToken();
-            // TODO 校验token
+            if (!verifyToken(token)) {
+                LoginAck loginAck = LoginAck.newBuilder()
+                    .setId(loginMesaage.getId())
+                    .setCode(Code.FAIL)
+                    .setTime(System.currentTimeMillis())
+                    .build();
+                ctx.writeAndFlush(loginAck);
+            }
             // 增加路由
             redisTemplate.boundHashOps(Constants.USER_ROUTE_KEY)
                 .putIfAbsent(loginMesaage.getUid(), getLocalAddress());
@@ -99,6 +107,10 @@ public class LoginAuthHandler extends SimpleChannelInboundHandler<MessageLite> {
             return;
         }
         log.error(cause.getMessage(), cause);
+    }
+
+    private boolean verifyToken(String token) {
+        return redisTemplate.hasKey(token);
     }
 
 

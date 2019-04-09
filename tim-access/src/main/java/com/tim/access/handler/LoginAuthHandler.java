@@ -1,7 +1,9 @@
 package com.tim.access.handler;
 
+
 import com.google.protobuf.MessageLite;
-import com.tim.common.netty.ChannelManager;
+
+import com.tim.common.netty.ServerChannelManager;
 import com.tim.common.protos.Auth.Login;
 import com.tim.common.protos.Auth.LoginAck;
 import com.tim.common.protos.Common.Code;
@@ -23,9 +25,8 @@ import org.springframework.util.CollectionUtils;
 @Slf4j
 public class LoginAuthHandler extends SimpleChannelInboundHandler<MessageLite> {
 
-
     @Autowired
-    private ChannelManager uidChannelManager;
+    private ServerChannelManager uidChannelManager;
 
     @Autowired
     private RedisTemplate redisTemplate;
@@ -45,7 +46,14 @@ public class LoginAuthHandler extends SimpleChannelInboundHandler<MessageLite> {
         if (messageLite instanceof Login) {
             Login loginMesaage = (Login) messageLite;
             String token = loginMesaage.getToken();
-            // TODO 校验token
+            if (!verifyToken(token)) {
+                LoginAck loginAck = LoginAck.newBuilder()
+                    .setId(loginMesaage.getId())
+                    .setCode(Code.FAIL)
+                    .setTime(System.currentTimeMillis())
+                    .build();
+                ctx.writeAndFlush(loginAck);
+            }
             // 增加路由
             redisTemplate.boundHashOps(Constants.USER_ROUTE_KEY)
                 .putIfAbsent(loginMesaage.getUid(), getLocalAddress());
@@ -98,6 +106,10 @@ public class LoginAuthHandler extends SimpleChannelInboundHandler<MessageLite> {
             return;
         }
         log.error(cause.getMessage(), cause);
+    }
+
+    private boolean verifyToken(String token) {
+        return redisTemplate.hasKey(token);
     }
 
 

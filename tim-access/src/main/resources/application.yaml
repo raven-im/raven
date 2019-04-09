@@ -21,6 +21,12 @@ spring:
 server:
   port: 8010
 
+discovery:
+  single-server-name: tim-single
+  group-server-name: tim-group
+  single-server-path: /services/tim-admin
+  group-server-path: /services/${discovery.group-server-name}
+
 netty:
   server:
     port: 7010

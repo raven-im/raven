@@ -3,7 +3,7 @@ package com.tim.access.process;
 import com.google.protobuf.MessageLite;
 import com.tim.access.offline.OfflineMsgService;
 import com.tim.common.netty.BaseMessageProcessor;
-import com.tim.common.netty.ChannelManager;
+import com.tim.common.netty.ServerChannelManager;
 import com.tim.common.protos.Message.MessageAck;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +16,7 @@ public class MeaasgeProcessor implements BaseMessageProcessor {
     private OfflineMsgService offLineMsgService;
 
     @Autowired
-    private ChannelManager uidChannelManager;
+    private ServerChannelManager uidChannelManager;
 
     @Override
     public void process(MessageLite messageLite, ChannelHandlerContext context) {

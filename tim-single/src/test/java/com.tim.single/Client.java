@@ -2,15 +2,15 @@ package com.tim.single;
 
 import com.tim.common.code.MessageDecoder;
 import com.tim.common.code.MessageEncoder;
-import com.tim.common.utils.SnowFlake;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
-import io.netty.channel.ChannelPipeline;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
+import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -32,10 +32,12 @@ public class Client {
             .handler(new ChannelInitializer<SocketChannel>() {
                 @Override
                 public void initChannel(SocketChannel ch) throws Exception {
-                    ChannelPipeline p = ch.pipeline();
-                    p.addLast("MessageDecoder", new MessageDecoder());
-                    p.addLast("MessageEncoder", new MessageEncoder());
-                    p.addLast(new ClientHandler());
+                ch.pipeline()
+                    .addLast(new ProtobufVarint32FrameDecoder())// 处理半包消息的解码类
+                    .addLast("MessageDecoder", new MessageDecoder())
+                    .addLast(new ProtobufVarint32LengthFieldPrepender())// 对protobuf协议的消息头上加上一个长度为32的整形字段
+                    .addLast("MessageEncoder", new MessageEncoder())
+                    .addLast(new ClientHandler());
                 }
             });
         startConnection(b);

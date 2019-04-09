@@ -53,16 +53,13 @@ public class SingleTcpServer {
             .channel(NioServerSocketChannel.class)
             .childHandler(new ChannelInitializer<SocketChannel>() {
                 @Override
-                protected void initChannel(SocketChannel channel)
-                    throws Exception {
-                    ChannelPipeline pipeline = channel.pipeline();
-                    pipeline.addLast(new IdleStateHandler(10, 10, 15));
-//                    pipeline.addLast(new ProtobufVarint32FrameDecoder());// 处理半包消息的解码类
-                    pipeline.addLast(new MessageDecoder());
-                    pipeline.addLast(
-                        new ProtobufVarint32LengthFieldPrepender());// 对protobuf协议的消息头上加上一个长度为32的整形字段
-                    pipeline.addLast(new MessageEncoder());
-                    pipeline.addLast(new MessageHandler());
+                protected void initChannel(SocketChannel channel) throws Exception {
+                    channel.pipeline().addLast(new IdleStateHandler(10, 10, 15))
+                        .addLast(new ProtobufVarint32FrameDecoder())// 处理半包消息的解码类
+                        .addLast(new MessageDecoder())
+                        .addLast(new ProtobufVarint32LengthFieldPrepender())// 对protobuf协议的消息头上加上一个长度为32的整形字段
+                        .addLast(new MessageEncoder())
+                        .addLast(new MessageHandler());
                 }
             });
         bindConnectionOptions(bootstrap);

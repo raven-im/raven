@@ -12,7 +12,9 @@ public class Constants {
 
     public static final String ACCESS_SERVER_ROUTE_KEY = "access_server_route_key_";
 
-
+    public static final String PREFIX_CONVERSATION_ID = "convid_";
+    public static final String PREFIX_CONVERSATION_LIST = "convlist_";
+    public static final String PREFIX_MESSAGE_ID = "msg_";
     /*
      * Authentication.
      * */

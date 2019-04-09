@@ -1,4 +1,4 @@
-package com.tim.single.tcp;
+package com.tim.single.tcp.manager;
 
 import static com.tim.common.utils.Constants.*;
 import com.tim.common.loadbalance.ConsistentHashLoadBalancer;

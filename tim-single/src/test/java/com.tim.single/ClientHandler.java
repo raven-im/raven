@@ -51,7 +51,7 @@ public class ClientHandler extends SimpleChannelInboundHandler<MessageLite> {
             .setFromId(fromUserId)
             .setTargetId(targetUserId)
             .setConversationType(ConversationType.SINGLE)
-            .setConversasionId(convId)
+//            .setConversasionId(convId)
             .setContent(content)
             .setDirection(Direction.SS)
             .build();

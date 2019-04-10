@@ -18,7 +18,6 @@ public class ClientHandler extends SimpleChannelInboundHandler<MessageLite> {
 
     private String fromUserId = "user1";
     private String targetUserId = "user2";
-    private String convId = "user1_user2";
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws IOException {
@@ -33,6 +32,9 @@ public class ClientHandler extends SimpleChannelInboundHandler<MessageLite> {
             MessageAck ack = (MessageAck) msg;
             log.info(ack.getConversasionId());
 //            sendPrivateMessage();
+        } else if (msg instanceof UpDownMessage) {
+            UpDownMessage downMessage = (UpDownMessage) msg;
+            log.info(downMessage.getConversasionId());
         }
     }
 

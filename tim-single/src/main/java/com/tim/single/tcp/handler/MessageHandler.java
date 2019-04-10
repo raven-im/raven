@@ -5,6 +5,7 @@ import com.tim.common.loadbalance.Server;
 import com.tim.common.netty.ServerChannelManager;
 import com.tim.common.protos.Common.Code;
 import com.tim.common.protos.Common.ConversationType;
+import com.tim.common.protos.Message.Direction;
 import com.tim.common.protos.Message.MessageAck;
 import com.tim.common.protos.Message.UpDownMessage;
 import com.tim.single.tcp.manager.ConversationManager;
@@ -43,8 +44,16 @@ public class MessageHandler extends SimpleChannelInboundHandler<MessageLite> {
                 String convId = conversationManager.cacheConversation(message);
                 sendACK(ctx, message.getId(), message.getFromId(), Code.SUCCESS, convId);
 
-                //TODO message direction  SS  -> SC
-                senderManager.addMessage(message);
+                UpDownMessage downMessage = UpDownMessage.newBuilder()
+                    .setId(message.getId())
+                    .setFromId(message.getFromId())
+                    .setTargetId(message.getTargetId())
+                    .setConversationType(message.getConversationType())
+                    .setDirection(Direction.SC)
+                    .setContent(message.getContent())
+                    .setConversasionId(convId)
+                    .build();
+                senderManager.addMessage(downMessage);
             } else {
                 log.error("illegal Message.");
                 sendACK(ctx, message.getId(), message.getFromId(), Code.FAIL, "");

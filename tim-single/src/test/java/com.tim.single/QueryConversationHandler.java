@@ -4,7 +4,8 @@ import com.google.protobuf.MessageLite;
 import com.tim.common.protos.Common;
 import com.tim.common.protos.Common.ConversationType;
 import com.tim.common.protos.Common.MessageType;
-import com.tim.common.protos.Message.*;
+import com.tim.common.protos.Message.Direction;
+import com.tim.common.protos.Message.UpDownMessage;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -12,7 +13,7 @@ import java.io.IOException;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class ClientHandler extends SimpleChannelInboundHandler<MessageLite> {
+public class QueryConversationHandler extends SimpleChannelInboundHandler<MessageLite> {
 
     private ChannelHandlerContext messageConnectionCtx;
 
@@ -22,23 +23,23 @@ public class ClientHandler extends SimpleChannelInboundHandler<MessageLite> {
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws IOException {
         messageConnectionCtx = ctx;
-        sendPrivateMessage();
+        sendQueryConversation();
     }
 
 
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, MessageLite msg) {
-        if (msg instanceof MessageAck) {
-            MessageAck ack = (MessageAck) msg;
-            log.info(ack.getConversasionId());
-//            sendPrivateMessage();
-        } else if (msg instanceof UpDownMessage) {
-            UpDownMessage downMessage = (UpDownMessage) msg;
-            log.info(downMessage.getConversasionId());
-        }
+//        if (msg instanceof MessageAck) {
+//            MessageAck ack = (MessageAck) msg;
+//            log.info(ack.getConversasionId());
+////            sendPrivateMessage();
+//        } else if (msg instanceof UpDownMessage) {
+//            UpDownMessage downMessage = (UpDownMessage) msg;
+//            log.info(downMessage.getConversasionId());
+//        }
     }
 
-    private void sendPrivateMessage() {
+    private void sendQueryConversation() {
         Common.MessageContent content = Common.MessageContent.newBuilder()
             .setId(1)
             .setUid(fromUserId)
@@ -59,10 +60,6 @@ public class ClientHandler extends SimpleChannelInboundHandler<MessageLite> {
             .build();
         ByteBuf byteBuf = Utils.pack2Client(msg);
         messageConnectionCtx.writeAndFlush(byteBuf);
-    }
-
-    @Override
-    public void channelReadComplete(ChannelHandlerContext ctx) {
     }
 
     @Override

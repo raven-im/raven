@@ -261,7 +261,7 @@ public final class Message {
 
     /**
      * <pre>
-     * 单聊会话 用户ID 群会话 群ID
+     * 单聊会话 用户ID 群会话 群ID 会话id为空时需要
      * </pre>
      *
      * <code>string targetId = 4;</code>
@@ -269,7 +269,7 @@ public final class Message {
     java.lang.String getTargetId();
     /**
      * <pre>
-     * 单聊会话 用户ID 群会话 群ID
+     * 单聊会话 用户ID 群会话 群ID 会话id为空时需要
      * </pre>
      *
      * <code>string targetId = 4;</code>
@@ -561,7 +561,7 @@ public final class Message {
     private volatile java.lang.Object targetId_;
     /**
      * <pre>
-     * 单聊会话 用户ID 群会话 群ID
+     * 单聊会话 用户ID 群会话 群ID 会话id为空时需要
      * </pre>
      *
      * <code>string targetId = 4;</code>
@@ -580,7 +580,7 @@ public final class Message {
     }
     /**
      * <pre>
-     * 单聊会话 用户ID 群会话 群ID
+     * 单聊会话 用户ID 群会话 群ID 会话id为空时需要
      * </pre>
      *
      * <code>string targetId = 4;</code>
@@ -1331,7 +1331,7 @@ public final class Message {
       private java.lang.Object targetId_ = "";
       /**
        * <pre>
-       * 单聊会话 用户ID 群会话 群ID
+       * 单聊会话 用户ID 群会话 群ID 会话id为空时需要
        * </pre>
        *
        * <code>string targetId = 4;</code>
@@ -1350,7 +1350,7 @@ public final class Message {
       }
       /**
        * <pre>
-       * 单聊会话 用户ID 群会话 群ID
+       * 单聊会话 用户ID 群会话 群ID 会话id为空时需要
        * </pre>
        *
        * <code>string targetId = 4;</code>
@@ -1370,7 +1370,7 @@ public final class Message {
       }
       /**
        * <pre>
-       * 单聊会话 用户ID 群会话 群ID
+       * 单聊会话 用户ID 群会话 群ID 会话id为空时需要
        * </pre>
        *
        * <code>string targetId = 4;</code>
@@ -1387,7 +1387,7 @@ public final class Message {
       }
       /**
        * <pre>
-       * 单聊会话 用户ID 群会话 群ID
+       * 单聊会话 用户ID 群会话 群ID 会话id为空时需要
        * </pre>
        *
        * <code>string targetId = 4;</code>
@@ -1400,7 +1400,7 @@ public final class Message {
       }
       /**
        * <pre>
-       * 单聊会话 用户ID 群会话 群ID
+       * 单聊会话 用户ID 群会话 群ID 会话id为空时需要
        * </pre>
        *
        * <code>string targetId = 4;</code>

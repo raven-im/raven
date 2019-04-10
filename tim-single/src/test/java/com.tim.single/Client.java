@@ -1,11 +1,14 @@
 package com.tim.single;
 
+import com.google.protobuf.MessageLite;
 import com.tim.common.code.MessageDecoder;
 import com.tim.common.code.MessageEncoder;
+import com.tim.common.protos.Message.UpDownMessage;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
+import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
@@ -23,7 +26,7 @@ public class Client {
     private static final int PORT = 7270;
 //    public static SnowFlake snowFlake = new SnowFlake(1, 2);
 
-    public static void sendSingleMsgTest() throws InterruptedException {
+    private static void baseTest(SimpleChannelInboundHandler<MessageLite> handler) throws InterruptedException {
         EventLoopGroup group = new NioEventLoopGroup();
         Bootstrap b = new Bootstrap();
         b.group(group)
@@ -37,7 +40,7 @@ public class Client {
                     .addLast("MessageDecoder", new MessageDecoder())
                     .addLast(new ProtobufVarint32LengthFieldPrepender())// 对protobuf协议的消息头上加上一个长度为32的整形字段
                     .addLast("MessageEncoder", new MessageEncoder())
-                    .addLast(new ClientHandler());
+                    .addLast(handler);
                 }
             });
         startConnection(b);
@@ -54,5 +57,12 @@ public class Client {
         });
     }
 
+    public static void sendSingleMsgTest(UpDownMessage msg, MessageListener listener) throws InterruptedException {
+        baseTest(new SendSingleMsgHandler(msg, listener));
+    }
+
+    public static void queryConversationTest() throws InterruptedException {
+        baseTest(new QueryConversationHandler());
+    }
 }
 

@@ -1,9 +1,7 @@
 package com.tim.access.handler;
 
-
 import com.google.protobuf.MessageLite;
-
-import com.tim.common.netty.ServerChannelManager;
+import com.tim.common.netty.IdChannelManager;
 import com.tim.common.protos.Auth.Login;
 import com.tim.common.protos.Auth.LoginAck;
 import com.tim.common.protos.Common.Code;
@@ -19,14 +17,16 @@ import org.apache.curator.x.discovery.ServiceInstanceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
+@Component
 @Sharable
 @Slf4j
 public class LoginAuthHandler extends SimpleChannelInboundHandler<MessageLite> {
 
     @Autowired
-    private ServerChannelManager uidChannelManager;
+    private IdChannelManager uidChannelManager;
 
     @Autowired
     private RedisTemplate redisTemplate;

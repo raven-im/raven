@@ -41,6 +41,15 @@ public class AccessTcpServer {
 
     private EventLoopGroup workGroup = new NioEventLoopGroup();
 
+    @Autowired
+    private HeartBeatHandler heartBeatHandler;
+
+    @Autowired
+    private LoginAuthHandler loginAuthHandler;
+
+    @Autowired
+    private MesaageHandler mesaageHandler;
+
     @PostConstruct
     public void startServer() {
         startMessageServer();
@@ -62,11 +71,9 @@ public class AccessTcpServer {
                     // 对protobuf协议的消息头上加上一个长度为32的整形字段
                     pipeline.addLast(new ProtobufVarint32LengthFieldPrepender());
                     pipeline.addLast(new MessageEncoder());
-                    pipeline.addLast(new LoginAuthHandler());
-                    pipeline.addLast(new HeartBeatHandler());
-                    pipeline.addLast(new MesaageHandler());
-                    pipeline.addLast(new ConversationHandler());
-                    pipeline.addLast(new HistoryHandler());
+                    pipeline.addLast("LoginAuthHandler", loginAuthHandler);
+                    pipeline.addLast("HeartBeatHandler", heartBeatHandler);
+                    pipeline.addLast("MesaageHandler", mesaageHandler);
 
                 }
             });

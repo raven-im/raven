@@ -1,15 +1,17 @@
 package com.tim.common.netty;
 
+import com.tim.common.loadbalance.Server;
 import io.netty.channel.Channel;
 import java.util.List;
 
 public interface ServerChannelManager {
 
-    void addId2Channel(String id, Channel channel);
+    void addServer2Channel(Server server, Channel channel);
 
-    List<Channel> getChannelsById(String id);
+    Channel getChannelByServer(Server server);
 
-    String getIdByChannel(Channel channel);
+    Server getServerByChannel(Channel channel);
 
-    void removeChannel(Channel channel);
+    void removeServer(Server server);
+
 }

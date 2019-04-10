@@ -66,7 +66,7 @@ mybatis:
 #通用mapper
 #mappers 多个接口时逗号隔开
 mapper:
-  mappers: com.tim.single.restful.config.BaseMapper
+  mappers: com.tim.single.config.BaseMapper
   not-empty: true
   before: true
   identity: mysql

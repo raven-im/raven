@@ -1,6 +1,8 @@
 package com.tim.single.tcp.handler;
 
 import com.google.protobuf.MessageLite;
+import com.tim.common.loadbalance.Server;
+import com.tim.common.netty.ServerChannelManager;
 import com.tim.common.protos.Common.Code;
 import com.tim.common.protos.Common.ConversationType;
 import com.tim.common.protos.Message.MessageAck;
@@ -10,6 +12,7 @@ import com.tim.single.tcp.manager.SenderManager;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import java.net.InetSocketAddress;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -25,6 +28,9 @@ public class MessageHandler extends SimpleChannelInboundHandler<MessageLite> {
 
     @Autowired
     private SenderManager senderManager;
+
+    @Autowired
+    private ServerChannelManager channelManager;
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, MessageLite messageLite) throws Exception {
@@ -44,6 +50,26 @@ public class MessageHandler extends SimpleChannelInboundHandler<MessageLite> {
                 sendACK(ctx, message.getId(), message.getFromId(), Code.FAIL, "");
             }
         }
+    }
+
+    @Override
+    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+        log.info("client connected remote address:{},id:{}", ctx.channel().remoteAddress(),
+            ctx.channel().id().asShortText());
+        String host = ((InetSocketAddress)ctx.channel().remoteAddress()).getAddress().getHostAddress();
+        int port = ((InetSocketAddress)ctx.channel().remoteAddress()).getPort();
+        Server server = new Server(host, port);
+        channelManager.addServer2Channel(server, ctx.channel());
+    }
+
+    @Override
+    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+        log.info("client disconnected remote address:{},id:{}", ctx.channel().remoteAddress(),
+            ctx.channel().id().asShortText());
+        String host = ((InetSocketAddress)ctx.channel().remoteAddress()).getAddress().getHostAddress();
+        int port = ((InetSocketAddress)ctx.channel().remoteAddress()).getPort();
+        Server server = new Server(host, port);
+        channelManager.removeServer(server);
     }
 
     private void sendACK(ChannelHandlerContext ctx, long id, String targetId, Code code, String convId) {

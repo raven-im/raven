@@ -1,7 +1,6 @@
 package com.tim.access.handler;
 
 import com.google.protobuf.MessageLite;
-import com.tim.access.server.AccessTcpServer;
 import com.tim.common.netty.NettyAttrUtil;
 import com.tim.common.netty.ServerChannelManager;
 import com.tim.common.protos.Message.HeartBeat;
@@ -14,7 +13,9 @@ import io.netty.handler.timeout.IdleState;
 import io.netty.handler.timeout.IdleStateEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 @Sharable
 @Slf4j
 public class HeartBeatHandler extends SimpleChannelInboundHandler<MessageLite> {

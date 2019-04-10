@@ -1,7 +1,5 @@
 package com.tim.access.handler;
 
-import static com.tim.common.utils.Constants.TOKEN_CACHE_DURATION;
-
 import com.google.protobuf.MessageLite;
 import com.tim.common.netty.ServerChannelManager;
 import com.tim.common.protos.Auth.Login;
@@ -14,14 +12,15 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.util.Collection;
-import java.util.concurrent.TimeUnit;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.curator.x.discovery.ServiceInstanceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
+@Component
 @Sharable
 @Slf4j
 public class LoginAuthHandler extends SimpleChannelInboundHandler<MessageLite> {

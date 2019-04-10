@@ -1,11 +1,8 @@
 package com.tim.single;
 
 import com.google.protobuf.MessageLite;
-import com.tim.common.protos.Common;
-import com.tim.common.protos.Common.ConversationType;
-import com.tim.common.protos.Common.MessageType;
-import com.tim.common.protos.Message.Direction;
-import com.tim.common.protos.Message.UpDownMessage;
+import com.tim.common.protos.Conversation.ConversationAck;
+import com.tim.common.protos.Conversation.ConversationReq;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -17,48 +14,30 @@ public class QueryConversationHandler extends SimpleChannelInboundHandler<Messag
 
     private ChannelHandlerContext messageConnectionCtx;
 
-    private String fromUserId = "user1";
-    private String targetUserId = "user2";
+    private ConversationReq request;
+    private MessageListener listener;
+
+    public QueryConversationHandler(ConversationReq req, MessageListener listener) {
+        this.request = req;
+        this.listener = listener;
+    }
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws IOException {
         messageConnectionCtx = ctx;
-        sendQueryConversation();
+        sendQueryConversation(request);
     }
-
 
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, MessageLite msg) {
-//        if (msg instanceof MessageAck) {
-//            MessageAck ack = (MessageAck) msg;
-//            log.info(ack.getConversasionId());
-////            sendPrivateMessage();
-//        } else if (msg instanceof UpDownMessage) {
-//            UpDownMessage downMessage = (UpDownMessage) msg;
-//            log.info(downMessage.getConversasionId());
-//        }
+        if (msg instanceof ConversationAck) {
+            ConversationAck ack = (ConversationAck) msg;
+            listener.onQueryAck(ack);
+        }
     }
 
-    private void sendQueryConversation() {
-        Common.MessageContent content = Common.MessageContent.newBuilder()
-            .setId(1)
-            .setUid(fromUserId)
-            .setTime(System.currentTimeMillis())
-            .setType(MessageType.TEXT)
-            .setContent("Hello world!")
-            .build();
-
-        UpDownMessage msg = UpDownMessage.newBuilder()
-            .setId(100)
-//            .setClientId(1000)
-            .setFromId(fromUserId)
-            .setTargetId(targetUserId)
-            .setConversationType(ConversationType.SINGLE)
-//            .setConversasionId(convId)
-            .setContent(content)
-            .setDirection(Direction.SS)
-            .build();
-        ByteBuf byteBuf = Utils.pack2Client(msg);
+    private void sendQueryConversation(ConversationReq req) {
+        ByteBuf byteBuf = Utils.pack2Client(req);
         messageConnectionCtx.writeAndFlush(byteBuf);
     }
 

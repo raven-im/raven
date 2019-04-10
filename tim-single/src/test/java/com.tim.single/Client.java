@@ -3,6 +3,7 @@ package com.tim.single;
 import com.google.protobuf.MessageLite;
 import com.tim.common.code.MessageDecoder;
 import com.tim.common.code.MessageEncoder;
+import com.tim.common.protos.Conversation.ConversationReq;
 import com.tim.common.protos.Message.UpDownMessage;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelInitializer;
@@ -61,8 +62,8 @@ public class Client {
         baseTest(new SendSingleMsgHandler(msg, listener));
     }
 
-    public static void queryConversationTest() throws InterruptedException {
-        baseTest(new QueryConversationHandler());
+    public static void queryConversationTest(ConversationReq req, MessageListener listener) throws InterruptedException {
+        baseTest(new QueryConversationHandler(req, listener));
     }
 }
 

@@ -2,7 +2,7 @@ package com.tim.access.handler;
 
 import com.google.protobuf.MessageLite;
 import com.tim.access.config.S2sChannelManager;
-import com.tim.common.netty.ServerChannelManager;
+import com.tim.common.netty.IdChannelManager;
 import com.tim.common.protos.Common.Code;
 import com.tim.common.protos.Common.ConversationType;
 import com.tim.common.protos.Message.MessageAck;
@@ -23,7 +23,7 @@ import org.springframework.stereotype.Component;
 public class MesaageHandler extends SimpleChannelInboundHandler<MessageLite> {
 
     @Autowired
-    private ServerChannelManager uidChannelManager;
+    private IdChannelManager uidChannelManager;
 
     @Autowired
     private S2sChannelManager s2sChannelManager;

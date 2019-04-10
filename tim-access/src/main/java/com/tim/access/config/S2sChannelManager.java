@@ -6,7 +6,7 @@ import static com.tim.common.utils.Constants.CONFIG_NETTY_PORT;
 import com.tim.common.loadbalance.ConsistentHashLoadBalancer;
 import com.tim.common.loadbalance.LoadBalancer;
 import com.tim.common.loadbalance.Server;
-import com.tim.common.netty.ClientChannelManager;
+import com.tim.common.netty.ServerChannelManager;
 import io.netty.channel.Channel;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,7 +24,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-public class S2sChannelManager implements ClientChannelManager {
+public class S2sChannelManager implements ServerChannelManager {
 
     @Autowired
     private DiscoveryClient discovery;

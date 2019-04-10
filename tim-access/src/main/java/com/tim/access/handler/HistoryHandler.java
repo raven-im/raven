@@ -1,7 +1,7 @@
 package com.tim.access.handler;
 
 import com.google.protobuf.MessageLite;
-import com.tim.common.netty.ServerChannelManager;
+import com.tim.common.netty.IdChannelManager;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 public class HistoryHandler extends SimpleChannelInboundHandler<MessageLite> {
 
     @Autowired
-    private ServerChannelManager uidChannelManager;
+    private IdChannelManager uidChannelManager;
 
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext,

@@ -2,7 +2,7 @@ package com.tim.access.handler;
 
 import com.google.protobuf.MessageLite;
 import com.tim.common.netty.NettyAttrUtil;
-import com.tim.common.netty.ServerChannelManager;
+import com.tim.common.netty.IdChannelManager;
 import com.tim.common.protos.Message.HeartBeat;
 import com.tim.common.protos.Message.HeartBeatType;
 import com.tim.common.utils.SnowFlake;
@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
 public class HeartBeatHandler extends SimpleChannelInboundHandler<MessageLite> {
 
     @Autowired
-    private ServerChannelManager uidChannelManager;
+    private IdChannelManager uidChannelManager;
 
     @Autowired
     private SnowFlake snowFlake;

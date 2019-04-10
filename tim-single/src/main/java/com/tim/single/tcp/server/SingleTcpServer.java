@@ -19,6 +19,7 @@ import java.net.InetSocketAddress;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -35,7 +36,11 @@ public class SingleTcpServer {
     @Value("${netty.server.port}")
     private int nettyServerPort;
 
-    public static SnowFlake snowFlake;
+    @Autowired
+    private MessageHandler messageHandler;
+
+    @Autowired
+    public SnowFlake snowFlake;
 
     private EventLoopGroup bossGroup = new NioEventLoopGroup();
 
@@ -44,7 +49,6 @@ public class SingleTcpServer {
     @PostConstruct
     public void startServer() {
         startMessageServer();
-        snowFlake = new SnowFlake(dataCenterId, machineId);
     }
 
     private void startMessageServer() {
@@ -59,7 +63,7 @@ public class SingleTcpServer {
                         .addLast(new MessageDecoder())
                         .addLast(new ProtobufVarint32LengthFieldPrepender())// 对protobuf协议的消息头上加上一个长度为32的整形字段
                         .addLast(new MessageEncoder())
-                        .addLast(new MessageHandler());
+                        .addLast("MessageHandler", messageHandler);
                 }
             });
         bindConnectionOptions(bootstrap);

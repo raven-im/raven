@@ -1,4 +1,4 @@
-package com.tim.single.restful.single.controller;
+package com.tim.single.restful.controller;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 

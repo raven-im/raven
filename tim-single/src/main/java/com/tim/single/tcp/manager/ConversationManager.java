@@ -2,8 +2,10 @@ package com.tim.single.tcp.manager;
 
 import static com.tim.common.utils.Constants.*;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.tim.common.protos.Common.ConversationType;
 import com.tim.common.protos.Message.UpDownMessage;
+import com.tim.common.utils.JsonHelper;
 import com.tim.common.utils.UidUtil;
 import com.tim.single.tcp.model.ConversationModel;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +36,14 @@ public class ConversationManager {
         //TODO  conversation name ??
         ConversationModel model = new ConversationModel(convId, ConversationType.SINGLE, "Single",
             msg.getContent().getTime(), msg.getContent().getContent());
-        redisTemplate.boundHashOps(PREFIX_CONVERSATION_ID + convId).put(PREFIX_CONVERSATION_ID + convId, model);
+        try {
+            String modelStr = JsonHelper.toJsonString(model);
+            redisTemplate.boundHashOps(PREFIX_CONVERSATION_ID + convId).put(PREFIX_CONVERSATION_ID + convId, modelStr);
+        } catch (JsonProcessingException e) {
+            log.error("Json processing error.");
+            return;
+        }
+
         //2. cache redis "msg_" + convId, 1 to set, UpDownMessage
         redisTemplate.boundSetOps(PREFIX_MESSAGE_ID + convId).add(msg);
         //3. cache redis "convlist_" + uid(fromId, targetId), 1 to set, convId

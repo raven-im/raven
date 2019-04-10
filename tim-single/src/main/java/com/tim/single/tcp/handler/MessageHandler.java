@@ -12,16 +12,19 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+@Component
 @Sharable
 @Slf4j
 public class MessageHandler extends SimpleChannelInboundHandler<MessageLite> {
 
     @Autowired
-    @Lazy
     private ConversationManager conversationManager;
+
+    @Autowired
+    private SenderManager senderManager;
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, MessageLite messageLite) throws Exception {
@@ -35,7 +38,7 @@ public class MessageHandler extends SimpleChannelInboundHandler<MessageLite> {
                 sendACK(ctx, message.getId(), message.getFromId(), Code.SUCCESS, convId);
 
                 //TODO message direction  SS  -> SC
-                SenderManager.addMessage(message);
+                senderManager.addMessage(message);
             } else {
                 log.error("illegal Message.");
                 sendACK(ctx, message.getId(), message.getFromId(), Code.FAIL, "");

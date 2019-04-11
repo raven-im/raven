@@ -56,7 +56,7 @@ management:
         include: '*' #开放所有监控接口
 
 server:
-  port: 8050
+  port: 8270
 
 # Mybatis
 mybatis:
@@ -66,7 +66,7 @@ mybatis:
 #通用mapper
 #mappers 多个接口时逗号隔开
 mapper:
-  mappers: com.tim.single.restful.config.BaseMapper
+  mappers: com.tim.single.config.BaseMapper
   not-empty: true
   before: true
   identity: mysql
@@ -74,4 +74,8 @@ mapper:
 netty:
   server:
     port: 7270
+
+node:
+  data-center-id: 1
+  machine-id: 1
 

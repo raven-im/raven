@@ -7,7 +7,7 @@ option java_outer_classname = "Conversation";
 message ConversationReq {
   uint64 id = 1; // 消息ID
   OperationType type = 2;
-  string conversasionId = 3; // 会话ID
+  string conversationId = 3; // 会话ID
 }
 
 enum OperationType {
@@ -27,7 +27,7 @@ message ConversationAck {
 
 // 会话详情
 message ConversationDetail {
-  string conversasionId = 1; // 会话ID
+  string conversationId = 1; // 会话ID
   ConversationType type = 2; // 会话类型
   string targetId = 3; // 单聊会话 用户ID 群会话 群ID
   uint64 unreadCount = 5; // 未读数

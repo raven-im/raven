@@ -1,6 +1,6 @@
-package com.tim.single.restful.single.service.impl;
+package com.tim.single.restful.service.impl;
 
-import com.tim.single.restful.single.service.SingleService;
+import com.tim.single.restful.service.SingleService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

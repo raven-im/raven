@@ -1,4 +1,4 @@
-package com.tim.single.restful.config;
+package com.tim.single.config;
 
 import tk.mybatis.mapper.common.Mapper;
 import tk.mybatis.mapper.common.MySqlMapper;

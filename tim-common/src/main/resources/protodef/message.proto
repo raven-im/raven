@@ -8,11 +8,12 @@ option java_outer_classname = "Message";
 message UpDownMessage {
   uint64 id = 1; // 服务端生成消息ID
   uint64 clientId = 2; // 客户端消息ID
-  string targetId = 3; // 单聊会话 用户ID 群会话 群ID 会话id为空时需要
-  string conversasionId = 4; // 会话id
-  ConversationType conversationType = 5; // 会话类型
-  Direction direction = 6; // 消息方向
-  MessageContent content = 7; // 内容
+  string fromId = 3; // 发送人ID
+  string targetId = 4; // 单聊会话 用户ID 群会话 群ID 会话id为空时需要
+  string conversasionId = 5; // 会话id
+  ConversationType conversationType = 6; // 会话类型
+  Direction direction = 7; // 消息方向
+  MessageContent content = 8; // 内容
 }
 
 // 心跳

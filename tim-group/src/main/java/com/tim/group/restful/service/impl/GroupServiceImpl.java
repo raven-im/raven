@@ -1,7 +1,7 @@
-package com.tim.group.restful.group.service.impl;
+package com.tim.group.restful.service.impl;
 
 
-import com.tim.group.restful.group.service.GroupService;
+import com.tim.group.restful.service.GroupService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

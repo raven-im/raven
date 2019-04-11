@@ -1,4 +1,4 @@
-package com.tim.group.restful.group.mapper;
+package com.tim.group.restful.mapper;
 
 /**
  * Author zxx

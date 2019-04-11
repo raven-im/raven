@@ -1,4 +1,4 @@
-package com.tim.group.restful.group.controller;
+package com.tim.group.restful.controller;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 

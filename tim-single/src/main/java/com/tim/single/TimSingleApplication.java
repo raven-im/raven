@@ -9,7 +9,7 @@ import tk.mybatis.spring.annotation.MapperScan;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableTransactionManagement
-@MapperScan("com.tim.single.restful.*.mapper")
+@MapperScan("com.tim.single.restful.mapper")
 public class TimSingleApplication {
 
     public static void main(String[] args) throws Exception {

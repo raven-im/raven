@@ -26,7 +26,7 @@ import org.springframework.util.StringUtils;
 @Slf4j
 @Component
 public class SenderManager {
-    private static final int THREAD_NUM = Runtime.getRuntime().availableProcessors();
+//    private static final int THREAD_NUM = Runtime.getRuntime().availableProcessors();
     private static final LinkedBlockingQueue<UpDownMessage> sendingQ = new LinkedBlockingQueue(1024 * 128);
 
     @Autowired

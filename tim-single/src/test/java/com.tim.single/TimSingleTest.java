@@ -104,7 +104,6 @@ public class TimSingleTest {
     }
 
     @Test
-    @Ignore
     public void queryConversationDetailTest() throws Exception {
         ConversationReq req = ConversationReq.newBuilder()
             .setId(2)
@@ -128,7 +127,6 @@ public class TimSingleTest {
     }
 
     @Test
-    @Ignore
     public void queryConversationAllTest() throws Exception {
         ConversationReq req = ConversationReq.newBuilder()
             .setId(3)

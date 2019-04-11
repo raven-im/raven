@@ -3,7 +3,7 @@ package com.tim.group;
 import com.google.protobuf.MessageLite;
 import com.tim.common.code.MessageDecoder;
 import com.tim.common.code.MessageEncoder;
-import com.tim.common.protos.Conversation.ConversationReq;
+import com.tim.common.protos.Group.GroupCmd;
 import com.tim.common.protos.Message.UpDownMessage;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelInitializer;
@@ -58,12 +58,12 @@ public class Client {
         });
     }
 
-    public static void sendGroupMsgTest(UpDownMessage msg, MessageListener listener) throws InterruptedException {
-        baseTest(new SendSingleMsgHandler(msg, listener));
+    public static void sendGroupMsgTest(UpDownMessage msg, GroupListener listener) throws InterruptedException {
+        baseTest(new GroupMsgHandler(msg, listener));
     }
-//
-//    public static void queryConversationTest(ConversationReq req, MessageListener listener) throws InterruptedException {
-//        baseTest(new QueryConversationHandler(req, listener));
-//    }
+
+    public static void sendGroupCmd(GroupCmd cmd, GroupListener listener) throws InterruptedException {
+        baseTest(new GroupOperationHandler(cmd, listener));
+    }
 }
 

@@ -1,0 +1,36 @@
+syntax = "proto3";
+package com.tim.common.protos;
+import "common.proto";
+option java_outer_classname = "Group";
+
+message GroupCmd {
+    uint64 id = 1; // 消息ID
+    GroupCmdType type = 2;
+    string conversationId = 3; // 群组id
+    repeated string userList = 4; //群组成员
+    string groupName = 5; // 群组名称
+}
+enum GroupCmdType {
+    CREATE = 0;
+    JOIN = 1;
+    DETAILS = 2;
+    QUIT = 3;
+    DISMISS = 4;
+}
+
+message GroupAck {
+    uint64 id = 1; // 消息ID
+    Code code = 2; // 返回码
+    uint64 time = 3; // 时间
+    string conversationId = 4;
+    GroupDetail detail = 5;
+}
+
+message GroupDetail {
+    string conversationId = 1; // 会话ID
+    repeated string userList = 2; //群组成员
+    string groupName = 3; // 群组名称
+}
+
+
+

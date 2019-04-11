@@ -18,6 +18,7 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -103,6 +104,7 @@ public class TimSingleTest {
     }
 
     @Test
+    @Ignore
     public void queryConversationDetailTest() throws Exception {
         ConversationReq req = ConversationReq.newBuilder()
             .setId(2)
@@ -126,6 +128,7 @@ public class TimSingleTest {
     }
 
     @Test
+    @Ignore
     public void queryConversationAllTest() throws Exception {
         ConversationReq req = ConversationReq.newBuilder()
             .setId(3)

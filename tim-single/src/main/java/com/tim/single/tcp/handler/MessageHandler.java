@@ -37,11 +37,24 @@ public class MessageHandler extends SimpleChannelInboundHandler<MessageLite> {
     protected void channelRead0(ChannelHandlerContext ctx, MessageLite messageLite) throws Exception {
         if (messageLite instanceof UpDownMessage) {
             UpDownMessage message = (UpDownMessage) messageLite;
-            if (message.getConversationType() == ConversationType.SINGLE &&
-                StringUtils.isEmpty(message.getConversasionId())) {
+            String convId;
+            if (message.getConversationType() == ConversationType.SINGLE ) {
                 log.info("received msg id:{}", message.getId());
+                if (!StringUtils.isEmpty(message.getConversasionId())) {
+                    // validate the conversation id.
+                    if (!conversationManager.isSingleConvIdValid(message.getConversasionId(),
+                        message.getFromId(), message.getTargetId())) {
+                        log.error("illegal conversation id.");
+                        sendACK(ctx, message.getId(), message.getFromId(), Code.FAIL, message.getConversasionId());
+                        return;
+                    } else {
+                        convId = message.getConversasionId();
+                    }
+                } else {
+                    convId = conversationManager.newConversationId(message.getFromId(), message.getTargetId());
+                }
                 // access server ACK.
-                String convId = conversationManager.cacheConversation(message);
+                conversationManager.cacheConversation(message, convId);
                 sendACK(ctx, message.getId(), message.getFromId(), Code.SUCCESS, convId);
 
                 UpDownMessage downMessage = UpDownMessage.newBuilder()

@@ -37,7 +37,8 @@ spring:
         prefer-ip-address: true
         metadata:
           netty-port: ${netty.server.port}
-
+  jackson:
+    default-property-inclusion: non_null
 # actuator相关配置
 management:
   security:

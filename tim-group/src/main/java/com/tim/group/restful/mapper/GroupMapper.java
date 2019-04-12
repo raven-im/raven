@@ -1,10 +1,8 @@
 package com.tim.group.restful.mapper;
 
-/**
- * Author zxx
- * Description 
- * Date Created on 2018/6/12
- */
-public interface GroupMapper {
+import com.tim.group.restful.bean.model.GroupModel;
+import tk.mybatis.mapper.common.BaseMapper;
+
+public interface GroupMapper extends BaseMapper<GroupModel> {
 
 }

@@ -3,12 +3,10 @@ package com.tim.single.tcp.manager;
 import com.tim.common.loadbalance.Server;
 import com.tim.common.netty.ServerChannelManager;
 import io.netty.channel.Channel;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -21,29 +19,51 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class AccessServerManager implements ServerChannelManager {
 
-    private final Map<Server, Channel> serverChannel = new ConcurrentHashMap<>();
-    private final Map<Channel, Server> channelServer = new ConcurrentHashMap<>();
+    private ReadWriteLock rwLock = new ReentrantReadWriteLock();
+
+    private final Map<Server, Channel> serverChannel = new HashMap<>();
+    private final Map<Channel, Server> channelServer = new HashMap<>();
 
     @Override
     public void addServer2Channel(Server server, Channel channel) {
-        serverChannel.put(server, channel);
-        channelServer.put(channel, server);
+        rwLock.writeLock().lock();
+        try {
+            serverChannel.put(server, channel);
+            channelServer.put(channel, server);
+        } finally {
+            rwLock.writeLock().unlock();
+        }
     }
 
     @Override
     public Channel getChannelByServer(Server server) {
-        return serverChannel.get(server);
+        rwLock.readLock().lock();
+        try {
+            return serverChannel.get(server);
+        } finally {
+            rwLock.readLock().unlock();
+        }
     }
 
     @Override
     public Server getServerByChannel(Channel channel) {
-        return channelServer.get(channel);
+        rwLock.readLock().lock();
+        try {
+            return channelServer.get(channel);
+        } finally {
+            rwLock.readLock().unlock();
+        }
     }
 
     @Override
     public void removeServer(Server server) {
-        Channel channel = serverChannel.get(server);
-        channelServer.remove(channel);
-        serverChannel.remove(server);
+        rwLock.writeLock().lock();
+        try {
+            Channel channel = serverChannel.get(server);
+            channelServer.remove(channel);
+            serverChannel.remove(server);
+        } finally {
+            rwLock.writeLock().unlock();
+        }
     }
 }

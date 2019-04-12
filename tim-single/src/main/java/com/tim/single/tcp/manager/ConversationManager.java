@@ -25,13 +25,15 @@ public class ConversationManager {
     @Autowired
     private RedisTemplate redisTemplate;
 
-    public String cacheConversation(UpDownMessage msg) {
-        String convId = UidUtil.uuid24By2Factor(msg.getFromId(), msg.getTargetId());
-        updateRedis(msg, convId);
-        return convId;
+    public String newConversationId(String fromUid, String toUid) {
+        return UidUtil.uuid24By2Factor(fromUid, toUid);
     }
 
-    private void updateRedis(UpDownMessage msg, String convId) {
+    public boolean isSingleConvIdValid(String convId, String fromUid, String toUid) {
+        return UidUtil.uuid24By2Factor(fromUid, toUid).equals(convId);
+    }
+
+    public void cacheConversation(UpDownMessage msg, String convId) {
         //1. cache redis "convid_" + convId,  1 to 1 , ConversationModel
         //TODO  conversation name ??
         ConversationModel model = new ConversationModel(convId, ConversationType.SINGLE, "Single",

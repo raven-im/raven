@@ -41,7 +41,6 @@ public class TimSingleTest {
 
     private static String fromUser;
     private static String targetUser;
-    private static String conversationId;
     private MessageAck ackMsg;
     private ConversationAck ackConv;
 
@@ -100,11 +99,83 @@ public class TimSingleTest {
         lock.await(2000, TimeUnit.MILLISECONDS);
         assertEquals(ackMsg.getTargetId(), fromUser);
         assertEquals(ackMsg.getId(), MESSAGE_ID);
-        conversationId = ackMsg.getConversasionId();
     }
 
     @Test
+    public void singleMsgInvaliConvIdTest() throws Exception {
+
+        Common.MessageContent content = Common.MessageContent.newBuilder()
+            .setId(2)
+            .setUid(fromUser)
+            .setTime(System.currentTimeMillis())
+            .setType(MessageType.TEXT)
+            .setContent(MESSAGE_CONTENT)
+            .build();
+
+        String conversationId = UidUtil.uuid24By2Factor(fromUser, targetUser);
+        UpDownMessage msg = UpDownMessage.newBuilder()
+            .setId(MESSAGE_ID)
+            .setFromId(fromUser)
+            .setTargetId(targetUser)
+            .setConversasionId(conversationId)
+            .setConversationType(ConversationType.SINGLE)
+            .setContent(content)
+            .setDirection(Direction.SS)
+            .build();
+
+        log.info("{} send msg to {}", fromUser, targetUser);
+        Client.sendSingleMsgTest(msg, new MessageListener() {
+            @Override
+            public void onMessageAckReceived(MessageAck ack) {
+                log.info("get msg ACK from server");
+                ackMsg = ack;
+                lock.countDown();
+            }
+        });
+        lock.await(2000, TimeUnit.MILLISECONDS);
+        assertEquals(ackMsg.getTargetId(), fromUser);
+        assertEquals(ackMsg.getId(), MESSAGE_ID);
+    }
+
+    @Test
+    public void singleMsgValidConvIdTest() throws Exception {
+
+        Common.MessageContent content = Common.MessageContent.newBuilder()
+            .setId(3)
+            .setUid(fromUser)
+            .setTime(System.currentTimeMillis())
+            .setType(MessageType.TEXT)
+            .setContent(MESSAGE_CONTENT)
+            .build();
+
+        UpDownMessage msg = UpDownMessage.newBuilder()
+            .setId(MESSAGE_ID)
+            .setFromId(fromUser)
+            .setTargetId(targetUser)
+            .setConversasionId("INVALI_CONVERSATION_ID")
+            .setConversationType(ConversationType.SINGLE)
+            .setContent(content)
+            .setDirection(Direction.SS)
+            .build();
+
+        log.info("{} send msg to {}", fromUser, targetUser);
+        Client.sendSingleMsgTest(msg, new MessageListener() {
+            @Override
+            public void onMessageAckReceived(MessageAck ack) {
+                log.info("get msg ACK from server");
+                ackMsg = ack;
+                lock.countDown();
+            }
+        });
+        lock.await(2000, TimeUnit.MILLISECONDS);
+        assertEquals(ackMsg.getCode(), Code.FAIL);
+    }
+
+    @Test
+    @Ignore
     public void queryConversationDetailTest() throws Exception {
+
+        String conversationId = UidUtil.uuid24By2Factor(fromUser, targetUser);
         ConversationReq req = ConversationReq.newBuilder()
             .setId(2)
             .setType(OperationType.DETAIL)
@@ -127,6 +198,7 @@ public class TimSingleTest {
     }
 
     @Test
+    @Ignore
     public void queryConversationAllTest() throws Exception {
         ConversationReq req = ConversationReq.newBuilder()
             .setId(3)

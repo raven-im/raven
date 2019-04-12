@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS `t_group_member` (
   `user_uid`  varchar(36) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '成员Id',
   `create_dt` datetime(3) DEFAULT NULL,
   `update_dt` datetime(3) DEFAULT NULL,
-  `status` tinyint(1) DEFAULT NULL COMMENT '群成员状态: 1: 正式成员  2: 请求待确认',
+  `status` tinyint(1) DEFAULT NULL COMMENT '群成员状态: 0: 正常  2: 标记删除',
   PRIMARY KEY (`id`),
   UNIQUE KEY `group_member_unique` (`group_uid`,`user_uid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='群组成员表';

@@ -13,6 +13,7 @@ import com.tim.group.restful.validator.GroupValidator;
 import com.tim.group.restful.validator.MemberInValidator;
 import com.tim.group.restful.validator.MemberNotInValidator;
 import java.util.Date;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,6 +49,7 @@ public class GroupServiceImpl implements GroupService {
         model.setOwner(reqParam.getMembers().get(0));
         model.setCreateDate(now);
         model.setUpdateDate(now);
+        model.setStatus(0); //0 for normal
         groupMapper.insert(model);
 
         reqParam.getMembers().forEach(uid -> {
@@ -56,6 +58,7 @@ public class GroupServiceImpl implements GroupService {
             member.setCreateDate(now);
             member.setUpdateDate(now);
             member.setMemberUid(uid);
+            member.setStatus(0);// 0 normal status;
             memberMapper.insert(member);
         });
         return model;
@@ -77,6 +80,7 @@ public class GroupServiceImpl implements GroupService {
             member.setCreateDate(now);
             member.setUpdateDate(now);
             member.setMemberUid(uid);
+            member.setStatus(0);// 0 normal status;
             memberMapper.insert(member);
         });
         return ResultCode.COMMON_SUCCESS;
@@ -93,12 +97,32 @@ public class GroupServiceImpl implements GroupService {
         }
 
         reqParam.getMembers().forEach(uid-> {
+            GroupMemberModel member = new GroupMemberModel();
+            member.setUpdateDate(DateTimeUtils.currentUTC());
+            member.setStatus(2);// 2 mark delete.
+
             Example example = new Example(GroupMemberModel.class);
             example.createCriteria()
                 .andEqualTo("groupId", reqParam.getGroupId())
                 .andEqualTo("memberUid", uid);
-            memberMapper.deleteByExample(example);
+            memberMapper.updateByExampleSelective(member, example);
         });
+        return ResultCode.COMMON_SUCCESS;
+    }
+
+    @Override
+    public ResultCode dismissGroup(GroupReqParam reqParam) {
+        //params check.
+        if (!groupValidator.isValid(reqParam.getGroupId())) {
+            return groupValidator.errorCode();
+        }
+        GroupModel model = new GroupModel();
+        model.setStatus(2); //2 for mark delete
+        model.setUpdateDate(DateTimeUtils.currentUTC());
+        Example example = new Example(GroupModel.class);
+        example.createCriteria()
+            .andEqualTo("uid", reqParam.getGroupId());
+        groupMapper.updateByExampleSelective(model, example);
         return ResultCode.COMMON_SUCCESS;
     }
 }

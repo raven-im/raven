@@ -159,6 +159,24 @@ public class TimGroupTest {
     }
 
     @Test
+    public void test8GroupDismiss() {
+        GroupReqParam input = new GroupReqParam();
+        input.setGroupId(groupId);
+
+        Result response = restTemplate.postForObject("/group/dismiss", input, Result.class);
+        assertEquals(response.getCode().intValue(), ResultCode.COMMON_SUCCESS.getCode());
+    }
+
+    @Test
+    public void test9GroupDismissFail() {
+        GroupReqParam input = new GroupReqParam();
+        input.setGroupId(UidUtil.uuid());
+
+        Result response = restTemplate.postForObject("/group/dismiss", input, Result.class);
+        assertEquals(response.getCode().intValue(), ResultCode.GROUP_ERROR_INVALID_GROUP_ID.getCode());
+    }
+
+    @Test
     @Ignore
     public void groupMsgAckTest() throws Exception {
 

@@ -52,7 +52,11 @@ public class GroupController {
     @PostMapping("/dismiss")
     public Result dismiss(@RequestBody GroupReqParam param) {
         log.info("group dismiss:{}", param.getGroupId());
-        return Result.success();
+        ResultCode code = service.dismissGroup(param);
+        if (ResultCode.COMMON_SUCCESS.getCode() != code.getCode()) {
+            return Result.failure(code);
+        }
+        return Result.success(code);
     }
 
     @GetMapping("/detail")

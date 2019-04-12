@@ -28,6 +28,7 @@ public class MemberNotInValidator implements Validator {
     public boolean isValid(String groupId, List<String> members) {
         Example example = new Example(GroupMemberModel.class);
         example.createCriteria()
+            .andNotEqualTo("status", 2)
             .andEqualTo("groupId", groupId)
             .andIn("memberUid", members);
         models = memberMapper.selectByExample(example);

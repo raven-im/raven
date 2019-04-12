@@ -22,7 +22,9 @@ public class GroupValidator implements Validator {
     @Override
     public boolean isValid(String key) {
         Example example = new Example(GroupModel.class);
-        example.createCriteria().andEqualTo("uid", key);
+        example.createCriteria()
+            .andEqualTo("uid", key)
+            .andNotEqualTo("status", 2);
         List<GroupModel> models = groupMapper.selectByExample(example);
         return !models.isEmpty();
     }

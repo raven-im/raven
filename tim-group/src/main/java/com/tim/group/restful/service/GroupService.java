@@ -8,4 +8,5 @@ public interface GroupService {
     GroupModel createGroup(GroupReqParam reqParam);
     ResultCode joinGroup(GroupReqParam reqParam);
     ResultCode quitGroup(GroupReqParam reqParam);
+    ResultCode dismissGroup(GroupReqParam reqParam);
 }

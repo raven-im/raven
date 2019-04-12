@@ -10,12 +10,14 @@ import com.tim.group.restful.mapper.GroupMapper;
 import com.tim.group.restful.mapper.GroupMemberMapper;
 import com.tim.group.restful.service.GroupService;
 import com.tim.group.restful.validator.GroupValidator;
-import com.tim.group.restful.validator.MemberValidator;
+import com.tim.group.restful.validator.MemberInValidator;
+import com.tim.group.restful.validator.MemberNotInValidator;
 import java.util.Date;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import tk.mybatis.mapper.entity.Example;
 
 @Service
 @Transactional(rollbackFor = Throwable.class)
@@ -28,8 +30,12 @@ public class GroupServiceImpl implements GroupService {
     private GroupMemberMapper memberMapper;
     @Autowired
     private GroupValidator groupValidator;
+
     @Autowired
-    private MemberValidator memberValidator;
+    private MemberNotInValidator memberNotValidator;
+
+    @Autowired
+    private MemberInValidator memberInValidator;
 
     @Override
     public GroupModel createGroup(GroupReqParam reqParam) {
@@ -61,8 +67,8 @@ public class GroupServiceImpl implements GroupService {
         if (!groupValidator.isValid(reqParam.getGroupId())) {
             return groupValidator.errorCode();
         }
-        if (!memberValidator.isValid(reqParam.getGroupId(), reqParam.getMembers())) {
-            return memberValidator.errorCode();
+        if (!memberInValidator.isValid(reqParam.getGroupId(), reqParam.getMembers())) {
+            return memberInValidator.errorCode();
         }
         Date now = DateTimeUtils.currentUTC();
         reqParam.getMembers().forEach(uid-> {
@@ -72,6 +78,26 @@ public class GroupServiceImpl implements GroupService {
             member.setUpdateDate(now);
             member.setMemberUid(uid);
             memberMapper.insert(member);
+        });
+        return ResultCode.COMMON_SUCCESS;
+    }
+
+    @Override
+    public ResultCode quitGroup(GroupReqParam reqParam) {
+        //params check.
+        if (!groupValidator.isValid(reqParam.getGroupId())) {
+            return groupValidator.errorCode();
+        }
+        if (!memberNotValidator.isValid(reqParam.getGroupId(), reqParam.getMembers())) {
+            return memberNotValidator.errorCode();
+        }
+
+        reqParam.getMembers().forEach(uid-> {
+            Example example = new Example(GroupMemberModel.class);
+            example.createCriteria()
+                .andEqualTo("groupId", reqParam.getGroupId())
+                .andEqualTo("memberUid", uid);
+            memberMapper.deleteByExample(example);
         });
         return ResultCode.COMMON_SUCCESS;
     }

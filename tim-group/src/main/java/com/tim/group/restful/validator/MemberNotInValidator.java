@@ -17,7 +17,7 @@ import tk.mybatis.mapper.entity.Example;
  * @description: UserValidator
  **/
 @Component
-public class MemberValidator implements Validator {
+public class MemberNotInValidator implements Validator {
 
     @Autowired
     private GroupMemberMapper memberMapper;
@@ -31,11 +31,11 @@ public class MemberValidator implements Validator {
             .andEqualTo("groupId", groupId)
             .andIn("memberUid", members);
         models = memberMapper.selectByExample(example);
-        return models.size() == 0;
+        return models.size() == members.size();
     }
 
     @Override
     public ResultCode errorCode() {
-        return ResultCode.GROUP_ERROR_MEMBER_ALREADY_IN;
+        return ResultCode.GROUP_ERROR_MEMBER_NOT_IN;
     }
 }

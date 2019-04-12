@@ -42,7 +42,11 @@ public class GroupController {
     @PostMapping("/quit")
     public Result quit(@RequestBody GroupReqParam param) {
         log.info("group quit:{}", param.getGroupId());
-        return Result.success();
+        ResultCode code = service.quitGroup(param);
+        if (ResultCode.COMMON_SUCCESS.getCode() != code.getCode()) {
+            return Result.failure(code);
+        }
+        return Result.success(code);
     }
 
     @PostMapping("/dismiss")

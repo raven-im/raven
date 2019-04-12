@@ -128,6 +128,37 @@ public class TimGroupTest {
     }
 
     @Test
+    public void test5GroupQuit() {
+        GroupReqParam input = new GroupReqParam();
+        input.setGroupId(groupId);
+        input.setMembers(Collections.singletonList(invitee1));
+
+        Result response = restTemplate.postForObject("/group/quit", input, Result.class);
+        assertEquals(response.getCode().intValue(), ResultCode.COMMON_SUCCESS.getCode());
+    }
+
+    @Test
+    public void test6GroupQuitFail() {
+        // not valid group id.
+        GroupReqParam input = new GroupReqParam();
+        input.setGroupId(UidUtil.uuid());
+        input.setMembers(Collections.singletonList(invitee2));
+
+        Result response = restTemplate.postForObject("/group/quit", input, Result.class);
+        assertEquals(response.getCode().intValue(), ResultCode.GROUP_ERROR_INVALID_GROUP_ID.getCode());
+    }
+
+    @Test
+    public void test7GroupQuitFail() {
+        GroupReqParam input = new GroupReqParam();
+        input.setGroupId(groupId);
+        input.setMembers(Collections.singletonList(invitee1));
+
+        Result response = restTemplate.postForObject("/group/quit", input, Result.class);
+        assertEquals(response.getCode().intValue(), ResultCode.GROUP_ERROR_MEMBER_NOT_IN.getCode());
+    }
+
+    @Test
     @Ignore
     public void groupMsgAckTest() throws Exception {
 

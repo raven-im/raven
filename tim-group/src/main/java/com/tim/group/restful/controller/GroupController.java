@@ -13,10 +13,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/group", produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/group", produces = APPLICATION_JSON_VALUE)
 @Slf4j
 public class GroupController {
 
@@ -59,9 +60,15 @@ public class GroupController {
         return Result.success(code);
     }
 
-    @GetMapping("/detail")
-    public Result details(@RequestBody GroupReqParam param) {
+    @PostMapping("/detail")
+    public Result detailsPost(@RequestBody GroupReqParam param) {
         log.info("group details:{}", param.getGroupId());
-        return Result.success();
+        return service.groupDetail(param.getGroupId());
+    }
+
+    @GetMapping("/detail")
+    public Result detailsGet(@RequestParam("id") String groupId) {
+        log.info("group details:{}", groupId);
+        return service.groupDetail(groupId);
     }
 }

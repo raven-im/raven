@@ -19,8 +19,6 @@ public class MemberInValidator implements Validator {
     @Autowired
     private GroupMemberMapper memberMapper;
 
-    private List<GroupMemberModel> models;
-
     @Override
     public boolean isValid(String groupId, List<String> members) {
         Example example = new Example(GroupMemberModel.class);
@@ -28,7 +26,7 @@ public class MemberInValidator implements Validator {
             .andNotEqualTo("status", 2)
             .andEqualTo("groupId", groupId)
             .andIn("memberUid", members);
-        models = memberMapper.selectByExample(example);
+        List<GroupMemberModel> models = memberMapper.selectByExample(example);
         return models.size() == 0;
     }
 

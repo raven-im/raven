@@ -1,10 +1,12 @@
 package com.tim.group.restful.service.impl;
 
+import com.tim.common.result.Result;
 import com.tim.common.result.ResultCode;
 import com.tim.common.utils.DateTimeUtils;
 import com.tim.common.utils.UidUtil;
 import com.tim.group.restful.bean.model.GroupMemberModel;
 import com.tim.group.restful.bean.model.GroupModel;
+import com.tim.group.restful.bean.param.GroupOutParam;
 import com.tim.group.restful.bean.param.GroupReqParam;
 import com.tim.group.restful.mapper.GroupMapper;
 import com.tim.group.restful.mapper.GroupMemberMapper;
@@ -124,5 +126,27 @@ public class GroupServiceImpl implements GroupService {
             .andEqualTo("uid", reqParam.getGroupId());
         groupMapper.updateByExampleSelective(model, example);
         return ResultCode.COMMON_SUCCESS;
+    }
+
+    @Override
+    public Result groupDetail(String groupId) {
+        //params check.
+        if (!groupValidator.isValid(groupId)) {
+            return Result.failure(groupValidator.errorCode());
+        }
+
+        Example example = new Example(GroupModel.class);
+        example.createCriteria()
+            .andEqualTo("status", 0)
+            .andEqualTo("uid", groupId);
+        List<GroupModel> info = groupMapper.selectByExample(example);
+
+        Example example1 = new Example(GroupMemberModel.class);
+        example1.createCriteria()
+            .andEqualTo("status", 0)
+            .andEqualTo("groupId", groupId);
+        List<GroupMemberModel> members = memberMapper.selectByExample(example1);
+
+        return Result.success(new GroupOutParam(info.get(0), members));
     }
 }

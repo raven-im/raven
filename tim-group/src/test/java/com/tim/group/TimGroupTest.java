@@ -12,6 +12,7 @@ import com.tim.common.utils.UidUtil;
 import com.tim.group.restful.bean.param.GroupReqParam;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -83,7 +84,7 @@ public class TimGroupTest {
     }
 
     @Test
-    public void test1GroupCreate() {
+    public void test01GroupCreate() {
         GroupReqParam input = new GroupReqParam();
         input.setName(GROUP_NAME);
         input.setPortrait(DEFAULT_URL);
@@ -96,7 +97,7 @@ public class TimGroupTest {
     }
 
     @Test
-    public void test2GroupJoin() {
+    public void test02GroupJoin() {
         GroupReqParam input = new GroupReqParam();
         input.setGroupId(groupId);
         input.setMembers(Collections.singletonList(invitee3));
@@ -106,7 +107,7 @@ public class TimGroupTest {
     }
 
     @Test
-    public void test3GroupJoinFail() {
+    public void test03GroupJoinFail() {
         // not valid group id.
         GroupReqParam input = new GroupReqParam();
         input.setGroupId(UidUtil.uuid());
@@ -117,7 +118,7 @@ public class TimGroupTest {
     }
 
     @Test
-    public void test4GroupJoinFail() {
+    public void test04GroupJoinFail() {
         // not valid member id.
         GroupReqParam input = new GroupReqParam();
         input.setGroupId(groupId);
@@ -128,7 +129,7 @@ public class TimGroupTest {
     }
 
     @Test
-    public void test5GroupQuit() {
+    public void test05GroupQuit() {
         GroupReqParam input = new GroupReqParam();
         input.setGroupId(groupId);
         input.setMembers(Collections.singletonList(invitee1));
@@ -138,7 +139,7 @@ public class TimGroupTest {
     }
 
     @Test
-    public void test6GroupQuitFail() {
+    public void test06GroupQuitFail() {
         // not valid group id.
         GroupReqParam input = new GroupReqParam();
         input.setGroupId(UidUtil.uuid());
@@ -149,7 +150,7 @@ public class TimGroupTest {
     }
 
     @Test
-    public void test7GroupQuitFail() {
+    public void test07GroupQuitFail() {
         GroupReqParam input = new GroupReqParam();
         input.setGroupId(groupId);
         input.setMembers(Collections.singletonList(invitee1));
@@ -159,7 +160,19 @@ public class TimGroupTest {
     }
 
     @Test
-    public void test8GroupDismiss() {
+    public void test08GroupDetail() {
+        String url = String.format("/group/detail?id=%s", groupId);
+        Result response = restTemplate.getForObject(url, Result.class);
+        assertEquals(response.getCode().intValue(), ResultCode.COMMON_SUCCESS.getCode());
+        Map<String, Object> param = (Map) response.getData();
+        Map<String, Object> subParam = (Map) param.get("details");
+        List list = (List) subParam.get("members");
+        assertEquals((String) subParam.get("name"), GROUP_NAME);
+        assertEquals(list.size(), 3);
+    }
+
+    @Test
+    public void test09GroupDismiss() {
         GroupReqParam input = new GroupReqParam();
         input.setGroupId(groupId);
 
@@ -168,7 +181,7 @@ public class TimGroupTest {
     }
 
     @Test
-    public void test9GroupDismissFail() {
+    public void test10GroupDismissFail() {
         GroupReqParam input = new GroupReqParam();
         input.setGroupId(UidUtil.uuid());
 
@@ -178,7 +191,7 @@ public class TimGroupTest {
 
     @Test
     @Ignore
-    public void groupMsgAckTest() throws Exception {
+    public void test11GroupMsgSent() throws Exception {
 
         Common.MessageContent content = Common.MessageContent.newBuilder()
             .setId(1)

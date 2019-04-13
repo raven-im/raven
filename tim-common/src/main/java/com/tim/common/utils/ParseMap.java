@@ -29,19 +29,21 @@ public class ParseMap {
             Message.UpDownMessage.class);
         register(MessageTypeConstants.MESSAGEACK, Message.MessageAck::parseFrom,
             Message.MessageAck.class);
-        register(MessageTypeConstants.CONVERSATIONREQ, Conversation.ConversationReq::parseFrom,
-            Conversation.ConversationReq.class);
-        register(MessageTypeConstants.CONVERSATIONACK, Conversation.ConversationAck::parseFrom,
-            Conversation.ConversationAck.class);
+        register(MessageTypeConstants.CONVERSATIONREQ, Conversation.ConverReq::parseFrom,
+            Conversation.ConverReq.class);
+        register(MessageTypeConstants.CONVERSATIONACK, Conversation.ConverAck::parseFrom,
+            Conversation.ConverAck.class);
         register(MessageTypeConstants.CONVERSATIONDETAIL,
-            Conversation.ConversationDetail::parseFrom,
-            Conversation.ConversationDetail.class);
+            Conversation.ConverInfo::parseFrom,
+            Conversation.ConverInfo.class);
         register(MessageTypeConstants.HISMESSAGESREQ, History.HisMessagesReq::parseFrom,
             History.HisMessagesReq.class);
         register(MessageTypeConstants.HISMESSAGESACK, History.HisMessagesAck::parseFrom,
             History.HisMessagesAck.class);
         register(MessageTypeConstants.NOTIFY, Notify.NotifyMessage::parseFrom,
             Notify.NotifyMessage.class);
+        register(MessageTypeConstants.SERVERINFO, Auth.ServerInfo::parseFrom,
+            Auth.ServerInfo.class);
     }
 
     @FunctionalInterface
@@ -68,7 +70,7 @@ public class ParseMap {
     public static MessageLite getMessage(int messageType, byte[] bytes) throws IOException {
         Parsing parser = parseMap.get(messageType);
         if (parser == null) {
-            log.error("UnKnown Protocol Num: {}", messageType);
+            log.error("unknown protocol num: {}", messageType);
         }
         assert parser != null;
         return parser.process(bytes);

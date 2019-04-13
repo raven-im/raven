@@ -3,7 +3,7 @@ package com.tim.single;
 import com.google.protobuf.MessageLite;
 import com.tim.common.code.MessageDecoder;
 import com.tim.common.code.MessageEncoder;
-import com.tim.common.protos.Conversation.ConversationReq;
+import com.tim.common.protos.Conversation.ConverReq;
 import com.tim.common.protos.Message.UpDownMessage;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelInitializer;
@@ -13,8 +13,6 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
-import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -37,9 +35,7 @@ public class Client {
                 @Override
                 public void initChannel(SocketChannel ch) throws Exception {
                 ch.pipeline()
-                    .addLast(new ProtobufVarint32FrameDecoder())// 处理半包消息的解码类
                     .addLast("MessageDecoder", new MessageDecoder())
-                    .addLast(new ProtobufVarint32LengthFieldPrepender())// 对protobuf协议的消息头上加上一个长度为32的整形字段
                     .addLast("MessageEncoder", new MessageEncoder())
                     .addLast(handler);
                 }
@@ -62,7 +58,7 @@ public class Client {
         baseTest(new SendSingleMsgHandler(msg, listener));
     }
 
-    public static void queryConversationTest(ConversationReq req, MessageListener listener) throws InterruptedException {
+    public static void queryConversationTest(ConverReq req, MessageListener listener) throws InterruptedException {
         baseTest(new QueryConversationHandler(req, listener));
     }
 }

@@ -27,7 +27,20 @@ public class JsonHelper {
     }
 
     public static Map<String, Object> strToMap(String str) throws IOException {
-        return mapper.readValue(str, Map.class);
+        try {
+            return mapper.readValue(str, Map.class);
+        } catch (IOException e) {
+            log.error("read json value error");
+        }
+        return null;
     }
 
+    public static <T> T readValue(String str, Class<T> classType) {
+        try {
+            return mapper.readValue(str, classType);
+        } catch (IOException e) {
+            log.error("read json value error");
+        }
+        return null;
+    }
 }

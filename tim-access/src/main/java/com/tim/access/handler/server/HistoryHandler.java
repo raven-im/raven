@@ -1,4 +1,4 @@
-package com.tim.access.handler;
+package com.tim.access.handler.server;
 
 import com.google.protobuf.MessageLite;
 import com.tim.common.netty.IdChannelManager;

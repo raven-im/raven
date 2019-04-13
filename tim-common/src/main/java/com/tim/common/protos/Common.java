@@ -117,9 +117,9 @@ public final class Common {
    * 会话类型
    * </pre>
    *
-   * Protobuf enum {@code com.tim.common.protos.ConversationType}
+   * Protobuf enum {@code com.tim.common.protos.ConverType}
    */
-  public enum ConversationType
+  public enum ConverType
       implements com.google.protobuf.ProtocolMessageEnum {
     /**
      * <code>SINGLE = 0;</code>
@@ -154,11 +154,11 @@ public final class Common {
      * @deprecated Use {@link #forNumber(int)} instead.
      */
     @java.lang.Deprecated
-    public static ConversationType valueOf(int value) {
+    public static ConverType valueOf(int value) {
       return forNumber(value);
     }
 
-    public static ConversationType forNumber(int value) {
+    public static ConverType forNumber(int value) {
       switch (value) {
         case 0: return SINGLE;
         case 1: return GROUP;
@@ -166,15 +166,15 @@ public final class Common {
       }
     }
 
-    public static com.google.protobuf.Internal.EnumLiteMap<ConversationType>
+    public static com.google.protobuf.Internal.EnumLiteMap<ConverType>
         internalGetValueMap() {
       return internalValueMap;
     }
     private static final com.google.protobuf.Internal.EnumLiteMap<
-        ConversationType> internalValueMap =
-          new com.google.protobuf.Internal.EnumLiteMap<ConversationType>() {
-            public ConversationType findValueByNumber(int number) {
-              return ConversationType.forNumber(number);
+        ConverType> internalValueMap =
+          new com.google.protobuf.Internal.EnumLiteMap<ConverType>() {
+            public ConverType findValueByNumber(int number) {
+              return ConverType.forNumber(number);
             }
           };
 
@@ -191,9 +191,9 @@ public final class Common {
       return com.tim.common.protos.Common.getDescriptor().getEnumTypes().get(1);
     }
 
-    private static final ConversationType[] VALUES = values();
+    private static final ConverType[] VALUES = values();
 
-    public static ConversationType valueOf(
+    public static ConverType valueOf(
         com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
       if (desc.getType() != getDescriptor()) {
         throw new java.lang.IllegalArgumentException(
@@ -207,11 +207,11 @@ public final class Common {
 
     private final int value;
 
-    private ConversationType(int value) {
+    private ConverType(int value) {
       this.value = value;
     }
 
-    // @@protoc_insertion_point(enum_scope:com.tim.common.protos.ConversationType)
+    // @@protoc_insertion_point(enum_scope:com.tim.common.protos.ConverType)
   }
 
   /**
@@ -1381,10 +1381,10 @@ public final class Common {
       "\016MessageContent\022\n\n\002id\030\001 \001(\004\022\013\n\003uid\030\002 \001(\t" +
       "\0220\n\004type\030\003 \001(\0162\".com.tim.common.protos.M" +
       "essageType\022\017\n\007content\030\004 \001(\t\022\014\n\004time\030\005 \001(" +
-      "\004*\035\n\004Code\022\013\n\007SUCCESS\020\000\022\010\n\004FAIL\020\001*)\n\020Conv" +
-      "ersationType\022\n\n\006SINGLE\020\000\022\t\n\005GROUP\020\001*:\n\013M" +
-      "essageType\022\010\n\004TEXT\020\000\022\013\n\007PICTURE\020\001\022\t\n\005VOI" +
-      "CE\020\002\022\t\n\005VIDEO\020\003B\010B\006Commonb\006proto3"
+      "\004*\035\n\004Code\022\013\n\007SUCCESS\020\000\022\010\n\004FAIL\020\001*#\n\nConv" +
+      "erType\022\n\n\006SINGLE\020\000\022\t\n\005GROUP\020\001*:\n\013Message" +
+      "Type\022\010\n\004TEXT\020\000\022\013\n\007PICTURE\020\001\022\t\n\005VOICE\020\002\022\t" +
+      "\n\005VIDEO\020\003B\010B\006Commonb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

@@ -50,18 +50,18 @@ public final class Notify {
      * 接收id
      * </pre>
      *
-     * <code>string targetid = 3;</code>
+     * <code>string targetUid = 3;</code>
      */
-    java.lang.String getTargetid();
+    java.lang.String getTargetUid();
     /**
      * <pre>
      * 接收id
      * </pre>
      *
-     * <code>string targetid = 3;</code>
+     * <code>string targetUid = 3;</code>
      */
     com.google.protobuf.ByteString
-        getTargetidBytes();
+        getTargetUidBytes();
 
     /**
      * <pre>
@@ -109,7 +109,7 @@ public final class Notify {
     private NotifyMessage() {
       id_ = 0L;
       type_ = "";
-      targetid_ = "";
+      targetUid_ = "";
       content_ = "";
       time_ = 0L;
     }
@@ -152,7 +152,7 @@ public final class Notify {
             case 26: {
               java.lang.String s = input.readStringRequireUtf8();
 
-              targetid_ = s;
+              targetUid_ = s;
               break;
             }
             case 34: {
@@ -253,24 +253,24 @@ public final class Notify {
       }
     }
 
-    public static final int TARGETID_FIELD_NUMBER = 3;
-    private volatile java.lang.Object targetid_;
+    public static final int TARGETUID_FIELD_NUMBER = 3;
+    private volatile java.lang.Object targetUid_;
     /**
      * <pre>
      * 接收id
      * </pre>
      *
-     * <code>string targetid = 3;</code>
+     * <code>string targetUid = 3;</code>
      */
-    public java.lang.String getTargetid() {
-      java.lang.Object ref = targetid_;
+    public java.lang.String getTargetUid() {
+      java.lang.Object ref = targetUid_;
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
         com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        targetid_ = s;
+        targetUid_ = s;
         return s;
       }
     }
@@ -279,16 +279,16 @@ public final class Notify {
      * 接收id
      * </pre>
      *
-     * <code>string targetid = 3;</code>
+     * <code>string targetUid = 3;</code>
      */
     public com.google.protobuf.ByteString
-        getTargetidBytes() {
-      java.lang.Object ref = targetid_;
+        getTargetUidBytes() {
+      java.lang.Object ref = targetUid_;
       if (ref instanceof java.lang.String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        targetid_ = b;
+        targetUid_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
@@ -370,8 +370,8 @@ public final class Notify {
       if (!getTypeBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 2, type_);
       }
-      if (!getTargetidBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, targetid_);
+      if (!getTargetUidBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, targetUid_);
       }
       if (!getContentBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 4, content_);
@@ -395,8 +395,8 @@ public final class Notify {
       if (!getTypeBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, type_);
       }
-      if (!getTargetidBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, targetid_);
+      if (!getTargetUidBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, targetUid_);
       }
       if (!getContentBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, content_);
@@ -425,8 +425,8 @@ public final class Notify {
           == other.getId());
       result = result && getType()
           .equals(other.getType());
-      result = result && getTargetid()
-          .equals(other.getTargetid());
+      result = result && getTargetUid()
+          .equals(other.getTargetUid());
       result = result && getContent()
           .equals(other.getContent());
       result = result && (getTime()
@@ -447,8 +447,8 @@ public final class Notify {
           getId());
       hash = (37 * hash) + TYPE_FIELD_NUMBER;
       hash = (53 * hash) + getType().hashCode();
-      hash = (37 * hash) + TARGETID_FIELD_NUMBER;
-      hash = (53 * hash) + getTargetid().hashCode();
+      hash = (37 * hash) + TARGETUID_FIELD_NUMBER;
+      hash = (53 * hash) + getTargetUid().hashCode();
       hash = (37 * hash) + CONTENT_FIELD_NUMBER;
       hash = (53 * hash) + getContent().hashCode();
       hash = (37 * hash) + TIME_FIELD_NUMBER;
@@ -595,7 +595,7 @@ public final class Notify {
 
         type_ = "";
 
-        targetid_ = "";
+        targetUid_ = "";
 
         content_ = "";
 
@@ -629,7 +629,7 @@ public final class Notify {
         com.tim.common.protos.Notify.NotifyMessage result = new com.tim.common.protos.Notify.NotifyMessage(this);
         result.id_ = id_;
         result.type_ = type_;
-        result.targetid_ = targetid_;
+        result.targetUid_ = targetUid_;
         result.content_ = content_;
         result.time_ = time_;
         onBuilt();
@@ -687,8 +687,8 @@ public final class Notify {
           type_ = other.type_;
           onChanged();
         }
-        if (!other.getTargetid().isEmpty()) {
-          targetid_ = other.targetid_;
+        if (!other.getTargetUid().isEmpty()) {
+          targetUid_ = other.targetUid_;
           onChanged();
         }
         if (!other.getContent().isEmpty()) {
@@ -854,21 +854,21 @@ public final class Notify {
         return this;
       }
 
-      private java.lang.Object targetid_ = "";
+      private java.lang.Object targetUid_ = "";
       /**
        * <pre>
        * 接收id
        * </pre>
        *
-       * <code>string targetid = 3;</code>
+       * <code>string targetUid = 3;</code>
        */
-      public java.lang.String getTargetid() {
-        java.lang.Object ref = targetid_;
+      public java.lang.String getTargetUid() {
+        java.lang.Object ref = targetUid_;
         if (!(ref instanceof java.lang.String)) {
           com.google.protobuf.ByteString bs =
               (com.google.protobuf.ByteString) ref;
           java.lang.String s = bs.toStringUtf8();
-          targetid_ = s;
+          targetUid_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -879,16 +879,16 @@ public final class Notify {
        * 接收id
        * </pre>
        *
-       * <code>string targetid = 3;</code>
+       * <code>string targetUid = 3;</code>
        */
       public com.google.protobuf.ByteString
-          getTargetidBytes() {
-        java.lang.Object ref = targetid_;
+          getTargetUidBytes() {
+        java.lang.Object ref = targetUid_;
         if (ref instanceof String) {
           com.google.protobuf.ByteString b = 
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
-          targetid_ = b;
+          targetUid_ = b;
           return b;
         } else {
           return (com.google.protobuf.ByteString) ref;
@@ -899,15 +899,15 @@ public final class Notify {
        * 接收id
        * </pre>
        *
-       * <code>string targetid = 3;</code>
+       * <code>string targetUid = 3;</code>
        */
-      public Builder setTargetid(
+      public Builder setTargetUid(
           java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
   
-        targetid_ = value;
+        targetUid_ = value;
         onChanged();
         return this;
       }
@@ -916,11 +916,11 @@ public final class Notify {
        * 接收id
        * </pre>
        *
-       * <code>string targetid = 3;</code>
+       * <code>string targetUid = 3;</code>
        */
-      public Builder clearTargetid() {
+      public Builder clearTargetUid() {
         
-        targetid_ = getDefaultInstance().getTargetid();
+        targetUid_ = getDefaultInstance().getTargetUid();
         onChanged();
         return this;
       }
@@ -929,16 +929,16 @@ public final class Notify {
        * 接收id
        * </pre>
        *
-       * <code>string targetid = 3;</code>
+       * <code>string targetUid = 3;</code>
        */
-      public Builder setTargetidBytes(
+      public Builder setTargetUidBytes(
           com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
         
-        targetid_ = value;
+        targetUid_ = value;
         onChanged();
         return this;
       }
@@ -1136,10 +1136,10 @@ public final class Notify {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\014notify.proto\022\025com.tim.common.protos\"Z\n" +
+      "\n\014notify.proto\022\025com.tim.common.protos\"[\n" +
       "\rNotifyMessage\022\n\n\002id\030\001 \001(\004\022\014\n\004type\030\002 \001(\t" +
-      "\022\020\n\010targetid\030\003 \001(\t\022\017\n\007content\030\004 \001(\t\022\014\n\004t" +
-      "ime\030\005 \001(\004B\010B\006Notifyb\006proto3"
+      "\022\021\n\ttargetUid\030\003 \001(\t\022\017\n\007content\030\004 \001(\t\022\014\n\004" +
+      "time\030\005 \001(\004B\010B\006Notifyb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -1158,7 +1158,7 @@ public final class Notify {
     internal_static_com_tim_common_protos_NotifyMessage_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_tim_common_protos_NotifyMessage_descriptor,
-        new java.lang.String[] { "Id", "Type", "Targetid", "Content", "Time", });
+        new java.lang.String[] { "Id", "Type", "TargetUid", "Content", "Time", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

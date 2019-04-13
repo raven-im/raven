@@ -15,3 +15,10 @@ message LoginAck {
   string msg = 3; //描述
   uint64 time = 4; //消息时间
 }
+
+message ServerInfo {
+  uint64 id = 1; //消息ID
+  string ip = 2;
+  uint32 port = 3;
+}
+

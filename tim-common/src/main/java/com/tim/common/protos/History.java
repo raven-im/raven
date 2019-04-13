@@ -32,18 +32,18 @@ public final class History {
      * 会话id
      * </pre>
      *
-     * <code>string conversasionId = 2;</code>
+     * <code>string converId = 2;</code>
      */
-    java.lang.String getConversasionId();
+    java.lang.String getConverId();
     /**
      * <pre>
      * 会话id
      * </pre>
      *
-     * <code>string conversasionId = 2;</code>
+     * <code>string converId = 2;</code>
      */
     com.google.protobuf.ByteString
-        getConversasionIdBytes();
+        getConverIdBytes();
   }
   /**
    * <pre>
@@ -63,7 +63,7 @@ public final class History {
     }
     private HisMessagesReq() {
       id_ = 0L;
-      conversasionId_ = "";
+      converId_ = "";
     }
 
     @java.lang.Override
@@ -98,7 +98,7 @@ public final class History {
             case 18: {
               java.lang.String s = input.readStringRequireUtf8();
 
-              conversasionId_ = s;
+              converId_ = s;
               break;
             }
             default: {
@@ -146,24 +146,24 @@ public final class History {
       return id_;
     }
 
-    public static final int CONVERSASIONID_FIELD_NUMBER = 2;
-    private volatile java.lang.Object conversasionId_;
+    public static final int CONVERID_FIELD_NUMBER = 2;
+    private volatile java.lang.Object converId_;
     /**
      * <pre>
      * 会话id
      * </pre>
      *
-     * <code>string conversasionId = 2;</code>
+     * <code>string converId = 2;</code>
      */
-    public java.lang.String getConversasionId() {
-      java.lang.Object ref = conversasionId_;
+    public java.lang.String getConverId() {
+      java.lang.Object ref = converId_;
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
         com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        conversasionId_ = s;
+        converId_ = s;
         return s;
       }
     }
@@ -172,16 +172,16 @@ public final class History {
      * 会话id
      * </pre>
      *
-     * <code>string conversasionId = 2;</code>
+     * <code>string converId = 2;</code>
      */
     public com.google.protobuf.ByteString
-        getConversasionIdBytes() {
-      java.lang.Object ref = conversasionId_;
+        getConverIdBytes() {
+      java.lang.Object ref = converId_;
       if (ref instanceof java.lang.String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        conversasionId_ = b;
+        converId_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
@@ -205,8 +205,8 @@ public final class History {
       if (id_ != 0L) {
         output.writeUInt64(1, id_);
       }
-      if (!getConversasionIdBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, conversasionId_);
+      if (!getConverIdBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, converId_);
       }
       unknownFields.writeTo(output);
     }
@@ -221,8 +221,8 @@ public final class History {
         size += com.google.protobuf.CodedOutputStream
           .computeUInt64Size(1, id_);
       }
-      if (!getConversasionIdBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, conversasionId_);
+      if (!getConverIdBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, converId_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -242,8 +242,8 @@ public final class History {
       boolean result = true;
       result = result && (getId()
           == other.getId());
-      result = result && getConversasionId()
-          .equals(other.getConversasionId());
+      result = result && getConverId()
+          .equals(other.getConverId());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -258,8 +258,8 @@ public final class History {
       hash = (37 * hash) + ID_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           getId());
-      hash = (37 * hash) + CONVERSASIONID_FIELD_NUMBER;
-      hash = (53 * hash) + getConversasionId().hashCode();
+      hash = (37 * hash) + CONVERID_FIELD_NUMBER;
+      hash = (53 * hash) + getConverId().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -399,7 +399,7 @@ public final class History {
         super.clear();
         id_ = 0L;
 
-        conversasionId_ = "";
+        converId_ = "";
 
         return this;
       }
@@ -428,7 +428,7 @@ public final class History {
       public com.tim.common.protos.History.HisMessagesReq buildPartial() {
         com.tim.common.protos.History.HisMessagesReq result = new com.tim.common.protos.History.HisMessagesReq(this);
         result.id_ = id_;
-        result.conversasionId_ = conversasionId_;
+        result.converId_ = converId_;
         onBuilt();
         return result;
       }
@@ -480,8 +480,8 @@ public final class History {
         if (other.getId() != 0L) {
           setId(other.getId());
         }
-        if (!other.getConversasionId().isEmpty()) {
-          conversasionId_ = other.conversasionId_;
+        if (!other.getConverId().isEmpty()) {
+          converId_ = other.converId_;
           onChanged();
         }
         this.mergeUnknownFields(other.unknownFields);
@@ -551,21 +551,21 @@ public final class History {
         return this;
       }
 
-      private java.lang.Object conversasionId_ = "";
+      private java.lang.Object converId_ = "";
       /**
        * <pre>
        * 会话id
        * </pre>
        *
-       * <code>string conversasionId = 2;</code>
+       * <code>string converId = 2;</code>
        */
-      public java.lang.String getConversasionId() {
-        java.lang.Object ref = conversasionId_;
+      public java.lang.String getConverId() {
+        java.lang.Object ref = converId_;
         if (!(ref instanceof java.lang.String)) {
           com.google.protobuf.ByteString bs =
               (com.google.protobuf.ByteString) ref;
           java.lang.String s = bs.toStringUtf8();
-          conversasionId_ = s;
+          converId_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -576,16 +576,16 @@ public final class History {
        * 会话id
        * </pre>
        *
-       * <code>string conversasionId = 2;</code>
+       * <code>string converId = 2;</code>
        */
       public com.google.protobuf.ByteString
-          getConversasionIdBytes() {
-        java.lang.Object ref = conversasionId_;
+          getConverIdBytes() {
+        java.lang.Object ref = converId_;
         if (ref instanceof String) {
           com.google.protobuf.ByteString b = 
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
-          conversasionId_ = b;
+          converId_ = b;
           return b;
         } else {
           return (com.google.protobuf.ByteString) ref;
@@ -596,15 +596,15 @@ public final class History {
        * 会话id
        * </pre>
        *
-       * <code>string conversasionId = 2;</code>
+       * <code>string converId = 2;</code>
        */
-      public Builder setConversasionId(
+      public Builder setConverId(
           java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
   
-        conversasionId_ = value;
+        converId_ = value;
         onChanged();
         return this;
       }
@@ -613,11 +613,11 @@ public final class History {
        * 会话id
        * </pre>
        *
-       * <code>string conversasionId = 2;</code>
+       * <code>string converId = 2;</code>
        */
-      public Builder clearConversasionId() {
+      public Builder clearConverId() {
         
-        conversasionId_ = getDefaultInstance().getConversasionId();
+        converId_ = getDefaultInstance().getConverId();
         onChanged();
         return this;
       }
@@ -626,16 +626,16 @@ public final class History {
        * 会话id
        * </pre>
        *
-       * <code>string conversasionId = 2;</code>
+       * <code>string converId = 2;</code>
        */
-      public Builder setConversasionIdBytes(
+      public Builder setConverIdBytes(
           com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
         
-        conversasionId_ = value;
+        converId_ = value;
         onChanged();
         return this;
       }
@@ -710,18 +710,18 @@ public final class History {
      * 会话id
      * </pre>
      *
-     * <code>string conversasionId = 2;</code>
+     * <code>string converId = 2;</code>
      */
-    java.lang.String getConversasionId();
+    java.lang.String getConverId();
     /**
      * <pre>
      * 会话id
      * </pre>
      *
-     * <code>string conversasionId = 2;</code>
+     * <code>string converId = 2;</code>
      */
     com.google.protobuf.ByteString
-        getConversasionIdBytes();
+        getConverIdBytes();
 
     /**
      * <code>repeated .com.tim.common.protos.MessageContent messageList = 3;</code>
@@ -765,7 +765,7 @@ public final class History {
     }
     private HisMessagesAck() {
       id_ = 0L;
-      conversasionId_ = "";
+      converId_ = "";
       messageList_ = java.util.Collections.emptyList();
     }
 
@@ -801,7 +801,7 @@ public final class History {
             case 18: {
               java.lang.String s = input.readStringRequireUtf8();
 
-              conversasionId_ = s;
+              converId_ = s;
               break;
             }
             case 26: {
@@ -862,24 +862,24 @@ public final class History {
       return id_;
     }
 
-    public static final int CONVERSASIONID_FIELD_NUMBER = 2;
-    private volatile java.lang.Object conversasionId_;
+    public static final int CONVERID_FIELD_NUMBER = 2;
+    private volatile java.lang.Object converId_;
     /**
      * <pre>
      * 会话id
      * </pre>
      *
-     * <code>string conversasionId = 2;</code>
+     * <code>string converId = 2;</code>
      */
-    public java.lang.String getConversasionId() {
-      java.lang.Object ref = conversasionId_;
+    public java.lang.String getConverId() {
+      java.lang.Object ref = converId_;
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
         com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        conversasionId_ = s;
+        converId_ = s;
         return s;
       }
     }
@@ -888,16 +888,16 @@ public final class History {
      * 会话id
      * </pre>
      *
-     * <code>string conversasionId = 2;</code>
+     * <code>string converId = 2;</code>
      */
     public com.google.protobuf.ByteString
-        getConversasionIdBytes() {
-      java.lang.Object ref = conversasionId_;
+        getConverIdBytes() {
+      java.lang.Object ref = converId_;
       if (ref instanceof java.lang.String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        conversasionId_ = b;
+        converId_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
@@ -956,8 +956,8 @@ public final class History {
       if (id_ != 0L) {
         output.writeUInt64(1, id_);
       }
-      if (!getConversasionIdBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, conversasionId_);
+      if (!getConverIdBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, converId_);
       }
       for (int i = 0; i < messageList_.size(); i++) {
         output.writeMessage(3, messageList_.get(i));
@@ -975,8 +975,8 @@ public final class History {
         size += com.google.protobuf.CodedOutputStream
           .computeUInt64Size(1, id_);
       }
-      if (!getConversasionIdBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, conversasionId_);
+      if (!getConverIdBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, converId_);
       }
       for (int i = 0; i < messageList_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
@@ -1000,8 +1000,8 @@ public final class History {
       boolean result = true;
       result = result && (getId()
           == other.getId());
-      result = result && getConversasionId()
-          .equals(other.getConversasionId());
+      result = result && getConverId()
+          .equals(other.getConverId());
       result = result && getMessageListList()
           .equals(other.getMessageListList());
       result = result && unknownFields.equals(other.unknownFields);
@@ -1018,8 +1018,8 @@ public final class History {
       hash = (37 * hash) + ID_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           getId());
-      hash = (37 * hash) + CONVERSASIONID_FIELD_NUMBER;
-      hash = (53 * hash) + getConversasionId().hashCode();
+      hash = (37 * hash) + CONVERID_FIELD_NUMBER;
+      hash = (53 * hash) + getConverId().hashCode();
       if (getMessageListCount() > 0) {
         hash = (37 * hash) + MESSAGELIST_FIELD_NUMBER;
         hash = (53 * hash) + getMessageListList().hashCode();
@@ -1164,7 +1164,7 @@ public final class History {
         super.clear();
         id_ = 0L;
 
-        conversasionId_ = "";
+        converId_ = "";
 
         if (messageListBuilder_ == null) {
           messageList_ = java.util.Collections.emptyList();
@@ -1201,7 +1201,7 @@ public final class History {
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         result.id_ = id_;
-        result.conversasionId_ = conversasionId_;
+        result.converId_ = converId_;
         if (messageListBuilder_ == null) {
           if (((bitField0_ & 0x00000004) == 0x00000004)) {
             messageList_ = java.util.Collections.unmodifiableList(messageList_);
@@ -1263,8 +1263,8 @@ public final class History {
         if (other.getId() != 0L) {
           setId(other.getId());
         }
-        if (!other.getConversasionId().isEmpty()) {
-          conversasionId_ = other.conversasionId_;
+        if (!other.getConverId().isEmpty()) {
+          converId_ = other.converId_;
           onChanged();
         }
         if (messageListBuilder_ == null) {
@@ -1361,21 +1361,21 @@ public final class History {
         return this;
       }
 
-      private java.lang.Object conversasionId_ = "";
+      private java.lang.Object converId_ = "";
       /**
        * <pre>
        * 会话id
        * </pre>
        *
-       * <code>string conversasionId = 2;</code>
+       * <code>string converId = 2;</code>
        */
-      public java.lang.String getConversasionId() {
-        java.lang.Object ref = conversasionId_;
+      public java.lang.String getConverId() {
+        java.lang.Object ref = converId_;
         if (!(ref instanceof java.lang.String)) {
           com.google.protobuf.ByteString bs =
               (com.google.protobuf.ByteString) ref;
           java.lang.String s = bs.toStringUtf8();
-          conversasionId_ = s;
+          converId_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -1386,16 +1386,16 @@ public final class History {
        * 会话id
        * </pre>
        *
-       * <code>string conversasionId = 2;</code>
+       * <code>string converId = 2;</code>
        */
       public com.google.protobuf.ByteString
-          getConversasionIdBytes() {
-        java.lang.Object ref = conversasionId_;
+          getConverIdBytes() {
+        java.lang.Object ref = converId_;
         if (ref instanceof String) {
           com.google.protobuf.ByteString b = 
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
-          conversasionId_ = b;
+          converId_ = b;
           return b;
         } else {
           return (com.google.protobuf.ByteString) ref;
@@ -1406,15 +1406,15 @@ public final class History {
        * 会话id
        * </pre>
        *
-       * <code>string conversasionId = 2;</code>
+       * <code>string converId = 2;</code>
        */
-      public Builder setConversasionId(
+      public Builder setConverId(
           java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
   
-        conversasionId_ = value;
+        converId_ = value;
         onChanged();
         return this;
       }
@@ -1423,11 +1423,11 @@ public final class History {
        * 会话id
        * </pre>
        *
-       * <code>string conversasionId = 2;</code>
+       * <code>string converId = 2;</code>
        */
-      public Builder clearConversasionId() {
+      public Builder clearConverId() {
         
-        conversasionId_ = getDefaultInstance().getConversasionId();
+        converId_ = getDefaultInstance().getConverId();
         onChanged();
         return this;
       }
@@ -1436,16 +1436,16 @@ public final class History {
        * 会话id
        * </pre>
        *
-       * <code>string conversasionId = 2;</code>
+       * <code>string converId = 2;</code>
        */
-      public Builder setConversasionIdBytes(
+      public Builder setConverIdBytes(
           com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
         
-        conversasionId_ = value;
+        converId_ = value;
         onChanged();
         return this;
       }
@@ -1762,11 +1762,11 @@ public final class History {
   static {
     java.lang.String[] descriptorData = {
       "\n\rhistory.proto\022\025com.tim.common.protos\032\014" +
-      "common.proto\"4\n\016HisMessagesReq\022\n\n\002id\030\001 \001" +
-      "(\004\022\026\n\016conversasionId\030\002 \001(\t\"p\n\016HisMessage" +
-      "sAck\022\n\n\002id\030\001 \001(\004\022\026\n\016conversasionId\030\002 \001(\t" +
-      "\022:\n\013messageList\030\003 \003(\0132%.com.tim.common.p" +
-      "rotos.MessageContentB\tB\007Historyb\006proto3"
+      "common.proto\".\n\016HisMessagesReq\022\n\n\002id\030\001 \001" +
+      "(\004\022\020\n\010converId\030\002 \001(\t\"j\n\016HisMessagesAck\022\n" +
+      "\n\002id\030\001 \001(\004\022\020\n\010converId\030\002 \001(\t\022:\n\013messageL" +
+      "ist\030\003 \003(\0132%.com.tim.common.protos.Messag" +
+      "eContentB\tB\007Historyb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -1786,13 +1786,13 @@ public final class History {
     internal_static_com_tim_common_protos_HisMessagesReq_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_tim_common_protos_HisMessagesReq_descriptor,
-        new java.lang.String[] { "Id", "ConversasionId", });
+        new java.lang.String[] { "Id", "ConverId", });
     internal_static_com_tim_common_protos_HisMessagesAck_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_com_tim_common_protos_HisMessagesAck_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_tim_common_protos_HisMessagesAck_descriptor,
-        new java.lang.String[] { "Id", "ConversasionId", "MessageList", });
+        new java.lang.String[] { "Id", "ConverId", "MessageList", });
     com.tim.common.protos.Common.getDescriptor();
   }
 

@@ -4,7 +4,7 @@ import "common.proto";
 option java_outer_classname = "Conversation";
 
 // 会话操作请求  消息ID使用客户端生成
-message ConversationReq {
+message ConverReq {
   uint64 id = 1; // 消息ID
   OperationType type = 2;
   string conversationId = 3; // 会话ID
@@ -16,21 +16,21 @@ enum OperationType {
 }
 
 // 会话操作结果
-message ConversationAck {
+message ConverAck {
   uint64 id = 1; // 消息ID
   Code code = 3; // 返回码
   uint64 time = 4; // 时间
-  ConversationDetail conversation = 5;
-  repeated ConversationDetail conversationList = 6;
-
+  ConverInfo conversation = 5;
+  repeated ConverInfo conversationList = 6;
 }
 
 // 会话详情
-message ConversationDetail {
-  string conversationId = 1; // 会话ID
-  ConversationType type = 2; // 会话类型
-  string targetId = 3; // 单聊会话 用户ID 群会话 群ID
-  uint64 unreadCount = 5; // 未读数
+message ConverInfo {
+  string converId = 1; // 会话ID
+  ConverType type = 2; // 会话类型
+  repeated string uid = 3; // 单聊会话 用户列表
+  string groupId = 4; //  群会话 群ID
+  uint64 unCount = 5; // 未读数
   MessageContent lastContent = 6; // 最后一条消息
 }
 

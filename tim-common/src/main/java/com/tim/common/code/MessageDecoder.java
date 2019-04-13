@@ -2,6 +2,7 @@ package com.tim.common.code;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.MessageLite;
+import com.tim.common.utils.JsonHelper;
 import com.tim.common.utils.ParseMap;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -21,31 +22,26 @@ public class MessageDecoder extends ByteToMessageDecoder {
 
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) {
-        in.markReaderIndex();
-        if (in.readableBytes() < 4) {
-            log.info("readableBytes length less than 4 bytes, ignored");
-            in.resetReaderIndex();
-            return;
-        }
-        int length = in.readInt();
-        if (length < 0) {
-            ctx.close();
-            log.error("message length less than 0, channel closed");
-            return;
-        }
-        if (length > in.readableBytes() - 4) {
-            in.resetReaderIndex();
-            return;
-        }
-        int messageType = in.readInt();
-        ByteBuf byteBuf = Unpooled.buffer(length);
-        in.readBytes(byteBuf);
         try {
+            in.markReaderIndex();
+            if (in.readableBytes() < 4) {
+                log.error("readableBytes length less than 4 bytes, ignored");
+                in.resetReaderIndex();
+                return;
+            }
+            int length = in.readInt();
+            if (length < 0) {
+                log.error("message length less than 0, ignored");
+                in.resetReaderIndex();
+                return;
+            }
+            int ptoNum = in.readInt();
+            ByteBuf byteBuf = Unpooled.buffer(length);
+            in.readBytes(byteBuf);
             byte[] body = byteBuf.array();
-            MessageLite msg = ParseMap.getMessage(messageType, body);
+            MessageLite msg = ParseMap.getMessage(ptoNum, body);
             out.add(msg);
-            log.debug("Received Message remoteAddress:{}, content:{}",
-                ctx.channel().remoteAddress(), msg.toString());
+            log.info("received message msg:{}", msg.toString());
         } catch (Exception e) {
             log.error("{},decode failed:{}", ctx.channel().remoteAddress(), e);
         }

@@ -1,10 +1,10 @@
-package com.tim.access.handler;
+package com.tim.access.handler.server;
 
 import com.google.protobuf.MessageLite;
 import com.tim.access.config.S2sChannelManager;
 import com.tim.common.netty.IdChannelManager;
 import com.tim.common.protos.Common.Code;
-import com.tim.common.protos.Common.ConversationType;
+import com.tim.common.protos.Common.ConverType;
 import com.tim.common.protos.Message.MessageAck;
 import com.tim.common.protos.Message.UpDownMessage;
 import com.tim.common.utils.SnowFlake;
@@ -38,24 +38,24 @@ public class MesaageHandler extends SimpleChannelInboundHandler<MessageLite> {
             UpDownMessage message = (UpDownMessage) messageLite;
             message.toBuilder().setId(snowFlake.nextId())
                 .getContent().toBuilder().setTime(System.currentTimeMillis());
-            if (message.getConversationType() == ConversationType.SINGLE) {
-                if (StringUtils.isNotBlank(message.getConversasionId())) {
+            if (message.getConverType() == ConverType.SINGLE) {
+                if (StringUtils.isNotBlank(message.getConverId())) {
                     Channel channel = s2sChannelManager
-                        .selectSingleChannel(message.getConversasionId());
+                        .selectSingleChannel(message.getConverId());
                     channel.writeAndFlush(message);
-                } else if (StringUtils.isNotBlank(message.getTargetId())) {
-                    Channel channel = s2sChannelManager.selectSingleChannel(message.getTargetId());
+                } else if (StringUtils.isNotBlank(message.getTargetUid())) {
+                    Channel channel = s2sChannelManager.selectSingleChannel(message.getTargetUid());
                     channel.writeAndFlush(message);
                 } else {
                     sendFail(ctx, message);
                 }
-            } else if (message.getConversationType() == ConversationType.GROUP) {
-                if (StringUtils.isNotBlank(message.getConversasionId())) {
+            } else if (message.getConverType() == ConverType.GROUP) {
+                if (StringUtils.isNotBlank(message.getConverId())) {
                     Channel channel = s2sChannelManager
-                        .selectGroupChannel(message.getConversasionId());
+                        .selectGroupChannel(message.getConverId());
                     channel.writeAndFlush(message);
-                } else if (StringUtils.isNotBlank(message.getTargetId())) {
-                    Channel channel = s2sChannelManager.selectGroupChannel(message.getTargetId());
+                } else if (StringUtils.isNotBlank(message.getTargetUid())) {
+                    Channel channel = s2sChannelManager.selectGroupChannel(message.getTargetUid());
                     channel.writeAndFlush(message);
                 } else {
                     sendFail(ctx, message);
@@ -70,11 +70,11 @@ public class MesaageHandler extends SimpleChannelInboundHandler<MessageLite> {
 
     private void sendFail(ChannelHandlerContext ctx, UpDownMessage message) {
         MessageAck messageAck = MessageAck.newBuilder()
-            .setClientId(message.getClientId())
-            .setTargetId(uidChannelManager.getIdByChannel(ctx.channel()))
+            .setCid(message.getCid())
+            .setTargetUid(uidChannelManager.getIdByChannel(ctx.channel()))
             .setCode(Code.FAIL)
             .setTime(System.currentTimeMillis())
-            .setConversasionId(message.getConversasionId())
+            .setConverId(message.getConverId())
             .build();
         ctx.writeAndFlush(messageAck);
     }

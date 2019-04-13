@@ -112,113 +112,6 @@ public final class Message {
     // @@protoc_insertion_point(enum_scope:com.tim.common.protos.HeartBeatType)
   }
 
-  /**
-   * Protobuf enum {@code com.tim.common.protos.Direction}
-   */
-  public enum Direction
-      implements com.google.protobuf.ProtocolMessageEnum {
-    /**
-     * <code>CS = 0;</code>
-     */
-    CS(0),
-    /**
-     * <code>SS = 1;</code>
-     */
-    SS(1),
-    /**
-     * <code>SC = 2;</code>
-     */
-    SC(2),
-    UNRECOGNIZED(-1),
-    ;
-
-    /**
-     * <code>CS = 0;</code>
-     */
-    public static final int CS_VALUE = 0;
-    /**
-     * <code>SS = 1;</code>
-     */
-    public static final int SS_VALUE = 1;
-    /**
-     * <code>SC = 2;</code>
-     */
-    public static final int SC_VALUE = 2;
-
-
-    public final int getNumber() {
-      if (this == UNRECOGNIZED) {
-        throw new java.lang.IllegalArgumentException(
-            "Can't get the number of an unknown enum value.");
-      }
-      return value;
-    }
-
-    /**
-     * @deprecated Use {@link #forNumber(int)} instead.
-     */
-    @java.lang.Deprecated
-    public static Direction valueOf(int value) {
-      return forNumber(value);
-    }
-
-    public static Direction forNumber(int value) {
-      switch (value) {
-        case 0: return CS;
-        case 1: return SS;
-        case 2: return SC;
-        default: return null;
-      }
-    }
-
-    public static com.google.protobuf.Internal.EnumLiteMap<Direction>
-        internalGetValueMap() {
-      return internalValueMap;
-    }
-    private static final com.google.protobuf.Internal.EnumLiteMap<
-        Direction> internalValueMap =
-          new com.google.protobuf.Internal.EnumLiteMap<Direction>() {
-            public Direction findValueByNumber(int number) {
-              return Direction.forNumber(number);
-            }
-          };
-
-    public final com.google.protobuf.Descriptors.EnumValueDescriptor
-        getValueDescriptor() {
-      return getDescriptor().getValues().get(ordinal());
-    }
-    public final com.google.protobuf.Descriptors.EnumDescriptor
-        getDescriptorForType() {
-      return getDescriptor();
-    }
-    public static final com.google.protobuf.Descriptors.EnumDescriptor
-        getDescriptor() {
-      return com.tim.common.protos.Message.getDescriptor().getEnumTypes().get(1);
-    }
-
-    private static final Direction[] VALUES = values();
-
-    public static Direction valueOf(
-        com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-      if (desc.getType() != getDescriptor()) {
-        throw new java.lang.IllegalArgumentException(
-          "EnumValueDescriptor is not for this type.");
-      }
-      if (desc.getIndex() == -1) {
-        return UNRECOGNIZED;
-      }
-      return VALUES[desc.getIndex()];
-    }
-
-    private final int value;
-
-    private Direction(int value) {
-      this.value = value;
-    }
-
-    // @@protoc_insertion_point(enum_scope:com.tim.common.protos.Direction)
-  }
-
   public interface UpDownMessageOrBuilder extends
       // @@protoc_insertion_point(interface_extends:com.tim.common.protos.UpDownMessage)
       com.google.protobuf.MessageOrBuilder {
@@ -237,104 +130,105 @@ public final class Message {
      * 客户端消息ID
      * </pre>
      *
-     * <code>uint64 clientId = 2;</code>
+     * <code>uint64 cid = 2;</code>
      */
-    long getClientId();
+    long getCid();
 
     /**
      * <pre>
      * 发送人ID
      * </pre>
      *
-     * <code>string fromId = 3;</code>
+     * <code>string fromUid = 3;</code>
      */
-    java.lang.String getFromId();
+    java.lang.String getFromUid();
     /**
      * <pre>
      * 发送人ID
      * </pre>
      *
-     * <code>string fromId = 3;</code>
+     * <code>string fromUid = 3;</code>
      */
     com.google.protobuf.ByteString
-        getFromIdBytes();
+        getFromUidBytes();
 
     /**
      * <pre>
-     * 单聊会话 用户ID 群会话 群ID 会话id为空时需要
+     * 接收人ID
      * </pre>
      *
-     * <code>string targetId = 4;</code>
+     * <code>string targetUid = 4;</code>
      */
-    java.lang.String getTargetId();
+    java.lang.String getTargetUid();
     /**
      * <pre>
-     * 单聊会话 用户ID 群会话 群ID 会话id为空时需要
+     * 接收人ID
      * </pre>
      *
-     * <code>string targetId = 4;</code>
+     * <code>string targetUid = 4;</code>
      */
     com.google.protobuf.ByteString
-        getTargetIdBytes();
+        getTargetUidBytes();
+
+    /**
+     * <pre>
+     *  群ID
+     * </pre>
+     *
+     * <code>string groupId = 5;</code>
+     */
+    java.lang.String getGroupId();
+    /**
+     * <pre>
+     *  群ID
+     * </pre>
+     *
+     * <code>string groupId = 5;</code>
+     */
+    com.google.protobuf.ByteString
+        getGroupIdBytes();
 
     /**
      * <pre>
      * 会话id
      * </pre>
      *
-     * <code>string conversasionId = 5;</code>
+     * <code>string converId = 6;</code>
      */
-    java.lang.String getConversasionId();
+    java.lang.String getConverId();
     /**
      * <pre>
      * 会话id
      * </pre>
      *
-     * <code>string conversasionId = 5;</code>
+     * <code>string converId = 6;</code>
      */
     com.google.protobuf.ByteString
-        getConversasionIdBytes();
+        getConverIdBytes();
 
     /**
      * <pre>
      * 会话类型
      * </pre>
      *
-     * <code>.com.tim.common.protos.ConversationType conversationType = 6;</code>
+     * <code>.com.tim.common.protos.ConverType converType = 7;</code>
      */
-    int getConversationTypeValue();
+    int getConverTypeValue();
     /**
      * <pre>
      * 会话类型
      * </pre>
      *
-     * <code>.com.tim.common.protos.ConversationType conversationType = 6;</code>
+     * <code>.com.tim.common.protos.ConverType converType = 7;</code>
      */
-    com.tim.common.protos.Common.ConversationType getConversationType();
-
-    /**
-     * <pre>
-     * 消息方向
-     * </pre>
-     *
-     * <code>.com.tim.common.protos.Direction direction = 7;</code>
-     */
-    int getDirectionValue();
-    /**
-     * <pre>
-     * 消息方向
-     * </pre>
-     *
-     * <code>.com.tim.common.protos.Direction direction = 7;</code>
-     */
-    com.tim.common.protos.Message.Direction getDirection();
+    com.tim.common.protos.Common.ConverType getConverType();
 
     /**
      * <pre>
      * 内容
      * </pre>
      *
-     * <code>.com.tim.common.protos.MessageContent content = 8;</code>
+     * <code>.com.tim.common.protos.MessageContent content = 9;</code>
      */
     boolean hasContent();
     /**
@@ -342,7 +236,7 @@ public final class Message {
      * 内容
      * </pre>
      *
-     * <code>.com.tim.common.protos.MessageContent content = 8;</code>
+     * <code>.com.tim.common.protos.MessageContent content = 9;</code>
      */
     com.tim.common.protos.Common.MessageContent getContent();
     /**
@@ -350,7 +244,7 @@ public final class Message {
      * 内容
      * </pre>
      *
-     * <code>.com.tim.common.protos.MessageContent content = 8;</code>
+     * <code>.com.tim.common.protos.MessageContent content = 9;</code>
      */
     com.tim.common.protos.Common.MessageContentOrBuilder getContentOrBuilder();
   }
@@ -372,12 +266,12 @@ public final class Message {
     }
     private UpDownMessage() {
       id_ = 0L;
-      clientId_ = 0L;
-      fromId_ = "";
-      targetId_ = "";
-      conversasionId_ = "";
-      conversationType_ = 0;
-      direction_ = 0;
+      cid_ = 0L;
+      fromUid_ = "";
+      targetUid_ = "";
+      groupId_ = "";
+      converId_ = "";
+      converType_ = 0;
     }
 
     @java.lang.Override
@@ -411,40 +305,40 @@ public final class Message {
             }
             case 16: {
 
-              clientId_ = input.readUInt64();
+              cid_ = input.readUInt64();
               break;
             }
             case 26: {
               java.lang.String s = input.readStringRequireUtf8();
 
-              fromId_ = s;
+              fromUid_ = s;
               break;
             }
             case 34: {
               java.lang.String s = input.readStringRequireUtf8();
 
-              targetId_ = s;
+              targetUid_ = s;
               break;
             }
             case 42: {
               java.lang.String s = input.readStringRequireUtf8();
 
-              conversasionId_ = s;
+              groupId_ = s;
               break;
             }
-            case 48: {
-              int rawValue = input.readEnum();
+            case 50: {
+              java.lang.String s = input.readStringRequireUtf8();
 
-              conversationType_ = rawValue;
+              converId_ = s;
               break;
             }
             case 56: {
               int rawValue = input.readEnum();
 
-              direction_ = rawValue;
+              converType_ = rawValue;
               break;
             }
-            case 66: {
+            case 74: {
               com.tim.common.protos.Common.MessageContent.Builder subBuilder = null;
               if (content_ != null) {
                 subBuilder = content_.toBuilder();
@@ -502,37 +396,37 @@ public final class Message {
       return id_;
     }
 
-    public static final int CLIENTID_FIELD_NUMBER = 2;
-    private long clientId_;
+    public static final int CID_FIELD_NUMBER = 2;
+    private long cid_;
     /**
      * <pre>
      * 客户端消息ID
      * </pre>
      *
-     * <code>uint64 clientId = 2;</code>
+     * <code>uint64 cid = 2;</code>
      */
-    public long getClientId() {
-      return clientId_;
+    public long getCid() {
+      return cid_;
     }
 
-    public static final int FROMID_FIELD_NUMBER = 3;
-    private volatile java.lang.Object fromId_;
+    public static final int FROMUID_FIELD_NUMBER = 3;
+    private volatile java.lang.Object fromUid_;
     /**
      * <pre>
      * 发送人ID
      * </pre>
      *
-     * <code>string fromId = 3;</code>
+     * <code>string fromUid = 3;</code>
      */
-    public java.lang.String getFromId() {
-      java.lang.Object ref = fromId_;
+    public java.lang.String getFromUid() {
+      java.lang.Object ref = fromUid_;
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
         com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        fromId_ = s;
+        fromUid_ = s;
         return s;
       }
     }
@@ -541,82 +435,124 @@ public final class Message {
      * 发送人ID
      * </pre>
      *
-     * <code>string fromId = 3;</code>
+     * <code>string fromUid = 3;</code>
      */
     public com.google.protobuf.ByteString
-        getFromIdBytes() {
-      java.lang.Object ref = fromId_;
+        getFromUidBytes() {
+      java.lang.Object ref = fromUid_;
       if (ref instanceof java.lang.String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        fromId_ = b;
+        fromUid_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
     }
 
-    public static final int TARGETID_FIELD_NUMBER = 4;
-    private volatile java.lang.Object targetId_;
+    public static final int TARGETUID_FIELD_NUMBER = 4;
+    private volatile java.lang.Object targetUid_;
     /**
      * <pre>
-     * 单聊会话 用户ID 群会话 群ID 会话id为空时需要
+     * 接收人ID
      * </pre>
      *
-     * <code>string targetId = 4;</code>
+     * <code>string targetUid = 4;</code>
      */
-    public java.lang.String getTargetId() {
-      java.lang.Object ref = targetId_;
+    public java.lang.String getTargetUid() {
+      java.lang.Object ref = targetUid_;
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
         com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        targetId_ = s;
+        targetUid_ = s;
         return s;
       }
     }
     /**
      * <pre>
-     * 单聊会话 用户ID 群会话 群ID 会话id为空时需要
+     * 接收人ID
      * </pre>
      *
-     * <code>string targetId = 4;</code>
+     * <code>string targetUid = 4;</code>
      */
     public com.google.protobuf.ByteString
-        getTargetIdBytes() {
-      java.lang.Object ref = targetId_;
+        getTargetUidBytes() {
+      java.lang.Object ref = targetUid_;
       if (ref instanceof java.lang.String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        targetId_ = b;
+        targetUid_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
     }
 
-    public static final int CONVERSASIONID_FIELD_NUMBER = 5;
-    private volatile java.lang.Object conversasionId_;
+    public static final int GROUPID_FIELD_NUMBER = 5;
+    private volatile java.lang.Object groupId_;
     /**
      * <pre>
-     * 会话id
+     *  群ID
      * </pre>
      *
-     * <code>string conversasionId = 5;</code>
+     * <code>string groupId = 5;</code>
      */
-    public java.lang.String getConversasionId() {
-      java.lang.Object ref = conversasionId_;
+    public java.lang.String getGroupId() {
+      java.lang.Object ref = groupId_;
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
         com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        conversasionId_ = s;
+        groupId_ = s;
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     *  群ID
+     * </pre>
+     *
+     * <code>string groupId = 5;</code>
+     */
+    public com.google.protobuf.ByteString
+        getGroupIdBytes() {
+      java.lang.Object ref = groupId_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        groupId_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int CONVERID_FIELD_NUMBER = 6;
+    private volatile java.lang.Object converId_;
+    /**
+     * <pre>
+     * 会话id
+     * </pre>
+     *
+     * <code>string converId = 6;</code>
+     */
+    public java.lang.String getConverId() {
+      java.lang.Object ref = converId_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        converId_ = s;
         return s;
       }
     }
@@ -625,80 +561,55 @@ public final class Message {
      * 会话id
      * </pre>
      *
-     * <code>string conversasionId = 5;</code>
+     * <code>string converId = 6;</code>
      */
     public com.google.protobuf.ByteString
-        getConversasionIdBytes() {
-      java.lang.Object ref = conversasionId_;
+        getConverIdBytes() {
+      java.lang.Object ref = converId_;
       if (ref instanceof java.lang.String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        conversasionId_ = b;
+        converId_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
     }
 
-    public static final int CONVERSATIONTYPE_FIELD_NUMBER = 6;
-    private int conversationType_;
+    public static final int CONVERTYPE_FIELD_NUMBER = 7;
+    private int converType_;
     /**
      * <pre>
      * 会话类型
      * </pre>
      *
-     * <code>.com.tim.common.protos.ConversationType conversationType = 6;</code>
+     * <code>.com.tim.common.protos.ConverType converType = 7;</code>
      */
-    public int getConversationTypeValue() {
-      return conversationType_;
+    public int getConverTypeValue() {
+      return converType_;
     }
     /**
      * <pre>
      * 会话类型
      * </pre>
      *
-     * <code>.com.tim.common.protos.ConversationType conversationType = 6;</code>
+     * <code>.com.tim.common.protos.ConverType converType = 7;</code>
      */
-    public com.tim.common.protos.Common.ConversationType getConversationType() {
+    public com.tim.common.protos.Common.ConverType getConverType() {
       @SuppressWarnings("deprecation")
-      com.tim.common.protos.Common.ConversationType result = com.tim.common.protos.Common.ConversationType.valueOf(conversationType_);
-      return result == null ? com.tim.common.protos.Common.ConversationType.UNRECOGNIZED : result;
+      com.tim.common.protos.Common.ConverType result = com.tim.common.protos.Common.ConverType.valueOf(converType_);
+      return result == null ? com.tim.common.protos.Common.ConverType.UNRECOGNIZED : result;
     }
 
-    public static final int DIRECTION_FIELD_NUMBER = 7;
-    private int direction_;
-    /**
-     * <pre>
-     * 消息方向
-     * </pre>
-     *
-     * <code>.com.tim.common.protos.Direction direction = 7;</code>
-     */
-    public int getDirectionValue() {
-      return direction_;
-    }
-    /**
-     * <pre>
-     * 消息方向
-     * </pre>
-     *
-     * <code>.com.tim.common.protos.Direction direction = 7;</code>
-     */
-    public com.tim.common.protos.Message.Direction getDirection() {
-      @SuppressWarnings("deprecation")
-      com.tim.common.protos.Message.Direction result = com.tim.common.protos.Message.Direction.valueOf(direction_);
-      return result == null ? com.tim.common.protos.Message.Direction.UNRECOGNIZED : result;
-    }
-
-    public static final int CONTENT_FIELD_NUMBER = 8;
+    public static final int CONTENT_FIELD_NUMBER = 9;
     private com.tim.common.protos.Common.MessageContent content_;
     /**
      * <pre>
      * 内容
      * </pre>
      *
-     * <code>.com.tim.common.protos.MessageContent content = 8;</code>
+     * <code>.com.tim.common.protos.MessageContent content = 9;</code>
      */
     public boolean hasContent() {
       return content_ != null;
@@ -708,7 +619,7 @@ public final class Message {
      * 内容
      * </pre>
      *
-     * <code>.com.tim.common.protos.MessageContent content = 8;</code>
+     * <code>.com.tim.common.protos.MessageContent content = 9;</code>
      */
     public com.tim.common.protos.Common.MessageContent getContent() {
       return content_ == null ? com.tim.common.protos.Common.MessageContent.getDefaultInstance() : content_;
@@ -718,7 +629,7 @@ public final class Message {
      * 内容
      * </pre>
      *
-     * <code>.com.tim.common.protos.MessageContent content = 8;</code>
+     * <code>.com.tim.common.protos.MessageContent content = 9;</code>
      */
     public com.tim.common.protos.Common.MessageContentOrBuilder getContentOrBuilder() {
       return getContent();
@@ -741,26 +652,26 @@ public final class Message {
       if (id_ != 0L) {
         output.writeUInt64(1, id_);
       }
-      if (clientId_ != 0L) {
-        output.writeUInt64(2, clientId_);
+      if (cid_ != 0L) {
+        output.writeUInt64(2, cid_);
       }
-      if (!getFromIdBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, fromId_);
+      if (!getFromUidBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, fromUid_);
       }
-      if (!getTargetIdBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, targetId_);
+      if (!getTargetUidBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, targetUid_);
       }
-      if (!getConversasionIdBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 5, conversasionId_);
+      if (!getGroupIdBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 5, groupId_);
       }
-      if (conversationType_ != com.tim.common.protos.Common.ConversationType.SINGLE.getNumber()) {
-        output.writeEnum(6, conversationType_);
+      if (!getConverIdBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 6, converId_);
       }
-      if (direction_ != com.tim.common.protos.Message.Direction.CS.getNumber()) {
-        output.writeEnum(7, direction_);
+      if (converType_ != com.tim.common.protos.Common.ConverType.SINGLE.getNumber()) {
+        output.writeEnum(7, converType_);
       }
       if (content_ != null) {
-        output.writeMessage(8, getContent());
+        output.writeMessage(9, getContent());
       }
       unknownFields.writeTo(output);
     }
@@ -775,30 +686,29 @@ public final class Message {
         size += com.google.protobuf.CodedOutputStream
           .computeUInt64Size(1, id_);
       }
-      if (clientId_ != 0L) {
+      if (cid_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-          .computeUInt64Size(2, clientId_);
+          .computeUInt64Size(2, cid_);
       }
-      if (!getFromIdBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, fromId_);
+      if (!getFromUidBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, fromUid_);
       }
-      if (!getTargetIdBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, targetId_);
+      if (!getTargetUidBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, targetUid_);
       }
-      if (!getConversasionIdBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, conversasionId_);
+      if (!getGroupIdBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, groupId_);
       }
-      if (conversationType_ != com.tim.common.protos.Common.ConversationType.SINGLE.getNumber()) {
+      if (!getConverIdBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, converId_);
+      }
+      if (converType_ != com.tim.common.protos.Common.ConverType.SINGLE.getNumber()) {
         size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(6, conversationType_);
-      }
-      if (direction_ != com.tim.common.protos.Message.Direction.CS.getNumber()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(7, direction_);
+          .computeEnumSize(7, converType_);
       }
       if (content_ != null) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(8, getContent());
+          .computeMessageSize(9, getContent());
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -818,16 +728,17 @@ public final class Message {
       boolean result = true;
       result = result && (getId()
           == other.getId());
-      result = result && (getClientId()
-          == other.getClientId());
-      result = result && getFromId()
-          .equals(other.getFromId());
-      result = result && getTargetId()
-          .equals(other.getTargetId());
-      result = result && getConversasionId()
-          .equals(other.getConversasionId());
-      result = result && conversationType_ == other.conversationType_;
-      result = result && direction_ == other.direction_;
+      result = result && (getCid()
+          == other.getCid());
+      result = result && getFromUid()
+          .equals(other.getFromUid());
+      result = result && getTargetUid()
+          .equals(other.getTargetUid());
+      result = result && getGroupId()
+          .equals(other.getGroupId());
+      result = result && getConverId()
+          .equals(other.getConverId());
+      result = result && converType_ == other.converType_;
       result = result && (hasContent() == other.hasContent());
       if (hasContent()) {
         result = result && getContent()
@@ -847,19 +758,19 @@ public final class Message {
       hash = (37 * hash) + ID_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           getId());
-      hash = (37 * hash) + CLIENTID_FIELD_NUMBER;
+      hash = (37 * hash) + CID_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-          getClientId());
-      hash = (37 * hash) + FROMID_FIELD_NUMBER;
-      hash = (53 * hash) + getFromId().hashCode();
-      hash = (37 * hash) + TARGETID_FIELD_NUMBER;
-      hash = (53 * hash) + getTargetId().hashCode();
-      hash = (37 * hash) + CONVERSASIONID_FIELD_NUMBER;
-      hash = (53 * hash) + getConversasionId().hashCode();
-      hash = (37 * hash) + CONVERSATIONTYPE_FIELD_NUMBER;
-      hash = (53 * hash) + conversationType_;
-      hash = (37 * hash) + DIRECTION_FIELD_NUMBER;
-      hash = (53 * hash) + direction_;
+          getCid());
+      hash = (37 * hash) + FROMUID_FIELD_NUMBER;
+      hash = (53 * hash) + getFromUid().hashCode();
+      hash = (37 * hash) + TARGETUID_FIELD_NUMBER;
+      hash = (53 * hash) + getTargetUid().hashCode();
+      hash = (37 * hash) + GROUPID_FIELD_NUMBER;
+      hash = (53 * hash) + getGroupId().hashCode();
+      hash = (37 * hash) + CONVERID_FIELD_NUMBER;
+      hash = (53 * hash) + getConverId().hashCode();
+      hash = (37 * hash) + CONVERTYPE_FIELD_NUMBER;
+      hash = (53 * hash) + converType_;
       if (hasContent()) {
         hash = (37 * hash) + CONTENT_FIELD_NUMBER;
         hash = (53 * hash) + getContent().hashCode();
@@ -1003,17 +914,17 @@ public final class Message {
         super.clear();
         id_ = 0L;
 
-        clientId_ = 0L;
+        cid_ = 0L;
 
-        fromId_ = "";
+        fromUid_ = "";
 
-        targetId_ = "";
+        targetUid_ = "";
 
-        conversasionId_ = "";
+        groupId_ = "";
 
-        conversationType_ = 0;
+        converId_ = "";
 
-        direction_ = 0;
+        converType_ = 0;
 
         if (contentBuilder_ == null) {
           content_ = null;
@@ -1048,12 +959,12 @@ public final class Message {
       public com.tim.common.protos.Message.UpDownMessage buildPartial() {
         com.tim.common.protos.Message.UpDownMessage result = new com.tim.common.protos.Message.UpDownMessage(this);
         result.id_ = id_;
-        result.clientId_ = clientId_;
-        result.fromId_ = fromId_;
-        result.targetId_ = targetId_;
-        result.conversasionId_ = conversasionId_;
-        result.conversationType_ = conversationType_;
-        result.direction_ = direction_;
+        result.cid_ = cid_;
+        result.fromUid_ = fromUid_;
+        result.targetUid_ = targetUid_;
+        result.groupId_ = groupId_;
+        result.converId_ = converId_;
+        result.converType_ = converType_;
         if (contentBuilder_ == null) {
           result.content_ = content_;
         } else {
@@ -1110,26 +1021,27 @@ public final class Message {
         if (other.getId() != 0L) {
           setId(other.getId());
         }
-        if (other.getClientId() != 0L) {
-          setClientId(other.getClientId());
+        if (other.getCid() != 0L) {
+          setCid(other.getCid());
         }
-        if (!other.getFromId().isEmpty()) {
-          fromId_ = other.fromId_;
+        if (!other.getFromUid().isEmpty()) {
+          fromUid_ = other.fromUid_;
           onChanged();
         }
-        if (!other.getTargetId().isEmpty()) {
-          targetId_ = other.targetId_;
+        if (!other.getTargetUid().isEmpty()) {
+          targetUid_ = other.targetUid_;
           onChanged();
         }
-        if (!other.getConversasionId().isEmpty()) {
-          conversasionId_ = other.conversasionId_;
+        if (!other.getGroupId().isEmpty()) {
+          groupId_ = other.groupId_;
           onChanged();
         }
-        if (other.conversationType_ != 0) {
-          setConversationTypeValue(other.getConversationTypeValue());
+        if (!other.getConverId().isEmpty()) {
+          converId_ = other.converId_;
+          onChanged();
         }
-        if (other.direction_ != 0) {
-          setDirectionValue(other.getDirectionValue());
+        if (other.converType_ != 0) {
+          setConverTypeValue(other.getConverTypeValue());
         }
         if (other.hasContent()) {
           mergeContent(other.getContent());
@@ -1201,27 +1113,27 @@ public final class Message {
         return this;
       }
 
-      private long clientId_ ;
+      private long cid_ ;
       /**
        * <pre>
        * 客户端消息ID
        * </pre>
        *
-       * <code>uint64 clientId = 2;</code>
+       * <code>uint64 cid = 2;</code>
        */
-      public long getClientId() {
-        return clientId_;
+      public long getCid() {
+        return cid_;
       }
       /**
        * <pre>
        * 客户端消息ID
        * </pre>
        *
-       * <code>uint64 clientId = 2;</code>
+       * <code>uint64 cid = 2;</code>
        */
-      public Builder setClientId(long value) {
+      public Builder setCid(long value) {
         
-        clientId_ = value;
+        cid_ = value;
         onChanged();
         return this;
       }
@@ -1230,30 +1142,30 @@ public final class Message {
        * 客户端消息ID
        * </pre>
        *
-       * <code>uint64 clientId = 2;</code>
+       * <code>uint64 cid = 2;</code>
        */
-      public Builder clearClientId() {
+      public Builder clearCid() {
         
-        clientId_ = 0L;
+        cid_ = 0L;
         onChanged();
         return this;
       }
 
-      private java.lang.Object fromId_ = "";
+      private java.lang.Object fromUid_ = "";
       /**
        * <pre>
        * 发送人ID
        * </pre>
        *
-       * <code>string fromId = 3;</code>
+       * <code>string fromUid = 3;</code>
        */
-      public java.lang.String getFromId() {
-        java.lang.Object ref = fromId_;
+      public java.lang.String getFromUid() {
+        java.lang.Object ref = fromUid_;
         if (!(ref instanceof java.lang.String)) {
           com.google.protobuf.ByteString bs =
               (com.google.protobuf.ByteString) ref;
           java.lang.String s = bs.toStringUtf8();
-          fromId_ = s;
+          fromUid_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -1264,16 +1176,16 @@ public final class Message {
        * 发送人ID
        * </pre>
        *
-       * <code>string fromId = 3;</code>
+       * <code>string fromUid = 3;</code>
        */
       public com.google.protobuf.ByteString
-          getFromIdBytes() {
-        java.lang.Object ref = fromId_;
+          getFromUidBytes() {
+        java.lang.Object ref = fromUid_;
         if (ref instanceof String) {
           com.google.protobuf.ByteString b = 
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
-          fromId_ = b;
+          fromUid_ = b;
           return b;
         } else {
           return (com.google.protobuf.ByteString) ref;
@@ -1284,15 +1196,15 @@ public final class Message {
        * 发送人ID
        * </pre>
        *
-       * <code>string fromId = 3;</code>
+       * <code>string fromUid = 3;</code>
        */
-      public Builder setFromId(
+      public Builder setFromUid(
           java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
   
-        fromId_ = value;
+        fromUid_ = value;
         onChanged();
         return this;
       }
@@ -1301,11 +1213,11 @@ public final class Message {
        * 发送人ID
        * </pre>
        *
-       * <code>string fromId = 3;</code>
+       * <code>string fromUid = 3;</code>
        */
-      public Builder clearFromId() {
+      public Builder clearFromUid() {
         
-        fromId_ = getDefaultInstance().getFromId();
+        fromUid_ = getDefaultInstance().getFromUid();
         onChanged();
         return this;
       }
@@ -1314,35 +1226,35 @@ public final class Message {
        * 发送人ID
        * </pre>
        *
-       * <code>string fromId = 3;</code>
+       * <code>string fromUid = 3;</code>
        */
-      public Builder setFromIdBytes(
+      public Builder setFromUidBytes(
           com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
         
-        fromId_ = value;
+        fromUid_ = value;
         onChanged();
         return this;
       }
 
-      private java.lang.Object targetId_ = "";
+      private java.lang.Object targetUid_ = "";
       /**
        * <pre>
-       * 单聊会话 用户ID 群会话 群ID 会话id为空时需要
+       * 接收人ID
        * </pre>
        *
-       * <code>string targetId = 4;</code>
+       * <code>string targetUid = 4;</code>
        */
-      public java.lang.String getTargetId() {
-        java.lang.Object ref = targetId_;
+      public java.lang.String getTargetUid() {
+        java.lang.Object ref = targetUid_;
         if (!(ref instanceof java.lang.String)) {
           com.google.protobuf.ByteString bs =
               (com.google.protobuf.ByteString) ref;
           java.lang.String s = bs.toStringUtf8();
-          targetId_ = s;
+          targetUid_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -1350,19 +1262,19 @@ public final class Message {
       }
       /**
        * <pre>
-       * 单聊会话 用户ID 群会话 群ID 会话id为空时需要
+       * 接收人ID
        * </pre>
        *
-       * <code>string targetId = 4;</code>
+       * <code>string targetUid = 4;</code>
        */
       public com.google.protobuf.ByteString
-          getTargetIdBytes() {
-        java.lang.Object ref = targetId_;
+          getTargetUidBytes() {
+        java.lang.Object ref = targetUid_;
         if (ref instanceof String) {
           com.google.protobuf.ByteString b = 
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
-          targetId_ = b;
+          targetUid_ = b;
           return b;
         } else {
           return (com.google.protobuf.ByteString) ref;
@@ -1370,68 +1282,157 @@ public final class Message {
       }
       /**
        * <pre>
-       * 单聊会话 用户ID 群会话 群ID 会话id为空时需要
+       * 接收人ID
        * </pre>
        *
-       * <code>string targetId = 4;</code>
+       * <code>string targetUid = 4;</code>
        */
-      public Builder setTargetId(
+      public Builder setTargetUid(
           java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
   
-        targetId_ = value;
+        targetUid_ = value;
         onChanged();
         return this;
       }
       /**
        * <pre>
-       * 单聊会话 用户ID 群会话 群ID 会话id为空时需要
+       * 接收人ID
        * </pre>
        *
-       * <code>string targetId = 4;</code>
+       * <code>string targetUid = 4;</code>
        */
-      public Builder clearTargetId() {
+      public Builder clearTargetUid() {
         
-        targetId_ = getDefaultInstance().getTargetId();
+        targetUid_ = getDefaultInstance().getTargetUid();
         onChanged();
         return this;
       }
       /**
        * <pre>
-       * 单聊会话 用户ID 群会话 群ID 会话id为空时需要
+       * 接收人ID
        * </pre>
        *
-       * <code>string targetId = 4;</code>
+       * <code>string targetUid = 4;</code>
        */
-      public Builder setTargetIdBytes(
+      public Builder setTargetUidBytes(
           com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
         
-        targetId_ = value;
+        targetUid_ = value;
         onChanged();
         return this;
       }
 
-      private java.lang.Object conversasionId_ = "";
+      private java.lang.Object groupId_ = "";
+      /**
+       * <pre>
+       *  群ID
+       * </pre>
+       *
+       * <code>string groupId = 5;</code>
+       */
+      public java.lang.String getGroupId() {
+        java.lang.Object ref = groupId_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          groupId_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <pre>
+       *  群ID
+       * </pre>
+       *
+       * <code>string groupId = 5;</code>
+       */
+      public com.google.protobuf.ByteString
+          getGroupIdBytes() {
+        java.lang.Object ref = groupId_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          groupId_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       *  群ID
+       * </pre>
+       *
+       * <code>string groupId = 5;</code>
+       */
+      public Builder setGroupId(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        groupId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *  群ID
+       * </pre>
+       *
+       * <code>string groupId = 5;</code>
+       */
+      public Builder clearGroupId() {
+        
+        groupId_ = getDefaultInstance().getGroupId();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *  群ID
+       * </pre>
+       *
+       * <code>string groupId = 5;</code>
+       */
+      public Builder setGroupIdBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        groupId_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object converId_ = "";
       /**
        * <pre>
        * 会话id
        * </pre>
        *
-       * <code>string conversasionId = 5;</code>
+       * <code>string converId = 6;</code>
        */
-      public java.lang.String getConversasionId() {
-        java.lang.Object ref = conversasionId_;
+      public java.lang.String getConverId() {
+        java.lang.Object ref = converId_;
         if (!(ref instanceof java.lang.String)) {
           com.google.protobuf.ByteString bs =
               (com.google.protobuf.ByteString) ref;
           java.lang.String s = bs.toStringUtf8();
-          conversasionId_ = s;
+          converId_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -1442,16 +1443,16 @@ public final class Message {
        * 会话id
        * </pre>
        *
-       * <code>string conversasionId = 5;</code>
+       * <code>string converId = 6;</code>
        */
       public com.google.protobuf.ByteString
-          getConversasionIdBytes() {
-        java.lang.Object ref = conversasionId_;
+          getConverIdBytes() {
+        java.lang.Object ref = converId_;
         if (ref instanceof String) {
           com.google.protobuf.ByteString b = 
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
-          conversasionId_ = b;
+          converId_ = b;
           return b;
         } else {
           return (com.google.protobuf.ByteString) ref;
@@ -1462,15 +1463,15 @@ public final class Message {
        * 会话id
        * </pre>
        *
-       * <code>string conversasionId = 5;</code>
+       * <code>string converId = 6;</code>
        */
-      public Builder setConversasionId(
+      public Builder setConverId(
           java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
   
-        conversasionId_ = value;
+        converId_ = value;
         onChanged();
         return this;
       }
@@ -1479,11 +1480,11 @@ public final class Message {
        * 会话id
        * </pre>
        *
-       * <code>string conversasionId = 5;</code>
+       * <code>string converId = 6;</code>
        */
-      public Builder clearConversasionId() {
+      public Builder clearConverId() {
         
-        conversasionId_ = getDefaultInstance().getConversasionId();
+        converId_ = getDefaultInstance().getConverId();
         onChanged();
         return this;
       }
@@ -1492,40 +1493,40 @@ public final class Message {
        * 会话id
        * </pre>
        *
-       * <code>string conversasionId = 5;</code>
+       * <code>string converId = 6;</code>
        */
-      public Builder setConversasionIdBytes(
+      public Builder setConverIdBytes(
           com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
         
-        conversasionId_ = value;
+        converId_ = value;
         onChanged();
         return this;
       }
 
-      private int conversationType_ = 0;
+      private int converType_ = 0;
       /**
        * <pre>
        * 会话类型
        * </pre>
        *
-       * <code>.com.tim.common.protos.ConversationType conversationType = 6;</code>
+       * <code>.com.tim.common.protos.ConverType converType = 7;</code>
        */
-      public int getConversationTypeValue() {
-        return conversationType_;
+      public int getConverTypeValue() {
+        return converType_;
       }
       /**
        * <pre>
        * 会话类型
        * </pre>
        *
-       * <code>.com.tim.common.protos.ConversationType conversationType = 6;</code>
+       * <code>.com.tim.common.protos.ConverType converType = 7;</code>
        */
-      public Builder setConversationTypeValue(int value) {
-        conversationType_ = value;
+      public Builder setConverTypeValue(int value) {
+        converType_ = value;
         onChanged();
         return this;
       }
@@ -1534,26 +1535,26 @@ public final class Message {
        * 会话类型
        * </pre>
        *
-       * <code>.com.tim.common.protos.ConversationType conversationType = 6;</code>
+       * <code>.com.tim.common.protos.ConverType converType = 7;</code>
        */
-      public com.tim.common.protos.Common.ConversationType getConversationType() {
+      public com.tim.common.protos.Common.ConverType getConverType() {
         @SuppressWarnings("deprecation")
-        com.tim.common.protos.Common.ConversationType result = com.tim.common.protos.Common.ConversationType.valueOf(conversationType_);
-        return result == null ? com.tim.common.protos.Common.ConversationType.UNRECOGNIZED : result;
+        com.tim.common.protos.Common.ConverType result = com.tim.common.protos.Common.ConverType.valueOf(converType_);
+        return result == null ? com.tim.common.protos.Common.ConverType.UNRECOGNIZED : result;
       }
       /**
        * <pre>
        * 会话类型
        * </pre>
        *
-       * <code>.com.tim.common.protos.ConversationType conversationType = 6;</code>
+       * <code>.com.tim.common.protos.ConverType converType = 7;</code>
        */
-      public Builder setConversationType(com.tim.common.protos.Common.ConversationType value) {
+      public Builder setConverType(com.tim.common.protos.Common.ConverType value) {
         if (value == null) {
           throw new NullPointerException();
         }
         
-        conversationType_ = value.getNumber();
+        converType_ = value.getNumber();
         onChanged();
         return this;
       }
@@ -1562,76 +1563,11 @@ public final class Message {
        * 会话类型
        * </pre>
        *
-       * <code>.com.tim.common.protos.ConversationType conversationType = 6;</code>
+       * <code>.com.tim.common.protos.ConverType converType = 7;</code>
        */
-      public Builder clearConversationType() {
+      public Builder clearConverType() {
         
-        conversationType_ = 0;
-        onChanged();
-        return this;
-      }
-
-      private int direction_ = 0;
-      /**
-       * <pre>
-       * 消息方向
-       * </pre>
-       *
-       * <code>.com.tim.common.protos.Direction direction = 7;</code>
-       */
-      public int getDirectionValue() {
-        return direction_;
-      }
-      /**
-       * <pre>
-       * 消息方向
-       * </pre>
-       *
-       * <code>.com.tim.common.protos.Direction direction = 7;</code>
-       */
-      public Builder setDirectionValue(int value) {
-        direction_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * 消息方向
-       * </pre>
-       *
-       * <code>.com.tim.common.protos.Direction direction = 7;</code>
-       */
-      public com.tim.common.protos.Message.Direction getDirection() {
-        @SuppressWarnings("deprecation")
-        com.tim.common.protos.Message.Direction result = com.tim.common.protos.Message.Direction.valueOf(direction_);
-        return result == null ? com.tim.common.protos.Message.Direction.UNRECOGNIZED : result;
-      }
-      /**
-       * <pre>
-       * 消息方向
-       * </pre>
-       *
-       * <code>.com.tim.common.protos.Direction direction = 7;</code>
-       */
-      public Builder setDirection(com.tim.common.protos.Message.Direction value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        
-        direction_ = value.getNumber();
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * 消息方向
-       * </pre>
-       *
-       * <code>.com.tim.common.protos.Direction direction = 7;</code>
-       */
-      public Builder clearDirection() {
-        
-        direction_ = 0;
+        converType_ = 0;
         onChanged();
         return this;
       }
@@ -1644,7 +1580,7 @@ public final class Message {
        * 内容
        * </pre>
        *
-       * <code>.com.tim.common.protos.MessageContent content = 8;</code>
+       * <code>.com.tim.common.protos.MessageContent content = 9;</code>
        */
       public boolean hasContent() {
         return contentBuilder_ != null || content_ != null;
@@ -1654,7 +1590,7 @@ public final class Message {
        * 内容
        * </pre>
        *
-       * <code>.com.tim.common.protos.MessageContent content = 8;</code>
+       * <code>.com.tim.common.protos.MessageContent content = 9;</code>
        */
       public com.tim.common.protos.Common.MessageContent getContent() {
         if (contentBuilder_ == null) {
@@ -1668,7 +1604,7 @@ public final class Message {
        * 内容
        * </pre>
        *
-       * <code>.com.tim.common.protos.MessageContent content = 8;</code>
+       * <code>.com.tim.common.protos.MessageContent content = 9;</code>
        */
       public Builder setContent(com.tim.common.protos.Common.MessageContent value) {
         if (contentBuilder_ == null) {
@@ -1688,7 +1624,7 @@ public final class Message {
        * 内容
        * </pre>
        *
-       * <code>.com.tim.common.protos.MessageContent content = 8;</code>
+       * <code>.com.tim.common.protos.MessageContent content = 9;</code>
        */
       public Builder setContent(
           com.tim.common.protos.Common.MessageContent.Builder builderForValue) {
@@ -1706,7 +1642,7 @@ public final class Message {
        * 内容
        * </pre>
        *
-       * <code>.com.tim.common.protos.MessageContent content = 8;</code>
+       * <code>.com.tim.common.protos.MessageContent content = 9;</code>
        */
       public Builder mergeContent(com.tim.common.protos.Common.MessageContent value) {
         if (contentBuilder_ == null) {
@@ -1728,7 +1664,7 @@ public final class Message {
        * 内容
        * </pre>
        *
-       * <code>.com.tim.common.protos.MessageContent content = 8;</code>
+       * <code>.com.tim.common.protos.MessageContent content = 9;</code>
        */
       public Builder clearContent() {
         if (contentBuilder_ == null) {
@@ -1746,7 +1682,7 @@ public final class Message {
        * 内容
        * </pre>
        *
-       * <code>.com.tim.common.protos.MessageContent content = 8;</code>
+       * <code>.com.tim.common.protos.MessageContent content = 9;</code>
        */
       public com.tim.common.protos.Common.MessageContent.Builder getContentBuilder() {
         
@@ -1758,7 +1694,7 @@ public final class Message {
        * 内容
        * </pre>
        *
-       * <code>.com.tim.common.protos.MessageContent content = 8;</code>
+       * <code>.com.tim.common.protos.MessageContent content = 9;</code>
        */
       public com.tim.common.protos.Common.MessageContentOrBuilder getContentOrBuilder() {
         if (contentBuilder_ != null) {
@@ -1773,7 +1709,7 @@ public final class Message {
        * 内容
        * </pre>
        *
-       * <code>.com.tim.common.protos.MessageContent content = 8;</code>
+       * <code>.com.tim.common.protos.MessageContent content = 9;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           com.tim.common.protos.Common.MessageContent, com.tim.common.protos.Common.MessageContent.Builder, com.tim.common.protos.Common.MessageContentOrBuilder> 
@@ -2458,45 +2394,45 @@ public final class Message {
      * 对应收到的消息ID
      * </pre>
      *
-     * <code>uint64 clientId = 2;</code>
+     * <code>uint64 cid = 2;</code>
      */
-    long getClientId();
+    long getCid();
 
     /**
      * <pre>
-     * 用户ID
+     * 接收人ID
      * </pre>
      *
-     * <code>string targetId = 3;</code>
+     * <code>string targetUid = 3;</code>
      */
-    java.lang.String getTargetId();
+    java.lang.String getTargetUid();
     /**
      * <pre>
-     * 用户ID
+     * 接收人ID
      * </pre>
      *
-     * <code>string targetId = 3;</code>
+     * <code>string targetUid = 3;</code>
      */
     com.google.protobuf.ByteString
-        getTargetIdBytes();
+        getTargetUidBytes();
 
     /**
      * <pre>
      * 会话id
      * </pre>
      *
-     * <code>string conversasionId = 4;</code>
+     * <code>string converId = 4;</code>
      */
-    java.lang.String getConversasionId();
+    java.lang.String getConverId();
     /**
      * <pre>
      * 会话id
      * </pre>
      *
-     * <code>string conversasionId = 4;</code>
+     * <code>string converId = 4;</code>
      */
     com.google.protobuf.ByteString
-        getConversasionIdBytes();
+        getConverIdBytes();
 
     /**
      * <pre>
@@ -2542,9 +2478,9 @@ public final class Message {
     }
     private MessageAck() {
       id_ = 0L;
-      clientId_ = 0L;
-      targetId_ = "";
-      conversasionId_ = "";
+      cid_ = 0L;
+      targetUid_ = "";
+      converId_ = "";
       time_ = 0L;
       code_ = 0;
     }
@@ -2580,19 +2516,19 @@ public final class Message {
             }
             case 16: {
 
-              clientId_ = input.readUInt64();
+              cid_ = input.readUInt64();
               break;
             }
             case 26: {
               java.lang.String s = input.readStringRequireUtf8();
 
-              targetId_ = s;
+              targetUid_ = s;
               break;
             }
             case 34: {
               java.lang.String s = input.readStringRequireUtf8();
 
-              conversasionId_ = s;
+              converId_ = s;
               break;
             }
             case 40: {
@@ -2651,79 +2587,79 @@ public final class Message {
       return id_;
     }
 
-    public static final int CLIENTID_FIELD_NUMBER = 2;
-    private long clientId_;
+    public static final int CID_FIELD_NUMBER = 2;
+    private long cid_;
     /**
      * <pre>
      * 对应收到的消息ID
      * </pre>
      *
-     * <code>uint64 clientId = 2;</code>
+     * <code>uint64 cid = 2;</code>
      */
-    public long getClientId() {
-      return clientId_;
+    public long getCid() {
+      return cid_;
     }
 
-    public static final int TARGETID_FIELD_NUMBER = 3;
-    private volatile java.lang.Object targetId_;
+    public static final int TARGETUID_FIELD_NUMBER = 3;
+    private volatile java.lang.Object targetUid_;
     /**
      * <pre>
-     * 用户ID
+     * 接收人ID
      * </pre>
      *
-     * <code>string targetId = 3;</code>
+     * <code>string targetUid = 3;</code>
      */
-    public java.lang.String getTargetId() {
-      java.lang.Object ref = targetId_;
+    public java.lang.String getTargetUid() {
+      java.lang.Object ref = targetUid_;
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
         com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        targetId_ = s;
+        targetUid_ = s;
         return s;
       }
     }
     /**
      * <pre>
-     * 用户ID
+     * 接收人ID
      * </pre>
      *
-     * <code>string targetId = 3;</code>
+     * <code>string targetUid = 3;</code>
      */
     public com.google.protobuf.ByteString
-        getTargetIdBytes() {
-      java.lang.Object ref = targetId_;
+        getTargetUidBytes() {
+      java.lang.Object ref = targetUid_;
       if (ref instanceof java.lang.String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        targetId_ = b;
+        targetUid_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
     }
 
-    public static final int CONVERSASIONID_FIELD_NUMBER = 4;
-    private volatile java.lang.Object conversasionId_;
+    public static final int CONVERID_FIELD_NUMBER = 4;
+    private volatile java.lang.Object converId_;
     /**
      * <pre>
      * 会话id
      * </pre>
      *
-     * <code>string conversasionId = 4;</code>
+     * <code>string converId = 4;</code>
      */
-    public java.lang.String getConversasionId() {
-      java.lang.Object ref = conversasionId_;
+    public java.lang.String getConverId() {
+      java.lang.Object ref = converId_;
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
         com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        conversasionId_ = s;
+        converId_ = s;
         return s;
       }
     }
@@ -2732,16 +2668,16 @@ public final class Message {
      * 会话id
      * </pre>
      *
-     * <code>string conversasionId = 4;</code>
+     * <code>string converId = 4;</code>
      */
     public com.google.protobuf.ByteString
-        getConversasionIdBytes() {
-      java.lang.Object ref = conversasionId_;
+        getConverIdBytes() {
+      java.lang.Object ref = converId_;
       if (ref instanceof java.lang.String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        conversasionId_ = b;
+        converId_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
@@ -2803,14 +2739,14 @@ public final class Message {
       if (id_ != 0L) {
         output.writeUInt64(1, id_);
       }
-      if (clientId_ != 0L) {
-        output.writeUInt64(2, clientId_);
+      if (cid_ != 0L) {
+        output.writeUInt64(2, cid_);
       }
-      if (!getTargetIdBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, targetId_);
+      if (!getTargetUidBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, targetUid_);
       }
-      if (!getConversasionIdBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, conversasionId_);
+      if (!getConverIdBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, converId_);
       }
       if (time_ != 0L) {
         output.writeUInt64(5, time_);
@@ -2831,15 +2767,15 @@ public final class Message {
         size += com.google.protobuf.CodedOutputStream
           .computeUInt64Size(1, id_);
       }
-      if (clientId_ != 0L) {
+      if (cid_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-          .computeUInt64Size(2, clientId_);
+          .computeUInt64Size(2, cid_);
       }
-      if (!getTargetIdBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, targetId_);
+      if (!getTargetUidBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, targetUid_);
       }
-      if (!getConversasionIdBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, conversasionId_);
+      if (!getConverIdBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, converId_);
       }
       if (time_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
@@ -2867,12 +2803,12 @@ public final class Message {
       boolean result = true;
       result = result && (getId()
           == other.getId());
-      result = result && (getClientId()
-          == other.getClientId());
-      result = result && getTargetId()
-          .equals(other.getTargetId());
-      result = result && getConversasionId()
-          .equals(other.getConversasionId());
+      result = result && (getCid()
+          == other.getCid());
+      result = result && getTargetUid()
+          .equals(other.getTargetUid());
+      result = result && getConverId()
+          .equals(other.getConverId());
       result = result && (getTime()
           == other.getTime());
       result = result && code_ == other.code_;
@@ -2890,13 +2826,13 @@ public final class Message {
       hash = (37 * hash) + ID_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           getId());
-      hash = (37 * hash) + CLIENTID_FIELD_NUMBER;
+      hash = (37 * hash) + CID_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-          getClientId());
-      hash = (37 * hash) + TARGETID_FIELD_NUMBER;
-      hash = (53 * hash) + getTargetId().hashCode();
-      hash = (37 * hash) + CONVERSASIONID_FIELD_NUMBER;
-      hash = (53 * hash) + getConversasionId().hashCode();
+          getCid());
+      hash = (37 * hash) + TARGETUID_FIELD_NUMBER;
+      hash = (53 * hash) + getTargetUid().hashCode();
+      hash = (37 * hash) + CONVERID_FIELD_NUMBER;
+      hash = (53 * hash) + getConverId().hashCode();
       hash = (37 * hash) + TIME_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           getTime());
@@ -3041,11 +2977,11 @@ public final class Message {
         super.clear();
         id_ = 0L;
 
-        clientId_ = 0L;
+        cid_ = 0L;
 
-        targetId_ = "";
+        targetUid_ = "";
 
-        conversasionId_ = "";
+        converId_ = "";
 
         time_ = 0L;
 
@@ -3078,9 +3014,9 @@ public final class Message {
       public com.tim.common.protos.Message.MessageAck buildPartial() {
         com.tim.common.protos.Message.MessageAck result = new com.tim.common.protos.Message.MessageAck(this);
         result.id_ = id_;
-        result.clientId_ = clientId_;
-        result.targetId_ = targetId_;
-        result.conversasionId_ = conversasionId_;
+        result.cid_ = cid_;
+        result.targetUid_ = targetUid_;
+        result.converId_ = converId_;
         result.time_ = time_;
         result.code_ = code_;
         onBuilt();
@@ -3134,15 +3070,15 @@ public final class Message {
         if (other.getId() != 0L) {
           setId(other.getId());
         }
-        if (other.getClientId() != 0L) {
-          setClientId(other.getClientId());
+        if (other.getCid() != 0L) {
+          setCid(other.getCid());
         }
-        if (!other.getTargetId().isEmpty()) {
-          targetId_ = other.targetId_;
+        if (!other.getTargetUid().isEmpty()) {
+          targetUid_ = other.targetUid_;
           onChanged();
         }
-        if (!other.getConversasionId().isEmpty()) {
-          conversasionId_ = other.conversasionId_;
+        if (!other.getConverId().isEmpty()) {
+          converId_ = other.converId_;
           onChanged();
         }
         if (other.getTime() != 0L) {
@@ -3218,27 +3154,27 @@ public final class Message {
         return this;
       }
 
-      private long clientId_ ;
+      private long cid_ ;
       /**
        * <pre>
        * 对应收到的消息ID
        * </pre>
        *
-       * <code>uint64 clientId = 2;</code>
+       * <code>uint64 cid = 2;</code>
        */
-      public long getClientId() {
-        return clientId_;
+      public long getCid() {
+        return cid_;
       }
       /**
        * <pre>
        * 对应收到的消息ID
        * </pre>
        *
-       * <code>uint64 clientId = 2;</code>
+       * <code>uint64 cid = 2;</code>
        */
-      public Builder setClientId(long value) {
+      public Builder setCid(long value) {
         
-        clientId_ = value;
+        cid_ = value;
         onChanged();
         return this;
       }
@@ -3247,30 +3183,30 @@ public final class Message {
        * 对应收到的消息ID
        * </pre>
        *
-       * <code>uint64 clientId = 2;</code>
+       * <code>uint64 cid = 2;</code>
        */
-      public Builder clearClientId() {
+      public Builder clearCid() {
         
-        clientId_ = 0L;
+        cid_ = 0L;
         onChanged();
         return this;
       }
 
-      private java.lang.Object targetId_ = "";
+      private java.lang.Object targetUid_ = "";
       /**
        * <pre>
-       * 用户ID
+       * 接收人ID
        * </pre>
        *
-       * <code>string targetId = 3;</code>
+       * <code>string targetUid = 3;</code>
        */
-      public java.lang.String getTargetId() {
-        java.lang.Object ref = targetId_;
+      public java.lang.String getTargetUid() {
+        java.lang.Object ref = targetUid_;
         if (!(ref instanceof java.lang.String)) {
           com.google.protobuf.ByteString bs =
               (com.google.protobuf.ByteString) ref;
           java.lang.String s = bs.toStringUtf8();
-          targetId_ = s;
+          targetUid_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -3278,19 +3214,19 @@ public final class Message {
       }
       /**
        * <pre>
-       * 用户ID
+       * 接收人ID
        * </pre>
        *
-       * <code>string targetId = 3;</code>
+       * <code>string targetUid = 3;</code>
        */
       public com.google.protobuf.ByteString
-          getTargetIdBytes() {
-        java.lang.Object ref = targetId_;
+          getTargetUidBytes() {
+        java.lang.Object ref = targetUid_;
         if (ref instanceof String) {
           com.google.protobuf.ByteString b = 
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
-          targetId_ = b;
+          targetUid_ = b;
           return b;
         } else {
           return (com.google.protobuf.ByteString) ref;
@@ -3298,68 +3234,68 @@ public final class Message {
       }
       /**
        * <pre>
-       * 用户ID
+       * 接收人ID
        * </pre>
        *
-       * <code>string targetId = 3;</code>
+       * <code>string targetUid = 3;</code>
        */
-      public Builder setTargetId(
+      public Builder setTargetUid(
           java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
   
-        targetId_ = value;
+        targetUid_ = value;
         onChanged();
         return this;
       }
       /**
        * <pre>
-       * 用户ID
+       * 接收人ID
        * </pre>
        *
-       * <code>string targetId = 3;</code>
+       * <code>string targetUid = 3;</code>
        */
-      public Builder clearTargetId() {
+      public Builder clearTargetUid() {
         
-        targetId_ = getDefaultInstance().getTargetId();
+        targetUid_ = getDefaultInstance().getTargetUid();
         onChanged();
         return this;
       }
       /**
        * <pre>
-       * 用户ID
+       * 接收人ID
        * </pre>
        *
-       * <code>string targetId = 3;</code>
+       * <code>string targetUid = 3;</code>
        */
-      public Builder setTargetIdBytes(
+      public Builder setTargetUidBytes(
           com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
         
-        targetId_ = value;
+        targetUid_ = value;
         onChanged();
         return this;
       }
 
-      private java.lang.Object conversasionId_ = "";
+      private java.lang.Object converId_ = "";
       /**
        * <pre>
        * 会话id
        * </pre>
        *
-       * <code>string conversasionId = 4;</code>
+       * <code>string converId = 4;</code>
        */
-      public java.lang.String getConversasionId() {
-        java.lang.Object ref = conversasionId_;
+      public java.lang.String getConverId() {
+        java.lang.Object ref = converId_;
         if (!(ref instanceof java.lang.String)) {
           com.google.protobuf.ByteString bs =
               (com.google.protobuf.ByteString) ref;
           java.lang.String s = bs.toStringUtf8();
-          conversasionId_ = s;
+          converId_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -3370,16 +3306,16 @@ public final class Message {
        * 会话id
        * </pre>
        *
-       * <code>string conversasionId = 4;</code>
+       * <code>string converId = 4;</code>
        */
       public com.google.protobuf.ByteString
-          getConversasionIdBytes() {
-        java.lang.Object ref = conversasionId_;
+          getConverIdBytes() {
+        java.lang.Object ref = converId_;
         if (ref instanceof String) {
           com.google.protobuf.ByteString b = 
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
-          conversasionId_ = b;
+          converId_ = b;
           return b;
         } else {
           return (com.google.protobuf.ByteString) ref;
@@ -3390,15 +3326,15 @@ public final class Message {
        * 会话id
        * </pre>
        *
-       * <code>string conversasionId = 4;</code>
+       * <code>string converId = 4;</code>
        */
-      public Builder setConversasionId(
+      public Builder setConverId(
           java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
   
-        conversasionId_ = value;
+        converId_ = value;
         onChanged();
         return this;
       }
@@ -3407,11 +3343,11 @@ public final class Message {
        * 会话id
        * </pre>
        *
-       * <code>string conversasionId = 4;</code>
+       * <code>string converId = 4;</code>
        */
-      public Builder clearConversasionId() {
+      public Builder clearConverId() {
         
-        conversasionId_ = getDefaultInstance().getConversasionId();
+        converId_ = getDefaultInstance().getConverId();
         onChanged();
         return this;
       }
@@ -3420,16 +3356,16 @@ public final class Message {
        * 会话id
        * </pre>
        *
-       * <code>string conversasionId = 4;</code>
+       * <code>string converId = 4;</code>
        */
-      public Builder setConversasionIdBytes(
+      public Builder setConverIdBytes(
           com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
         
-        conversasionId_ = value;
+        converId_ = value;
         onChanged();
         return this;
       }
@@ -3614,22 +3550,19 @@ public final class Message {
   static {
     java.lang.String[] descriptorData = {
       "\n\rmessage.proto\022\025com.tim.common.protos\032\014" +
-      "common.proto\"\227\002\n\rUpDownMessage\022\n\n\002id\030\001 \001" +
-      "(\004\022\020\n\010clientId\030\002 \001(\004\022\016\n\006fromId\030\003 \001(\t\022\020\n\010" +
-      "targetId\030\004 \001(\t\022\026\n\016conversasionId\030\005 \001(\t\022A" +
-      "\n\020conversationType\030\006 \001(\0162\'.com.tim.commo" +
-      "n.protos.ConversationType\0223\n\tdirection\030\007" +
-      " \001(\0162 .com.tim.common.protos.Direction\0226" +
-      "\n\007content\030\010 \001(\0132%.com.tim.common.protos." +
-      "MessageContent\"T\n\tHeartBeat\022\n\n\002id\030\001 \001(\004\022" +
-      ";\n\rheartBeatType\030\002 \001(\0162$.com.tim.common." +
-      "protos.HeartBeatType\"\215\001\n\nMessageAck\022\n\n\002i" +
-      "d\030\001 \001(\004\022\020\n\010clientId\030\002 \001(\004\022\020\n\010targetId\030\003 " +
-      "\001(\t\022\026\n\016conversasionId\030\004 \001(\t\022\014\n\004time\030\005 \001(" +
-      "\004\022)\n\004code\030\006 \001(\0162\033.com.tim.common.protos." +
-      "Code*#\n\rHeartBeatType\022\010\n\004PING\020\000\022\010\n\004PONG\020" +
-      "\001*#\n\tDirection\022\006\n\002CS\020\000\022\006\n\002SS\020\001\022\006\n\002SC\020\002B\t" +
-      "B\007Messageb\006proto3"
+      "common.proto\"\336\001\n\rUpDownMessage\022\n\n\002id\030\001 \001" +
+      "(\004\022\013\n\003cid\030\002 \001(\004\022\017\n\007fromUid\030\003 \001(\t\022\021\n\ttarg" +
+      "etUid\030\004 \001(\t\022\017\n\007groupId\030\005 \001(\t\022\020\n\010converId" +
+      "\030\006 \001(\t\0225\n\nconverType\030\007 \001(\0162!.com.tim.com" +
+      "mon.protos.ConverType\0226\n\007content\030\t \001(\0132%" +
+      ".com.tim.common.protos.MessageContent\"T\n" +
+      "\tHeartBeat\022\n\n\002id\030\001 \001(\004\022;\n\rheartBeatType\030" +
+      "\002 \001(\0162$.com.tim.common.protos.HeartBeatT" +
+      "ype\"\203\001\n\nMessageAck\022\n\n\002id\030\001 \001(\004\022\013\n\003cid\030\002 " +
+      "\001(\004\022\021\n\ttargetUid\030\003 \001(\t\022\020\n\010converId\030\004 \001(\t" +
+      "\022\014\n\004time\030\005 \001(\004\022)\n\004code\030\006 \001(\0162\033.com.tim.c" +
+      "ommon.protos.Code*#\n\rHeartBeatType\022\010\n\004PI" +
+      "NG\020\000\022\010\n\004PONG\020\001B\tB\007Messageb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -3649,7 +3582,7 @@ public final class Message {
     internal_static_com_tim_common_protos_UpDownMessage_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_tim_common_protos_UpDownMessage_descriptor,
-        new java.lang.String[] { "Id", "ClientId", "FromId", "TargetId", "ConversasionId", "ConversationType", "Direction", "Content", });
+        new java.lang.String[] { "Id", "Cid", "FromUid", "TargetUid", "GroupId", "ConverId", "ConverType", "Content", });
     internal_static_com_tim_common_protos_HeartBeat_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_com_tim_common_protos_HeartBeat_fieldAccessorTable = new
@@ -3661,7 +3594,7 @@ public final class Message {
     internal_static_com_tim_common_protos_MessageAck_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_tim_common_protos_MessageAck_descriptor,
-        new java.lang.String[] { "Id", "ClientId", "TargetId", "ConversasionId", "Time", "Code", });
+        new java.lang.String[] { "Id", "Cid", "TargetUid", "ConverId", "Time", "Code", });
     com.tim.common.protos.Common.getDescriptor();
   }
 

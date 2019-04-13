@@ -8,7 +8,7 @@ enum Code {
 }
 
 // 会话类型
-enum ConversationType {
+enum ConverType {
   SINGLE = 0;
   GROUP = 1;
 }

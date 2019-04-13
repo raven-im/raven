@@ -7,13 +7,13 @@ option java_outer_classname = "Message";
 // 上下行消息
 message UpDownMessage {
   uint64 id = 1; // 服务端生成消息ID
-  uint64 clientId = 2; // 客户端消息ID
-  string fromId = 3; // 发送人ID
-  string targetId = 4; // 单聊会话 用户ID 群会话 群ID 会话id为空时需要
-  string conversasionId = 5; // 会话id
-  ConversationType conversationType = 6; // 会话类型
-  Direction direction = 7; // 消息方向
-  MessageContent content = 8; // 内容
+  uint64 cid = 2; // 客户端消息ID
+  string fromUid = 3; // 发送人ID
+  string targetUid = 4; // 接收人ID
+  string groupId = 5; //  群ID
+  string converId = 6; // 会话id
+  ConverType converType = 7; // 会话类型
+  MessageContent content = 9; // 内容
 }
 
 // 心跳
@@ -27,18 +27,12 @@ enum HeartBeatType {
   PONG = 1;
 }
 
-enum Direction {
-  CS = 0;
-  SS = 1;
-  SC = 2;
-}
-
 // 消息ACK
 message MessageAck {
   uint64 id = 1; // 服务端生成消息ID
-  uint64 clientId = 2; // 对应收到的消息ID
-  string targetId = 3; // 用户ID
-  string conversasionId = 4; // 会话id
+  uint64 cid = 2; // 对应收到的消息ID
+  string targetUid = 3; // 接收人ID
+  string converId = 4; // 会话id
   uint64 time = 5; // 发送时间
   Code code = 6; // 返回码
 }

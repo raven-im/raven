@@ -1,16 +1,14 @@
 package com.tim.group.restful.config;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.json.GsonHttpMessageConverter;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.RedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
  * Author zxx
@@ -22,10 +20,17 @@ public class CustomConfig {
 
     @Bean
     @ConditionalOnMissingBean(name = "redisTemplate")
-    public RedisTemplate<Object, Object> redisTemplate(
+    public RedisTemplate<String, Object> redisTemplate(
         RedisConnectionFactory redisConnectionFactory) {
-        RedisTemplate<Object, Object> template = new RedisTemplate<>();
+        RedisTemplate<String, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(redisConnectionFactory);
+        RedisSerializer stringSerializer = new StringRedisSerializer();
+        Jackson2JsonRedisSerializer serializer = new Jackson2JsonRedisSerializer(Object.class);
+        template.setKeySerializer(stringSerializer);
+        template.setValueSerializer(serializer);
+        template.setHashKeySerializer(stringSerializer);
+        template.setHashValueSerializer(serializer);
+        template.setDefaultSerializer(serializer);
         return template;
     }
 

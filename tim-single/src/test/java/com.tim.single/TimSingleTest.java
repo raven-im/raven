@@ -1,13 +1,14 @@
 package com.tim.single;
 
+import static junit.framework.TestCase.assertEquals;
+
 import com.tim.common.protos.Common;
 import com.tim.common.protos.Common.Code;
-import com.tim.common.protos.Common.ConversationType;
+import com.tim.common.protos.Common.ConverType;
 import com.tim.common.protos.Common.MessageType;
-import com.tim.common.protos.Conversation.ConversationAck;
-import com.tim.common.protos.Conversation.ConversationReq;
+import com.tim.common.protos.Conversation.ConverAck;
+import com.tim.common.protos.Conversation.ConverReq;
 import com.tim.common.protos.Conversation.OperationType;
-import com.tim.common.protos.Message.Direction;
 import com.tim.common.protos.Message.MessageAck;
 import com.tim.common.protos.Message.UpDownMessage;
 import com.tim.common.utils.UidUtil;
@@ -23,8 +24,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import static junit.framework.TestCase.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Slf4j
@@ -42,7 +41,7 @@ public class TimSingleTest {
     private static String fromUser;
     private static String targetUser;
     private MessageAck ackMsg;
-    private ConversationAck ackConv;
+    private ConverAck ackConv;
 
     @BeforeClass
     public static void beforeAll() {
@@ -80,11 +79,10 @@ public class TimSingleTest {
 
         UpDownMessage msg = UpDownMessage.newBuilder()
             .setId(MESSAGE_ID)
-            .setFromId(fromUser)
-            .setTargetId(targetUser)
-            .setConversationType(ConversationType.SINGLE)
+            .setFromUid(fromUser)
+            .setTargetUid(targetUser)
+            .setConverType(ConverType.SINGLE)
             .setContent(content)
-            .setDirection(Direction.SS)
             .build();
 
         log.info("{} send msg to {}", fromUser, targetUser);
@@ -97,7 +95,7 @@ public class TimSingleTest {
             }
         });
         lock.await(2000, TimeUnit.MILLISECONDS);
-        assertEquals(ackMsg.getTargetId(), fromUser);
+        assertEquals(ackMsg.getTargetUid(), fromUser);
         assertEquals(ackMsg.getId(), MESSAGE_ID);
     }
 
@@ -115,12 +113,11 @@ public class TimSingleTest {
         String conversationId = UidUtil.uuid24By2Factor(fromUser, targetUser);
         UpDownMessage msg = UpDownMessage.newBuilder()
             .setId(MESSAGE_ID)
-            .setFromId(fromUser)
-            .setTargetId(targetUser)
-            .setConversasionId(conversationId)
-            .setConversationType(ConversationType.SINGLE)
+            .setFromUid(fromUser)
+            .setTargetUid(targetUser)
+            .setConverId(conversationId)
+            .setConverType(ConverType.SINGLE)
             .setContent(content)
-            .setDirection(Direction.SS)
             .build();
 
         log.info("{} send msg to {}", fromUser, targetUser);
@@ -133,7 +130,7 @@ public class TimSingleTest {
             }
         });
         lock.await(2000, TimeUnit.MILLISECONDS);
-        assertEquals(ackMsg.getTargetId(), fromUser);
+        assertEquals(ackMsg.getTargetUid(), fromUser);
         assertEquals(ackMsg.getId(), MESSAGE_ID);
     }
 
@@ -150,12 +147,11 @@ public class TimSingleTest {
 
         UpDownMessage msg = UpDownMessage.newBuilder()
             .setId(MESSAGE_ID)
-            .setFromId(fromUser)
-            .setTargetId(targetUser)
-            .setConversasionId("INVALI_CONVERSATION_ID")
-            .setConversationType(ConversationType.SINGLE)
+            .setFromUid(fromUser)
+            .setTargetUid(targetUser)
+            .setConverId("INVALI_CONVERSATION_ID")
+            .setConverType(ConverType.SINGLE)
             .setContent(content)
-            .setDirection(Direction.SS)
             .build();
 
         log.info("{} send msg to {}", fromUser, targetUser);
@@ -176,7 +172,7 @@ public class TimSingleTest {
     public void queryConversationDetailTest() throws Exception {
 
         String conversationId = UidUtil.uuid24By2Factor(fromUser, targetUser);
-        ConversationReq req = ConversationReq.newBuilder()
+        ConverReq req = ConverReq.newBuilder()
             .setId(2)
             .setType(OperationType.DETAIL)
             .setConversationId(conversationId)
@@ -184,7 +180,7 @@ public class TimSingleTest {
         log.info("req conversation {}", conversationId);
         Client.queryConversationTest(req, new MessageListener() {
             @Override
-            public void onQueryAck(ConversationAck ack) {
+            public void onQueryAck(ConverAck ack) {
                 log.info("get conv ACK from server");
                 ackConv = ack;
                 lock.countDown();
@@ -192,22 +188,22 @@ public class TimSingleTest {
         });
         lock.await(2000, TimeUnit.MILLISECONDS);
         assertEquals(ackConv.getId(), 2);
-        assertEquals(ackConv.getConversation().getConversationId(), conversationId);
+        assertEquals(ackConv.getConversation().getConverId(), conversationId);
         assertEquals(ackConv.getConversation().getLastContent().getContent(), MESSAGE_CONTENT);
-        assertEquals(ackConv.getConversation().getType(), ConversationType.SINGLE);
+        assertEquals(ackConv.getConversation().getType(), ConverType.SINGLE);
     }
 
     @Test
     @Ignore
     public void queryConversationAllTest() throws Exception {
-        ConversationReq req = ConversationReq.newBuilder()
+        ConverReq req = ConverReq.newBuilder()
             .setId(3)
             .setType(OperationType.ALL)
             .build();
         log.info("req conversation all by user {}", fromUser);
         Client.queryConversationTest(req, new MessageListener() {
             @Override
-            public void onQueryAck(ConversationAck ack) {
+            public void onQueryAck(ConverAck ack) {
                 log.info("get conv ACK from server");
                 ackConv = ack;
                 lock.countDown();

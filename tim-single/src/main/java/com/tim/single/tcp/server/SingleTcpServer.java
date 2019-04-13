@@ -12,8 +12,6 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
-import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
 import io.netty.handler.timeout.IdleStateHandler;
 import java.net.InetSocketAddress;
 import javax.annotation.PostConstruct;
@@ -58,10 +56,9 @@ public class SingleTcpServer {
             .childHandler(new ChannelInitializer<SocketChannel>() {
                 @Override
                 protected void initChannel(SocketChannel channel) throws Exception {
-                    channel.pipeline().addLast(new IdleStateHandler(10, 10, 15))
-                        .addLast(new ProtobufVarint32FrameDecoder())// 处理半包消息的解码类
+                    channel.pipeline()
+                        .addLast(new IdleStateHandler(10, 10, 15))
                         .addLast(new MessageDecoder())
-                        .addLast(new ProtobufVarint32LengthFieldPrepender())// 对protobuf协议的消息头上加上一个长度为32的整形字段
                         .addLast(new MessageEncoder())
                         .addLast("MessageHandler", messageHandler);
                 }

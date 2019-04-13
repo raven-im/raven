@@ -18,5 +18,6 @@ public class MessageTypeConstants {
     public static final int HISMESSAGESREQ = 1008;
     public static final int HISMESSAGESACK = 1009;
     public static final int NOTIFY = 1010;
+    public static final int SERVERINFO = 1011;
 
 }

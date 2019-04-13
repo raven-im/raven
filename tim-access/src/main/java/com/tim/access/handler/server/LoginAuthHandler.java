@@ -1,6 +1,7 @@
-package com.tim.access.handler;
+package com.tim.access.handler.server;
 
 import com.google.protobuf.MessageLite;
+import com.tim.access.util.IpUtil;
 import com.tim.common.netty.IdChannelManager;
 import com.tim.common.protos.Auth.Login;
 import com.tim.common.protos.Auth.LoginAck;
@@ -45,15 +46,16 @@ public class LoginAuthHandler extends SimpleChannelInboundHandler<MessageLite> {
         MessageLite messageLite) throws Exception {
         if (messageLite instanceof Login) {
             Login loginMesaage = (Login) messageLite;
+            log.info("login msg:{}",loginMesaage.toString());
             String token = loginMesaage.getToken();
-            if (!verifyToken(token)) {
-                LoginAck loginAck = LoginAck.newBuilder()
-                    .setId(loginMesaage.getId())
-                    .setCode(Code.FAIL)
-                    .setTime(System.currentTimeMillis())
-                    .build();
-                ctx.writeAndFlush(loginAck);
-            }
+//            if (!verifyToken(token)) {
+//                LoginAck loginAck = LoginAck.newBuilder()
+//                    .setId(loginMesaage.getId())
+//                    .setCode(Code.FAIL)
+//                    .setTime(System.currentTimeMillis())
+//                    .build();
+//                ctx.writeAndFlush(loginAck);
+//            }
             // 增加路由
             redisTemplate.boundHashOps(Constants.USER_ROUTE_KEY)
                 .putIfAbsent(loginMesaage.getUid(), getLocalAddress());
@@ -91,13 +93,7 @@ public class LoginAuthHandler extends SimpleChannelInboundHandler<MessageLite> {
     }
 
     private String getLocalAddress() throws SocketException {
-        String address = null;
-        Collection<InetAddress> ips = ServiceInstanceBuilder.getAllLocalIPs();
-        if (ips.size() > 0) {
-            address = ips.iterator().next().getHostAddress();   // 参考zk注册代码
-        }
-        address = address + ":" + nettyServerPort;
-        return address;
+        return IpUtil.getIp() + ":" + nettyServerPort;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.tim.common.code;
 
 import com.google.protobuf.MessageLite;
+import com.tim.common.utils.JsonHelper;
 import com.tim.common.utils.ParseMap;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -27,8 +28,7 @@ public class MessageEncoder extends MessageToByteEncoder<MessageLite> {
         buf.writeInt(ptoNum);
         buf.writeBytes(bytes);
         out.writeBytes(buf);
-        log.info("Send Message, remoteAddress:{}, content:{}",
-            ctx.channel().remoteAddress(), msg.toString(), ptoNum);
+        log.info("send msg:{}", msg.toString());
 
     }
 }

@@ -1,4 +1,4 @@
-package com.tim.access.handler;
+package com.tim.access.handler.server;
 
 import com.google.protobuf.MessageLite;
 import com.tim.common.netty.NettyAttrUtil;
@@ -38,6 +38,7 @@ public class HeartBeatHandler extends SimpleChannelInboundHandler<MessageLite> {
                     .build();
                 channelHandlerContext.writeAndFlush(heartBeatAck);
             } else if (heartBeat.getHeartBeatType() == HeartBeatType.PONG) {
+                log.info("heartBeat msg:{}",heartBeat.toString());
                 NettyAttrUtil
                     .updateReaderTime(channelHandlerContext.channel(), System.currentTimeMillis());
             }
@@ -53,7 +54,7 @@ public class HeartBeatHandler extends SimpleChannelInboundHandler<MessageLite> {
                 String uid = uidChannelManager.getIdByChannel(ctx.channel());
                 HeartBeat heartBeat = HeartBeat.newBuilder()
                     .setId(snowFlake.nextId())
-                    .setHeartBeatType(HeartBeatType.PONG)
+                    .setHeartBeatType(HeartBeatType.PING)
                     .build();
                 ctx.writeAndFlush(heartBeat).addListeners(future -> {
                     if (!future.isSuccess()) {

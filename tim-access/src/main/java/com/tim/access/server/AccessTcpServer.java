@@ -1,13 +1,10 @@
 package com.tim.access.server;
 
-import com.tim.access.handler.ConversationHandler;
-import com.tim.access.handler.HeartBeatHandler;
-import com.tim.access.handler.HistoryHandler;
-import com.tim.access.handler.LoginAuthHandler;
-import com.tim.access.handler.MesaageHandler;
+import com.tim.access.handler.server.HeartBeatHandler;
+import com.tim.access.handler.server.LoginAuthHandler;
+import com.tim.access.handler.server.MesaageHandler;
 import com.tim.common.code.MessageDecoder;
 import com.tim.common.code.MessageEncoder;
-import com.tim.common.utils.SnowFlake;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -16,8 +13,6 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
-import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
 import io.netty.handler.timeout.IdleStateHandler;
 import java.net.InetSocketAddress;
 import javax.annotation.PostConstruct;
@@ -65,11 +60,7 @@ public class AccessTcpServer {
                     throws Exception {
                     ChannelPipeline pipeline = channel.pipeline();
                     pipeline.addLast(new IdleStateHandler(10, 10, 15));
-                    // 处理半包消息的解码类
-                    pipeline.addLast(new ProtobufVarint32FrameDecoder());
                     pipeline.addLast(new MessageDecoder());
-                    // 对protobuf协议的消息头上加上一个长度为32的整形字段
-                    pipeline.addLast(new ProtobufVarint32LengthFieldPrepender());
                     pipeline.addLast(new MessageEncoder());
                     pipeline.addLast("LoginAuthHandler", loginAuthHandler);
                     pipeline.addLast("HeartBeatHandler", heartBeatHandler);

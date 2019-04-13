@@ -8,8 +8,10 @@ import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import lombok.extern.slf4j.Slf4j;
 
 
+@Slf4j
 public class ConsistentHashLoadBalancer implements LoadBalancer {
 
     // 使用murmur哈希算法

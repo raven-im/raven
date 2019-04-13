@@ -20,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 public class Client {
 
     private static final String HOST = "127.0.0.1";
-    private static final int PORT = 7070;
+    private static final int PORT = 7010;
     private static final int clientNum = 10;
     public static SnowFlake snowFlake = new SnowFlake(1, 2);
 
@@ -43,9 +43,7 @@ public class Client {
                     p.addLast(new ClientHandler());
                 }
             });
-        for (int i = 1; i <= clientNum; i++) {
-            startConnection(b, i);
-        }
+        b.connect(HOST, PORT);
     }
 
     private static void startConnection(Bootstrap b, int index) {

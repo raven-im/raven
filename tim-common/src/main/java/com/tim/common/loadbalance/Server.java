@@ -1,6 +1,8 @@
 package com.tim.common.loadbalance;
 
 
+import static com.tim.common.utils.Constants.DEFAULT_SEPARATES_SIGN;
+
 import java.util.Objects;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,6 +19,12 @@ public class Server {
 
     public String getUrl() {
         return ip + ":" + port;
+    }
+
+    public Server(String address) {
+        String[] array = address.split(DEFAULT_SEPARATES_SIGN);
+        this.ip = array[0];
+        this.port = Integer.parseInt(array[1]);
     }
 
     @Override

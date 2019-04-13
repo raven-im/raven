@@ -1,7 +1,9 @@
 package com.tim.client;
 
-import com.tim.common.code.MessageDecoder;
-import com.tim.common.code.MessageEncoder;
+import com.tim.common.protos.Message;
+import com.tim.common.protos.Message.HeartBeat;
+import com.tim.common.protos.Message.MessageAck;
+import com.tim.common.protos.Message.UpDownMessage;
 import com.tim.common.utils.SnowFlake;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelInitializer;
@@ -11,6 +13,11 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.protobuf.ProtobufDecoder;
+import io.netty.handler.codec.protobuf.ProtobufEncoder;
+import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
+import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
+import io.netty.handler.timeout.IdleStateHandler;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -20,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 public class Client {
 
     private static final String HOST = "127.0.0.1";
-    private static final int PORT = 7070;
+    private static final int PORT = 7010;
     private static final int clientNum = 10;
     public static SnowFlake snowFlake = new SnowFlake(1, 2);
 
@@ -37,15 +44,17 @@ public class Client {
             .handler(new ChannelInitializer<SocketChannel>() {
                 @Override
                 public void initChannel(SocketChannel ch) throws Exception {
-                    ChannelPipeline p = ch.pipeline();
-                    p.addLast("MessageDecoder", new MessageDecoder());
-                    p.addLast("MessageEncoder", new MessageEncoder());
-                    p.addLast(new ClientHandler());
+                    ChannelPipeline pipeline = ch.pipeline();
+                    pipeline.addLast(new IdleStateHandler(10, 10, 15));
+                    pipeline.addLast(new ProtobufVarint32FrameDecoder());
+                    pipeline.addLast(new ProtobufDecoder(Message.TimMessage.getDefaultInstance()));
+                    // 对protobuf协议的消息头上加上一个长度为32的整形字段
+                    pipeline.addLast(new ProtobufVarint32LengthFieldPrepender());
+                    pipeline.addLast(new ProtobufEncoder());
+                    pipeline.addLast(new ClientHandler());
                 }
             });
-        for (int i = 1; i <= clientNum; i++) {
-            startConnection(b, i);
-        }
+        b.connect(HOST, PORT);
     }
 
     private static void startConnection(Bootstrap b, int index) {

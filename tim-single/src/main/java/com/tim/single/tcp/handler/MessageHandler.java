@@ -1,19 +1,19 @@
 package com.tim.single.tcp.handler;
 
-import com.google.protobuf.MessageLite;
 import com.tim.common.loadbalance.Server;
 import com.tim.common.netty.ServerChannelManager;
-import com.tim.common.protos.Common.Code;
-import com.tim.common.protos.Common.ConversationType;
-import com.tim.common.protos.Message.Direction;
+import com.tim.common.protos.Message.Code;
+import com.tim.common.protos.Message.ConverType;
 import com.tim.common.protos.Message.MessageAck;
+import com.tim.common.protos.Message.ServerInfo;
+import com.tim.common.protos.Message.TimMessage;
+import com.tim.common.protos.Message.TimMessage.Type;
 import com.tim.common.protos.Message.UpDownMessage;
-import com.tim.single.tcp.manager.ConversationManager;
 import com.tim.single.tcp.manager.SenderManager;
+import com.tim.storage.conver.ConverManager;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import java.net.InetSocketAddress;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,10 +22,10 @@ import org.springframework.util.StringUtils;
 @Component
 @Sharable
 @Slf4j
-public class MessageHandler extends SimpleChannelInboundHandler<MessageLite> {
+public class MessageHandler extends SimpleChannelInboundHandler<TimMessage> {
 
     @Autowired
-    private ConversationManager conversationManager;
+    private ConverManager converManager;
 
     @Autowired
     private SenderManager senderManager;
@@ -34,43 +34,47 @@ public class MessageHandler extends SimpleChannelInboundHandler<MessageLite> {
     private ServerChannelManager channelManager;
 
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, MessageLite messageLite) throws Exception {
-        if (messageLite instanceof UpDownMessage) {
-            UpDownMessage message = (UpDownMessage) messageLite;
+    protected void channelRead0(ChannelHandlerContext ctx, TimMessage message)
+        throws Exception {
+        if (message.getType() == Type.UpDownMessage) {
+            UpDownMessage upDownMessage = message.getUpDownMessage();
             String convId;
-            if (message.getConversationType() == ConversationType.SINGLE ) {
-                log.info("received msg id:{}", message.getId());
-                if (!StringUtils.isEmpty(message.getConversasionId())) {
-                    // validate the conversation id.
-                    if (!conversationManager.isSingleConvIdValid(message.getConversasionId(),
-                        message.getFromId(), message.getTargetId())) {
+            if (upDownMessage.getConverType() == ConverType.SINGLE) {
+                log.info("received msg id:{}", upDownMessage.getId());
+                if (!StringUtils.isEmpty(upDownMessage.getConverId())) {
+                    if (!converManager.isSingleConverIdValid(upDownMessage.getConverId())) {
                         log.error("illegal conversation id.");
-                        sendACK(ctx, message.getId(), message.getFromId(), Code.FAIL, message.getConversasionId());
+                        sendACK(ctx, upDownMessage, Code.FAIL);
                         return;
                     } else {
-                        convId = message.getConversasionId();
+                        convId = upDownMessage.getConverId();
                     }
                 } else {
-                    convId = conversationManager.newConversationId(message.getFromId(), message.getTargetId());
+                    convId = converManager
+                        .newSingleConverId(upDownMessage.getFromUid(), upDownMessage.getTargetUid());
+                    upDownMessage.toBuilder().setConverId(convId);
                 }
                 // access server ACK.
-                conversationManager.cacheConversation(message, convId);
-                sendACK(ctx, message.getId(), message.getFromId(), Code.SUCCESS, convId);
-
+                converManager.cacheMsg2Conver(upDownMessage.getContent(), convId);
+                sendACK(ctx, upDownMessage, Code.SUCCESS);
                 UpDownMessage downMessage = UpDownMessage.newBuilder()
-                    .setId(message.getId())
-                    .setFromId(message.getFromId())
-                    .setTargetId(message.getTargetId())
-                    .setConversationType(message.getConversationType())
-                    .setDirection(Direction.SC)
-                    .setContent(message.getContent())
-                    .setConversasionId(convId)
+                    .setId(upDownMessage.getId())
+                    .setFromUid(upDownMessage.getFromUid())
+                    .setTargetUid(upDownMessage.getTargetUid())
+                    .setConverType(upDownMessage.getConverType())
+                    .setContent(upDownMessage.getContent())
+                    .setConverId(convId)
                     .build();
                 senderManager.addMessage(downMessage);
             } else {
                 log.error("illegal Message.");
-                sendACK(ctx, message.getId(), message.getFromId(), Code.FAIL, "");
+                sendACK(ctx, upDownMessage, Code.FAIL);
             }
+        } else if (message.getType() ==  Type.ServerInfo) {
+            ServerInfo serverInfo =  message.getServerInfo();
+            Server server = new Server(serverInfo.getIp(), serverInfo.getPort());
+            log.info("tim access server connect success ip:{},port{}",server.getIp(),server.getPort());
+            channelManager.addServer2Channel(server, ctx.channel());
         }
     }
 
@@ -78,31 +82,35 @@ public class MessageHandler extends SimpleChannelInboundHandler<MessageLite> {
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         log.info("client connected remote address:{},id:{}", ctx.channel().remoteAddress(),
             ctx.channel().id().asShortText());
-        String host = ((InetSocketAddress)ctx.channel().remoteAddress()).getAddress().getHostAddress();
-        int port = ((InetSocketAddress)ctx.channel().remoteAddress()).getPort();
-        Server server = new Server(host, port);
-        channelManager.addServer2Channel(server, ctx.channel());
     }
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         log.info("client disconnected remote address:{},id:{}", ctx.channel().remoteAddress(),
             ctx.channel().id().asShortText());
-        String host = ((InetSocketAddress)ctx.channel().remoteAddress()).getAddress().getHostAddress();
-        int port = ((InetSocketAddress)ctx.channel().remoteAddress()).getPort();
-        Server server = new Server(host, port);
+        Server server = channelManager.getServerByChannel(ctx.channel());
         channelManager.removeServer(server);
     }
 
-    private void sendACK(ChannelHandlerContext ctx, long id, String targetId, Code code, String convId) {
+    private void sendACK(ChannelHandlerContext ctx, UpDownMessage message, Code code) {
         MessageAck messageAck = MessageAck.newBuilder()
-            .setId(id)
-            .setTargetId(targetId)
+            .setId(message.getId())
+            .setTargetUid(message.getFromUid())
+            .setCid(message.getCid())
             .setCode(code)
             .setTime(System.currentTimeMillis())
-            .setConversasionId(convId)
+            .setConverId(message.getConverId())
             .build();
-        ctx.writeAndFlush(messageAck);
+        TimMessage timMessage = TimMessage.newBuilder().setType(Type.MessageAck).setMessageAck(messageAck).build();
+        ctx.writeAndFlush(timMessage);
+    }
+
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
+        if ("Connection reset by peer".equals(cause.getMessage())) {
+            return;
+        }
+        log.error(cause.getMessage(), cause);
     }
 
 }

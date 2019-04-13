@@ -3,14 +3,13 @@ package com.tim.group.tcp.handler;
 import com.google.protobuf.MessageLite;
 import com.tim.common.loadbalance.Server;
 import com.tim.common.netty.ServerChannelManager;
-import com.tim.common.protos.Common.Code;
-import com.tim.common.protos.Common.ConversationType;
-import com.tim.common.protos.Message.Direction;
+import com.tim.common.protos.Message.Code;
 import com.tim.common.protos.Message.MessageAck;
+import com.tim.common.protos.Message.TimMessage;
+import com.tim.common.protos.Message.TimMessage.Type;
 import com.tim.common.protos.Message.UpDownMessage;
-
-import com.tim.group.tcp.manager.ConversationManager;
 import com.tim.group.tcp.manager.SenderManager;
+import com.tim.storage.conver.ConverManager;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -18,7 +17,6 @@ import java.net.InetSocketAddress;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 @Component
 @Sharable
@@ -26,7 +24,7 @@ import org.springframework.util.StringUtils;
 public class MessageHandler extends SimpleChannelInboundHandler<MessageLite> {
 
     @Autowired
-    private ConversationManager conversationManager;
+    private ConverManager converManager;
 
     @Autowired
     private SenderManager senderManager;
@@ -95,15 +93,17 @@ public class MessageHandler extends SimpleChannelInboundHandler<MessageLite> {
         channelManager.removeServer(server);
     }
 
-    private void sendACK(ChannelHandlerContext ctx, long id, String targetId, Code code, String convId) {
+    private void sendACK(ChannelHandlerContext ctx, UpDownMessage message, Code code) {
         MessageAck messageAck = MessageAck.newBuilder()
-            .setId(id)
-            .setTargetId(targetId)
+            .setId(message.getId())
+            .setTargetUid(message.getFromUid())
+            .setCid(message.getCid())
             .setCode(code)
             .setTime(System.currentTimeMillis())
-            .setConversasionId(convId)
+            .setConverId(message.getConverId())
             .build();
-        ctx.writeAndFlush(messageAck);
+        TimMessage timMessage = TimMessage.newBuilder().setType(Type.MessageAck).setMessageAck(messageAck).build();
+        ctx.writeAndFlush(timMessage);
     }
 
 }

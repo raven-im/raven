@@ -1,8 +1,7 @@
 package com.tim.group;
 
 import com.google.protobuf.MessageLite;
-import com.tim.common.code.MessageDecoder;
-import com.tim.common.code.MessageEncoder;
+import com.tim.common.protos.Message;
 import com.tim.common.protos.Message.UpDownMessage;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelInitializer;
@@ -12,6 +11,8 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.protobuf.ProtobufDecoder;
+import io.netty.handler.codec.protobuf.ProtobufEncoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
 import lombok.extern.slf4j.Slf4j;
@@ -37,9 +38,9 @@ public class Client {
                 public void initChannel(SocketChannel ch) throws Exception {
                 ch.pipeline()
                     .addLast(new ProtobufVarint32FrameDecoder())// 处理半包消息的解码类
-                    .addLast("MessageDecoder", new MessageDecoder())
+                    .addLast(new ProtobufDecoder(Message.TimMessage.getDefaultInstance()))
                     .addLast(new ProtobufVarint32LengthFieldPrepender())// 对protobuf协议的消息头上加上一个长度为32的整形字段
-                    .addLast("MessageEncoder", new MessageEncoder())
+                    .addLast(new ProtobufEncoder())
                     .addLast(handler);
                 }
             });

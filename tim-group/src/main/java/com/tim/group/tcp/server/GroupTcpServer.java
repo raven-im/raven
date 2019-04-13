@@ -1,7 +1,6 @@
 package com.tim.group.tcp.server;
 
-import com.tim.common.code.MessageDecoder;
-import com.tim.common.code.MessageEncoder;
+import com.tim.common.protos.Message;
 import com.tim.group.tcp.handler.MessageHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
@@ -10,6 +9,8 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.protobuf.ProtobufDecoder;
+import io.netty.handler.codec.protobuf.ProtobufEncoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
 import io.netty.handler.timeout.IdleStateHandler;
@@ -49,9 +50,9 @@ public class GroupTcpServer {
                 protected void initChannel(SocketChannel channel) throws Exception {
                     channel.pipeline().addLast(new IdleStateHandler(10, 10, 15))
                         .addLast(new ProtobufVarint32FrameDecoder())// 处理半包消息的解码类
-                        .addLast(new MessageDecoder())
+                        .addLast(new ProtobufDecoder(Message.TimMessage.getDefaultInstance()))
                         .addLast(new ProtobufVarint32LengthFieldPrepender())// 对protobuf协议的消息头上加上一个长度为32的整形字段
-                        .addLast(new MessageEncoder())
+                        .addLast(new ProtobufEncoder())
                         .addLast("MessageHandler", messageHandler);
                 }
             });

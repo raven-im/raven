@@ -78,12 +78,11 @@ public class SenderManager {
                     TimMessage timMessage = TimMessage.newBuilder().setType(Type.UpDownMessage)
                         .setUpDownMessage(msg).build();
                     chan.writeAndFlush(timMessage);
-                    log.info("downstream msg {} sent.", msg.getId());
+                    log.info("send down msg {}", msg);
                 } else {
                     log.error("cannot find channel. server:{}", server);
                 }
             } else {
-                log.info("downstream push msg {} sent.", msg.getId());
                 converManager.incrUserConverUnCount(uid, msg.getConverId(), 1);
             }
         }

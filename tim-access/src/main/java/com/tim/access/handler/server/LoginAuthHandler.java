@@ -35,8 +35,7 @@ public class LoginAuthHandler extends SimpleChannelInboundHandler<TimMessage> {
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        log.info("client connected remote address:{},id:{}", ctx.channel().remoteAddress(),
-            ctx.channel().id().asShortText());
+        log.info("client connected remote address:{}", ctx.channel().remoteAddress());
     }
 
     @Override
@@ -73,8 +72,7 @@ public class LoginAuthHandler extends SimpleChannelInboundHandler<TimMessage> {
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         String uid = uidChannelManager.getIdByChannel(ctx.channel());
         if (null != uid) {
-            log.info("client disconnected channelId:{},uid:{}", ctx.channel().id().asShortText(),
-                uid);
+            log.info("client disconnected uid:{}", uid);
             uidChannelManager.removeChannel(ctx.channel());
             // 最后一台设备下线才清除路由
             if (CollectionUtils.isEmpty(uidChannelManager.getChannelsById(uid))) {

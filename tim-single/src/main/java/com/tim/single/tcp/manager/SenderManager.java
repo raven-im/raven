@@ -5,6 +5,8 @@ import static com.tim.common.utils.Constants.USER_ROUTE_KEY;
 
 import com.tim.common.loadbalance.Server;
 import com.tim.common.netty.ServerChannelManager;
+import com.tim.common.protos.Message.TimMessage;
+import com.tim.common.protos.Message.TimMessage.Type;
 import com.tim.common.protos.Message.UpDownMessage;
 import com.tim.storage.conver.ConverManager;
 import io.netty.channel.Channel;
@@ -73,7 +75,9 @@ public class SenderManager {
                 Server server = new Server(serverAddress);
                 Channel chan = channelManager.getChannelByServer(server);
                 if (chan != null) {
-                    chan.writeAndFlush(msg);
+                    TimMessage timMessage = TimMessage.newBuilder().setType(Type.UpDownMessage)
+                        .setUpDownMessage(msg).build();
+                    chan.writeAndFlush(timMessage);
                     log.info("downstream msg {} sent.", msg.getId());
                 } else {
                     log.error("cannot find channel. server:{}", server);

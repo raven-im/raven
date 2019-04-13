@@ -1,6 +1,5 @@
 package com.tim.common.model;
 
-import com.tim.common.protos.Common.MessageType;
 import java.io.Serializable;
 import lombok.Data;
 

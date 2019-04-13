@@ -3,9 +3,11 @@ package com.tim.access.handler.server;
 import com.google.protobuf.MessageLite;
 import com.tim.access.config.S2sChannelManager;
 import com.tim.common.netty.IdChannelManager;
-import com.tim.common.protos.Common.Code;
-import com.tim.common.protos.Common.ConverType;
+import com.tim.common.protos.Message.Code;
+import com.tim.common.protos.Message.ConverType;
 import com.tim.common.protos.Message.MessageAck;
+import com.tim.common.protos.Message.TimMessage;
+import com.tim.common.protos.Message.TimMessage.Type;
 import com.tim.common.protos.Message.UpDownMessage;
 import com.tim.common.utils.SnowFlake;
 import io.netty.channel.Channel;
@@ -20,7 +22,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Sharable
 @Slf4j
-public class MesaageHandler extends SimpleChannelInboundHandler<MessageLite> {
+public class MesaageHandler extends SimpleChannelInboundHandler<TimMessage> {
 
     @Autowired
     private IdChannelManager uidChannelManager;
@@ -33,38 +35,40 @@ public class MesaageHandler extends SimpleChannelInboundHandler<MessageLite> {
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx,
-        MessageLite messageLite) throws Exception {
-        if (messageLite instanceof UpDownMessage) {
-            UpDownMessage message = (UpDownMessage) messageLite;
-            message.toBuilder().setId(snowFlake.nextId())
+        TimMessage message) throws Exception {
+        if (message.getType() == Type.UpDownMessage) {
+            UpDownMessage upDownMessage = message.getUpDownMessage();
+            log.info("receive up message:{}",upDownMessage);
+            upDownMessage.toBuilder().setId(snowFlake.nextId())
                 .getContent().toBuilder().setTime(System.currentTimeMillis());
-            if (message.getConverType() == ConverType.SINGLE) {
-                if (StringUtils.isNotBlank(message.getConverId())) {
+            if (upDownMessage.getConverType() == ConverType.SINGLE) {
+                if (StringUtils.isNotBlank(upDownMessage.getConverId())) {
                     Channel channel = s2sChannelManager
-                        .selectSingleChannel(message.getConverId());
+                        .selectSingleChannel(upDownMessage.getConverId());
                     channel.writeAndFlush(message);
-                } else if (StringUtils.isNotBlank(message.getTargetUid())) {
-                    Channel channel = s2sChannelManager.selectSingleChannel(message.getTargetUid());
+
+                } else if (StringUtils.isNotBlank(upDownMessage.getTargetUid())) {
+                    Channel channel = s2sChannelManager
+                        .selectSingleChannel(upDownMessage.getTargetUid());
                     channel.writeAndFlush(message);
                 } else {
-                    sendFail(ctx, message);
+                    sendFail(ctx, upDownMessage);
                 }
-            } else if (message.getConverType() == ConverType.GROUP) {
-                if (StringUtils.isNotBlank(message.getConverId())) {
+            } else if (upDownMessage.getConverType() == ConverType.GROUP) {
+                if (StringUtils.isNotBlank(upDownMessage.getConverId())) {
                     Channel channel = s2sChannelManager
-                        .selectGroupChannel(message.getConverId());
+                        .selectGroupChannel(upDownMessage.getConverId());
                     channel.writeAndFlush(message);
-                } else if (StringUtils.isNotBlank(message.getTargetUid())) {
-                    Channel channel = s2sChannelManager.selectGroupChannel(message.getTargetUid());
+                } else if (StringUtils.isNotBlank(upDownMessage.getTargetUid())) {
+                    Channel channel = s2sChannelManager
+                        .selectGroupChannel(upDownMessage.getTargetUid());
                     channel.writeAndFlush(message);
                 } else {
-                    sendFail(ctx, message);
+                    sendFail(ctx, upDownMessage);
                 }
             } else {
-                sendFail(ctx, message);
+                sendFail(ctx, upDownMessage);
             }
-        } else {
-            ctx.fireChannelRead(messageLite);
         }
     }
 
@@ -76,6 +80,8 @@ public class MesaageHandler extends SimpleChannelInboundHandler<MessageLite> {
             .setTime(System.currentTimeMillis())
             .setConverId(message.getConverId())
             .build();
-        ctx.writeAndFlush(messageAck);
+        TimMessage timMessage = TimMessage.newBuilder().setType(Type.MessageAck)
+            .setMessageAck(messageAck).build();
+        ctx.writeAndFlush(timMessage);
     }
 }

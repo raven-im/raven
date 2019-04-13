@@ -1,20 +1,18 @@
 package com.tim.access.handler.server;
 
-import com.google.protobuf.MessageLite;
 import com.tim.access.util.IpUtil;
 import com.tim.common.netty.IdChannelManager;
-import com.tim.common.protos.Auth.Login;
-import com.tim.common.protos.Auth.LoginAck;
-import com.tim.common.protos.Common.Code;
+import com.tim.common.protos.Message.Code;
+import com.tim.common.protos.Message.Login;
+import com.tim.common.protos.Message.LoginAck;
+import com.tim.common.protos.Message.TimMessage;
+import com.tim.common.protos.Message.TimMessage.Type;
 import com.tim.common.utils.Constants;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import java.net.InetAddress;
 import java.net.SocketException;
-import java.util.Collection;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.curator.x.discovery.ServiceInstanceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -24,7 +22,7 @@ import org.springframework.util.CollectionUtils;
 @Component
 @Sharable
 @Slf4j
-public class LoginAuthHandler extends SimpleChannelInboundHandler<MessageLite> {
+public class LoginAuthHandler extends SimpleChannelInboundHandler<TimMessage> {
 
     @Autowired
     private IdChannelManager uidChannelManager;
@@ -43,11 +41,11 @@ public class LoginAuthHandler extends SimpleChannelInboundHandler<MessageLite> {
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx,
-        MessageLite messageLite) throws Exception {
-        if (messageLite instanceof Login) {
-            Login loginMesaage = (Login) messageLite;
-            log.info("login msg:{}",loginMesaage.toString());
-            String token = loginMesaage.getToken();
+        TimMessage message) throws Exception {
+        if (message.getType() == Type.Login) {
+            Login loginMesaage = message.getLogin();
+            log.info("login msg:{}", loginMesaage.toString());
+//            String token = loginMesaage.getToken();
 //            if (!verifyToken(token)) {
 //                LoginAck loginAck = LoginAck.newBuilder()
 //                    .setId(loginMesaage.getId())
@@ -61,18 +59,13 @@ public class LoginAuthHandler extends SimpleChannelInboundHandler<MessageLite> {
                 .putIfAbsent(loginMesaage.getUid(), getLocalAddress());
             redisTemplate.boundSetOps(Constants.ACCESS_SERVER_ROUTE_KEY + getLocalAddress())
                 .add(loginMesaage.getUid());
-            uidChannelManager.addId2Channel(token, ctx.channel());
-            LoginAck loginAck = LoginAck.newBuilder()
-                .setId(loginMesaage.getId())
-                .setCode(Code.SUCCESS)
-                .setTime(System.currentTimeMillis())
-                .build();
-            ctx.writeAndFlush(loginAck);
+            uidChannelManager.addId2Channel(loginMesaage.getUid(), ctx.channel());
+            sendLoginAck(ctx, loginMesaage.getId(), Code.SUCCESS);
         } else {
             if (null == uidChannelManager.getIdByChannel(ctx.channel())) {
                 ctx.close();
             }
-            ctx.fireChannelRead(messageLite);
+            ctx.fireChannelRead(message);
         }
     }
 
@@ -106,6 +99,17 @@ public class LoginAuthHandler extends SimpleChannelInboundHandler<MessageLite> {
 
     private boolean verifyToken(String token) {
         return redisTemplate.hasKey(token);
+    }
+
+    private void sendLoginAck(ChannelHandlerContext ctx, long id, Code code) {
+        LoginAck loginAck = LoginAck.newBuilder()
+            .setId(id)
+            .setCode(code)
+            .setTime(System.currentTimeMillis())
+            .build();
+        TimMessage timMessage = TimMessage.newBuilder().setType(Type.LoginAck)
+            .setLoginAck(loginAck).build();
+        ctx.writeAndFlush(timMessage);
     }
 
 

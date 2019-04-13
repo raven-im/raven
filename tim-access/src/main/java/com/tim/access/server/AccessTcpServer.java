@@ -3,8 +3,9 @@ package com.tim.access.server;
 import com.tim.access.handler.server.HeartBeatHandler;
 import com.tim.access.handler.server.LoginAuthHandler;
 import com.tim.access.handler.server.MesaageHandler;
-import com.tim.common.code.MessageDecoder;
-import com.tim.common.code.MessageEncoder;
+import com.tim.common.protos.Message;
+import com.tim.common.protos.Message.HeartBeat;
+import com.tim.common.protos.Message.UpDownMessage;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -13,6 +14,10 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.protobuf.ProtobufDecoder;
+import io.netty.handler.codec.protobuf.ProtobufEncoder;
+import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
+import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
 import io.netty.handler.timeout.IdleStateHandler;
 import java.net.InetSocketAddress;
 import javax.annotation.PostConstruct;
@@ -60,8 +65,11 @@ public class AccessTcpServer {
                     throws Exception {
                     ChannelPipeline pipeline = channel.pipeline();
                     pipeline.addLast(new IdleStateHandler(10, 10, 15));
-                    pipeline.addLast(new MessageDecoder());
-                    pipeline.addLast(new MessageEncoder());
+                    pipeline.addLast(new ProtobufVarint32FrameDecoder());
+                    pipeline.addLast(new ProtobufDecoder(Message.TimMessage.getDefaultInstance()));
+                    // 对protobuf协议的消息头上加上一个长度为32的整形字段
+                    pipeline.addLast(new ProtobufVarint32LengthFieldPrepender());
+                    pipeline.addLast(new ProtobufEncoder());
                     pipeline.addLast("LoginAuthHandler", loginAuthHandler);
                     pipeline.addLast("HeartBeatHandler", heartBeatHandler);
                     pipeline.addLast("MesaageHandler", mesaageHandler);

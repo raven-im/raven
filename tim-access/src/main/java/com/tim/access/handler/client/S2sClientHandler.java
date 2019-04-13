@@ -1,12 +1,14 @@
 package com.tim.access.handler.client;
 
-import com.google.protobuf.MessageLite;
 import com.tim.access.config.S2sChannelManager;
 import com.tim.access.util.IpUtil;
 import com.tim.common.loadbalance.Server;
 import com.tim.common.netty.IdChannelManager;
-import com.tim.common.protos.Auth.ServerInfo;
 import com.tim.common.protos.Message.MessageAck;
+import com.tim.common.protos.Message.ServerInfo;
+import com.tim.common.protos.Message.TimMessage;
+import com.tim.common.protos.Message.TimMessage.Type;
+import com.tim.common.protos.Message.UpDownMessage;
 import com.tim.common.utils.SnowFlake;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler.Sharable;
@@ -21,7 +23,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Sharable
 @Slf4j
-public class S2sClientHandler extends SimpleChannelInboundHandler<MessageLite> {
+public class S2sClientHandler extends SimpleChannelInboundHandler<TimMessage> {
 
     @Autowired
     private IdChannelManager uidChannelManager;
@@ -43,7 +45,9 @@ public class S2sClientHandler extends SimpleChannelInboundHandler<MessageLite> {
             .setId(snowFlake.nextId())
             .setIp(IpUtil.getIp())
             .setPort(nettyServerPort).build();
-        ctx.writeAndFlush(serverInfo);
+        TimMessage timMessage = TimMessage.newBuilder().setType(Type.ServerInfo)
+            .setServerInfo(serverInfo).build();
+        ctx.writeAndFlush(timMessage);
     }
 
     @Override
@@ -64,12 +68,23 @@ public class S2sClientHandler extends SimpleChannelInboundHandler<MessageLite> {
     }
 
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, MessageLite msg) throws Exception {
-        if (msg instanceof MessageAck) {
-            MessageAck ack = (MessageAck) msg;
+    protected void channelRead0(ChannelHandlerContext ctx, TimMessage msg) throws Exception {
+        if (msg.getType() == Type.MessageAck) {
+            MessageAck ack = msg.getMessageAck();
+            log.info("receive down message ack:{}",ack);
             List<Channel> channels = uidChannelManager.getChannelsById(ack.getTargetUid());
             // TODO channels为空
-            channels.forEach(channel -> channel.writeAndFlush(ack));
+            TimMessage timMessage = TimMessage.newBuilder().setType(Type.MessageAck)
+                .setMessageAck(ack).build();
+            channels.forEach(channel -> channel.writeAndFlush(timMessage));
+        } else if (msg.getType() == Type.UpDownMessage) {
+            UpDownMessage upDownMessage = msg.getUpDownMessage();
+            log.info("receive down message:{}",upDownMessage);
+            List<Channel> channels = uidChannelManager
+                .getChannelsById(upDownMessage.getTargetUid());
+            TimMessage timMessage = TimMessage.newBuilder().setType(Type.UpDownMessage)
+                .setUpDownMessage(upDownMessage).build();
+            channels.forEach(channel -> channel.writeAndFlush(timMessage));
         } else {
             ctx.fireChannelRead(msg);
         }

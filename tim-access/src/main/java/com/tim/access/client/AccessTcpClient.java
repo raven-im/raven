@@ -3,12 +3,13 @@ package com.tim.access.client;
 
 import com.tim.access.config.S2sChannelManager;
 import com.tim.access.handler.client.S2sClientHandler;
-import com.tim.common.code.MessageDecoder;
-import com.tim.common.code.MessageEncoder;
 import com.tim.common.loadbalance.Server;
+import com.tim.common.protos.Message;
+import com.tim.common.protos.Message.HeartBeat;
+import com.tim.common.protos.Message.MessageAck;
+import com.tim.common.protos.Message.UpDownMessage;
 import com.tim.common.utils.JsonHelper;
 import io.netty.bootstrap.Bootstrap;
-import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -16,8 +17,12 @@ import io.netty.channel.ChannelPipeline;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
-import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.protobuf.ProtobufDecoder;
+import io.netty.handler.codec.protobuf.ProtobufEncoder;
+import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
+import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
+import io.netty.handler.timeout.IdleStateHandler;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -82,8 +87,12 @@ public class AccessTcpClient {
                 @Override
                 public void initChannel(SocketChannel ch) throws Exception {
                     ChannelPipeline p = ch.pipeline();
-                    p.addLast("MessageDecoder", new MessageDecoder());
-                    p.addLast("MessageEncoder", new MessageEncoder());
+                    p.addLast(new IdleStateHandler(10, 10, 15));
+                    p.addLast(new ProtobufVarint32FrameDecoder());
+                    p.addLast(new ProtobufDecoder(Message.TimMessage.getDefaultInstance()));
+                    // 对protobuf协议的消息头上加上一个长度为32的整形字段
+                    p.addLast(new ProtobufVarint32LengthFieldPrepender());
+                    p.addLast(new ProtobufEncoder());
                     p.addLast("S2sClientHandler", s2sClientHandler);
                 }
             });

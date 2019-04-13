@@ -1,22 +1,21 @@
 package com.tim.client;
 
-import com.google.protobuf.MessageLite;
-import com.tim.common.protos.Auth.Login;
-import com.tim.common.protos.Auth.LoginAck;
-import com.tim.common.protos.Common.Code;
-import com.tim.common.protos.Common.ConverType;
-import com.tim.common.protos.Common.MessageContent;
-import com.tim.common.protos.Message.HeartBeat;
-import com.tim.common.protos.Message.HeartBeatType;
+import com.tim.common.protos.Message.Code;
+import com.tim.common.protos.Message.ConverType;
+import com.tim.common.protos.Message.Login;
+import com.tim.common.protos.Message.LoginAck;
+import com.tim.common.protos.Message.MessageAck;
+import com.tim.common.protos.Message.MessageContent;
+import com.tim.common.protos.Message.TimMessage;
+import com.tim.common.protos.Message.TimMessage.Type;
 import com.tim.common.protos.Message.UpDownMessage;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import java.io.IOException;
-import java.util.concurrent.atomic.AtomicLong;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class ClientHandler extends SimpleChannelInboundHandler<MessageLite> {
+public class ClientHandler extends SimpleChannelInboundHandler<TimMessage> {
 
     private ChannelHandlerContext messageConnectionCtx;
 
@@ -33,19 +32,19 @@ public class ClientHandler extends SimpleChannelInboundHandler<MessageLite> {
             .setUid(uid)
             .setId(888)
             .build();
-        ctx.writeAndFlush(login);
+        TimMessage timMessage = TimMessage.newBuilder().setType(Type.Login).setLogin(login).build();
+        ctx.writeAndFlush(timMessage);
     }
 
     @Override
-    protected void channelRead0(ChannelHandlerContext channelHandlerContext, MessageLite msg)
+    protected void channelRead0(ChannelHandlerContext channelHandlerContext, TimMessage message)
         throws Exception {
-        if (msg instanceof LoginAck) {
-            LoginAck loginAck = (LoginAck) msg;
+        if (message.getType() == Type.LoginAck) {
+            LoginAck loginAck = message.getLoginAck();
             log.info("login ack:{}", loginAck.toString());
-            log.info("login ack code:{}", loginAck.getCode());
             if (loginAck.getCode() == Code.SUCCESS) {
                 int i = 0;
-                while (i < 1) {
+                while (i < 10) {
                     Thread.sleep(1000);
                     MessageContent content = MessageContent.newBuilder().setUid(uid)
                         .setContent("hello world").build();
@@ -53,28 +52,21 @@ public class ClientHandler extends SimpleChannelInboundHandler<MessageLite> {
                         .setFromUid(uid)
                         .setTargetUid(uid).setConverType(
                             ConverType.SINGLE).setContent(content).build();
-                    channelHandlerContext.writeAndFlush(upDownMessage);
+                    TimMessage timMessage = TimMessage.newBuilder().setType(Type.UpDownMessage)
+                        .setUpDownMessage(upDownMessage).build();
+                    channelHandlerContext.writeAndFlush(timMessage);
                     i++;
                 }
-
             }
         }
-//        if (msg instanceof HeartBeat) {
-//            HeartBeat heartBeat = (HeartBeat) msg;
-//            if (heartBeat.getHeartBeatType() == HeartBeatType.PING) {
-//                HeartBeat heartBeatAck = HeartBeat.newBuilder()
-//                    .setId(heartBeat.getId())
-//                    .setHeartBeatType(HeartBeatType.PONG)
-//                    .build();
-//
-//                MessageContent content = MessageContent.newBuilder().setUid(uid)
-//                    .setContent("hello world").build();
-//                UpDownMessage upDownMessage = UpDownMessage.newBuilder().setCid(11)
-//                    .setTargetUid(uid).setConverType(
-//                        ConverType.SINGLE).setContent(content).build();
-//                channelHandlerContext.writeAndFlush(upDownMessage);
-//            }
-//        }
+        if (message.getType() == Type.MessageAck) {
+            MessageAck messageAck = message.getMessageAck();
+            log.info("receive message ack:{}", messageAck);
+        }
+        if (message.getType() == Type.UpDownMessage) {
+            UpDownMessage upDownMessage = message.getUpDownMessage();
+            log.info("receive down message:{}", upDownMessage);
+        }
     }
 
     @Override

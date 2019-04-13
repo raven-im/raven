@@ -1,6 +1,6 @@
 package com.tim.single;
 
-import com.tim.common.protos.Conversation.ConverAck;
+import com.tim.common.protos.Message.ConverAck;
 import com.tim.common.protos.Message.MessageAck;
 
 public interface MessageListener {

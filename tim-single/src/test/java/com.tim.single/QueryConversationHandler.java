@@ -1,8 +1,8 @@
 package com.tim.single;
 
 import com.google.protobuf.MessageLite;
-import com.tim.common.protos.Conversation.ConverAck;
-import com.tim.common.protos.Conversation.ConverReq;
+import com.tim.common.protos.Message.ConverAck;
+import com.tim.common.protos.Message.ConverReq;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;

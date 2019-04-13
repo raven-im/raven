@@ -61,7 +61,6 @@ public class AccessTcpClient {
 
     @PostConstruct
     public void startClient() throws Exception {
-        startConnection();
         startZkWatcher();
     }
 
@@ -71,13 +70,10 @@ public class AccessTcpClient {
         log.info("close tim access client success");
     }
 
-    private void startConnection() {
-        for (Server server : s2sChannelManager.getSingleServerList()) {
-            connectServer(server);
-        }
-    }
-
     private void connectServer(Server server) {
+        if (null != s2sChannelManager.getChannelByServer(server)) {
+            return;
+        }
         EventLoopGroup group = new NioEventLoopGroup();
         Bootstrap bootstrap = new Bootstrap();
         bootstrap.group(group)

@@ -52,7 +52,7 @@ public class MesaageHandler extends SimpleChannelInboundHandler<TimMessage> {
                         .selectSingleChannel(upDownMessage.getTargetUid());
                     channel.writeAndFlush(message);
                 } else {
-                    sendFail(ctx, upDownMessage);
+                    sendFailAck(ctx, upDownMessage);
                 }
             } else if (upDownMessage.getConverType() == ConverType.GROUP) {
                 if (StringUtils.isNotBlank(upDownMessage.getConverId())) {
@@ -64,15 +64,15 @@ public class MesaageHandler extends SimpleChannelInboundHandler<TimMessage> {
                         .selectGroupChannel(upDownMessage.getTargetUid());
                     channel.writeAndFlush(message);
                 } else {
-                    sendFail(ctx, upDownMessage);
+                    sendFailAck(ctx, upDownMessage);
                 }
             } else {
-                sendFail(ctx, upDownMessage);
+                sendFailAck(ctx, upDownMessage);
             }
         }
     }
 
-    private void sendFail(ChannelHandlerContext ctx, UpDownMessage message) {
+    private void sendFailAck(ChannelHandlerContext ctx, UpDownMessage message) {
         MessageAck messageAck = MessageAck.newBuilder()
             .setCid(message.getCid())
             .setTargetUid(uidChannelManager.getIdByChannel(ctx.channel()))

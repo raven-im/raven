@@ -80,14 +80,11 @@ public class MessageHandler extends SimpleChannelInboundHandler<TimMessage> {
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        log.info("client connected remote address:{},id:{}", ctx.channel().remoteAddress(),
-            ctx.channel().id().asShortText());
     }
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-        log.info("client disconnected remote address:{},id:{}", ctx.channel().remoteAddress(),
-            ctx.channel().id().asShortText());
+        log.info("tim access server disconnected address:{}", ctx.channel().remoteAddress());
         Server server = channelManager.getServerByChannel(ctx.channel());
         channelManager.removeServer(server);
     }

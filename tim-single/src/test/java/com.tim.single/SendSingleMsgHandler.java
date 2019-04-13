@@ -32,11 +32,11 @@ public class SendSingleMsgHandler extends SimpleChannelInboundHandler<MessageLit
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, MessageLite msg) {
         if (msg instanceof MessageAck) {
             MessageAck ack = (MessageAck) msg;
-            log.info(ack.getConversasionId());
+            log.info(ack.getConverId());
             listener.onMessageAckReceived(ack);
         } else if (msg instanceof UpDownMessage) {
             UpDownMessage downMessage = (UpDownMessage) msg;
-            log.info(downMessage.getConversasionId());
+            log.info(downMessage.getConverId());
         }
     }
 

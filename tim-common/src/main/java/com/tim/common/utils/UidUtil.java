@@ -5,9 +5,7 @@ import java.util.Base64;
 import java.util.UUID;
 
 /**
- * Author zxx
- * Description  uuid生成工具
- * Date Created on 2018/6/28
+ * uuid生成工具
  */
 public class UidUtil {
 

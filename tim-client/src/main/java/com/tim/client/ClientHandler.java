@@ -1,79 +1,80 @@
 package com.tim.client;
 
-import com.google.protobuf.MessageLite;
-import com.tim.common.protos.Auth;
-import com.tim.common.protos.Auth.Login;
-import com.tim.common.protos.Message;
-import com.tim.common.protos.Message.HeartBeat;
-import com.tim.common.protos.Message.HeartBeatType;
-import com.tim.common.utils.MessageTypeConstants;
-import io.netty.buffer.ByteBuf;
+import com.tim.common.protos.Message.Code;
+import com.tim.common.protos.Message.ConverType;
+import com.tim.common.protos.Message.Login;
+import com.tim.common.protos.Message.LoginAck;
+import com.tim.common.protos.Message.MessageAck;
+import com.tim.common.protos.Message.MessageContent;
+import com.tim.common.protos.Message.TimMessage;
+import com.tim.common.protos.Message.TimMessage.Type;
+import com.tim.common.protos.Message.UpDownMessage;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.atomic.AtomicLong;
+import lombok.extern.slf4j.Slf4j;
 
-public class ClientHandler extends SimpleChannelInboundHandler<MessageLite> {
+@Slf4j
+public class ClientHandler extends SimpleChannelInboundHandler<TimMessage> {
 
     private ChannelHandlerContext messageConnectionCtx;
 
-    private String uid = "";
-    private static AtomicLong increased = new AtomicLong(1);
+    private String uid = "test1";
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws IOException {
         messageConnectionCtx = ctx;
-        uid = Long.toString(increased.getAndIncrement());
         sendLogin(ctx, uid);
     }
 
     private void sendLogin(ChannelHandlerContext ctx, String uid) {
         Login login = Login.newBuilder()
             .setUid(uid)
+            .setId(888)
             .build();
-        ByteBuf byteBuf = Utils.pack2Client(login);
-        ctx.writeAndFlush(byteBuf);
+        TimMessage timMessage = TimMessage.newBuilder().setType(Type.Login).setLogin(login).build();
+        ctx.writeAndFlush(timMessage);
     }
 
     @Override
-    protected void channelRead0(ChannelHandlerContext channelHandlerContext, MessageLite msg)
+    protected void channelRead0(ChannelHandlerContext channelHandlerContext, TimMessage message)
         throws Exception {
-        if (msg instanceof Auth.LoginAck) {
-            Thread.sleep(2000);
-            sendPrivateMessage();
-            Timer timer = new Timer();
-            timer.schedule(new HeartBeatTask(), 20 * 1000, 20 * 1000);
+        if (message.getType() == Type.LoginAck) {
+            LoginAck loginAck = message.getLoginAck();
+            log.info("login ack:{}", loginAck.toString());
+            if (loginAck.getCode() == Code.SUCCESS) {
+                int i = 0;
+                while (i < 10) {
+                    Thread.sleep(1000);
+                    MessageContent content = MessageContent.newBuilder().setUid(uid)
+                        .setContent("hello world").build();
+                    UpDownMessage upDownMessage = UpDownMessage.newBuilder().setCid(11)
+                        .setFromUid(uid)
+                        .setTargetUid(uid).setConverType(
+                            ConverType.SINGLE).setContent(content).build();
+                    TimMessage timMessage = TimMessage.newBuilder().setType(Type.UpDownMessage)
+                        .setUpDownMessage(upDownMessage).build();
+                    channelHandlerContext.writeAndFlush(timMessage);
+                    i++;
+                }
+            }
         }
-    }
-
-    private void sendPrivateMessage() {
-        String content = "Hello World!";
-        List<String> uids = new ArrayList<>();
-        uids.add(String.valueOf((int) (Math.random() * 10) % 10 + 1));
-
-    }
-
-    @Override
-    public void channelReadComplete(ChannelHandlerContext ctx) {
+        if (message.getType() == Type.MessageAck) {
+            MessageAck messageAck = message.getMessageAck();
+            log.info("receive message ack:{}", messageAck);
+        }
+        if (message.getType() == Type.UpDownMessage) {
+            UpDownMessage upDownMessage = message.getUpDownMessage();
+            log.info("receive down message:{}", upDownMessage);
+        }
     }
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-        cause.printStackTrace();
-        ctx.close();
-    }
-
-    class HeartBeatTask extends TimerTask {
-
-        @Override
-        public void run() {
-            HeartBeat beat = HeartBeat.newBuilder().setHeartBeatType(HeartBeatType.PING).build();
-            ByteBuf byteBuf = Utils.pack2Client(beat);
-            messageConnectionCtx.channel().writeAndFlush(byteBuf);
+        if ("Connection reset by peer".equals(cause.getMessage())) {
+            return;
         }
+        log.error(cause.getMessage(), cause);
     }
+
 }

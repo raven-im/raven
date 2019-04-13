@@ -22,6 +22,7 @@
         <module>tim-admin</module>
         <module>tim-single</module>
         <module>tim-group</module>
+        <module>tim-storage</module>
     </modules>
 
     <properties>
@@ -62,6 +63,11 @@
             <dependency>
                 <groupId>com.github.tim</groupId>
                 <artifactId>tim-access</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.tim</groupId>
+                <artifactId>tim-storage</artifactId>
                 <version>1.0.0-SNAPSHOT</version>
             </dependency>
             <dependency>

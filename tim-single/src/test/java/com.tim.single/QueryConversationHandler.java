@@ -37,8 +37,7 @@ public class QueryConversationHandler extends SimpleChannelInboundHandler<Messag
     }
 
     private void sendQueryConversation(ConverReq req) {
-        ByteBuf byteBuf = Utils.pack2Client(req);
-        messageConnectionCtx.writeAndFlush(byteBuf);
+        messageConnectionCtx.writeAndFlush(req);
     }
 
     @Override

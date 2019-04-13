@@ -1,23 +1,22 @@
 package com.tim.single;
 
-import com.google.protobuf.MessageLite;
 import com.tim.common.protos.Message.*;
-import io.netty.buffer.ByteBuf;
+import com.tim.common.protos.Message.TimMessage.Type;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import java.io.IOException;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class SendSingleMsgHandler extends SimpleChannelInboundHandler<MessageLite> {
+public class SendSingleMsgHandler extends SimpleChannelInboundHandler<TimMessage> {
 
     private ChannelHandlerContext messageConnectionCtx;
 
-    private UpDownMessage message;
+    private TimMessage message;
 
     private MessageListener listener;
 
-    public SendSingleMsgHandler(UpDownMessage message, MessageListener listener) {
+    public SendSingleMsgHandler(TimMessage message, MessageListener listener) {
         this.message = message;
         this.listener = listener;
     }
@@ -29,20 +28,17 @@ public class SendSingleMsgHandler extends SimpleChannelInboundHandler<MessageLit
     }
 
     @Override
-    protected void channelRead0(ChannelHandlerContext channelHandlerContext, MessageLite msg) {
-        if (msg instanceof MessageAck) {
-            MessageAck ack = (MessageAck) msg;
-            log.info(ack.getConverId());
+    protected void channelRead0(ChannelHandlerContext channelHandlerContext, TimMessage msg) {
+        if (msg.getType() == Type.MessageAck) {
+            MessageAck ack = msg.getMessageAck();
+            log.info("receive message ack:{}", ack);
             listener.onMessageAckReceived(ack);
-        } else if (msg instanceof UpDownMessage) {
-            UpDownMessage downMessage = (UpDownMessage) msg;
-            log.info(downMessage.getConverId());
         }
     }
 
-    private void sendSingleMessage(UpDownMessage message) {
-        ByteBuf byteBuf = Utils.pack2Client(message);
-        messageConnectionCtx.writeAndFlush(byteBuf);
+    private void sendSingleMessage(TimMessage message) {
+        log.info("send single message");
+        messageConnectionCtx.writeAndFlush(message);
     }
 
     @Override

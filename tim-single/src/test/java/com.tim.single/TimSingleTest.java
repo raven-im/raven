@@ -19,7 +19,6 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -172,53 +171,5 @@ public class TimSingleTest {
         });
         lock.await(2000, TimeUnit.MILLISECONDS);
         assertEquals(ackMsg.getCode(), Code.FAIL);
-    }
-
-    @Test
-    @Ignore
-    public void queryConversationDetailTest() throws Exception {
-
-//        String conversationId = UidUtil.uuid24By2Factor(fromUser, targetUser);
-//        ConverReq req = ConverReq.newBuilder()
-//            .setId(2)
-//            .setType(OperationType.DETAIL)
-//            .setConversationId(conversationId)
-//            .build();
-//        log.info("req conversation {}", conversationId);
-//        Client.queryConversationTest(req, new MessageListener() {
-//            @Override
-//            public void onQueryAck(ConverAck ack) {
-//                log.info("get conv ACK from server");
-//                ackConv = ack;
-//                lock.countDown();
-//            }
-//        });
-//        lock.await(2000, TimeUnit.MILLISECONDS);
-//        assertEquals(ackConv.getId(), 2);
-//        assertEquals(ackConv.getConversation().getConverId(), conversationId);
-//        assertEquals(ackConv.getConversation().getLastContent().getContent(), MESSAGE_CONTENT);
-//        assertEquals(ackConv.getConversation().getType(), ConverType.SINGLE);
-    }
-
-    @Test
-    @Ignore
-    public void queryConversationAllTest() throws Exception {
-//        ConverReq req = ConverReq.newBuilder()
-//            .setId(3)
-//            .setType(OperationType.ALL)
-//            .build();
-//        log.info("req conversation all by user {}", fromUser);
-//        Client.queryConversationTest(req, new MessageListener() {
-//            @Override
-//            public void onQueryAck(ConverAck ack) {
-//                log.info("get conv ACK from server");
-//                ackConv = ack;
-//                lock.countDown();
-//            }
-//        });
-//        lock.await(2000, TimeUnit.MILLISECONDS);
-//        assertEquals(ackConv.getId(), 3);
-//        assertEquals(ackConv.getCode(), Code.SUCCESS);
-//        assertEquals(ackConv.getConversationListCount(), 1);
     }
 }

@@ -60,9 +60,5 @@ public class Client {
     public static void sendSingleMsgTest(TimMessage msg, MessageListener listener) throws InterruptedException {
         baseTest(new SendSingleMsgHandler(msg, listener));
     }
-
-//    public static void queryConversationTest(ConverReq req, MessageListener listener) throws InterruptedException {
-//        baseTest(new QueryConversationHandler(req, listener));
-//    }
 }
 

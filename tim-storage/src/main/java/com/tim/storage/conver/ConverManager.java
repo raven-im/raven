@@ -52,7 +52,7 @@ public class ConverManager {
     public String newGroupConverId(String groupId, List<String> members) {
         String converId = UidUtil.uuid24ByFactor(groupId);
         ConverInfo converInfo = new ConverInfo().setId(converId).setType(ConverType.GROUP.getNumber())
-            .setUidList(members);
+            .setUidList(members).setGroupId(groupId);
         try {
             if (redisTemplate.opsForValue()
                 .setIfAbsent(converId, JsonHelper.toJsonString(converInfo))) {

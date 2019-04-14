@@ -39,8 +39,7 @@ public class S2sClientHandler extends SimpleChannelInboundHandler<TimMessage> {
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        log.info("server connected remote address:{},id:{}", ctx.channel().remoteAddress(),
-            ctx.channel().id().asShortText());
+        log.info("server connected remote address:{}", ctx.channel().remoteAddress());
         ServerInfo serverInfo = ServerInfo.newBuilder()
             .setId(snowFlake.nextId())
             .setIp(IpUtil.getIp())

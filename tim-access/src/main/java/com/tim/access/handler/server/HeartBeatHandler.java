@@ -42,7 +42,7 @@ public class HeartBeatHandler extends SimpleChannelInboundHandler<TimMessage> {
                     .setHeartBeat(heartBeatAck).build();
                 channelHandlerContext.writeAndFlush(timMessage);
             } else if (heartBeat.getHeartBeatType() == HeartBeatType.PONG) {
-                log.info("heartBeat msg:{}", heartBeat.toString());
+                log.info("receive hearbeat :{}", heartBeat.toString());
                 NettyAttrUtil
                     .updateReaderTime(channelHandlerContext.channel(), System.currentTimeMillis());
             }

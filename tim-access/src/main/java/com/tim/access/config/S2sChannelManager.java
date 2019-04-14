@@ -26,8 +26,8 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class S2sChannelManager implements ServerChannelManager {
 
-    @Autowired
-    private DiscoveryClient discovery;
+//    @Autowired
+//    private DiscoveryClient discovery;
 
     @Value("${discovery.single-server-name}")
     private String singleServerName;
@@ -73,27 +73,27 @@ public class S2sChannelManager implements ServerChannelManager {
         return singleServerList;
     }
 
-    @PostConstruct
-    public void init() {
-        addSingleServer();
-        addGroupServer();
-    }
-
-    private void addSingleServer() {
-        List<ServiceInstance> serviceInstances = discovery.getInstances(singleServerName);
-        serviceInstances.forEach(x -> {
-            int nettyPort = Integer.valueOf(x.getMetadata().get(CONFIG_NETTY_PORT));
-            addSingleServer(new Server(x.getHost(), nettyPort));
-        });
-    }
-
-    private void addGroupServer() {
-        List<ServiceInstance> serviceInstances = discovery.getInstances(groupServerName);
-        serviceInstances.forEach(x -> {
-            int nettyPort = Integer.valueOf(x.getMetadata().get(CONFIG_NETTY_PORT));
-            addGroupServer(new Server(x.getHost(), nettyPort));
-        });
-    }
+//    @PostConstruct
+//    public void init() {
+//        addSingleServer();
+//        addGroupServer();
+//    }
+//
+//    private void addSingleServer() {
+//        List<ServiceInstance> serviceInstances = discovery.getInstances(singleServerName);
+//        serviceInstances.forEach(x -> {
+//            int nettyPort = Integer.valueOf(x.getMetadata().get(CONFIG_NETTY_PORT));
+//            addSingleServer(new Server(x.getHost(), nettyPort));
+//        });
+//    }
+//
+//    private void addGroupServer() {
+//        List<ServiceInstance> serviceInstances = discovery.getInstances(groupServerName);
+//        serviceInstances.forEach(x -> {
+//            int nettyPort = Integer.valueOf(x.getMetadata().get(CONFIG_NETTY_PORT));
+//            addGroupServer(new Server(x.getHost(), nettyPort));
+//        });
+//    }
 
     @Override
     public void addServer2Channel(Server server, Channel channel) {

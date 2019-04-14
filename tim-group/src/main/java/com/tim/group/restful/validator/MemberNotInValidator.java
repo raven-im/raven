@@ -26,6 +26,7 @@ public class MemberNotInValidator implements Validator {
 
     @Override
     public boolean isValid(String groupId, List<String> members) {
+        //members 中有一个成员 不在群组中，就算失败。 members需要是一个净删除列表
         Example example = new Example(GroupMemberModel.class);
         example.createCriteria()
             .andNotEqualTo("status", 2)

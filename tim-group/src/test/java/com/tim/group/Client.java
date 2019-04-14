@@ -1,8 +1,7 @@
 package com.tim.group;
 
-import com.google.protobuf.MessageLite;
 import com.tim.common.protos.Message;
-import com.tim.common.protos.Message.UpDownMessage;
+import com.tim.common.protos.Message.TimMessage;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -27,7 +26,7 @@ public class Client {
     private static final int PORT = 7370;
 //    public static SnowFlake snowFlake = new SnowFlake(1, 2);
 
-    private static void baseTest(SimpleChannelInboundHandler<MessageLite> handler) throws InterruptedException {
+    private static void baseTest(SimpleChannelInboundHandler<TimMessage> handler) throws InterruptedException {
         EventLoopGroup group = new NioEventLoopGroup();
         Bootstrap b = new Bootstrap();
         b.group(group)
@@ -51,14 +50,14 @@ public class Client {
         b.connect(HOST, PORT).addListener(future -> {
             if (future.isSuccess()) {
                 //init registry
-                log.info("Client connected SingleTcpServer Success...");
+                log.info("Client connected GroupTcpServer Success...");
             } else {
-                log.error("Client connected SingleTcpServer Failed");
+                log.error("Client connected GroupTcpServer Failed");
             }
         });
     }
 
-    public static void sendGroupMsgTest(UpDownMessage msg, GroupListener listener) throws InterruptedException {
+    public static void sendGroupMsgTest(TimMessage msg, GroupListener listener) throws InterruptedException {
         baseTest(new GroupMsgHandler(msg, listener));
     }
 }

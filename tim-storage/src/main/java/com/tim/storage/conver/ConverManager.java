@@ -49,13 +49,52 @@ public class ConverManager {
         return converId;
     }
 
+    public String newGroupConverId(String groupId, List<String> members) {
+        String converId = UidUtil.uuid24ByFactor(groupId);
+        ConverInfo converInfo = new ConverInfo().setId(converId).setType(ConverType.GROUP.getNumber())
+            .setUidList(members);
+        try {
+            if (redisTemplate.opsForValue()
+                .setIfAbsent(converId, JsonHelper.toJsonString(converInfo))) {
+                members.forEach(member -> redisTemplate.boundHashOps(PREFIX_CONVERSATION_LIST + member)
+                    .put(converId, 0));
+            }
+        } catch (JsonProcessingException e) {
+            log.error("json processing error", e);
+        }
+        return converId;
+    }
+
+    public void addMemberConverList(String groupId, List<String> members) {
+        String converId = UidUtil.uuid24ByFactor(groupId);
+        members.forEach(member -> redisTemplate.boundHashOps(PREFIX_CONVERSATION_LIST + member)
+                    .put(converId, 0));
+    }
+
+    public void removeMemberConverList(String groupId, List<String> members) {
+        String converId = UidUtil.uuid24ByFactor(groupId);
+        members.forEach(member -> redisTemplate.boundHashOps(PREFIX_CONVERSATION_LIST + member)
+            .delete(converId));
+    }
+
+    public void removeConversation(String groupId, List<String> members) {
+        String converId = UidUtil.uuid24ByFactor(groupId);
+        redisTemplate.delete(converId);
+        removeMemberConverList(groupId, members);
+
+    }
+
     public boolean isSingleConverIdValid(String converId) {
         ConverInfo converInfo = getConverInfo(converId);
         return converInfo == null ? false : converInfo.getType() == ConverType.SINGLE.getNumber();
     }
 
-    public void cacheMsg2Conver(MessageContent msg, String converId)
-        throws Exception {
+    public boolean isGroupConverIdValid(String converId) {
+        ConverInfo converInfo = getConverInfo(converId);
+        return converInfo == null ? false : converInfo.getType() == ConverType.GROUP.getNumber();
+    }
+
+    public void cacheMsg2Conver(MessageContent msg, String converId) throws Exception {
         MsgContent msgContent = new MsgContent().setId(msg.getId()).setUid(msg.getUid())
             .setType(msg.getType().getNumber()).setContent(msg.getContent()).setTime(msg.getTime());
         String str = JsonHelper.toJsonString(msgContent);

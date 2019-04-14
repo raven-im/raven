@@ -36,6 +36,9 @@ public class GroupModel implements Serializable {
     @Column(name = "update_dt")
     private Date updateDate;
 
+    @Column(name = "conv_id")
+    private String converId;
+
     @Column
     private Integer status;
 }

@@ -1,6 +1,13 @@
 package com.tim.group;
 
+import com.tim.common.protos.Message.Code;
+import com.tim.common.protos.Message.ConverType;
 import com.tim.common.protos.Message.MessageAck;
+import com.tim.common.protos.Message.MessageContent;
+import com.tim.common.protos.Message.MessageType;
+import com.tim.common.protos.Message.TimMessage;
+import com.tim.common.protos.Message.TimMessage.Type;
+import com.tim.common.protos.Message.UpDownMessage;
 import com.tim.common.result.Result;
 import com.tim.common.result.ResultCode;
 import com.tim.common.utils.UidUtil;
@@ -10,6 +17,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -35,6 +43,7 @@ public class TimGroupTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
+    private static int MESSAGE_ID = 100;
     private static String MESSAGE_CONTENT = "Hello world!";
     private static String GROUP_NAME = "Tim-Group";
     private static String DEFAULT_URL = "http://www.google.com/1.jpg";
@@ -166,7 +175,47 @@ public class TimGroupTest {
     }
 
     @Test
-    public void test09GroupDismiss() {
+    public void test09GroupMsgSent() throws Exception {
+
+        MessageContent content = MessageContent.newBuilder()
+            .setId(1)
+            .setUid(groupOwner)
+            .setTime(System.currentTimeMillis())
+            .setType(MessageType.TEXT)
+            .setContent(MESSAGE_CONTENT)
+            .build();
+
+        UpDownMessage msg = UpDownMessage.newBuilder()
+            .setId(MESSAGE_ID)
+            .setCid(MESSAGE_ID + 1)
+            .setFromUid(groupOwner)
+            .setTargetUid(invitee3)
+            .setGroupId(groupId)
+            .setConverType(ConverType.GROUP)
+            .setContent(content)
+            .build();
+
+        TimMessage timMessage = TimMessage.newBuilder().setType(Type.UpDownMessage)
+            .setUpDownMessage(msg).build();
+
+        log.info("{} send msg to {}", groupOwner, invitee2);
+        Client.sendGroupMsgTest(timMessage, new GroupListener() {
+            @Override
+            public void onMessageAckReceived(MessageAck ack) {
+                log.info("get msg ACK from server");
+                ackMsg = ack;
+                lock.countDown();
+            }
+        });
+        lock.await(2000, TimeUnit.MILLISECONDS);
+        assertEquals(ackMsg.getTargetUid(), groupOwner);
+        assertEquals(ackMsg.getCode(), Code.SUCCESS);
+        assertEquals(ackMsg.getId(), MESSAGE_ID);
+        assertEquals(ackMsg.getCid(), MESSAGE_ID + 1);
+    }
+
+    @Test
+    public void test10GroupDismiss() {
         GroupReqParam input = new GroupReqParam();
         input.setGroupId(groupId);
 
@@ -175,46 +224,11 @@ public class TimGroupTest {
     }
 
     @Test
-    public void test10GroupDismissFail() {
+    public void test11GroupDismissFail() {
         GroupReqParam input = new GroupReqParam();
         input.setGroupId(UidUtil.uuid());
 
         Result response = restTemplate.postForObject("/group/dismiss", input, Result.class);
         assertEquals(response.getCode().intValue(), ResultCode.GROUP_ERROR_INVALID_GROUP_ID.getCode());
     }
-
-//    @Test
-//    @Ignore
-//    public void test11GroupMsgSent() throws Exception {
-//
-//        Common.MessageContent content = Common.MessageContent.newBuilder()
-//            .setId(1)
-//            .setUid(groupOwner)
-//            .setTime(System.currentTimeMillis())
-//            .setType(MessageType.TEXT)
-//            .setContent(MESSAGE_CONTENT)
-//            .build();
-//
-//        UpDownMessage msg = UpDownMessage.newBuilder()
-//            .setId(7)
-//            .setFromId(groupOwner)
-//            .setTargetId(invitee2)
-//            .setConversationType(ConversationType.GROUP)
-//            .setContent(content)
-//            .setDirection(Direction.SS)
-//            .build();
-//
-//        log.info("{} send msg to {}", groupOwner, invitee2);
-//        Client.sendGroupMsgTest(msg, new GroupListener() {
-//            @Override
-//            public void onMessageAckReceived(MessageAck ack) {
-//                log.info("get msg ACK from server");
-//                ackMsg = ack;
-//                lock.countDown();
-//            }
-//        });
-//        lock.await(2000, TimeUnit.MILLISECONDS);
-//        assertEquals(ackMsg.getTargetId(), groupOwner);
-//        assertEquals(ackMsg.getId(), 7);
-//    }
 }

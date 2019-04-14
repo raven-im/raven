@@ -21,6 +21,7 @@ public class MemberInValidator implements Validator {
 
     @Override
     public boolean isValid(String groupId, List<String> members) {
+        //members 中有一个成员在群组中，就算失败。 members需要是一个净添加列表
         Example example = new Example(GroupMemberModel.class);
         example.createCriteria()
             .andNotEqualTo("status", 2)

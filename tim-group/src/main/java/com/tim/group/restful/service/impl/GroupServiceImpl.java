@@ -14,8 +14,10 @@ import com.tim.group.restful.service.GroupService;
 import com.tim.group.restful.validator.GroupValidator;
 import com.tim.group.restful.validator.MemberInValidator;
 import com.tim.group.restful.validator.MemberNotInValidator;
+import com.tim.storage.conver.ConverManager;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +33,10 @@ public class GroupServiceImpl implements GroupService {
     private GroupMapper groupMapper;
     @Autowired
     private GroupMemberMapper memberMapper;
+
+    @Autowired
+    private ConverManager converManager;
+
     @Autowired
     private GroupValidator groupValidator;
 
@@ -52,6 +58,8 @@ public class GroupServiceImpl implements GroupService {
         model.setCreateDate(now);
         model.setUpdateDate(now);
         model.setStatus(0); //0 for normal
+        String converId = converManager.newGroupConverId(groupId, reqParam.getMembers());
+        model.setConverId(converId);
         groupMapper.insert(model);
 
         reqParam.getMembers().forEach(uid -> {
@@ -85,6 +93,8 @@ public class GroupServiceImpl implements GroupService {
             member.setStatus(0);// 0 normal status;
             memberMapper.insert(member);
         });
+        //update new member conversation list.
+        converManager.addMemberConverList(reqParam.getGroupId(), reqParam.getMembers());
         return ResultCode.COMMON_SUCCESS;
     }
 
@@ -109,6 +119,8 @@ public class GroupServiceImpl implements GroupService {
                 .andEqualTo("memberUid", uid);
             memberMapper.updateByExampleSelective(member, example);
         });
+        //update deleted member conversation list.
+        converManager.removeMemberConverList(reqParam.getGroupId(), reqParam.getMembers());
         return ResultCode.COMMON_SUCCESS;
     }
 
@@ -118,6 +130,17 @@ public class GroupServiceImpl implements GroupService {
         if (!groupValidator.isValid(reqParam.getGroupId())) {
             return groupValidator.errorCode();
         }
+        // conversation delete.
+        Example example1 = new Example(GroupMemberModel.class);
+        example1.createCriteria()
+            .andEqualTo("groupId", reqParam.getGroupId());
+        List<GroupMemberModel> members = memberMapper.selectByExample(example1);
+        List<String> memberModels = members.stream()
+            .map((x) -> x.getMemberUid())
+            .collect(Collectors.toList());
+        converManager.removeConversation(reqParam.getGroupId(), memberModels);
+
+        // clean group info
         GroupModel model = new GroupModel();
         model.setStatus(2); //2 for mark delete
         model.setUpdateDate(DateTimeUtils.currentUTC());
@@ -125,6 +148,12 @@ public class GroupServiceImpl implements GroupService {
         example.createCriteria()
             .andEqualTo("uid", reqParam.getGroupId());
         groupMapper.updateByExampleSelective(model, example);
+
+        //clean group member info
+        GroupMemberModel member = new GroupMemberModel();
+        member.setUpdateDate(DateTimeUtils.currentUTC());
+        member.setStatus(2);// 2 mark delete.
+        memberMapper.updateByExampleSelective(member, example1);
         return ResultCode.COMMON_SUCCESS;
     }
 

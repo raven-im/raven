@@ -1,23 +1,22 @@
 package com.tim.group;
 
-import com.google.protobuf.MessageLite;
 import com.tim.common.protos.Message.MessageAck;
-import com.tim.common.protos.Message.UpDownMessage;
-import io.netty.buffer.ByteBuf;
+import com.tim.common.protos.Message.TimMessage;
+import com.tim.common.protos.Message.TimMessage.Type;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import java.io.IOException;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class GroupMsgHandler extends SimpleChannelInboundHandler<MessageLite> {
+public class GroupMsgHandler extends SimpleChannelInboundHandler<TimMessage> {
     private ChannelHandlerContext messageConnectionCtx;
 
-    private UpDownMessage message;
+    private TimMessage message;
 
     private GroupListener listener;
 
-    public GroupMsgHandler(UpDownMessage msg, GroupListener listener) {
+    public GroupMsgHandler(TimMessage msg, GroupListener listener) {
         this.message = msg;
         this.listener = listener;
     }
@@ -29,16 +28,15 @@ public class GroupMsgHandler extends SimpleChannelInboundHandler<MessageLite> {
     }
 
     @Override
-    protected void channelRead0(ChannelHandlerContext channelHandlerContext, MessageLite msg) {
-        if (msg instanceof MessageAck) {
-            MessageAck ack = (MessageAck) msg;
+    protected void channelRead0(ChannelHandlerContext channelHandlerContext, TimMessage msg) {
+        if (msg.getType() == Type.MessageAck) {
+            MessageAck ack = msg.getMessageAck();
             listener.onMessageAckReceived(ack);
         }
     }
 
-    private void sendGroupMsg(UpDownMessage cmd) {
-        ByteBuf byteBuf = Utils.pack2Client(cmd);
-        messageConnectionCtx.writeAndFlush(byteBuf);
+    private void sendGroupMsg(TimMessage msg) {
+        messageConnectionCtx.writeAndFlush(msg);
     }
 
     @Override

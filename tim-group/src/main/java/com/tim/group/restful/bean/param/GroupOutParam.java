@@ -13,17 +13,20 @@ import lombok.Data;
 public class GroupOutParam {
 
     private String groupId;
+    private String converId;
     private GroupDetailParam details;
     private Date time;
 
     public GroupOutParam(GroupModel model) {
         this.groupId = model.getUid();
+        this.converId = model.getConverId();
         this.time = model.getCreateDate();
     }
 
     public GroupOutParam(GroupModel model, List<GroupMemberModel> memberModels) {
         this.groupId = model.getUid();
-        this.time = model.getCreateDate();
+        this.converId = model.getConverId();
+        this.time = model.getUpdateDate();
         List<String> members = memberModels.stream()
             .map(x -> x.getMemberUid())
             .collect(Collectors.toList());

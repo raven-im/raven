@@ -77,12 +77,12 @@ public class S2sClientHandler extends SimpleChannelInboundHandler<TimMessage> {
                 .setMessageAck(ack).build();
             channels.forEach(channel -> channel.writeAndFlush(timMessage));
         } else if (msg.getType() == Type.UpDownMessage) {
-            UpDownMessage upDownMessage = msg.getUpDownMessage();
-            log.info("receive down message:{}",upDownMessage);
+            UpDownMessage downMessage = msg.getUpDownMessage();
+            log.info("receive down message:{}",downMessage);
             List<Channel> channels = uidChannelManager
-                .getChannelsById(upDownMessage.getTargetUid());
+                .getChannelsById(downMessage.getTargetUid());
             TimMessage timMessage = TimMessage.newBuilder().setType(Type.UpDownMessage)
-                .setUpDownMessage(upDownMessage).build();
+                .setUpDownMessage(downMessage).build();
             channels.forEach(channel -> channel.writeAndFlush(timMessage));
         } else {
             ctx.fireChannelRead(msg);

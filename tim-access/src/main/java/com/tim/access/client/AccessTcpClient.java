@@ -5,11 +5,9 @@ import com.tim.access.config.S2sChannelManager;
 import com.tim.access.handler.client.S2sClientHandler;
 import com.tim.common.loadbalance.Server;
 import com.tim.common.protos.Message;
-import com.tim.common.protos.Message.HeartBeat;
-import com.tim.common.protos.Message.MessageAck;
-import com.tim.common.protos.Message.UpDownMessage;
 import com.tim.common.utils.JsonHelper;
 import io.netty.bootstrap.Bootstrap;
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -70,9 +68,9 @@ public class AccessTcpClient {
         log.info("close tim access client success");
     }
 
-    private void connectServer(Server server) {
+    private Channel connectServer(Server server) {
         if (null != s2sChannelManager.getChannelByServer(server)) {
-            return;
+            return null;
         }
         EventLoopGroup group = new NioEventLoopGroup();
         Bootstrap bootstrap = new Bootstrap();
@@ -95,13 +93,14 @@ public class AccessTcpClient {
         ChannelFuture future = bootstrap.connect(server.getIp(), server.getPort())
             .syncUninterruptibly();
         if (future.isSuccess()) {
-            s2sChannelManager.addServer2Channel(server, future.channel());
             log.info("connect server success ip:{},port:{}", server.getIp(),
                 server.getPort());
+            return future.channel();
         } else {
             log.error("connect server failed ip:{},port:{}", server.getIp(),
                 server.getPort());
         }
+        return null;
     }
 
     private void startZkWatcher() throws Exception {
@@ -120,7 +119,10 @@ public class AccessTcpClient {
                     Map<String, Object> metadata = (Map<String, Object>) payload.get("metadata");
                     int port = Integer.valueOf(metadata.get("netty-port").toString());
                     Server server = new Server(address, port);
-                    connectServer(server);
+                    Channel channel = connectServer(server);
+                    if (null != channel) {
+                        s2sChannelManager.addSingleServer(server, channel);
+                    }
                 }
             }
         });
@@ -141,7 +143,10 @@ public class AccessTcpClient {
                     Map<String, Object> metadata = (Map<String, Object>) payload.get("metadata");
                     int port = Integer.valueOf(metadata.get("netty-port").toString());
                     Server server = new Server(address, port);
-                    connectServer(server);
+                    Channel channel = connectServer(server);
+                    if (null != channel) {
+                        s2sChannelManager.addGroupServer(server, channel);
+                    }
                 }
             }
         });

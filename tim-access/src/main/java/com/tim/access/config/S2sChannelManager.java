@@ -1,8 +1,6 @@
 package com.tim.access.config;
 
 
-import static com.tim.common.utils.Constants.CONFIG_NETTY_PORT;
-
 import com.tim.common.loadbalance.ConsistentHashLoadBalancer;
 import com.tim.common.loadbalance.LoadBalancer;
 import com.tim.common.loadbalance.Server;
@@ -10,24 +8,19 @@ import com.tim.common.netty.ServerChannelManager;
 import io.netty.channel.Channel;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
-import javax.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.client.ServiceInstance;
-import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
 public class S2sChannelManager implements ServerChannelManager {
-
-//    @Autowired
-//    private DiscoveryClient discovery;
 
     @Value("${discovery.single-server-name}")
     private String singleServerName;
@@ -35,9 +28,9 @@ public class S2sChannelManager implements ServerChannelManager {
     @Value("${discovery.group-server-name}")
     private String groupServerName;
 
-    List<Server> singleServerList = new ArrayList<>();
+    Set<Server> singleServerSet = new HashSet<>();
 
-    List<Server> groupServerList = new ArrayList<>();
+    Set<Server> groupServerSet = new HashSet<>();
 
     private final Map<Server, Channel> serverChannel = new HashMap<>();
 
@@ -45,55 +38,27 @@ public class S2sChannelManager implements ServerChannelManager {
 
     private ReadWriteLock rwLock = new ReentrantReadWriteLock();
 
-    public void addSingleServer(Server server) {
+    public void addSingleServer(Server server,Channel channel) {
         rwLock.writeLock().lock();
         try {
-            singleServerList.add(server);
+            singleServerSet.add(server);
+            addServer2Channel(server,channel);
             log.info("add single server: " + server);
         } finally {
             rwLock.writeLock().unlock();
         }
     }
 
-    public void addGroupServer(Server server) {
+    public void addGroupServer(Server server,Channel channel) {
         rwLock.writeLock().lock();
         try {
-            groupServerList.add(server);
+            groupServerSet.add(server);
+            addServer2Channel(server,channel);
             log.info("add group server: " + server);
         } finally {
             rwLock.writeLock().unlock();
         }
     }
-
-    public List<Server> getGroupServerList() {
-        return groupServerList;
-    }
-
-    public List<Server> getSingleServerList() {
-        return singleServerList;
-    }
-
-//    @PostConstruct
-//    public void init() {
-//        addSingleServer();
-//        addGroupServer();
-//    }
-//
-//    private void addSingleServer() {
-//        List<ServiceInstance> serviceInstances = discovery.getInstances(singleServerName);
-//        serviceInstances.forEach(x -> {
-//            int nettyPort = Integer.valueOf(x.getMetadata().get(CONFIG_NETTY_PORT));
-//            addSingleServer(new Server(x.getHost(), nettyPort));
-//        });
-//    }
-//
-//    private void addGroupServer() {
-//        List<ServiceInstance> serviceInstances = discovery.getInstances(groupServerName);
-//        serviceInstances.forEach(x -> {
-//            int nettyPort = Integer.valueOf(x.getMetadata().get(CONFIG_NETTY_PORT));
-//            addGroupServer(new Server(x.getHost(), nettyPort));
-//        });
-//    }
 
     @Override
     public void addServer2Channel(Server server, Channel channel) {
@@ -133,6 +98,11 @@ public class S2sChannelManager implements ServerChannelManager {
             Channel channel = serverChannel.get(server);
             channelServer.remove(channel);
             serverChannel.remove(server);
+            if (singleServerSet.contains(server)) {
+                singleServerSet.remove(server);
+            } else {
+                groupServerSet.remove(server);
+            }
         } finally {
             rwLock.writeLock().unlock();
         }
@@ -140,13 +110,13 @@ public class S2sChannelManager implements ServerChannelManager {
 
     public Channel selectGroupChannel(String conversationId) {
         LoadBalancer lb = new ConsistentHashLoadBalancer();
-        Server server = lb.select(groupServerList, conversationId);
+        Server server = lb.select(new ArrayList<Server>(groupServerSet), conversationId);
         return getChannelByServer(server);
     }
 
     public Channel selectSingleChannel(String conversationId) {
         LoadBalancer lb = new ConsistentHashLoadBalancer();
-        Server server = lb.select(singleServerList, conversationId);
+        Server server = lb.select(new ArrayList<Server>(singleServerSet), conversationId);
         return getChannelByServer(server);
     }
 }

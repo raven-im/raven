@@ -1,4 +1,4 @@
-package com.tim.group.restful.config.web;
+package com.tim.group.config.web;
 
 import com.tim.common.result.Result;
 import com.tim.common.result.ResultCode;

@@ -25,7 +25,9 @@ public enum ResultCode {
      * GROUP PART ERROR.  [12000, 13000)
      */
     GROUP_ERROR_COMMON_ERROR(12000, "group module common error."),
-
+    GROUP_ERROR_INVALID_GROUP_ID(12001, "group id invalid."),
+    GROUP_ERROR_MEMBER_NOT_IN(12002, "member not in group."),
+    GROUP_ERROR_MEMBER_ALREADY_IN(12003, "member already in group."),
     /*
      * APP PART ERROR.  [13000, 14000)
      */

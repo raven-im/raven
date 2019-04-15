@@ -1,9 +1,7 @@
-package com.tim.single.tcp.server;
+package com.tim.group.tcp.server;
 
 import com.tim.common.protos.Message;
-import com.tim.common.protos.Message.UpDownMessage;
-import com.tim.common.utils.SnowFlake;
-import com.tim.single.tcp.handler.MessageHandler;
+import com.tim.group.tcp.handler.MessageHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -26,16 +24,13 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-public class SingleTcpServer {
+public class GroupTcpServer {
 
     @Value("${netty.server.port}")
     private int nettyServerPort;
 
     @Autowired
     private MessageHandler messageHandler;
-
-    @Autowired
-    public SnowFlake snowFlake;
 
     private EventLoopGroup bossGroup = new NioEventLoopGroup();
 
@@ -53,12 +48,10 @@ public class SingleTcpServer {
             .childHandler(new ChannelInitializer<SocketChannel>() {
                 @Override
                 protected void initChannel(SocketChannel channel) throws Exception {
-                    channel.pipeline()
-                        .addLast(new IdleStateHandler(10, 10, 15))
-                        .addLast(new ProtobufVarint32FrameDecoder())
+                    channel.pipeline().addLast(new IdleStateHandler(10, 10, 15))
+                        .addLast(new ProtobufVarint32FrameDecoder())// 处理半包消息的解码类
                         .addLast(new ProtobufDecoder(Message.TimMessage.getDefaultInstance()))
-                        // 对protobuf协议的消息头上加上一个长度为32的整形字段
-                        .addLast(new ProtobufVarint32LengthFieldPrepender())
+                        .addLast(new ProtobufVarint32LengthFieldPrepender())// 对protobuf协议的消息头上加上一个长度为32的整形字段
                         .addLast(new ProtobufEncoder())
                         .addLast("MessageHandler", messageHandler);
                 }
@@ -66,9 +59,9 @@ public class SingleTcpServer {
         bindConnectionOptions(bootstrap);
         bootstrap.bind(new InetSocketAddress(nettyServerPort)).addListener(future -> {
             if (future.isSuccess()) {
-                log.info("tim single server start success on port:{}", nettyServerPort);
+                log.info("tim group server start success on port:{}", nettyServerPort);
             } else {
-                log.error("tim single server start failed!");
+                log.error("tim group server start failed!");
             }
         });
     }
@@ -83,6 +76,6 @@ public class SingleTcpServer {
     public void destroy() {
         bossGroup.shutdownGracefully().syncUninterruptibly();
         workGroup.shutdownGracefully().syncUninterruptibly();
-        log.info("close tim single server success");
+        log.info("close tim group server success");
     }
 }

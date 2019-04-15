@@ -1,6 +1,7 @@
-package com.tim.single;
+package com.tim.group;
 
-import com.tim.common.protos.Message.*;
+import com.tim.common.protos.Message.MessageAck;
+import com.tim.common.protos.Message.TimMessage;
 import com.tim.common.protos.Message.TimMessage.Type;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -8,37 +9,34 @@ import java.io.IOException;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class SendSingleMsgHandler extends SimpleChannelInboundHandler<TimMessage> {
-
+public class GroupMsgHandler extends SimpleChannelInboundHandler<TimMessage> {
     private ChannelHandlerContext messageConnectionCtx;
 
     private TimMessage message;
 
-    private MessageListener listener;
+    private GroupListener listener;
 
-    public SendSingleMsgHandler(TimMessage message, MessageListener listener) {
-        this.message = message;
+    public GroupMsgHandler(TimMessage msg, GroupListener listener) {
+        this.message = msg;
         this.listener = listener;
     }
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws IOException {
         messageConnectionCtx = ctx;
-        sendSingleMessage(message);
+        sendGroupMsg(message);
     }
 
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, TimMessage msg) {
         if (msg.getType() == Type.MessageAck) {
             MessageAck ack = msg.getMessageAck();
-            log.info("receive message ack:{}", ack);
             listener.onMessageAckReceived(ack);
         }
     }
 
-    private void sendSingleMessage(TimMessage message) {
-        log.info("send single message");
-        messageConnectionCtx.writeAndFlush(message);
+    private void sendGroupMsg(TimMessage msg) {
+        messageConnectionCtx.writeAndFlush(msg);
     }
 
     @Override

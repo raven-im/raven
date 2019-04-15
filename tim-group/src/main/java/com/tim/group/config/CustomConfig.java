@@ -1,8 +1,13 @@
-package com.tim.group.restful.config;
+package com.tim.group.config;
 
+
+import com.tim.common.utils.SnowFlake;
+import com.tim.storage.conver.ConverManager;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -17,6 +22,17 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  */
 @Configuration
 public class CustomConfig {
+
+    @Value("${node.data-center-id}")
+    private int dataCenterId;
+
+    @Value("${node.machine-id}")
+    private int machineId;
+
+    @Bean
+    public SnowFlake snowFlake() {
+        return new SnowFlake(dataCenterId, machineId);
+    }
 
     @Bean
     @ConditionalOnMissingBean(name = "redisTemplate")
@@ -42,5 +58,9 @@ public class CustomConfig {
         return template;
     }
 
-
+    @Bean
+    @DependsOn("redisTemplate")
+    public ConverManager conversationManager(RedisTemplate redisTemplate) {
+        return new ConverManager(redisTemplate);
+    }
 }

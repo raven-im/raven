@@ -1,4 +1,4 @@
-package com.tim.single;
+package com.tim.group;
 
 import com.tim.common.protos.Message;
 import com.tim.common.protos.Message.TimMessage;
@@ -23,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 public class Client {
 
     private static final String HOST = "127.0.0.1";
-    private static final int PORT = 7270;
+    private static final int PORT = 7370;
 //    public static SnowFlake snowFlake = new SnowFlake(1, 2);
 
     private static void baseTest(SimpleChannelInboundHandler<TimMessage> handler) throws InterruptedException {
@@ -50,15 +50,15 @@ public class Client {
         b.connect(HOST, PORT).addListener(future -> {
             if (future.isSuccess()) {
                 //init registry
-                log.info("Client connected SingleTcpServer Success...");
+                log.info("Client connected GroupTcpServer Success...");
             } else {
-                log.error("Client connected SingleTcpServer Failed");
+                log.error("Client connected GroupTcpServer Failed");
             }
         });
     }
 
-    public static void sendSingleMsgTest(TimMessage msg, MessageListener listener) throws InterruptedException {
-        baseTest(new SendSingleMsgHandler(msg, listener));
+    public static void sendGroupMsgTest(TimMessage msg, GroupListener listener) throws InterruptedException {
+        baseTest(new GroupMsgHandler(msg, listener));
     }
 }
 

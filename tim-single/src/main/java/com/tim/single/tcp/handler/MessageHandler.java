@@ -40,7 +40,7 @@ public class MessageHandler extends SimpleChannelInboundHandler<TimMessage> {
             UpDownMessage upDownMessage = message.getUpDownMessage();
             String convId;
             if (upDownMessage.getConverType() == ConverType.SINGLE) {
-                log.info("received msg id:{}", upDownMessage.getId());
+                log.info("received up msg :{}", upDownMessage);
                 if (!StringUtils.isEmpty(upDownMessage.getConverId())) {
                     if (!converManager.isSingleConverIdValid(upDownMessage.getConverId())) {
                         log.error("illegal conversation id.");

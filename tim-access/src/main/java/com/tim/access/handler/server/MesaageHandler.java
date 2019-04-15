@@ -6,6 +6,7 @@ import com.tim.common.netty.IdChannelManager;
 import com.tim.common.protos.Message.Code;
 import com.tim.common.protos.Message.ConverType;
 import com.tim.common.protos.Message.MessageAck;
+import com.tim.common.protos.Message.MessageContent;
 import com.tim.common.protos.Message.TimMessage;
 import com.tim.common.protos.Message.TimMessage.Type;
 import com.tim.common.protos.Message.UpDownMessage;
@@ -37,37 +38,34 @@ public class MesaageHandler extends SimpleChannelInboundHandler<TimMessage> {
     protected void channelRead0(ChannelHandlerContext ctx,
         TimMessage message) throws Exception {
         if (message.getType() == Type.UpDownMessage) {
-            UpDownMessage upDownMessage = message.getUpDownMessage();
-            log.info("receive up message:{}",upDownMessage);
-            upDownMessage.toBuilder().setId(snowFlake.nextId())
-                .getContent().toBuilder().setTime(System.currentTimeMillis());
-            if (upDownMessage.getConverType() == ConverType.SINGLE) {
-                if (StringUtils.isNotBlank(upDownMessage.getConverId())) {
+            UpDownMessage upMessage = message.getUpDownMessage();
+            log.info("receive up message:{}", upMessage);
+            if (upMessage.getConverType() == ConverType.SINGLE) {
+                if (StringUtils.isNotBlank(upMessage.getConverId())) {
                     Channel channel = s2sChannelManager
-                        .selectSingleChannel(upDownMessage.getConverId());
-                    channel.writeAndFlush(message);
-
-                } else if (StringUtils.isNotBlank(upDownMessage.getTargetUid())) {
+                        .selectSingleChannel(upMessage.getConverId());
+                    channel.writeAndFlush(buildTimMessage(ctx, upMessage));
+                } else if (StringUtils.isNotBlank(upMessage.getTargetUid())) {
                     Channel channel = s2sChannelManager
-                        .selectSingleChannel(upDownMessage.getTargetUid());
-                    channel.writeAndFlush(message);
+                        .selectSingleChannel(upMessage.getTargetUid());
+                    channel.writeAndFlush(buildTimMessage(ctx, upMessage));
                 } else {
-                    sendFailAck(ctx, upDownMessage);
+                    sendFailAck(ctx, upMessage);
                 }
-            } else if (upDownMessage.getConverType() == ConverType.GROUP) {
-                if (StringUtils.isNotBlank(upDownMessage.getConverId())) {
+            } else if (upMessage.getConverType() == ConverType.GROUP) {
+                if (StringUtils.isNotBlank(upMessage.getConverId())) {
                     Channel channel = s2sChannelManager
-                        .selectGroupChannel(upDownMessage.getConverId());
-                    channel.writeAndFlush(message);
-                } else if (StringUtils.isNotBlank(upDownMessage.getTargetUid())) {
+                        .selectGroupChannel(upMessage.getConverId());
+                    channel.writeAndFlush(buildTimMessage(ctx, upMessage));
+                } else if (StringUtils.isNotBlank(upMessage.getTargetUid())) {
                     Channel channel = s2sChannelManager
-                        .selectGroupChannel(upDownMessage.getTargetUid());
-                    channel.writeAndFlush(message);
+                        .selectGroupChannel(upMessage.getTargetUid());
+                    channel.writeAndFlush(buildTimMessage(ctx, upMessage));
                 } else {
-                    sendFailAck(ctx, upDownMessage);
+                    sendFailAck(ctx, upMessage);
                 }
             } else {
-                sendFailAck(ctx, upDownMessage);
+                sendFailAck(ctx, upMessage);
             }
         }
     }
@@ -83,5 +81,23 @@ public class MesaageHandler extends SimpleChannelInboundHandler<TimMessage> {
         TimMessage timMessage = TimMessage.newBuilder().setType(Type.MessageAck)
             .setMessageAck(messageAck).build();
         ctx.writeAndFlush(timMessage);
+    }
+
+    private TimMessage buildTimMessage(ChannelHandlerContext ctx, UpDownMessage upDownMessage) {
+        Long id = snowFlake.nextId();
+        String uid = uidChannelManager.getIdByChannel(ctx.channel());
+        MessageContent content = MessageContent.newBuilder().setId(id)
+            .setType(upDownMessage.getContent().getType()).setUid(uid)
+            .setContent(upDownMessage.getContent().getContent())
+            .setTime(System.currentTimeMillis()).build();
+        UpDownMessage upMesaage = UpDownMessage.newBuilder().setId(id)
+            .setCid(upDownMessage.getCid()).setFromUid(uid)
+            .setTargetUid(upDownMessage.getTargetUid()).setContent(content)
+            .setConverId(upDownMessage.getConverId()).setConverType(upDownMessage.getConverType())
+            .setGroupId(upDownMessage.getGroupId())
+            .build();
+        TimMessage timMessage = TimMessage.newBuilder().setType(Type.UpDownMessage)
+            .setUpDownMessage(upMesaage).build();
+        return timMessage;
     }
 }

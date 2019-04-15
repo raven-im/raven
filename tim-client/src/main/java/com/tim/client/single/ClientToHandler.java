@@ -1,11 +1,9 @@
-package com.tim.client;
+package com.tim.client.single;
 
 import com.tim.common.protos.Message.Code;
-import com.tim.common.protos.Message.ConverType;
 import com.tim.common.protos.Message.Login;
 import com.tim.common.protos.Message.LoginAck;
 import com.tim.common.protos.Message.MessageAck;
-import com.tim.common.protos.Message.MessageContent;
 import com.tim.common.protos.Message.TimMessage;
 import com.tim.common.protos.Message.TimMessage.Type;
 import com.tim.common.protos.Message.UpDownMessage;
@@ -15,11 +13,11 @@ import java.io.IOException;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class ClientHandler extends SimpleChannelInboundHandler<TimMessage> {
+public class ClientToHandler extends SimpleChannelInboundHandler<TimMessage> {
 
     private ChannelHandlerContext messageConnectionCtx;
 
-    private String uid = "test1";
+    private String uid = "test_user2";
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws IOException {
@@ -43,27 +41,12 @@ public class ClientHandler extends SimpleChannelInboundHandler<TimMessage> {
             LoginAck loginAck = message.getLoginAck();
             log.info("login ack:{}", loginAck.toString());
             if (loginAck.getCode() == Code.SUCCESS) {
-                int i = 0;
-                while (i < 10) {
-                    Thread.sleep(1000);
-                    MessageContent content = MessageContent.newBuilder().setUid(uid)
-                        .setContent("hello world").build();
-                    UpDownMessage upDownMessage = UpDownMessage.newBuilder().setCid(11)
-                        .setFromUid(uid)
-                        .setTargetUid(uid).setConverType(
-                            ConverType.SINGLE).setContent(content).build();
-                    TimMessage timMessage = TimMessage.newBuilder().setType(Type.UpDownMessage)
-                        .setUpDownMessage(upDownMessage).build();
-                    channelHandlerContext.writeAndFlush(timMessage);
-                    i++;
-                }
+                log.info("waiting for incoming messages.");
             }
-        }
-        if (message.getType() == Type.MessageAck) {
+        } else if (message.getType() == Type.MessageAck) {
             MessageAck messageAck = message.getMessageAck();
             log.info("receive message ack:{}", messageAck);
-        }
-        if (message.getType() == Type.UpDownMessage) {
+        } else if (message.getType() == Type.UpDownMessage) {
             UpDownMessage upDownMessage = message.getUpDownMessage();
             log.info("receive down message:{}", upDownMessage);
         }

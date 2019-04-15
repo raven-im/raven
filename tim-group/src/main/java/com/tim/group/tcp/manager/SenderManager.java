@@ -67,16 +67,16 @@ public class SenderManager {
         List<String> uidList = converManager.getUidListByConverExcludeSender(msg.getConverId(),
             msg.getFromUid());
         for (String uid : uidList) {
-            UpDownMessage msgSending = msg.toBuilder().setTargetUid(uid).build();
+            UpDownMessage downMessage = msg.toBuilder().setTargetUid(uid).build();
             String serverAddress = (String) redisTemplate.boundHashOps(USER_ROUTE_KEY).get(uid);
             if (!StringUtils.isEmpty(serverAddress)) {
                 Server server = new Server(serverAddress);
                 Channel chan = channelManager.getChannelByServer(server);
                 if (chan != null) {
                     TimMessage timMessage = TimMessage.newBuilder().setType(Type.UpDownMessage)
-                        .setUpDownMessage(msgSending).build();
+                        .setUpDownMessage(downMessage).build();
                     chan.writeAndFlush(timMessage);
-                    log.info("downstream msg {} sent.", msgSending.getId());
+                    log.info("downstream msg {} sent.", downMessage.getId());
                 } else {
                     log.error("cannot find channel. server:{}", server);
                 }

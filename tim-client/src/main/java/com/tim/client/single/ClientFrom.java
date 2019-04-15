@@ -1,9 +1,6 @@
-package com.tim.client;
+package com.tim.client.single;
 
 import com.tim.common.protos.Message;
-import com.tim.common.protos.Message.HeartBeat;
-import com.tim.common.protos.Message.MessageAck;
-import com.tim.common.protos.Message.UpDownMessage;
 import com.tim.common.utils.SnowFlake;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelInitializer;
@@ -24,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
  * Author zxx Description Simple client for module test Date Created on 2018/5/25
  */
 @Slf4j
-public class Client {
+public class ClientFrom {
 
     private static final String HOST = "127.0.0.1";
     private static final int PORT = 7010;
@@ -51,23 +48,10 @@ public class Client {
                     // 对protobuf协议的消息头上加上一个长度为32的整形字段
                     pipeline.addLast(new ProtobufVarint32LengthFieldPrepender());
                     pipeline.addLast(new ProtobufEncoder());
-                    pipeline.addLast(new ClientHandler());
+                    pipeline.addLast(new ClientFromHandler("test_user2"));
                 }
             });
         b.connect(HOST, PORT);
     }
-
-    private static void startConnection(Bootstrap b, int index) {
-        b.connect(HOST, PORT).addListener(future -> {
-            if (future.isSuccess()) {
-                //init registry
-                log.info("Client:{} connected MessageServer Successed...", index);
-            } else {
-                log.error("Client:{} connected MessageServer Failed", index);
-            }
-        });
-        b.connect(HOST, PORT);
-    }
-
 }
 

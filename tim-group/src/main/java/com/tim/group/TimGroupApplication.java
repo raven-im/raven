@@ -9,11 +9,10 @@ import tk.mybatis.spring.annotation.MapperScan;
 @EnableDiscoveryClient
 @EnableTransactionManagement
 @SpringBootApplication
-@MapperScan("com.tim.group.restful.*.mapper")
+@MapperScan("com.tim.group.restful.mapper")
 public class TimGroupApplication {
 
     public static void main(String[] args) throws Exception {
         SpringApplication.run(TimGroupApplication.class, args);
     }
-
 }

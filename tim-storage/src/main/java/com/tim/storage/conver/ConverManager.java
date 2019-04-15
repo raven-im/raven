@@ -67,12 +67,32 @@ public class ConverManager {
 
     public void addMemberConverList(String groupId, List<String> members) {
         String converId = UidUtil.uuid24ByFactor(groupId);
+        ConverInfo converInfo = getConverInfo(converId);
+        List<String> memberList = converInfo.getUidList();
+        memberList.addAll(members);
+        converInfo.setUidList(memberList);
+        try {
+            redisTemplate.opsForValue().set(converId, JsonHelper.toJsonString(converInfo));
+        } catch (JsonProcessingException e) {
+            log.error("json processing error", e);
+        }
+
         members.forEach(member -> redisTemplate.boundHashOps(PREFIX_CONVERSATION_LIST + member)
-                    .put(converId, 0));
+            .put(converId, 0));
     }
 
     public void removeMemberConverList(String groupId, List<String> members) {
         String converId = UidUtil.uuid24ByFactor(groupId);
+
+        ConverInfo converInfo = getConverInfo(converId);
+        List<String> memberList = converInfo.getUidList();
+        memberList.removeAll(members);
+        converInfo.setUidList(memberList);
+        try {
+            redisTemplate.opsForValue().set(converId, JsonHelper.toJsonString(converInfo));
+        } catch (JsonProcessingException e) {
+            log.error("json processing error", e);
+        }
         members.forEach(member -> redisTemplate.boundHashOps(PREFIX_CONVERSATION_LIST + member)
             .delete(converId));
     }
@@ -112,10 +132,20 @@ public class ConverManager {
 
     public List<String> getUidListByConver(String converId) {
         ConverInfo converInfo = getConverInfo(converId);
-        if (converInfo.getType() == ConverType.SINGLE.getNumber()) {
+        if (converInfo.getType() == ConverType.SINGLE.getNumber()
+            || converInfo.getType() == ConverType.GROUP.getNumber()) {
             return converInfo.getUidList();
-        } else if (converInfo.getType() == ConverType.GROUP.getNumber()) {
-            // TODO 从缓存拿群成员ID
+        }
+        return new ArrayList<>();
+    }
+
+    public List<String> getUidListByConverExcludeSender(String converId, String fromUser) {
+        ConverInfo converInfo = getConverInfo(converId);
+        if (converInfo.getType() == ConverType.SINGLE.getNumber() ||
+            converInfo.getType() == ConverType.GROUP.getNumber()) {
+            List<String> uids = converInfo.getUidList();
+            uids.remove(fromUser);
+            return uids;
         }
         return new ArrayList<>();
     }

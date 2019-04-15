@@ -12,6 +12,7 @@ import io.netty.channel.Channel;
 import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
@@ -63,18 +64,19 @@ public class SenderManager {
     }
 
     private void msgQTask(UpDownMessage msg) {
-        List<String> uidList = converManager.getUidListByConver(msg.getConverId());
+        List<String> uidList = converManager.getUidListByConverExcludeSender(msg.getConverId(),
+            msg.getFromUid());
         for (String uid : uidList) {
-            msg.toBuilder().setTargetUid(uid);
+            UpDownMessage downMessage = msg.toBuilder().setTargetUid(uid).build();
             String serverAddress = (String) redisTemplate.boundHashOps(USER_ROUTE_KEY).get(uid);
-            if (org.apache.commons.lang.StringUtils.isNotBlank(serverAddress)) {
+            if (!StringUtils.isEmpty(serverAddress)) {
                 Server server = new Server(serverAddress);
                 Channel chan = channelManager.getChannelByServer(server);
                 if (chan != null) {
                     TimMessage timMessage = TimMessage.newBuilder().setType(Type.UpDownMessage)
-                        .setUpDownMessage(msg).build();
+                        .setUpDownMessage(downMessage).build();
                     chan.writeAndFlush(timMessage);
-                    log.info("downstream msg {} sent.", msg.getId());
+                    log.info("downstream msg {} sent.", downMessage.getId());
                 } else {
                     log.error("cannot find channel. server:{}", server);
                 }

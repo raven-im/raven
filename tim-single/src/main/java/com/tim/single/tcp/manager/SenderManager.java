@@ -1,6 +1,5 @@
 package com.tim.single.tcp.manager;
 
-import static com.tim.common.utils.Constants.DEFAULT_SEPARATES_SIGN;
 import static com.tim.common.utils.Constants.USER_ROUTE_KEY;
 
 import com.tim.common.loadbalance.Server;
@@ -17,7 +16,6 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
 
 /**
  * @author: bbpatience
@@ -67,18 +65,19 @@ public class SenderManager {
     }
 
     private void msgQTask(UpDownMessage msg) {
-        List<String> uidList = converManager.getUidListByConver(msg.getConverId());
+        List<String> uidList = converManager.getUidListByConverExcludeSender(msg.getConverId(),
+            msg.getFromUid());
         for (String uid : uidList) {
-            msg.toBuilder().setTargetUid(uid);
+            UpDownMessage downMessage = msg.toBuilder().setTargetUid(uid).build();
             String serverAddress = (String) redisTemplate.boundHashOps(USER_ROUTE_KEY).get(uid);
             if (StringUtils.isNotBlank(serverAddress)) {
                 Server server = new Server(serverAddress);
                 Channel chan = channelManager.getChannelByServer(server);
                 if (chan != null) {
                     TimMessage timMessage = TimMessage.newBuilder().setType(Type.UpDownMessage)
-                        .setUpDownMessage(msg).build();
+                        .setUpDownMessage(downMessage).build();
                     chan.writeAndFlush(timMessage);
-                    log.info("send down msg {}", msg);
+                    log.info("send down msg {}", downMessage);
                 } else {
                     log.error("cannot find channel. server:{}", server);
                 }

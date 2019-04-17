@@ -26,8 +26,8 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class GroupTcpServer {
 
-    @Value("${netty.server.port}")
-    private int nettyServerPort;
+    @Value("${netty.tcp.port}")
+    private int nettyTcpPort;
 
     @Autowired
     private MessageHandler messageHandler;
@@ -57,9 +57,9 @@ public class GroupTcpServer {
                 }
             });
         bindConnectionOptions(bootstrap);
-        bootstrap.bind(new InetSocketAddress(nettyServerPort)).addListener(future -> {
+        bootstrap.bind(new InetSocketAddress(nettyTcpPort)).addListener(future -> {
             if (future.isSuccess()) {
-                log.info("tim group server start success on port:{}", nettyServerPort);
+                log.info("tim group server start success on port:{}", nettyTcpPort);
             } else {
                 log.error("tim group server start failed!");
             }

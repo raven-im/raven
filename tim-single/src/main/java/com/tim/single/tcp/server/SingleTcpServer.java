@@ -28,8 +28,8 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class SingleTcpServer {
 
-    @Value("${netty.server.port}")
-    private int nettyServerPort;
+    @Value("${netty.tcp.port}")
+    private int nettyTcpPort;
 
     @Autowired
     private MessageHandler messageHandler;
@@ -64,9 +64,9 @@ public class SingleTcpServer {
                 }
             });
         bindConnectionOptions(bootstrap);
-        bootstrap.bind(new InetSocketAddress(nettyServerPort)).addListener(future -> {
+        bootstrap.bind(new InetSocketAddress(nettyTcpPort)).addListener(future -> {
             if (future.isSuccess()) {
-                log.info("tim single server start success on port:{}", nettyServerPort);
+                log.info("tim single server start success on port:{}", nettyTcpPort);
             } else {
                 log.error("tim single server start failed!");
             }

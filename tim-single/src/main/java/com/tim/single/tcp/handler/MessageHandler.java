@@ -73,7 +73,7 @@ public class MessageHandler extends SimpleChannelInboundHandler<TimMessage> {
         } else if (message.getType() ==  Type.ServerInfo) {
             ServerInfo serverInfo =  message.getServerInfo();
             Server server = new Server(serverInfo.getIp(), serverInfo.getPort());
-            log.info("tim access server connect success ip:{},port{}",server.getIp(),server.getPort());
+            log.info("tim-access server connect success ip:{},port{}",server.getIp(),server.getPort());
             channelManager.addServer2Channel(server, ctx.channel());
         }
     }
@@ -84,7 +84,7 @@ public class MessageHandler extends SimpleChannelInboundHandler<TimMessage> {
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-        log.info("tim access server disconnected address:{}", ctx.channel().remoteAddress());
+        log.info("tim-access server disconnected address:{}", ctx.channel().remoteAddress());
         Server server = channelManager.getServerByChannel(ctx.channel());
         channelManager.removeServer(server);
     }

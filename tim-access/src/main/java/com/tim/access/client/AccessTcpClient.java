@@ -5,6 +5,7 @@ import com.tim.access.config.S2sChannelManager;
 import com.tim.access.handler.client.S2sClientHandler;
 import com.tim.common.loadbalance.Server;
 import com.tim.common.protos.Message;
+import com.tim.common.utils.Constants;
 import com.tim.common.utils.JsonHelper;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
@@ -65,7 +66,7 @@ public class AccessTcpClient {
     @PreDestroy
     public void destroy() {
         workGroup.shutdownGracefully().syncUninterruptibly();
-        log.info("close tim access client success");
+        log.info("close tim-access client success");
     }
 
     private Channel connectServer(Server server) {
@@ -117,7 +118,7 @@ public class AccessTcpClient {
                     String address = (String) data.get("address");
                     Map<String, Object> payload = (Map<String, Object>) data.get("payload");
                     Map<String, Object> metadata = (Map<String, Object>) payload.get("metadata");
-                    int port = Integer.valueOf(metadata.get("netty-port").toString());
+                    int port = Integer.valueOf(metadata.get(Constants.CONFIG_TCP_PORT).toString());
                     Server server = new Server(address, port);
                     Channel channel = connectServer(server);
                     if (null != channel) {
@@ -141,7 +142,7 @@ public class AccessTcpClient {
                     String address = (String) data.get("address");
                     Map<String, Object> payload = (Map<String, Object>) data.get("payload");
                     Map<String, Object> metadata = (Map<String, Object>) payload.get("metadata");
-                    int port = Integer.valueOf(metadata.get("netty-port").toString());
+                    int port = Integer.valueOf(metadata.get(Constants.CONFIG_TCP_PORT).toString());
                     Server server = new Server(address, port);
                     Channel channel = connectServer(server);
                     if (null != channel) {

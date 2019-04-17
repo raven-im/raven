@@ -17,7 +17,8 @@ spring:
       discovery:
         prefer-ip-address: true
         metadata:
-          netty-port: ${netty.server.port}
+          tcp-port: ${netty.tcp.port}
+          websocket-port: ${netty.websocket.port}
 server:
   port: 8010
 
@@ -28,8 +29,10 @@ discovery:
   group-server-path: /services/tim-group
 
 netty:
-  server:
+  tcp:
     port: 7010
+  websocket:
+    port: 7011
 
 node:
   data-center-id: 1

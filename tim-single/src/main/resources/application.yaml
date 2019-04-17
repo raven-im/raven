@@ -36,7 +36,7 @@ spring:
       discovery:
         prefer-ip-address: true
         metadata:
-          netty-port: ${netty.server.port}
+          tcp-port: ${netty.tcp.port}
 
 # actuator相关配置
 management:
@@ -72,7 +72,7 @@ mapper:
   identity: mysql
 
 netty:
-  server:
+  tcp:
     port: 7270
 
 node:

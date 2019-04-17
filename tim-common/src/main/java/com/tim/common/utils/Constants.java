@@ -43,5 +43,9 @@ public class Constants {
     /**
      * Global config.
      */
-    public static final String CONFIG_NETTY_PORT = "netty-port";
+    public static final String CONFIG_TCP_PORT = "tcp-port";
+
+    public static final String CONFIG_WEBSOCKET_PORT = "websocket-port";
+
+    public static final String CONFIG_ACCESS_SERVER_NAME = "tim-access";
 }

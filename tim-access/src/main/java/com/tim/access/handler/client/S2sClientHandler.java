@@ -31,8 +31,8 @@ public class S2sClientHandler extends SimpleChannelInboundHandler<TimMessage> {
     @Autowired
     private S2sChannelManager s2sChannelManager;
 
-    @Value("${netty.server.port}")
-    private int nettyServerPort;
+    @Value("${netty.tcp.port}")
+    private int nettyTcpPort;
 
     @Autowired
     private SnowFlake snowFlake;
@@ -43,7 +43,7 @@ public class S2sClientHandler extends SimpleChannelInboundHandler<TimMessage> {
         ServerInfo serverInfo = ServerInfo.newBuilder()
             .setId(snowFlake.nextId())
             .setIp(IpUtil.getIp())
-            .setPort(nettyServerPort).build();
+            .setPort(nettyTcpPort).build();
         TimMessage timMessage = TimMessage.newBuilder().setType(Type.ServerInfo)
             .setServerInfo(serverInfo).build();
         ctx.writeAndFlush(timMessage);

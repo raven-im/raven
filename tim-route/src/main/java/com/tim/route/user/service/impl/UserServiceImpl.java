@@ -105,12 +105,12 @@ public class UserServiceImpl implements UserService {
             long port = Long.parseLong(array[1]);
             return Result.success(new ServerInfoOutParam(key, uid, ip, port));
         } else {
-            List<ServiceInstance> instances = discoveryClient.getInstances("tim-access");
+            List<ServiceInstance> instances = discoveryClient.getInstances(CONFIG_ACCESS_SERVER_NAME);
             if (!instances.isEmpty()) {
                 List<Server> servers = instances.stream()
                     .map((x) -> {
-                        if (x.getMetadata().containsKey(CONFIG_NETTY_PORT)) {
-                            int nettyPort = Integer.valueOf(x.getMetadata().get(CONFIG_NETTY_PORT));
+                        if (x.getMetadata().containsKey(CONFIG_TCP_PORT)) {
+                            int nettyPort = Integer.valueOf(x.getMetadata().get(CONFIG_TCP_PORT));
                             return new Server(x.getHost(), nettyPort);
                         } else {
                             return new Server(x.getHost(), x.getPort());

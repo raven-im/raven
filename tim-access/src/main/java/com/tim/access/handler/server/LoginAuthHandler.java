@@ -30,8 +30,8 @@ public class LoginAuthHandler extends SimpleChannelInboundHandler<TimMessage> {
     @Autowired
     private RedisTemplate redisTemplate;
 
-    @Value("${netty.server.port}")
-    private int nettyServerPort;
+    @Value("${netty.tcp.port}")
+    private int nettyTcpPort;
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
@@ -84,7 +84,7 @@ public class LoginAuthHandler extends SimpleChannelInboundHandler<TimMessage> {
     }
 
     private String getLocalAddress() throws SocketException {
-        return IpUtil.getIp() + ":" + nettyServerPort;
+        return IpUtil.getIp() + ":" + nettyTcpPort;
     }
 
     @Override

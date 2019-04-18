@@ -1,11 +1,16 @@
 package com.tim.client;
 
 import com.tim.common.protos.Message.Code;
+import com.tim.common.protos.Message.ConverAck;
+import com.tim.common.protos.Message.ConverReq;
 import com.tim.common.protos.Message.ConverType;
+import com.tim.common.protos.Message.HeartBeat;
 import com.tim.common.protos.Message.Login;
 import com.tim.common.protos.Message.LoginAck;
 import com.tim.common.protos.Message.MessageAck;
 import com.tim.common.protos.Message.MessageContent;
+import com.tim.common.protos.Message.MessageType;
+import com.tim.common.protos.Message.OperationType;
 import com.tim.common.protos.Message.TimMessage;
 import com.tim.common.protos.Message.TimMessage.Type;
 import com.tim.common.protos.Message.UpDownMessage;
@@ -19,7 +24,9 @@ public class ClientHandler extends SimpleChannelInboundHandler<TimMessage> {
 
     private ChannelHandlerContext messageConnectionCtx;
 
-    private String uid = "test1";
+    private String uid = "test2";
+
+    private String[] toUidList = {"test3", "test1", "test4", "test5", "test6"};
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws IOException {
@@ -43,20 +50,26 @@ public class ClientHandler extends SimpleChannelInboundHandler<TimMessage> {
             LoginAck loginAck = message.getLoginAck();
             log.info("login ack:{}", loginAck.toString());
             if (loginAck.getCode() == Code.SUCCESS) {
-                int i = 0;
-                while (i < 10) {
+                for (String toUid : toUidList) {
                     Thread.sleep(1000);
                     MessageContent content = MessageContent.newBuilder().setUid(uid)
+                        .setType(MessageType.TEXT)
                         .setContent("hello world").build();
                     UpDownMessage upDownMessage = UpDownMessage.newBuilder().setCid(11)
                         .setFromUid(uid)
-                        .setTargetUid(uid).setConverType(
-                            ConverType.SINGLE).setContent(content).build();
+                        .setTargetUid(toUid)
+                        .setConverType(ConverType.SINGLE)
+                        .setContent(content).build();
                     TimMessage timMessage = TimMessage.newBuilder().setType(Type.UpDownMessage)
                         .setUpDownMessage(upDownMessage).build();
                     channelHandlerContext.writeAndFlush(timMessage);
-                    i++;
                 }
+                Thread.sleep(2000);
+                ConverReq converReq = ConverReq.newBuilder().setId(222).setType(OperationType.ALL)
+                    .build();
+                TimMessage timMessage = TimMessage.newBuilder().setType(Type.ConverReq)
+                    .setConverReq(converReq).build();
+                channelHandlerContext.writeAndFlush(timMessage);
             }
         }
         if (message.getType() == Type.MessageAck) {
@@ -66,6 +79,14 @@ public class ClientHandler extends SimpleChannelInboundHandler<TimMessage> {
         if (message.getType() == Type.UpDownMessage) {
             UpDownMessage upDownMessage = message.getUpDownMessage();
             log.info("receive down message:{}", upDownMessage);
+        }
+        if (message.getType() == Type.HeartBeat) {
+            HeartBeat heartBeat = message.getHeartBeat();
+            log.info("receive heartbeat message:{}", heartBeat);
+        }
+        if (message.getType() == Type.ConverAck) {
+            ConverAck converAck = message.getConverAck();
+            log.info("receive conver ack message:{}", converAck);
         }
     }
 

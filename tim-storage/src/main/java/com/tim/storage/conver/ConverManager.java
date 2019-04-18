@@ -5,6 +5,7 @@ import static com.tim.common.utils.Constants.PREFIX_MESSAGE_ID;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.tim.common.model.ConverInfo;
+import com.tim.common.model.ConverListInfo;
 import com.tim.common.model.MsgContent;
 import com.tim.common.protos.Message.ConverType;
 import com.tim.common.protos.Message.MessageContent;
@@ -13,6 +14,8 @@ import com.tim.common.utils.UidUtil;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -35,7 +38,8 @@ public class ConverManager {
         Set<String> uidList = new HashSet<>();
         uidList.add(fromUid);
         uidList.add(toUid);
-        ConverInfo converInfo = new ConverInfo().setId(converId).setType(ConverType.SINGLE.getNumber())
+        ConverInfo converInfo = new ConverInfo().setId(converId)
+            .setType(ConverType.SINGLE.getNumber())
             .setUidList(CollectionUtils.arrayToList(uidList.toArray()));
         try {
             if (redisTemplate.opsForValue()
@@ -51,13 +55,15 @@ public class ConverManager {
 
     public String newGroupConverId(String groupId, List<String> members) {
         String converId = UidUtil.uuid24ByFactor(groupId);
-        ConverInfo converInfo = new ConverInfo().setId(converId).setType(ConverType.GROUP.getNumber())
+        ConverInfo converInfo = new ConverInfo().setId(converId)
+            .setType(ConverType.GROUP.getNumber())
             .setUidList(members).setGroupId(groupId);
         try {
             if (redisTemplate.opsForValue()
                 .setIfAbsent(converId, JsonHelper.toJsonString(converInfo))) {
-                members.forEach(member -> redisTemplate.boundHashOps(PREFIX_CONVERSATION_LIST + member)
-                    .put(converId, 0));
+                members
+                    .forEach(member -> redisTemplate.boundHashOps(PREFIX_CONVERSATION_LIST + member)
+                        .put(converId, 0));
             }
         } catch (JsonProcessingException e) {
             log.error("json processing error", e);
@@ -68,7 +74,7 @@ public class ConverManager {
     public void addMemberConverList(String groupId, List<String> members) {
         String converId = UidUtil.uuid24ByFactor(groupId);
         members.forEach(member -> redisTemplate.boundHashOps(PREFIX_CONVERSATION_LIST + member)
-                    .put(converId, 0));
+            .put(converId, 0));
     }
 
     public void removeMemberConverList(String groupId, List<String> members) {
@@ -81,7 +87,6 @@ public class ConverManager {
         String converId = UidUtil.uuid24ByFactor(groupId);
         redisTemplate.delete(converId);
         removeMemberConverList(groupId, members);
-
     }
 
     public boolean isSingleConverIdValid(String converId) {
@@ -99,7 +104,6 @@ public class ConverManager {
             .setType(msg.getType().getNumber()).setContent(msg.getContent()).setTime(msg.getTime());
         String str = JsonHelper.toJsonString(msgContent);
         redisTemplate.boundZSetOps(PREFIX_MESSAGE_ID + converId).add(str, msgContent.getTime());
-
     }
 
     public ConverInfo getConverInfo(String converId) {
@@ -108,6 +112,30 @@ public class ConverManager {
             return null;
         }
         return JsonHelper.readValue(ob.toString(), ConverInfo.class);
+    }
+
+    public List<ConverListInfo> getConverListByUid(String uid) {
+        List<ConverListInfo> list = new ArrayList<>();
+        Map<String, Integer> converList = redisTemplate.boundHashOps(PREFIX_CONVERSATION_LIST + uid)
+            .entries();
+        for (Entry<String, Integer> entry : converList.entrySet()) {
+            ConverInfo converInfo = getConverInfo(entry.getKey());
+            if (null != converInfo) {
+                Set<String> strs = redisTemplate.boundZSetOps(PREFIX_MESSAGE_ID + converInfo.getId())
+                    .range(-1, -1);
+                if (strs.size() >= 1) {
+                    MsgContent msgContent = JsonHelper.readValue(strs.iterator().next().toString(), MsgContent.class);
+                    ConverListInfo converListInfo = new ConverListInfo()
+                        .setId(converInfo.getId()).setGroupId(converInfo.getGroupId())
+                        .setLastContent(msgContent)
+                        .setUidList(converInfo.getUidList()).setType(converInfo.getType())
+                        .setUnCount(entry.getValue());
+                    list.add(converListInfo);
+                }
+            }
+
+        }
+        return list;
     }
 
     public List<String> getUidListByConver(String converId) {

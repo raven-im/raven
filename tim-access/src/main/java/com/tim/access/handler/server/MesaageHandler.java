@@ -67,6 +67,8 @@ public class MesaageHandler extends SimpleChannelInboundHandler<TimMessage> {
             } else {
                 sendFailAck(ctx, upMessage);
             }
+        }else {
+            ctx.fireChannelRead(message);
         }
     }
 

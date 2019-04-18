@@ -28,6 +28,7 @@ public class ClientFromHandler extends SimpleChannelInboundHandler<TimMessage> {
 
     private String[] toUidList = {"test3", "test1", "test4", "test5", "test6"};
 
+
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws IOException {
         messageConnectionCtx = ctx;

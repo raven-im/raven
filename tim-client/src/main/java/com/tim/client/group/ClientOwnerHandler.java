@@ -1,16 +1,12 @@
-package com.tim.client;
+package com.tim.client.group;
 
 import com.tim.common.protos.Message.Code;
-import com.tim.common.protos.Message.ConverAck;
-import com.tim.common.protos.Message.ConverReq;
 import com.tim.common.protos.Message.ConverType;
-import com.tim.common.protos.Message.HeartBeat;
 import com.tim.common.protos.Message.Login;
 import com.tim.common.protos.Message.LoginAck;
 import com.tim.common.protos.Message.MessageAck;
 import com.tim.common.protos.Message.MessageContent;
 import com.tim.common.protos.Message.MessageType;
-import com.tim.common.protos.Message.OperationType;
 import com.tim.common.protos.Message.TimMessage;
 import com.tim.common.protos.Message.TimMessage.Type;
 import com.tim.common.protos.Message.UpDownMessage;
@@ -20,13 +16,17 @@ import java.io.IOException;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class ClientHandler extends SimpleChannelInboundHandler<TimMessage> {
+public class ClientOwnerHandler extends SimpleChannelInboundHandler<TimMessage> {
 
     private ChannelHandlerContext messageConnectionCtx;
 
-    private String uid = "test2";
+    private String uid;
+    private String groupId;
 
-    private String[] toUidList = {"test3", "test1", "test4", "test5", "test6"};
+    public ClientOwnerHandler(String uid, String groupId) {
+        this.uid = uid;
+        this.groupId = groupId;
+    }
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws IOException {
@@ -50,25 +50,25 @@ public class ClientHandler extends SimpleChannelInboundHandler<TimMessage> {
             LoginAck loginAck = message.getLoginAck();
             log.info("login ack:{}", loginAck.toString());
             if (loginAck.getCode() == Code.SUCCESS) {
-                for (String toUid : toUidList) {
-                    Thread.sleep(1000);
-                    MessageContent content = MessageContent.newBuilder().setUid(uid)
-                        .setType(MessageType.TEXT)
-                        .setContent("hello world").build();
-                    UpDownMessage upDownMessage = UpDownMessage.newBuilder().setCid(11)
-                        .setFromUid(uid)
-                        .setTargetUid(toUid)
-                        .setConverType(ConverType.SINGLE)
-                        .setContent(content).build();
-                    TimMessage timMessage = TimMessage.newBuilder().setType(Type.UpDownMessage)
-                        .setUpDownMessage(upDownMessage).build();
-                    channelHandlerContext.writeAndFlush(timMessage);
-                }
-                Thread.sleep(2000);
-                ConverReq converReq = ConverReq.newBuilder().setId(222).setType(OperationType.ALL)
+                MessageContent content = MessageContent.newBuilder()
+                    .setId(88)
+                    .setUid(uid)
+                    .setTime(System.currentTimeMillis())
+                    .setType(MessageType.TEXT)
+                    .setContent("hello world.")
                     .build();
-                TimMessage timMessage = TimMessage.newBuilder().setType(Type.ConverReq)
-                    .setConverReq(converReq).build();
+
+                UpDownMessage msg = UpDownMessage.newBuilder()
+                    .setCid(90)
+                    .setFromUid(uid)
+                    .setTargetUid("invitee2")
+                    .setGroupId(groupId)
+                    .setConverType(ConverType.GROUP)
+                    .setContent(content)
+                    .build();
+
+                TimMessage timMessage = TimMessage.newBuilder().setType(Type.UpDownMessage)
+                    .setUpDownMessage(msg).build();
                 channelHandlerContext.writeAndFlush(timMessage);
             }
         }
@@ -79,14 +79,6 @@ public class ClientHandler extends SimpleChannelInboundHandler<TimMessage> {
         if (message.getType() == Type.UpDownMessage) {
             UpDownMessage upDownMessage = message.getUpDownMessage();
             log.info("receive down message:{}", upDownMessage);
-        }
-        if (message.getType() == Type.HeartBeat) {
-            HeartBeat heartBeat = message.getHeartBeat();
-            log.info("receive heartbeat message:{}", heartBeat);
-        }
-        if (message.getType() == Type.ConverAck) {
-            ConverAck converAck = message.getConverAck();
-            log.info("receive conver ack message:{}", converAck);
         }
     }
 

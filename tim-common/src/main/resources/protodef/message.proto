@@ -152,7 +152,7 @@ message ConverAck {
 message ConverInfo {
   string converId = 1; // 会话ID
   ConverType type = 2; // 会话类型
-  repeated string uid = 3; // 单聊会话 用户列表
+  repeated string uidList = 3; // 单聊会话 用户列表
   string groupId = 4; //  群会话 群ID
   uint64 unCount = 5; // 未读数
   MessageContent lastContent = 6; // 最后一条消息

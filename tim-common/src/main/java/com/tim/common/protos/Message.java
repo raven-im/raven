@@ -14332,35 +14332,35 @@ public final class Message {
      * 单聊会话 用户列表
      * </pre>
      *
-     * <code>repeated string uid = 3;</code>
+     * <code>repeated string uidList = 3;</code>
      */
     java.util.List<java.lang.String>
-        getUidList();
+        getUidListList();
     /**
      * <pre>
      * 单聊会话 用户列表
      * </pre>
      *
-     * <code>repeated string uid = 3;</code>
+     * <code>repeated string uidList = 3;</code>
      */
-    int getUidCount();
+    int getUidListCount();
     /**
      * <pre>
      * 单聊会话 用户列表
      * </pre>
      *
-     * <code>repeated string uid = 3;</code>
+     * <code>repeated string uidList = 3;</code>
      */
-    java.lang.String getUid(int index);
+    java.lang.String getUidList(int index);
     /**
      * <pre>
      * 单聊会话 用户列表
      * </pre>
      *
-     * <code>repeated string uid = 3;</code>
+     * <code>repeated string uidList = 3;</code>
      */
     com.google.protobuf.ByteString
-        getUidBytes(int index);
+        getUidListBytes(int index);
 
     /**
      * <pre>
@@ -14433,7 +14433,7 @@ public final class Message {
     private ConverInfo() {
       converId_ = "";
       type_ = 0;
-      uid_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      uidList_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       groupId_ = "";
       unCount_ = 0L;
     }
@@ -14477,10 +14477,10 @@ public final class Message {
             case 26: {
               java.lang.String s = input.readStringRequireUtf8();
               if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
-                uid_ = new com.google.protobuf.LazyStringArrayList();
+                uidList_ = new com.google.protobuf.LazyStringArrayList();
                 mutable_bitField0_ |= 0x00000004;
               }
-              uid_.add(s);
+              uidList_.add(s);
               break;
             }
             case 34: {
@@ -14523,7 +14523,7 @@ public final class Message {
             e).setUnfinishedMessage(this);
       } finally {
         if (((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
-          uid_ = uid_.getUnmodifiableView();
+          uidList_ = uidList_.getUnmodifiableView();
         }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -14610,49 +14610,49 @@ public final class Message {
       return result == null ? com.tim.common.protos.Message.ConverType.UNRECOGNIZED : result;
     }
 
-    public static final int UID_FIELD_NUMBER = 3;
-    private com.google.protobuf.LazyStringList uid_;
+    public static final int UIDLIST_FIELD_NUMBER = 3;
+    private com.google.protobuf.LazyStringList uidList_;
     /**
      * <pre>
      * 单聊会话 用户列表
      * </pre>
      *
-     * <code>repeated string uid = 3;</code>
+     * <code>repeated string uidList = 3;</code>
      */
     public com.google.protobuf.ProtocolStringList
-        getUidList() {
-      return uid_;
+        getUidListList() {
+      return uidList_;
     }
     /**
      * <pre>
      * 单聊会话 用户列表
      * </pre>
      *
-     * <code>repeated string uid = 3;</code>
+     * <code>repeated string uidList = 3;</code>
      */
-    public int getUidCount() {
-      return uid_.size();
+    public int getUidListCount() {
+      return uidList_.size();
     }
     /**
      * <pre>
      * 单聊会话 用户列表
      * </pre>
      *
-     * <code>repeated string uid = 3;</code>
+     * <code>repeated string uidList = 3;</code>
      */
-    public java.lang.String getUid(int index) {
-      return uid_.get(index);
+    public java.lang.String getUidList(int index) {
+      return uidList_.get(index);
     }
     /**
      * <pre>
      * 单聊会话 用户列表
      * </pre>
      *
-     * <code>repeated string uid = 3;</code>
+     * <code>repeated string uidList = 3;</code>
      */
     public com.google.protobuf.ByteString
-        getUidBytes(int index) {
-      return uid_.getByteString(index);
+        getUidListBytes(int index) {
+      return uidList_.getByteString(index);
     }
 
     public static final int GROUPID_FIELD_NUMBER = 4;
@@ -14763,8 +14763,8 @@ public final class Message {
       if (type_ != com.tim.common.protos.Message.ConverType.SINGLE.getNumber()) {
         output.writeEnum(2, type_);
       }
-      for (int i = 0; i < uid_.size(); i++) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, uid_.getRaw(i));
+      for (int i = 0; i < uidList_.size(); i++) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, uidList_.getRaw(i));
       }
       if (!getGroupIdBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 4, groupId_);
@@ -14793,11 +14793,11 @@ public final class Message {
       }
       {
         int dataSize = 0;
-        for (int i = 0; i < uid_.size(); i++) {
-          dataSize += computeStringSizeNoTag(uid_.getRaw(i));
+        for (int i = 0; i < uidList_.size(); i++) {
+          dataSize += computeStringSizeNoTag(uidList_.getRaw(i));
         }
         size += dataSize;
-        size += 1 * getUidList().size();
+        size += 1 * getUidListList().size();
       }
       if (!getGroupIdBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, groupId_);
@@ -14829,8 +14829,8 @@ public final class Message {
       result = result && getConverId()
           .equals(other.getConverId());
       result = result && type_ == other.type_;
-      result = result && getUidList()
-          .equals(other.getUidList());
+      result = result && getUidListList()
+          .equals(other.getUidListList());
       result = result && getGroupId()
           .equals(other.getGroupId());
       result = result && (getUnCount()
@@ -14855,9 +14855,9 @@ public final class Message {
       hash = (53 * hash) + getConverId().hashCode();
       hash = (37 * hash) + TYPE_FIELD_NUMBER;
       hash = (53 * hash) + type_;
-      if (getUidCount() > 0) {
-        hash = (37 * hash) + UID_FIELD_NUMBER;
-        hash = (53 * hash) + getUidList().hashCode();
+      if (getUidListCount() > 0) {
+        hash = (37 * hash) + UIDLIST_FIELD_NUMBER;
+        hash = (53 * hash) + getUidListList().hashCode();
       }
       hash = (37 * hash) + GROUPID_FIELD_NUMBER;
       hash = (53 * hash) + getGroupId().hashCode();
@@ -15009,7 +15009,7 @@ public final class Message {
 
         type_ = 0;
 
-        uid_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        uidList_ = com.google.protobuf.LazyStringArrayList.EMPTY;
         bitField0_ = (bitField0_ & ~0x00000004);
         groupId_ = "";
 
@@ -15052,10 +15052,10 @@ public final class Message {
         result.converId_ = converId_;
         result.type_ = type_;
         if (((bitField0_ & 0x00000004) == 0x00000004)) {
-          uid_ = uid_.getUnmodifiableView();
+          uidList_ = uidList_.getUnmodifiableView();
           bitField0_ = (bitField0_ & ~0x00000004);
         }
-        result.uid_ = uid_;
+        result.uidList_ = uidList_;
         result.groupId_ = groupId_;
         result.unCount_ = unCount_;
         if (lastContentBuilder_ == null) {
@@ -15119,13 +15119,13 @@ public final class Message {
         if (other.type_ != 0) {
           setTypeValue(other.getTypeValue());
         }
-        if (!other.uid_.isEmpty()) {
-          if (uid_.isEmpty()) {
-            uid_ = other.uid_;
+        if (!other.uidList_.isEmpty()) {
+          if (uidList_.isEmpty()) {
+            uidList_ = other.uidList_;
             bitField0_ = (bitField0_ & ~0x00000004);
           } else {
-            ensureUidIsMutable();
-            uid_.addAll(other.uid_);
+            ensureUidListIsMutable();
+            uidList_.addAll(other.uidList_);
           }
           onChanged();
         }
@@ -15323,10 +15323,10 @@ public final class Message {
         return this;
       }
 
-      private com.google.protobuf.LazyStringList uid_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      private void ensureUidIsMutable() {
+      private com.google.protobuf.LazyStringList uidList_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      private void ensureUidListIsMutable() {
         if (!((bitField0_ & 0x00000004) == 0x00000004)) {
-          uid_ = new com.google.protobuf.LazyStringArrayList(uid_);
+          uidList_ = new com.google.protobuf.LazyStringArrayList(uidList_);
           bitField0_ |= 0x00000004;
          }
       }
@@ -15335,57 +15335,57 @@ public final class Message {
        * 单聊会话 用户列表
        * </pre>
        *
-       * <code>repeated string uid = 3;</code>
+       * <code>repeated string uidList = 3;</code>
        */
       public com.google.protobuf.ProtocolStringList
-          getUidList() {
-        return uid_.getUnmodifiableView();
+          getUidListList() {
+        return uidList_.getUnmodifiableView();
       }
       /**
        * <pre>
        * 单聊会话 用户列表
        * </pre>
        *
-       * <code>repeated string uid = 3;</code>
+       * <code>repeated string uidList = 3;</code>
        */
-      public int getUidCount() {
-        return uid_.size();
+      public int getUidListCount() {
+        return uidList_.size();
       }
       /**
        * <pre>
        * 单聊会话 用户列表
        * </pre>
        *
-       * <code>repeated string uid = 3;</code>
+       * <code>repeated string uidList = 3;</code>
        */
-      public java.lang.String getUid(int index) {
-        return uid_.get(index);
+      public java.lang.String getUidList(int index) {
+        return uidList_.get(index);
       }
       /**
        * <pre>
        * 单聊会话 用户列表
        * </pre>
        *
-       * <code>repeated string uid = 3;</code>
+       * <code>repeated string uidList = 3;</code>
        */
       public com.google.protobuf.ByteString
-          getUidBytes(int index) {
-        return uid_.getByteString(index);
+          getUidListBytes(int index) {
+        return uidList_.getByteString(index);
       }
       /**
        * <pre>
        * 单聊会话 用户列表
        * </pre>
        *
-       * <code>repeated string uid = 3;</code>
+       * <code>repeated string uidList = 3;</code>
        */
-      public Builder setUid(
+      public Builder setUidList(
           int index, java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  ensureUidIsMutable();
-        uid_.set(index, value);
+  ensureUidListIsMutable();
+        uidList_.set(index, value);
         onChanged();
         return this;
       }
@@ -15394,15 +15394,15 @@ public final class Message {
        * 单聊会话 用户列表
        * </pre>
        *
-       * <code>repeated string uid = 3;</code>
+       * <code>repeated string uidList = 3;</code>
        */
-      public Builder addUid(
+      public Builder addUidList(
           java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  ensureUidIsMutable();
-        uid_.add(value);
+  ensureUidListIsMutable();
+        uidList_.add(value);
         onChanged();
         return this;
       }
@@ -15411,13 +15411,13 @@ public final class Message {
        * 单聊会话 用户列表
        * </pre>
        *
-       * <code>repeated string uid = 3;</code>
+       * <code>repeated string uidList = 3;</code>
        */
-      public Builder addAllUid(
+      public Builder addAllUidList(
           java.lang.Iterable<java.lang.String> values) {
-        ensureUidIsMutable();
+        ensureUidListIsMutable();
         com.google.protobuf.AbstractMessageLite.Builder.addAll(
-            values, uid_);
+            values, uidList_);
         onChanged();
         return this;
       }
@@ -15426,10 +15426,10 @@ public final class Message {
        * 单聊会话 用户列表
        * </pre>
        *
-       * <code>repeated string uid = 3;</code>
+       * <code>repeated string uidList = 3;</code>
        */
-      public Builder clearUid() {
-        uid_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      public Builder clearUidList() {
+        uidList_ = com.google.protobuf.LazyStringArrayList.EMPTY;
         bitField0_ = (bitField0_ & ~0x00000004);
         onChanged();
         return this;
@@ -15439,16 +15439,16 @@ public final class Message {
        * 单聊会话 用户列表
        * </pre>
        *
-       * <code>repeated string uid = 3;</code>
+       * <code>repeated string uidList = 3;</code>
        */
-      public Builder addUidBytes(
+      public Builder addUidListBytes(
           com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
-        ensureUidIsMutable();
-        uid_.add(value);
+        ensureUidListIsMutable();
+        uidList_.add(value);
         onChanged();
         return this;
       }
@@ -17025,20 +17025,20 @@ public final class Message {
       "2\033.com.tim.common.protos.Code\022\014\n\004time\030\004 " +
       "\001(\004\0225\n\nconverInfo\030\005 \001(\0132!.com.tim.common" +
       ".protos.ConverInfo\0225\n\nconverList\030\006 \003(\0132!" +
-      ".com.tim.common.protos.ConverInfo\"\272\001\n\nCo" +
+      ".com.tim.common.protos.ConverInfo\"\276\001\n\nCo" +
       "nverInfo\022\020\n\010converId\030\001 \001(\t\022/\n\004type\030\002 \001(\016" +
-      "2!.com.tim.common.protos.ConverType\022\013\n\003u" +
-      "id\030\003 \003(\t\022\017\n\007groupId\030\004 \001(\t\022\017\n\007unCount\030\005 \001" +
-      "(\004\022:\n\013lastContent\030\006 \001(\0132%.com.tim.common" +
-      ".protos.MessageContent\"[\n\rNotifyMessage\022" +
-      "\n\n\002id\030\001 \001(\004\022\014\n\004type\030\002 \001(\t\022\021\n\ttargetUid\030\003" +
-      " \001(\t\022\017\n\007content\030\004 \001(\t\022\014\n\004time\030\005 \001(\004*#\n\rH" +
-      "eartBeatType\022\010\n\004PING\020\000\022\010\n\004PONG\020\001*\035\n\004Code" +
-      "\022\013\n\007SUCCESS\020\000\022\010\n\004FAIL\020\001*#\n\nConverType\022\n\n" +
-      "\006SINGLE\020\000\022\t\n\005GROUP\020\001*:\n\013MessageType\022\010\n\004T" +
-      "EXT\020\000\022\013\n\007PICTURE\020\001\022\t\n\005VOICE\020\002\022\t\n\005VIDEO\020\003" +
-      "*$\n\rOperationType\022\n\n\006DETAIL\020\000\022\007\n\003ALL\020\001B\t" +
-      "B\007Messageb\006proto3"
+      "2!.com.tim.common.protos.ConverType\022\017\n\007u" +
+      "idList\030\003 \003(\t\022\017\n\007groupId\030\004 \001(\t\022\017\n\007unCount" +
+      "\030\005 \001(\004\022:\n\013lastContent\030\006 \001(\0132%.com.tim.co" +
+      "mmon.protos.MessageContent\"[\n\rNotifyMess" +
+      "age\022\n\n\002id\030\001 \001(\004\022\014\n\004type\030\002 \001(\t\022\021\n\ttargetU" +
+      "id\030\003 \001(\t\022\017\n\007content\030\004 \001(\t\022\014\n\004time\030\005 \001(\004*" +
+      "#\n\rHeartBeatType\022\010\n\004PING\020\000\022\010\n\004PONG\020\001*\035\n\004" +
+      "Code\022\013\n\007SUCCESS\020\000\022\010\n\004FAIL\020\001*#\n\nConverTyp" +
+      "e\022\n\n\006SINGLE\020\000\022\t\n\005GROUP\020\001*:\n\013MessageType\022" +
+      "\010\n\004TEXT\020\000\022\013\n\007PICTURE\020\001\022\t\n\005VOICE\020\002\022\t\n\005VID" +
+      "EO\020\003*$\n\rOperationType\022\n\n\006DETAIL\020\000\022\007\n\003ALL" +
+      "\020\001B\tB\007Messageb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -17129,7 +17129,7 @@ public final class Message {
     internal_static_com_tim_common_protos_ConverInfo_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_tim_common_protos_ConverInfo_descriptor,
-        new java.lang.String[] { "ConverId", "Type", "Uid", "GroupId", "UnCount", "LastContent", });
+        new java.lang.String[] { "ConverId", "Type", "UidList", "GroupId", "UnCount", "LastContent", });
     internal_static_com_tim_common_protos_NotifyMessage_descriptor =
       getDescriptor().getMessageTypes().get(13);
     internal_static_com_tim_common_protos_NotifyMessage_fieldAccessorTable = new

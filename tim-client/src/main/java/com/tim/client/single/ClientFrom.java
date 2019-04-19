@@ -48,7 +48,7 @@ public class ClientFrom {
                     // 对protobuf协议的消息头上加上一个长度为32的整形字段
                     pipeline.addLast(new ProtobufVarint32LengthFieldPrepender());
                     pipeline.addLast(new ProtobufEncoder());
-                    pipeline.addLast(new ClientFromHandler("test_user2"));
+                    pipeline.addLast(new ClientFromHandler());
                 }
             });
         b.connect(HOST, PORT);

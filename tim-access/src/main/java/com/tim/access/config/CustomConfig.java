@@ -3,11 +3,13 @@ package com.tim.access.config;
 import com.tim.common.netty.IdChannelManager;
 import com.tim.common.netty.UidChannelManager;
 import com.tim.common.utils.SnowFlake;
+import com.tim.storage.conver.ConverManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -60,6 +62,12 @@ public class CustomConfig {
     @Bean
     public IdChannelManager uidChannelManager() {
         return new UidChannelManager();
+    }
+
+    @Bean
+    @DependsOn("redisTemplate")
+    public ConverManager conversationManager(RedisTemplate redisTemplate) {
+        return new ConverManager(redisTemplate);
     }
 
 }

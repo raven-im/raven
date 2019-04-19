@@ -1,11 +1,10 @@
 package com.tim.access.server;
 
+import com.tim.access.handler.server.ConversationHandler;
 import com.tim.access.handler.server.HeartBeatHandler;
 import com.tim.access.handler.server.LoginAuthHandler;
 import com.tim.access.handler.server.MesaageHandler;
 import com.tim.common.protos.Message;
-import com.tim.common.protos.Message.HeartBeat;
-import com.tim.common.protos.Message.UpDownMessage;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -50,6 +49,9 @@ public class AccessTcpServer {
     @Autowired
     private MesaageHandler mesaageHandler;
 
+    @Autowired
+    private ConversationHandler conversationHandler;
+
     @PostConstruct
     public void startServer() {
         startMessageServer();
@@ -73,6 +75,7 @@ public class AccessTcpServer {
                     pipeline.addLast("LoginAuthHandler", loginAuthHandler);
                     pipeline.addLast("HeartBeatHandler", heartBeatHandler);
                     pipeline.addLast("MesaageHandler", mesaageHandler);
+                    pipeline.addLast("ConversationHandler", conversationHandler);
 
                 }
             });

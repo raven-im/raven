@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class MsgContent implements Serializable {
 
-    private Long id;
+    private long id;
 
     private String uid;
 
@@ -14,10 +14,9 @@ public class MsgContent implements Serializable {
 
     private String content;
 
-    private Long time;
+    private long time;
 
-
-    public MsgContent setId(Long id) {
+    public MsgContent setId(long id) {
         this.id = id;
         return this;
     }
@@ -37,12 +36,12 @@ public class MsgContent implements Serializable {
         return this;
     }
 
-    public MsgContent setTime(Long time) {
+    public MsgContent setTime(long time) {
         this.time = time;
         return this;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
@@ -58,9 +57,7 @@ public class MsgContent implements Serializable {
         return content;
     }
 
-    public Long getTime() {
+    public long getTime() {
         return time;
     }
-
-
 }

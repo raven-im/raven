@@ -29,10 +29,10 @@ public class HeartBeatHandler extends SimpleChannelInboundHandler<TimMessage> {
     private SnowFlake snowFlake;
 
     @Override
-    protected void channelRead0(ChannelHandlerContext channelHandlerContext,
-        TimMessage message) {
+    protected void channelRead0(ChannelHandlerContext ctx, TimMessage message) {
         if (message.getType() == Type.HeartBeat) {
             HeartBeat heartBeat = message.getHeartBeat();
+            log.info("receive hearbeat :{}", heartBeat);
             if (heartBeat.getHeartBeatType() == HeartBeatType.PING) {
                 HeartBeat heartBeatAck = HeartBeat.newBuilder()
                     .setId(heartBeat.getId())
@@ -40,14 +40,10 @@ public class HeartBeatHandler extends SimpleChannelInboundHandler<TimMessage> {
                     .build();
                 TimMessage timMessage = TimMessage.newBuilder().setType(Type.HeartBeat)
                     .setHeartBeat(heartBeatAck).build();
-                channelHandlerContext.writeAndFlush(timMessage);
-            } else if (heartBeat.getHeartBeatType() == HeartBeatType.PONG) {
-                log.info("receive hearbeat :{}", heartBeat.toString());
-                NettyAttrUtil
-                    .updateReaderTime(channelHandlerContext.channel(), System.currentTimeMillis());
+                ctx.writeAndFlush(timMessage);
             }
         } else {
-            channelHandlerContext.fireChannelRead(message);
+            ctx.fireChannelRead(message);
         }
     }
 
@@ -55,7 +51,12 @@ public class HeartBeatHandler extends SimpleChannelInboundHandler<TimMessage> {
     public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
         if (evt instanceof IdleStateEvent) {
             if (((IdleStateEvent) evt).state() == IdleState.READER_IDLE) {
+                Long lastReadTime = NettyAttrUtil.getReaderTime(ctx.channel());
                 String uid = uidChannelManager.getIdByChannel(ctx.channel());
+                if ( System.currentTimeMillis() - lastReadTime > 30000) {
+                    log.info("uid:{} last read time more than 30 seconds", uid);
+                    ctx.close();
+                }
                 HeartBeat heartBeat = HeartBeat.newBuilder()
                     .setId(snowFlake.nextId())
                     .setHeartBeatType(HeartBeatType.PING)

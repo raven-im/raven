@@ -18,6 +18,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.connection.RedisZSetCommands.Limit;
+import org.springframework.data.redis.connection.RedisZSetCommands.Range;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.CollectionUtils;
 
@@ -89,7 +91,6 @@ public class ConverManager {
 
     public void removeMemberConverList(String groupId, List<String> members) {
         String converId = UidUtil.uuid24ByFactor(groupId);
-
         ConverInfo converInfo = getConverInfo(converId);
         List<String> memberList = converInfo.getUidList();
         memberList.removeAll(members);
@@ -126,6 +127,20 @@ public class ConverManager {
         redisTemplate.boundZSetOps(PREFIX_MESSAGE_ID + converId).add(str, msgContent.getTime());
     }
 
+    public List<MsgContent> getHistoryMsg(String converId, Long beginTime) {
+        List<MsgContent> msgContents = new ArrayList<>();
+        long now = System.currentTimeMillis();
+        Set<String> messages = redisTemplate.opsForZSet()
+            .rangeByScore(PREFIX_MESSAGE_ID + converId, Double.valueOf(beginTime),
+                Double.valueOf(now), 0, 100);
+        for (String message : messages) {
+            MsgContent msgContent = JsonHelper
+                .readValue(message, MsgContent.class);
+            msgContents.add(msgContent);
+        }
+        return msgContents;
+    }
+
     public ConverInfo getConverInfo(String converId) {
         Object ob = redisTemplate.opsForValue().get(converId);
         if (null == ob) {
@@ -141,10 +156,12 @@ public class ConverManager {
         for (Entry<String, Integer> entry : converList.entrySet()) {
             ConverInfo converInfo = getConverInfo(entry.getKey());
             if (null != converInfo) {
-                Set<String> strs = redisTemplate.boundZSetOps(PREFIX_MESSAGE_ID + converInfo.getId())
+                Set<String> strs = redisTemplate
+                    .boundZSetOps(PREFIX_MESSAGE_ID + converInfo.getId())
                     .range(-1, -1);
                 if (strs.size() >= 1) {
-                    MsgContent msgContent = JsonHelper.readValue(strs.iterator().next().toString(), MsgContent.class);
+                    MsgContent msgContent = JsonHelper
+                        .readValue(strs.iterator().next().toString(), MsgContent.class);
                     ConverListInfo converListInfo = new ConverListInfo()
                         .setId(converInfo.getId()).setGroupId(converInfo.getGroupId())
                         .setLastContent(msgContent)

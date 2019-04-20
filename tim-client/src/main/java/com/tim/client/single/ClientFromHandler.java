@@ -2,9 +2,12 @@ package com.tim.client.single;
 
 import com.tim.common.protos.Message.Code;
 import com.tim.common.protos.Message.ConverAck;
+import com.tim.common.protos.Message.ConverInfo;
 import com.tim.common.protos.Message.ConverReq;
 import com.tim.common.protos.Message.ConverType;
 import com.tim.common.protos.Message.HeartBeat;
+import com.tim.common.protos.Message.HisMessagesAck;
+import com.tim.common.protos.Message.HisMessagesReq;
 import com.tim.common.protos.Message.Login;
 import com.tim.common.protos.Message.LoginAck;
 import com.tim.common.protos.Message.MessageAck;
@@ -86,6 +89,18 @@ public class ClientFromHandler extends SimpleChannelInboundHandler<TimMessage> {
         if (message.getType() == Type.ConverAck) {
             ConverAck converAck = message.getConverAck();
             log.info("receive conver ack message:{}", converAck);
+            long beginTime = 1L;
+            for (ConverInfo converInfo : converAck.getConverListList()) {
+                HisMessagesReq hisMessagesReq = HisMessagesReq.newBuilder().setId(333)
+                    .setBeaginTime(beginTime).setConverId(converInfo.getConverId()).build();
+                TimMessage timMessage = TimMessage.newBuilder().setType(Type.HisMessagesReq)
+                    .setHisMessagesReq(hisMessagesReq).build();
+                channelHandlerContext.writeAndFlush(timMessage);
+            }
+        }
+        if (message.getType() == Type.HisMessagesAck) {
+            HisMessagesAck hisMessagesAck = message.getHisMessagesAck();
+            log.info("receive history messaage ack:{}", hisMessagesAck);
         }
     }
 

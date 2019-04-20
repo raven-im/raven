@@ -2,6 +2,7 @@ package com.tim.access.handler.server;
 
 import com.tim.access.util.IpUtil;
 import com.tim.common.netty.IdChannelManager;
+import com.tim.common.netty.NettyAttrUtil;
 import com.tim.common.protos.Message.Code;
 import com.tim.common.protos.Message.Login;
 import com.tim.common.protos.Message.LoginAck;
@@ -39,8 +40,7 @@ public class LoginAuthHandler extends SimpleChannelInboundHandler<TimMessage> {
     }
 
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx,
-        TimMessage message) throws Exception {
+    protected void channelRead0(ChannelHandlerContext ctx, TimMessage message) throws Exception {
         if (message.getType() == Type.Login) {
             Login loginMesaage = message.getLogin();
             log.info("login msg:{}", loginMesaage.toString());
@@ -64,6 +64,8 @@ public class LoginAuthHandler extends SimpleChannelInboundHandler<TimMessage> {
             if (null == uidChannelManager.getIdByChannel(ctx.channel())) {
                 ctx.close();
             }
+            NettyAttrUtil
+                .updateReaderTime(ctx.channel(), System.currentTimeMillis());
             ctx.fireChannelRead(message);
         }
     }

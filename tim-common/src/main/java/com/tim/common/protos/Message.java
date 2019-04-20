@@ -10533,6 +10533,15 @@ public final class Message {
      */
     com.google.protobuf.ByteString
         getConverIdBytes();
+
+    /**
+     * <pre>
+     * 消息起始时间
+     * </pre>
+     *
+     * <code>uint64 beaginTime = 3;</code>
+     */
+    long getBeaginTime();
   }
   /**
    * <pre>
@@ -10553,6 +10562,7 @@ public final class Message {
     private HisMessagesReq() {
       id_ = 0L;
       converId_ = "";
+      beaginTime_ = 0L;
     }
 
     @java.lang.Override
@@ -10588,6 +10598,11 @@ public final class Message {
               java.lang.String s = input.readStringRequireUtf8();
 
               converId_ = s;
+              break;
+            }
+            case 24: {
+
+              beaginTime_ = input.readUInt64();
               break;
             }
             default: {
@@ -10677,6 +10692,19 @@ public final class Message {
       }
     }
 
+    public static final int BEAGINTIME_FIELD_NUMBER = 3;
+    private long beaginTime_;
+    /**
+     * <pre>
+     * 消息起始时间
+     * </pre>
+     *
+     * <code>uint64 beaginTime = 3;</code>
+     */
+    public long getBeaginTime() {
+      return beaginTime_;
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -10697,6 +10725,9 @@ public final class Message {
       if (!getConverIdBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 2, converId_);
       }
+      if (beaginTime_ != 0L) {
+        output.writeUInt64(3, beaginTime_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -10712,6 +10743,10 @@ public final class Message {
       }
       if (!getConverIdBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, converId_);
+      }
+      if (beaginTime_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt64Size(3, beaginTime_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -10733,6 +10768,8 @@ public final class Message {
           == other.getId());
       result = result && getConverId()
           .equals(other.getConverId());
+      result = result && (getBeaginTime()
+          == other.getBeaginTime());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -10749,6 +10786,9 @@ public final class Message {
           getId());
       hash = (37 * hash) + CONVERID_FIELD_NUMBER;
       hash = (53 * hash) + getConverId().hashCode();
+      hash = (37 * hash) + BEAGINTIME_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getBeaginTime());
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -10890,6 +10930,8 @@ public final class Message {
 
         converId_ = "";
 
+        beaginTime_ = 0L;
+
         return this;
       }
 
@@ -10918,6 +10960,7 @@ public final class Message {
         com.tim.common.protos.Message.HisMessagesReq result = new com.tim.common.protos.Message.HisMessagesReq(this);
         result.id_ = id_;
         result.converId_ = converId_;
+        result.beaginTime_ = beaginTime_;
         onBuilt();
         return result;
       }
@@ -10972,6 +11015,9 @@ public final class Message {
         if (!other.getConverId().isEmpty()) {
           converId_ = other.converId_;
           onChanged();
+        }
+        if (other.getBeaginTime() != 0L) {
+          setBeaginTime(other.getBeaginTime());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -11128,6 +11174,44 @@ public final class Message {
         onChanged();
         return this;
       }
+
+      private long beaginTime_ ;
+      /**
+       * <pre>
+       * 消息起始时间
+       * </pre>
+       *
+       * <code>uint64 beaginTime = 3;</code>
+       */
+      public long getBeaginTime() {
+        return beaginTime_;
+      }
+      /**
+       * <pre>
+       * 消息起始时间
+       * </pre>
+       *
+       * <code>uint64 beaginTime = 3;</code>
+       */
+      public Builder setBeaginTime(long value) {
+        
+        beaginTime_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * 消息起始时间
+       * </pre>
+       *
+       * <code>uint64 beaginTime = 3;</code>
+       */
+      public Builder clearBeaginTime() {
+        
+        beaginTime_ = 0L;
+        onChanged();
+        return this;
+      }
       @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -11213,25 +11297,45 @@ public final class Message {
         getConverIdBytes();
 
     /**
-     * <code>repeated .com.tim.common.protos.MessageContent messageList = 3;</code>
+     * <pre>
+     * 消息列表
+     * </pre>
+     *
+     * <code>repeated .com.tim.common.protos.MessageContent messageList = 4;</code>
      */
     java.util.List<com.tim.common.protos.Message.MessageContent> 
         getMessageListList();
     /**
-     * <code>repeated .com.tim.common.protos.MessageContent messageList = 3;</code>
+     * <pre>
+     * 消息列表
+     * </pre>
+     *
+     * <code>repeated .com.tim.common.protos.MessageContent messageList = 4;</code>
      */
     com.tim.common.protos.Message.MessageContent getMessageList(int index);
     /**
-     * <code>repeated .com.tim.common.protos.MessageContent messageList = 3;</code>
+     * <pre>
+     * 消息列表
+     * </pre>
+     *
+     * <code>repeated .com.tim.common.protos.MessageContent messageList = 4;</code>
      */
     int getMessageListCount();
     /**
-     * <code>repeated .com.tim.common.protos.MessageContent messageList = 3;</code>
+     * <pre>
+     * 消息列表
+     * </pre>
+     *
+     * <code>repeated .com.tim.common.protos.MessageContent messageList = 4;</code>
      */
     java.util.List<? extends com.tim.common.protos.Message.MessageContentOrBuilder> 
         getMessageListOrBuilderList();
     /**
-     * <code>repeated .com.tim.common.protos.MessageContent messageList = 3;</code>
+     * <pre>
+     * 消息列表
+     * </pre>
+     *
+     * <code>repeated .com.tim.common.protos.MessageContent messageList = 4;</code>
      */
     com.tim.common.protos.Message.MessageContentOrBuilder getMessageListOrBuilder(
         int index);
@@ -11293,7 +11397,7 @@ public final class Message {
               converId_ = s;
               break;
             }
-            case 26: {
+            case 34: {
               if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
                 messageList_ = new java.util.ArrayList<com.tim.common.protos.Message.MessageContent>();
                 mutable_bitField0_ |= 0x00000004;
@@ -11393,35 +11497,55 @@ public final class Message {
       }
     }
 
-    public static final int MESSAGELIST_FIELD_NUMBER = 3;
+    public static final int MESSAGELIST_FIELD_NUMBER = 4;
     private java.util.List<com.tim.common.protos.Message.MessageContent> messageList_;
     /**
-     * <code>repeated .com.tim.common.protos.MessageContent messageList = 3;</code>
+     * <pre>
+     * 消息列表
+     * </pre>
+     *
+     * <code>repeated .com.tim.common.protos.MessageContent messageList = 4;</code>
      */
     public java.util.List<com.tim.common.protos.Message.MessageContent> getMessageListList() {
       return messageList_;
     }
     /**
-     * <code>repeated .com.tim.common.protos.MessageContent messageList = 3;</code>
+     * <pre>
+     * 消息列表
+     * </pre>
+     *
+     * <code>repeated .com.tim.common.protos.MessageContent messageList = 4;</code>
      */
     public java.util.List<? extends com.tim.common.protos.Message.MessageContentOrBuilder> 
         getMessageListOrBuilderList() {
       return messageList_;
     }
     /**
-     * <code>repeated .com.tim.common.protos.MessageContent messageList = 3;</code>
+     * <pre>
+     * 消息列表
+     * </pre>
+     *
+     * <code>repeated .com.tim.common.protos.MessageContent messageList = 4;</code>
      */
     public int getMessageListCount() {
       return messageList_.size();
     }
     /**
-     * <code>repeated .com.tim.common.protos.MessageContent messageList = 3;</code>
+     * <pre>
+     * 消息列表
+     * </pre>
+     *
+     * <code>repeated .com.tim.common.protos.MessageContent messageList = 4;</code>
      */
     public com.tim.common.protos.Message.MessageContent getMessageList(int index) {
       return messageList_.get(index);
     }
     /**
-     * <code>repeated .com.tim.common.protos.MessageContent messageList = 3;</code>
+     * <pre>
+     * 消息列表
+     * </pre>
+     *
+     * <code>repeated .com.tim.common.protos.MessageContent messageList = 4;</code>
      */
     public com.tim.common.protos.Message.MessageContentOrBuilder getMessageListOrBuilder(
         int index) {
@@ -11449,7 +11573,7 @@ public final class Message {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 2, converId_);
       }
       for (int i = 0; i < messageList_.size(); i++) {
-        output.writeMessage(3, messageList_.get(i));
+        output.writeMessage(4, messageList_.get(i));
       }
       unknownFields.writeTo(output);
     }
@@ -11469,7 +11593,7 @@ public final class Message {
       }
       for (int i = 0; i < messageList_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(3, messageList_.get(i));
+          .computeMessageSize(4, messageList_.get(i));
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -11952,7 +12076,11 @@ public final class Message {
           com.tim.common.protos.Message.MessageContent, com.tim.common.protos.Message.MessageContent.Builder, com.tim.common.protos.Message.MessageContentOrBuilder> messageListBuilder_;
 
       /**
-       * <code>repeated .com.tim.common.protos.MessageContent messageList = 3;</code>
+       * <pre>
+       * 消息列表
+       * </pre>
+       *
+       * <code>repeated .com.tim.common.protos.MessageContent messageList = 4;</code>
        */
       public java.util.List<com.tim.common.protos.Message.MessageContent> getMessageListList() {
         if (messageListBuilder_ == null) {
@@ -11962,7 +12090,11 @@ public final class Message {
         }
       }
       /**
-       * <code>repeated .com.tim.common.protos.MessageContent messageList = 3;</code>
+       * <pre>
+       * 消息列表
+       * </pre>
+       *
+       * <code>repeated .com.tim.common.protos.MessageContent messageList = 4;</code>
        */
       public int getMessageListCount() {
         if (messageListBuilder_ == null) {
@@ -11972,7 +12104,11 @@ public final class Message {
         }
       }
       /**
-       * <code>repeated .com.tim.common.protos.MessageContent messageList = 3;</code>
+       * <pre>
+       * 消息列表
+       * </pre>
+       *
+       * <code>repeated .com.tim.common.protos.MessageContent messageList = 4;</code>
        */
       public com.tim.common.protos.Message.MessageContent getMessageList(int index) {
         if (messageListBuilder_ == null) {
@@ -11982,7 +12118,11 @@ public final class Message {
         }
       }
       /**
-       * <code>repeated .com.tim.common.protos.MessageContent messageList = 3;</code>
+       * <pre>
+       * 消息列表
+       * </pre>
+       *
+       * <code>repeated .com.tim.common.protos.MessageContent messageList = 4;</code>
        */
       public Builder setMessageList(
           int index, com.tim.common.protos.Message.MessageContent value) {
@@ -11999,7 +12139,11 @@ public final class Message {
         return this;
       }
       /**
-       * <code>repeated .com.tim.common.protos.MessageContent messageList = 3;</code>
+       * <pre>
+       * 消息列表
+       * </pre>
+       *
+       * <code>repeated .com.tim.common.protos.MessageContent messageList = 4;</code>
        */
       public Builder setMessageList(
           int index, com.tim.common.protos.Message.MessageContent.Builder builderForValue) {
@@ -12013,7 +12157,11 @@ public final class Message {
         return this;
       }
       /**
-       * <code>repeated .com.tim.common.protos.MessageContent messageList = 3;</code>
+       * <pre>
+       * 消息列表
+       * </pre>
+       *
+       * <code>repeated .com.tim.common.protos.MessageContent messageList = 4;</code>
        */
       public Builder addMessageList(com.tim.common.protos.Message.MessageContent value) {
         if (messageListBuilder_ == null) {
@@ -12029,7 +12177,11 @@ public final class Message {
         return this;
       }
       /**
-       * <code>repeated .com.tim.common.protos.MessageContent messageList = 3;</code>
+       * <pre>
+       * 消息列表
+       * </pre>
+       *
+       * <code>repeated .com.tim.common.protos.MessageContent messageList = 4;</code>
        */
       public Builder addMessageList(
           int index, com.tim.common.protos.Message.MessageContent value) {
@@ -12046,7 +12198,11 @@ public final class Message {
         return this;
       }
       /**
-       * <code>repeated .com.tim.common.protos.MessageContent messageList = 3;</code>
+       * <pre>
+       * 消息列表
+       * </pre>
+       *
+       * <code>repeated .com.tim.common.protos.MessageContent messageList = 4;</code>
        */
       public Builder addMessageList(
           com.tim.common.protos.Message.MessageContent.Builder builderForValue) {
@@ -12060,7 +12216,11 @@ public final class Message {
         return this;
       }
       /**
-       * <code>repeated .com.tim.common.protos.MessageContent messageList = 3;</code>
+       * <pre>
+       * 消息列表
+       * </pre>
+       *
+       * <code>repeated .com.tim.common.protos.MessageContent messageList = 4;</code>
        */
       public Builder addMessageList(
           int index, com.tim.common.protos.Message.MessageContent.Builder builderForValue) {
@@ -12074,7 +12234,11 @@ public final class Message {
         return this;
       }
       /**
-       * <code>repeated .com.tim.common.protos.MessageContent messageList = 3;</code>
+       * <pre>
+       * 消息列表
+       * </pre>
+       *
+       * <code>repeated .com.tim.common.protos.MessageContent messageList = 4;</code>
        */
       public Builder addAllMessageList(
           java.lang.Iterable<? extends com.tim.common.protos.Message.MessageContent> values) {
@@ -12089,7 +12253,11 @@ public final class Message {
         return this;
       }
       /**
-       * <code>repeated .com.tim.common.protos.MessageContent messageList = 3;</code>
+       * <pre>
+       * 消息列表
+       * </pre>
+       *
+       * <code>repeated .com.tim.common.protos.MessageContent messageList = 4;</code>
        */
       public Builder clearMessageList() {
         if (messageListBuilder_ == null) {
@@ -12102,7 +12270,11 @@ public final class Message {
         return this;
       }
       /**
-       * <code>repeated .com.tim.common.protos.MessageContent messageList = 3;</code>
+       * <pre>
+       * 消息列表
+       * </pre>
+       *
+       * <code>repeated .com.tim.common.protos.MessageContent messageList = 4;</code>
        */
       public Builder removeMessageList(int index) {
         if (messageListBuilder_ == null) {
@@ -12115,14 +12287,22 @@ public final class Message {
         return this;
       }
       /**
-       * <code>repeated .com.tim.common.protos.MessageContent messageList = 3;</code>
+       * <pre>
+       * 消息列表
+       * </pre>
+       *
+       * <code>repeated .com.tim.common.protos.MessageContent messageList = 4;</code>
        */
       public com.tim.common.protos.Message.MessageContent.Builder getMessageListBuilder(
           int index) {
         return getMessageListFieldBuilder().getBuilder(index);
       }
       /**
-       * <code>repeated .com.tim.common.protos.MessageContent messageList = 3;</code>
+       * <pre>
+       * 消息列表
+       * </pre>
+       *
+       * <code>repeated .com.tim.common.protos.MessageContent messageList = 4;</code>
        */
       public com.tim.common.protos.Message.MessageContentOrBuilder getMessageListOrBuilder(
           int index) {
@@ -12132,7 +12312,11 @@ public final class Message {
         }
       }
       /**
-       * <code>repeated .com.tim.common.protos.MessageContent messageList = 3;</code>
+       * <pre>
+       * 消息列表
+       * </pre>
+       *
+       * <code>repeated .com.tim.common.protos.MessageContent messageList = 4;</code>
        */
       public java.util.List<? extends com.tim.common.protos.Message.MessageContentOrBuilder> 
            getMessageListOrBuilderList() {
@@ -12143,14 +12327,22 @@ public final class Message {
         }
       }
       /**
-       * <code>repeated .com.tim.common.protos.MessageContent messageList = 3;</code>
+       * <pre>
+       * 消息列表
+       * </pre>
+       *
+       * <code>repeated .com.tim.common.protos.MessageContent messageList = 4;</code>
        */
       public com.tim.common.protos.Message.MessageContent.Builder addMessageListBuilder() {
         return getMessageListFieldBuilder().addBuilder(
             com.tim.common.protos.Message.MessageContent.getDefaultInstance());
       }
       /**
-       * <code>repeated .com.tim.common.protos.MessageContent messageList = 3;</code>
+       * <pre>
+       * 消息列表
+       * </pre>
+       *
+       * <code>repeated .com.tim.common.protos.MessageContent messageList = 4;</code>
        */
       public com.tim.common.protos.Message.MessageContent.Builder addMessageListBuilder(
           int index) {
@@ -12158,7 +12350,11 @@ public final class Message {
             index, com.tim.common.protos.Message.MessageContent.getDefaultInstance());
       }
       /**
-       * <code>repeated .com.tim.common.protos.MessageContent messageList = 3;</code>
+       * <pre>
+       * 消息列表
+       * </pre>
+       *
+       * <code>repeated .com.tim.common.protos.MessageContent messageList = 4;</code>
        */
       public java.util.List<com.tim.common.protos.Message.MessageContent.Builder> 
            getMessageListBuilderList() {
@@ -17014,31 +17210,32 @@ public final class Message {
       ".common.protos.Code\"z\n\016MessageContent\022\n\n" +
       "\002id\030\001 \001(\004\022\013\n\003uid\030\002 \001(\t\0220\n\004type\030\003 \001(\0162\".c" +
       "om.tim.common.protos.MessageType\022\017\n\007cont" +
-      "ent\030\004 \001(\t\022\014\n\004time\030\005 \001(\004\".\n\016HisMessagesRe" +
-      "q\022\n\n\002id\030\001 \001(\004\022\020\n\010converId\030\002 \001(\t\"j\n\016HisMe" +
-      "ssagesAck\022\n\n\002id\030\001 \001(\004\022\020\n\010converId\030\002 \001(\t\022" +
-      ":\n\013messageList\030\003 \003(\0132%.com.tim.common.pr" +
-      "otos.MessageContent\"c\n\tConverReq\022\n\n\002id\030\001" +
-      " \001(\004\0222\n\004type\030\002 \001(\0162$.com.tim.common.prot" +
-      "os.OperationType\022\026\n\016conversationId\030\003 \001(\t" +
-      "\"\276\001\n\tConverAck\022\n\n\002id\030\001 \001(\004\022)\n\004code\030\003 \001(\016" +
-      "2\033.com.tim.common.protos.Code\022\014\n\004time\030\004 " +
-      "\001(\004\0225\n\nconverInfo\030\005 \001(\0132!.com.tim.common" +
-      ".protos.ConverInfo\0225\n\nconverList\030\006 \003(\0132!" +
-      ".com.tim.common.protos.ConverInfo\"\276\001\n\nCo" +
-      "nverInfo\022\020\n\010converId\030\001 \001(\t\022/\n\004type\030\002 \001(\016" +
-      "2!.com.tim.common.protos.ConverType\022\017\n\007u" +
-      "idList\030\003 \003(\t\022\017\n\007groupId\030\004 \001(\t\022\017\n\007unCount" +
-      "\030\005 \001(\004\022:\n\013lastContent\030\006 \001(\0132%.com.tim.co" +
-      "mmon.protos.MessageContent\"[\n\rNotifyMess" +
-      "age\022\n\n\002id\030\001 \001(\004\022\014\n\004type\030\002 \001(\t\022\021\n\ttargetU" +
-      "id\030\003 \001(\t\022\017\n\007content\030\004 \001(\t\022\014\n\004time\030\005 \001(\004*" +
-      "#\n\rHeartBeatType\022\010\n\004PING\020\000\022\010\n\004PONG\020\001*\035\n\004" +
-      "Code\022\013\n\007SUCCESS\020\000\022\010\n\004FAIL\020\001*#\n\nConverTyp" +
-      "e\022\n\n\006SINGLE\020\000\022\t\n\005GROUP\020\001*:\n\013MessageType\022" +
-      "\010\n\004TEXT\020\000\022\013\n\007PICTURE\020\001\022\t\n\005VOICE\020\002\022\t\n\005VID" +
-      "EO\020\003*$\n\rOperationType\022\n\n\006DETAIL\020\000\022\007\n\003ALL" +
-      "\020\001B\tB\007Messageb\006proto3"
+      "ent\030\004 \001(\t\022\014\n\004time\030\005 \001(\004\"B\n\016HisMessagesRe" +
+      "q\022\n\n\002id\030\001 \001(\004\022\020\n\010converId\030\002 \001(\t\022\022\n\nbeagi" +
+      "nTime\030\003 \001(\004\"j\n\016HisMessagesAck\022\n\n\002id\030\001 \001(" +
+      "\004\022\020\n\010converId\030\002 \001(\t\022:\n\013messageList\030\004 \003(\013" +
+      "2%.com.tim.common.protos.MessageContent\"" +
+      "c\n\tConverReq\022\n\n\002id\030\001 \001(\004\0222\n\004type\030\002 \001(\0162$" +
+      ".com.tim.common.protos.OperationType\022\026\n\016" +
+      "conversationId\030\003 \001(\t\"\276\001\n\tConverAck\022\n\n\002id" +
+      "\030\001 \001(\004\022)\n\004code\030\003 \001(\0162\033.com.tim.common.pr" +
+      "otos.Code\022\014\n\004time\030\004 \001(\004\0225\n\nconverInfo\030\005 " +
+      "\001(\0132!.com.tim.common.protos.ConverInfo\0225" +
+      "\n\nconverList\030\006 \003(\0132!.com.tim.common.prot" +
+      "os.ConverInfo\"\276\001\n\nConverInfo\022\020\n\010converId" +
+      "\030\001 \001(\t\022/\n\004type\030\002 \001(\0162!.com.tim.common.pr" +
+      "otos.ConverType\022\017\n\007uidList\030\003 \003(\t\022\017\n\007grou" +
+      "pId\030\004 \001(\t\022\017\n\007unCount\030\005 \001(\004\022:\n\013lastConten" +
+      "t\030\006 \001(\0132%.com.tim.common.protos.MessageC" +
+      "ontent\"[\n\rNotifyMessage\022\n\n\002id\030\001 \001(\004\022\014\n\004t" +
+      "ype\030\002 \001(\t\022\021\n\ttargetUid\030\003 \001(\t\022\017\n\007content\030" +
+      "\004 \001(\t\022\014\n\004time\030\005 \001(\004*#\n\rHeartBeatType\022\010\n\004" +
+      "PING\020\000\022\010\n\004PONG\020\001*\035\n\004Code\022\013\n\007SUCCESS\020\000\022\010\n" +
+      "\004FAIL\020\001*#\n\nConverType\022\n\n\006SINGLE\020\000\022\t\n\005GRO" +
+      "UP\020\001*:\n\013MessageType\022\010\n\004TEXT\020\000\022\013\n\007PICTURE" +
+      "\020\001\022\t\n\005VOICE\020\002\022\t\n\005VIDEO\020\003*$\n\rOperationTyp" +
+      "e\022\n\n\006DETAIL\020\000\022\007\n\003ALL\020\001B\tB\007Messageb\006proto" +
+      "3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -17105,7 +17302,7 @@ public final class Message {
     internal_static_com_tim_common_protos_HisMessagesReq_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_tim_common_protos_HisMessagesReq_descriptor,
-        new java.lang.String[] { "Id", "ConverId", });
+        new java.lang.String[] { "Id", "ConverId", "BeaginTime", });
     internal_static_com_tim_common_protos_HisMessagesAck_descriptor =
       getDescriptor().getMessageTypes().get(9);
     internal_static_com_tim_common_protos_HisMessagesAck_fieldAccessorTable = new

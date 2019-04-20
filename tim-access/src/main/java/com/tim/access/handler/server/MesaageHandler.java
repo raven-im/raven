@@ -35,8 +35,7 @@ public class MesaageHandler extends SimpleChannelInboundHandler<TimMessage> {
     private SnowFlake snowFlake;
 
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx,
-        TimMessage message) throws Exception {
+    protected void channelRead0(ChannelHandlerContext ctx, TimMessage message) throws Exception {
         if (message.getType() == Type.UpDownMessage) {
             UpDownMessage upMessage = message.getUpDownMessage();
             log.info("receive up message:{}", upMessage);
@@ -67,7 +66,7 @@ public class MesaageHandler extends SimpleChannelInboundHandler<TimMessage> {
             } else {
                 sendFailAck(ctx, upMessage);
             }
-        }else {
+        } else {
             ctx.fireChannelRead(message);
         }
     }

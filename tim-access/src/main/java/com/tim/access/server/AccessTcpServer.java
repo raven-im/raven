@@ -2,6 +2,7 @@ package com.tim.access.server;
 
 import com.tim.access.handler.server.ConversationHandler;
 import com.tim.access.handler.server.HeartBeatHandler;
+import com.tim.access.handler.server.HistoryHandler;
 import com.tim.access.handler.server.LoginAuthHandler;
 import com.tim.access.handler.server.MesaageHandler;
 import com.tim.common.protos.Message;
@@ -52,6 +53,9 @@ public class AccessTcpServer {
     @Autowired
     private ConversationHandler conversationHandler;
 
+    @Autowired
+    private HistoryHandler historyHandler;
+
     @PostConstruct
     public void startServer() {
         startMessageServer();
@@ -76,7 +80,7 @@ public class AccessTcpServer {
                     pipeline.addLast("HeartBeatHandler", heartBeatHandler);
                     pipeline.addLast("MesaageHandler", mesaageHandler);
                     pipeline.addLast("ConversationHandler", conversationHandler);
-
+                    pipeline.addLast("HistoryHandler", historyHandler);
                 }
             });
         bindConnectionOptions(bootstrap);

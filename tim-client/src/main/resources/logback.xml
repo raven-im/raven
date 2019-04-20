@@ -29,7 +29,6 @@
     <logger name="com.tim.route" level="DEBUG"></logger>
     <root level="INFO">
         <appender-ref ref="CONSOLE"/>
-        <appender-ref ref="FILE"/>
     </root>
 
 </configuration>

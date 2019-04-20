@@ -37,8 +37,7 @@ public class ConversationHandler extends SimpleChannelInboundHandler<TimMessage>
     private ConverManager converManager;
 
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx,
-        TimMessage message) throws Exception {
+    protected void channelRead0(ChannelHandlerContext ctx, TimMessage message) throws Exception {
         if (message.getType() == Type.ConverReq) {
             ConverReq conversationReq = message.getConverReq();
             log.info("receive conver request message:{}", conversationReq);
@@ -108,6 +107,8 @@ public class ConversationHandler extends SimpleChannelInboundHandler<TimMessage>
             } else {
                 sendFailAck(ctx, conversationReq.getId());
             }
+        } else {
+            ctx.fireChannelRead(message);
         }
     }
 

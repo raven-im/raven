@@ -1,6 +1,7 @@
 package com.tim.access.handler.server;
 
 import com.tim.access.util.IpUtil;
+import com.tim.common.loadbalance.Server;
 import com.tim.common.netty.IdChannelManager;
 import com.tim.common.netty.NettyAttrUtil;
 import com.tim.common.protos.Message.Code;
@@ -9,6 +10,7 @@ import com.tim.common.protos.Message.LoginAck;
 import com.tim.common.protos.Message.TimMessage;
 import com.tim.common.protos.Message.TimMessage.Type;
 import com.tim.common.utils.Constants;
+import com.tim.storage.route.RouteManager;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -31,6 +33,9 @@ public class LoginAuthHandler extends SimpleChannelInboundHandler<TimMessage> {
     @Autowired
     private RedisTemplate redisTemplate;
 
+    @Autowired
+    private RouteManager routeManager;
+
     @Value("${netty.tcp.port}")
     private int nettyTcpPort;
 
@@ -43,7 +48,7 @@ public class LoginAuthHandler extends SimpleChannelInboundHandler<TimMessage> {
     protected void channelRead0(ChannelHandlerContext ctx, TimMessage message) throws Exception {
         if (message.getType() == Type.Login) {
             Login loginMesaage = message.getLogin();
-            log.info("login msg:{}", loginMesaage.toString());
+            log.info("login msg:{}", loginMesaage);
 //            String token = loginMesaage.getToken();
 //            if (!verifyToken(token)) {
 //                LoginAck loginAck = LoginAck.newBuilder()
@@ -53,11 +58,7 @@ public class LoginAuthHandler extends SimpleChannelInboundHandler<TimMessage> {
 //                    .build();
 //                ctx.writeAndFlush(loginAck);
 //            }
-            // 增加路由
-            redisTemplate.boundHashOps(Constants.USER_ROUTE_KEY)
-                .putIfAbsent(loginMesaage.getUid(), getLocalAddress());
-            redisTemplate.boundSetOps(Constants.ACCESS_SERVER_ROUTE_KEY + getLocalAddress())
-                .add(loginMesaage.getUid());
+            routeManager.addUser2Server(loginMesaage.getUid(), getLocalServer());
             uidChannelManager.addId2Channel(loginMesaage.getUid(), ctx.channel());
             sendLoginAck(ctx, loginMesaage.getId(), Code.SUCCESS);
         } else {
@@ -78,15 +79,13 @@ public class LoginAuthHandler extends SimpleChannelInboundHandler<TimMessage> {
             uidChannelManager.removeChannel(ctx.channel());
             // 最后一台设备下线才清除路由
             if (CollectionUtils.isEmpty(uidChannelManager.getChannelsById(uid))) {
-                redisTemplate.boundHashOps(Constants.USER_ROUTE_KEY).delete(uid);
-                redisTemplate.boundSetOps(Constants.ACCESS_SERVER_ROUTE_KEY + getLocalAddress())
-                    .remove(uid);
+                routeManager.removerUserFromServer(uid, getLocalServer());
             }
         }
     }
 
-    private String getLocalAddress() throws SocketException {
-        return IpUtil.getIp() + ":" + nettyTcpPort;
+    private Server getLocalServer() {
+        return new Server(IpUtil.getIp(), nettyTcpPort);
     }
 
     @Override

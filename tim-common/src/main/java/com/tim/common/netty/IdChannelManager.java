@@ -12,4 +12,8 @@ public interface IdChannelManager {
     String getIdByChannel(Channel channel);
 
     void removeChannel(Channel channel);
+
+    List<String> getAllIds();
+
+    List<Channel> getAllChannels();
 }

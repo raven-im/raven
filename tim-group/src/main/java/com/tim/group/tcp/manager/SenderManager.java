@@ -1,13 +1,12 @@
 package com.tim.group.tcp.manager;
 
-import static com.tim.common.utils.Constants.USER_ROUTE_KEY;
-
 import com.tim.common.loadbalance.Server;
 import com.tim.common.netty.ServerChannelManager;
 import com.tim.common.protos.Message.TimMessage;
 import com.tim.common.protos.Message.TimMessage.Type;
 import com.tim.common.protos.Message.UpDownMessage;
 import com.tim.storage.conver.ConverManager;
+import com.tim.storage.route.RouteManager;
 import io.netty.channel.Channel;
 import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -37,6 +36,9 @@ public class SenderManager {
 
     @Autowired
     private ConverManager converManager;
+
+    @Autowired
+    private RouteManager routeManager;
 
     public SenderManager() {
         //TODO   threads create according to Thread_NUM
@@ -68,9 +70,8 @@ public class SenderManager {
             msg.getFromUid());
         for (String uid : uidList) {
             UpDownMessage downMessage = msg.toBuilder().setTargetUid(uid).build();
-            String serverAddress = (String) redisTemplate.boundHashOps(USER_ROUTE_KEY).get(uid);
-            if (!StringUtils.isEmpty(serverAddress)) {
-                Server server = new Server(serverAddress);
+            Server server = routeManager.getServerByUid(uid);
+            if (null != server) {
                 Channel chan = channelManager.getChannelByServer(server);
                 if (chan != null) {
                     TimMessage timMessage = TimMessage.newBuilder().setType(Type.UpDownMessage)

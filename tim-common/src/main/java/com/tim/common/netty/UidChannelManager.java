@@ -4,6 +4,7 @@ import io.netty.channel.Channel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class UidChannelManager implements IdChannelManager {
@@ -41,6 +42,23 @@ public class UidChannelManager implements IdChannelManager {
         if (null != uid) {
             uidChannels.remove(uid);
         }
+    }
 
+    @Override
+    public List<String> getAllIds() {
+        List<String> idList = new ArrayList<>();
+        for (Entry<String, List<Channel>> entry : uidChannels.entrySet()) {
+            idList.add(entry.getKey());
+        }
+        return idList;
+    }
+
+    @Override
+    public List<Channel> getAllChannels() {
+        List<Channel> channels = new ArrayList<>();
+        for (Entry<String, List<Channel>> entry : uidChannels.entrySet()) {
+            channels.addAll(entry.getValue());
+        }
+        return channels;
     }
 }

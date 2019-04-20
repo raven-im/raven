@@ -47,9 +47,6 @@ public class Server {
 
     @Override
     public String toString() {
-        return "Server{" +
-            "ip='" + ip + '\'' +
-            ", port=" + port +
-            '}';
+        return ip + ":" + port;
     }
 }

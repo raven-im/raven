@@ -1,8 +1,10 @@
 package com.tim.route.config;
 
+import com.tim.storage.route.RouteManager;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -42,5 +44,10 @@ public class CustomConfig {
         return template;
     }
 
+    @Bean
+    @DependsOn("redisTemplate")
+    public RouteManager routeManager(RedisTemplate redisTemplate) {
+        return new RouteManager(redisTemplate);
+    }
 
 }

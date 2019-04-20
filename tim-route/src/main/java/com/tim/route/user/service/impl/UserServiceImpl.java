@@ -16,6 +16,7 @@ import com.tim.route.user.bean.model.AppConfigModel;
 import com.tim.route.user.bean.param.*;
 import com.tim.route.user.mapper.AppConfigMapper;
 import com.tim.route.user.service.UserService;
+import com.tim.storage.route.RouteManager;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -57,6 +58,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private RedisTemplate redisTemplate;
 
+    @Autowired
+    private RouteManager routeManager;
+
     @Override
     public Result getToken(String uid, String appKey) {
         // check app key validation.
@@ -97,15 +101,13 @@ public class UserServiceImpl implements UserService {
         String uid = tokenStr.split(DEFAULT_SEPARATES_SIGN)[1];
 
         // check if there is already a Access server.  if yes , dispatch to that server.
-        String serverAddress = (String) redisTemplate.boundHashOps(USER_ROUTE_KEY).get(uid);
-
-        if (!StringUtils.isEmpty(serverAddress)) {
-            String[] array = serverAddress.split(DEFAULT_SEPARATES_SIGN);
-            String ip = array[0];
-            long port = Long.parseLong(array[1]);
-            return Result.success(new ServerInfoOutParam(key, uid, ip, port));
+        Server server = routeManager.getServerByUid(uid);
+        if (null != server) {
+            return Result
+                .success(new ServerInfoOutParam(key, uid, server.getIp(), server.getPort()));
         } else {
-            List<ServiceInstance> instances = discoveryClient.getInstances(CONFIG_ACCESS_SERVER_NAME);
+            List<ServiceInstance> instances = discoveryClient
+                .getInstances(CONFIG_ACCESS_SERVER_NAME);
             if (!instances.isEmpty()) {
                 List<Server> servers = instances.stream()
                     .map((x) -> {

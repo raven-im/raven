@@ -21,6 +21,10 @@
             <artifactId>tim-common</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.github.tim</groupId>
+            <artifactId>tim-storage</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
             <version>${version.spring.boot}</version>
@@ -139,17 +143,17 @@
                 </configuration>
             </plugin>
             <!--<plugin>-->
-                <!--<groupId>com.spotify</groupId>-->
-                <!--<artifactId>dockerfile-maven-plugin</artifactId>-->
-                <!--<version>1.4.8</version>-->
-                <!--<configuration>-->
-                    <!--<pullNewerImage>false</pullNewerImage>-->
-                    <!--<repository>${project.build.finalName}</repository>-->
-                    <!--<tag>${project.version}</tag>-->
-                    <!--<buildArgs>-->
-                        <!--<JAR_FILE>/target/${project.build.finalName}.jar</JAR_FILE>-->
-                    <!--</buildArgs>-->
-                <!--</configuration>-->
+            <!--<groupId>com.spotify</groupId>-->
+            <!--<artifactId>dockerfile-maven-plugin</artifactId>-->
+            <!--<version>1.4.8</version>-->
+            <!--<configuration>-->
+            <!--<pullNewerImage>false</pullNewerImage>-->
+            <!--<repository>${project.build.finalName}</repository>-->
+            <!--<tag>${project.version}</tag>-->
+            <!--<buildArgs>-->
+            <!--<JAR_FILE>/target/${project.build.finalName}.jar</JAR_FILE>-->
+            <!--</buildArgs>-->
+            <!--</configuration>-->
             <!--</plugin>-->
         </plugins>
 

@@ -5,8 +5,13 @@ import com.tim.access.handler.server.HeartBeatHandler;
 import com.tim.access.handler.server.HistoryHandler;
 import com.tim.access.handler.server.LoginAuthHandler;
 import com.tim.access.handler.server.MesaageHandler;
+import com.tim.access.util.IpUtil;
+import com.tim.common.loadbalance.Server;
+import com.tim.common.netty.IdChannelManager;
 import com.tim.common.protos.Message;
+import com.tim.storage.route.RouteManager;
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.ChannelPipeline;
@@ -20,6 +25,7 @@ import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
 import io.netty.handler.timeout.IdleStateHandler;
 import java.net.InetSocketAddress;
+import java.net.SocketException;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import lombok.extern.slf4j.Slf4j;
@@ -55,6 +61,12 @@ public class AccessTcpServer {
 
     @Autowired
     private HistoryHandler historyHandler;
+
+    @Autowired
+    private IdChannelManager uidChannelManager;
+
+    @Autowired
+    private RouteManager routeManager;
 
     @PostConstruct
     public void startServer() {
@@ -101,8 +113,13 @@ public class AccessTcpServer {
 
     @PreDestroy
     public void destroy() {
+        routeManager.serverDown(getLocalServer());
         bossGroup.shutdownGracefully().syncUninterruptibly();
         workGroup.shutdownGracefully().syncUninterruptibly();
         log.info("close tim-access tcp server success");
+    }
+
+    private Server getLocalServer() {
+        return new Server(IpUtil.getIp(), nettyTcpPort);
     }
 }

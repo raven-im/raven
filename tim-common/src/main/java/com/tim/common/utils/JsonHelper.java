@@ -18,15 +18,25 @@ public class JsonHelper {
         return mapper;
     }
 
-    public static String toJsonString(Object object) throws JsonProcessingException {
-        return mapper.writeValueAsString(object);
+    public static String toJsonString(Object object) {
+        try {
+            return mapper.writeValueAsString(object);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
-    public static byte[] toJsonBytes(Object object) throws JsonProcessingException {
-        return mapper.writeValueAsBytes(object);
+    public static byte[] toJsonBytes(Object object) {
+        try {
+            return mapper.writeValueAsBytes(object);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
-    public static Map<String, Object> strToMap(String str) throws IOException {
+    public static Map<String, Object> strToMap(String str) {
         try {
             return mapper.readValue(str, Map.class);
         } catch (IOException e) {

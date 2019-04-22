@@ -40,7 +40,6 @@ public class CustomConfig {
         template.setHashKeySerializer(stringSerializer);
         template.setHashValueSerializer(serializer);
         template.setDefaultSerializer(serializer);
-        template.setEnableTransactionSupport(true);
         return template;
     }
 
@@ -49,7 +48,6 @@ public class CustomConfig {
     public StringRedisTemplate stringRedisTemplate(RedisConnectionFactory redisConnectionFactory) {
         StringRedisTemplate template = new StringRedisTemplate();
         template.setConnectionFactory(redisConnectionFactory);
-        template.setEnableTransactionSupport(true);
         return template;
     }
 

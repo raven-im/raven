@@ -46,6 +46,8 @@ public class LoginAuthHandler extends SimpleChannelInboundHandler<TimMessage> {
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, TimMessage message) throws Exception {
+        NettyAttrUtil
+            .updateReaderTime(ctx.channel(), System.currentTimeMillis());
         if (message.getType() == Type.Login) {
             Login loginMesaage = message.getLogin();
             log.info("login msg:{}", loginMesaage);
@@ -65,8 +67,6 @@ public class LoginAuthHandler extends SimpleChannelInboundHandler<TimMessage> {
             if (null == uidChannelManager.getIdByChannel(ctx.channel())) {
                 ctx.close();
             }
-            NettyAttrUtil
-                .updateReaderTime(ctx.channel(), System.currentTimeMillis());
             ctx.fireChannelRead(message);
         }
     }

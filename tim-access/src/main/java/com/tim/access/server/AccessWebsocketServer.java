@@ -4,7 +4,9 @@ import static io.netty.buffer.Unpooled.wrappedBuffer;
 
 import com.google.protobuf.MessageLite;
 import com.google.protobuf.MessageLiteOrBuilder;
+import com.tim.access.handler.server.ConversationHandler;
 import com.tim.access.handler.server.HeartBeatHandler;
+import com.tim.access.handler.server.HistoryHandler;
 import com.tim.access.handler.server.LoginAuthHandler;
 import com.tim.access.handler.server.MesaageHandler;
 import com.tim.common.protos.Message;
@@ -27,9 +29,6 @@ import io.netty.handler.codec.http.websocketx.WebSocketFrame;
 import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import io.netty.handler.codec.http.websocketx.extensions.compression.WebSocketServerCompressionHandler;
 import io.netty.handler.codec.protobuf.ProtobufDecoder;
-import io.netty.handler.codec.protobuf.ProtobufEncoder;
-import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
-import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
 import io.netty.handler.stream.ChunkedWriteHandler;
 import io.netty.handler.timeout.IdleStateHandler;
 import java.net.InetSocketAddress;
@@ -60,6 +59,12 @@ public class AccessWebsocketServer {
 
     @Autowired
     private MesaageHandler mesaageHandler;
+
+    @Autowired
+    private ConversationHandler conversationHandler;
+
+    @Autowired
+    private HistoryHandler historyHandler;
 
     @PostConstruct
     public void startServer() {
@@ -119,6 +124,8 @@ public class AccessWebsocketServer {
                     pipeline.addLast("LoginAuthHandler", loginAuthHandler);
                     pipeline.addLast("HeartBeatHandler", heartBeatHandler);
                     pipeline.addLast("MesaageHandler", mesaageHandler);
+                    pipeline.addLast("ConversationHandler", conversationHandler);
+                    pipeline.addLast("HistoryHandler", historyHandler);
 
                 }
             });

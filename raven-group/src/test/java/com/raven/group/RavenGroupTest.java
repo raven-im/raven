@@ -44,7 +44,7 @@ public class RavenGroupTest {
 
     private static int MESSAGE_ID = 100;
     private static String MESSAGE_CONTENT = "Hello world!";
-    private static String GROUP_NAME = "Tim-Group";
+    private static String GROUP_NAME = "Raven-Group";
     private static String DEFAULT_URL = "http://www.google.com/1.jpg";
 
     /**

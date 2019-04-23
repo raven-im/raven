@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: raven-access
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    pool:
+      max-active: 20
+      max-wait: 60000
+      max-idle: 5
+      min-idle: 1
+  main:
+    banner-mode: log
+  cloud:
+    zookeeper:
+      connect-string: localhost:2181
+      discovery:
+        prefer-ip-address: true
+        metadata:
+          tcp-port: ${netty.tcp.port}
+          websocket-port: ${netty.websocket.port}
+server:
+  port: 8010
+
+discovery:
+  single-server-name: raven-single
+  group-server-name: raven-group
+  single-server-path: /services/raven-single
+  group-server-path: /services/raven-group
+
+netty:
+  tcp:
+    port: 7010
+  websocket:
+    port: 7011
+
+node:
+  data-center-id: 1
+  machine-id: 1
+
+
+

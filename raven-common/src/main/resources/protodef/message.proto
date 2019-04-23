@@ -1,0 +1,169 @@
+syntax = "proto3";
+package com.raven.common.protos;
+
+option java_outer_classname = "Message";
+
+message RavenMessage {
+  Type type = 1;
+  //oneof的意思：如果有多个可选字段，在某一个时刻只能只有一个值被设置，可以节省内存空间
+  oneof data {
+    Login login = 2;
+    LoginAck loginAck = 3;
+    ServerInfo serverInfo = 4;
+    UpDownMessage upDownMessage = 5;
+    HeartBeat heartBeat = 6;
+    MessageAck messageAck = 7;
+    HisMessagesReq hisMessagesReq = 8;
+    HisMessagesAck hisMessagesAck = 9;
+    NotifyMessage notifyMessage = 10;
+    ConverReq converReq = 11;
+    ConverAck converAck = 12;
+  }
+
+  enum Type {
+    Login = 0;
+    LoginAck = 1;
+    ServerInfo = 2;
+    UpDownMessage = 3;
+    HeartBeat = 4;
+    MessageAck = 5;
+    HisMessagesReq = 6;
+    HisMessagesAck = 7;
+    NotifyMessage = 8;
+    ConverReq = 11;
+    ConverAck = 10;
+  }
+}
+
+message Login {
+  uint64 id = 1; //消息ID
+  string uid = 2;
+  string token = 3; // token
+}
+
+message LoginAck {
+  uint64 id = 1; //消息ID
+  Code code = 2; //返回码
+  string msg = 3; //描述
+  uint64 time = 4; //消息时间
+}
+
+message ServerInfo {
+  uint64 id = 1; //消息ID
+  string ip = 2;
+  uint32 port = 3;
+}
+
+// 上下行消息
+message UpDownMessage {
+  uint64 id = 1; // 服务端生成消息ID
+  uint64 cid = 2; // 客户端消息ID
+  string fromUid = 3; // 发送人ID
+  string targetUid = 4; // 接收人ID
+  string groupId = 5; //  群ID
+  string converId = 6; // 会话id
+  ConverType converType = 7; // 会话类型
+  MessageContent content = 9; // 内容
+}
+
+// 心跳
+message HeartBeat {
+  uint64 id = 1; // 消息ID
+  HeartBeatType heartBeatType = 2;
+}
+
+enum HeartBeatType {
+  PING = 0;
+  PONG = 1;
+}
+
+// 消息ACK
+message MessageAck {
+  uint64 id = 1; // 服务端生成消息ID
+  uint64 cid = 2; // 对应收到的消息ID
+  string targetUid = 3; // 接收人ID
+  string converId = 4; // 会话id
+  uint64 time = 5; // 发送时间
+  Code code = 6; // 返回码
+}
+
+enum Code {
+  SUCCESS = 0;
+  FAIL = 1;
+}
+
+// 会话类型
+enum ConverType {
+  SINGLE = 0;
+  GROUP = 1;
+}
+
+// 消息内容
+message MessageContent {
+  uint64 id = 1; // 消息ID
+  string uid = 2; // 发送方uid
+  MessageType type = 3;
+  string content = 4; // 内容
+  uint64 time = 5; // 消息时间
+}
+
+// 消息类型
+enum MessageType {
+  TEXT = 0;
+  PICTURE = 1;
+  VOICE = 2;
+  VIDEO = 3;
+}
+
+// 历史消息请求  消息ID使用客户端生成
+message HisMessagesReq {
+  uint64 id = 1; // 消息ID
+  string converId = 2; // 会话id
+  uint64 beaginTime = 3; // 消息起始时间
+}
+
+// 历史消息
+message HisMessagesAck {
+  uint64 id = 1; // 消息ID
+  string converId = 2; // 会话id
+  repeated MessageContent messageList = 4; // 消息列表
+}
+// 会话操作请求  消息ID使用客户端生成
+message ConverReq {
+  uint64 id = 1; // 消息ID
+  OperationType type = 2;
+  string conversationId = 3; // 会话ID
+}
+
+enum OperationType {
+  DETAIL = 0;
+  ALL = 1;
+}
+
+// 会话操作结果
+message ConverAck {
+  uint64 id = 1; // 消息ID
+  Code code = 3; // 返回码
+  uint64 time = 4; // 时间
+  ConverInfo converInfo = 5;
+  repeated ConverInfo converList = 6;
+}
+
+// 会话详情
+message ConverInfo {
+  string converId = 1; // 会话ID
+  ConverType type = 2; // 会话类型
+  repeated string uidList = 3; // 单聊会话 用户列表
+  string groupId = 4; //  群会话 群ID
+  uint64 unCount = 5; // 未读数
+  MessageContent lastContent = 6; // 最后一条消息
+}
+
+//通知消息
+message NotifyMessage {
+  uint64 id = 1; //消息ID
+  string type = 2; // 通知类型
+  string targetUid = 3; // 接收id
+  string content = 4; // 通知内容
+  uint64 time = 5; //消息时间
+}

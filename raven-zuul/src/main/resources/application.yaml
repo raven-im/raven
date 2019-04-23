@@ -1,0 +1,61 @@
+spring:
+  application:
+    name: raven-zuul
+  http:
+    encoding:
+      charset: UTF-8
+      force: true
+      enabled: true
+  cloud:
+    zookeeper:
+      connect-string: localhost:2181
+      discovery:
+        prefer-ip-address: true
+
+server:
+  port: 8060
+
+zuul:
+  ignored-services: '*'
+  routes:
+    api:
+      path: /api/**
+      serviceId: raven-route # 要区分大小写
+    admin-api:
+      path: /admin-api/**
+      serviceId: raven-admin
+  ribbon:
+    eager-load:
+      enabled: true # 立即加载ribbon负载均衡器
+  servlet-path: /raven-zuul
+
+ribbon:
+  ConnectTimeout: 2000
+  ReadTimeout: 5000
+
+# 熔断时间
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 5000
+
+
+# actuator相关配置
+management:
+  security:
+    enabled: false
+  endpoint:
+    health:
+      show-details: always
+      enabled: true
+    prometheus:
+      enabled: true
+    shutdown:
+      enabled: false
+  endpoints:
+    web:
+      exposure:
+        include: '*' #开放所有监控接口

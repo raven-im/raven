@@ -1,0 +1,81 @@
+spring:
+  application:
+    name: raven-group
+  http:
+    encoding:
+      charset: UTF-8
+      force: true
+      enabled: true
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/imdb?useUnicode=true
+    username: root
+    password: 123456
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      initial-size: 10
+      max-active: 20
+      min-idle: 5
+      max-wait: 60000
+      validation-query: SELECT 1 FROM DUAL
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    pool:
+      max-active: 20
+      max-wait: 60000
+      max-idle: 5
+      min-idle: 1
+  main:
+    banner-mode: log
+  cloud:
+    zookeeper:
+      connect-string: localhost:2181
+      discovery:
+        prefer-ip-address: true
+        metadata:
+          tcp-port: ${netty.tcp.port}
+  jackson:
+    default-property-inclusion: non_null
+# actuator相关配置
+management:
+  security:
+    enabled: false
+  endpoint:
+    health:
+      show-details: always
+      enabled: true
+    prometheus:
+      enabled: true
+    shutdown:
+      enabled: false
+  endpoints:
+    web:
+      exposure:
+        include: '*' #开放所有监控接口
+
+server:
+  port: 8370
+
+# Mybatis
+mybatis:
+  mapperLocations: classpath:mapper/*Mapper.xml
+  config-location: classpath:mybatis-config.xml
+
+#通用mapper
+#mappers 多个接口时逗号隔开
+mapper:
+  mappers: com.raven.group.config.BaseMapper
+  not-empty: true
+  before: true
+  identity: mysql
+
+netty:
+  tcp:
+    port: 7370
+
+node:
+  data-center-id: 1
+  machine-id: 1

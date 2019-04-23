@@ -61,7 +61,6 @@ public class GroupServiceImpl implements GroupService {
         String converId = converManager.newGroupConverId(groupId, reqParam.getMembers());
         model.setConverId(converId);
         groupMapper.insert(model);
-
         reqParam.getMembers().forEach(uid -> {
             GroupMemberModel member = new GroupMemberModel();
             member.setGroupId(groupId);
@@ -138,8 +137,7 @@ public class GroupServiceImpl implements GroupService {
         List<String> memberModels = members.stream()
             .map((x) -> x.getMemberUid())
             .collect(Collectors.toList());
-        converManager.removeConversation(reqParam.getGroupId(), memberModels);
-
+        converManager.dismissGroup(reqParam.getGroupId());
         // clean group info
         GroupModel model = new GroupModel();
         model.setStatus(2); //2 for mark delete
@@ -163,13 +161,11 @@ public class GroupServiceImpl implements GroupService {
         if (!groupValidator.isValid(groupId)) {
             return Result.failure(groupValidator.errorCode());
         }
-
         Example example = new Example(GroupModel.class);
         example.createCriteria()
             .andEqualTo("status", 0)
             .andEqualTo("uid", groupId);
         List<GroupModel> info = groupMapper.selectByExample(example);
-
         Example example1 = new Example(GroupMemberModel.class);
         example1.createCriteria()
             .andEqualTo("status", 0)

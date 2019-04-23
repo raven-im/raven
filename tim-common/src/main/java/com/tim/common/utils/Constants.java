@@ -15,6 +15,7 @@ public class Constants {
     public static final String PREFIX_CONVERSATION_ID = "converid_";
     public static final String PREFIX_CONVERSATION_LIST = "converlist_";
     public static final String PREFIX_MESSAGE_ID = "msg_";
+    public static final String PREFIX_GROUP_MEMBER = "group_member_";
     /*
      * Authentication.
      * */

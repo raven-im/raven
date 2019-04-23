@@ -56,6 +56,7 @@ public class HeartBeatHandler extends SimpleChannelInboundHandler<TimMessage> {
                 if ( System.currentTimeMillis() - lastReadTime > 30000) {
                     log.info("uid:{} last read time more than 30 seconds", uid);
                     ctx.close();
+                    return;
                 }
                 HeartBeat heartBeat = HeartBeat.newBuilder()
                     .setId(snowFlake.nextId())

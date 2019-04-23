@@ -26,7 +26,6 @@
         </encoder>
     </appender>
 
-    <logger name="com.tim.zuul" level="DEBUG"></logger>
     <root level="INFO">
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="FILE"/>

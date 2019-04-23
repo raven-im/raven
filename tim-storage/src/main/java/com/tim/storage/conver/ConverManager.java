@@ -1,6 +1,7 @@
 package com.tim.storage.conver;
 
 import static com.tim.common.utils.Constants.PREFIX_CONVERSATION_LIST;
+import static com.tim.common.utils.Constants.PREFIX_GROUP_MEMBER;
 import static com.tim.common.utils.Constants.PREFIX_MESSAGE_ID;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -18,9 +19,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.redis.connection.RedisZSetCommands.Limit;
-import org.springframework.data.redis.connection.RedisZSetCommands.Range;
+import lombok.val;
+import org.springframework.dao.DataAccessException;
+import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.SessionCallback;
 import org.springframework.util.CollectionUtils;
 
 @Slf4j
@@ -43,14 +46,10 @@ public class ConverManager {
         ConverInfo converInfo = new ConverInfo().setId(converId)
             .setType(ConverType.SINGLE.getNumber())
             .setUidList(CollectionUtils.arrayToList(uidList.toArray()));
-        try {
-            if (redisTemplate.opsForValue()
-                .setIfAbsent(converId, JsonHelper.toJsonString(converInfo))) {
-                redisTemplate.boundHashOps(PREFIX_CONVERSATION_LIST + fromUid).put(converId, 0);
-                redisTemplate.boundHashOps(PREFIX_CONVERSATION_LIST + toUid).put(converId, 0);
-            }
-        } catch (JsonProcessingException e) {
-            log.error("json processing error", e);
+        boolean result = redisTemplate.opsForValue().setIfAbsent(converId, JsonHelper.toJsonString(converInfo));
+        if (result) {
+            redisTemplate.boundHashOps(PREFIX_CONVERSATION_LIST + fromUid).put(converId, 0);
+            redisTemplate.boundHashOps(PREFIX_CONVERSATION_LIST + toUid).put(converId, 0);
         }
         return converId;
     }
@@ -60,54 +59,43 @@ public class ConverManager {
         ConverInfo converInfo = new ConverInfo().setId(converId)
             .setType(ConverType.GROUP.getNumber())
             .setUidList(members).setGroupId(groupId);
-        try {
-            if (redisTemplate.opsForValue()
-                .setIfAbsent(converId, JsonHelper.toJsonString(converInfo))) {
-                members
-                    .forEach(member -> redisTemplate.boundHashOps(PREFIX_CONVERSATION_LIST + member)
-                        .put(converId, 0));
+        boolean result = redisTemplate.opsForValue()
+            .setIfAbsent(converId, JsonHelper.toJsonString(converInfo));
+        if (result) {
+            for (String member : members) {
+                redisTemplate.boundHashOps(PREFIX_CONVERSATION_LIST + member).put(converId, 0);
             }
-        } catch (JsonProcessingException e) {
-            log.error("json processing error", e);
         }
         return converId;
     }
 
     public void addMemberConverList(String groupId, List<String> members) {
         String converId = UidUtil.uuid24ByFactor(groupId);
-        ConverInfo converInfo = getConverInfo(converId);
-        List<String> memberList = converInfo.getUidList();
-        memberList.addAll(members);
-        converInfo.setUidList(memberList);
-        try {
-            redisTemplate.opsForValue().set(converId, JsonHelper.toJsonString(converInfo));
-        } catch (JsonProcessingException e) {
-            log.error("json processing error", e);
+        for (String member : members) {
+            redisTemplate.boundSetOps(PREFIX_GROUP_MEMBER + groupId).add(member);
+            redisTemplate.boundHashOps(PREFIX_CONVERSATION_LIST + member).put(converId, 0);
         }
-
-        members.forEach(member -> redisTemplate.boundHashOps(PREFIX_CONVERSATION_LIST + member)
-            .put(converId, 0));
     }
 
     public void removeMemberConverList(String groupId, List<String> members) {
         String converId = UidUtil.uuid24ByFactor(groupId);
-        ConverInfo converInfo = getConverInfo(converId);
-        List<String> memberList = converInfo.getUidList();
-        memberList.removeAll(members);
-        converInfo.setUidList(memberList);
-        try {
-            redisTemplate.opsForValue().set(converId, JsonHelper.toJsonString(converInfo));
-        } catch (JsonProcessingException e) {
-            log.error("json processing error", e);
+        for (String member : members) {
+            redisTemplate.boundSetOps(PREFIX_GROUP_MEMBER + groupId).remove(member);
+            redisTemplate.boundHashOps(PREFIX_CONVERSATION_LIST + member)
+                .delete(converId);
         }
-        members.forEach(member -> redisTemplate.boundHashOps(PREFIX_CONVERSATION_LIST + member)
-            .delete(converId));
     }
 
-    public void removeConversation(String groupId, List<String> members) {
+    public void dismissGroup(String groupId) {
         String converId = UidUtil.uuid24ByFactor(groupId);
+        Set<String> uids = redisTemplate
+            .boundSetOps(PREFIX_GROUP_MEMBER + groupId).members();
+        for (String uid : uids) {
+            redisTemplate.boundHashOps(PREFIX_CONVERSATION_LIST + uid)
+                .delete(converId);
+        }
+        redisTemplate.delete(PREFIX_GROUP_MEMBER + groupId);
         redisTemplate.delete(converId);
-        removeMemberConverList(groupId, members);
     }
 
     public boolean isSingleConverIdValid(String converId) {
@@ -170,29 +158,27 @@ public class ConverManager {
                     list.add(converListInfo);
                 }
             }
-
         }
         return list;
     }
 
     public List<String> getUidListByConver(String converId) {
+        List<String> uidList = new ArrayList<>();
         ConverInfo converInfo = getConverInfo(converId);
-        if (converInfo.getType() == ConverType.SINGLE.getNumber()
-            || converInfo.getType() == ConverType.GROUP.getNumber()) {
-            return converInfo.getUidList();
+        if (converInfo.getType() == ConverType.SINGLE.getNumber()) {
+            uidList.addAll(converInfo.getUidList());
+        } else if (converInfo.getType() == ConverType.GROUP.getNumber()) {
+            Set<String> uids = redisTemplate
+                .boundSetOps(PREFIX_GROUP_MEMBER + converInfo.getGroupId()).members();
+            uidList.addAll(uids);
         }
-        return new ArrayList<>();
+        return uidList;
     }
 
     public List<String> getUidListByConverExcludeSender(String converId, String fromUser) {
-        ConverInfo converInfo = getConverInfo(converId);
-        if (converInfo.getType() == ConverType.SINGLE.getNumber() ||
-            converInfo.getType() == ConverType.GROUP.getNumber()) {
-            List<String> uids = converInfo.getUidList();
-            uids.remove(fromUser);
-            return uids;
-        }
-        return new ArrayList<>();
+        List<String> uids = getUidListByConver(converId);
+        uids.remove(fromUser);
+        return uids;
     }
 
     public void incrUserConverUnCount(String uid, String converId, int num) {

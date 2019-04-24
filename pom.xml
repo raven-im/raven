@@ -3,8 +3,8 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.github.tim</groupId>
-    <artifactId>tim-parent</artifactId>
+    <groupId>com.github.raven</groupId>
+    <artifactId>raven-parent</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <parent>
@@ -14,15 +14,15 @@
     </parent>
 
     <modules>
-        <module>tim-zuul</module>
-        <module>tim-route</module>
-        <module>tim-common</module>
-        <module>tim-client</module>
-        <module>tim-access</module>
-        <module>tim-admin</module>
-        <module>tim-single</module>
-        <module>tim-group</module>
-        <module>tim-storage</module>
+        <module>raven-zuul</module>
+        <module>raven-route</module>
+        <module>raven-common</module>
+        <module>raven-client</module>
+        <module>raven-access</module>
+        <module>raven-admin</module>
+        <module>raven-single</module>
+        <module>raven-group</module>
+        <module>raven-storage</module>
     </modules>
 
     <properties>
@@ -46,28 +46,28 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>com.github.tim</groupId>
-                <artifactId>tim-common</artifactId>
+                <groupId>com.github.raven</groupId>
+                <artifactId>raven-common</artifactId>
                 <version>1.0.0-SNAPSHOT</version>
             </dependency>
             <dependency>
-                <groupId>com.github.tim</groupId>
-                <artifactId>tim-route</artifactId>
+                <groupId>com.github.raven</groupId>
+                <artifactId>raven-route</artifactId>
                 <version>1.0.0-SNAPSHOT</version>
             </dependency>
             <dependency>
-                <groupId>com.github.tim</groupId>
-                <artifactId>tim-admin</artifactId>
+                <groupId>com.github.raven</groupId>
+                <artifactId>raven-admin</artifactId>
                 <version>1.0.0-SNAPSHOT</version>
             </dependency>
             <dependency>
-                <groupId>com.github.tim</groupId>
-                <artifactId>tim-access</artifactId>
+                <groupId>com.github.raven</groupId>
+                <artifactId>raven-access</artifactId>
                 <version>1.0.0-SNAPSHOT</version>
             </dependency>
             <dependency>
-                <groupId>com.github.tim</groupId>
-                <artifactId>tim-storage</artifactId>
+                <groupId>com.github.raven</groupId>
+                <artifactId>raven-storage</artifactId>
                 <version>1.0.0-SNAPSHOT</version>
             </dependency>
             <dependency>

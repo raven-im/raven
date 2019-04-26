@@ -8,7 +8,7 @@ spring:
       enabled: true
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/imdb?useUnicode=true
+    url: jdbc:mysql://${address.mysql}:3306/imdb?useUnicode=true
     username: root
     password: 123456
     type: com.alibaba.druid.pool.DruidDataSource
@@ -21,7 +21,7 @@ spring:
       time-between-eviction-runs-millis: 60000
       min-evictable-idle-time-millis: 300000
   redis:
-    host: 127.0.0.1
+    host: ${address.redis}
     port: 6379
     pool:
       max-active: 20
@@ -32,7 +32,7 @@ spring:
     banner-mode: log
   cloud:
     zookeeper:
-      connect-string: localhost:2181
+      connect-string: ${address.zookeeper}:2181
       discovery:
         prefer-ip-address: true
         metadata:
@@ -79,3 +79,7 @@ node:
   data-center-id: 1
   machine-id: 1
 
+address:
+  mysql: 127.0.0.1
+  zookeeper: 127.0.0.1
+  redis: 127.0.0.1

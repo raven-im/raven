@@ -48,5 +48,5 @@ public class Constants {
 
     public static final String CONFIG_WEBSOCKET_PORT = "websocket-port";
 
-    public static final String CONFIG_ACCESS_SERVER_NAME = "tim-access";
+    public static final String CONFIG_ACCESS_SERVER_NAME = "raven-access";
 }

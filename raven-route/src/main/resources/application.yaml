@@ -1,6 +1,6 @@
 spring:
   application:
-    name: tim-route
+    name: raven-route
   http:
     encoding:
       charset: UTF-8

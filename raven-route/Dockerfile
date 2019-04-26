@@ -3,5 +3,5 @@ ARG JAR_FILE
 RUN mkdir -p /raven/
 WORKDIR /raven/
 COPY ${JAR_FILE} /raven/raven-route.jar
-EXPOSE 8080
+EXPOSE 8040
 ENTRYPOINT ["java","-jar","raven-route.jar"]

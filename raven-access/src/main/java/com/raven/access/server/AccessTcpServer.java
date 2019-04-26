@@ -96,9 +96,9 @@ public class AccessTcpServer {
         bindConnectionOptions(bootstrap);
         bootstrap.bind(new InetSocketAddress(nettyTcpPort)).addListener(future -> {
             if (future.isSuccess()) {
-                log.info("tim-access tcp server start success on port:{}", nettyTcpPort);
+                log.info("raven access tcp server start success on port:{}", nettyTcpPort);
             } else {
-                log.error("tim-access tcp server start failed!");
+                log.error("raven-access tcp server start failed!");
             }
         });
     }
@@ -114,7 +114,7 @@ public class AccessTcpServer {
         routeManager.serverDown(getLocalServer());
         bossGroup.shutdownGracefully().syncUninterruptibly();
         workGroup.shutdownGracefully().syncUninterruptibly();
-        log.info("close tim-access tcp server success");
+        log.info("close raven-access tcp server success");
     }
 
     private Server getLocalServer() {

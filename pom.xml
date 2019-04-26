@@ -41,6 +41,7 @@
         <version.spring.boot>2.1.3.RELEASE</version.spring.boot>
         <version.spring.cloud>Greenwich.SR1</version.spring.cloud>
         <version.boot.admin>2.1.3</version.boot.admin>
+        <docker.image.prefix>iamnotshady</docker.image.prefix>
     </properties>
 
     <dependencyManagement>

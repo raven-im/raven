@@ -66,7 +66,7 @@ public class AccessTcpClient {
     @PreDestroy
     public void destroy() {
         workGroup.shutdownGracefully().syncUninterruptibly();
-        log.info("close tim-access client success");
+        log.info("close ravenaccess client success");
     }
 
     private Channel connectServer(Server server) {

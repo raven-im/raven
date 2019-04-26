@@ -25,8 +25,8 @@ public class RouteManager {
 
     // 增加路由
     public void addUser2Server(String uid, Server server) {
-        redisTemplate.boundHashOps(Constants.USER_ROUTE_KEY).put(uid, server);
-        redisTemplate.boundSetOps(Constants.ACCESS_SERVER_ROUTE_KEY + server).add(uid);
+        redisTemplate.boundHashOps(Constants.USER_ROUTE_KEY).put(uid, server.toString());
+        redisTemplate.boundSetOps(Constants.ACCESS_SERVER_ROUTE_KEY + server.toString()).add(uid);
     }
 
     // 移除路由
@@ -53,7 +53,8 @@ public class RouteManager {
         if (null == ob) {
             return null;
         }
-        return JsonHelper.readValue(ob.toString(), Server.class);
+
+        return new Server(ob.toString());
     }
 
 }

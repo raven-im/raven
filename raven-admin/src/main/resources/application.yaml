@@ -8,7 +8,7 @@ spring:
       enabled: true
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/imdb?useUnicode=true
+    url: jdbc:mysql://${address.mysql}:3306/imdb?useUnicode=true
     username: root
     password: 123456
     type: com.alibaba.druid.pool.DruidDataSource
@@ -24,12 +24,13 @@ spring:
     banner-mode: log
   cloud:
     zookeeper:
-      connect-string: localhost:2181
+      connect-string: ${address.zookeeper}:2181
       discovery:
         prefer-ip-address: true
 
 server:
   port: 8020
+
 # Mybatis
 mybatis:
   mapperLocations: classpath:mapper/*Mapper.xml
@@ -59,3 +60,7 @@ management:
     web:
       exposure:
         include: '*' #开放所有监控接口
+
+address:
+  mysql: 127.0.0.1
+  zookeeper: 127.0.0.1

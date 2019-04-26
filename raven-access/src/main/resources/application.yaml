@@ -2,7 +2,7 @@ spring:
   application:
     name: raven-access
   redis:
-    host: 127.0.0.1
+    host: ${address.redis}
     port: 6379
     pool:
       max-active: 20
@@ -13,7 +13,7 @@ spring:
     banner-mode: log
   cloud:
     zookeeper:
-      connect-string: localhost:2181
+      connect-string: ${address.zookeeper}:2181
       discovery:
         prefer-ip-address: true
         metadata:
@@ -21,6 +21,23 @@ spring:
           websocket-port: ${netty.websocket.port}
 server:
   port: 8010
+
+# actuator相关配置
+management:
+  security:
+    enabled: false
+  endpoint:
+    health:
+      show-details: always
+      enabled: true
+    prometheus:
+      enabled: true
+    shutdown:
+      enabled: false
+  endpoints:
+    web:
+      exposure:
+        include: '*' #开放所有监控接口
 
 discovery:
   single-server-name: raven-single
@@ -38,5 +55,6 @@ node:
   data-center-id: 1
   machine-id: 1
 
-
-
+address:
+  zookeeper: 127.0.0.1
+  redis: 127.0.0.1

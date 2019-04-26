@@ -132,9 +132,9 @@ public class AccessWebsocketServer {
         bindConnectionOptions(bootstrap);
         bootstrap.bind(new InetSocketAddress(nettyWebsocketPort)).addListener(future -> {
             if (future.isSuccess()) {
-                log.info("tim-access websocket server start success on port:{}", nettyWebsocketPort);
+                log.info("raven-access websocket server start success on port:{}", nettyWebsocketPort);
             } else {
-                log.error("tim-access websocket server start failed!");
+                log.error("raven-access websocket server start failed!");
             }
         });
     }
@@ -149,7 +149,7 @@ public class AccessWebsocketServer {
     public void destroy() {
         bossGroup.shutdownGracefully().syncUninterruptibly();
         workGroup.shutdownGracefully().syncUninterruptibly();
-        log.info("close tim-access websocket server success");
+        log.info("close raven-access websocket server success");
     }
 
 }

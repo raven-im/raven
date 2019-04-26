@@ -8,7 +8,7 @@ spring:
       enabled: true
   cloud:
     zookeeper:
-      connect-string: localhost:2181
+      connect-string: ${address.zookeeper}:2181
       discovery:
         prefer-ip-address: true
 
@@ -18,11 +18,17 @@ server:
 zuul:
   ignored-services: '*'
   routes:
-    api:
-      path: /api/**
+    route:
+      path: /route/**
       serviceId: raven-route # 要区分大小写
-    admin-api:
-      path: /admin-api/**
+    single:
+      path: /single/**
+      serviceId: raven-single
+    group:
+      path: /group/**
+      serviceId: raven-group
+    admin:
+      path: /admin/**
       serviceId: raven-admin
   ribbon:
     eager-load:
@@ -42,7 +48,6 @@ hystrix:
           thread:
             timeoutInMilliseconds: 5000
 
-
 # actuator相关配置
 management:
   security:
@@ -59,3 +64,6 @@ management:
     web:
       exposure:
         include: '*' #开放所有监控接口
+
+address:
+  zookeeper: 127.0.0.1

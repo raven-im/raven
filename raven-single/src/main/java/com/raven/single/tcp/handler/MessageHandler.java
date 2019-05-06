@@ -52,7 +52,7 @@ public class MessageHandler extends SimpleChannelInboundHandler<RavenMessage> {
                 } else {
                     convId = converManager
                         .newSingleConverId(upDownMessage.getFromUid(), upDownMessage.getTargetUid());
-                    upDownMessage.toBuilder().setConverId(convId);
+                    upDownMessage = upDownMessage.toBuilder().setConverId(convId).build();// set upDownMessage convId.
                 }
                 // access server ACK.
                 converManager.cacheMsg2Conver(upDownMessage.getContent(), convId);

@@ -1,8 +1,10 @@
 # raven
 
-开源即时通讯系统
+Open Source Instant Message System.
 
-## 技术
+
+
+## Tech
 
 * netty
 * protobuf
@@ -11,3 +13,10 @@
 * flyway
 * spring boot
 * spring cloud
+
+### Related Components
+mobile client: 
+https://github.com/bbpatience/raven-client
+
+application server for user and group things:
+https://github.com/bbpatience/raven-appserver

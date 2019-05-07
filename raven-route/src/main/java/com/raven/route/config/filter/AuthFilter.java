@@ -16,6 +16,7 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -31,8 +32,7 @@ import org.springframework.util.StringUtils;
  * @description: AuthFilter
  **/
 @Slf4j
-//TODO
-//@WebFilter(urlPatterns = {"/user/token", "/nav"}, filterName = "AuthFilter")
+@WebFilter(urlPatterns = {"/user/token"}, filterName = "AuthFilter")
 public class AuthFilter implements Filter {
 
     @Autowired

@@ -132,6 +132,26 @@ public class ConverManager {
         return JsonHelper.readValue(ob.toString(), ConverInfo.class);
     }
 
+    public ConverListInfo getConverListInfo(String converId) {
+        ConverInfo converInfo = getConverInfo(converId);
+        if (null != converInfo) {
+            Set<String> strs = redisTemplate
+                .boundZSetOps(PREFIX_MESSAGE_ID + converInfo.getId())
+                .range(-1, -1);
+            if (strs.size() >= 1) {
+                MsgContent msgContent = JsonHelper
+                    .readValue(strs.iterator().next().toString(), MsgContent.class);
+                ConverListInfo converListInfo = new ConverListInfo()
+                    .setId(converInfo.getId()).setGroupId(converInfo.getGroupId())
+                    .setLastContent(msgContent)
+                    .setUidList(converInfo.getUidList()).setType(converInfo.getType())
+                    .setUnCount(0); // TODO
+                return converListInfo;
+            }
+        }
+        return null;
+    }
+
     public List<ConverListInfo> getConverListByUid(String uid) {
         List<ConverListInfo> list = new ArrayList<>();
         Map<String, Integer> converList = redisTemplate.boundHashOps(PREFIX_CONVERSATION_LIST + uid)

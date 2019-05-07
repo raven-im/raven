@@ -42,8 +42,8 @@ public class ConversationHandler extends SimpleChannelInboundHandler<RavenMessag
             ConverReq conversationReq = message.getConverReq();
             log.info("receive conver request message:{}", conversationReq);
             if (conversationReq.getType() == OperationType.DETAIL) {
-                ConverInfo converInfo = converManager
-                    .getConverInfo(conversationReq.getConversationId());
+                ConverListInfo converInfo = converManager
+                    .getConverListInfo(conversationReq.getConversationId());
                 if (null == converInfo) {
                     sendFailAck(ctx, conversationReq.getId());
                 }
@@ -56,6 +56,15 @@ public class ConversationHandler extends SimpleChannelInboundHandler<RavenMessag
                 if (ConverType.valueOf(converInfo.getType()) == ConverType.GROUP) {
                     builder.setGroupId(converInfo.getGroupId());
                 }
+                MsgContent msgContent = converInfo.getLastContent();
+                MessageContent content = MessageContent.newBuilder().setId(msgContent.getId())
+                    .setUid(msgContent.getUid())
+                    .setType(MessageType.valueOf(msgContent.getType()))
+                    .setContent(msgContent.getContent())
+                    .setTime(msgContent.getTime())
+                    .build();
+                builder.setLastContent(content);
+                builder.setUnCount(converInfo.getUnCount());
                 Message.ConverInfo info = builder.build();
                 ConverAck converAck = ConverAck.newBuilder()
                     .setId(conversationReq.getId())

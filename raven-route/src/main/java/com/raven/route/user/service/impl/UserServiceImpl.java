@@ -6,6 +6,7 @@ import com.raven.common.loadbalance.LoadBalancer;
 import com.raven.common.loadbalance.Server;
 import com.raven.common.result.Result;
 import com.raven.common.result.ResultCode;
+import com.raven.route.utils.ClientType;
 import com.raven.route.validator.AppKeyValidator;
 import com.raven.route.validator.TokenValidator;
 import com.raven.route.validator.UserValidator;
@@ -79,7 +80,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Result getAccessInfo(String key, String token) {
+    public Result getAccessInfo(String key, String token, ClientType type) {
         // check app key validation.
         if (!appKeyValidator.validate(key)) {
             return Result.failure(appKeyValidator.errorCode());
@@ -102,7 +103,10 @@ public class UserServiceImpl implements UserService {
             if (!instances.isEmpty()) {
                 List<Server> servers = instances.stream()
                     .map((x) -> {
-                        if (x.getMetadata().containsKey(CONFIG_TCP_PORT)) {
+                        if (x.getMetadata().containsKey(CONFIG_WEBSOCKET_PORT) && type == ClientType.WEB) {
+                            int websocketPort = Integer.valueOf(x.getMetadata().get(CONFIG_WEBSOCKET_PORT));
+                            return new Server(x.getHost(), websocketPort);
+                        } else if (x.getMetadata().containsKey(CONFIG_TCP_PORT) && type == ClientType.MOBILE) {
                             int nettyPort = Integer.valueOf(x.getMetadata().get(CONFIG_TCP_PORT));
                             return new Server(x.getHost(), nettyPort);
                         } else {

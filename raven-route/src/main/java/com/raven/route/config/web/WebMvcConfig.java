@@ -24,7 +24,7 @@ public class WebMvcConfig extends WebMvcConfigurationSupport implements Environm
             .allowedOrigins("*")
             .allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS")
             .allowedHeaders("Content-Type", "X-Requested-With", "accept", "Origin",
-                "Access-Control-Request-Method", "Access-Control-Request-Headers")
+                "Access-Control-Request-Method", "Access-Control-Request-Headers", "AppKey", "Token")
             .exposedHeaders("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials")
             .allowCredentials(true)
             .maxAge(1800);

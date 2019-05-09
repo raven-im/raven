@@ -16,6 +16,7 @@ spring:
       connect-string: ${address.zookeeper}:2181
       discovery:
         prefer-ip-address: true
+        instance-ip-address: ${address.local}
         metadata:
           tcp-port: ${netty.tcp.port}
           websocket-port: ${netty.websocket.port}
@@ -58,3 +59,4 @@ node:
 address:
   zookeeper: 127.0.0.1
   redis: 127.0.0.1
+  local: 127.0.0.1

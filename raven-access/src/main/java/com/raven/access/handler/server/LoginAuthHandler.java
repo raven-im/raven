@@ -49,15 +49,15 @@ public class LoginAuthHandler extends SimpleChannelInboundHandler<RavenMessage> 
         if (message.getType() == Type.Login) {
             Login loginMesaage = message.getLogin();
             log.info("login msg:{}", loginMesaage);
-//            String token = loginMesaage.getToken();
-//            if (!verifyToken(token)) {
-//                LoginAck loginAck = LoginAck.newBuilder()
-//                    .setId(loginMesaage.getId())
-//                    .setCode(Code.FAIL)
-//                    .setTime(System.currentTimeMillis())
-//                    .build();
-//                ctx.writeAndFlush(loginAck);
-//            }
+            String token = loginMesaage.getToken();
+            if (!verifyToken(token)) {
+                LoginAck loginAck = LoginAck.newBuilder()
+                    .setId(loginMesaage.getId())
+                    .setCode(Code.FAIL)
+                    .setTime(System.currentTimeMillis())
+                    .build();
+                ctx.writeAndFlush(loginAck);
+            }
             routeManager.addUser2Server(loginMesaage.getUid(), getLocalServer());
             uidChannelManager.addId2Channel(loginMesaage.getUid(), ctx.channel());
             sendLoginAck(ctx, loginMesaage.getId(), Code.SUCCESS);

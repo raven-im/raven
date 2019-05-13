@@ -7,6 +7,7 @@ import com.raven.common.result.Result;
 import com.raven.route.user.bean.param.GetAccessParam;
 import com.raven.route.user.bean.param.GetTokenParam;
 import com.raven.route.user.service.UserService;
+import com.raven.route.utils.ClientType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,17 +48,22 @@ public class UserController {
 
     /**
      * 获取用户登录接入点
+     * 只有web用，它会拿到 websocket 端口
      */
     @GetMapping("/access")
     public Result getAccessInfo(@RequestHeader(AUTH_APP_KEY) String appKey,
         @RequestHeader(AUTH_TOKEN) String token) {
         log.info("getToken, app key {}, token {}", appKey, token);
-        return userService.getAccessInfo(appKey, token);
+        return userService.getAccessInfo(appKey, token, ClientType.WEB);
     }
 
+    /**
+     * 获取用户登录接入点
+     * mobile 或其他在用，它会拿到 tcp 端口
+     */
     @PostMapping("/access")
     public Result getAccessInfo(@RequestBody GetAccessParam param) {
         log.info("getToken, app key {}, token {}", param.getAppKey(), param.getToken());
-        return userService.getAccessInfo(param.getAppKey(), param.getToken());
+        return userService.getAccessInfo(param.getAppKey(), param.getToken(), ClientType.MOBILE);
     }
 }

@@ -9,11 +9,20 @@ spring:
       max-wait: 60000
       max-idle: 5
       min-idle: 1
+  kafka:
+    producer:
+      acks: all
+      retries: 0
+      buffer-memory: 33554432
+      bootstrap-servers: ${address.kafka}
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
   main:
     banner-mode: log
   cloud:
     zookeeper:
-      connect-string: ${address.zookeeper}:2181
+      connect-string: ${address.zookeeper}
       discovery:
         prefer-ip-address: true
         instance-ip-address: ${address.local}
@@ -57,6 +66,6 @@ node:
   machine-id: 1
 
 address:
-  zookeeper: 127.0.0.1
+  zookeeper: 127.0.0.1:2181
   redis: 127.0.0.1
-  local: 127.0.0.1
+  kafka: 127.0.0.1:9092

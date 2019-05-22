@@ -9,6 +9,7 @@ import com.raven.common.model.ConverListInfo;
 import com.raven.common.model.MsgContent;
 import com.raven.common.protos.Message.ConverType;
 import com.raven.common.protos.Message.MessageContent;
+import com.raven.common.utils.Constants;
 import com.raven.common.utils.JsonHelper;
 import com.raven.common.utils.UidUtil;
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.CollectionUtils;
@@ -41,7 +43,8 @@ public class ConverManager {
         ConverInfo converInfo = new ConverInfo().setId(converId)
             .setType(ConverType.SINGLE.getNumber())
             .setUidList(CollectionUtils.arrayToList(uidList.toArray()));
-        boolean result = redisTemplate.opsForValue().setIfAbsent(converId, JsonHelper.toJsonString(converInfo));
+        boolean result = redisTemplate.opsForValue()
+            .setIfAbsent(converId, JsonHelper.toJsonString(converInfo));
         if (result) {
             redisTemplate.boundHashOps(PREFIX_CONVERSATION_LIST + fromUid).put(converId, 0);
             redisTemplate.boundHashOps(PREFIX_CONVERSATION_LIST + toUid).put(converId, 0);
@@ -198,6 +201,18 @@ public class ConverManager {
 
     public void incrUserConverUnCount(String uid, String converId, int num) {
         redisTemplate.boundHashOps(PREFIX_CONVERSATION_LIST + uid).increment(converId, num);
+    }
+
+    public boolean isClientIdExist(String uid, Long clientId) {
+        String key = Constants.PREFIX_USER_CID + uid + "_" + clientId;
+        return redisTemplate.hasKey(key);
+    }
+
+    public void saveUserCid(String uid, Long clientId) {
+        redisTemplate
+            .boundValueOps(Constants.PREFIX_USER_CID + uid + "_" + clientId)
+            .set(0, 10,
+                TimeUnit.MINUTES);
     }
 
 }

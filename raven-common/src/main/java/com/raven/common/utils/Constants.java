@@ -16,6 +16,7 @@ public class Constants {
     public static final String PREFIX_CONVERSATION_LIST = "converlist_";
     public static final String PREFIX_MESSAGE_ID = "msg_";
     public static final String PREFIX_GROUP_MEMBER = "group_member_";
+    public static final String PREFIX_USER_CID = "user_cid_";
     /*
      * Authentication.
      * */
@@ -49,4 +50,10 @@ public class Constants {
     public static final String CONFIG_WEBSOCKET_PORT = "websocket-port";
 
     public static final String CONFIG_ACCESS_SERVER_NAME = "raven-access";
+
+    // kafka topic
+    public static final String KAFKA_TOPIC_SINGLE_MSG= "singleMsg";
+
+    public static final String KAFKA_TOPIC_GROUP_MSG= "groupMsg";
+
 }

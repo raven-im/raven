@@ -1,5 +1,7 @@
 package com.raven.access.handler.server;
 
+import com.googlecode.protobuf.format.JsonFormat;
+import com.raven.access.config.KafkaProducerManager;
 import com.raven.access.config.S2sChannelManager;
 import com.raven.common.netty.IdChannelManager;
 import com.raven.common.protos.Message.Code;
@@ -9,7 +11,11 @@ import com.raven.common.protos.Message.MessageContent;
 import com.raven.common.protos.Message.RavenMessage;
 import com.raven.common.protos.Message.RavenMessage.Type;
 import com.raven.common.protos.Message.UpDownMessage;
+import com.raven.common.result.Result;
+import com.raven.common.result.ResultCode;
+import com.raven.common.utils.Constants;
 import com.raven.common.utils.SnowFlake;
+import com.raven.storage.conver.ConverManager;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
@@ -33,36 +39,44 @@ public class MesaageHandler extends SimpleChannelInboundHandler<RavenMessage> {
     @Autowired
     private SnowFlake snowFlake;
 
+    @Autowired
+    private ConverManager converManager;
+
+    @Autowired
+    private KafkaProducerManager kafkaProducerManager;
+
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, RavenMessage message) throws Exception {
         if (message.getType() == Type.UpDownMessage) {
             UpDownMessage upMessage = message.getUpDownMessage();
             log.info("receive up message:{}", upMessage);
-            if (upMessage.getConverType() == ConverType.SINGLE) {
-                if (StringUtils.isNotBlank(upMessage.getConverId())) {
-                    Channel channel = s2sChannelManager
-                        .selectSingleChannel(upMessage.getConverId());
-                    channel.writeAndFlush(buildRavenMessage(ctx, upMessage));
-                } else if (StringUtils.isNotBlank(upMessage.getTargetUid())) {
-                    Channel channel = s2sChannelManager
-                        .selectSingleChannel(upMessage.getTargetUid());
-                    channel.writeAndFlush(buildRavenMessage(ctx, upMessage));
-                } else {
-                    sendFailAck(ctx, upMessage);
-                }
-            } else if (upMessage.getConverType() == ConverType.GROUP) {
-                if (StringUtils.isNotBlank(upMessage.getConverId())) {
-                    Channel channel = s2sChannelManager
-                        .selectGroupChannel(upMessage.getConverId());
-                    channel.writeAndFlush(buildRavenMessage(ctx, upMessage));
-                } else if (StringUtils.isNotBlank(upMessage.getTargetUid())) {
-                    Channel channel = s2sChannelManager
-                        .selectGroupChannel(upMessage.getTargetUid());
-                    channel.writeAndFlush(buildRavenMessage(ctx, upMessage));
-                } else {
-                    sendFailAck(ctx, upMessage);
-                }
+            if (verifyMsgClientId(ctx, upMessage)) {
+                sendFailAck(ctx, upMessage);
+                return;
             } else {
+                saveUserClientId(ctx, upMessage);
+            }
+            String topic;
+            if (upMessage.getConverType() == ConverType.SINGLE) {
+                if (StringUtils.isBlank(upMessage.getConverId()) && StringUtils
+                    .isBlank(upMessage.getTargetUid())) {
+                    sendFailAck(ctx, upMessage);
+                    return;
+                }
+                topic = Constants.KAFKA_TOPIC_SINGLE_MSG;
+            } else if (upMessage.getConverType() == ConverType.GROUP) {
+                if (StringUtils.isBlank(upMessage.getConverId()) && StringUtils
+                    .isBlank(upMessage.getGroupId())) {
+                    sendFailAck(ctx, upMessage);
+                    return;
+                }
+                topic = Constants.KAFKA_TOPIC_GROUP_MSG;
+            } else {
+                sendFailAck(ctx, upMessage);
+                return;
+            }
+            RavenMessage ravenMessage = buildRavenMessage(ctx, upMessage);
+            if (!sendMsgToKafka(ravenMessage, ravenMessage.getUpDownMessage().getId(), topic)) {
                 sendFailAck(ctx, upMessage);
             }
         } else {
@@ -84,7 +98,7 @@ public class MesaageHandler extends SimpleChannelInboundHandler<RavenMessage> {
     }
 
     private RavenMessage buildRavenMessage(ChannelHandlerContext ctx, UpDownMessage upDownMessage) {
-        Long id = snowFlake.nextId();
+        long id = snowFlake.nextId();
         String uid = uidChannelManager.getIdByChannel(ctx.channel());
         MessageContent content = MessageContent.newBuilder().setId(id)
             .setType(upDownMessage.getContent().getType()).setUid(uid)
@@ -100,4 +114,27 @@ public class MesaageHandler extends SimpleChannelInboundHandler<RavenMessage> {
             .setUpDownMessage(upMesaage).build();
         return ravenMessage;
     }
+
+    private boolean verifyMsgClientId(ChannelHandlerContext ctx, UpDownMessage upMessage) {
+        if (0 == upMessage.getCid()) {
+            return true;
+        }
+        String uid = uidChannelManager.getIdByChannel(ctx.channel());
+        return converManager.isClientIdExist(uid, upMessage.getCid());
+    }
+
+    private void saveUserClientId(ChannelHandlerContext ctx, UpDownMessage upMessage) {
+        String uid = uidChannelManager.getIdByChannel(ctx.channel());
+        converManager.saveUserCid(uid, upMessage.getCid());
+    }
+
+    private boolean sendMsgToKafka(RavenMessage ravenMessage, long id, String topic) {
+        JsonFormat jsonFormat = new JsonFormat();
+        String message = jsonFormat.printToString(ravenMessage);
+        log.info("protobuf to json message:{}", message);
+        Result result = kafkaProducerManager.send(topic, String.valueOf(id), message);
+        return result.getCode().intValue() == ResultCode.COMMON_SUCCESS.getCode();
+    }
+
+
 }

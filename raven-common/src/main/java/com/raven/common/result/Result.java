@@ -57,7 +57,7 @@ public class Result implements Serializable {
         this.msg = code.getMsg();
     }
 
-    private void setData(Object data) {
+    public void setData(Object data) {
         this.data = data;
     }
 

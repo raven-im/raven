@@ -14,6 +14,7 @@ public enum ResultCode {
     COMMON_SIGN_ERROR(10006, "signature not passed."),
     COMMON_UNAUTHORIZED_ERROR(10007, "unauthorized."),
     COMMON_NO_ACCESS_ERROR(10008, "no access."),
+    COMMON_KAFKA_PRODUCE_ERROR(10009, "kafka produce error."),
 
     /*
      * USER PART ERROR.  [11000, 12000)

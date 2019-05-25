@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 public class ClientFrom {
 
     private static final String HOST = "127.0.0.1";
-    private static final int PORT = 7011;
+    private static final int PORT = 7010;
     private static final int clientNum = 10;
     public static SnowFlake snowFlake = new SnowFlake(1, 2);
 

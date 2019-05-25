@@ -1,20 +1,23 @@
-package com.raven.single.kafka.listener;
+package com.raven.group.kafka.listener;
 
 import com.googlecode.protobuf.format.JsonFormat;
 import com.raven.common.kafka.MessageListener;
 import com.raven.common.netty.ServerChannelManager;
+import com.raven.common.protos.Message.Code;
 import com.raven.common.protos.Message.RavenMessage;
 import com.raven.common.protos.Message.UpDownMessage;
 import com.raven.common.utils.Constants;
-import com.raven.single.tcp.manager.SenderManager;
+import com.raven.common.utils.UidUtil;
+import com.raven.group.tcp.manager.SenderManager;
 import com.raven.storage.conver.ConverManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 @Slf4j
 @Component
-public class SingleMessageListener extends MessageListener<String, String> {
+public class GroupMessageListener extends MessageListener<String, String> {
 
     @Autowired
     private ConverManager converManager;
@@ -25,8 +28,8 @@ public class SingleMessageListener extends MessageListener<String, String> {
     @Autowired
     private ServerChannelManager internalServerChannelManager;
 
-    public SingleMessageListener() {
-        this.setTopic(Constants.KAFKA_TOPIC_SINGLE_MSG);
+    public GroupMessageListener() {
+        this.setTopic(Constants.KAFKA_TOPIC_GROUP_MSG);
     }
 
     @Override
@@ -36,20 +39,18 @@ public class SingleMessageListener extends MessageListener<String, String> {
             RavenMessage.Builder builder = RavenMessage.newBuilder();
             JsonFormat.merge(message, builder);
             UpDownMessage upDownMessage = builder.getUpDownMessage();
-            String convId = upDownMessage.getConverId();
-            converManager.cacheMsg2Conver(upDownMessage.getContent(), convId);
-            UpDownMessage downMessage = UpDownMessage.newBuilder()
-                .setId(upDownMessage.getId())
-                .setFromUid(upDownMessage.getFromUid())
-                .setTargetUid(upDownMessage.getTargetUid())
-                .setConverType(upDownMessage.getConverType())
-                .setContent(upDownMessage.getContent())
-                .setConverId(convId)
-                .build();
-            senderManager.sendMessage(downMessage);
+            cacheAndTransferMsg(upDownMessage);
         } catch (Exception e) {
             log.error("process message error", e);
         }
+    }
 
+    private void cacheAndTransferMsg(UpDownMessage upDownMessage) {
+        try {
+            converManager.cacheMsg2Conver(upDownMessage.getContent(), upDownMessage.getConverId());
+            senderManager.sendMessage(upDownMessage);
+        } catch (Exception e) {
+            log.error(e.getMessage(),e);
+        }
     }
 }

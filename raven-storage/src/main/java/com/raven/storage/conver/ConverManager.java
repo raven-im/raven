@@ -56,11 +56,12 @@ public class ConverManager {
         String converId = UidUtil.uuid24ByFactor(groupId);
         ConverInfo converInfo = new ConverInfo().setId(converId)
             .setType(ConverType.GROUP.getNumber())
-            .setUidList(members).setGroupId(groupId);
+            .setGroupId(groupId);
         boolean result = redisTemplate.opsForValue()
             .setIfAbsent(converId, JsonHelper.toJsonString(converInfo));
         if (result) {
             for (String member : members) {
+                redisTemplate.boundSetOps(PREFIX_GROUP_MEMBER + groupId).add(member);
                 redisTemplate.boundHashOps(PREFIX_CONVERSATION_LIST + member).put(converId, 0);
             }
         }

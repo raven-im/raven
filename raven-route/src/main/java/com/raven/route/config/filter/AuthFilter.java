@@ -20,8 +20,8 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.script.DigestUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.util.StringUtils;
@@ -67,7 +67,7 @@ public class AuthFilter implements Filter {
             AppConfigModel app = getApp(key);
             if (app != null) {
                 String toSign = app.getSecret() + nonce + timestamp;
-                if (sign.equalsIgnoreCase(DigestUtils.sha1DigestAsHex(toSign))) {
+                if (sign.equalsIgnoreCase(DigestUtils.sha1Hex(toSign))) {
                     return true;
                 }
             }

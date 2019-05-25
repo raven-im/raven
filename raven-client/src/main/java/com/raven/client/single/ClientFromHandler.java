@@ -1,5 +1,6 @@
 package com.raven.client.single;
 
+import com.raven.client.common.Utils;
 import com.raven.common.protos.Message.Code;
 import com.raven.common.protos.Message.ConverAck;
 import com.raven.common.protos.Message.ConverInfo;
@@ -39,8 +40,11 @@ public class ClientFromHandler extends SimpleChannelInboundHandler<RavenMessage>
     }
 
     private void sendLogin(ChannelHandlerContext ctx, String uid) {
+        String token = Utils.getToken(uid);
+        log.info("token{}" + token);
         Login login = Login.newBuilder()
             .setUid(uid)
+            .setToken(token)
             .setId(ClientFrom.snowFlake.nextId())
             .build();
         RavenMessage ravenMessage = RavenMessage.newBuilder().setType(Type.Login).setLogin(login)

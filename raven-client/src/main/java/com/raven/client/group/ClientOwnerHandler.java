@@ -1,7 +1,10 @@
 package com.raven.client.group;
 
+import com.raven.client.common.Utils;
 import com.raven.common.protos.Message.Code;
 import com.raven.common.protos.Message.ConverType;
+import com.raven.common.protos.Message.HeartBeat;
+import com.raven.common.protos.Message.HeartBeatType;
 import com.raven.common.protos.Message.Login;
 import com.raven.common.protos.Message.LoginAck;
 import com.raven.common.protos.Message.MessageAck;
@@ -35,50 +38,59 @@ public class ClientOwnerHandler extends SimpleChannelInboundHandler<RavenMessage
     }
 
     private void sendLogin(ChannelHandlerContext ctx, String uid) {
+        String token = Utils.getToken(uid);
         Login login = Login.newBuilder()
             .setUid(uid)
-            .setId(888)
+            .setId(ClientOwner.snowFlake.nextId())
+            .setToken(token)
             .build();
         RavenMessage ravenMessage = RavenMessage.newBuilder().setType(Type.Login).setLogin(login).build();
         ctx.writeAndFlush(ravenMessage);
     }
 
     @Override
-    protected void channelRead0(ChannelHandlerContext channelHandlerContext, RavenMessage message)
+    protected void channelRead0(ChannelHandlerContext ctx, RavenMessage message)
         throws Exception {
         if (message.getType() == Type.LoginAck) {
             LoginAck loginAck = message.getLoginAck();
             log.info("login ack:{}", loginAck.toString());
             if (loginAck.getCode() == Code.SUCCESS) {
                 MessageContent content = MessageContent.newBuilder()
-                    .setId(88)
+                    .setId(ClientOwner.snowFlake.nextId())
                     .setUid(uid)
                     .setTime(System.currentTimeMillis())
                     .setType(MessageType.TEXT)
                     .setContent("hello world.")
                     .build();
-
                 UpDownMessage msg = UpDownMessage.newBuilder()
-                    .setCid(90)
+                    .setCid(ClientOwner.snowFlake.nextId())
                     .setFromUid(uid)
-                    .setTargetUid("invitee2")
                     .setGroupId(groupId)
                     .setConverType(ConverType.GROUP)
                     .setContent(content)
                     .build();
-
                 RavenMessage ravenMessage = RavenMessage.newBuilder().setType(Type.UpDownMessage)
                     .setUpDownMessage(msg).build();
-                channelHandlerContext.writeAndFlush(ravenMessage);
+                ctx.writeAndFlush(ravenMessage);
             }
-        }
-        if (message.getType() == Type.MessageAck) {
+        } else  if (message.getType() == Type.MessageAck) {
             MessageAck messageAck = message.getMessageAck();
             log.info("receive message ack:{}", messageAck);
-        }
-        if (message.getType() == Type.UpDownMessage) {
+        }else if (message.getType() == Type.UpDownMessage) {
             UpDownMessage upDownMessage = message.getUpDownMessage();
             log.info("receive down message:{}", upDownMessage);
+        } else if (message.getType() == Type.HeartBeat) {
+            HeartBeat heartBeat = message.getHeartBeat();
+            log.info("receive hearbeat :{}", heartBeat);
+            if (heartBeat.getHeartBeatType() == HeartBeatType.PING) {
+                HeartBeat heartBeatAck = HeartBeat.newBuilder()
+                    .setId(heartBeat.getId())
+                    .setHeartBeatType(HeartBeatType.PONG)
+                    .build();
+                RavenMessage ravenMessage = RavenMessage.newBuilder().setType(Type.HeartBeat)
+                    .setHeartBeat(heartBeatAck).build();
+                ctx.writeAndFlush(ravenMessage);
+            }
         }
     }
 

@@ -3,7 +3,6 @@ package com.raven.access.handler.server;
 import com.googlecode.protobuf.format.JsonFormat;
 import com.raven.access.config.KafkaProducerManager;
 import com.raven.common.netty.IdChannelManager;
-import com.raven.common.netty.ServerChannelManager;
 import com.raven.common.protos.Message.Code;
 import com.raven.common.protos.Message.ConverType;
 import com.raven.common.protos.Message.MessageAck;
@@ -15,6 +14,7 @@ import com.raven.common.result.Result;
 import com.raven.common.result.ResultCode;
 import com.raven.common.utils.Constants;
 import com.raven.common.utils.SnowFlake;
+import com.raven.common.utils.UidUtil;
 import com.raven.storage.conver.ConverManager;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
@@ -55,11 +55,6 @@ public class MesaageHandler extends SimpleChannelInboundHandler<RavenMessage> {
             String topic;
             String convId;
             if (upMessage.getConverType() == ConverType.SINGLE) {
-                if (StringUtils.isBlank(upMessage.getConverId()) && StringUtils
-                    .isBlank(upMessage.getTargetUid())) {
-                    sendACK(ctx, upMessage, Code.FAIL);
-                    return;
-                }
                 if (StringUtils.isNotBlank(upMessage.getConverId())) {
                     if (!converManager.isSingleConverIdValid(upMessage.getConverId())) {
                         log.error("illegal conversation id.");
@@ -68,15 +63,26 @@ public class MesaageHandler extends SimpleChannelInboundHandler<RavenMessage> {
                     } else {
                         convId = upMessage.getConverId();
                     }
-                } else {
+                } else if (StringUtils.isNotBlank(upMessage.getTargetUid())){
                     convId = converManager
                         .newSingleConverId(upMessage.getFromUid(), upMessage.getTargetUid());
                     upMessage = upMessage.toBuilder().setConverId(convId).build();
+                } else {
+                    sendACK(ctx, upMessage, Code.FAIL);
+                    return;
                 }
                 topic = Constants.KAFKA_TOPIC_SINGLE_MSG;
             } else if (upMessage.getConverType() == ConverType.GROUP) {
-                if (StringUtils.isBlank(upMessage.getConverId()) && StringUtils
-                    .isBlank(upMessage.getGroupId())) {
+                convId = upMessage.getConverId();
+                String groupId = upMessage.getGroupId();
+                if (StringUtils.isNotBlank(convId)) {
+                    if (!converManager.isGroupConverIdValid(convId)) {
+                        sendACK(ctx, upMessage, Code.FAIL);
+                    }
+                } else if (StringUtils.isNotBlank(groupId)) {
+                    convId = UidUtil.uuid24ByFactor(groupId);
+                    upMessage = upMessage.toBuilder().setConverId(convId).build();
+                } else {
                     sendACK(ctx, upMessage, Code.FAIL);
                     return;
                 }

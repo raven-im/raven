@@ -1,4 +1,4 @@
-package com.raven.single.kafka;
+package com.raven.common.kafka;
 
 public abstract class MessageListener<K, V> {
 

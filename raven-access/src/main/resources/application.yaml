@@ -52,11 +52,11 @@ management:
 
 netty:
   tcp:
-    port: 7011
+    port: 7010
   websocket:
-    port: 7012
+    port: 7011
   internal:
-    port: 7013
+    port: 7012
 
 node:
   data-center-id: 1

@@ -49,5 +49,10 @@
             <artifactId>protobuf-java-format</artifactId>
             <version>1.2</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka-clients</artifactId>
+            <version>${version.kafka}</version>
+        </dependency>
     </dependencies>
 </project>

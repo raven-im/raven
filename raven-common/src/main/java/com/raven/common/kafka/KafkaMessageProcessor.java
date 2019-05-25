@@ -1,6 +1,5 @@
-package com.raven.single.kafka.config;
+package com.raven.common.kafka;
 
-import com.raven.single.kafka.MessageListener;
 import java.time.Duration;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;

@@ -1,4 +1,4 @@
-package com.raven.single.kafka.config;
+package com.raven.group.kafka.config;
 
 import com.raven.common.kafka.KafkaMessageProcessor;
 import com.raven.common.kafka.MessageListener;

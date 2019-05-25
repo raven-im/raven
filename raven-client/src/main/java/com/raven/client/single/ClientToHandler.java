@@ -1,5 +1,6 @@
 package com.raven.client.single;
 
+import com.raven.client.common.Utils;
 import com.raven.common.protos.Message.Code;
 import com.raven.common.protos.Message.HeartBeat;
 import com.raven.common.protos.Message.HeartBeatType;
@@ -28,9 +29,11 @@ public class ClientToHandler extends SimpleChannelInboundHandler<RavenMessage> {
     }
 
     private void sendLogin(ChannelHandlerContext ctx, String uid) {
+        String token = Utils.getToken(uid);
         Login login = Login.newBuilder()
             .setUid(uid)
-            .setId(888)
+            .setId(ClientTo.snowFlake.nextId())
+            .setToken(token)
             .build();
         RavenMessage ravenMessage = RavenMessage.newBuilder().setType(Type.Login).setLogin(login)
             .build();

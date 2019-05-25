@@ -1,7 +1,9 @@
 package com.raven.access.config;
 
 import com.raven.common.netty.IdChannelManager;
-import com.raven.common.netty.UidChannelManager;
+import com.raven.common.netty.ServerChannelManager;
+import com.raven.common.netty.impl.InternalServerChannelManager;
+import com.raven.common.netty.impl.UidChannelManager;
 import com.raven.common.utils.SnowFlake;
 import com.raven.storage.conver.ConverManager;
 import com.raven.storage.route.RouteManager;
@@ -63,6 +65,11 @@ public class CustomConfig {
     @Bean
     public IdChannelManager uidChannelManager() {
         return new UidChannelManager();
+    }
+
+    @Bean
+    public ServerChannelManager internalServerChannelManager() {
+        return new InternalServerChannelManager();
     }
 
     @Bean

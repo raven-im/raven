@@ -5,10 +5,9 @@ import com.raven.access.handler.server.HeartBeatHandler;
 import com.raven.access.handler.server.HistoryHandler;
 import com.raven.access.handler.server.LoginAuthHandler;
 import com.raven.access.handler.server.MesaageHandler;
-import com.raven.access.util.IpUtil;
 import com.raven.common.loadbalance.Server;
-import com.raven.common.netty.IdChannelManager;
 import com.raven.common.protos.Message;
+import com.raven.common.utils.IpUtil;
 import com.raven.storage.route.RouteManager;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
@@ -31,9 +30,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-/**
- * Author zxx Description 消息服务 Date Created on 2018/5/25
- */
 @Component
 @Slf4j
 public class AccessTcpServer {
@@ -59,9 +55,6 @@ public class AccessTcpServer {
 
     @Autowired
     private HistoryHandler historyHandler;
-
-    @Autowired
-    private IdChannelManager uidChannelManager;
 
     @Autowired
     private RouteManager routeManager;
@@ -96,7 +89,7 @@ public class AccessTcpServer {
         bindConnectionOptions(bootstrap);
         bootstrap.bind(new InetSocketAddress(nettyTcpPort)).addListener(future -> {
             if (future.isSuccess()) {
-                log.info("raven access tcp server start success on port:{}", nettyTcpPort);
+                log.info("raven-access tcp server start success on port:{}", nettyTcpPort);
             } else {
                 log.error("raven-access tcp server start failed!");
             }

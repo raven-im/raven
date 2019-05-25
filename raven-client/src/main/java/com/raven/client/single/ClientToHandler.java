@@ -1,6 +1,8 @@
 package com.raven.client.single;
 
 import com.raven.common.protos.Message.Code;
+import com.raven.common.protos.Message.HeartBeat;
+import com.raven.common.protos.Message.HeartBeatType;
 import com.raven.common.protos.Message.Login;
 import com.raven.common.protos.Message.LoginAck;
 import com.raven.common.protos.Message.MessageAck;
@@ -17,7 +19,7 @@ public class ClientToHandler extends SimpleChannelInboundHandler<RavenMessage> {
 
     private ChannelHandlerContext messageConnectionCtx;
 
-    private String uid = "test_user2";
+    private String uid = "test1";
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws IOException {
@@ -30,12 +32,13 @@ public class ClientToHandler extends SimpleChannelInboundHandler<RavenMessage> {
             .setUid(uid)
             .setId(888)
             .build();
-        RavenMessage ravenMessage = RavenMessage.newBuilder().setType(Type.Login).setLogin(login).build();
+        RavenMessage ravenMessage = RavenMessage.newBuilder().setType(Type.Login).setLogin(login)
+            .build();
         ctx.writeAndFlush(ravenMessage);
     }
 
     @Override
-    protected void channelRead0(ChannelHandlerContext channelHandlerContext, RavenMessage message)
+    protected void channelRead0(ChannelHandlerContext ctx, RavenMessage message)
         throws Exception {
         if (message.getType() == Type.LoginAck) {
             LoginAck loginAck = message.getLoginAck();
@@ -49,6 +52,18 @@ public class ClientToHandler extends SimpleChannelInboundHandler<RavenMessage> {
         } else if (message.getType() == Type.UpDownMessage) {
             UpDownMessage upDownMessage = message.getUpDownMessage();
             log.info("receive down message:{}", upDownMessage);
+        } else if (message.getType() == Type.HeartBeat) {
+            HeartBeat heartBeat = message.getHeartBeat();
+            log.info("receive hearbeat :{}", heartBeat);
+            if (heartBeat.getHeartBeatType() == HeartBeatType.PING) {
+                HeartBeat heartBeatAck = HeartBeat.newBuilder()
+                    .setId(heartBeat.getId())
+                    .setHeartBeatType(HeartBeatType.PONG)
+                    .build();
+                RavenMessage ravenMessage = RavenMessage.newBuilder().setType(Type.HeartBeat)
+                    .setHeartBeat(heartBeatAck).build();
+                ctx.writeAndFlush(ravenMessage);
+            }
         }
     }
 

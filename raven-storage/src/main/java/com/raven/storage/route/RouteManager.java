@@ -29,11 +29,21 @@ public class RouteManager {
         redisTemplate.boundSetOps(Constants.ACCESS_SERVER_ROUTE_KEY + server.toString()).add(uid);
     }
 
+    // 增加内部服务路由
+    public void addUser2InternalServer(String uid, Server server) {
+        redisTemplate.boundHashOps(Constants.USER_INTERNAL_ROUTE_KEY).put(uid, server.toString());
+    }
+
     // 移除路由
     public void removerUserFromServer(String uid, Server server) {
         redisTemplate.boundHashOps(Constants.USER_ROUTE_KEY).delete(uid);
         redisTemplate.boundSetOps(Constants.ACCESS_SERVER_ROUTE_KEY + server)
             .remove(uid);
+    }
+
+    // 移除内部服务路由
+    public void removerUserFromInternalServer(String uid, Server server) {
+        redisTemplate.boundHashOps(Constants.USER_INTERNAL_ROUTE_KEY).delete(uid);
     }
 
     // 服务下线
@@ -43,6 +53,7 @@ public class RouteManager {
         while (cursor.hasNext()) {
             String uid = (String) cursor.next();
             redisTemplate.boundHashOps(Constants.USER_ROUTE_KEY).delete(uid);
+            redisTemplate.boundHashOps(Constants.USER_INTERNAL_ROUTE_KEY).delete(uid);
         }
         redisTemplate.delete(Constants.ACCESS_SERVER_ROUTE_KEY + server);
     }
@@ -54,6 +65,15 @@ public class RouteManager {
             return null;
         }
 
+        return new Server(ob.toString());
+    }
+
+    // 获取内部服务用户路由信息
+    public Server getInternalServerByUid(String uid) {
+        Object ob = redisTemplate.boundHashOps(Constants.USER_INTERNAL_ROUTE_KEY).get(uid);
+        if (null == ob) {
+            return null;
+        }
         return new Server(ob.toString());
     }
 

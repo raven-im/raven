@@ -10,6 +10,8 @@ public class Constants {
      */
     public static final String USER_ROUTE_KEY = "user_route_key";
 
+    public static final String USER_INTERNAL_ROUTE_KEY = "user_internal_route_key";
+
     public static final String ACCESS_SERVER_ROUTE_KEY = "access_server_route_key_";
 
     public static final String PREFIX_CONVERSATION_ID = "converid_";
@@ -48,6 +50,8 @@ public class Constants {
     public static final String CONFIG_TCP_PORT = "tcp-port";
 
     public static final String CONFIG_WEBSOCKET_PORT = "websocket-port";
+
+    public static final String CONFIG_INTERNAL_PORT = "internal-port";
 
     public static final String CONFIG_ACCESS_SERVER_NAME = "raven-access";
 

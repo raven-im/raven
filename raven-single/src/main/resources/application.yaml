@@ -37,6 +37,15 @@ spring:
         prefer-ip-address: true
         metadata:
           tcp-port: ${netty.tcp.port}
+  kafka:
+    consumer:
+      group-id: singleMsg1
+      nThreads: 1
+      enable-auto-commit: true
+      auto-commit-interval: 1000
+      bootstrap-servers: ${address.kafka}
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
 
 # actuator相关配置
 management:
@@ -71,15 +80,11 @@ mapper:
   before: true
   identity: mysql
 
-netty:
-  tcp:
-    port: 7270
-
-node:
-  data-center-id: 1
-  machine-id: 1
+discovery:
+  access-server-path: /services/raven-access
 
 address:
   mysql: 127.0.0.1
   zookeeper: 127.0.0.1
   redis: 127.0.0.1
+  kafka: 127.0.0.1:9092

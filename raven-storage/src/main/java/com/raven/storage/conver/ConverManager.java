@@ -106,7 +106,7 @@ public class ConverManager {
         return converInfo == null ? false : converInfo.getType() == ConverType.GROUP.getNumber();
     }
 
-    public void cacheMsg2Conver(MessageContent msg, String converId) throws Exception {
+    public void cacheMsg2Conver(MessageContent msg, String converId){
         MsgContent msgContent = new MsgContent().setId(msg.getId()).setUid(msg.getUid())
             .setType(msg.getType().getNumber()).setContent(msg.getContent()).setTime(msg.getTime());
         String str = JsonHelper.toJsonString(msgContent);

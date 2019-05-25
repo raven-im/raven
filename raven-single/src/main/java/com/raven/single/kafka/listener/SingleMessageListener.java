@@ -22,9 +22,6 @@ public class SingleMessageListener extends MessageListener<String, String> {
     @Autowired
     private SenderManager senderManager;
 
-    @Autowired
-    private ServerChannelManager internalServerChannelManager;
-
     public SingleMessageListener() {
         this.setTopic(Constants.KAFKA_TOPIC_SINGLE_MSG);
     }

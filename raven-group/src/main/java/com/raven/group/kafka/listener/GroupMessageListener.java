@@ -25,9 +25,6 @@ public class GroupMessageListener extends MessageListener<String, String> {
     @Autowired
     private SenderManager senderManager;
 
-    @Autowired
-    private ServerChannelManager internalServerChannelManager;
-
     public GroupMessageListener() {
         this.setTopic(Constants.KAFKA_TOPIC_GROUP_MSG);
     }

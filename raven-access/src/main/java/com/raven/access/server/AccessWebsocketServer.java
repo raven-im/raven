@@ -27,9 +27,7 @@ import io.netty.handler.codec.MessageToMessageDecoder;
 import io.netty.handler.codec.MessageToMessageEncoder;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
-import io.netty.handler.codec.http.websocketx.BinaryWebSocketFrame;
-import io.netty.handler.codec.http.websocketx.WebSocketFrame;
-import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
+import io.netty.handler.codec.http.websocketx.*;
 import io.netty.handler.codec.http.websocketx.extensions.compression.WebSocketServerCompressionHandler;
 import io.netty.handler.codec.protobuf.ProtobufDecoder;
 import io.netty.handler.stream.ChunkedWriteHandler;
@@ -102,11 +100,18 @@ public class AccessWebsocketServer {
                     // 协议包解码
                     pipeline.addLast(new MessageToMessageDecoder<WebSocketFrame>() {
                         @Override
-                        protected void decode(ChannelHandlerContext ctx, WebSocketFrame frame,
-                            List<Object> objs) throws Exception {
-                            ByteBuf buf = ((BinaryWebSocketFrame) frame).content();
-                            objs.add(buf);
-                            buf.retain();
+                        protected void decode(ChannelHandlerContext ctx, WebSocketFrame frame, List<Object> out) throws Exception {
+                            if (frame instanceof BinaryWebSocketFrame) {
+                                ByteBuf buf = frame.content();
+                                out.add(buf);
+                                buf.retain();
+                            } else if (frame instanceof PingWebSocketFrame) {
+                                ctx.channel()
+                                    .writeAndFlush(new PongWebSocketFrame(frame.content()
+                                        .retain()));
+                            } else {
+                                throw new IllegalStateException("Unsupported web socket msg " + frame);
+                            }
                         }
                     });
                     // 协议包编码

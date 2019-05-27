@@ -9,6 +9,16 @@ spring:
       max-wait: 60000
       max-idle: 5
       min-idle: 1
+  kafka:
+    producer:
+      acks: 1
+      retries: 2
+      buffer-memory: 33554432
+      bootstrap-servers: ${address.kafka}
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      max-in-flight-requests.per.connection: 1
+
   main:
     banner-mode: log
   cloud:
@@ -19,6 +29,7 @@ spring:
         metadata:
           tcp-port: ${netty.tcp.port}
           websocket-port: ${netty.websocket.port}
+          internal-port: ${netty.internal.port}
 server:
   port: 8010
 
@@ -39,17 +50,13 @@ management:
       exposure:
         include: '*' #开放所有监控接口
 
-discovery:
-  single-server-name: raven-single
-  group-server-name: raven-group
-  single-server-path: /services/raven-single
-  group-server-path: /services/raven-group
-
 netty:
   tcp:
     port: 7010
   websocket:
     port: 7011
+  internal:
+    port: 7012
 
 node:
   data-center-id: 1
@@ -58,3 +65,4 @@ node:
 address:
   zookeeper: 127.0.0.1
   redis: 127.0.0.1
+  kafka: 127.0.0.1:9092

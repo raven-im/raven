@@ -1,5 +1,7 @@
-package com.raven.common.netty;
+package com.raven.common.netty.impl;
 
+import com.raven.common.netty.IdChannelManager;
+import com.raven.common.netty.NettyAttrUtil;
 import io.netty.channel.Channel;
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,5 @@
 package com.raven.access.handler.server;
 
-import com.raven.access.util.IpUtil;
 import com.raven.common.loadbalance.Server;
 import com.raven.common.netty.IdChannelManager;
 import com.raven.common.netty.NettyAttrUtil;
@@ -9,6 +8,7 @@ import com.raven.common.protos.Message.Login;
 import com.raven.common.protos.Message.LoginAck;
 import com.raven.common.protos.Message.RavenMessage;
 import com.raven.common.protos.Message.RavenMessage.Type;
+import com.raven.common.utils.IpUtil;
 import com.raven.storage.route.RouteManager;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
@@ -37,6 +37,9 @@ public class LoginAuthHandler extends SimpleChannelInboundHandler<RavenMessage> 
     @Value("${netty.tcp.port}")
     private int nettyTcpPort;
 
+    @Value("${netty.internal.port}")
+    private int nettyInternalPort;
+
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         log.info("client connected remote address:{}", ctx.channel().remoteAddress());
@@ -58,7 +61,10 @@ public class LoginAuthHandler extends SimpleChannelInboundHandler<RavenMessage> 
                     .build();
                 ctx.writeAndFlush(loginAck);
             }
-            routeManager.addUser2Server(loginMesaage.getUid(), getLocalServer());
+            routeManager
+                .addUser2Server(loginMesaage.getUid(), new Server(IpUtil.getIp(), nettyTcpPort));
+            routeManager.addUser2InternalServer(loginMesaage.getUid(),
+                new Server(IpUtil.getIp(), nettyInternalPort));
             uidChannelManager.addId2Channel(loginMesaage.getUid(), ctx.channel());
             sendLoginAck(ctx, loginMesaage.getId(), Code.SUCCESS);
         } else {
@@ -77,13 +83,11 @@ public class LoginAuthHandler extends SimpleChannelInboundHandler<RavenMessage> 
             uidChannelManager.removeChannel(ctx.channel());
             // 最后一台设备下线才清除路由
             if (CollectionUtils.isEmpty(uidChannelManager.getChannelsById(uid))) {
-                routeManager.removerUserFromServer(uid, getLocalServer());
+                routeManager.removerUserFromServer(uid, new Server(IpUtil.getIp(), nettyTcpPort));
+                routeManager.removerUserFromInternalServer(uid,
+                    new Server(IpUtil.getIp(), nettyInternalPort));
             }
         }
-    }
-
-    private Server getLocalServer() {
-        return new Server(IpUtil.getIp(), nettyTcpPort);
     }
 
     @Override

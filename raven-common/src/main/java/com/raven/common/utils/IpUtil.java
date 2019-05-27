@@ -1,4 +1,4 @@
-package com.raven.access.util;
+package com.raven.common.utils;
 
 import java.net.InetAddress;
 import java.net.NetworkInterface;

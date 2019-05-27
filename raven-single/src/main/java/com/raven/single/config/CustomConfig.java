@@ -1,5 +1,7 @@
 package com.raven.single.config;
 
+import com.raven.common.netty.ServerChannelManager;
+import com.raven.common.netty.impl.InternalServerChannelManager;
 import com.raven.common.utils.SnowFlake;
 import com.raven.storage.conver.ConverManager;
 import com.raven.storage.route.RouteManager;
@@ -20,12 +22,6 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  */
 @Configuration
 public class CustomConfig {
-
-    @Value("${node.data-center-id}")
-    private int dataCenterId;
-
-    @Value("${node.machine-id}")
-    private int machineId;
 
     @Bean
     @ConditionalOnMissingBean(name = "redisTemplate")
@@ -52,8 +48,8 @@ public class CustomConfig {
     }
 
     @Bean
-    public SnowFlake snowFlake() {
-        return new SnowFlake(dataCenterId, machineId);
+    public ServerChannelManager internalServerChannelManager() {
+        return new InternalServerChannelManager();
     }
 
     @Bean

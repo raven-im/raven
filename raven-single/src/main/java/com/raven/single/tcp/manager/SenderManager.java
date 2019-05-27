@@ -15,24 +15,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
-/**
- * @author: bbpatience
- * @date: 2019/4/9
- * @description: SenderManager
- **/
 @Slf4j
 @Component
 public class SenderManager {
 
-    //    private static final int THREAD_NUM = Runtime.getRuntime().availableProcessors();
-    private static final LinkedBlockingQueue<UpDownMessage> sendingQ = new LinkedBlockingQueue(
-        1024 * 128);
-
     @Autowired
-    private RedisTemplate redisTemplate;
-
-    @Autowired
-    private ServerChannelManager channelManager;
+    private ServerChannelManager internalServerChannelManager;
 
     @Autowired
     private ConverManager converManager;
@@ -40,43 +28,19 @@ public class SenderManager {
     @Autowired
     private RouteManager routeManager;
 
-    public SenderManager() {
-        //TODO   threads create according to Thread_NUM
-        new Thread(() -> {
-            int sleepTime = 5;
-            while (true) {
-                try {
-                    if (!sendingQ.isEmpty()) {
-                        UpDownMessage msg = sendingQ.take();
-                        if (msg != null) {
-                            msgQTask(msg);
-                        }
-                    }
-                    Thread.sleep(sleepTime);
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                    log.error(e.getMessage(), e);
-                }
-            }
-        }, "message_sender").start();
-    }
-
-    public void addMessage(UpDownMessage msg) {
-        sendingQ.offer(msg);
-    }
-
-    private void msgQTask(UpDownMessage msg) {
+    public void sendMessage(UpDownMessage msg) {
         List<String> uidList = converManager.getUidListByConverExcludeSender(msg.getConverId(),
             msg.getFromUid());
         for (String uid : uidList) {
             UpDownMessage downMessage = msg.toBuilder().setTargetUid(uid).build();
-            Server server = routeManager.getServerByUid(uid);
+            Server server = routeManager.getInternalServerByUid(uid);
             if (null != server) {
-                Channel chan = channelManager.getChannelByServer(server);
-                if (chan != null) {
-                    RavenMessage ravenMessage = RavenMessage.newBuilder().setType(Type.UpDownMessage)
+                Channel channel = internalServerChannelManager.getChannelByServer(server);
+                if (channel != null) {
+                    RavenMessage ravenMessage = RavenMessage.newBuilder()
+                        .setType(Type.UpDownMessage)
                         .setUpDownMessage(downMessage).build();
-                    chan.writeAndFlush(ravenMessage);
+                    channel.writeAndFlush(ravenMessage);
                     log.info("send down msg {}", downMessage);
                 } else {
                     log.error("cannot find channel. server:{}", server);
@@ -85,6 +49,5 @@ public class SenderManager {
                 converManager.incrUserConverUnCount(uid, msg.getConverId(), 1);
             }
         }
-
     }
 }

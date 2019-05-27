@@ -9,7 +9,10 @@ import com.raven.access.handler.server.HeartBeatHandler;
 import com.raven.access.handler.server.HistoryHandler;
 import com.raven.access.handler.server.LoginAuthHandler;
 import com.raven.access.handler.server.MesaageHandler;
+import com.raven.common.loadbalance.Server;
 import com.raven.common.protos.Message;
+import com.raven.common.utils.IpUtil;
+import com.raven.storage.route.RouteManager;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
@@ -64,6 +67,9 @@ public class AccessWebsocketServer {
     @Autowired
     private HistoryHandler historyHandler;
 
+    @Autowired
+    private RouteManager routeManager;
+
     @PostConstruct
     public void startServer() {
         startMessageServer();
@@ -89,7 +95,8 @@ public class AccessWebsocketServer {
                     // WebSocket数据压缩
                     pipeline.addLast(new WebSocketServerCompressionHandler());
                     // 协议包长度限制
-                    pipeline.addLast(new WebSocketServerProtocolHandler("/ws", null, true, 1024 * 10));
+                    pipeline
+                        .addLast(new WebSocketServerProtocolHandler("/ws", null, true, 1024 * 10));
                     // 协议包解码
                     pipeline.addLast(new MessageToMessageDecoder<WebSocketFrame>() {
                         @Override
@@ -110,13 +117,15 @@ public class AccessWebsocketServer {
                     // 协议包编码
                     pipeline.addLast(new MessageToMessageEncoder<MessageLiteOrBuilder>() {
                         @Override
-                        protected void encode(ChannelHandlerContext ctx, MessageLiteOrBuilder msg, List<Object> out) throws Exception {
+                        protected void encode(ChannelHandlerContext ctx, MessageLiteOrBuilder msg,
+                            List<Object> out) throws Exception {
                             ByteBuf result = null;
                             if (msg instanceof MessageLite) {
                                 result = wrappedBuffer(((MessageLite) msg).toByteArray());
                             }
                             if (msg instanceof MessageLite.Builder) {
-                                result = wrappedBuffer(((MessageLite.Builder) msg).build().toByteArray());
+                                result = wrappedBuffer(
+                                    ((MessageLite.Builder) msg).build().toByteArray());
                             }
                             // ==== 上面代码片段是拷贝自TCP ProtobufEncoder 源码 ====
                             // 然后下面再转成websocket二进制流，因为客户端不能直接解析protobuf编码生成的
@@ -125,7 +134,8 @@ public class AccessWebsocketServer {
                         }
                     });
                     // 协议包解码时指定Protobuf字节数实例化为RavenMessage类型
-                    pipeline.addLast(new ProtobufDecoder(Message.RavenMessage.getDefaultInstance()));
+                    pipeline
+                        .addLast(new ProtobufDecoder(Message.RavenMessage.getDefaultInstance()));
                     // 业务处理器
                     pipeline.addLast("LoginAuthHandler", loginAuthHandler);
                     pipeline.addLast("HeartBeatHandler", heartBeatHandler);
@@ -138,7 +148,8 @@ public class AccessWebsocketServer {
         bindConnectionOptions(bootstrap);
         bootstrap.bind(new InetSocketAddress(nettyWebsocketPort)).addListener(future -> {
             if (future.isSuccess()) {
-                log.info("raven-access websocket server start success on port:{}", nettyWebsocketPort);
+                log.info("raven-access websocket server start success on port:{}",
+                    nettyWebsocketPort);
             } else {
                 log.error("raven-access websocket server start failed!");
             }
@@ -153,9 +164,13 @@ public class AccessWebsocketServer {
 
     @PreDestroy
     public void destroy() {
+        routeManager.serverDown(getLocalServer());
         bossGroup.shutdownGracefully().syncUninterruptibly();
         workGroup.shutdownGracefully().syncUninterruptibly();
         log.info("close raven-access websocket server success");
     }
 
+    private Server getLocalServer() {
+        return new Server(IpUtil.getIp(), nettyWebsocketPort);
+    }
 }

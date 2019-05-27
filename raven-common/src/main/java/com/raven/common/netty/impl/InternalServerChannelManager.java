@@ -1,4 +1,5 @@
-package com.raven.group.tcp.manager;
+package com.raven.common.netty.impl;
+
 
 import com.raven.common.loadbalance.Server;
 import com.raven.common.netty.ServerChannelManager;
@@ -8,21 +9,15 @@ import java.util.Map;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 
-/**
- * @author: bbpatience
- * @date: 2019/4/10
- * @description: AccessServerManager
- **/
-@Component
 @Slf4j
-public class AccessServerManager implements ServerChannelManager {
-
-    private ReadWriteLock rwLock = new ReentrantReadWriteLock();
+public class InternalServerChannelManager implements ServerChannelManager {
 
     private final Map<Server, Channel> serverChannel = new HashMap<>();
+
     private final Map<Channel, Server> channelServer = new HashMap<>();
+
+    private ReadWriteLock rwLock = new ReentrantReadWriteLock();
 
     @Override
     public void addServer2Channel(Server server, Channel channel) {

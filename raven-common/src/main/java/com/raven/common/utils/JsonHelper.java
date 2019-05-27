@@ -22,7 +22,7 @@ public class JsonHelper {
         try {
             return mapper.writeValueAsString(object);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            log.error("to json string error",e);
         }
         return null;
     }
@@ -31,7 +31,7 @@ public class JsonHelper {
         try {
             return mapper.writeValueAsBytes(object);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            log.error("to json bytes error",e);
         }
         return null;
     }
@@ -40,7 +40,7 @@ public class JsonHelper {
         try {
             return mapper.readValue(str, Map.class);
         } catch (IOException e) {
-            log.error("read json value error");
+            log.error("read json value error",e);
         }
         return null;
     }
@@ -49,7 +49,7 @@ public class JsonHelper {
         try {
             return mapper.readValue(str, classType);
         } catch (IOException e) {
-            log.error("read json value error");
+            log.error("read json value error",e);
         }
         return null;
     }

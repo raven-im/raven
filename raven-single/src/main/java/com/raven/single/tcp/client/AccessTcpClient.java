@@ -1,12 +1,12 @@
-package com.raven.access.client;
+package com.raven.single.tcp.client;
 
 
-import com.raven.access.config.S2sChannelManager;
-import com.raven.access.handler.client.S2sClientHandler;
 import com.raven.common.loadbalance.Server;
+import com.raven.common.netty.ServerChannelManager;
 import com.raven.common.protos.Message;
 import com.raven.common.utils.Constants;
 import com.raven.common.utils.JsonHelper;
+import com.raven.single.tcp.handler.MessageHandler;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
@@ -38,23 +38,20 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-@DependsOn("s2sChannelManager")
+@DependsOn("internalServerChannelManager")
 public class AccessTcpClient {
 
     @Autowired
-    private S2sChannelManager s2sChannelManager;
+    private ServerChannelManager internalServerChannelManager;
 
     @Autowired
-    private S2sClientHandler s2sClientHandler;
+    private MessageHandler messageHandler;
 
     @Autowired
     private CuratorFramework curator;
 
-    @Value("${discovery.single-server-path}")
-    private String singleServerPath;
-
-    @Value("${discovery.group-server-path}")
-    private String groupServerPath;
+    @Value("${discovery.access-server-path}")
+    private String accessServerPath;
 
     private EventLoopGroup workGroup = new NioEventLoopGroup();
 
@@ -66,11 +63,11 @@ public class AccessTcpClient {
     @PreDestroy
     public void destroy() {
         workGroup.shutdownGracefully().syncUninterruptibly();
-        log.info("close ravenaccess client success");
+        log.info("close raven-single client success");
     }
 
     private Channel connectServer(Server server) {
-        if (null != s2sChannelManager.getChannelByServer(server)) {
+        if (null != internalServerChannelManager.getChannelByServer(server)) {
             return null;
         }
         EventLoopGroup group = new NioEventLoopGroup();
@@ -88,7 +85,7 @@ public class AccessTcpClient {
                     // 对protobuf协议的消息头上加上一个长度为32的整形字段
                     p.addLast(new ProtobufVarint32LengthFieldPrepender());
                     p.addLast(new ProtobufEncoder());
-                    p.addLast("S2sClientHandler", s2sClientHandler);
+                    p.addLast("MessageHandler", messageHandler);
                 }
             });
         ChannelFuture future = bootstrap.connect(server.getIp(), server.getPort())
@@ -105,54 +102,31 @@ public class AccessTcpClient {
     }
 
     private void startZkWatcher() throws Exception {
-        PathChildrenCache singleWatcher = new PathChildrenCache(curator, singleServerPath, true);
-        singleWatcher.getListenable().addListener(new PathChildrenCacheListener() {
+        PathChildrenCache accessWatcher = new PathChildrenCache(curator, accessServerPath, true);
+        accessWatcher.getListenable().addListener(new PathChildrenCacheListener() {
             @Override
             public void childEvent(CuratorFramework curator,
                 PathChildrenCacheEvent event) throws Exception {
                 if (event.getType().equals(Type.CHILD_ADDED)) {
-                    log.info("zookeeper watched add single server node:{}",
+                    log.info("zookeeper watched add access server node:{}",
                         new String(event.getData().getData()));
                     Map<String, Object> data = JsonHelper
                         .strToMap(new String(event.getData().getData()));
                     String address = (String) data.get("address");
                     Map<String, Object> payload = (Map<String, Object>) data.get("payload");
                     Map<String, Object> metadata = (Map<String, Object>) payload.get("metadata");
-                    int port = Integer.valueOf(metadata.get(Constants.CONFIG_TCP_PORT).toString());
+                    int port = Integer
+                        .valueOf(metadata.get(Constants.CONFIG_INTERNAL_PORT).toString());
                     Server server = new Server(address, port);
                     Channel channel = connectServer(server);
                     if (null != channel) {
-                        s2sChannelManager.addSingleServer(server, channel);
+                        internalServerChannelManager.addServer2Channel(server, channel);
                     }
                 }
             }
         });
-        singleWatcher.start();
-        log.info("start single server zk watcher");
-        PathChildrenCache groupWatcher = new PathChildrenCache(curator, groupServerPath, true);
-        groupWatcher.getListenable().addListener(new PathChildrenCacheListener() {
-            @Override
-            public void childEvent(CuratorFramework curator,
-                PathChildrenCacheEvent event) throws Exception {
-                if (event.getType().equals(Type.CHILD_ADDED)) {
-                    log.info("zookeeper watched add group server node:{}",
-                        new String(event.getData().getData()));
-                    Map<String, Object> data = JsonHelper
-                        .strToMap(new String(event.getData().getData()));
-                    String address = (String) data.get("address");
-                    Map<String, Object> payload = (Map<String, Object>) data.get("payload");
-                    Map<String, Object> metadata = (Map<String, Object>) payload.get("metadata");
-                    int port = Integer.valueOf(metadata.get(Constants.CONFIG_TCP_PORT).toString());
-                    Server server = new Server(address, port);
-                    Channel channel = connectServer(server);
-                    if (null != channel) {
-                        s2sChannelManager.addGroupServer(server, channel);
-                    }
-                }
-            }
-        });
-        groupWatcher.start();
-        log.info("start group server zk watcher");
+        accessWatcher.start();
+        log.info("start access server zk watcher");
     }
 
 

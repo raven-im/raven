@@ -15,8 +15,6 @@ Open Source Instant Message System.
 * spring cloud
 
 ### Related Components
-mobile client: 
-https://github.com/bbpatience/raven-client
-
-application server for user and group things:
-https://github.com/bbpatience/raven-appserver
+* mobile client: https://github.com/bbpatience/raven-client
+* web client: https://github.com/bbpatience/raven-web
+* application server:https://github.com/bbpatience/raven-appserver

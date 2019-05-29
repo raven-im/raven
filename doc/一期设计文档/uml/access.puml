@@ -2,17 +2,23 @@
 
 actor "foo1" as client
 participant "app-server" as app
-participant "router" as border
+participant "gateway" as gateway
+participant "router" as router
 participant "access"
 
 autonumber
-client --> app: req token
-app --> border: req token
-border --> app: rsp(token)
+client --> app: req(token?)
+app --> gateway: req(token?)
+gateway --> router: req(token?)
+router --> gateway: rsp(token)
+gateway --> app: rsp(token)
 app --> client: rsp(token)
-client --> border: req access(token)
-border --> client: rsp(access node)
-client --> access: login init(token)
+client --> gateway: req(token, access?)
+gateway --> router: req(token, access?)
+router --> router: token validation
+router --> gateway: rsp(access)
+gateway --> client: rsp(access)
+client --> access: login to access node(token)
 access --> client: login done
 
 @enduml

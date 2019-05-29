@@ -2,21 +2,30 @@
 
 actor "foo1" as client1
 
-participant "access" as access1
+participant "app-server" as app
+participant "gateway"
 participant "group-server" as group
 database "storage" as db
+participant "access" as access1
+database "kafka"
 participant "access" as access2
 actor "foo2" as client2
 
 autonumber
-client1 --> access1 : msg publish
-access1 --> group: msg up stream
-group --> group: validation
-group --> db: save msg
-group --> access1: msg up ACK
-access1 --> client1 : publish ack(msg_id, sent_time)
+client1 --> app : create a group
+app --> gateway: create a group
+gateway --> group: create a group
+group --> db: db create a group
+db --> group: create done
+group --> gateway: group created(group id)
+gateway --> app: group created(group id)
+app --> client1 : group created(group id)
 
-group --> access2: msg down stream
-access2 --> client2: msg notify
-client2 --> access2: notify ack
+client1 --> access1: msg upstream(group id)
+access1 --> db: group id validation
+access1 --> kafka: msg producer
+group --> kafka: msg consumer
+group --> access2: msg downstream
+access2 --> client2: msg push
+client2 --> access2: push ack
 @enduml

@@ -3,18 +3,20 @@
 actor "foo1" as client1
 
 participant "access" as access1
+database "kafka"
 participant "single-server" as single
 database "storage" as db
 participant "access" as access2
 actor "foo2" as client2
 
 autonumber
-client1 --> access1 : msg publish
-access1 --> single: msg up stream
-single --> db: save msg
-single --> access1: msg up stream ack
-access1 --> client1 : publish ack(msg_id, sent_time)
-single --> access2: msg down stream
-access2 --> client2: msg notify
-client2 --> access2: notify ack
+client1 --> access1 : msg upstream
+access1 --> kafka: msg producer
+kafka --> access1: ack
+access1 --> client1: ack(msg_id, sent_time)
+single --> kafka: msg consumer
+single --> db: save in db
+single --> access2: msg downstream
+access2 --> client2: msg push
+client2 --> access2: msg ack
 @enduml

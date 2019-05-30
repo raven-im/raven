@@ -1,16 +1,14 @@
 package com.raven.access.handler.internal;
 
-import com.raven.common.loadbalance.Server;
 import com.raven.common.netty.IdChannelManager;
 import com.raven.common.netty.NettyAttrUtil;
-import com.raven.common.netty.ServerChannelManager;
 import com.raven.common.protos.Message.HeartBeat;
 import com.raven.common.protos.Message.HeartBeatType;
 import com.raven.common.protos.Message.RavenMessage;
 import com.raven.common.protos.Message.RavenMessage.Type;
-import com.raven.common.protos.Message.ServerInfo;
 import com.raven.common.protos.Message.UpDownMessage;
 import com.raven.common.utils.SnowFlake;
+import com.raven.storage.conver.ConverManager;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
@@ -29,6 +27,9 @@ public class InternalMessageHandler extends SimpleChannelInboundHandler<RavenMes
 
     @Autowired
     private IdChannelManager uidChannelManager;
+
+    @Autowired
+    private ConverManager converManager;
 
     @Autowired
     private SnowFlake snowFlake;
@@ -75,8 +76,15 @@ public class InternalMessageHandler extends SimpleChannelInboundHandler<RavenMes
                 .getChannelsById(downMessage.getTargetUid());
             RavenMessage ravenMessage = RavenMessage.newBuilder().setType(Type.UpDownMessage)
                 .setUpDownMessage(downMessage).build();
-            // todo 失败重试
-            channels.forEach(channel -> channel.writeAndFlush(ravenMessage));
+            // TODO 失败策略
+            for (Channel channel : channels) {
+                channel.writeAndFlush(ravenMessage).addListener(future -> {
+                    if (!future.isSuccess()) {
+                        log.info("push msg to uid:{} fail", downMessage.getTargetUid());
+                        channel.close();
+                    }
+                });
+            }
         }
     }
 
@@ -86,7 +94,8 @@ public class InternalMessageHandler extends SimpleChannelInboundHandler<RavenMes
             if (((IdleStateEvent) evt).state() == IdleState.READER_IDLE) {
                 Long lastReadTime = NettyAttrUtil.getReaderTime(ctx.channel());
                 if (System.currentTimeMillis() - lastReadTime > 30000) {
-                    log.info("server:{} last read time more than 30 seconds", ctx.channel().remoteAddress());
+                    log.info("server:{} last read time more than 30 seconds",
+                        ctx.channel().remoteAddress());
                     ctx.close();
                     return;
                 }

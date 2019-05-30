@@ -10536,12 +10536,12 @@ public final class Message {
 
     /**
      * <pre>
-     * 消息起始时间
+     * 消息起始id
      * </pre>
      *
-     * <code>uint64 beaginTime = 3;</code>
+     * <code>uint64 beginId = 3;</code>
      */
-    long getBeaginTime();
+    long getBeginId();
   }
   /**
    * <pre>
@@ -10562,7 +10562,7 @@ public final class Message {
     private HisMessagesReq() {
       id_ = 0L;
       converId_ = "";
-      beaginTime_ = 0L;
+      beginId_ = 0L;
     }
 
     @java.lang.Override
@@ -10602,7 +10602,7 @@ public final class Message {
             }
             case 24: {
 
-              beaginTime_ = input.readUInt64();
+              beginId_ = input.readUInt64();
               break;
             }
             default: {
@@ -10692,17 +10692,17 @@ public final class Message {
       }
     }
 
-    public static final int BEAGINTIME_FIELD_NUMBER = 3;
-    private long beaginTime_;
+    public static final int BEGINID_FIELD_NUMBER = 3;
+    private long beginId_;
     /**
      * <pre>
-     * 消息起始时间
+     * 消息起始id
      * </pre>
      *
-     * <code>uint64 beaginTime = 3;</code>
+     * <code>uint64 beginId = 3;</code>
      */
-    public long getBeaginTime() {
-      return beaginTime_;
+    public long getBeginId() {
+      return beginId_;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -10725,8 +10725,8 @@ public final class Message {
       if (!getConverIdBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 2, converId_);
       }
-      if (beaginTime_ != 0L) {
-        output.writeUInt64(3, beaginTime_);
+      if (beginId_ != 0L) {
+        output.writeUInt64(3, beginId_);
       }
       unknownFields.writeTo(output);
     }
@@ -10744,9 +10744,9 @@ public final class Message {
       if (!getConverIdBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, converId_);
       }
-      if (beaginTime_ != 0L) {
+      if (beginId_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-          .computeUInt64Size(3, beaginTime_);
+          .computeUInt64Size(3, beginId_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -10768,8 +10768,8 @@ public final class Message {
           == other.getId());
       result = result && getConverId()
           .equals(other.getConverId());
-      result = result && (getBeaginTime()
-          == other.getBeaginTime());
+      result = result && (getBeginId()
+          == other.getBeginId());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -10786,9 +10786,9 @@ public final class Message {
           getId());
       hash = (37 * hash) + CONVERID_FIELD_NUMBER;
       hash = (53 * hash) + getConverId().hashCode();
-      hash = (37 * hash) + BEAGINTIME_FIELD_NUMBER;
+      hash = (37 * hash) + BEGINID_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-          getBeaginTime());
+          getBeginId());
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -10930,7 +10930,7 @@ public final class Message {
 
         converId_ = "";
 
-        beaginTime_ = 0L;
+        beginId_ = 0L;
 
         return this;
       }
@@ -10960,7 +10960,7 @@ public final class Message {
         com.raven.common.protos.Message.HisMessagesReq result = new com.raven.common.protos.Message.HisMessagesReq(this);
         result.id_ = id_;
         result.converId_ = converId_;
-        result.beaginTime_ = beaginTime_;
+        result.beginId_ = beginId_;
         onBuilt();
         return result;
       }
@@ -11016,8 +11016,8 @@ public final class Message {
           converId_ = other.converId_;
           onChanged();
         }
-        if (other.getBeaginTime() != 0L) {
-          setBeaginTime(other.getBeaginTime());
+        if (other.getBeginId() != 0L) {
+          setBeginId(other.getBeginId());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -11175,40 +11175,40 @@ public final class Message {
         return this;
       }
 
-      private long beaginTime_ ;
+      private long beginId_ ;
       /**
        * <pre>
-       * 消息起始时间
+       * 消息起始id
        * </pre>
        *
-       * <code>uint64 beaginTime = 3;</code>
+       * <code>uint64 beginId = 3;</code>
        */
-      public long getBeaginTime() {
-        return beaginTime_;
+      public long getBeginId() {
+        return beginId_;
       }
       /**
        * <pre>
-       * 消息起始时间
+       * 消息起始id
        * </pre>
        *
-       * <code>uint64 beaginTime = 3;</code>
+       * <code>uint64 beginId = 3;</code>
        */
-      public Builder setBeaginTime(long value) {
+      public Builder setBeginId(long value) {
         
-        beaginTime_ = value;
+        beginId_ = value;
         onChanged();
         return this;
       }
       /**
        * <pre>
-       * 消息起始时间
+       * 消息起始id
        * </pre>
        *
-       * <code>uint64 beaginTime = 3;</code>
+       * <code>uint64 beginId = 3;</code>
        */
-      public Builder clearBeaginTime() {
+      public Builder clearBeginId() {
         
-        beaginTime_ = 0L;
+        beginId_ = 0L;
         onChanged();
         return this;
       }
@@ -17211,32 +17211,32 @@ public final class Message {
       ".common.protos.Code\"|\n\016MessageContent\022\n\n" +
       "\002id\030\001 \001(\004\022\013\n\003uid\030\002 \001(\t\0222\n\004type\030\003 \001(\0162$.c" +
       "om.raven.common.protos.MessageType\022\017\n\007co" +
-      "ntent\030\004 \001(\t\022\014\n\004time\030\005 \001(\004\"B\n\016HisMessages" +
-      "Req\022\n\n\002id\030\001 \001(\004\022\020\n\010converId\030\002 \001(\t\022\022\n\nbea" +
-      "ginTime\030\003 \001(\004\"l\n\016HisMessagesAck\022\n\n\002id\030\001 " +
-      "\001(\004\022\020\n\010converId\030\002 \001(\t\022<\n\013messageList\030\004 \003" +
-      "(\0132\'.com.raven.common.protos.MessageCont" +
-      "ent\"e\n\tConverReq\022\n\n\002id\030\001 \001(\004\0224\n\004type\030\002 \001" +
-      "(\0162&.com.raven.common.protos.OperationTy" +
-      "pe\022\026\n\016conversationId\030\003 \001(\t\"\304\001\n\tConverAck" +
-      "\022\n\n\002id\030\001 \001(\004\022+\n\004code\030\003 \001(\0162\035.com.raven.c" +
-      "ommon.protos.Code\022\014\n\004time\030\004 \001(\004\0227\n\nconve" +
-      "rInfo\030\005 \001(\0132#.com.raven.common.protos.Co" +
-      "nverInfo\0227\n\nconverList\030\006 \003(\0132#.com.raven" +
-      ".common.protos.ConverInfo\"\302\001\n\nConverInfo" +
-      "\022\020\n\010converId\030\001 \001(\t\0221\n\004type\030\002 \001(\0162#.com.r" +
-      "aven.common.protos.ConverType\022\017\n\007uidList" +
-      "\030\003 \003(\t\022\017\n\007groupId\030\004 \001(\t\022\017\n\007unCount\030\005 \001(\004" +
-      "\022<\n\013lastContent\030\006 \001(\0132\'.com.raven.common" +
-      ".protos.MessageContent\"[\n\rNotifyMessage\022" +
-      "\n\n\002id\030\001 \001(\004\022\014\n\004type\030\002 \001(\t\022\021\n\ttargetUid\030\003" +
-      " \001(\t\022\017\n\007content\030\004 \001(\t\022\014\n\004time\030\005 \001(\004*#\n\rH" +
-      "eartBeatType\022\010\n\004PING\020\000\022\010\n\004PONG\020\001*\035\n\004Code" +
-      "\022\013\n\007SUCCESS\020\000\022\010\n\004FAIL\020\001*#\n\nConverType\022\n\n" +
-      "\006SINGLE\020\000\022\t\n\005GROUP\020\001*:\n\013MessageType\022\010\n\004T" +
-      "EXT\020\000\022\013\n\007PICTURE\020\001\022\t\n\005VOICE\020\002\022\t\n\005VIDEO\020\003" +
-      "*$\n\rOperationType\022\n\n\006DETAIL\020\000\022\007\n\003ALL\020\001B\t" +
-      "B\007Messageb\006proto3"
+      "ntent\030\004 \001(\t\022\014\n\004time\030\005 \001(\004\"?\n\016HisMessages" +
+      "Req\022\n\n\002id\030\001 \001(\004\022\020\n\010converId\030\002 \001(\t\022\017\n\007beg" +
+      "inId\030\003 \001(\004\"l\n\016HisMessagesAck\022\n\n\002id\030\001 \001(\004" +
+      "\022\020\n\010converId\030\002 \001(\t\022<\n\013messageList\030\004 \003(\0132" +
+      "\'.com.raven.common.protos.MessageContent" +
+      "\"e\n\tConverReq\022\n\n\002id\030\001 \001(\004\0224\n\004type\030\002 \001(\0162" +
+      "&.com.raven.common.protos.OperationType\022" +
+      "\026\n\016conversationId\030\003 \001(\t\"\304\001\n\tConverAck\022\n\n" +
+      "\002id\030\001 \001(\004\022+\n\004code\030\003 \001(\0162\035.com.raven.comm" +
+      "on.protos.Code\022\014\n\004time\030\004 \001(\004\0227\n\nconverIn" +
+      "fo\030\005 \001(\0132#.com.raven.common.protos.Conve" +
+      "rInfo\0227\n\nconverList\030\006 \003(\0132#.com.raven.co" +
+      "mmon.protos.ConverInfo\"\302\001\n\nConverInfo\022\020\n" +
+      "\010converId\030\001 \001(\t\0221\n\004type\030\002 \001(\0162#.com.rave" +
+      "n.common.protos.ConverType\022\017\n\007uidList\030\003 " +
+      "\003(\t\022\017\n\007groupId\030\004 \001(\t\022\017\n\007unCount\030\005 \001(\004\022<\n" +
+      "\013lastContent\030\006 \001(\0132\'.com.raven.common.pr" +
+      "otos.MessageContent\"[\n\rNotifyMessage\022\n\n\002" +
+      "id\030\001 \001(\004\022\014\n\004type\030\002 \001(\t\022\021\n\ttargetUid\030\003 \001(" +
+      "\t\022\017\n\007content\030\004 \001(\t\022\014\n\004time\030\005 \001(\004*#\n\rHear" +
+      "tBeatType\022\010\n\004PING\020\000\022\010\n\004PONG\020\001*\035\n\004Code\022\013\n" +
+      "\007SUCCESS\020\000\022\010\n\004FAIL\020\001*#\n\nConverType\022\n\n\006SI" +
+      "NGLE\020\000\022\t\n\005GROUP\020\001*:\n\013MessageType\022\010\n\004TEXT" +
+      "\020\000\022\013\n\007PICTURE\020\001\022\t\n\005VOICE\020\002\022\t\n\005VIDEO\020\003*$\n" +
+      "\rOperationType\022\n\n\006DETAIL\020\000\022\007\n\003ALL\020\001B\tB\007M" +
+      "essageb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -17303,7 +17303,7 @@ public final class Message {
     internal_static_com_raven_common_protos_HisMessagesReq_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_raven_common_protos_HisMessagesReq_descriptor,
-        new java.lang.String[] { "Id", "ConverId", "BeaginTime", });
+        new java.lang.String[] { "Id", "ConverId", "BeginId", });
     internal_static_com_raven_common_protos_HisMessagesAck_descriptor =
       getDescriptor().getMessageTypes().get(9);
     internal_static_com_raven_common_protos_HisMessagesAck_fieldAccessorTable = new

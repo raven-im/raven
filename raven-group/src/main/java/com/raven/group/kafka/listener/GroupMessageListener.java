@@ -36,18 +36,18 @@ public class GroupMessageListener extends MessageListener<String, String> {
             RavenMessage.Builder builder = RavenMessage.newBuilder();
             JsonFormat.merge(message, builder);
             UpDownMessage upDownMessage = builder.getUpDownMessage();
-            cacheAndTransferMsg(upDownMessage);
+            saveAndSendMsg(upDownMessage);
         } catch (Exception e) {
             log.error("process message error", e);
         }
     }
 
-    private void cacheAndTransferMsg(UpDownMessage upDownMessage) {
+    private void saveAndSendMsg(UpDownMessage upDownMessage) {
         try {
-            converManager.cacheMsg2Conver(upDownMessage.getContent(), upDownMessage.getConverId());
+            converManager.saveMsg2Conver(upDownMessage.getContent(), upDownMessage.getConverId());
             senderManager.sendMessage(upDownMessage);
         } catch (Exception e) {
-            log.error(e.getMessage(),e);
+            log.error(e.getMessage(), e);
         }
     }
 }

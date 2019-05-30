@@ -2,11 +2,14 @@ package com.raven.client.single;
 
 import com.raven.client.common.Utils;
 import com.raven.common.protos.Message.Code;
+import com.raven.common.protos.Message.ConverType;
 import com.raven.common.protos.Message.HeartBeat;
 import com.raven.common.protos.Message.HeartBeatType;
 import com.raven.common.protos.Message.Login;
 import com.raven.common.protos.Message.LoginAck;
 import com.raven.common.protos.Message.MessageAck;
+import com.raven.common.protos.Message.MessageContent;
+import com.raven.common.protos.Message.MessageType;
 import com.raven.common.protos.Message.RavenMessage;
 import com.raven.common.protos.Message.RavenMessage.Type;
 import com.raven.common.protos.Message.UpDownMessage;
@@ -55,6 +58,19 @@ public class ClientToHandler extends SimpleChannelInboundHandler<RavenMessage> {
         } else if (message.getType() == Type.UpDownMessage) {
             UpDownMessage upDownMessage = message.getUpDownMessage();
             log.info("receive down message:{}", upDownMessage);
+            MessageContent content = MessageContent.newBuilder().setUid(uid)
+                .setType(MessageType.TEXT)
+                .setContent("hello world").build();
+            UpDownMessage upDownMessage1 = UpDownMessage.newBuilder()
+                .setCid(ClientFrom.snowFlake.nextId())
+                .setFromUid(uid)
+                .setTargetUid(upDownMessage.getFromUid())
+                .setConverType(ConverType.SINGLE)
+                .setContent(content).build();
+            RavenMessage ravenMessage = RavenMessage.newBuilder().setType(Type.UpDownMessage)
+                .setUpDownMessage(upDownMessage1).build();
+            ctx.writeAndFlush(ravenMessage);
+
         } else if (message.getType() == Type.HeartBeat) {
             HeartBeat heartBeat = message.getHeartBeat();
             log.info("receive hearbeat :{}", heartBeat);

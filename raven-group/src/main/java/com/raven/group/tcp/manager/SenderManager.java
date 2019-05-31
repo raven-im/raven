@@ -48,12 +48,13 @@ public class SenderManager {
                         .setType(Type.UpDownMessage)
                         .setUpDownMessage(downMessage).build();
                     channel.writeAndFlush(ravenMessage);
-                    log.info("downstream msg {} sent.", downMessage.getId());
+                    log.info("down msg {} send to uid:{}", downMessage.getId(),downMessage.getTargetUid());
                 } else {
                     log.error("cannot find channel. server:{}", server);
+                    converManager.incrUserConverUnCount(uid, msg.getConverId(), 1);
                 }
             } else {
-                log.info("downstream push msg {} sent.", msg.getId());
+                log.info("uid:{} no server to push down msg:{}.",uid, msg.getId());
                 converManager.incrUserConverUnCount(uid, msg.getConverId(), 1);
             }
         }

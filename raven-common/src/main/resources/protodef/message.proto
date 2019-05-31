@@ -119,7 +119,7 @@ enum MessageType {
 message HisMessagesReq {
   uint64 id = 1; // 消息ID
   string converId = 2; // 会话id
-  uint64 beaginTime = 3; // 消息起始时间
+  uint64 beginId = 3; // 消息起始id
 }
 
 // 历史消息

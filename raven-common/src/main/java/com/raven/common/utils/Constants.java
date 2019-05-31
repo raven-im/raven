@@ -32,7 +32,7 @@ public class Constants {
 
     public static final String AUTH_TOKEN = "Token";
 
-    public static final long TOKEN_CACHE_DURATION = 7; // 7 days
+    public static final long TOKEN_CACHE_DURATION = 1; // 7 days
 
     /**
      * Default cipher algorithm

@@ -1,4 +1,4 @@
-package com.raven.route.user.bean.param;
+package com.raven.common.param;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -6,10 +6,6 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class ServerInfoOutParam {
-
-    private String appKey;
-
-    private String uid;
 
     private String ip;
 

@@ -1,4 +1,4 @@
-package com.raven.route.user.bean.param;
+package com.raven.common.param;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

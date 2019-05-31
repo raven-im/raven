@@ -46,7 +46,7 @@ public class MesaageHandler extends SimpleChannelInboundHandler<RavenMessage> {
         if (message.getType() == Type.UpDownMessage) {
             UpDownMessage upMessage = message.getUpDownMessage();
             log.info("receive up message:{}", upMessage);
-            if (!verifyMsgClientId(ctx, upMessage)) {
+            if (!isMsgClientIdValid(ctx, upMessage)) {
                 sendACK(ctx, upMessage, Code.FAIL);
                 return;
             } else {
@@ -134,7 +134,7 @@ public class MesaageHandler extends SimpleChannelInboundHandler<RavenMessage> {
         return ravenMessage;
     }
 
-    private boolean verifyMsgClientId(ChannelHandlerContext ctx, UpDownMessage upMessage) {
+    private boolean isMsgClientIdValid(ChannelHandlerContext ctx, UpDownMessage upMessage) {
         if (0 == upMessage.getCid()) {
             return false;
         }

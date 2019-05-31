@@ -132,7 +132,7 @@ public class ClientFromHandler extends SimpleChannelInboundHandler<RavenMessage>
             for (ConverInfo converInfo : converAck.getConverListList()) {
                 HisMessagesReq hisMessagesReq = HisMessagesReq.newBuilder()
                     .setId(ClientFrom.snowFlake.nextId())
-                    .setBeaginTime(beginTime).setConverId(converInfo.getConverId()).build();
+                    .setBeginId(beginTime).setConverId(converInfo.getConverId()).build();
                 RavenMessage ravenMessage = RavenMessage.newBuilder().setType(Type.HisMessagesReq)
                     .setHisMessagesReq(hisMessagesReq).build();
                 ctx.writeAndFlush(ravenMessage);

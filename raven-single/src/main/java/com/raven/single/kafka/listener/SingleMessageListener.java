@@ -34,7 +34,7 @@ public class SingleMessageListener extends MessageListener<String, String> {
             JsonFormat.merge(message, builder);
             UpDownMessage upDownMessage = builder.getUpDownMessage();
             String convId = upDownMessage.getConverId();
-            converManager.cacheMsg2Conver(upDownMessage.getContent(), convId);
+            converManager.saveMsg2Conver(upDownMessage.getContent(), convId);
             UpDownMessage downMessage = UpDownMessage.newBuilder()
                 .setId(upDownMessage.getId())
                 .setFromUid(upDownMessage.getFromUid())

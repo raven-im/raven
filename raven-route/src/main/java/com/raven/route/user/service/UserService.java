@@ -7,5 +7,5 @@ public interface UserService {
 
     Result getToken(String uid, String appKey);
 
-    Result getAccessInfo(String appKey, String token, ClientType type);
+    Result getAccessInfo(String token, ClientType type);
 }

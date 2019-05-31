@@ -107,18 +107,18 @@ public class ConverManager {
         return converInfo == null ? false : converInfo.getType() == ConverType.GROUP.getNumber();
     }
 
-    public void cacheMsg2Conver(MessageContent msg, String converId){
+    public void saveMsg2Conver(MessageContent msg, String converId){
         MsgContent msgContent = new MsgContent().setId(msg.getId()).setUid(msg.getUid())
             .setType(msg.getType().getNumber()).setContent(msg.getContent()).setTime(msg.getTime());
         String str = JsonHelper.toJsonString(msgContent);
-        redisTemplate.boundZSetOps(PREFIX_MESSAGE_ID + converId).add(str, msgContent.getTime());
+        redisTemplate.boundZSetOps(PREFIX_MESSAGE_ID + converId).add(str, msgContent.getId());
     }
 
-    public List<MsgContent> getHistoryMsg(String converId, Long beginTime) {
+    public List<MsgContent> getHistoryMsg(String converId, Long beginId) {
         List<MsgContent> msgContents = new ArrayList<>();
         long now = System.currentTimeMillis();
         Set<String> messages = redisTemplate.opsForZSet()
-            .rangeByScore(PREFIX_MESSAGE_ID + converId, Double.valueOf(beginTime),
+            .rangeByScore(PREFIX_MESSAGE_ID + converId, Double.valueOf(beginId),
                 Double.valueOf(now), 0, 100);
         for (String message : messages) {
             MsgContent msgContent = JsonHelper

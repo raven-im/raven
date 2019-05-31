@@ -1,4 +1,4 @@
-package com.raven.route.user.bean.param;
+package com.raven.common.param;
 
 import lombok.Data;
 
@@ -9,6 +9,8 @@ import lombok.Data;
  **/
 @Data
 public class GetTokenParam {
+
     private String appKey;
+
     private String uid;
 }

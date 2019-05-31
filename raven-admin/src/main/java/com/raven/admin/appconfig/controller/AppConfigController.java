@@ -2,11 +2,11 @@ package com.raven.admin.appconfig.controller;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
+import com.raven.admin.appconfig.bean.model.AppConfigModel;
+import com.raven.admin.appconfig.service.AppConfigService;
+import com.raven.common.param.AppConfigOutParam;
 import com.raven.common.result.Result;
 import com.raven.common.result.ResultCode;
-import com.raven.admin.appconfig.bean.model.AppConfigModel;
-import com.raven.admin.appconfig.bean.param.AppConfigOutParam;
-import com.raven.admin.appconfig.service.AppConfigService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,41 +14,37 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@RequestMapping(path="/app", produces = APPLICATION_JSON_VALUE)
 @Slf4j
+@RestController
+@RequestMapping(path = "/app", produces = APPLICATION_JSON_VALUE)
 public class AppConfigController {
 
-	private AppConfigService service;
-
     @Autowired
-    public AppConfigController(AppConfigService service) {
-        this.service = service;
-    }
+    private AppConfigService service;
 
     @PutMapping
-    public @ResponseBody Result createApp() {
+    public Result createApp() {
         log.info("admin app create.");
-        return Result.success(new AppConfigOutParam(service.createApp()));
+        AppConfigModel model = service.createApp();
+        return Result.success(new AppConfigOutParam(model.getUid(), model.getSecret()));
     }
 
     @DeleteMapping("/{uid}")
-    public @ResponseBody Result deleteApp(@PathVariable("uid") String uid) {
+    public Result deleteApp(@PathVariable("uid") String uid) {
         log.info("admin app delete . uid {}", uid);
         service.delApp(uid);
         return Result.success();
     }
 
     @GetMapping("/{uid}")
-    public @ResponseBody Result getApp(@PathVariable("uid") String uid) {
+    public Result getApp(@PathVariable("uid") String uid) {
         log.info("admin app query . uid {}", uid);
         AppConfigModel model = service.getApp(uid);
         if (model == null) {
             return Result.failure(ResultCode.COMMON_INVALID_PARAMETER);
         }
-        return Result.success(new AppConfigOutParam(model));
+        return Result.success(new AppConfigOutParam(model.getUid(), model.getSecret()));
     }
 }

@@ -48,7 +48,7 @@ public class SenderManager {
                         .setType(Type.UpDownMessage)
                         .setUpDownMessage(downMessage).build();
                     channel.writeAndFlush(ravenMessage);
-                    log.info("down msg {} sent.", downMessage.getId());
+                    log.info("down msg {} send to uid:{}", downMessage.getId(),downMessage.getTargetUid());
                 } else {
                     log.error("cannot find channel. server:{}", server);
                     converManager.incrUserConverUnCount(uid, msg.getConverId(), 1);

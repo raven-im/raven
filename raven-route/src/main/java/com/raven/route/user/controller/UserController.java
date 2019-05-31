@@ -55,7 +55,7 @@ public class UserController {
     /**
      * 获取用户登录接入点 mobile 或其他在用，它会拿到 tcp 端口
      */
-    @GetMapping("/access")
+    @PostMapping("/access")
     public Result getAccessInfo(@RequestBody GetAccessParam param) {
         log.info("get access address, token {}", param.getToken());
         return userService.getAccessInfo(param.getToken(), ClientType.MOBILE);

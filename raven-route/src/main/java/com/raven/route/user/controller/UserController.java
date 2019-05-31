@@ -47,7 +47,7 @@ public class UserController {
      * 获取用户登录接入点 只有web用，它会拿到 websocket 端口
      */
     @GetMapping("/access/web")
-    public Result getAccessInfo(@RequestHeader(AUTH_TOKEN) String token) {
+    public Result getAccessInfoWeb(@RequestHeader(AUTH_TOKEN) String token) {
         log.info("get access address, token {}", token);
         return userService.getAccessInfo(token, ClientType.WEB);
     }
@@ -55,9 +55,9 @@ public class UserController {
     /**
      * 获取用户登录接入点 mobile 或其他在用，它会拿到 tcp 端口
      */
-    @PostMapping("/access")
-    public Result getAccessInfo(@RequestBody GetAccessParam param) {
-        log.info("get access address, token {}", param.getToken());
-        return userService.getAccessInfo(param.getToken(), ClientType.MOBILE);
+    @GetMapping("/access")
+    public Result getAccessInfo(@RequestHeader(AUTH_TOKEN) String token) {
+        log.info("get access address, token {}", token);
+        return userService.getAccessInfo(token, ClientType.MOBILE);
     }
 }

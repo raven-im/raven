@@ -1,7 +1,8 @@
-package com.raven.client.group;
+package com.raven.client.presure;
 
 import com.raven.client.common.Utils;
 import com.raven.client.group.bean.GroupOutParam;
+import com.raven.common.param.ServerInfoOutParam;
 import com.raven.common.protos.Message;
 import com.raven.common.utils.SnowFlake;
 import io.netty.bootstrap.Bootstrap;
@@ -19,28 +20,30 @@ import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
 import io.netty.handler.timeout.IdleStateHandler;
 import java.util.Arrays;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 
-/**
- * Author zxx Description Simple client for module test Date Created on 2018/5/25
- */
-public class ClientOwner {
+@Slf4j
+public class ClientPresureMember {
 
-    private static final String HOST = "127.0.0.1";
-    private static final int PORT = 7010;
-    public static SnowFlake snowFlake = new SnowFlake(1, 2);
+    public static ServerInfoOutParam outParam = null;
 
     public static void main(String[] args) throws Exception {
-        List<String> members = Arrays.asList("owner", "invitee1", "invitee2");
-        GroupOutParam groupInfo = Utils.newGroup(members);
-        loginAndSendMessage(groupInfo.getGroupId());
+        String token = Utils.getToken("user1");
+        outParam = Utils.getAccessAddress(token);
+        for (int i = 2; i < 1001; i++) {
+            Thread.sleep(100);
+            String uid = "user" + i;
+            loginAndSendMessage(uid, token);
+        }
     }
 
-    private static void loginAndSendMessage(String groupId) throws InterruptedException {
+    private static void loginAndSendMessage(String uid, String token) throws InterruptedException {
         EventLoopGroup group = new NioEventLoopGroup();
         Bootstrap b = new Bootstrap();
         b.group(group)
             .channel(NioSocketChannel.class)
             .option(ChannelOption.TCP_NODELAY, true)
+            .option(ChannelOption.SO_REUSEADDR, true) //调试用
             .handler(new ChannelInitializer<SocketChannel>() {
                 @Override
                 public void initChannel(SocketChannel ch) throws Exception {
@@ -52,10 +55,10 @@ public class ClientOwner {
                     // 对protobuf协议的消息头上加上一个长度为32的整形字段
                     pipeline.addLast(new ProtobufVarint32LengthFieldPrepender());
                     pipeline.addLast(new ProtobufEncoder());
-                    pipeline.addLast(new ClientOwnerHandler("owner", groupId));
+                    pipeline.addLast(new ClientPresureMemberHandler(uid, token));
                 }
             });
-        b.connect(HOST, PORT);
+        b.connect(outParam.getIp(), outParam.getPort());
     }
 
 }

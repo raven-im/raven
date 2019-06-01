@@ -10,7 +10,10 @@ import lombok.Data;
 public class GroupDetailParam {
 
     private String name;
+
     private String portrait;
+
     private List<String> members;
+
     private Date time;
 }

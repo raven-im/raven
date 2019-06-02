@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
     private DiscoveryClient discoveryClient;
 
     @Autowired
-    private RedisTemplate redisTemplate;
+    private StringRedisTemplate stringRedisTemplate;
 
     @Autowired
     private RouteManager routeManager;
@@ -60,8 +60,7 @@ public class UserServiceImpl implements UserService {
             String token = new Token(uid, appKey).getToken(appKey);
             // cache token to redis.
             String key = appKey + DEFAULT_SEPARATES_SIGN + uid;
-            redisTemplate.boundHashOps(token).put(token, key);
-            redisTemplate.boundHashOps(token).expire(TOKEN_CACHE_DURATION, TimeUnit.DAYS);
+            stringRedisTemplate.opsForValue().set(token, key, TOKEN_CACHE_DURATION, TimeUnit.DAYS);
             return Result.success(new TokenInfoOutParam(appKey, uid, token));
         } catch (TokenException e) {
             return Result.failure(ResultCode.APP_ERROR_TOKEN_CREATE_ERROR);
@@ -74,7 +73,7 @@ public class UserServiceImpl implements UserService {
         if (!tokenValidator.validate(token)) {
             return Result.failure(tokenValidator.errorCode());
         }
-        String tokenStr = (String) redisTemplate.boundHashOps(token).get(token);
+        String tokenStr = (String) stringRedisTemplate.opsForValue().get(token);
         String uid = tokenStr.split(DEFAULT_SEPARATES_SIGN)[1];
         // check if there is already a Access server.  if yes , dispatch to that server.
         Server server = routeManager.getServerByUid(uid);

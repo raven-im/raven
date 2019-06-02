@@ -31,8 +31,9 @@ public class GroupMessageListener extends MessageListener<String, String> {
 
     @Override
     public void receive(String topic, String key, String message) {
-        log.info("topic=[{}], message=[{}]", topic, message);
+//        log.info("topic=[{}], message=[{}]", topic, message);
         try {
+            long startTime = System.currentTimeMillis();
             RavenMessage.Builder builder = RavenMessage.newBuilder();
             JsonFormat.merge(message, builder);
             UpDownMessage upDownMessage = builder.getUpDownMessage();
@@ -44,7 +45,6 @@ public class GroupMessageListener extends MessageListener<String, String> {
 
     private void saveAndSendMsg(UpDownMessage upDownMessage) {
         try {
-            converManager.saveMsg2Conver(upDownMessage.getContent(), upDownMessage.getConverId());
             senderManager.sendMessage(upDownMessage);
         } catch (Exception e) {
             log.error(e.getMessage(), e);

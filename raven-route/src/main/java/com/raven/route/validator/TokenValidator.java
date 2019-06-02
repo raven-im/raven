@@ -2,9 +2,8 @@ package com.raven.route.validator;
 
 import com.raven.common.result.ResultCode;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 /**
  * @author: bbpatience
@@ -15,12 +14,11 @@ import org.springframework.util.StringUtils;
 public class TokenValidator implements Validator {
 
     @Autowired
-    private RedisTemplate redisTemplate;
+    private StringRedisTemplate stringRedisTemplate;
 
     @Override
     public boolean validate(String key) {
-        String value = (String) redisTemplate.boundHashOps(key).get(key);
-        return !StringUtils.isEmpty(value);
+        return stringRedisTemplate.hasKey(key);
     }
 
     @Override

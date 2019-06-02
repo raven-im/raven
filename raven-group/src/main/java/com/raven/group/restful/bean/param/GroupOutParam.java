@@ -13,8 +13,11 @@ import lombok.Data;
 public class GroupOutParam {
 
     private String groupId;
+
     private String converId;
+
     private GroupDetailParam details;
+
     private Date time;
 
     public GroupOutParam(GroupModel model) {

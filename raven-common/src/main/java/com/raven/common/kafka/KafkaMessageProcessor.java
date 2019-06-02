@@ -15,7 +15,7 @@ public class KafkaMessageProcessor<K, V> implements Runnable {
 
     private MessageListener<K, V> messageListener;
 
-    private static final int MILLIS = 500;
+    private static final int MILLIS = 100;
 
     public KafkaMessageProcessor(String topic, KafkaConsumer<K, V> kafkaConsumer,
         MessageListener<K, V> messageListener) {

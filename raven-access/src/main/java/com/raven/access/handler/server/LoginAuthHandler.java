@@ -99,6 +99,7 @@ public class LoginAuthHandler extends SimpleChannelInboundHandler<RavenMessage> 
     }
 
     private boolean verifyToken(String token) {
+        // TODO 验证UID
         return redisTemplate.hasKey(token);
     }
 

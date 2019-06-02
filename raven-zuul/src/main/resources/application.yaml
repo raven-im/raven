@@ -36,8 +36,8 @@ zuul:
   servlet-path: /raven-zuul
 
 ribbon:
-  ConnectTimeout: 2000
-  ReadTimeout: 5000
+  ConnectTimeout: 10000
+  ReadTimeout: 10000
 
 # 熔断时间
 hystrix:
@@ -46,7 +46,7 @@ hystrix:
       execution:
         isolation:
           thread:
-            timeoutInMilliseconds: 5000
+            timeoutInMilliseconds: 40000
 
 # actuator相关配置
 management:

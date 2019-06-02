@@ -1,7 +1,8 @@
-package com.raven.client.group;
+package com.raven.client.presure;
 
 import com.raven.client.common.Utils;
 import com.raven.client.group.bean.GroupOutParam;
+import com.raven.common.param.ServerInfoOutParam;
 import com.raven.common.protos.Message;
 import com.raven.common.utils.SnowFlake;
 import io.netty.bootstrap.Bootstrap;
@@ -17,25 +18,32 @@ import io.netty.handler.codec.protobuf.ProtobufEncoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
 import io.netty.handler.timeout.IdleStateHandler;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 
-/**
- * Author zxx Description Simple client for module test Date Created on 2018/5/25
- */
-public class ClientOwner {
+@Slf4j
+public class ClientPresureOwner {
 
-    private static final String HOST = "127.0.0.1";
-    private static final int PORT = 7010;
     public static SnowFlake snowFlake = new SnowFlake(1, 2);
 
     public static void main(String[] args) throws Exception {
-        List<String> members = Arrays.asList("owner", "invitee1", "invitee2");
-        GroupOutParam groupInfo = Utils.newGroup(members);
-        loginAndSendMessage(groupInfo.getGroupId());
+        String uid = "user1";
+        List<String> members = new ArrayList<>();
+        members.add(uid);
+        for (int i = 2; i <2501; i++) {
+            String member = "user" + i;
+            members.add(member);
+        }
+//        GroupOutParam groupInfo = Utils.newGroup(members);
+        String token = Utils.getToken(uid);
+//        log.info("$$$$$:{}",groupInfo.getGroupId());
+        loginAndSendMessage(uid, token, "lBOx-9GTSrEnlpOChMccy0");
     }
 
-    private static void loginAndSendMessage(String groupId) throws InterruptedException {
+    private static void loginAndSendMessage(String uid, String token, String groupId)
+        throws InterruptedException {
         EventLoopGroup group = new NioEventLoopGroup();
         Bootstrap b = new Bootstrap();
         b.group(group)
@@ -52,10 +60,11 @@ public class ClientOwner {
                     // 对protobuf协议的消息头上加上一个长度为32的整形字段
                     pipeline.addLast(new ProtobufVarint32LengthFieldPrepender());
                     pipeline.addLast(new ProtobufEncoder());
-                    pipeline.addLast(new ClientOwnerHandler("owner", groupId));
+                    pipeline.addLast(new ClientPresureOwnerHandler(uid, groupId, token));
                 }
             });
-        b.connect(HOST, PORT);
+//        ServerInfoOutParam outParam = Utils.getAccessAddress(token);
+        b.connect("35.229.128.80", 7010);
     }
 
 }

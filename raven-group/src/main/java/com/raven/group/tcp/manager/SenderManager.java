@@ -9,10 +9,14 @@ import com.raven.storage.conver.ConverManager;
 import com.raven.storage.route.RouteManager;
 import io.netty.channel.Channel;
 import java.util.List;
-import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import javax.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.clients.producer.KafkaProducer;
+import org.checkerframework.checker.units.qual.K;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Slf4j
@@ -28,36 +32,12 @@ public class SenderManager {
     @Autowired
     private RouteManager routeManager;
 
-    public void sendMessage(UpDownMessage msg) {
-        List<String> uidList = converManager.getUidListByConverExcludeSender(msg.getConverId(),
-            msg.getFromUid());
-        for (String uid : uidList) {
-            Server server = routeManager.getInternalServerByUid(uid);
-            if (null != server) {
-                Channel channel = internalServerChannelManager.getChannelByServer(server);
-                if (channel != null) {
-                    UpDownMessage downMessage = UpDownMessage.newBuilder()
-                        .setId(msg.getId())
-                        .setFromUid(msg.getFromUid())
-                        .setTargetUid(uid)
-                        .setConverType(msg.getConverType())
-                        .setContent(msg.getContent())
-                        .setConverId(msg.getConverId())
-                        .build();
-                    RavenMessage ravenMessage = RavenMessage.newBuilder()
-                        .setType(Type.UpDownMessage)
-                        .setUpDownMessage(downMessage).build();
-                    channel.writeAndFlush(ravenMessage);
-                    log.info("down msg {} send to uid:{}", downMessage.getId(),downMessage.getTargetUid());
-                } else {
-                    log.error("cannot find channel. server:{}", server);
-                    converManager.incrUserConverUnCount(uid, msg.getConverId(), 1);
-                }
-            } else {
-                log.info("uid:{} no server to push down msg:{}.",uid, msg.getId());
-                converManager.incrUserConverUnCount(uid, msg.getConverId(), 1);
-            }
-        }
+    private ExecutorService executorService = Executors
+        .newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 2);
 
+    public void sendMessage(UpDownMessage msg) {
+        GroupMessageProcesser processer = new GroupMessageProcesser(internalServerChannelManager,
+            converManager, routeManager, msg);
+        executorService.submit(processer);
     }
 }

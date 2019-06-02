@@ -1,10 +1,8 @@
 package com.raven.client.presure;
 
 import com.raven.client.common.Utils;
-import com.raven.client.group.bean.GroupOutParam;
 import com.raven.common.param.ServerInfoOutParam;
 import com.raven.common.protos.Message;
-import com.raven.common.utils.SnowFlake;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -18,20 +16,27 @@ import io.netty.handler.codec.protobuf.ProtobufEncoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
 import io.netty.handler.timeout.IdleStateHandler;
-import java.util.Arrays;
-import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class ClientPresureMember {
 
-    public static ServerInfoOutParam outParam = null;
+    public static volatile int maxTimeDiff = 0;
+
+    public static AtomicLong countTimeDiff = new AtomicLong();
+
+    public static AtomicInteger msgCount = new AtomicInteger();
 
     public static void main(String[] args) throws Exception {
+        maxTimeDiff = 0;
+        countTimeDiff.lazySet(0);
+        msgCount.lazySet(0);
+        log.info("消息总数:{} 总延迟:{} 最大延迟:{}", msgCount.get(), countTimeDiff.get(), maxTimeDiff);
         String token = Utils.getToken("user1");
-        outParam = Utils.getAccessAddress(token);
-        for (int i = 2; i < 1001; i++) {
-            Thread.sleep(100);
+        for (int i = 2; i < 2501; i++) {
+            Thread.sleep(10);
             String uid = "user" + i;
             loginAndSendMessage(uid, token);
         }
@@ -58,7 +63,7 @@ public class ClientPresureMember {
                     pipeline.addLast(new ClientPresureMemberHandler(uid, token));
                 }
             });
-        b.connect(outParam.getIp(), outParam.getPort());
+        b.connect("35.229.128.80", 7010);
     }
 
 }

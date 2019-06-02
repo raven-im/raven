@@ -32,13 +32,14 @@ public class ClientPresureOwner {
         String uid = "user1";
         List<String> members = new ArrayList<>();
         members.add(uid);
-        for (int i = 2; i < 1001; i++) {
+        for (int i = 2; i <2501; i++) {
             String member = "user" + i;
             members.add(member);
         }
 //        GroupOutParam groupInfo = Utils.newGroup(members);
         String token = Utils.getToken(uid);
-        loginAndSendMessage(uid, token, "DrtoynA4QbIgtBlJiQtPSA");
+//        log.info("$$$$$:{}",groupInfo.getGroupId());
+        loginAndSendMessage(uid, token, "lBOx-9GTSrEnlpOChMccy0");
     }
 
     private static void loginAndSendMessage(String uid, String token, String groupId)
@@ -62,8 +63,8 @@ public class ClientPresureOwner {
                     pipeline.addLast(new ClientPresureOwnerHandler(uid, groupId, token));
                 }
             });
-        ServerInfoOutParam outParam = Utils.getAccessAddress(token);
-        b.connect(outParam.getIp(), outParam.getPort());
+//        ServerInfoOutParam outParam = Utils.getAccessAddress(token);
+        b.connect("35.229.128.80", 7010);
     }
 
 }

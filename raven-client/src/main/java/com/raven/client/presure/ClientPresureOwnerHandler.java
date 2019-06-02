@@ -60,38 +60,9 @@ public class ClientPresureOwnerHandler extends SimpleChannelInboundHandler<Raven
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, RavenMessage message)
         throws Exception {
-        if (message.getType() == Type.LoginAck) {
-            LoginAck loginAck = message.getLoginAck();
-            log.info("login ack:{}", loginAck.toString());
-        } else if (message.getType() == Type.MessageAck) {
-            MessageAck messageAck = message.getMessageAck();
-            long time = cidTime.get(String.valueOf(messageAck.getCid()));
-            log.info("消息cid:{},延迟:{}ms", messageAck.getCid(), messageAck.getTime() - time);
-        } else if (message.getType() == Type.UpDownMessage) {
-            UpDownMessage upDownMessage = message.getUpDownMessage();
-        } else if (message.getType() == Type.HeartBeat) {
-            HeartBeat heartBeat = message.getHeartBeat();
-            if (heartBeat.getHeartBeatType() == HeartBeatType.PING) {
-                long cid = ClientPresureOwner.snowFlake.nextId();
-                long time = System.currentTimeMillis();
-                cidTime.put(String.valueOf(cid), time);
-                MessageContent content = MessageContent.newBuilder()
-                    .setUid(uid)
-                    .setTime(time)
-                    .setType(MessageType.TEXT)
-                    .setContent("hello world.")
-                    .build();
-                UpDownMessage msg = UpDownMessage.newBuilder()
-                    .setCid(cid)
-                    .setFromUid(uid)
-                    .setGroupId(groupId)
-                    .setConverType(ConverType.GROUP)
-                    .setContent(content)
-                    .build();
-                RavenMessage ravenMessage = RavenMessage.newBuilder().setType(Type.UpDownMessage)
-                    .setUpDownMessage(msg).build();
-                ctx.writeAndFlush(ravenMessage);
-            }
+        while (true) {
+            sendMessage(ctx);
+            Thread.sleep(357);
         }
     }
 
@@ -101,6 +72,27 @@ public class ClientPresureOwnerHandler extends SimpleChannelInboundHandler<Raven
             return;
         }
         log.error(cause.getMessage(), cause);
+    }
+
+    private void sendMessage(ChannelHandlerContext ctx) {
+        long cid = ClientPresureOwner.snowFlake.nextId();
+        long time = System.currentTimeMillis();
+        MessageContent content = MessageContent.newBuilder()
+            .setUid(uid)
+            .setTime(time)
+            .setType(MessageType.TEXT)
+            .setContent("hello world.")
+            .build();
+        UpDownMessage msg = UpDownMessage.newBuilder()
+            .setCid(cid)
+            .setFromUid(uid)
+            .setGroupId(groupId)
+            .setConverType(ConverType.GROUP)
+            .setContent(content)
+            .build();
+        RavenMessage ravenMessage = RavenMessage.newBuilder().setType(Type.UpDownMessage)
+            .setUpDownMessage(msg).build();
+        ctx.writeAndFlush(ravenMessage);
     }
 
 }

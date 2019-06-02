@@ -41,10 +41,12 @@ public class KafkaMessageConsumer<K, V> {
             MessageListener messageListener = entry.getValue();
             KafkaConsumer<K, V> consumer = new KafkaConsumer(properties);
             consumer.subscribe(Arrays.asList(topic));
-            KafkaMessageProcessor<K, V> kafkaStreamProcessor = new KafkaMessageProcessor<K, V>(
-                topic, consumer, messageListener);
             ExecutorService executorService = Executors.newFixedThreadPool(nThreads);
-            executorService.submit(kafkaStreamProcessor);
+            for (int i = 0; i < nThreads; i++) {
+                KafkaMessageProcessor<K, V> kafkaStreamProcessor = new KafkaMessageProcessor<K, V>(
+                    topic, consumer, messageListener);
+                executorService.submit(kafkaStreamProcessor);
+            }
         }
     }
 

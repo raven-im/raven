@@ -1,21 +1,19 @@
 package com.raven.client.presure;
 
-import com.raven.client.group.ClientOwner;
 import com.raven.common.protos.Message.Code;
-import com.raven.common.protos.Message.ConverType;
 import com.raven.common.protos.Message.HeartBeat;
 import com.raven.common.protos.Message.HeartBeatType;
 import com.raven.common.protos.Message.Login;
 import com.raven.common.protos.Message.LoginAck;
 import com.raven.common.protos.Message.MessageAck;
-import com.raven.common.protos.Message.MessageContent;
-import com.raven.common.protos.Message.MessageType;
 import com.raven.common.protos.Message.RavenMessage;
 import com.raven.common.protos.Message.RavenMessage.Type;
 import com.raven.common.protos.Message.UpDownMessage;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import java.io.IOException;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -62,7 +60,7 @@ public class ClientPresureMemberHandler extends SimpleChannelInboundHandler<Rave
             log.info("receive message ack:{}", messageAck);
         } else if (message.getType() == Type.UpDownMessage) {
             UpDownMessage upDownMessage = message.getUpDownMessage();
-            log.info("receive down message:{}", upDownMessage);
+            logAvgTimeDiff(System.currentTimeMillis() - upDownMessage.getContent().getTime());
         } else if (message.getType() == Type.HeartBeat) {
             HeartBeat heartBeat = message.getHeartBeat();
             if (heartBeat.getHeartBeatType() == HeartBeatType.PING) {
@@ -83,6 +81,17 @@ public class ClientPresureMemberHandler extends SimpleChannelInboundHandler<Rave
             return;
         }
         log.error(cause.getMessage(), cause);
+    }
+
+    private synchronized void logAvgTimeDiff(long timeDiff) {
+        if (timeDiff > ClientPresureMember.maxTimeDiff) {
+            ClientPresureMember.maxTimeDiff = (int) timeDiff;
+        }
+        int count = ClientPresureMember.msgCount.incrementAndGet();
+        long cc = ClientPresureMember.countTimeDiff.addAndGet(timeDiff);
+        log.info("消息总数:{}, 总延迟:{}ms", count, cc);
+        int avgTime = (int) (cc / count);
+        log.info("消息最大延迟：{}ms,平均延迟:{}ms", ClientPresureMember.maxTimeDiff, avgTime);
     }
 
 }

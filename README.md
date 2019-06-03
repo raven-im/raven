@@ -28,15 +28,6 @@ Demo: http://34.80.127.96:8081/
 Test Account1:  13800222222, password: 222222
 Test Account2:  13800333333, password: 333333
 ```
-### Tech
-
-* netty
-* protobuf
-* redis
-* mysql
-* flyway
-* spring boot
-* spring cloud
 
 ### Contact us
 * zhou.xiaoxiao@outlook.com

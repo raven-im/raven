@@ -43,7 +43,7 @@
         <version.boot.admin>2.1.3</version.boot.admin>
         <docker.image.prefix>iamnotshady</docker.image.prefix>
         <version.kafka>2.2.0</version.kafka>
-        <version.zookeeper>3.4.13</version.zookeeper>
+        <version.zookeeper>3.4.14</version.zookeeper>
     </properties>
 
     <dependencyManagement>

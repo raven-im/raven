@@ -41,12 +41,6 @@ public class MessageHandler extends SimpleChannelInboundHandler<RavenMessage> {
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        HeartBeat heartBeat = HeartBeat.newBuilder()
-            .setHeartBeatType(HeartBeatType.PING)
-            .build();
-        RavenMessage ravenMessage = RavenMessage.newBuilder().setHeartBeat(heartBeat)
-            .setType(Type.HeartBeat).build();
-        ctx.writeAndFlush(ravenMessage);
         super.channelActive(ctx);
     }
 

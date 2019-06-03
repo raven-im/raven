@@ -93,7 +93,7 @@ public class InternalMessageHandler extends SimpleChannelInboundHandler<RavenMes
         if (evt instanceof IdleStateEvent) {
             if (((IdleStateEvent) evt).state() == IdleState.READER_IDLE) {
                 Long lastReadTime = NettyAttrUtil.getReaderTime(ctx.channel());
-                if (System.currentTimeMillis() - lastReadTime > 30000) {
+                if (null != lastReadTime && System.currentTimeMillis() - lastReadTime > 30000) {
                     log.info("server:{} last read time more than 30 seconds",
                         ctx.channel().remoteAddress());
                     ctx.close();

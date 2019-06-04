@@ -1,6 +1,6 @@
 package com.raven.single.tcp.manager;
 
-import com.raven.common.loadbalance.Server;
+import com.raven.common.loadbalance.AceessServerInfo;
 import com.raven.common.netty.ServerChannelManager;
 import com.raven.common.protos.Message.RavenMessage;
 import com.raven.common.protos.Message.RavenMessage.Type;
@@ -9,10 +9,8 @@ import com.raven.storage.conver.ConverManager;
 import com.raven.storage.route.RouteManager;
 import io.netty.channel.Channel;
 import java.util.List;
-import java.util.concurrent.LinkedBlockingQueue;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 @Slf4j
@@ -33,7 +31,7 @@ public class SenderManager {
             msg.getFromUid());
         for (String uid : uidList) {
             UpDownMessage downMessage = msg.toBuilder().setTargetUid(uid).build();
-            Server server = routeManager.getInternalServerByUid(uid);
+            AceessServerInfo server = routeManager.getServerByUid(uid);
             if (null != server) {
                 Channel channel = internalServerChannelManager.getChannelByServer(server);
                 if (channel != null) {

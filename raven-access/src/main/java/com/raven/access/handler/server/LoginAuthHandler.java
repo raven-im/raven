@@ -1,6 +1,6 @@
 package com.raven.access.handler.server;
 
-import com.raven.common.loadbalance.Server;
+import com.raven.common.loadbalance.AceessServerInfo;
 import com.raven.common.netty.IdChannelManager;
 import com.raven.common.netty.NettyAttrUtil;
 import com.raven.common.protos.Message.Code;
@@ -35,10 +35,13 @@ public class LoginAuthHandler extends SimpleChannelInboundHandler<RavenMessage> 
     private RouteManager routeManager;
 
     @Value("${netty.tcp.port}")
-    private int nettyTcpPort;
+    private int tcpPort;
+
+    @Value("${netty.websocket.port}")
+    private int wsPort;
 
     @Value("${netty.internal.port}")
-    private int nettyInternalPort;
+    private int internalPort;
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
@@ -61,10 +64,8 @@ public class LoginAuthHandler extends SimpleChannelInboundHandler<RavenMessage> 
                     .build();
                 ctx.writeAndFlush(loginAck);
             }
-            routeManager
-                .addUser2Server(loginMesaage.getUid(), new Server(IpUtil.getIp(), nettyTcpPort));
-            routeManager.addUser2InternalServer(loginMesaage.getUid(),
-                new Server(IpUtil.getIp(), nettyInternalPort));
+            routeManager.addUser2Server(loginMesaage.getUid(),
+                new AceessServerInfo(IpUtil.getIp(), tcpPort, wsPort, internalPort));
             uidChannelManager.addId2Channel(loginMesaage.getUid(), ctx.channel());
             sendLoginAck(ctx, loginMesaage.getId(), Code.SUCCESS);
         } else {
@@ -83,9 +84,8 @@ public class LoginAuthHandler extends SimpleChannelInboundHandler<RavenMessage> 
             uidChannelManager.removeChannel(ctx.channel());
             // 最后一台设备下线才清除路由
             if (CollectionUtils.isEmpty(uidChannelManager.getChannelsById(uid))) {
-                routeManager.removerUserFromServer(uid, new Server(IpUtil.getIp(), nettyTcpPort));
-                routeManager.removerUserFromInternalServer(uid,
-                    new Server(IpUtil.getIp(), nettyInternalPort));
+                routeManager.removerUserFromServer(uid,
+                    new AceessServerInfo(IpUtil.getIp(), tcpPort, wsPort, internalPort));
             }
         }
     }

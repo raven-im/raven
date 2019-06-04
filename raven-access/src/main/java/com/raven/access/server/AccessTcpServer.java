@@ -5,7 +5,7 @@ import com.raven.access.handler.server.HeartBeatHandler;
 import com.raven.access.handler.server.HistoryHandler;
 import com.raven.access.handler.server.LoginAuthHandler;
 import com.raven.access.handler.server.MesaageHandler;
-import com.raven.common.loadbalance.Server;
+import com.raven.common.loadbalance.AceessServerInfo;
 import com.raven.common.protos.Message;
 import com.raven.common.utils.IpUtil;
 import com.raven.storage.route.RouteManager;
@@ -35,7 +35,13 @@ import org.springframework.stereotype.Component;
 public class AccessTcpServer {
 
     @Value("${netty.tcp.port}")
-    private int nettyTcpPort;
+    private int tcpPort;
+
+    @Value("${netty.websocket.port}")
+    private int wsPort;
+
+    @Value("${netty.internal.port}")
+    private int internalPort;
 
     private EventLoopGroup bossGroup = new NioEventLoopGroup();
 
@@ -75,7 +81,8 @@ public class AccessTcpServer {
                     ChannelPipeline pipeline = channel.pipeline();
                     pipeline.addLast(new IdleStateHandler(10, 10, 15));
                     pipeline.addLast(new ProtobufVarint32FrameDecoder());
-                    pipeline.addLast(new ProtobufDecoder(Message.RavenMessage.getDefaultInstance()));
+                    pipeline
+                        .addLast(new ProtobufDecoder(Message.RavenMessage.getDefaultInstance()));
                     // 对protobuf协议的消息头上加上一个长度为32的整形字段
                     pipeline.addLast(new ProtobufVarint32LengthFieldPrepender());
                     pipeline.addLast(new ProtobufEncoder());
@@ -87,9 +94,9 @@ public class AccessTcpServer {
                 }
             });
         bindConnectionOptions(bootstrap);
-        bootstrap.bind(new InetSocketAddress(nettyTcpPort)).addListener(future -> {
+        bootstrap.bind(new InetSocketAddress(tcpPort)).addListener(future -> {
             if (future.isSuccess()) {
-                log.info("raven-access tcp server start success on port:{}", nettyTcpPort);
+                log.info("raven-access tcp server start success on port:{}", tcpPort);
             } else {
                 log.error("raven-access tcp server start failed!");
             }
@@ -110,7 +117,7 @@ public class AccessTcpServer {
         log.info("close raven-access tcp server success");
     }
 
-    private Server getLocalServer() {
-        return new Server(IpUtil.getIp(), nettyTcpPort);
+    private AceessServerInfo getLocalServer() {
+        return new AceessServerInfo(IpUtil.getIp(), tcpPort, wsPort, internalPort);
     }
 }

@@ -1,16 +1,20 @@
-package com.raven.route.utils;
+package com.raven.route.user.bean;
 
 import com.raven.common.utils.DesUtils;
 import com.raven.common.exception.TokenException;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
+import lombok.Data;
 
 import static com.raven.common.utils.Constants.DEFAULT_SEPARATES_SIGN;
 
+@Data
 public class Token {
 
     private String uid;
+
     private String appKey;
+
     private long timestamp;
 
     public Token(String uid, String appKey) {

@@ -1,34 +1,36 @@
 package com.raven.route.user.service.impl;
 
 import static com.raven.common.utils.Constants.CONFIG_ACCESS_SERVER_NAME;
+import static com.raven.common.utils.Constants.CONFIG_INTERNAL_PORT;
 import static com.raven.common.utils.Constants.CONFIG_TCP_PORT;
 import static com.raven.common.utils.Constants.CONFIG_WEBSOCKET_PORT;
 import static com.raven.common.utils.Constants.DEFAULT_SEPARATES_SIGN;
 import static com.raven.common.utils.Constants.TOKEN_CACHE_DURATION;
 
+import com.raven.common.enums.AccessServerType;
 import com.raven.common.exception.TokenException;
 import com.raven.common.loadbalance.ConsistentHashLoadBalancer;
 import com.raven.common.loadbalance.LoadBalancer;
-import com.raven.common.loadbalance.Server;
+import com.raven.common.loadbalance.AceessServerInfo;
 import com.raven.common.param.ServerInfoOutParam;
 import com.raven.common.param.TokenInfoOutParam;
 import com.raven.common.result.Result;
 import com.raven.common.result.ResultCode;
 import com.raven.route.user.service.UserService;
-import com.raven.route.utils.ClientType;
-import com.raven.route.utils.Token;
+import com.raven.route.user.bean.Token;
 import com.raven.route.validator.TokenValidator;
 import com.raven.route.validator.UserValidator;
 import com.raven.storage.route.RouteManager;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 @Service
 @Slf4j
@@ -68,41 +70,46 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Result getAccessInfo(String token, ClientType type) {
-        // check token validation.
+    public Result getAccessInfo(String token, AccessServerType type) {
         if (!tokenValidator.validate(token)) {
             return Result.failure(tokenValidator.errorCode());
         }
         String tokenStr = (String) stringRedisTemplate.opsForValue().get(token);
         String uid = tokenStr.split(DEFAULT_SEPARATES_SIGN)[1];
-        // check if there is already a Access server.  if yes , dispatch to that server.
-        Server server = routeManager.getServerByUid(uid);
+        AceessServerInfo server = routeManager.getServerByUid(uid);
         if (null != server) {
-            return Result.success(new ServerInfoOutParam(server.getIp(), server.getPort()));
-        } else {
-            List<ServiceInstance> instances = discoveryClient
-                .getInstances(CONFIG_ACCESS_SERVER_NAME);
-            if (!instances.isEmpty()) {
-                List<Server> servers = instances.stream()
-                    .map((x) -> {
-                        if (x.getMetadata().containsKey(CONFIG_WEBSOCKET_PORT)
-                            && type == ClientType.WEB) {
-                            int websocketPort = Integer
-                                .valueOf(x.getMetadata().get(CONFIG_WEBSOCKET_PORT));
-                            return new Server(x.getHost(), websocketPort);
-                        } else if (x.getMetadata().containsKey(CONFIG_TCP_PORT)
-                            && type == ClientType.MOBILE) {
-                            int nettyPort = Integer.valueOf(x.getMetadata().get(CONFIG_TCP_PORT));
-                            return new Server(x.getHost(), nettyPort);
-                        } else {
-                            return new Server(x.getHost(), x.getPort());
-                        }
-                    })
-                    .collect(Collectors.toList());
-                LoadBalancer lb = new ConsistentHashLoadBalancer();
-                Server origin = lb.select(servers, uid);
-                return Result.success(new ServerInfoOutParam(origin.getIp(), origin.getPort()));
+            if (type == AccessServerType.WEBSOCKET) {
+                return Result.success(new ServerInfoOutParam(server.getIp(), server.getWsPort()));
             }
+            if (type == AccessServerType.TCP) {
+                return Result.success(new ServerInfoOutParam(server.getIp(), server.getTcpPort()));
+            }
+        } else {
+
+            List<ServiceInstance> instances = discoveryClient.getInstances(CONFIG_ACCESS_SERVER_NAME);
+            List<AceessServerInfo> servers = new ArrayList<>();
+            for (ServiceInstance instance : instances) {
+                int tcpPort = Integer.valueOf(instance.getMetadata().get(CONFIG_TCP_PORT));
+                int wsPort = Integer.valueOf(instance.getMetadata().get(CONFIG_WEBSOCKET_PORT));
+                int internalPort = Integer
+                    .valueOf(instance.getMetadata().get(CONFIG_INTERNAL_PORT));
+                AceessServerInfo serverInfo = new AceessServerInfo(instance.getHost(), tcpPort,
+                    wsPort, internalPort);
+                servers.add(serverInfo);
+            }
+            if (!CollectionUtils.isEmpty(servers)) {
+                LoadBalancer lb = new ConsistentHashLoadBalancer();
+                AceessServerInfo origin = lb.select(servers, uid);
+                if (type == AccessServerType.WEBSOCKET) {
+                    return Result
+                        .success(new ServerInfoOutParam(origin.getIp(), origin.getWsPort()));
+                }
+                if (type == AccessServerType.TCP) {
+                    return Result
+                        .success(new ServerInfoOutParam(origin.getIp(), origin.getTcpPort()));
+                }
+            }
+
         }
         return Result.failure(ResultCode.COMMON_NO_ACCESS_ERROR);
     }

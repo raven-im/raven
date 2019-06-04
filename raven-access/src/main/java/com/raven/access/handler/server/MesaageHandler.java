@@ -63,7 +63,7 @@ public class MesaageHandler extends SimpleChannelInboundHandler<RavenMessage> {
                     } else {
                         convId = upMessage.getConverId();
                     }
-                } else if (StringUtils.isNotBlank(upMessage.getTargetUid())){
+                } else if (StringUtils.isNotBlank(upMessage.getTargetUid())) {
                     convId = converManager
                         .newSingleConverId(upMessage.getFromUid(), upMessage.getTargetUid());
                     upMessage = upMessage.toBuilder().setConverId(convId).build();

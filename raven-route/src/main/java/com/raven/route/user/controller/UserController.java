@@ -4,11 +4,11 @@ import static com.raven.common.utils.Constants.AUTH_APP_KEY;
 import static com.raven.common.utils.Constants.AUTH_TOKEN;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
+import com.raven.common.enums.AccessServerType;
 import com.raven.common.param.GetAccessParam;
 import com.raven.common.param.GetTokenParam;
 import com.raven.common.result.Result;
 import com.raven.route.user.service.UserService;
-import com.raven.route.utils.ClientType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,20 +44,20 @@ public class UserController {
     }
 
     /**
-     * 获取用户登录接入点 只有web用，它会拿到 websocket 端口
+     * 获取用户登录websocket接入点
      */
     @GetMapping("/access/web")
     public Result getAccessInfoWeb(@RequestHeader(AUTH_TOKEN) String token) {
         log.info("get access address, token {}", token);
-        return userService.getAccessInfo(token, ClientType.WEB);
+        return userService.getAccessInfo(token, AccessServerType.WEBSOCKET);
     }
 
     /**
-     * 获取用户登录接入点 mobile 或其他在用，它会拿到 tcp 端口
+     * 获取用户登录tcp接入点
      */
     @GetMapping("/access")
     public Result getAccessInfo(@RequestHeader(AUTH_TOKEN) String token) {
         log.info("get access address, token {}", token);
-        return userService.getAccessInfo(token, ClientType.MOBILE);
+        return userService.getAccessInfo(token, AccessServerType.TCP);
     }
 }

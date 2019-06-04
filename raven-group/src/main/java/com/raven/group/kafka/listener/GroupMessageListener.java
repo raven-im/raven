@@ -31,7 +31,6 @@ public class GroupMessageListener extends MessageListener<String, String> {
 
     @Override
     public void receive(String topic, String key, String message) {
-//        log.info("topic=[{}], message=[{}]", topic, message);
         try {
             long startTime = System.currentTimeMillis();
             RavenMessage.Builder builder = RavenMessage.newBuilder();

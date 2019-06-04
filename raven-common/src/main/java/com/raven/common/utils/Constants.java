@@ -10,14 +10,16 @@ public class Constants {
      */
     public static final String USER_ROUTE_KEY = "user_route_key";
 
-    public static final String USER_INTERNAL_ROUTE_KEY = "user_internal_route_key";
-
     public static final String ACCESS_SERVER_ROUTE_KEY = "access_server_route_key_";
 
     public static final String PREFIX_CONVERSATION_ID = "converid_";
+
     public static final String PREFIX_CONVERSATION_LIST = "converlist_";
+
     public static final String PREFIX_MESSAGE_ID = "msg_";
+
     public static final String PREFIX_GROUP_MEMBER = "group_member_";
+
     public static final String PREFIX_USER_CID = "user_cid_";
     /*
      * Authentication.

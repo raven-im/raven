@@ -8,8 +8,8 @@ public enum AckMessageStatus {
 
     private int status;
 
-    private AckMessageStatus(int state) {
-
+    AckMessageStatus(int status) {
+        this.status = status;
     }
 
     public int getStatus() {

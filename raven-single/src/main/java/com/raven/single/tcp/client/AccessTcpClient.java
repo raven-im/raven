@@ -1,7 +1,7 @@
 package com.raven.single.tcp.client;
 
 
-import com.raven.common.loadbalance.Server;
+import com.raven.common.loadbalance.AceessServerInfo;
 import com.raven.common.netty.ServerChannelManager;
 import com.raven.common.protos.Message;
 import com.raven.common.utils.Constants;
@@ -66,7 +66,7 @@ public class AccessTcpClient {
         log.info("close raven-single client success");
     }
 
-    private Channel connectServer(Server server) {
+    private Channel connectServer(AceessServerInfo server) {
         if (null != internalServerChannelManager.getChannelByServer(server)) {
             return null;
         }
@@ -88,15 +88,15 @@ public class AccessTcpClient {
                     p.addLast("MessageHandler", messageHandler);
                 }
             });
-        ChannelFuture future = bootstrap.connect(server.getIp(), server.getPort())
+        ChannelFuture future = bootstrap.connect(server.getIp(), server.getInternalPort())
             .syncUninterruptibly();
         if (future.isSuccess()) {
             log.info("connect server success ip:{},port:{}", server.getIp(),
-                server.getPort());
+                server.getInternalPort());
             return future.channel();
         } else {
             log.error("connect server failed ip:{},port:{}", server.getIp(),
-                server.getPort());
+                server.getInternalPort());
         }
         return null;
     }
@@ -115,9 +115,14 @@ public class AccessTcpClient {
                     String address = (String) data.get("address");
                     Map<String, Object> payload = (Map<String, Object>) data.get("payload");
                     Map<String, Object> metadata = (Map<String, Object>) payload.get("metadata");
-                    int port = Integer
+                    int tcpPort = Integer
+                        .valueOf(metadata.get(Constants.CONFIG_TCP_PORT).toString());
+                    int wsPort = Integer
+                        .valueOf(metadata.get(Constants.CONFIG_WEBSOCKET_PORT).toString());
+                    int internalPort = Integer
                         .valueOf(metadata.get(Constants.CONFIG_INTERNAL_PORT).toString());
-                    Server server = new Server(address, port);
+                    AceessServerInfo server = new AceessServerInfo(address, tcpPort, wsPort,
+                        internalPort);
                     Channel channel = connectServer(server);
                     if (null != channel) {
                         internalServerChannelManager.addServer2Channel(server, channel);

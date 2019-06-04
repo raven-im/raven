@@ -79,11 +79,4 @@ public class AccessInternalServer {
         bootstrap.childOption(ChannelOption.SO_REUSEADDR, true); //调试用
     }
 
-    @PreDestroy
-    public void destroy() {
-        bossGroup.shutdownGracefully().syncUninterruptibly();
-        workGroup.shutdownGracefully().syncUninterruptibly();
-        log.info("close raven-access internal server success");
-    }
-
 }

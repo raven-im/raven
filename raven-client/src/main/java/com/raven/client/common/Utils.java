@@ -51,7 +51,7 @@ public class Utils {
         String groupName = "test-group";
         String portrait = "http://google.com/1.jpg";
         GroupReqParam param = new GroupReqParam(groupName, portrait, members);
-        HttpPost httpPost = new HttpPost("http://34.80.112.16:8373/create");
+        HttpPost httpPost = new HttpPost("http://localhost:8370/create");
         httpPost.addHeader("Content-Type", "application/json;charset=UTF-8");
         try {
             StringEntity stringEntity = new StringEntity(JsonHelper.toJsonString(param), "UTF-8");
@@ -71,7 +71,7 @@ public class Utils {
 
     public static String getToken(String uid) {
         HttpGet httpGet = new HttpGet(
-            "http://34.80.128.78:8040/user/token?uid=" + uid);
+            "http://localhost:8040/user/token?uid=" + uid);
         httpGet.addHeader("Content-Type", "application/json;charset=UTF-8");
         httpGet.addHeader("AppKey", "u43tOdeHSx8r0XfJRuRDgo");
         httpGet.addHeader("Nonce", "abc");
@@ -94,7 +94,7 @@ public class Utils {
     }
 
     public static ServerInfoOutParam getAccessAddress(String token) {
-        HttpGet httpGet = new HttpGet("http://34.80.128.78:8040/user/access");
+        HttpGet httpGet = new HttpGet("http://localhost:8040/user/access");
         httpGet.addHeader("Token", token);
         ServerInfoOutParam outParam = new ServerInfoOutParam();
         try {

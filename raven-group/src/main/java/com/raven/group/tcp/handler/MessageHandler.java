@@ -1,17 +1,11 @@
 package com.raven.group.tcp.handler;
 
-import com.raven.common.loadbalance.Server;
+import com.raven.common.loadbalance.AceessServerInfo;
 import com.raven.common.netty.ServerChannelManager;
-import com.raven.common.protos.Message.Code;
-import com.raven.common.protos.Message.ConverType;
 import com.raven.common.protos.Message.HeartBeat;
 import com.raven.common.protos.Message.HeartBeatType;
-import com.raven.common.protos.Message.MessageAck;
 import com.raven.common.protos.Message.RavenMessage;
 import com.raven.common.protos.Message.RavenMessage.Type;
-import com.raven.common.protos.Message.ServerInfo;
-import com.raven.common.protos.Message.UpDownMessage;
-import com.raven.common.utils.UidUtil;
 import com.raven.group.restful.validator.GroupValidator;
 import com.raven.group.tcp.manager.SenderManager;
 import com.raven.storage.conver.ConverManager;
@@ -21,7 +15,6 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 @Component
 @Sharable
@@ -65,7 +58,7 @@ public class MessageHandler extends SimpleChannelInboundHandler<RavenMessage> {
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         log.info("raven-access server disconnected address:{}", ctx.channel().remoteAddress());
-        Server server = internalServerChannelManager.getServerByChannel(ctx.channel());
+        AceessServerInfo server = internalServerChannelManager.getServerByChannel(ctx.channel());
         internalServerChannelManager.removeServer(server);
     }
 

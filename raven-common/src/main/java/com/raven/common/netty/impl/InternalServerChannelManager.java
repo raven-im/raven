@@ -1,7 +1,7 @@
 package com.raven.common.netty.impl;
 
 
-import com.raven.common.loadbalance.Server;
+import com.raven.common.loadbalance.AceessServerInfo;
 import com.raven.common.netty.ServerChannelManager;
 import io.netty.channel.Channel;
 import java.util.HashMap;
@@ -13,14 +13,14 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class InternalServerChannelManager implements ServerChannelManager {
 
-    private final Map<Server, Channel> serverChannel = new HashMap<>();
+    private final Map<AceessServerInfo, Channel> serverChannel = new HashMap<>();
 
-    private final Map<Channel, Server> channelServer = new HashMap<>();
+    private final Map<Channel, AceessServerInfo> channelServer = new HashMap<>();
 
     private ReadWriteLock rwLock = new ReentrantReadWriteLock();
 
     @Override
-    public void addServer2Channel(Server server, Channel channel) {
+    public void addServer2Channel(AceessServerInfo server, Channel channel) {
         rwLock.writeLock().lock();
         try {
             serverChannel.put(server, channel);
@@ -31,7 +31,7 @@ public class InternalServerChannelManager implements ServerChannelManager {
     }
 
     @Override
-    public Channel getChannelByServer(Server server) {
+    public Channel getChannelByServer(AceessServerInfo server) {
         rwLock.readLock().lock();
         try {
             return serverChannel.get(server);
@@ -41,7 +41,7 @@ public class InternalServerChannelManager implements ServerChannelManager {
     }
 
     @Override
-    public Server getServerByChannel(Channel channel) {
+    public AceessServerInfo getServerByChannel(Channel channel) {
         rwLock.readLock().lock();
         try {
             return channelServer.get(channel);
@@ -51,7 +51,7 @@ public class InternalServerChannelManager implements ServerChannelManager {
     }
 
     @Override
-    public void removeServer(Server server) {
+    public void removeServer(AceessServerInfo server) {
         rwLock.writeLock().lock();
         try {
             Channel channel = serverChannel.get(server);

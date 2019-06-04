@@ -9,7 +9,7 @@ import com.raven.access.handler.server.HeartBeatHandler;
 import com.raven.access.handler.server.HistoryHandler;
 import com.raven.access.handler.server.LoginAuthHandler;
 import com.raven.access.handler.server.MesaageHandler;
-import com.raven.common.loadbalance.Server;
+import com.raven.common.loadbalance.AceessServerInfo;
 import com.raven.common.protos.Message;
 import com.raven.common.utils.IpUtil;
 import com.raven.storage.route.RouteManager;
@@ -160,17 +160,5 @@ public class AccessWebsocketServer {
         bootstrap.option(ChannelOption.SO_BACKLOG, 1024);
         bootstrap.childOption(ChannelOption.TCP_NODELAY, true);
         bootstrap.childOption(ChannelOption.SO_REUSEADDR, true); //调试用
-    }
-
-    @PreDestroy
-    public void destroy() {
-        routeManager.serverDown(getLocalServer());
-        bossGroup.shutdownGracefully().syncUninterruptibly();
-        workGroup.shutdownGracefully().syncUninterruptibly();
-        log.info("close raven-access websocket server success");
-    }
-
-    private Server getLocalServer() {
-        return new Server(IpUtil.getIp(), nettyWebsocketPort);
     }
 }

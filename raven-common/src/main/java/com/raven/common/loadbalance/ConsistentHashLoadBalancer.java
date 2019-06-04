@@ -24,16 +24,16 @@ public class ConsistentHashLoadBalancer implements LoadBalancer {
     private final static String VIRTUAL_NODE_SUFFIX = "#@";
 
     @Override
-    public Server select(List<Server> servers, String hashKey) {
+    public AceessServerInfo select(List<AceessServerInfo> servers, String hashKey) {
         HashCode hashCode = hashFunction.hashString(hashKey, charset);
-        TreeMap<Integer, Server> ring = buildConsistentHashRing(servers);
-        Server server = locate(ring, hashCode.asInt());
+        TreeMap<Integer, AceessServerInfo> ring = buildConsistentHashRing(servers);
+        AceessServerInfo server = locate(ring, hashCode.asInt());
         return server;
     }
 
-    private Server locate(TreeMap<Integer, Server> ring, int invocationHashCode) {
+    private AceessServerInfo locate(TreeMap<Integer, AceessServerInfo> ring, int invocationHashCode) {
         // 向右找到第一个 key
-        Map.Entry<Integer, Server> locateEntry = ring.ceilingEntry(invocationHashCode);
+        Map.Entry<Integer, AceessServerInfo> locateEntry = ring.ceilingEntry(invocationHashCode);
         if (locateEntry == null) {
             // 想象成一个环，超过尾部则取第一个 key
             locateEntry = ring.firstEntry();
@@ -41,13 +41,13 @@ public class ConsistentHashLoadBalancer implements LoadBalancer {
         return locateEntry.getValue();
     }
 
-    private TreeMap<Integer, Server> buildConsistentHashRing(List<Server> servers) {
-        TreeMap<Integer, Server> virtualNodeRing = new TreeMap<>();
-        for (Server server : servers) {
+    private TreeMap<Integer, AceessServerInfo> buildConsistentHashRing(List<AceessServerInfo> servers) {
+        TreeMap<Integer, AceessServerInfo> virtualNodeRing = new TreeMap<>();
+        for (AceessServerInfo server : servers) {
             for (int i = 0; i < VIRTUAL_NODE_SIZE; i++) {
                 // 映射虚拟节点与物理节点
                 HashCode hashCode = hashFunction
-                    .hashString(server.getUrl() + VIRTUAL_NODE_SUFFIX + i, charset);
+                    .hashString(server.hashCode() + VIRTUAL_NODE_SUFFIX + i, charset);
                 virtualNodeRing.put(hashCode.asInt(), server);
             }
         }

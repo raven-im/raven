@@ -1,6 +1,6 @@
 package com.raven.group.tcp.manager;
 
-import com.raven.common.loadbalance.Server;
+import com.raven.common.loadbalance.AceessServerInfo;
 import com.raven.common.netty.ServerChannelManager;
 import com.raven.common.protos.Message.RavenMessage;
 import com.raven.common.protos.Message.RavenMessage.Type;
@@ -37,9 +37,8 @@ public class GroupMessageProcesser implements Runnable {
         converManager.saveMsg2Conver(msg.getContent(), msg.getConverId());
         List<String> uidList = converManager.getUidListByConverExcludeSender(msg.getConverId(),
             msg.getFromUid());
-        long startTime = System.currentTimeMillis();
         for (String uid : uidList) {
-            Server server = routeManager.getInternalServerByUid(uid);
+            AceessServerInfo server = routeManager.getServerByUid(uid);
             if (null != server) {
                 Channel channel = internalServerChannelManager.getChannelByServer(server);
                 if (channel != null) {
@@ -60,11 +59,9 @@ public class GroupMessageProcesser implements Runnable {
                     converManager.incrUserConverUnCount(uid, msg.getConverId(), 1);
                 }
             } else {
-                log.info("uid:{} no server to push down msg:{}.", uid, msg.getId());
+                log.error("uid:{} no server to push down msg:{}.", uid, msg.getId());
                 converManager.incrUserConverUnCount(uid, msg.getConverId(), 1);
             }
         }
-        log.info("发送群消息耗时:{}ms", System.currentTimeMillis() - startTime);
-
     }
 }

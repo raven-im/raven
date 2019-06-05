@@ -116,10 +116,9 @@ public class ConverManager {
 
     public List<MsgContent> getHistoryMsg(String converId, Long beginId) {
         List<MsgContent> msgContents = new ArrayList<>();
-        long now = System.currentTimeMillis();
         Set<String> messages = redisTemplate.opsForZSet()
             .rangeByScore(PREFIX_MESSAGE_ID + converId, Double.valueOf(beginId),
-                Double.valueOf(now), 0, 100);
+                Double.MAX_VALUE, 0, 100);
         for (String message : messages) {
             MsgContent msgContent = JsonHelper
                 .readValue(message, MsgContent.class);

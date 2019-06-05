@@ -37,6 +37,14 @@ public enum ResultCode {
     APP_ERROR_TOKEN_CREATE_ERROR(13002, "token cannot be made."),
     APP_ERROR_TOKEN_INVALID(13003, "token is invalid."),
 
+    /*
+     * File Upload.  [14000, 15000)
+     */
+    UPLOAD_FILE_COMMON_ERROR(14000, "File Upload common error."),
+    UPLOAD_FILE_EMPTY(14001, "File empty."),
+    UPLOAD_FILE_UPLOAD_PARAMETER_ERROR(14002, "File upload Parameters error."),
+    UPLOAD_FILE_UPLOAD_ERROR(14003, "File upload error."),
+
     COMMON_ERROR(500, "error");
     private int code;
     private String msg;

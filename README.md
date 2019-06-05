@@ -16,11 +16,14 @@ It provides a solution that communicatie between different platforms, such as Io
 ![avatar](./doc/设计文档/image/架构设计图.png)
 
 
-### Pressure Test Result
+### Document
 
-[Click Me](./doc/压测记录/doc/2019.6.2-压测记录.md) 
+* Work flow
+([Click Me](./doc/设计文档/doc/process.md))
+* Pressure Test Result
+([Click Me](./doc/压测记录/doc/2019.6.2-压测记录.md)) 
 
-### Demo Enviroment
+### Demo
 
 Demo: http://34.80.127.96:8081/
 
@@ -28,15 +31,6 @@ Demo: http://34.80.127.96:8081/
 Test Account1:  13800222222, password: 222222
 Test Account2:  13800333333, password: 333333
 ```
-### Tech
-
-* netty
-* protobuf
-* redis
-* mysql
-* flyway
-* spring boot
-* spring cloud
 
 ### Contact us
 * zhou.xiaoxiao@outlook.com

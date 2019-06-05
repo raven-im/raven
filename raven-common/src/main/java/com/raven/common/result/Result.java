@@ -1,12 +1,14 @@
 package com.raven.common.result;
 
 import java.io.Serializable;
+import lombok.Data;
 
 /**
  * Author zxx
  * Description 通用接口返回
  * Date Created on 2018/6/12
  */
+@Data
 public class Result implements Serializable {
 
     private static final long serialVersionUID = 5679982684662864356L;
@@ -55,29 +57,5 @@ public class Result implements Serializable {
     private void setResultCode(ResultCode code) {
         this.code = code.getCode();
         this.msg = code.getMsg();
-    }
-
-    public void setData(Object data) {
-        this.data = data;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    public Integer getCode() {
-        return code;
-    }
-
-    public void setCode(Integer code) {
-        this.code = code;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public Object getData() {
-        return data;
     }
 }

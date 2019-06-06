@@ -66,7 +66,7 @@ public class FastDFSClientWrapper implements FastDFSClientApi {
     }
 
     private String getResAccessUrl(StorePath storePath) {
-        String fileUrl = serverUrl + ":" + storagePort + "/" + storePath.getFullPath();
+        String fileUrl = "http://" + serverUrl + ":" + storagePort + "/" + storePath.getFullPath();
         log.info("fileUrl:" + fileUrl);
         return fileUrl;
     }

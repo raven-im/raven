@@ -45,9 +45,9 @@ public class MesaageHandler extends SimpleChannelInboundHandler<RavenMessage> {
     protected void channelRead0(ChannelHandlerContext ctx, RavenMessage message) throws Exception {
         if (message.getType() == Type.UpDownMessage) {
             UpDownMessage upMessage = message.getUpDownMessage();
-            log.info("receive up message:{}", upMessage);
             if (!isMsgClientIdValid(ctx, upMessage)) {
-                sendACK(ctx, upMessage, Code.FAIL);
+                log.error("illegal client msg id.");
+                sendACK(ctx, upMessage, Code.CLIENT_ID_REPEAT);
                 return;
             } else {
                 saveUserClientId(ctx, upMessage);
@@ -58,7 +58,7 @@ public class MesaageHandler extends SimpleChannelInboundHandler<RavenMessage> {
                 if (StringUtils.isNotBlank(upMessage.getConverId())) {
                     if (!converManager.isSingleConverIdValid(upMessage.getConverId())) {
                         log.error("illegal conversation id.");
-                        sendACK(ctx, upMessage, Code.FAIL);
+                        sendACK(ctx, upMessage, Code.CONVER_ID_INVALID);
                         return;
                     } else {
                         convId = upMessage.getConverId();
@@ -68,7 +68,8 @@ public class MesaageHandler extends SimpleChannelInboundHandler<RavenMessage> {
                         .newSingleConverId(upMessage.getFromUid(), upMessage.getTargetUid());
                     upMessage = upMessage.toBuilder().setConverId(convId).build();
                 } else {
-                    sendACK(ctx, upMessage, Code.FAIL);
+                    log.error("conversation id and target uid all empty.");
+                    sendACK(ctx, upMessage, Code.NO_TARGET);
                     return;
                 }
                 topic = Constants.KAFKA_TOPIC_SINGLE_MSG;
@@ -77,25 +78,29 @@ public class MesaageHandler extends SimpleChannelInboundHandler<RavenMessage> {
                 String groupId = upMessage.getGroupId();
                 if (StringUtils.isNotBlank(convId)) {
                     if (!converManager.isGroupConverIdValid(convId)) {
-                        sendACK(ctx, upMessage, Code.FAIL);
+                        log.error("illegal conversation id.");
+                        sendACK(ctx, upMessage, Code.CONVER_ID_INVALID);
                     }
                 } else if (StringUtils.isNotBlank(groupId)) {
                     convId = UidUtil.uuid24ByFactor(groupId);
                     upMessage = upMessage.toBuilder().setConverId(convId).build();
                 } else {
-                    sendACK(ctx, upMessage, Code.FAIL);
+                    log.error("conversation id and group id all empty.");
+                    sendACK(ctx, upMessage, Code.NO_TARGET);
                     return;
                 }
                 topic = Constants.KAFKA_TOPIC_GROUP_MSG;
             } else {
-                sendACK(ctx, upMessage, Code.FAIL);
+                log.error("illegal conversation type.");
+                sendACK(ctx, upMessage, Code.CONVER_TYPE_INVALID);
                 return;
             }
             RavenMessage ravenMessage = buildRavenMessage(ctx, upMessage);
             if (sendMsgToKafka(ravenMessage, ravenMessage.getUpDownMessage().getId(), topic)) {
                 sendACK(ctx, upMessage, Code.SUCCESS);
             } else {
-                sendACK(ctx, upMessage, Code.FAIL);
+                log.error("send msg to kafka fail");
+                sendACK(ctx, upMessage, Code.KAFKA_ERROR);
             }
         } else {
             ctx.fireChannelRead(message);
@@ -104,12 +109,10 @@ public class MesaageHandler extends SimpleChannelInboundHandler<RavenMessage> {
 
     private void sendACK(ChannelHandlerContext ctx, UpDownMessage message, Code code) {
         MessageAck messageAck = MessageAck.newBuilder()
-            .setId(message.getId())
             .setTargetUid(message.getFromUid())
             .setCid(message.getCid())
             .setCode(code)
             .setTime(System.currentTimeMillis())
-            .setConverId(message.getConverId())
             .build();
         RavenMessage ravenMessage = RavenMessage.newBuilder().setType(Type.MessageAck)
             .setMessageAck(messageAck).build();
@@ -119,14 +122,19 @@ public class MesaageHandler extends SimpleChannelInboundHandler<RavenMessage> {
     private RavenMessage buildRavenMessage(ChannelHandlerContext ctx, UpDownMessage upDownMessage) {
         long id = snowFlake.nextId();
         String uid = uidChannelManager.getIdByChannel(ctx.channel());
-        MessageContent content = MessageContent.newBuilder().setId(id)
-            .setType(upDownMessage.getContent().getType()).setUid(uid)
+        MessageContent content = MessageContent.newBuilder()
+            .setId(id)
+            .setType(upDownMessage.getContent().getType())
+            .setUid(uid)
             .setContent(upDownMessage.getContent().getContent())
             .setTime(System.currentTimeMillis()).build();
         UpDownMessage upMesaage = UpDownMessage.newBuilder().setId(id)
-            .setCid(upDownMessage.getCid()).setFromUid(uid)
-            .setTargetUid(upDownMessage.getTargetUid()).setContent(content)
-            .setConverId(upDownMessage.getConverId()).setConverType(upDownMessage.getConverType())
+            .setCid(upDownMessage.getCid())
+            .setFromUid(uid)
+            .setTargetUid(upDownMessage.getTargetUid())
+            .setContent(content)
+            .setConverId(upDownMessage.getConverId())
+            .setConverType(upDownMessage.getConverType())
             .setGroupId(upDownMessage.getGroupId())
             .build();
         RavenMessage ravenMessage = RavenMessage.newBuilder().setType(Type.UpDownMessage)

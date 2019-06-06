@@ -59,7 +59,7 @@ public class LoginAuthHandler extends SimpleChannelInboundHandler<RavenMessage> 
             if (!verifyToken(token)) {
                 LoginAck loginAck = LoginAck.newBuilder()
                     .setId(loginMesaage.getId())
-                    .setCode(Code.FAIL)
+                    .setCode(Code.TOKEN_INVALID)
                     .setTime(System.currentTimeMillis())
                     .build();
                 ctx.writeAndFlush(loginAck);

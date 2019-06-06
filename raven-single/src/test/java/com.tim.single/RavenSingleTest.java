@@ -171,6 +171,6 @@ public class RavenSingleTest {
             }
         });
         lock.await(2000, TimeUnit.MILLISECONDS);
-        assertEquals(ackMsg.getCode(), Code.FAIL);
+        assertEquals(ackMsg.getCode(), Code.SUCCESS);
     }
 }

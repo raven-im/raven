@@ -122,9 +122,33 @@ public final class Message {
      */
     SUCCESS(0),
     /**
-     * <code>FAIL = 1;</code>
+     * <code>CLIENT_ID_REPEAT = 1;</code>
      */
-    FAIL(1),
+    CLIENT_ID_REPEAT(1),
+    /**
+     * <code>CONVER_TYPE_INVALID = 2;</code>
+     */
+    CONVER_TYPE_INVALID(2),
+    /**
+     * <code>KAFKA_ERROR = 3;</code>
+     */
+    KAFKA_ERROR(3),
+    /**
+     * <code>CONVER_ID_INVALID = 4;</code>
+     */
+    CONVER_ID_INVALID(4),
+    /**
+     * <code>NO_TARGET = 5;</code>
+     */
+    NO_TARGET(5),
+    /**
+     * <code>TOKEN_INVALID = 6;</code>
+     */
+    TOKEN_INVALID(6),
+    /**
+     * <code>OPERATION_TYPE_INVALID = 7;</code>
+     */
+    OPERATION_TYPE_INVALID(7),
     UNRECOGNIZED(-1),
     ;
 
@@ -133,9 +157,33 @@ public final class Message {
      */
     public static final int SUCCESS_VALUE = 0;
     /**
-     * <code>FAIL = 1;</code>
+     * <code>CLIENT_ID_REPEAT = 1;</code>
      */
-    public static final int FAIL_VALUE = 1;
+    public static final int CLIENT_ID_REPEAT_VALUE = 1;
+    /**
+     * <code>CONVER_TYPE_INVALID = 2;</code>
+     */
+    public static final int CONVER_TYPE_INVALID_VALUE = 2;
+    /**
+     * <code>KAFKA_ERROR = 3;</code>
+     */
+    public static final int KAFKA_ERROR_VALUE = 3;
+    /**
+     * <code>CONVER_ID_INVALID = 4;</code>
+     */
+    public static final int CONVER_ID_INVALID_VALUE = 4;
+    /**
+     * <code>NO_TARGET = 5;</code>
+     */
+    public static final int NO_TARGET_VALUE = 5;
+    /**
+     * <code>TOKEN_INVALID = 6;</code>
+     */
+    public static final int TOKEN_INVALID_VALUE = 6;
+    /**
+     * <code>OPERATION_TYPE_INVALID = 7;</code>
+     */
+    public static final int OPERATION_TYPE_INVALID_VALUE = 7;
 
 
     public final int getNumber() {
@@ -157,7 +205,13 @@ public final class Message {
     public static Code forNumber(int value) {
       switch (value) {
         case 0: return SUCCESS;
-        case 1: return FAIL;
+        case 1: return CLIENT_ID_REPEAT;
+        case 2: return CONVER_TYPE_INVALID;
+        case 3: return KAFKA_ERROR;
+        case 4: return CONVER_ID_INVALID;
+        case 5: return NO_TARGET;
+        case 6: return TOKEN_INVALID;
+        case 7: return OPERATION_TYPE_INVALID;
         default: return null;
       }
     }
@@ -17231,12 +17285,15 @@ public final class Message {
       "otos.MessageContent\"[\n\rNotifyMessage\022\n\n\002" +
       "id\030\001 \001(\004\022\014\n\004type\030\002 \001(\t\022\021\n\ttargetUid\030\003 \001(" +
       "\t\022\017\n\007content\030\004 \001(\t\022\014\n\004time\030\005 \001(\004*#\n\rHear" +
-      "tBeatType\022\010\n\004PING\020\000\022\010\n\004PONG\020\001*\035\n\004Code\022\013\n" +
-      "\007SUCCESS\020\000\022\010\n\004FAIL\020\001*#\n\nConverType\022\n\n\006SI" +
-      "NGLE\020\000\022\t\n\005GROUP\020\001*:\n\013MessageType\022\010\n\004TEXT" +
-      "\020\000\022\013\n\007PICTURE\020\001\022\t\n\005VOICE\020\002\022\t\n\005VIDEO\020\003*$\n" +
-      "\rOperationType\022\n\n\006DETAIL\020\000\022\007\n\003ALL\020\001B\tB\007M" +
-      "essageb\006proto3"
+      "tBeatType\022\010\n\004PING\020\000\022\010\n\004PONG\020\001*\250\001\n\004Code\022\013" +
+      "\n\007SUCCESS\020\000\022\024\n\020CLIENT_ID_REPEAT\020\001\022\027\n\023CON" +
+      "VER_TYPE_INVALID\020\002\022\017\n\013KAFKA_ERROR\020\003\022\025\n\021C" +
+      "ONVER_ID_INVALID\020\004\022\r\n\tNO_TARGET\020\005\022\021\n\rTOK" +
+      "EN_INVALID\020\006\022\032\n\026OPERATION_TYPE_INVALID\020\007" +
+      "*#\n\nConverType\022\n\n\006SINGLE\020\000\022\t\n\005GROUP\020\001*:\n" +
+      "\013MessageType\022\010\n\004TEXT\020\000\022\013\n\007PICTURE\020\001\022\t\n\005V" +
+      "OICE\020\002\022\t\n\005VIDEO\020\003*$\n\rOperationType\022\n\n\006DE" +
+      "TAIL\020\000\022\007\n\003ALL\020\001B\tB\007Messageb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

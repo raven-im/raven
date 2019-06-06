@@ -124,7 +124,7 @@ public class ConversationHandler extends SimpleChannelInboundHandler<RavenMessag
     private void sendFailAck(ChannelHandlerContext ctx, Long id) {
         ConverAck converAck = ConverAck.newBuilder()
             .setId(id)
-            .setCode(Code.FAIL)
+            .setCode(Code.OPERATION_TYPE_INVALID)
             .setTime(System.currentTimeMillis())
             .build();
         RavenMessage ravenMessage = RavenMessage.newBuilder()

@@ -89,7 +89,14 @@ message MessageAck {
 
 enum Code {
   SUCCESS = 0;
-  FAIL = 1;
+  CLIENT_ID_REPEAT = 1;
+  CONVER_TYPE_INVALID = 2;
+  KAFKA_ERROR = 3;
+  CONVER_ID_INVALID = 4;
+  NO_TARGET = 5;
+  TOKEN_INVALID = 6;
+  OPERATION_TYPE_INVALID=7;
+
 }
 
 // 会话类型

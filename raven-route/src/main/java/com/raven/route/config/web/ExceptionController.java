@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.multipart.MultipartException;
 
 /**
  * Author zxx
@@ -34,4 +35,9 @@ public class ExceptionController {
         return Result.failure(ResultCode.COMMON_ERROR, exception.getMessage());
     }
 
+    @ExceptionHandler(MultipartException.class)
+    public @ResponseBody Result handleMultipartFileException(MultipartException exception) {
+        log.error(exception.getMessage());
+        return Result.failure(ResultCode.UPLOAD_FILE_EMPTY);
+    }
 }

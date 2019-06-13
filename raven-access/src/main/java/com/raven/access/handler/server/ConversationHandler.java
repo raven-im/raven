@@ -1,6 +1,5 @@
 package com.raven.access.handler.server;
 
-import com.raven.common.model.ConverInfo;
 import com.raven.common.model.ConverListInfo;
 import com.raven.common.model.MsgContent;
 import com.raven.common.netty.IdChannelManager;

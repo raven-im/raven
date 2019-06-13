@@ -17,7 +17,6 @@ import com.raven.group.restful.validator.MemberNotInValidator;
 import com.raven.storage.conver.ConverManager;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -133,10 +132,10 @@ public class GroupServiceImpl implements GroupService {
         Example example1 = new Example(GroupMemberModel.class);
         example1.createCriteria()
             .andEqualTo("groupId", reqParam.getGroupId());
-        List<GroupMemberModel> members = memberMapper.selectByExample(example1);
-        List<String> memberModels = members.stream()
-            .map((x) -> x.getMemberUid())
-            .collect(Collectors.toList());
+//        List<GroupMemberModel> members = memberMapper.selectByExample(example1);
+//        List<String> memberModels = members.stream()
+//            .map((x) -> x.getMemberUid())
+//            .collect(Collectors.toList());
         converManager.dismissGroup(reqParam.getGroupId());
         // clean group info
         GroupModel model = new GroupModel();

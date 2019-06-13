@@ -24,16 +24,15 @@ public class ConsistentHashLoadBalancer implements LoadBalancer {
     private final static String VIRTUAL_NODE_SUFFIX = "#@";
 
     @Override
-    public AceessServerInfo select(List<AceessServerInfo> servers, String hashKey) {
+    public AccessServerInfo select(List<AccessServerInfo> servers, String hashKey) {
         HashCode hashCode = hashFunction.hashString(hashKey, charset);
-        TreeMap<Integer, AceessServerInfo> ring = buildConsistentHashRing(servers);
-        AceessServerInfo server = locate(ring, hashCode.asInt());
-        return server;
+        TreeMap<Integer, AccessServerInfo> ring = buildConsistentHashRing(servers);
+        return locate(ring, hashCode.asInt());
     }
 
-    private AceessServerInfo locate(TreeMap<Integer, AceessServerInfo> ring, int invocationHashCode) {
+    private AccessServerInfo locate(TreeMap<Integer, AccessServerInfo> ring, int invocationHashCode) {
         // 向右找到第一个 key
-        Map.Entry<Integer, AceessServerInfo> locateEntry = ring.ceilingEntry(invocationHashCode);
+        Map.Entry<Integer, AccessServerInfo> locateEntry = ring.ceilingEntry(invocationHashCode);
         if (locateEntry == null) {
             // 想象成一个环，超过尾部则取第一个 key
             locateEntry = ring.firstEntry();
@@ -41,9 +40,9 @@ public class ConsistentHashLoadBalancer implements LoadBalancer {
         return locateEntry.getValue();
     }
 
-    private TreeMap<Integer, AceessServerInfo> buildConsistentHashRing(List<AceessServerInfo> servers) {
-        TreeMap<Integer, AceessServerInfo> virtualNodeRing = new TreeMap<>();
-        for (AceessServerInfo server : servers) {
+    private TreeMap<Integer, AccessServerInfo> buildConsistentHashRing(List<AccessServerInfo> servers) {
+        TreeMap<Integer, AccessServerInfo> virtualNodeRing = new TreeMap<>();
+        for (AccessServerInfo server : servers) {
             for (int i = 0; i < VIRTUAL_NODE_SIZE; i++) {
                 // 映射虚拟节点与物理节点
                 HashCode hashCode = hashFunction

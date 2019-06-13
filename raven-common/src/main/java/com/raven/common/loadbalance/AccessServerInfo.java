@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AceessServerInfo {
+public class AccessServerInfo {
 
     private String ip;
 
@@ -28,7 +28,7 @@ public class AceessServerInfo {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        AceessServerInfo that = (AceessServerInfo) o;
+        AccessServerInfo that = (AccessServerInfo) o;
         return tcpPort == that.tcpPort &&
             wsPort == that.wsPort &&
             internalPort == that.internalPort &&

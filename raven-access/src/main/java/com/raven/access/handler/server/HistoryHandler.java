@@ -2,7 +2,6 @@ package com.raven.access.handler.server;
 
 import com.raven.common.model.ConverInfo;
 import com.raven.common.model.MsgContent;
-import com.raven.common.netty.IdChannelManager;
 import com.raven.common.protos.Message.HisMessagesAck;
 import com.raven.common.protos.Message.HisMessagesReq;
 import com.raven.common.protos.Message.MessageContent;
@@ -23,9 +22,6 @@ import org.springframework.stereotype.Component;
 @Sharable
 @Slf4j
 public class HistoryHandler extends SimpleChannelInboundHandler<RavenMessage> {
-
-    @Autowired
-    private IdChannelManager uidChannelManager;
 
     @Autowired
     private ConverManager converManager;

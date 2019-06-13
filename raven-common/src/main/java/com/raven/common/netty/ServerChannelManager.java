@@ -1,16 +1,16 @@
 package com.raven.common.netty;
 
-import com.raven.common.loadbalance.AceessServerInfo;
+import com.raven.common.loadbalance.AccessServerInfo;
 import io.netty.channel.Channel;
 
 public interface ServerChannelManager {
 
-    void addServer2Channel(AceessServerInfo server, Channel channel);
+    void addServer2Channel(AccessServerInfo server, Channel channel);
 
-    Channel getChannelByServer(AceessServerInfo server);
+    Channel getChannelByServer(AccessServerInfo server);
 
-    AceessServerInfo getServerByChannel(Channel channel);
+    AccessServerInfo getServerByChannel(Channel channel);
 
-    void removeServer(AceessServerInfo server);
+    void removeServer(AccessServerInfo server);
 
 }

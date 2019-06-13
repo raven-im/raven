@@ -1,6 +1,6 @@
 package com.raven.access.handler.server;
 
-import com.raven.common.loadbalance.AceessServerInfo;
+import com.raven.common.loadbalance.AccessServerInfo;
 import com.raven.common.netty.IdChannelManager;
 import com.raven.common.netty.NettyAttrUtil;
 import com.raven.common.protos.Message.Code;
@@ -53,21 +53,21 @@ public class LoginAuthHandler extends SimpleChannelInboundHandler<RavenMessage> 
         NettyAttrUtil
             .updateReaderTime(ctx.channel(), System.currentTimeMillis());
         if (message.getType() == Type.Login) {
-            Login loginMesaage = message.getLogin();
-            log.info("login msg:{}", loginMesaage);
-            String token = loginMesaage.getToken();
+            Login loginMessage = message.getLogin();
+            log.info("login msg:{}", loginMessage);
+            String token = loginMessage.getToken();
             if (!verifyToken(token)) {
                 LoginAck loginAck = LoginAck.newBuilder()
-                    .setId(loginMesaage.getId())
+                    .setId(loginMessage.getId())
                     .setCode(Code.TOKEN_INVALID)
                     .setTime(System.currentTimeMillis())
                     .build();
                 ctx.writeAndFlush(loginAck);
             }
-            routeManager.addUser2Server(loginMesaage.getUid(),
-                new AceessServerInfo(IpUtil.getIp(), tcpPort, wsPort, internalPort));
-            uidChannelManager.addId2Channel(loginMesaage.getUid(), ctx.channel());
-            sendLoginAck(ctx, loginMesaage.getId(), Code.SUCCESS);
+            routeManager.addUser2Server(loginMessage.getUid(),
+                new AccessServerInfo(IpUtil.getIp(), tcpPort, wsPort, internalPort));
+            uidChannelManager.addId2Channel(loginMessage.getUid(), ctx.channel());
+            sendLoginAck(ctx, loginMessage.getId(), Code.SUCCESS);
         } else {
             if (null == uidChannelManager.getIdByChannel(ctx.channel())) {
                 ctx.close();
@@ -85,7 +85,7 @@ public class LoginAuthHandler extends SimpleChannelInboundHandler<RavenMessage> 
             // 最后一台设备下线才清除路由
             if (CollectionUtils.isEmpty(uidChannelManager.getChannelsById(uid))) {
                 routeManager.removerUserFromServer(uid,
-                    new AceessServerInfo(IpUtil.getIp(), tcpPort, wsPort, internalPort));
+                    new AccessServerInfo(IpUtil.getIp(), tcpPort, wsPort, internalPort));
             }
         }
     }

@@ -12,12 +12,10 @@ import com.raven.common.protos.Message.UpDownMessage;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import java.io.IOException;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicLong;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class ClientPresureMemberHandler extends SimpleChannelInboundHandler<RavenMessage> {
+public class ClientPressureMemberHandler extends SimpleChannelInboundHandler<RavenMessage> {
 
     private ChannelHandlerContext messageConnectionCtx;
 
@@ -25,7 +23,7 @@ public class ClientPresureMemberHandler extends SimpleChannelInboundHandler<Rave
 
     private String token;
 
-    public ClientPresureMemberHandler(String uid, String token) {
+    public ClientPressureMemberHandler(String uid, String token) {
         this.uid = uid;
         this.token = token;
     }
@@ -39,7 +37,7 @@ public class ClientPresureMemberHandler extends SimpleChannelInboundHandler<Rave
     private void sendLogin(ChannelHandlerContext ctx, String uid) {
         Login login = Login.newBuilder()
             .setUid(uid)
-            .setId(ClientPresureOwner.snowFlake.nextId())
+            .setId(ClientPressureOwner.snowFlake.nextId())
             .setToken(token)
             .build();
         RavenMessage ravenMessage = RavenMessage.newBuilder().setType(Type.Login).setLogin(login)
@@ -84,14 +82,14 @@ public class ClientPresureMemberHandler extends SimpleChannelInboundHandler<Rave
     }
 
     private synchronized void logAvgTimeDiff(long timeDiff) {
-        if (timeDiff > ClientPresureMember.maxTimeDiff) {
-            ClientPresureMember.maxTimeDiff = (int) timeDiff;
+        if (timeDiff > ClientPressureMember.maxTimeDiff) {
+            ClientPressureMember.maxTimeDiff = (int) timeDiff;
         }
-        int count = ClientPresureMember.msgCount.incrementAndGet();
-        long cc = ClientPresureMember.countTimeDiff.addAndGet(timeDiff);
+        int count = ClientPressureMember.msgCount.incrementAndGet();
+        long cc = ClientPressureMember.countTimeDiff.addAndGet(timeDiff);
         log.info("消息总数:{}, 总延迟:{}ms", count, cc);
         int avgTime = (int) (cc / count);
-        log.info("消息最大延迟：{}ms,平均延迟:{}ms", ClientPresureMember.maxTimeDiff, avgTime);
+        log.info("消息最大延迟：{}ms,平均延迟:{}ms", ClientPressureMember.maxTimeDiff, avgTime);
     }
 
 }

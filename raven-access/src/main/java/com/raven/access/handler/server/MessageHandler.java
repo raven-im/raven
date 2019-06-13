@@ -27,7 +27,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Sharable
 @Slf4j
-public class MesaageHandler extends SimpleChannelInboundHandler<RavenMessage> {
+public class MessageHandler extends SimpleChannelInboundHandler<RavenMessage> {
 
     @Autowired
     private IdChannelManager uidChannelManager;
@@ -137,9 +137,8 @@ public class MesaageHandler extends SimpleChannelInboundHandler<RavenMessage> {
             .setConverType(upDownMessage.getConverType())
             .setGroupId(upDownMessage.getGroupId())
             .build();
-        RavenMessage ravenMessage = RavenMessage.newBuilder().setType(Type.UpDownMessage)
+        return RavenMessage.newBuilder().setType(Type.UpDownMessage)
             .setUpDownMessage(upMesaage).build();
-        return ravenMessage;
     }
 
     private boolean isMsgClientIdValid(ChannelHandlerContext ctx, UpDownMessage upMessage) {

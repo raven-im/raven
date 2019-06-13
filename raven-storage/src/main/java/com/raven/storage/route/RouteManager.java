@@ -3,8 +3,7 @@ package com.raven.storage.route;
 
 import static com.raven.common.utils.Constants.USER_ROUTE_KEY;
 
-import com.raven.common.loadbalance.AceessServerInfo;
-import com.raven.common.model.MsgContent;
+import com.raven.common.loadbalance.AccessServerInfo;
 import com.raven.common.utils.Constants;
 import com.raven.common.utils.JsonHelper;
 import lombok.extern.slf4j.Slf4j;
@@ -25,20 +24,20 @@ public class RouteManager {
     }
 
     // 增加路由
-    public void addUser2Server(String uid, AceessServerInfo server) {
+    public void addUser2Server(String uid, AccessServerInfo server) {
         redisTemplate.boundHashOps(Constants.USER_ROUTE_KEY).put(uid, server.toString());
         redisTemplate.boundSetOps(Constants.ACCESS_SERVER_ROUTE_KEY + server.hashCode()).add(uid);
     }
 
     // 移除路由
-    public void removerUserFromServer(String uid, AceessServerInfo server) {
+    public void removerUserFromServer(String uid, AccessServerInfo server) {
         redisTemplate.boundHashOps(Constants.USER_ROUTE_KEY).delete(uid);
         redisTemplate.boundSetOps(Constants.ACCESS_SERVER_ROUTE_KEY + server.hashCode())
             .remove(uid);
     }
 
     // 服务下线
-    public void serverDown(AceessServerInfo server) {
+    public void serverDown(AccessServerInfo server) {
         Cursor cursor = redisTemplate
             .boundSetOps(Constants.ACCESS_SERVER_ROUTE_KEY + server.hashCode())
             .scan(ScanOptions.scanOptions().count(Long.MAX_VALUE).build());
@@ -50,14 +49,13 @@ public class RouteManager {
     }
 
     // 获取用户路由信息
-    public AceessServerInfo getServerByUid(String uid) {
+    public AccessServerInfo getServerByUid(String uid) {
         Object ob = redisTemplate.boundHashOps(USER_ROUTE_KEY).get(uid);
         if (null == ob) {
             return null;
         }
-        AceessServerInfo aceessServerInfo = JsonHelper
-            .readValue(ob.toString(), AceessServerInfo.class);
-        return aceessServerInfo;
+        return JsonHelper
+            .readValue(ob.toString(), AccessServerInfo.class);
     }
 
 }

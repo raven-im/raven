@@ -8,11 +8,8 @@ import com.raven.access.handler.server.ConversationHandler;
 import com.raven.access.handler.server.HeartBeatHandler;
 import com.raven.access.handler.server.HistoryHandler;
 import com.raven.access.handler.server.LoginAuthHandler;
-import com.raven.access.handler.server.MesaageHandler;
-import com.raven.common.loadbalance.AceessServerInfo;
+import com.raven.access.handler.server.MessageHandler;
 import com.raven.common.protos.Message;
-import com.raven.common.utils.IpUtil;
-import com.raven.storage.route.RouteManager;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
@@ -35,7 +32,6 @@ import io.netty.handler.timeout.IdleStateHandler;
 import java.net.InetSocketAddress;
 import java.util.List;
 import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -59,16 +55,13 @@ public class AccessWebsocketServer {
     private LoginAuthHandler loginAuthHandler;
 
     @Autowired
-    private MesaageHandler mesaageHandler;
+    private MessageHandler messageHandler;
 
     @Autowired
     private ConversationHandler conversationHandler;
 
     @Autowired
     private HistoryHandler historyHandler;
-
-    @Autowired
-    private RouteManager routeManager;
 
     @PostConstruct
     public void startServer() {
@@ -139,7 +132,7 @@ public class AccessWebsocketServer {
                     // 业务处理器
                     pipeline.addLast("LoginAuthHandler", loginAuthHandler);
                     pipeline.addLast("HeartBeatHandler", heartBeatHandler);
-                    pipeline.addLast("MesaageHandler", mesaageHandler);
+                    pipeline.addLast("MessageHandler", messageHandler);
                     pipeline.addLast("ConversationHandler", conversationHandler);
                     pipeline.addLast("HistoryHandler", historyHandler);
 

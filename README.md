@@ -1,7 +1,7 @@
 # raven
 
 Open Source Instant Message System. 
-It provides a solution that communicatie between different platforms, such as Ios, Android and Web. It includes:
+It provides a solution that communicate between different platforms, such as Ios, Android and Web. It includes:
 
 |  Repo   | Description  | Comment |
 |  ----  | ----  | ----  |
@@ -13,19 +13,20 @@ It provides a solution that communicatie between different platforms, such as Io
 
 ### Architecture
 
-![avatar](./doc/设计文档/image/架构设计图.png)
+![avatar](doc/DesignDoc/image/Infrastructure.png)
 
 
 ### Document
 
 * Work flow
-([Click Me](./doc/设计文档/doc/process.md))
+([Click Me](doc/DesignDoc/doc/process.md))
 * Pressure Test Result
-([Click Me](./doc/压测记录/doc/2019.6.2-压测记录.md)) 
+([Click Me](doc/PressureTestRecord/doc/2019.6.2-record.md)) 
 
 ### Demo
 
-Demo: http://34.80.127.96:8081/
+Demo: https://114.67.79.183     http://114.67.79.183
+
 
 ```
 Test Account1:  13800222222, password: 222222

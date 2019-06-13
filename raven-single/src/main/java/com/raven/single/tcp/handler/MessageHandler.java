@@ -1,6 +1,6 @@
 package com.raven.single.tcp.handler;
 
-import com.raven.common.loadbalance.AceessServerInfo;
+import com.raven.common.loadbalance.AccessServerInfo;
 import com.raven.common.netty.ServerChannelManager;
 import com.raven.common.protos.Message.HeartBeat;
 import com.raven.common.protos.Message.HeartBeatType;
@@ -47,7 +47,7 @@ public class MessageHandler extends SimpleChannelInboundHandler<RavenMessage> {
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         log.info("raven-access server disconnected address:{}", ctx.channel().remoteAddress());
-        AceessServerInfo server = internalServerChannelManager.getServerByChannel(ctx.channel());
+        AccessServerInfo server = internalServerChannelManager.getServerByChannel(ctx.channel());
         internalServerChannelManager.removeServer(server);
     }
 

@@ -1,12 +1,9 @@
 package com.raven.access.config;
 
 import com.google.common.base.Strings;
-import com.raven.common.exception.RavenException;
 import com.raven.common.result.Result;
 import com.raven.common.result.ResultCode;
-import com.raven.common.utils.JsonHelper;
 import java.util.Properties;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import javax.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +12,6 @@ import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
-import org.omg.CORBA.SystemException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 

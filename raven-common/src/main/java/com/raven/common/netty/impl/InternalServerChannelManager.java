@@ -1,7 +1,7 @@
 package com.raven.common.netty.impl;
 
 
-import com.raven.common.loadbalance.AceessServerInfo;
+import com.raven.common.loadbalance.AccessServerInfo;
 import com.raven.common.netty.ServerChannelManager;
 import io.netty.channel.Channel;
 import java.util.HashMap;
@@ -13,14 +13,14 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class InternalServerChannelManager implements ServerChannelManager {
 
-    private final Map<AceessServerInfo, Channel> serverChannel = new HashMap<>();
+    private final Map<AccessServerInfo, Channel> serverChannel = new HashMap<>();
 
-    private final Map<Channel, AceessServerInfo> channelServer = new HashMap<>();
+    private final Map<Channel, AccessServerInfo> channelServer = new HashMap<>();
 
     private ReadWriteLock rwLock = new ReentrantReadWriteLock();
 
     @Override
-    public void addServer2Channel(AceessServerInfo server, Channel channel) {
+    public void addServer2Channel(AccessServerInfo server, Channel channel) {
         rwLock.writeLock().lock();
         try {
             serverChannel.put(server, channel);
@@ -31,7 +31,7 @@ public class InternalServerChannelManager implements ServerChannelManager {
     }
 
     @Override
-    public Channel getChannelByServer(AceessServerInfo server) {
+    public Channel getChannelByServer(AccessServerInfo server) {
         rwLock.readLock().lock();
         try {
             return serverChannel.get(server);
@@ -41,7 +41,7 @@ public class InternalServerChannelManager implements ServerChannelManager {
     }
 
     @Override
-    public AceessServerInfo getServerByChannel(Channel channel) {
+    public AccessServerInfo getServerByChannel(Channel channel) {
         rwLock.readLock().lock();
         try {
             return channelServer.get(channel);
@@ -51,7 +51,7 @@ public class InternalServerChannelManager implements ServerChannelManager {
     }
 
     @Override
-    public void removeServer(AceessServerInfo server) {
+    public void removeServer(AccessServerInfo server) {
         rwLock.writeLock().lock();
         try {
             Channel channel = serverChannel.get(server);

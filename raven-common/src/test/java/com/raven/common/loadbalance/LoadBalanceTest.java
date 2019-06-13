@@ -17,15 +17,15 @@ public class LoadBalanceTest extends RavenCommonTest {
     @Test
     public void testNodeAddAndRemove() {
         // 原节点
-        List<AceessServerInfo> servers = new ArrayList<>();
+        List<AccessServerInfo> servers = new ArrayList<>();
         for (int i = 0; i < 100; i++) {
-            servers.add(new AceessServerInfo(getRandomIp(), 8080,8081,8082));
+            servers.add(new AccessServerInfo(getRandomIp(), 8080,8081,8082));
         }
         // 上线20%节点
-        List<AceessServerInfo> serverAdd = new ArrayList<>(120);
+        List<AccessServerInfo> serverAdd = new ArrayList<>(120);
         servers.forEach(x -> serverAdd.add(x));
         for (int i = 0; i < 20; i++) {
-            serverAdd.add(new AceessServerInfo(getRandomIp(), 8080,8081,8082));
+            serverAdd.add(new AccessServerInfo(getRandomIp(), 8080,8081,8082));
         }
         LoadBalancer chloadBalance = new ConsistentHashLoadBalancer();
         // 构造 10000 随机请求
@@ -35,18 +35,18 @@ public class LoadBalanceTest extends RavenCommonTest {
         }
         int countDel = 0;
         // 下线20%节点
-        List<AceessServerInfo> serverDel = servers.subList(0, 80);
+        List<AccessServerInfo> serverDel = servers.subList(0, 80);
         for (String invocation : invocations) {
-            AceessServerInfo origin = chloadBalance.select(servers, invocation);
-            AceessServerInfo delete = chloadBalance.select(serverDel, invocation);
+            AccessServerInfo origin = chloadBalance.select(servers, invocation);
+            AccessServerInfo delete = chloadBalance.select(serverDel, invocation);
             if (origin.hashCode() == delete.hashCode()) {
                 countDel++;
             }
         }
         int countAdd = 0;
         for (String invocation : invocations) {
-            AceessServerInfo origin = chloadBalance.select(servers, invocation);
-            AceessServerInfo add = chloadBalance.select(serverAdd, invocation);
+            AccessServerInfo origin = chloadBalance.select(servers, invocation);
+            AccessServerInfo add = chloadBalance.select(serverAdd, invocation);
             if (origin.hashCode() == add.hashCode()) {
                 countAdd++;
             }

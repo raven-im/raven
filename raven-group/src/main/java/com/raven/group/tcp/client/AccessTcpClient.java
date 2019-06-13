@@ -1,7 +1,7 @@
 package com.raven.group.tcp.client;
 
 
-import com.raven.common.loadbalance.AceessServerInfo;
+import com.raven.common.loadbalance.AccessServerInfo;
 import com.raven.common.netty.ServerChannelManager;
 import com.raven.common.protos.Message;
 import com.raven.common.utils.Constants;
@@ -66,7 +66,7 @@ public class AccessTcpClient {
         log.info("close raven-single client success");
     }
 
-    private Channel connectServer(AceessServerInfo server) {
+    private Channel connectServer(AccessServerInfo server) {
         if (null != internalServerChannelManager.getChannelByServer(server)) {
             return null;
         }
@@ -121,7 +121,7 @@ public class AccessTcpClient {
                         .valueOf(metadata.get(Constants.CONFIG_WEBSOCKET_PORT).toString());
                     int internalPort = Integer
                         .valueOf(metadata.get(Constants.CONFIG_INTERNAL_PORT).toString());
-                    AceessServerInfo server = new AceessServerInfo(address, tcpPort, wsPort,
+                    AccessServerInfo server = new AccessServerInfo(address, tcpPort, wsPort,
                         internalPort);
                     Channel channel = connectServer(server);
                     if (null != channel) {

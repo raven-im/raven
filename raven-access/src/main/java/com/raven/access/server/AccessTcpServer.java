@@ -4,8 +4,8 @@ import com.raven.access.handler.server.ConversationHandler;
 import com.raven.access.handler.server.HeartBeatHandler;
 import com.raven.access.handler.server.HistoryHandler;
 import com.raven.access.handler.server.LoginAuthHandler;
-import com.raven.access.handler.server.MesaageHandler;
-import com.raven.common.loadbalance.AceessServerInfo;
+import com.raven.access.handler.server.MessageHandler;
+import com.raven.common.loadbalance.AccessServerInfo;
 import com.raven.common.protos.Message;
 import com.raven.common.utils.IpUtil;
 import com.raven.storage.route.RouteManager;
@@ -54,7 +54,7 @@ public class AccessTcpServer {
     private LoginAuthHandler loginAuthHandler;
 
     @Autowired
-    private MesaageHandler mesaageHandler;
+    private MessageHandler messageHandler;
 
     @Autowired
     private ConversationHandler conversationHandler;
@@ -88,7 +88,7 @@ public class AccessTcpServer {
                     pipeline.addLast(new ProtobufEncoder());
                     pipeline.addLast("LoginAuthHandler", loginAuthHandler);
                     pipeline.addLast("HeartBeatHandler", heartBeatHandler);
-                    pipeline.addLast("MesaageHandler", mesaageHandler);
+                    pipeline.addLast("MessageHandler", messageHandler);
                     pipeline.addLast("ConversationHandler", conversationHandler);
                     pipeline.addLast("HistoryHandler", historyHandler);
                 }
@@ -117,7 +117,7 @@ public class AccessTcpServer {
         log.info("close raven-access tcp server success");
     }
 
-    private AceessServerInfo getLocalServer() {
-        return new AceessServerInfo(IpUtil.getIp(), tcpPort, wsPort, internalPort);
+    private AccessServerInfo getLocalServer() {
+        return new AccessServerInfo(IpUtil.getIp(), tcpPort, wsPort, internalPort);
     }
 }

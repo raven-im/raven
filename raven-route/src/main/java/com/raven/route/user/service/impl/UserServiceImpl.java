@@ -11,7 +11,7 @@ import com.raven.common.enums.AccessServerType;
 import com.raven.common.exception.TokenException;
 import com.raven.common.loadbalance.ConsistentHashLoadBalancer;
 import com.raven.common.loadbalance.LoadBalancer;
-import com.raven.common.loadbalance.AceessServerInfo;
+import com.raven.common.loadbalance.AccessServerInfo;
 import com.raven.common.param.ServerInfoOutParam;
 import com.raven.common.param.TokenInfoOutParam;
 import com.raven.common.result.Result;
@@ -74,9 +74,9 @@ public class UserServiceImpl implements UserService {
         if (!tokenValidator.validate(token)) {
             return Result.failure(tokenValidator.errorCode());
         }
-        String tokenStr = (String) stringRedisTemplate.opsForValue().get(token);
+        String tokenStr = stringRedisTemplate.opsForValue().get(token);
         String uid = tokenStr.split(DEFAULT_SEPARATES_SIGN)[1];
-        AceessServerInfo server = routeManager.getServerByUid(uid);
+        AccessServerInfo server = routeManager.getServerByUid(uid);
         if (null != server) {
             if (type == AccessServerType.WEBSOCKET) {
                 return Result.success(new ServerInfoOutParam(server.getIp(), server.getWsPort()));
@@ -87,19 +87,19 @@ public class UserServiceImpl implements UserService {
         } else {
 
             List<ServiceInstance> instances = discoveryClient.getInstances(CONFIG_ACCESS_SERVER_NAME);
-            List<AceessServerInfo> servers = new ArrayList<>();
+            List<AccessServerInfo> servers = new ArrayList<>();
             for (ServiceInstance instance : instances) {
                 int tcpPort = Integer.valueOf(instance.getMetadata().get(CONFIG_TCP_PORT));
                 int wsPort = Integer.valueOf(instance.getMetadata().get(CONFIG_WEBSOCKET_PORT));
                 int internalPort = Integer
                     .valueOf(instance.getMetadata().get(CONFIG_INTERNAL_PORT));
-                AceessServerInfo serverInfo = new AceessServerInfo(instance.getHost(), tcpPort,
+                AccessServerInfo serverInfo = new AccessServerInfo(instance.getHost(), tcpPort,
                     wsPort, internalPort);
                 servers.add(serverInfo);
             }
             if (!CollectionUtils.isEmpty(servers)) {
                 LoadBalancer lb = new ConsistentHashLoadBalancer();
-                AceessServerInfo origin = lb.select(servers, uid);
+                AccessServerInfo origin = lb.select(servers, uid);
                 if (type == AccessServerType.WEBSOCKET) {
                     return Result
                         .success(new ServerInfoOutParam(origin.getIp(), origin.getWsPort()));

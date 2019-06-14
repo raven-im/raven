@@ -109,6 +109,8 @@ public class MesaageHandler extends SimpleChannelInboundHandler<RavenMessage> {
 
     private void sendACK(ChannelHandlerContext ctx, UpDownMessage message, Code code) {
         MessageAck messageAck = MessageAck.newBuilder()
+            .setId(message.getId())
+            .setConverId(message.getConverId())
             .setTargetUid(message.getFromUid())
             .setCid(message.getCid())
             .setCode(code)

@@ -95,9 +95,10 @@ public class MessageHandler extends SimpleChannelInboundHandler<RavenMessage> {
                 sendACK(ctx, upMessage, Code.CONVER_TYPE_INVALID);
                 return;
             }
-            RavenMessage ravenMessage = buildRavenMessage(ctx, upMessage);
+            long id = snowFlake.nextId();
+            RavenMessage ravenMessage = buildRavenMessage(ctx, upMessage, id);
             if (sendMsgToKafka(ravenMessage, ravenMessage.getUpDownMessage().getId(), topic)) {
-                sendACK(ctx, upMessage, Code.SUCCESS);
+                sendACK(ctx, upMessage, Code.SUCCESS, id);
             } else {
                 log.error("send msg to kafka fail");
                 sendACK(ctx, upMessage, Code.KAFKA_ERROR);
@@ -107,8 +108,10 @@ public class MessageHandler extends SimpleChannelInboundHandler<RavenMessage> {
         }
     }
 
-    private void sendACK(ChannelHandlerContext ctx, UpDownMessage message, Code code) {
+    private void sendACK(ChannelHandlerContext ctx, UpDownMessage message, Code code, long msgId) {
         MessageAck messageAck = MessageAck.newBuilder()
+            .setId(msgId)
+            .setConverId(message.getConverId())
             .setTargetUid(message.getFromUid())
             .setCid(message.getCid())
             .setCode(code)
@@ -118,17 +121,19 @@ public class MessageHandler extends SimpleChannelInboundHandler<RavenMessage> {
             .setMessageAck(messageAck).build();
         ctx.writeAndFlush(ravenMessage);
     }
+    private void sendACK(ChannelHandlerContext ctx, UpDownMessage message, Code code) {
+        sendACK(ctx, message, code, 0);
+    }
 
-    private RavenMessage buildRavenMessage(ChannelHandlerContext ctx, UpDownMessage upDownMessage) {
-        long id = snowFlake.nextId();
+    private RavenMessage buildRavenMessage(ChannelHandlerContext ctx, UpDownMessage upDownMessage, long msgId) {
         String uid = uidChannelManager.getIdByChannel(ctx.channel());
         MessageContent content = MessageContent.newBuilder()
-            .setId(id)
+            .setId(msgId)
             .setType(upDownMessage.getContent().getType())
             .setUid(uid)
             .setContent(upDownMessage.getContent().getContent())
             .setTime(System.currentTimeMillis()).build();
-        UpDownMessage upMesaage = UpDownMessage.newBuilder().setId(id)
+        UpDownMessage upMesaage = UpDownMessage.newBuilder().setId(msgId)
             .setCid(upDownMessage.getCid())
             .setFromUid(uid)
             .setTargetUid(upDownMessage.getTargetUid())

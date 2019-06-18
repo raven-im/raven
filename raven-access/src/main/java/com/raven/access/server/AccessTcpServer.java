@@ -7,7 +7,6 @@ import com.raven.access.handler.server.LoginAuthHandler;
 import com.raven.access.handler.server.MessageHandler;
 import com.raven.common.loadbalance.AccessServerInfo;
 import com.raven.common.protos.Message;
-import com.raven.common.utils.IpUtil;
 import com.raven.storage.route.RouteManager;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
@@ -28,6 +27,7 @@ import javax.annotation.PreDestroy;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.zookeeper.discovery.ZookeeperDiscoveryProperties;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -64,6 +64,9 @@ public class AccessTcpServer {
 
     @Autowired
     private RouteManager routeManager;
+
+    @Autowired
+    private ZookeeperDiscoveryProperties zookeeperDiscoveryProperties;
 
     @PostConstruct
     public void startServer() {
@@ -118,6 +121,7 @@ public class AccessTcpServer {
     }
 
     private AccessServerInfo getLocalServer() {
-        return new AccessServerInfo(IpUtil.getIp(), tcpPort, wsPort, internalPort);
+        return new AccessServerInfo(zookeeperDiscoveryProperties.getInstanceHost(), tcpPort, wsPort,
+            internalPort);
     }
 }

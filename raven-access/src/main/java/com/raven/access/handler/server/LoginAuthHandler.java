@@ -8,7 +8,6 @@ import com.raven.common.protos.Message.Login;
 import com.raven.common.protos.Message.LoginAck;
 import com.raven.common.protos.Message.RavenMessage;
 import com.raven.common.protos.Message.RavenMessage.Type;
-import com.raven.common.utils.IpUtil;
 import com.raven.storage.route.RouteManager;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
@@ -16,6 +15,7 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.zookeeper.discovery.ZookeeperDiscoveryProperties;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
@@ -33,6 +33,9 @@ public class LoginAuthHandler extends SimpleChannelInboundHandler<RavenMessage> 
 
     @Autowired
     private RouteManager routeManager;
+
+    @Autowired
+    private ZookeeperDiscoveryProperties zookeeperDiscoveryProperties;
 
     @Value("${netty.tcp.port}")
     private int tcpPort;
@@ -65,7 +68,8 @@ public class LoginAuthHandler extends SimpleChannelInboundHandler<RavenMessage> 
                 ctx.writeAndFlush(loginAck);
             }
             routeManager.addUser2Server(loginMessage.getUid(),
-                new AccessServerInfo(IpUtil.getIp(), tcpPort, wsPort, internalPort));
+                new AccessServerInfo(zookeeperDiscoveryProperties.getInstanceHost(), tcpPort,
+                    wsPort, internalPort));
             uidChannelManager.addId2Channel(loginMessage.getUid(), ctx.channel());
             sendLoginAck(ctx, loginMessage.getId(), Code.SUCCESS);
         } else {
@@ -85,7 +89,8 @@ public class LoginAuthHandler extends SimpleChannelInboundHandler<RavenMessage> 
             // 最后一台设备下线才清除路由
             if (CollectionUtils.isEmpty(uidChannelManager.getChannelsById(uid))) {
                 routeManager.removerUserFromServer(uid,
-                    new AccessServerInfo(IpUtil.getIp(), tcpPort, wsPort, internalPort));
+                    new AccessServerInfo(zookeeperDiscoveryProperties.getInstanceHost(), tcpPort,
+                        wsPort, internalPort));
             }
         }
     }

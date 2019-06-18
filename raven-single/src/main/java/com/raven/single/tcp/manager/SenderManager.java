@@ -1,6 +1,6 @@
 package com.raven.single.tcp.manager;
 
-import com.raven.common.loadbalance.AceessServerInfo;
+import com.raven.common.loadbalance.AccessServerInfo;
 import com.raven.common.netty.ServerChannelManager;
 import com.raven.common.protos.Message.RavenMessage;
 import com.raven.common.protos.Message.RavenMessage.Type;
@@ -31,7 +31,7 @@ public class SenderManager {
             msg.getFromUid());
         for (String uid : uidList) {
             UpDownMessage downMessage = msg.toBuilder().setTargetUid(uid).build();
-            AceessServerInfo server = routeManager.getServerByUid(uid);
+            AccessServerInfo server = routeManager.getServerByUid(uid);
             if (null != server) {
                 Channel channel = internalServerChannelManager.getChannelByServer(server);
                 if (channel != null) {

@@ -5,7 +5,6 @@ import static com.raven.common.utils.Constants.AUTH_TOKEN;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 import com.raven.common.enums.AccessServerType;
-import com.raven.common.param.GetAccessParam;
 import com.raven.common.param.GetTokenParam;
 import com.raven.common.result.Result;
 import com.raven.route.user.service.UserService;

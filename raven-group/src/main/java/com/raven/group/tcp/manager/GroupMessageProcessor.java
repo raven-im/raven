@@ -1,6 +1,6 @@
 package com.raven.group.tcp.manager;
 
-import com.raven.common.loadbalance.AceessServerInfo;
+import com.raven.common.loadbalance.AccessServerInfo;
 import com.raven.common.netty.ServerChannelManager;
 import com.raven.common.protos.Message.RavenMessage;
 import com.raven.common.protos.Message.RavenMessage.Type;
@@ -12,7 +12,7 @@ import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class GroupMessageProcesser implements Runnable {
+public class GroupMessageProcessor implements Runnable {
 
     private ServerChannelManager internalServerChannelManager;
 
@@ -22,7 +22,7 @@ public class GroupMessageProcesser implements Runnable {
 
     private UpDownMessage msg;
 
-    public GroupMessageProcesser(
+    public GroupMessageProcessor(
         ServerChannelManager internalServerChannelManager,
         ConverManager converManager, RouteManager routeManager,
         UpDownMessage msg) {
@@ -38,7 +38,7 @@ public class GroupMessageProcesser implements Runnable {
         List<String> uidList = converManager.getUidListByConverExcludeSender(msg.getConverId(),
             msg.getFromUid());
         for (String uid : uidList) {
-            AceessServerInfo server = routeManager.getServerByUid(uid);
+            AccessServerInfo server = routeManager.getServerByUid(uid);
             if (null != server) {
                 Channel channel = internalServerChannelManager.getChannelByServer(server);
                 if (channel != null) {

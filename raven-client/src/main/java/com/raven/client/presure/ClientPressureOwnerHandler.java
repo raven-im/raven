@@ -1,14 +1,7 @@
 package com.raven.client.presure;
 
-import com.raven.client.common.Utils;
-import com.raven.client.group.ClientOwner;
-import com.raven.common.protos.Message.Code;
 import com.raven.common.protos.Message.ConverType;
-import com.raven.common.protos.Message.HeartBeat;
-import com.raven.common.protos.Message.HeartBeatType;
 import com.raven.common.protos.Message.Login;
-import com.raven.common.protos.Message.LoginAck;
-import com.raven.common.protos.Message.MessageAck;
 import com.raven.common.protos.Message.MessageContent;
 import com.raven.common.protos.Message.MessageType;
 import com.raven.common.protos.Message.RavenMessage;
@@ -18,11 +11,10 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.concurrent.ConcurrentHashMap;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class ClientPresureOwnerHandler extends SimpleChannelInboundHandler<RavenMessage> {
+public class ClientPressureOwnerHandler extends SimpleChannelInboundHandler<RavenMessage> {
 
     private ChannelHandlerContext messageConnectionCtx;
 
@@ -34,7 +26,7 @@ public class ClientPresureOwnerHandler extends SimpleChannelInboundHandler<Raven
 
     public HashMap<String, Long> cidTime = new HashMap<String, Long>();
 
-    public ClientPresureOwnerHandler(String uid, String groupId, String token) {
+    public ClientPressureOwnerHandler(String uid, String groupId, String token) {
         this.uid = uid;
         this.groupId = groupId;
         this.token = token;
@@ -49,7 +41,7 @@ public class ClientPresureOwnerHandler extends SimpleChannelInboundHandler<Raven
     private void sendLogin(ChannelHandlerContext ctx, String uid) {
         Login login = Login.newBuilder()
             .setUid(uid)
-            .setId(ClientPresureOwner.snowFlake.nextId())
+            .setId(ClientPressureOwner.snowFlake.nextId())
             .setToken(token)
             .build();
         RavenMessage ravenMessage = RavenMessage.newBuilder().setType(Type.Login).setLogin(login)
@@ -75,7 +67,7 @@ public class ClientPresureOwnerHandler extends SimpleChannelInboundHandler<Raven
     }
 
     private void sendMessage(ChannelHandlerContext ctx) {
-        long cid = ClientPresureOwner.snowFlake.nextId();
+        long cid = ClientPressureOwner.snowFlake.nextId();
         long time = System.currentTimeMillis();
         MessageContent content = MessageContent.newBuilder()
             .setUid(uid)

@@ -1,14 +1,11 @@
 package com.raven.group.tcp.handler;
 
-import com.raven.common.loadbalance.AceessServerInfo;
+import com.raven.common.loadbalance.AccessServerInfo;
 import com.raven.common.netty.ServerChannelManager;
 import com.raven.common.protos.Message.HeartBeat;
 import com.raven.common.protos.Message.HeartBeatType;
 import com.raven.common.protos.Message.RavenMessage;
 import com.raven.common.protos.Message.RavenMessage.Type;
-import com.raven.group.restful.validator.GroupValidator;
-import com.raven.group.tcp.manager.SenderManager;
-import com.raven.storage.conver.ConverManager;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -22,16 +19,7 @@ import org.springframework.stereotype.Component;
 public class MessageHandler extends SimpleChannelInboundHandler<RavenMessage> {
 
     @Autowired
-    private ConverManager converManager;
-
-    @Autowired
-    private SenderManager senderManager;
-
-    @Autowired
     private ServerChannelManager internalServerChannelManager;
-
-    @Autowired
-    private GroupValidator groupValidator;
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, RavenMessage message) throws Exception {
@@ -58,7 +46,7 @@ public class MessageHandler extends SimpleChannelInboundHandler<RavenMessage> {
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         log.info("raven-access server disconnected address:{}", ctx.channel().remoteAddress());
-        AceessServerInfo server = internalServerChannelManager.getServerByChannel(ctx.channel());
+        AccessServerInfo server = internalServerChannelManager.getServerByChannel(ctx.channel());
         internalServerChannelManager.removeServer(server);
     }
 

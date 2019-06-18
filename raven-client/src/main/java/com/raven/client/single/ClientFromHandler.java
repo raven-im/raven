@@ -92,7 +92,7 @@ public class ClientFromHandler extends SimpleChannelInboundHandler<RavenMessage>
         }
         if (message.getType() == Type.HeartBeat) {
             HeartBeat heartBeat = message.getHeartBeat();
-            log.info("receive hearbeat :{}", heartBeat);
+            log.info("receive heartbeat :{}", heartBeat);
             if (heartBeat.getHeartBeatType() == HeartBeatType.PING) {
                 HeartBeat heartBeatAck = HeartBeat.newBuilder()
                     .setId(heartBeat.getId())
@@ -140,7 +140,7 @@ public class ClientFromHandler extends SimpleChannelInboundHandler<RavenMessage>
         }
         if (message.getType() == Type.HisMessagesAck) {
             HisMessagesAck hisMessagesAck = message.getHisMessagesAck();
-            log.info("receive history messaage ack:{}", hisMessagesAck);
+            log.info("receive history message ack:{}", hisMessagesAck);
         }
     }
 

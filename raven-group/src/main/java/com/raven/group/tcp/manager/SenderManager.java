@@ -27,8 +27,8 @@ public class SenderManager {
         .newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 2);
 
     public void sendMessage(UpDownMessage msg) {
-        GroupMessageProcesser processer = new GroupMessageProcesser(internalServerChannelManager,
+        GroupMessageProcessor processor = new GroupMessageProcessor(internalServerChannelManager,
             converManager, routeManager, msg);
-        executorService.submit(processer);
+        executorService.submit(processor);
     }
 }

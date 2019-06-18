@@ -31,7 +31,7 @@ public class HeartBeatHandler extends SimpleChannelInboundHandler<RavenMessage> 
     protected void channelRead0(ChannelHandlerContext ctx, RavenMessage message) {
         if (message.getType() == Type.HeartBeat) {
             HeartBeat heartBeat = message.getHeartBeat();
-            log.info("receive hearbeat :{}", heartBeat);
+            log.info("receive heartbeat :{}", heartBeat);
             if (heartBeat.getHeartBeatType() == HeartBeatType.PING) {
                 HeartBeat heartBeatAck = HeartBeat.newBuilder()
                     .setId(heartBeat.getId())

@@ -2,7 +2,6 @@ package com.raven.single.kafka.listener;
 
 import com.googlecode.protobuf.format.JsonFormat;
 import com.raven.common.kafka.MessageListener;
-import com.raven.common.netty.ServerChannelManager;
 import com.raven.common.protos.Message.RavenMessage;
 import com.raven.common.protos.Message.UpDownMessage;
 import com.raven.common.utils.Constants;

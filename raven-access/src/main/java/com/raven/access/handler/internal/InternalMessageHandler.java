@@ -29,9 +29,6 @@ public class InternalMessageHandler extends SimpleChannelInboundHandler<RavenMes
     private IdChannelManager uidChannelManager;
 
     @Autowired
-    private ConverManager converManager;
-
-    @Autowired
     private SnowFlake snowFlake;
 
     @Override

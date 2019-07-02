@@ -15,18 +15,28 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class SenderManager {
+public class SingleMessageProcessor implements Runnable {
 
-    @Autowired
     private ServerChannelManager internalServerChannelManager;
 
-    @Autowired
     private ConverManager converManager;
 
-    @Autowired
     private RouteManager routeManager;
 
-    public void sendMessage(UpDownMessage msg) {
+    private UpDownMessage msg;
+
+    public SingleMessageProcessor(
+        ServerChannelManager internalServerChannelManager,
+        ConverManager converManager, RouteManager routeManager,
+        UpDownMessage msg) {
+        this.internalServerChannelManager = internalServerChannelManager;
+        this.converManager = converManager;
+        this.routeManager = routeManager;
+        this.msg = msg;
+    }
+
+    @Override
+    public void run() {
         List<String> uidList = converManager.getUidListByConverExcludeSender(msg.getConverId(),
             msg.getFromUid());
         for (String uid : uidList) {

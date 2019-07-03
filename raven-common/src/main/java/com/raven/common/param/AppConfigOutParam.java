@@ -13,4 +13,6 @@ public class AppConfigOutParam {
 
     private String secret;
 
+
+
 }

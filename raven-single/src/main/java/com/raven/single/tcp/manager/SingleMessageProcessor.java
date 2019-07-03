@@ -1,4 +1,4 @@
-package com.raven.group.tcp.manager;
+package com.raven.single.tcp.manager;
 
 import com.googlecode.protobuf.format.JsonFormat;
 import com.googlecode.protobuf.format.JsonFormat.ParseException;
@@ -12,9 +12,11 @@ import com.raven.storage.route.RouteManager;
 import io.netty.channel.Channel;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 @Slf4j
-public class GroupMessageProcessor implements Runnable {
+@Component
+public class SingleMessageProcessor implements Runnable {
 
     private ServerChannelManager internalServerChannelManager;
 
@@ -24,7 +26,7 @@ public class GroupMessageProcessor implements Runnable {
 
     private String message;
 
-    public GroupMessageProcessor(ServerChannelManager internalServerChannelManager,
+    public SingleMessageProcessor(ServerChannelManager internalServerChannelManager,
         ConverManager converManager, RouteManager routeManager, String message) {
         this.internalServerChannelManager = internalServerChannelManager;
         this.converManager = converManager;
@@ -48,26 +50,25 @@ public class GroupMessageProcessor implements Runnable {
         for (String uid : uidList) {
             AccessServerInfo server = routeManager.getServerByUid(uid);
             if (null != server) {
+                UpDownMessage downMessage = UpDownMessage.newBuilder()
+                    .setId(upDownMessage.getId())
+                    .setFromUid(upDownMessage.getFromUid())
+                    .setTargetUid(uid)
+                    .setConverType(upDownMessage.getConverType())
+                    .setContent(upDownMessage.getContent())
+                    .setConverId(upDownMessage.getConverId())
+                    .build();
                 Channel channel = internalServerChannelManager.getChannelByServer(server);
                 if (channel != null) {
-                    UpDownMessage downMessage = UpDownMessage.newBuilder()
-                        .setId(upDownMessage.getId())
-                        .setFromUid(upDownMessage.getFromUid())
-                        .setTargetUid(uid)
-                        .setConverType(upDownMessage.getConverType())
-                        .setContent(upDownMessage.getContent())
-                        .setConverId(upDownMessage.getConverId())
-                        .build();
                     RavenMessage ravenMessage = RavenMessage.newBuilder()
                         .setType(Type.UpDownMessage)
                         .setUpDownMessage(downMessage).build();
                     channel.writeAndFlush(ravenMessage);
+                    log.info("send down msg {}", downMessage);
                 } else {
                     log.error("cannot find channel. server:{}", server);
-                    converManager.incrUserConverUnCount(uid, upDownMessage.getConverId(), 1);
                 }
             } else {
-                log.error("uid:{} no server to push down msg:{}.", uid, upDownMessage.getId());
                 converManager.incrUserConverUnCount(uid, upDownMessage.getConverId(), 1);
             }
         }

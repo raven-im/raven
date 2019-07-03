@@ -5,7 +5,7 @@ import com.raven.common.kafka.MessageListener;
 import com.raven.common.protos.Message.RavenMessage;
 import com.raven.common.protos.Message.UpDownMessage;
 import com.raven.common.utils.Constants;
-import com.raven.group.tcp.manager.SenderManager;
+import com.raven.group.tcp.manager.GroupMessageExecutor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 public class GroupMessageListener extends MessageListener<String, String> {
 
     @Autowired
-    private SenderManager senderManager;
+    private GroupMessageExecutor groupMessageExecutor;
 
     public GroupMessageListener() {
         this.setTopic(Constants.KAFKA_TOPIC_GROUP_MSG);
@@ -24,20 +24,9 @@ public class GroupMessageListener extends MessageListener<String, String> {
     @Override
     public void receive(String topic, String key, String message) {
         try {
-            RavenMessage.Builder builder = RavenMessage.newBuilder();
-            JsonFormat.merge(message, builder);
-            UpDownMessage upDownMessage = builder.getUpDownMessage();
-            saveAndSendMsg(upDownMessage);
+            groupMessageExecutor.saveAndSendMsg(message);
         } catch (Exception e) {
             log.error("process message error", e);
-        }
-    }
-
-    private void saveAndSendMsg(UpDownMessage upDownMessage) {
-        try {
-            senderManager.sendMessage(upDownMessage);
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
         }
     }
 }

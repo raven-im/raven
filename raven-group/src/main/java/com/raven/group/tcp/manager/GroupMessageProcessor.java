@@ -1,5 +1,7 @@
 package com.raven.group.tcp.manager;
 
+import com.googlecode.protobuf.format.JsonFormat;
+import com.googlecode.protobuf.format.JsonFormat.ParseException;
 import com.raven.common.loadbalance.AccessServerInfo;
 import com.raven.common.netty.ServerChannelManager;
 import com.raven.common.protos.Message.RavenMessage;
@@ -20,35 +22,41 @@ public class GroupMessageProcessor implements Runnable {
 
     private RouteManager routeManager;
 
-    private UpDownMessage msg;
+    private String message;
 
-    public GroupMessageProcessor(
-        ServerChannelManager internalServerChannelManager,
-        ConverManager converManager, RouteManager routeManager,
-        UpDownMessage msg) {
+    public GroupMessageProcessor(ServerChannelManager internalServerChannelManager,
+        ConverManager converManager, RouteManager routeManager, String message) {
         this.internalServerChannelManager = internalServerChannelManager;
         this.converManager = converManager;
         this.routeManager = routeManager;
-        this.msg = msg;
+        this.message = message;
     }
 
     @Override
     public void run() {
-        converManager.saveMsg2Conver(msg.getContent(), msg.getConverId());
-        List<String> uidList = converManager.getUidListByConverExcludeSender(msg.getConverId(),
-            msg.getFromUid());
+        RavenMessage.Builder builder = RavenMessage.newBuilder();
+        try {
+            JsonFormat.merge(message, builder);
+        } catch (ParseException e) {
+            log.error("parse message error", e);
+        }
+        UpDownMessage upDownMessage = builder.getUpDownMessage();
+        converManager.saveMsg2Conver(upDownMessage.getContent(), upDownMessage.getConverId());
+        List<String> uidList = converManager
+            .getUidListByConverExcludeSender(upDownMessage.getConverId(),
+                upDownMessage.getFromUid());
         for (String uid : uidList) {
             AccessServerInfo server = routeManager.getServerByUid(uid);
             if (null != server) {
                 Channel channel = internalServerChannelManager.getChannelByServer(server);
                 if (channel != null) {
                     UpDownMessage downMessage = UpDownMessage.newBuilder()
-                        .setId(msg.getId())
-                        .setFromUid(msg.getFromUid())
+                        .setId(upDownMessage.getId())
+                        .setFromUid(upDownMessage.getFromUid())
                         .setTargetUid(uid)
-                        .setConverType(msg.getConverType())
-                        .setContent(msg.getContent())
-                        .setConverId(msg.getConverId())
+                        .setConverType(upDownMessage.getConverType())
+                        .setContent(upDownMessage.getContent())
+                        .setConverId(upDownMessage.getConverId())
                         .build();
                     RavenMessage ravenMessage = RavenMessage.newBuilder()
                         .setType(Type.UpDownMessage)
@@ -56,11 +64,11 @@ public class GroupMessageProcessor implements Runnable {
                     channel.writeAndFlush(ravenMessage);
                 } else {
                     log.error("cannot find channel. server:{}", server);
-                    converManager.incrUserConverUnCount(uid, msg.getConverId(), 1);
+                    converManager.incrUserConverUnCount(uid, upDownMessage.getConverId(), 1);
                 }
             } else {
-                log.error("uid:{} no server to push down msg:{}.", uid, msg.getId());
-                converManager.incrUserConverUnCount(uid, msg.getConverId(), 1);
+                log.error("uid:{} no server to push down msg:{}.", uid, upDownMessage.getId());
+                converManager.incrUserConverUnCount(uid, upDownMessage.getConverId(), 1);
             }
         }
     }

@@ -24,20 +24,9 @@ public class GroupMessageListener extends MessageListener<String, String> {
     @Override
     public void receive(String topic, String key, String message) {
         try {
-            RavenMessage.Builder builder = RavenMessage.newBuilder();
-            JsonFormat.merge(message, builder);
-            UpDownMessage upDownMessage = builder.getUpDownMessage();
-            saveAndSendMsg(upDownMessage);
+            groupMessageExecutor.saveAndSendMsg(message);
         } catch (Exception e) {
             log.error("process message error", e);
-        }
-    }
-
-    private void saveAndSendMsg(UpDownMessage upDownMessage) {
-        try {
-            groupMessageExecutor.sendMessage(upDownMessage);
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
         }
     }
 }

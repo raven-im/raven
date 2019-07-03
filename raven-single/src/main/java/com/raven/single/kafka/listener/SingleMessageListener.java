@@ -23,21 +23,12 @@ public class SingleMessageListener extends MessageListener<String, String> {
 
     @Override
     public void receive(String topic, String key, String message) {
+        log.info("topic=[{}], message=[{}]", topic, message);
         try {
-            RavenMessage.Builder builder = RavenMessage.newBuilder();
-            JsonFormat.merge(message, builder);
-            UpDownMessage upDownMessage = builder.getUpDownMessage();
-            saveAndSendMsg(upDownMessage);
+            singleMessageExecutor.saveAndSendMsg(message);
         } catch (Exception e) {
             log.error("process message error", e);
         }
     }
 
-    private void saveAndSendMsg(UpDownMessage upDownMessage) {
-        try {
-            singleMessageExecutor.sendMessage(upDownMessage);
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-        }
-    }
 }

@@ -26,9 +26,9 @@ public class GroupMessageExecutor {
     private ExecutorService executorService = Executors
         .newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 2);
 
-    public void sendMessage(UpDownMessage msg) {
+    public void saveAndSendMsg(String message) {
         GroupMessageProcessor processor = new GroupMessageProcessor(internalServerChannelManager,
-            converManager, routeManager, msg);
+            converManager, routeManager, message);
         executorService.submit(processor);
     }
 }

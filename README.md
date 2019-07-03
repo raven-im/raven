@@ -33,6 +33,14 @@ Test Account1:  13800222222, password: 222222
 Test Account2:  13800333333, password: 333333
 ```
 
+### Screen Shot
+<div>
+<img src="doc/Images/conversation.jpeg" height="330" width="190" >
+<img src="doc/Images/chat1.png" height="330" width="190" >
+<img src="doc/Images/chat2.jpeg" height="330" width="190" >
+<img src="doc/Images/web.jpg" height="330" width="190" >
+</div>
+
 ### Contact us
 * zhou.xiaoxiao@outlook.com
 * bbpatience@gmail.com

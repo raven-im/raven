@@ -44,6 +44,9 @@
         <docker.image.prefix>iamnotshady</docker.image.prefix>
         <version.kafka>2.2.0</version.kafka>
         <version.zookeeper>3.4.14</version.zookeeper>
+        <version.caffeine>2.7.0</version.caffeine>
+        <version.fastdfs>1.26.4</version.fastdfs>
+        <version.commons.codec>1.12</version.commons.codec>
     </properties>
 
     <dependencyManagement>

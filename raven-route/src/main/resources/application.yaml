@@ -69,6 +69,9 @@ management:
       exposure:
         include: '*' #开放所有监控接口
 
+discovery:
+  access-server-path: /services/raven-access
+
 address:
   mysql: 127.0.0.1
   zookeeper: 127.0.0.1
@@ -83,7 +86,7 @@ fdfs:
   trackerList:            #TrackerList参数,支持多个
     - 18.136.206.81:22122
   pool:
-      max-total: 150         #从池中借出的对象的最大数目
-      max-wait-millis: 100   #获取连接时的最大等待毫秒数100
+    max-total: 150         #从池中借出的对象的最大数目
+    max-wait-millis: 100   #获取连接时的最大等待毫秒数100
   res-host: 18.136.206.81
   storage-port: 8888

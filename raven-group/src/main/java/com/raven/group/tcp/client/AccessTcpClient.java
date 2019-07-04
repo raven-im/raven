@@ -91,11 +91,11 @@ public class AccessTcpClient {
         ChannelFuture future = bootstrap.connect(server.getIp(), server.getInternalPort())
             .syncUninterruptibly();
         if (future.isSuccess()) {
-            log.info("connect server success ip:{},port:{}", server.getIp(),
+            log.info("connect access server success ip:{},port:{}", server.getIp(),
                 server.getInternalPort());
             return future.channel();
         } else {
-            log.error("connect server failed ip:{},port:{}", server.getIp(),
+            log.error("connect access server failed ip:{},port:{}", server.getIp(),
                 server.getInternalPort());
         }
         return null;

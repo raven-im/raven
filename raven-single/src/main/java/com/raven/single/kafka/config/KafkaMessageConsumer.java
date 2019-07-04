@@ -52,7 +52,7 @@ public class KafkaMessageConsumer<K, V> {
         if (!CollectionUtils.isEmpty(messageListeners)) {
             for (MessageListener messageListener : messageListeners) {
                 String topic = messageListener.getTopic();
-                if (StringUtils.isEmpty(topic)) {
+                if (StringUtils.isBlank(topic)) {
                     log.warn("MessageListener's topic is null. ["
                         + messageListener.getClass().getCanonicalName() + "]");
                     continue;

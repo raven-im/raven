@@ -31,10 +31,10 @@ public class KafkaMessageProcessor<K, V> implements Runnable {
             if (!records.isEmpty()) {
                 for (ConsumerRecord<K, V> record : records) {
                     try {
-                        log.info("current offset = " + record.offset());
+                        log.info("current record:{} ",record.toString());
                         messageListener.receive(topic, record.key(), record.value());
                     } catch (Exception e) {
-                        log.error("failed to receive message={}, error: {}", record.value(), e);
+                        log.error("failed to process record:{}, error: {}", record.toString(), e);
                     }
                 }
             } else {

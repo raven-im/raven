@@ -23,10 +23,6 @@ public class GroupMessageListener extends MessageListener<String, String> {
 
     @Override
     public void receive(String topic, String key, String message) {
-        try {
-            groupMessageExecutor.saveAndSendMsg(message);
-        } catch (Exception e) {
-            log.error("process message error", e);
-        }
+        groupMessageExecutor.saveAndSendMsg(message);
     }
 }

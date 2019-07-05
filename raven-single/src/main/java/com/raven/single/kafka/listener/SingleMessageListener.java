@@ -23,12 +23,7 @@ public class SingleMessageListener extends MessageListener<String, String> {
 
     @Override
     public void receive(String topic, String key, String message) {
-        log.info("topic=[{}], message=[{}]", topic, message);
-        try {
-            singleMessageExecutor.saveAndSendMsg(message);
-        } catch (Exception e) {
-            log.error("process message error", e);
-        }
+        singleMessageExecutor.saveAndSendMsg(message);
     }
 
 }

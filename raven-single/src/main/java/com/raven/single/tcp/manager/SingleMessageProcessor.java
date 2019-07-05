@@ -63,7 +63,6 @@ public class SingleMessageProcessor implements Runnable {
                         .setType(Type.UpDownMessage)
                         .setUpDownMessage(downMessage).build();
                     channel.writeAndFlush(ravenMessage);
-                    log.info("send down msg {}", downMessage);
                 } else {
                     log.error("cannot find channel. server:{}", server);
                 }

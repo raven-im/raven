@@ -6,11 +6,6 @@ import org.springframework.context.annotation.EnableMBeanExport;
 import org.springframework.context.annotation.Import;
 import org.springframework.jmx.support.RegistrationPolicy;
 
-/**
- * @author: bbpatience
- * @date: 2019/6/4
- * @description: FdfsConfiguration
- **/
 @Configuration
 @Import(FdfsClientConfig.class)
 @EnableMBeanExport(registration = RegistrationPolicy.IGNORE_EXISTING)

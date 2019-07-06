@@ -1,6 +1,11 @@
 package com.raven.route.config;
 
+import com.raven.common.netty.ServerChannelManager;
+import com.raven.common.netty.impl.InternalServerChannelManager;
+import com.raven.storage.conver.ConverManager;
 import com.raven.storage.route.RouteManager;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +19,9 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @Configuration
 public class CustomConfig {
+
+    public static final ExecutorService msgProcessorSevice = Executors
+        .newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
     @Bean
     @ConditionalOnMissingBean(name = "redisTemplate")
@@ -37,6 +45,17 @@ public class CustomConfig {
         StringRedisTemplate template = new StringRedisTemplate();
         template.setConnectionFactory(redisConnectionFactory);
         return template;
+    }
+
+    @Bean
+    public ServerChannelManager internalServerChannelManager() {
+        return new InternalServerChannelManager();
+    }
+
+    @Bean
+    @DependsOn("redisTemplate")
+    public ConverManager conversationManager(RedisTemplate redisTemplate) {
+        return new ConverManager(redisTemplate);
     }
 
     @Bean

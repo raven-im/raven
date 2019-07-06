@@ -9,11 +9,11 @@ import static org.springframework.cloud.netflix.zuul.filters.support.FilterConst
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
-import com.raven.common.param.AppConfigOutParam;
+import com.raven.common.param.OutAppConfigParam;
 import com.raven.common.result.Result;
 import com.raven.common.result.ResultCode;
 import com.raven.common.utils.JsonHelper;
-import com.raven.gateway.client.RavenAdminClient;
+import com.raven.gateway.feign.AdminFeignClient;
 import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,7 +30,7 @@ import org.springframework.stereotype.Component;
 public class AppKeyAuthFilter extends ZuulFilter {
 
     @Autowired
-    private RavenAdminClient ravenAdminClient;
+    private AdminFeignClient ravenAdminClient;
 
     @Override
     public String filterType() {
@@ -48,7 +48,7 @@ public class AppKeyAuthFilter extends ZuulFilter {
         HttpServletRequest request = ctx.getRequest();
         String uri = request.getRequestURI().toString();
         log.info("request uri:{}",uri);
-        return "/raven/route/user/token".equals(uri);
+        return "/raven/admin/gateway/token".equals(uri);
     }
 
     @Override
@@ -93,8 +93,8 @@ public class AppKeyAuthFilter extends ZuulFilter {
     private String getAppSecret(String uid) {
         Result result = ravenAdminClient.getApp(uid);
         if (ResultCode.COMMON_SUCCESS.getCode() == result.getCode()) {
-            AppConfigOutParam response = JsonHelper
-                .readValue(JsonHelper.toJsonString(result.getData()), AppConfigOutParam.class);
+            OutAppConfigParam response = JsonHelper
+                .readValue(JsonHelper.toJsonString(result.getData()), OutAppConfigParam.class);
             return response.getSecret();
         }
         return null;

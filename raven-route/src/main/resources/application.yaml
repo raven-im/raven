@@ -21,9 +21,18 @@ spring:
       connect-string: ${site.zookeeper}
       discovery:
         prefer-ip-address: true
+      gateway-server-path: /services/raven-gateway
+  kafka:
+    consumer:
+      group-id: raven1
+      enable-auto-commit: true
+      auto-commit-interval: 1000
+      bootstrap-servers: ${site.kafka}
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
 
 server:
-  port: 8040
+  port: 8030
 
 # actuator相关配置
 management:
@@ -42,9 +51,7 @@ management:
       exposure:
         include: '*' #开放所有监控接口
 
-discovery:
-  access-server-path: /services/raven-access
-
 site:
   zookeeper: 127.0.0.1:2181
   redis: 127.0.0.1
+  kafka: 127.0.0.1:9092

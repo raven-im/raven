@@ -5,5 +5,5 @@ import java.util.List;
 
 public interface LoadBalancer {
 
-    AccessServerInfo select(List<AccessServerInfo> servers, String hashKey);
+    GatewayServerInfo select(List<GatewayServerInfo> servers, String hashKey);
 }

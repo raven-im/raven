@@ -28,15 +28,15 @@ public class KafkaProducerManager {
 
     public Result send(String topic, String key, String message) {
         if (Strings.isNullOrEmpty(topic) || message == null) {
-            log.error("param error : topic=[{}], key=[{}], message=[{}]", topic, key, message);
+            log.error("param error! topic:{}, key:{}, message:{}", topic, key, message);
             return Result.failure(ResultCode.COMMON_KAFKA_PRODUCE_ERROR);
         }
         ProducerRecord<String, String> record = new ProducerRecord<>(topic, key, message);
         Future<RecordMetadata> future = producer.send(record, (recordMetadata, e) -> {
             if (e != null) {
-                log.error("send message to topic[{}] failure: ", topic, e);
+                log.error("send message to topic:{} failure!", topic, e);
             } else {
-                log.info("send message to topic[{}] success! current offset is [{}], messageStr={}",
+                log.info("send message to topic:{} success! current offset:{}, messageStr=:{}",
                     topic, recordMetadata.offset(), message);
             }
         });
@@ -45,7 +45,7 @@ public class KafkaProducerManager {
             result.setData(future.get());
         } catch (Exception e) {
             result = Result.failure(ResultCode.COMMON_KAFKA_PRODUCE_ERROR);
-            log.error("produce message error: ", e);
+            log.error("produce message error", e);
         }
         return result;
     }

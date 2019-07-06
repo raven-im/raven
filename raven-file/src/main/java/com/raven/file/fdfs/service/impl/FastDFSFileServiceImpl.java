@@ -52,7 +52,7 @@ public class FastDFSFileServiceImpl implements FastDFSFileService {
                     .getExtension(file.getOriginalFilename()), metaSet);
             log.info("storePath:" + storePath);
             OutputFileInfo fileInfo = new OutputFileInfo(file.getOriginalFilename(), file.getSize(),
-                getResAccessUrl(storePath));
+                getFileUrl(storePath));
             return Result.success(fileInfo);
         } catch (IOException e) {
             log.error("upload file io error", e);
@@ -60,7 +60,7 @@ public class FastDFSFileServiceImpl implements FastDFSFileService {
         return Result.failure(ResultCode.UPLOAD_FILE_UPLOAD_ERROR);
     }
 
-    private String getResAccessUrl(StorePath storePath) {
+    private String getFileUrl(StorePath storePath) {
         String fileUrl = "http://" + serverUrl + ":" + storagePort + "/" + storePath.getFullPath();
         log.info("fileUrl:" + fileUrl);
         return fileUrl;

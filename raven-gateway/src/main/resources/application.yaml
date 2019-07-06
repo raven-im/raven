@@ -36,20 +36,14 @@ spring:
           websocket-port: ${netty.websocket.port}
           internal-port: ${netty.internal.port}
 server:
-  port: 8010
+  port: 8080
 
 zuul:
   ignored-services: '*'
   routes:
-    route:
-      path: /route/**
-      serviceId: raven-route # 要区分大小写
-    single:
-      path: /single/**
-      serviceId: raven-single
-    group:
-      path: /group/**
-      serviceId: raven-group
+    file:
+      path: /file/**
+      serviceId: raven-file
     admin:
       path: /admin/**
       serviceId: raven-admin

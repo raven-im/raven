@@ -1,0 +1,106 @@
+spring:
+  application:
+    name: raven-gateway
+  http:
+    encoding:
+      charset: UTF-8
+      force: true
+      enabled: true
+  redis:
+    host: ${site.redis}
+    port: 6379
+    pool:
+      max-active: 20
+      max-wait: 60000
+      max-idle: 5
+      min-idle: 1
+  kafka:
+    producer:
+      acks: all
+      retries: 2
+      buffer-memory: 33554432
+      bootstrap-servers: ${site.kafka}
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      max-in-flight-requests.per.connection: 1
+
+  main:
+    banner-mode: log
+  cloud:
+    zookeeper:
+      connect-string: ${site.zookeeper}
+      discovery:
+        prefer-ip-address: true
+        metadata:
+          tcp-port: ${netty.tcp.port}
+          websocket-port: ${netty.websocket.port}
+          internal-port: ${netty.internal.port}
+server:
+  port: 8010
+
+zuul:
+  ignored-services: '*'
+  routes:
+    route:
+      path: /route/**
+      serviceId: raven-route # 要区分大小写
+    single:
+      path: /single/**
+      serviceId: raven-single
+    group:
+      path: /group/**
+      serviceId: raven-group
+    admin:
+      path: /admin/**
+      serviceId: raven-admin
+  ribbon:
+    eager-load:
+      enabled: true # 立即加载ribbon负载均衡器
+  servlet-path: /raven
+
+ribbon:
+  ConnectTimeout: 10000
+  ReadTimeout: 10000
+
+# 熔断时间
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 40000
+
+# actuator相关配置
+management:
+  security:
+    enabled: false
+  endpoint:
+    health:
+      show-details: always
+      enabled: true
+    prometheus:
+      enabled: true
+    shutdown:
+      enabled: false
+  endpoints:
+    web:
+      exposure:
+        include: '*' #开放所有监控接口
+
+netty:
+  tcp:
+    port: 7010
+  websocket:
+    port: 7011
+  internal:
+    port: 7012
+
+node:
+  data-center-id: 1
+  machine-id: 1
+
+site:
+  zookeeper: 127.0.0.1:2181
+  redis: 127.0.0.1
+  kafka: 127.0.0.1:9092

@@ -1,4 +1,4 @@
-package com.raven.route.user.service.impl;
+package com.raven.admin.user.service.impl;
 
 import static com.raven.common.utils.Constants.CONFIG_ACCESS_SERVER_NAME;
 import static com.raven.common.utils.Constants.CONFIG_INTERNAL_PORT;

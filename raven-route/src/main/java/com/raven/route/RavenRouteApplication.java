@@ -10,7 +10,6 @@ import tk.mybatis.spring.annotation.MapperScan;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@ServletComponentScan
 @EnableTransactionManagement
 @MapperScan("com.raven.route.*.mapper")
 public class RavenRouteApplication {

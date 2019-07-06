@@ -14,11 +14,10 @@
     </parent>
 
     <modules>
-        <module>raven-zuul</module>
         <module>raven-route</module>
         <module>raven-common</module>
         <module>raven-client</module>
-        <module>raven-access</module>
+        <module>raven-gateway</module>
         <module>raven-admin</module>
         <module>raven-single</module>
         <module>raven-group</module>

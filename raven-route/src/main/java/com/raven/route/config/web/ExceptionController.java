@@ -10,11 +10,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartException;
 
-/**
- * Author zxx
- * Description 全局异常处理
- * Date Created on 2018/6/12
- */
 @ControllerAdvice
 @Slf4j
 public class ExceptionController {
@@ -23,7 +18,7 @@ public class ExceptionController {
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public Result handleException(Exception exception) {
-        log.error("handle exception:{}", exception);
+        log.error("handle exception", exception);
         return Result.failure(ResultCode.COMMON_ERROR, exception.getMessage());
     }
 
@@ -31,13 +26,8 @@ public class ExceptionController {
     @ExceptionHandler(RuntimeException.class)
     @ResponseBody
     public Result handleRuntimeException(RuntimeException exception) {
-        log.error("handle exception:{}", exception);
+        log.error("handle runtimeexception", exception);
         return Result.failure(ResultCode.COMMON_ERROR, exception.getMessage());
     }
 
-    @ExceptionHandler(MultipartException.class)
-    public @ResponseBody Result handleMultipartFileException(MultipartException exception) {
-        log.error(exception.getMessage());
-        return Result.failure(ResultCode.UPLOAD_FILE_EMPTY);
-    }
 }

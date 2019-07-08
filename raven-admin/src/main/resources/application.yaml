@@ -6,9 +6,11 @@ spring:
       charset: UTF-8
       force: true
       enabled: true
+  jackson:
+    default-property-inclusion: non_null
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://${address.mysql}:3306/imdb?useUnicode=true
+    url: jdbc:mysql://${site.mysql}/imdb?useUnicode=true
     username: root
     password: 123456
     type: com.alibaba.druid.pool.DruidDataSource
@@ -20,16 +22,25 @@ spring:
       validation-query: SELECT 1 FROM DUAL
       time-between-eviction-runs-millis: 60000
       min-evictable-idle-time-millis: 300000
+  redis:
+    host: ${site.redis}
+    port: 6379
+    pool:
+      max-active: 20
+      max-wait: 60000
+      max-idle: 5
+      min-idle: 1
   main:
     banner-mode: log
   cloud:
     zookeeper:
-      connect-string: ${address.zookeeper}:2181
+      connect-string: ${site.zookeeper}
       discovery:
         prefer-ip-address: true
+      gateway-server-path: /services/raven-gateway
 
 server:
-  port: 8020
+  port: 8010
 
 # Mybatis
 mybatis:
@@ -61,6 +72,7 @@ management:
       exposure:
         include: '*' #开放所有监控接口
 
-address:
-  mysql: 127.0.0.1
-  zookeeper: 127.0.0.1
+site:
+  mysql: 127.0.0.1:3306
+  zookeeper: 127.0.0.1:2181
+  redis: 127.0.0.1

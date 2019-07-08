@@ -24,15 +24,15 @@ public class ConsistentHashLoadBalancer implements LoadBalancer {
     private final static String VIRTUAL_NODE_SUFFIX = "#@";
 
     @Override
-    public AccessServerInfo select(List<AccessServerInfo> servers, String hashKey) {
+    public GatewayServerInfo select(List<GatewayServerInfo> servers, String hashKey) {
         HashCode hashCode = hashFunction.hashString(hashKey, charset);
-        TreeMap<Integer, AccessServerInfo> ring = buildConsistentHashRing(servers);
+        TreeMap<Integer, GatewayServerInfo> ring = buildConsistentHashRing(servers);
         return locate(ring, hashCode.asInt());
     }
 
-    private AccessServerInfo locate(TreeMap<Integer, AccessServerInfo> ring, int invocationHashCode) {
+    private GatewayServerInfo locate(TreeMap<Integer, GatewayServerInfo> ring, int invocationHashCode) {
         // 向右找到第一个 key
-        Map.Entry<Integer, AccessServerInfo> locateEntry = ring.ceilingEntry(invocationHashCode);
+        Map.Entry<Integer, GatewayServerInfo> locateEntry = ring.ceilingEntry(invocationHashCode);
         if (locateEntry == null) {
             // 想象成一个环，超过尾部则取第一个 key
             locateEntry = ring.firstEntry();
@@ -40,9 +40,9 @@ public class ConsistentHashLoadBalancer implements LoadBalancer {
         return locateEntry.getValue();
     }
 
-    private TreeMap<Integer, AccessServerInfo> buildConsistentHashRing(List<AccessServerInfo> servers) {
-        TreeMap<Integer, AccessServerInfo> virtualNodeRing = new TreeMap<>();
-        for (AccessServerInfo server : servers) {
+    private TreeMap<Integer, GatewayServerInfo> buildConsistentHashRing(List<GatewayServerInfo> servers) {
+        TreeMap<Integer, GatewayServerInfo> virtualNodeRing = new TreeMap<>();
+        for (GatewayServerInfo server : servers) {
             for (int i = 0; i < VIRTUAL_NODE_SIZE; i++) {
                 // 映射虚拟节点与物理节点
                 HashCode hashCode = hashFunction

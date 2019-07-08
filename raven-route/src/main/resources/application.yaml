@@ -6,22 +6,8 @@ spring:
       charset: UTF-8
       force: true
       enabled: true
-  datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://${address.mysql}:3306/imdb?useUnicode=true
-    username: root
-    password: 123456
-    type: com.alibaba.druid.pool.DruidDataSource
-    druid:
-      initial-size: 10
-      max-active: 20
-      min-idle: 5
-      max-wait: 60000
-      validation-query: SELECT 1 FROM DUAL
-      time-between-eviction-runs-millis: 60000
-      min-evictable-idle-time-millis: 300000
   redis:
-    host: ${address.redis}
+    host: ${site.redis}
     port: 6379
     pool:
       max-active: 20
@@ -32,25 +18,21 @@ spring:
     banner-mode: log
   cloud:
     zookeeper:
-      connect-string: ${address.zookeeper}:2181
+      connect-string: ${site.zookeeper}
       discovery:
         prefer-ip-address: true
+      gateway-server-path: /services/raven-gateway
+  kafka:
+    consumer:
+      group-id: raven1
+      enable-auto-commit: true
+      auto-commit-interval: 1000
+      bootstrap-servers: ${site.kafka}
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
 
 server:
-  port: 8040
-
-# Mybatis
-mybatis:
-  mapperLocations: classpath:mapper/*Mapper.xml
-  config-location: classpath:mybatis-config.xml
-
-#通用mapper
-#mappers 多个接口时逗号隔开
-mapper:
-  mappers: com.raven.route.config.BaseMapper
-  not-empty: true
-  before: true
-  identity: mysql
+  port: 8030
 
 # actuator相关配置
 management:
@@ -69,24 +51,7 @@ management:
       exposure:
         include: '*' #开放所有监控接口
 
-discovery:
-  access-server-path: /services/raven-access
-
-address:
-  mysql: 127.0.0.1
-  zookeeper: 127.0.0.1
+site:
+  zookeeper: 127.0.0.1:2181
   redis: 127.0.0.1
-
-fdfs:
-  soTimeout: 1500
-  connectTimeout: 600
-  thumbImage:             #缩略图生成参数
-    width: 150
-    height: 150
-  trackerList:            #TrackerList参数,支持多个
-    - 18.136.206.81:22122
-  pool:
-    max-total: 150         #从池中借出的对象的最大数目
-    max-wait-millis: 100   #获取连接时的最大等待毫秒数100
-  res-host: 18.136.206.81
-  storage-port: 8888
+  kafka: 127.0.0.1:9092

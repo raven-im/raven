@@ -13,7 +13,7 @@ public enum ResultCode {
     COMMON_METHOD_NOT_SUPPORT(10005, "http method not support."),
     COMMON_SIGN_ERROR(10006, "signature not passed."),
     COMMON_UNAUTHORIZED_ERROR(10007, "unauthorized."),
-    COMMON_NO_ACCESS_ERROR(10008, "no access."),
+    COMMON_NO_GATEWAY_ERROR(10008, "no gateway."),
     COMMON_KAFKA_PRODUCE_ERROR(10009, "kafka produce error."),
 
     /*

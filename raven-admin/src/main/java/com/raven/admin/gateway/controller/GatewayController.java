@@ -54,7 +54,7 @@ public class GatewayController {
     /**
      * 获取网关tcp接入地址
      */
-    @GetMapping
+    @GetMapping(("/socket"))
     public Result getGatewaySite(@RequestHeader(AUTH_TOKEN) String token) {
         log.info("get gateway site, token {}", token);
         return userService.getGatewaySite(token, GatewayServerType.TCP);

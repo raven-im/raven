@@ -36,6 +36,7 @@ import io.netty.handler.timeout.IdleStateHandler;
 import java.net.InetSocketAddress;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -151,6 +152,13 @@ public class WebsocketServer {
                 log.error("raven-gateway websocket server start failed!");
             }
         });
+    }
+
+    @PreDestroy
+    public void destroy() {
+        bossGroup.shutdownGracefully().syncUninterruptibly();
+        workGroup.shutdownGracefully().syncUninterruptibly();
+        log.info("close raven-gateway websocket server success");
     }
 
     private void bindConnectionOptions(ServerBootstrap bootstrap) {

@@ -15,6 +15,7 @@ public enum ResultCode {
     COMMON_UNAUTHORIZED_ERROR(10007, "unauthorized."),
     COMMON_NO_GATEWAY_ERROR(10008, "no gateway."),
     COMMON_KAFKA_PRODUCE_ERROR(10009, "kafka produce error."),
+    COMMON_SERVER_NOT_AVAILABLE(10010, "server not available."),
 
     /*
      * USER PART ERROR.  [11000, 12000)

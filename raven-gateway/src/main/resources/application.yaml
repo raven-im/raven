@@ -35,26 +35,36 @@ spring:
           tcp-port: ${netty.tcp.port}
           websocket-port: ${netty.websocket.port}
           internal-port: ${netty.internal.port}
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: raven-file
+          uri: lb://raven-file
+          predicates:
+            - Path=/raven/file/**
+          filters:
+            - StripPrefix=2
+            - name: Hystrix
+              args:
+                name: fallback
+                fallbackUri: forward:/fallback
+        - id: raven-admin
+          uri: lb://raven-admin
+          predicates:
+            - Path=/raven/admin/**
+          filters:
+            - StripPrefix=2
+            - name: Hystrix
+              args:
+                name: fallback
+                fallbackUri: forward:/fallback
+
 server:
   port: 8080
-
-zuul:
-  ignored-services: '*'
-  routes:
-    file:
-      path: /file/**
-      serviceId: raven-file
-    admin:
-      path: /admin/**
-      serviceId: raven-admin
-  ribbon:
-    eager-load:
-      enabled: true # 立即加载ribbon负载均衡器
-  servlet-path: /raven
-
-ribbon:
-  ConnectTimeout: 10000
-  ReadTimeout: 10000
+  servlet:
+    context-path: /raven
 
 # 熔断时间
 hystrix:
@@ -63,7 +73,7 @@ hystrix:
       execution:
         isolation:
           thread:
-            timeoutInMilliseconds: 40000
+            timeoutInMilliseconds: 30000
 
 # actuator相关配置
 management:

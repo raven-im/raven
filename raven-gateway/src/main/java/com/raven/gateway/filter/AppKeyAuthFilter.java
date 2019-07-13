@@ -39,9 +39,9 @@ public class AppKeyAuthFilter implements GlobalFilter, Ordered {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
-        String uri = request.getURI().toString();
-        log.info("request uri:{}", uri);
-        if (!"/raven/admin/gateway/token".equals(uri)) {
+        String path = request.getPath().toString();
+        log.info("request path:{}", path);
+        if (!"/gateway/token".equals(path)) {
             return chain.filter(exchange);
         }
         HttpHeaders headers = request.getHeaders();

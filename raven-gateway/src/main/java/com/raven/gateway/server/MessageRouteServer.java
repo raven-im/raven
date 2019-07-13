@@ -26,7 +26,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-public class InternalServer {
+public class MessageRouteServer {
 
     @Value("${netty.internal.port}")
     private int nettyInternalPort;

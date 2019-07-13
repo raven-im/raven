@@ -44,7 +44,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-public class WebsocketServer {
+public class WsProtobuftServer {
 
     @Value("${netty.websocket.port}")
     private int nettyWebsocketPort;
@@ -125,7 +125,6 @@ public class WebsocketServer {
                                 result = wrappedBuffer(
                                     ((MessageLite.Builder) msg).build().toByteArray());
                             }
-                            // ==== 上面代码片段是拷贝自TCP ProtobufEncoder 源码 ====
                             // 然后下面再转成websocket二进制流，因为客户端不能直接解析protobuf编码生成的
                             WebSocketFrame frame = new BinaryWebSocketFrame(result);
                             out.add(frame);

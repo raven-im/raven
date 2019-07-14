@@ -17,6 +17,7 @@ import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
 import io.netty.handler.timeout.IdleStateHandler;
 import java.net.InetSocketAddress;
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,7 +26,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-public class InternalServer {
+public class MessageRouteServer {
 
     @Value("${netty.internal.port}")
     private int nettyInternalPort;
@@ -70,6 +71,13 @@ public class InternalServer {
                 log.error("raven-gateway internal server start failed!");
             }
         });
+    }
+
+    @PreDestroy
+    public void destroy() {
+        bossGroup.shutdownGracefully().syncUninterruptibly();
+        workGroup.shutdownGracefully().syncUninterruptibly();
+        log.info("close raven-gateway internal server success");
     }
 
     private void bindConnectionOptions(ServerBootstrap bootstrap) {

@@ -36,6 +36,7 @@ import io.netty.handler.timeout.IdleStateHandler;
 import java.net.InetSocketAddress;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -43,7 +44,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-public class WebsocketServer {
+public class WsProtobuftServer {
 
     @Value("${netty.websocket.port}")
     private int nettyWebsocketPort;
@@ -124,7 +125,6 @@ public class WebsocketServer {
                                 result = wrappedBuffer(
                                     ((MessageLite.Builder) msg).build().toByteArray());
                             }
-                            // ==== 上面代码片段是拷贝自TCP ProtobufEncoder 源码 ====
                             // 然后下面再转成websocket二进制流，因为客户端不能直接解析protobuf编码生成的
                             WebSocketFrame frame = new BinaryWebSocketFrame(result);
                             out.add(frame);
@@ -151,6 +151,13 @@ public class WebsocketServer {
                 log.error("raven-gateway websocket server start failed!");
             }
         });
+    }
+
+    @PreDestroy
+    public void destroy() {
+        bossGroup.shutdownGracefully().syncUninterruptibly();
+        workGroup.shutdownGracefully().syncUninterruptibly();
+        log.info("close raven-gateway websocket server success");
     }
 
     private void bindConnectionOptions(ServerBootstrap bootstrap) {

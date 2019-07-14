@@ -32,7 +32,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-public class TcpServer {
+public class TcpProtobufServer {
 
     @Value("${netty.tcp.port}")
     private int tcpPort;

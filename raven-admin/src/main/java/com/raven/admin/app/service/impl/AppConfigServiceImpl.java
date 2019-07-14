@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional(rollbackFor = Throwable.class)
 @Slf4j
 public class AppConfigServiceImpl implements AppConfigService {
 
@@ -20,6 +19,7 @@ public class AppConfigServiceImpl implements AppConfigService {
     private AppConfigMapper mapper;
 
     @Override
+    @Transactional(rollbackFor = Throwable.class)
     public AppConfigModel createApp() {
         AppConfigModel model = new AppConfigModel();
         model.setUid(UidUtil.uuid());
@@ -39,6 +39,7 @@ public class AppConfigServiceImpl implements AppConfigService {
     }
 
     @Override
+    @Transactional(rollbackFor = Throwable.class)
     public void delApp(String uid) {
         AppConfigModel model = new AppConfigModel();
         model.setUid(uid);

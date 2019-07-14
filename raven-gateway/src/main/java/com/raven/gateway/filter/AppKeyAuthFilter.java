@@ -4,74 +4,66 @@ import static com.raven.common.utils.Constants.AUTH_APP_KEY;
 import static com.raven.common.utils.Constants.AUTH_NONCE;
 import static com.raven.common.utils.Constants.AUTH_SIGNATURE;
 import static com.raven.common.utils.Constants.AUTH_TIMESTAMP;
-import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.PRE_TYPE;
 
-import com.netflix.zuul.ZuulFilter;
-import com.netflix.zuul.context.RequestContext;
-import com.netflix.zuul.exception.ZuulException;
 import com.raven.common.param.OutAppConfigParam;
 import com.raven.common.result.Result;
 import com.raven.common.result.ResultCode;
 import com.raven.common.utils.JsonHelper;
 import com.raven.gateway.feign.AdminFeignClient;
 import java.io.IOException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.nio.charset.StandardCharsets;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.gateway.filter.GatewayFilterChain;
+import org.springframework.cloud.gateway.filter.GlobalFilter;
+import org.springframework.core.Ordered;
+import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ServerWebExchange;
+import reactor.core.publisher.Mono;
 
 @Slf4j
 @Component
-public class AppKeyAuthFilter extends ZuulFilter {
+public class AppKeyAuthFilter implements GlobalFilter, Ordered {
 
     @Autowired
     private AdminFeignClient ravenAdminClient;
 
     @Override
-    public String filterType() {
-        return PRE_TYPE;
-    }
-
-    @Override
-    public int filterOrder() {
-        return 0;
-    }
-
-    @Override
-    public boolean shouldFilter() {
-        RequestContext ctx = RequestContext.getCurrentContext();
-        HttpServletRequest request = ctx.getRequest();
-        String uri = request.getRequestURI().toString();
-        log.info("request uri:{}",uri);
-        return "/raven/admin/gateway/token".equals(uri);
-    }
-
-    @Override
-    public Object run() throws ZuulException {
-        RequestContext requestContext = RequestContext.getCurrentContext();
-        HttpServletRequest request = requestContext.getRequest();
-        HttpServletResponse response = requestContext.getResponse();
-        String key = request.getHeader(AUTH_APP_KEY);
-        String nonce = request.getHeader(AUTH_NONCE);
-        String timestamp = request.getHeader(AUTH_TIMESTAMP);
-        String sign = request.getHeader(AUTH_SIGNATURE);
-        if (!isAuthPass(key, nonce, timestamp, sign)) {
-            try {
-                requestContext.setSendZuulResponse(false);
-                Result result = Result.failure(ResultCode.COMMON_SIGN_ERROR);
-                response.setStatus(HttpStatus.UNAUTHORIZED.value());
-                response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
-                response.getWriter().println(JsonHelper.toJsonString(result));
-            } catch (IOException e) {
-                log.error(e.getMessage(), e);
-            }
+    public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+        ServerHttpRequest request = exchange.getRequest();
+        String path = request.getPath().toString();
+        log.info("request path:{}", path);
+        if (!"/gateway/token".equals(path)) {
+            return chain.filter(exchange);
         }
-        return null;
+        HttpHeaders headers = request.getHeaders();
+        String key = headers.getFirst(AUTH_APP_KEY);
+        String nonce = headers.getFirst(AUTH_NONCE);
+        String timestamp = headers.getFirst(AUTH_TIMESTAMP);
+        String sign = headers.getFirst(AUTH_SIGNATURE);
+        ServerHttpResponse response = exchange.getResponse();
+        if (!isAuthPass(key, nonce, timestamp, sign)) {
+            Result result = Result.failure(ResultCode.COMMON_SIGN_ERROR);
+            byte[] bits = JsonHelper.toJsonString(result).getBytes(StandardCharsets.UTF_8);
+            DataBuffer buffer = response.bufferFactory().wrap(bits);
+            response.setStatusCode(HttpStatus.UNAUTHORIZED);
+            response.getHeaders().add("Content-Type", MediaType.APPLICATION_JSON_UTF8_VALUE);
+            response.writeWith(Mono.just(buffer));
+        }
+        return chain.filter(exchange);
+    }
+
+    @Override
+    public int getOrder() {
+        return Ordered.LOWEST_PRECEDENCE;
     }
 
     private boolean isAuthPass(String key, String nonce, String timestamp, String sign) {

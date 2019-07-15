@@ -48,7 +48,7 @@ spring:
             - StripPrefix=2
             - name: Hystrix
               args:
-                name: fallback
+                name: default
                 fallbackUri: forward:/fallback
         - id: raven-admin
           uri: lb://raven-admin
@@ -58,7 +58,7 @@ spring:
             - StripPrefix=2
             - name: Hystrix
               args:
-                name: fallback
+                name: default
                 fallbackUri: forward:/fallback
 
 server:
@@ -66,14 +66,16 @@ server:
   servlet:
     context-path: /raven
 
+ribbon:
+  eager-load:
+    enabled: true # 立即加载ribbon负载均衡器
+  ConnectTimeout: 10000
+  ReadTimeout: 10000
+  MaxAutoRetries: 0
+  MaxAutoRetriesNextServer: 1
+
 # 熔断时间
-hystrix:
-  command:
-    default:
-      execution:
-        isolation:
-          thread:
-            timeoutInMilliseconds: 30000
+hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 30000
 
 # actuator相关配置
 management:

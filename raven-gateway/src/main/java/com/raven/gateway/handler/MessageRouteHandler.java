@@ -22,7 +22,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Sharable
 @Slf4j
-public class InternalMessageHandler extends SimpleChannelInboundHandler<RavenMessage> {
+public class MessageRouteHandler extends SimpleChannelInboundHandler<RavenMessage> {
 
     @Autowired
     private IdChannelManager uidChannelManager;

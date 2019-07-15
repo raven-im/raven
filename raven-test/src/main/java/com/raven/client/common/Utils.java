@@ -8,6 +8,7 @@ import com.raven.common.utils.JsonHelper;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
@@ -72,6 +73,9 @@ public class Utils {
         httpGet.addHeader("Sign", sign);
         String token = null;
         try {
+            for (Header header : httpGet.getAllHeaders()) {
+                log.info(header.toString());
+            }
             String responseBody = httpClient.execute(httpGet, responseHandler);
             JsonNode node = JsonHelper.getJacksonMapper().readTree(responseBody);
             JsonNode nodeGroup = JsonHelper.getJacksonMapper()

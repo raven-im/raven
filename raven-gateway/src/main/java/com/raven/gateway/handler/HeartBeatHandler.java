@@ -52,7 +52,11 @@ public class HeartBeatHandler extends SimpleChannelInboundHandler<RavenMessage> 
             if (((IdleStateEvent) evt).state() == IdleState.READER_IDLE) {
                 Long lastReadTime = NettyAttrUtil.getReaderTime(ctx.channel());
                 String uid = uidChannelManager.getIdByChannel(ctx.channel());
-                if ( System.currentTimeMillis() - lastReadTime > 30000) {
+                if (null == lastReadTime || null == uid) {
+                    ctx.close();
+                    return;
+                }
+                if (System.currentTimeMillis() - lastReadTime > 30000) {
                     log.info("uid:{} last read time more than 30 seconds", uid);
                     ctx.close();
                     return;

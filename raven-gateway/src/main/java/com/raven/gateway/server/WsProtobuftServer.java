@@ -33,6 +33,9 @@ import io.netty.handler.codec.http.websocketx.extensions.compression.WebSocketSe
 import io.netty.handler.codec.protobuf.ProtobufDecoder;
 import io.netty.handler.stream.ChunkedWriteHandler;
 import io.netty.handler.timeout.IdleStateHandler;
+import io.netty.util.NettyRuntime;
+import io.netty.util.concurrent.DefaultEventExecutorGroup;
+import io.netty.util.concurrent.EventExecutorGroup;
 import java.net.InetSocketAddress;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -49,9 +52,12 @@ public class WsProtobuftServer {
     @Value("${netty.websocket.port}")
     private int nettyWebsocketPort;
 
-    private EventLoopGroup bossGroup = new NioEventLoopGroup();
+    private EventLoopGroup bossGroup = new NioEventLoopGroup(1);
 
     private EventLoopGroup workGroup = new NioEventLoopGroup();
+
+    private EventExecutorGroup executorGroup = new DefaultEventExecutorGroup(
+        NettyRuntime.availableProcessors() * 2);
 
     @Autowired
     private HeartBeatHandler heartBeatHandler;
@@ -98,7 +104,8 @@ public class WsProtobuftServer {
                     // 协议包解码
                     pipeline.addLast(new MessageToMessageDecoder<WebSocketFrame>() {
                         @Override
-                        protected void decode(ChannelHandlerContext ctx, WebSocketFrame frame, List<Object> out) throws Exception {
+                        protected void decode(ChannelHandlerContext ctx, WebSocketFrame frame,
+                            List<Object> out) throws Exception {
                             if (frame instanceof BinaryWebSocketFrame) {
                                 ByteBuf buf = frame.content();
                                 out.add(buf);
@@ -108,7 +115,8 @@ public class WsProtobuftServer {
                                     .writeAndFlush(new PongWebSocketFrame(frame.content()
                                         .retain()));
                             } else {
-                                throw new IllegalStateException("Unsupported web socket msg " + frame);
+                                throw new IllegalStateException(
+                                    "Unsupported web socket msg " + frame);
                             }
                         }
                     });
@@ -136,9 +144,9 @@ public class WsProtobuftServer {
                     // 业务处理器
                     pipeline.addLast("LoginAuthHandler", loginAuthHandler);
                     pipeline.addLast("HeartBeatHandler", heartBeatHandler);
-                    pipeline.addLast("MessageHandler", messageHandler);
-                    pipeline.addLast("ConversationHandler", conversationHandler);
-                    pipeline.addLast("HistoryHandler", historyHandler);
+                    pipeline.addLast(executorGroup, "MessageHandler", messageHandler);
+                    pipeline.addLast(executorGroup, "ConversationHandler", conversationHandler);
+                    pipeline.addLast(executorGroup, "HistoryHandler", historyHandler);
 
                 }
             });

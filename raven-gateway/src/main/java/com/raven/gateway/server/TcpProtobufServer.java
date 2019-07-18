@@ -21,6 +21,9 @@ import io.netty.handler.codec.protobuf.ProtobufEncoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
 import io.netty.handler.timeout.IdleStateHandler;
+import io.netty.util.NettyRuntime;
+import io.netty.util.concurrent.DefaultEventExecutorGroup;
+import io.netty.util.concurrent.EventExecutorGroup;
 import java.net.InetSocketAddress;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -43,9 +46,11 @@ public class TcpProtobufServer {
     @Value("${netty.internal.port}")
     private int internalPort;
 
-    private EventLoopGroup bossGroup = new NioEventLoopGroup();
+    private EventLoopGroup bossGroup = new NioEventLoopGroup(1);
 
     private EventLoopGroup workGroup = new NioEventLoopGroup();
+
+    private EventExecutorGroup executorGroup = new DefaultEventExecutorGroup(NettyRuntime.availableProcessors()*2);
 
     @Autowired
     private HeartBeatHandler heartBeatHandler;
@@ -91,9 +96,9 @@ public class TcpProtobufServer {
                     pipeline.addLast(new ProtobufEncoder());
                     pipeline.addLast("LoginAuthHandler", loginAuthHandler);
                     pipeline.addLast("HeartBeatHandler", heartBeatHandler);
-                    pipeline.addLast("MessageHandler", messageHandler);
-                    pipeline.addLast("ConversationHandler", conversationHandler);
-                    pipeline.addLast("HistoryHandler", historyHandler);
+                    pipeline.addLast(executorGroup,"MessageHandler", messageHandler);
+                    pipeline.addLast(executorGroup,"ConversationHandler", conversationHandler);
+                    pipeline.addLast(executorGroup,"HistoryHandler", historyHandler);
                 }
             });
         bindConnectionOptions(bootstrap);

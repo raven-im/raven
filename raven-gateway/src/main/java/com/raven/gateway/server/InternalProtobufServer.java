@@ -1,7 +1,7 @@
 package com.raven.gateway.server;
 
 import com.raven.common.protos.Message;
-import com.raven.gateway.handler.InternalMessageHandler;
+import com.raven.gateway.handler.MessageRouteHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -15,6 +15,7 @@ import io.netty.handler.codec.protobuf.ProtobufEncoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
 import io.netty.handler.timeout.IdleStateHandler;
+import io.netty.util.NettyRuntime;
 import java.net.InetSocketAddress;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -26,17 +27,17 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-public class MessageRouteServer {
+public class InternalProtobufServer {
 
     @Value("${netty.internal.port}")
     private int nettyInternalPort;
 
-    private EventLoopGroup bossGroup = new NioEventLoopGroup();
+    private EventLoopGroup bossGroup = new NioEventLoopGroup(1);
 
-    private EventLoopGroup workGroup = new NioEventLoopGroup();
+    private EventLoopGroup workGroup = new NioEventLoopGroup(1);
 
     @Autowired
-    private InternalMessageHandler messageAckHandler;
+    private MessageRouteHandler messageRouteHandler;
 
     @PostConstruct
     public void startServer() {
@@ -59,7 +60,7 @@ public class MessageRouteServer {
                     // 对protobuf协议的消息头上加上一个长度为32的整形字段
                     pipeline.addLast(new ProtobufVarint32LengthFieldPrepender());
                     pipeline.addLast(new ProtobufEncoder());
-                    pipeline.addLast("MessageAckHandler", messageAckHandler);
+                    pipeline.addLast("MessageRouteHandler", messageRouteHandler);
                 }
             });
         bindConnectionOptions(bootstrap);

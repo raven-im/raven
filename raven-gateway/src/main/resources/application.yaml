@@ -75,7 +75,26 @@ ribbon:
   MaxAutoRetriesNextServer: 1
 
 # 熔断时间
-hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 30000
+hystrix:
+  command:
+    default:
+      fallback:
+        isolation:
+          semaphore:
+            maxConcurrentRequests: 50
+      metrics:
+        rollingStats:
+          timeInMilliseconds: 10000
+          numBuckets: 10
+      execution:
+        isolation:
+          thread:
+            interruptOnCancel: true
+            timeoutInMilliseconds: 5000
+      circuitBreaker:
+        requestVolumeThreshold: 5
+        sleepWindowInMilliseconds=: 60000
+
 
 # actuator相关配置
 management:

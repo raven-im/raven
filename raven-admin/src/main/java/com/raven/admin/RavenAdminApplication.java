@@ -1,5 +1,6 @@
 package com.raven.admin;
 
+import com.alibaba.nacos.spring.context.annotation.config.NacosPropertySource;
 import de.codecentric.boot.admin.server.config.EnableAdminServer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,6 +15,7 @@ import tk.mybatis.spring.annotation.MapperScan;
 @EnableTransactionManagement
 @MapperScan("com.raven.admin.*.mapper")
 @EnableCaching
+@NacosPropertySource(dataId = "raven-admin.yaml")
 public class RavenAdminApplication {
 
     public static void main(String[] args) throws Exception {

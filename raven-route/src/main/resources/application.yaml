@@ -4,4 +4,4 @@ spring:
 
 nacos:
   config:
-    server-addr: 114.67.79.183:8848
+    server-addr: nacos.raven.api:8848

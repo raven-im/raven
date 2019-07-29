@@ -2,26 +2,6 @@ spring:
   application:
     name: raven-route
 
-server:
-  port: 8030
-
-# actuator相关配置
-management:
-  security:
-    enabled: false
-  endpoint:
-    health:
-      show-details: always
-      enabled: true
-    prometheus:
-      enabled: true
-    shutdown:
-      enabled: false
-  endpoints:
-    web:
-      exposure:
-        include: '*' #开放所有监控接口
-
 nacos:
   config:
     server-addr: 114.67.79.183:8848

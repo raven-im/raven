@@ -1,19 +1,6 @@
 spring:
   application:
     name: raven-file
-  http:
-    encoding:
-      charset: UTF-8
-      force: true
-      enabled: true
-  main:
-    banner-mode: log
-  cloud:
-    zookeeper:
-      connect-string: ${site.zookeeper}
-      discovery:
-        prefer-ip-address: true
-
 server:
   port: 8040
 
@@ -34,19 +21,6 @@ management:
       exposure:
         include: '*' #开放所有监控接口
 
-site:
-  zookeeper: 127.0.0.1:2181
-
-fdfs:
-  soTimeout: 1500
-  connectTimeout: 600
-  thumbImage:             #缩略图生成参数
-    width: 150
-    height: 150
-  trackerList:            #TrackerList参数,支持多个
-    - 18.136.206.81:22122
-  pool:
-    max-total: 150         #从池中借出的对象的最大数目
-    max-wait-millis: 100   #获取连接时的最大等待毫秒数100
-  res-host: 18.136.206.81
-  storage-port: 8888
+nacos:
+  config:
+    server-addr: 114.67.79.183:8848

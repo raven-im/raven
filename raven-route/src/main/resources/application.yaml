@@ -1,35 +1,6 @@
 spring:
   application:
     name: raven-route
-  http:
-    encoding:
-      charset: UTF-8
-      force: true
-      enabled: true
-  redis:
-    host: ${site.redis}
-    port: 6379
-    pool:
-      max-active: 20
-      max-wait: 60000
-      max-idle: 5
-      min-idle: 1
-  main:
-    banner-mode: log
-  cloud:
-    zookeeper:
-      connect-string: ${site.zookeeper}
-      discovery:
-        prefer-ip-address: true
-      gateway-server-path: /services/raven-gateway
-  kafka:
-    consumer:
-      group-id: raven1
-      enable-auto-commit: true
-      auto-commit-interval: 1000
-      bootstrap-servers: ${site.kafka}
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
 
 server:
   port: 8030
@@ -51,7 +22,6 @@ management:
       exposure:
         include: '*' #开放所有监控接口
 
-site:
-  zookeeper: 127.0.0.1:2181
-  redis: 127.0.0.1
-  kafka: 127.0.0.1:9092
+nacos:
+  config:
+    server-addr: 114.67.79.183:8848

@@ -5,13 +5,13 @@ public class SnowFlake {
     /**
      * 起始的时间戳
      */
-    private final static long START_STMP = 1480166465631L;
+    private final static long START_STMP = 1564927230391L;
 
     /**
      * 每一部分占用的位数
      */
-    private final static long SEQUENCE_BIT = 8; //序列号占用的位数
-    private final static long MACHINE_BIT = 2;   //机器标识占用的位数
+    private final static long SEQUENCE_BIT = 4; //序列号占用的位数
+    private final static long MACHINE_BIT = 6;   //机器标识占用的位数
     private final static long DATACENTER_BIT = 2;//数据中心占用的位数
 
     /**
@@ -93,7 +93,6 @@ public class SnowFlake {
 
     public static void main(String[] args) {
         SnowFlake snowFlake = new SnowFlake(2, 3);
-
         for (int i = 0; i < (1 << 12); i++) {
             System.out.println(snowFlake.nextId());
         }

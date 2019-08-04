@@ -1,11 +1,12 @@
 package com.raven.gateway.handler;
 
-import com.raven.common.model.ConverListInfo;
+import com.raven.common.model.UserConversation;
 import com.raven.common.model.MsgContent;
 import com.raven.common.netty.IdChannelManager;
 import com.raven.common.protos.Message;
 import com.raven.common.protos.Message.Code;
 import com.raven.common.protos.Message.ConverAck;
+import com.raven.common.protos.Message.ConverInfo;
 import com.raven.common.protos.Message.ConverInfo.Builder;
 import com.raven.common.protos.Message.ConverReq;
 import com.raven.common.protos.Message.ConverType;
@@ -39,91 +40,16 @@ public class ConversationHandler extends SimpleChannelInboundHandler<RavenMessag
     protected void channelRead0(ChannelHandlerContext ctx, RavenMessage message) throws Exception {
         if (message.getType() == Type.ConverReq) {
             ConverReq conversationReq = message.getConverReq();
-            log.info("receive conver request message:{}", conversationReq);
-            if (conversationReq.getType() == OperationType.DETAIL) {
-                ConverListInfo converInfo = converManager
-                    .getConverListInfo(conversationReq.getConversationId());
-                if (null == converInfo) {
-                    sendFailAck(ctx, conversationReq.getId());
-                }
-                Builder builder = Message.ConverInfo.newBuilder();
-                builder.setConverId(converInfo.getId());
-                builder.setType(ConverType.valueOf(converInfo.getType()));
-                if (ConverType.valueOf(converInfo.getType()) == ConverType.SINGLE) {
-                    builder.addAllUidList(converInfo.getUidList());
-                }
-                if (ConverType.valueOf(converInfo.getType()) == ConverType.GROUP) {
-                    builder.setGroupId(converInfo.getGroupId());
-                }
-                MsgContent msgContent = converInfo.getLastContent();
-                MessageContent content = MessageContent.newBuilder().setId(msgContent.getId())
-                    .setUid(msgContent.getUid())
-                    .setType(MessageType.valueOf(msgContent.getType()))
-                    .setContent(msgContent.getContent())
-                    .setTime(msgContent.getTime())
-                    .build();
-                builder.setLastContent(content);
-                builder.setUnCount(converInfo.getUnCount());
-                Message.ConverInfo info = builder.build();
-                ConverAck converAck = ConverAck.newBuilder()
-                    .setId(conversationReq.getId())
-                    .setCode(Code.SUCCESS)
-                    .setTime(System.currentTimeMillis())
-                    .setConverInfo(info)
-                    .build();
-                RavenMessage ravenMessage = RavenMessage.newBuilder()
-                    .setType(Type.ConverAck)
-                    .setConverAck(converAck).build();
-                ctx.writeAndFlush(ravenMessage);
-            } else if (conversationReq.getType() == OperationType.ALL) {
-                List<ConverListInfo> converList = converManager
-                    .getConverListByUid(uidChannelManager.getIdByChannel(ctx.channel()));
-                List<Message.ConverInfo> converInfos = new ArrayList<>();
-                for (ConverListInfo converListInfo : converList) {
-                    MsgContent msgContent = converListInfo.getLastContent();
-                    MessageContent content = MessageContent.newBuilder().setId(msgContent.getId())
-                        .setUid(msgContent.getUid())
-                        .setType(MessageType.valueOf(msgContent.getType()))
-                        .setContent(msgContent.getContent())
-                        .setTime(msgContent.getTime())
-                        .build();
-
-                    Builder builder = Message.ConverInfo.newBuilder();
-                    builder.setConverId(converListInfo.getId());
-                    builder.setType(ConverType.valueOf(converListInfo.getType()));
-                    if (ConverType.valueOf(converListInfo.getType()) == ConverType.SINGLE) {
-                        builder.addAllUidList(converListInfo.getUidList());
-                    }
-                    if (ConverType.valueOf(converListInfo.getType()) == ConverType.GROUP) {
-                        builder.setGroupId(converListInfo.getGroupId());
-                    }
-                    builder.setLastContent(content);
-                    builder.setUnCount(converListInfo.getUnCount());
-                    Message.ConverInfo info = builder.build();
-                    converInfos.add(info);
-                }
-                ConverAck converAck = ConverAck.newBuilder()
-                    .setId(conversationReq.getId())
-                    .setCode(Code.SUCCESS)
-                    .setTime(System.currentTimeMillis())
-                    .addAllConverList(converInfos)
-                    .build();
-                RavenMessage ravenMessage = RavenMessage.newBuilder()
-                    .setType(Type.ConverAck)
-                    .setConverAck(converAck).build();
-                ctx.writeAndFlush(ravenMessage);
-            } else {
-                sendFailAck(ctx, conversationReq.getId());
-            }
+            processConverReqMsg(ctx, conversationReq);
         } else {
             ctx.fireChannelRead(message);
         }
     }
 
-    private void sendFailAck(ChannelHandlerContext ctx, Long id) {
+    private void sendFailAck(ChannelHandlerContext ctx, Long id, Code code) {
         ConverAck converAck = ConverAck.newBuilder()
             .setId(id)
-            .setCode(Code.OPERATION_TYPE_INVALID)
+            .setCode(code)
             .setTime(System.currentTimeMillis())
             .build();
         RavenMessage ravenMessage = RavenMessage.newBuilder()
@@ -132,4 +58,69 @@ public class ConversationHandler extends SimpleChannelInboundHandler<RavenMessag
         ctx.writeAndFlush(ravenMessage);
     }
 
+    private void processConverReqMsg(ChannelHandlerContext ctx, ConverReq conversationReq) {
+        log.debug("receive conver request message:{}", conversationReq);
+        if (conversationReq.getType() == OperationType.DETAIL) {
+            UserConversation userConversation = converManager
+                .getConverListInfo(uidChannelManager.getIdByChannel(ctx.channel()),
+                    conversationReq.getConversationId());
+            if (null == userConversation) {
+                sendFailAck(ctx, conversationReq.getId(), Code.OPERATION_TYPE_INVALID);
+            }
+            ConverInfo info = buildConverInfo(userConversation);
+            ConverAck converAck = ConverAck.newBuilder()
+                .setId(conversationReq.getId())
+                .setCode(Code.SUCCESS)
+                .setTime(System.currentTimeMillis())
+                .setConverInfo(info)
+                .build();
+            RavenMessage ravenMessage = RavenMessage.newBuilder()
+                .setType(Type.ConverAck)
+                .setConverAck(converAck).build();
+            ctx.writeAndFlush(ravenMessage);
+        } else if (conversationReq.getType() == OperationType.ALL) {
+            List<UserConversation> converList = converManager
+                .getConverListByUid(uidChannelManager.getIdByChannel(ctx.channel()));
+            List<ConverInfo> converInfos = new ArrayList<>();
+            for (UserConversation converListInfo : converList) {
+                ConverInfo info = buildConverInfo(converListInfo);
+                converInfos.add(info);
+            }
+            ConverAck converAck = ConverAck.newBuilder()
+                .setId(conversationReq.getId())
+                .setCode(Code.SUCCESS)
+                .setTime(System.currentTimeMillis())
+                .addAllConverList(converInfos)
+                .build();
+            RavenMessage ravenMessage = RavenMessage.newBuilder()
+                .setType(Type.ConverAck)
+                .setConverAck(converAck).build();
+            ctx.writeAndFlush(ravenMessage);
+        } else {
+            sendFailAck(ctx, conversationReq.getId(), Code.OPERATION_TYPE_INVALID);
+        }
+    }
+
+    private ConverInfo buildConverInfo(UserConversation userConversation) {
+        Builder builder = ConverInfo.newBuilder();
+        builder.setConverId(userConversation.getId());
+        builder.setType(ConverType.valueOf(userConversation.getType()));
+        if (ConverType.valueOf(userConversation.getType()) == ConverType.SINGLE) {
+            builder.addAllUidList(userConversation.getUidList());
+        }
+        if (ConverType.valueOf(userConversation.getType()) == ConverType.GROUP) {
+            builder.setGroupId(userConversation.getGroupId());
+        }
+        MsgContent msgContent = userConversation.getLastContent();
+        MessageContent content = MessageContent.newBuilder().setId(msgContent.getId())
+            .setUid(msgContent.getUid())
+            .setType(MessageType.valueOf(msgContent.getType()))
+            .setContent(msgContent.getContent())
+            .setTime(msgContent.getTime())
+            .build();
+        builder.setLastContent(content);
+        builder.setReadMsgId(userConversation.getReadMsgId());
+        ConverInfo info = builder.build();
+        return info;
+    }
 }

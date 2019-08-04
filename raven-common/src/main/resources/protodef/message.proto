@@ -56,7 +56,7 @@ message ServerInfo {
 
 // 上下行消息
 message UpDownMessage {
-  uint64 id = 1; // 服务端生成消息ID
+  uint64 id = 1; // 服务端消息ID
   uint64 cid = 2; // 客户端消息ID
   string fromUid = 3; // 发送人ID
   string targetUid = 4; // 接收人ID
@@ -79,8 +79,8 @@ enum HeartBeatType {
 
 // 消息ACK
 message MessageAck {
-  uint64 id = 1; // 服务端生成消息ID
-  uint64 cid = 2; // 对应收到的消息ID
+  uint64 id = 1; // 服务端消息ID
+  uint64 cid = 2; // 客户端消息ID
   string targetUid = 3; // 接收人ID
   string converId = 4; // 会话id
   uint64 time = 5; // 发送时间
@@ -122,19 +122,21 @@ enum MessageType {
   VIDEO = 3;
 }
 
-// 历史消息请求  消息ID使用客户端生成
+// 历史消息请求
 message HisMessagesReq {
-  uint64 id = 1; // 消息ID
+  uint64 id = 1; // 消息ID 客户端生成
   string converId = 2; // 会话id
   uint64 beginId = 3; // 消息起始id
 }
 
-// 历史消息
+// 历史消息响应
 message HisMessagesAck {
-  uint64 id = 1; // 消息ID
+  uint64 id = 1; // 消息ID  客户端生成
   string converId = 2; // 会话id
-  repeated MessageContent messageList = 4; // 消息列表
+  repeated MessageContent messageList = 3; // 消息列表
+  uint64 unReadCount = 4; // 历史消息未读数
 }
+
 // 会话操作请求  消息ID使用客户端生成
 message ConverReq {
   uint64 id = 1; // 消息ID
@@ -162,7 +164,7 @@ message ConverInfo {
   ConverType type = 2; // 会话类型
   repeated string uidList = 3; // 单聊会话 用户列表
   string groupId = 4; //  群会话 群ID
-  uint64 unCount = 5; // 未读数
+  uint64 readMsgId = 5; // 已读消息ID
   MessageContent lastContent = 6; // 最后一条消息
 }
 

@@ -83,12 +83,23 @@ public class ClientFromHandler extends SimpleChannelInboundHandler<RavenMessage>
                     .setConverReq(converReq).build();
                 ctx.writeAndFlush(ravenMessage);
             }
-        } else if (message.getType() == Type.MessageAck) {
+        }
+        if (message.getType() == Type.MessageAck) {
             MessageAck messageAck = message.getMessageAck();
             log.info("receive message ack:{}", messageAck);
-        } else if (message.getType() == Type.UpDownMessage) {
+        }
+        if (message.getType() == Type.UpDownMessage) {
             UpDownMessage upDownMessage = message.getUpDownMessage();
             log.info("receive down message:{}", upDownMessage);
+            MessageAck messageAck = MessageAck.newBuilder()
+                .setId(upDownMessage.getId())
+                .setConverId(upDownMessage.getConverId())
+                .setCode(Code.SUCCESS)
+                .setTime(System.currentTimeMillis())
+                .build();
+            RavenMessage ravenMessage = RavenMessage.newBuilder().setType(Type.MessageAck)
+                .setMessageAck(messageAck).build();
+            ctx.writeAndFlush(ravenMessage);
         }
         if (message.getType() == Type.HeartBeat) {
             HeartBeat heartBeat = message.getHeartBeat();
@@ -128,7 +139,7 @@ public class ClientFromHandler extends SimpleChannelInboundHandler<RavenMessage>
         if (message.getType() == Type.ConverAck) {
             ConverAck converAck = message.getConverAck();
             log.info("receive conver ack message:{}", converAck);
-            long beginTime = 1L;
+            Long beginTime = Long.valueOf("1");
             for (ConverInfo converInfo : converAck.getConverListList()) {
                 HisMessagesReq hisMessagesReq = HisMessagesReq.newBuilder()
                     .setId(ClientFrom.snowFlake.nextId())

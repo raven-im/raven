@@ -58,6 +58,15 @@ public class ClientToHandler extends SimpleChannelInboundHandler<RavenMessage> {
         } else if (message.getType() == Type.UpDownMessage) {
             UpDownMessage upDownMessage = message.getUpDownMessage();
             log.info("receive down message:{}", upDownMessage);
+            MessageAck messageAck = MessageAck.newBuilder()
+                .setId(upDownMessage.getId())
+                .setConverId(upDownMessage.getConverId())
+                .setCode(Code.SUCCESS)
+                .setTime(System.currentTimeMillis())
+                .build();
+            RavenMessage ravenMessage = RavenMessage.newBuilder().setType(Type.MessageAck)
+                .setMessageAck(messageAck).build();
+            ctx.writeAndFlush(ravenMessage);
             MessageContent content = MessageContent.newBuilder().setUid(uid)
                 .setType(MessageType.TEXT)
                 .setContent("hello world").build();
@@ -67,7 +76,7 @@ public class ClientToHandler extends SimpleChannelInboundHandler<RavenMessage> {
                 .setTargetUid(upDownMessage.getFromUid())
                 .setConverType(ConverType.SINGLE)
                 .setContent(content).build();
-            RavenMessage ravenMessage = RavenMessage.newBuilder().setType(Type.UpDownMessage)
+            ravenMessage = RavenMessage.newBuilder().setType(Type.UpDownMessage)
                 .setUpDownMessage(upDownMessage1).build();
             ctx.writeAndFlush(ravenMessage);
 

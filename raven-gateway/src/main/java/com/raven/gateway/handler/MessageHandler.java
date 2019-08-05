@@ -46,7 +46,7 @@ public class MessageHandler extends SimpleChannelInboundHandler<RavenMessage> {
         if (message.getType() == Type.UpDownMessage) {
             UpDownMessage upMessage = message.getUpDownMessage();
             if (!isMsgClientIdValid(ctx, upMessage)) {
-                log.error("illegal client msg id.");
+                log.error(" client msg id repeat:{}",upMessage.getCid());
                 sendFailAck(ctx, upMessage, Code.CLIENT_ID_REPEAT);
                 return;
             } else {
@@ -153,7 +153,7 @@ public class MessageHandler extends SimpleChannelInboundHandler<RavenMessage> {
             return false;
         }
         String uid = uidChannelManager.getIdByChannel(ctx.channel());
-        return !converManager.isClientIdExist(uid, upMessage.getCid());
+        return !converManager.isUerCidExist(uid, upMessage.getCid());
     }
 
     private void saveUserClientId(ChannelHandlerContext ctx, UpDownMessage upMessage) {
@@ -167,6 +167,5 @@ public class MessageHandler extends SimpleChannelInboundHandler<RavenMessage> {
         Result result = kafkaProducerManager.send(topic, String.valueOf(id), message);
         return result.getCode().intValue() == ResultCode.COMMON_SUCCESS.getCode();
     }
-
 
 }

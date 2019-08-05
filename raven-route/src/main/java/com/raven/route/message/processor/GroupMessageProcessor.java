@@ -64,11 +64,9 @@ public class GroupMessageProcessor implements Runnable {
                     channel.writeAndFlush(ravenMessage);
                 } else {
                     log.error("cannot find channel. server:{}", server);
-                    converManager.incrUserConverUnCount(uid, upDownMessage.getConverId(), 1);
                 }
             } else {
-                log.error("uid:{} no server to push down msg:{}.", uid, upDownMessage.getId());
-                converManager.incrUserConverUnCount(uid, upDownMessage.getConverId(), 1);
+                log.info("uid:{} no server to push down msg:{}.", uid, upDownMessage.getId());
             }
         }
     }

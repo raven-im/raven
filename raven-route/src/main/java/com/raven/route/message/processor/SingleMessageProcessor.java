@@ -66,8 +66,7 @@ public class SingleMessageProcessor implements Runnable {
                     log.error("cannot find channel！ server:{}", server);
                 }
             } else {
-                log.error("uid:{} no server to push down msg:{}.", uid, upDownMessage.getId());
-                converManager.incrUserConverUnCount(uid, upDownMessage.getConverId(), 1);
+                log.info("uid:{} no server to push down msg:{}.", uid, upDownMessage.getId());
             }
         }
     }

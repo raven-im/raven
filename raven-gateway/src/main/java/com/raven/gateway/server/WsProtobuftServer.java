@@ -5,6 +5,7 @@ import static io.netty.buffer.Unpooled.wrappedBuffer;
 import com.google.protobuf.MessageLite;
 import com.google.protobuf.MessageLiteOrBuilder;
 import com.raven.common.protos.Message;
+import com.raven.gateway.handler.AckMessageHandler;
 import com.raven.gateway.handler.ConversationHandler;
 import com.raven.gateway.handler.HeartBeatHandler;
 import com.raven.gateway.handler.HistoryHandler;
@@ -70,6 +71,9 @@ public class WsProtobuftServer {
 
     @Autowired
     private ConversationHandler conversationHandler;
+
+    @Autowired
+    private AckMessageHandler ackMessageHandler;
 
     @Autowired
     private HistoryHandler historyHandler;
@@ -145,6 +149,7 @@ public class WsProtobuftServer {
                     pipeline.addLast("LoginAuthHandler", loginAuthHandler);
                     pipeline.addLast("HeartBeatHandler", heartBeatHandler);
                     pipeline.addLast(executorGroup, "MessageHandler", messageHandler);
+                    pipeline.addLast(executorGroup,"AckMessageHandler", ackMessageHandler);
                     pipeline.addLast(executorGroup, "ConversationHandler", conversationHandler);
                     pipeline.addLast(executorGroup, "HistoryHandler", historyHandler);
 

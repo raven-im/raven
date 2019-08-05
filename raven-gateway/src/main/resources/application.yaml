@@ -5,3 +5,5 @@ spring:
 nacos:
   config:
     server-addr: nacos.raven.api:8848
+
+node-id: 1

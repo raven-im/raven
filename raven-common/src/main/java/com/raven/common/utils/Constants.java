@@ -8,6 +8,8 @@ public class Constants {
     /**
      * redis key
      */
+    public static final String USER_TOKEN = "token_";
+
     public static final String USER_ROUTE_KEY = "user_route_key";
 
     public static final String GATEWAY_SERVER_ROUTE_KEY = "gateway_server_route_key_";
@@ -21,6 +23,8 @@ public class Constants {
     public static final String PREFIX_GROUP_MEMBER = "group_member_";
 
     public static final String PREFIX_USER_CID = "user_cid_";
+
+    public static final String PREFIX_WAIT_USER_ACK_MID = "wait_user_ack_mid_";
     /*
      * Authentication.
      * */

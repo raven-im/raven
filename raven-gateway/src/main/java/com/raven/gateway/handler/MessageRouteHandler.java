@@ -8,6 +8,7 @@ import com.raven.common.protos.Message.RavenMessage;
 import com.raven.common.protos.Message.RavenMessage.Type;
 import com.raven.common.protos.Message.UpDownMessage;
 import com.raven.common.utils.SnowFlake;
+import com.raven.storage.conver.ConverManager;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
@@ -17,6 +18,7 @@ import io.netty.handler.timeout.IdleStateEvent;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -29,6 +31,9 @@ public class MessageRouteHandler extends SimpleChannelInboundHandler<RavenMessag
 
     @Autowired
     private SnowFlake snowFlake;
+
+    @Autowired
+    private ConverManager converManager;
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
@@ -51,8 +56,7 @@ public class MessageRouteHandler extends SimpleChannelInboundHandler<RavenMessag
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, RavenMessage msg) throws Exception {
-        NettyAttrUtil
-            .updateReaderTime(ctx.channel(), System.currentTimeMillis());
+        NettyAttrUtil.updateReaderTime(ctx.channel(), System.currentTimeMillis());
         if (msg.getType() == Type.HeartBeat) {
             HeartBeat heartBeat = msg.getHeartBeat();
             log.info("receive hearbeat :{}", heartBeat);
@@ -68,11 +72,12 @@ public class MessageRouteHandler extends SimpleChannelInboundHandler<RavenMessag
         } else if (msg.getType() == Type.UpDownMessage) {
             UpDownMessage downMessage = msg.getUpDownMessage();
             log.info("receive down message:{}", downMessage);
+            converManager.saveWaitUserAckMsg(downMessage.getTargetUid(), downMessage.getConverId(),
+                downMessage.getId());
             List<Channel> channels = uidChannelManager
                 .getChannelsById(downMessage.getTargetUid());
             RavenMessage ravenMessage = RavenMessage.newBuilder().setType(Type.UpDownMessage)
                 .setUpDownMessage(downMessage).build();
-            // TODO 失败策略
             for (Channel channel : channels) {
                 channel.writeAndFlush(ravenMessage).addListener(future -> {
                     if (!future.isSuccess()) {

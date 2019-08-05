@@ -2,6 +2,7 @@ package com.raven.gateway.server;
 
 import com.raven.common.loadbalance.GatewayServerInfo;
 import com.raven.common.protos.Message;
+import com.raven.gateway.handler.AckMessageHandler;
 import com.raven.gateway.handler.ConversationHandler;
 import com.raven.gateway.handler.HeartBeatHandler;
 import com.raven.gateway.handler.HistoryHandler;
@@ -71,6 +72,9 @@ public class TcpProtobufServer {
     private RouteManager routeManager;
 
     @Autowired
+    private AckMessageHandler ackMessageHandler;
+
+    @Autowired
     private ZookeeperDiscoveryProperties zookeeperDiscoveryProperties;
 
     @PostConstruct
@@ -97,6 +101,7 @@ public class TcpProtobufServer {
                     pipeline.addLast("LoginAuthHandler", loginAuthHandler);
                     pipeline.addLast("HeartBeatHandler", heartBeatHandler);
                     pipeline.addLast(executorGroup,"MessageHandler", messageHandler);
+                    pipeline.addLast(executorGroup,"AckMessageHandler", ackMessageHandler);
                     pipeline.addLast(executorGroup,"ConversationHandler", conversationHandler);
                     pipeline.addLast(executorGroup,"HistoryHandler", historyHandler);
                 }

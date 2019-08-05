@@ -1,23 +1,18 @@
 package com.raven.common.utils;
 
-/**
- * Author zxx
- * Description twitter的雪花算法 生成唯一自增ID
- * Date Created on 2018/5/27
- */
 public class SnowFlake {
 
     /**
      * 起始的时间戳
      */
-    private final static long START_STMP = 1480166465631L;
+    private final static long START_STMP = 1564927230391L;
 
     /**
      * 每一部分占用的位数
      */
-    private final static long SEQUENCE_BIT = 12; //序列号占用的位数
-    private final static long MACHINE_BIT = 5;   //机器标识占用的位数
-    private final static long DATACENTER_BIT = 5;//数据中心占用的位数
+    private final static long SEQUENCE_BIT = 4; //序列号占用的位数
+    private final static long MACHINE_BIT = 6;   //机器标识占用的位数
+    private final static long DATACENTER_BIT = 2;//数据中心占用的位数
 
     /**
      * 每一部分的最大值
@@ -92,9 +87,12 @@ public class SnowFlake {
         return System.currentTimeMillis();
     }
 
+    public long getMachineId() {
+        return machineId;
+    }
+
     public static void main(String[] args) {
         SnowFlake snowFlake = new SnowFlake(2, 3);
-
         for (int i = 0; i < (1 << 12); i++) {
             System.out.println(snowFlake.nextId());
         }

@@ -53,8 +53,8 @@ public class KafkaConsumerConfig<K, V> {
             for (MessageListener messageListener : messageListeners) {
                 String topic = messageListener.getTopic();
                 if (StringUtils.isBlank(topic)) {
-                    log.warn("MessageListener's topic is null. ["
-                        + messageListener.getClass().getCanonicalName() + "]");
+                    log.warn("MessageListener:{} topic is null",
+                        messageListener.getClass().getCanonicalName());
                     continue;
                 }
                 messageListenerMap.put(topic, messageListener);

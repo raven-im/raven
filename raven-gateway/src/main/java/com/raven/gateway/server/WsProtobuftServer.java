@@ -9,7 +9,7 @@ import com.raven.gateway.handler.AckMessageHandler;
 import com.raven.gateway.handler.ConversationHandler;
 import com.raven.gateway.handler.HeartBeatHandler;
 import com.raven.gateway.handler.HistoryHandler;
-import com.raven.gateway.handler.LoginAuthHandler;
+import com.raven.gateway.handler.AuthenticationHandler;
 import com.raven.gateway.handler.MessageHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.ByteBuf;
@@ -64,7 +64,7 @@ public class WsProtobuftServer {
     private HeartBeatHandler heartBeatHandler;
 
     @Autowired
-    private LoginAuthHandler loginAuthHandler;
+    private AuthenticationHandler authenticationHandler;
 
     @Autowired
     private MessageHandler messageHandler;
@@ -146,7 +146,7 @@ public class WsProtobuftServer {
                     pipeline
                         .addLast(new ProtobufDecoder(Message.RavenMessage.getDefaultInstance()));
                     // 业务处理器
-                    pipeline.addLast("LoginAuthHandler", loginAuthHandler);
+                    pipeline.addLast("AuthenticationHandler", authenticationHandler);
                     pipeline.addLast("HeartBeatHandler", heartBeatHandler);
                     pipeline.addLast(executorGroup, "MessageHandler", messageHandler);
                     pipeline.addLast(executorGroup,"AckMessageHandler", ackMessageHandler);

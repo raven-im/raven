@@ -6,6 +6,7 @@ import com.raven.common.protos.Message.HeartBeat;
 import com.raven.common.protos.Message.HeartBeatType;
 import com.raven.common.protos.Message.RavenMessage;
 import com.raven.common.protos.Message.RavenMessage.Type;
+import com.raven.common.utils.JsonHelper;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -19,14 +20,14 @@ import org.springframework.stereotype.Component;
 public class MessageHandler extends SimpleChannelInboundHandler<RavenMessage> {
 
     @Autowired
-    private ServerChannelManager internalServerChannelManager;
+    private ServerChannelManager gateWayServerChannelManager;
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, RavenMessage message)
         throws Exception {
         if (message.getType() == Type.HeartBeat) {
             HeartBeat heartBeat = message.getHeartBeat();
-            log.info("receive hearbeat :{}", heartBeat);
+            log.info("receive hearbeat :{}",  JsonHelper.toJsonString(heartBeat));
             if (heartBeat.getHeartBeatType() == HeartBeatType.PING) {
                 HeartBeat heartBeatAck = HeartBeat.newBuilder()
                     .setId(heartBeat.getId())
@@ -46,9 +47,9 @@ public class MessageHandler extends SimpleChannelInboundHandler<RavenMessage> {
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-        log.info("raven-gateway server disconnected address:{}", ctx.channel().remoteAddress());
-        GatewayServerInfo server = internalServerChannelManager.getServerByChannel(ctx.channel());
-        internalServerChannelManager.removeServer(server);
+        log.info("raven gateway server disconnected address:{}", ctx.channel().remoteAddress());
+        GatewayServerInfo server = gateWayServerChannelManager.getServerByChannel(ctx.channel());
+        gateWayServerChannelManager.removeServer(server);
     }
 
     @Override

@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 public class GroupMessageExecutor {
 
     @Autowired
-    private ServerChannelManager internalServerChannelManager;
+    private ServerChannelManager gateWayServerChannelManager;
 
     @Autowired
     private ConverManager converManager;
@@ -23,7 +23,7 @@ public class GroupMessageExecutor {
     private RouteManager routeManager;
 
     public void saveAndSendMsg(String message) {
-        GroupMessageProcessor processor = new GroupMessageProcessor(internalServerChannelManager,
+        GroupMessageProcessor processor = new GroupMessageProcessor(gateWayServerChannelManager,
             converManager, routeManager, message);
         CustomConfig.msgProcessorSevice.submit(processor);
     }

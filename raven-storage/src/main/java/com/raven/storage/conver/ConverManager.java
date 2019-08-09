@@ -107,10 +107,12 @@ public class ConverManager {
             : conversation.getType() == ConverType.SINGLE.getNumber();
     }
 
-    public boolean isGroupConverIdValid(String converId) {
+    public String getGroupIdByConverId(String converId) {
         Conversation conversation = getConversation(converId);
-        return conversation == null ? false
-            : conversation.getType() == ConverType.GROUP.getNumber();
+        if (conversation == null ? false : conversation.getType() == ConverType.GROUP.getNumber()) {
+            return conversation.getGroupId();
+        }
+        return null;
     }
 
     public void saveMsg2Conver(MessageContent msg, String converId) {
@@ -123,7 +125,7 @@ public class ConverManager {
     public List<MsgContent> getHistoryMsg(String converId, Long beginId) {
         List<MsgContent> msgContents = new ArrayList<>();
         Set<String> messages = redisTemplate.opsForZSet()
-            .rangeByScore(PREFIX_MESSAGE_ID + converId, beginId+1,
+            .rangeByScore(PREFIX_MESSAGE_ID + converId, beginId + 1,
                 Long.MAX_VALUE, 0, 100);
         for (String message : messages) {
             MsgContent msgContent = JsonHelper.readValue(message, MsgContent.class);
@@ -134,7 +136,7 @@ public class ConverManager {
 
     public long getHistoryUnReadCount(String converId, Long beginId) {
         Long unReadCount = redisTemplate.boundZSetOps(PREFIX_MESSAGE_ID + converId)
-            .count(beginId+1, Long.MAX_VALUE);
+            .count(beginId + 1, Long.MAX_VALUE);
         return unReadCount;
     }
 
@@ -215,7 +217,12 @@ public class ConverManager {
     }
 
     public void updateUserReadMessageId(String uid, String converId, Long msgId) {
-        redisTemplate.boundHashOps(PREFIX_CONVERSATION_LIST + uid).put(converId, msgId);
+        Object oldMsgId = redisTemplate.boundHashOps(PREFIX_CONVERSATION_LIST + uid).get(converId);
+        if (null != oldMsgId) {
+            if ((Long) oldMsgId < msgId) {
+                redisTemplate.boundHashOps(PREFIX_CONVERSATION_LIST + uid).put(converId, msgId);
+            }
+        }
     }
 
     public Long getUserReadMessageId(String uid, String converId) {

@@ -13,6 +13,7 @@ import com.raven.common.protos.Message.MessageType;
 import com.raven.common.protos.Message.RavenMessage;
 import com.raven.common.protos.Message.RavenMessage.Type;
 import com.raven.common.protos.Message.UpDownMessage;
+import com.raven.common.utils.JsonHelper;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import java.io.IOException;
@@ -54,10 +55,10 @@ public class ClientInvitee1Handler extends SimpleChannelInboundHandler<RavenMess
             }
         } else if (message.getType() == Type.MessageAck) {
             MessageAck messageAck = message.getMessageAck();
-            log.info("receive message ack:{}", messageAck);
+            log.info("receive message ack:{}", JsonHelper.toJsonString(messageAck));
         } else if (message.getType() == Type.UpDownMessage) {
             UpDownMessage upDownMessage = message.getUpDownMessage();
-            log.info("receive down message:{}", upDownMessage);
+            log.info("receive down message:{}", JsonHelper.toJsonString(upDownMessage));
             MessageContent content = MessageContent.newBuilder()
                 .setId(ClientOwner.snowFlake.nextId())
                 .setUid(uid)
@@ -77,7 +78,7 @@ public class ClientInvitee1Handler extends SimpleChannelInboundHandler<RavenMess
             ctx.writeAndFlush(ravenMessage);
         } else if (message.getType() == Type.HeartBeat) {
             HeartBeat heartBeat = message.getHeartBeat();
-            log.info("receive hearbeat :{}", heartBeat);
+            log.info("receive hearbeat :{}", JsonHelper.toJsonString(heartBeat));
             if (heartBeat.getHeartBeatType() == HeartBeatType.PING) {
                 HeartBeat heartBeatAck = HeartBeat.newBuilder()
                     .setId(heartBeat.getId())

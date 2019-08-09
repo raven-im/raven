@@ -49,9 +49,8 @@ public class Utils {
             stringEntity.setContentEncoding("UTF-8");
             httpPost.setEntity(stringEntity);
             String responseBody = httpClient.execute(httpPost, responseHandler);
-            JsonNode node = JsonHelper.getJacksonMapper().readTree(responseBody);
-            JsonNode nodeGroup = JsonHelper.getJacksonMapper()
-                .readTree(node.get("data").toString());
+            JsonNode node = JsonHelper.mapper.readTree(responseBody);
+            JsonNode nodeGroup = JsonHelper.mapper.readTree(node.get("data").toString());
             return new GroupOutParam(nodeGroup.get("groupId").asText(),
                 nodeGroup.get("converId").asText());
         } catch (Exception e) {
@@ -77,9 +76,8 @@ public class Utils {
                 log.info(header.toString());
             }
             String responseBody = httpClient.execute(httpGet, responseHandler);
-            JsonNode node = JsonHelper.getJacksonMapper().readTree(responseBody);
-            JsonNode nodeGroup = JsonHelper.getJacksonMapper()
-                .readTree(node.get("data").toString());
+            JsonNode node = JsonHelper.mapper.readTree(responseBody);
+            JsonNode nodeGroup = JsonHelper.mapper.readTree(node.get("data").toString());
             token = nodeGroup.get("token").asText();
         } catch (Exception e) {
             log.error(e.getMessage(), e);
@@ -93,9 +91,8 @@ public class Utils {
         OutGatewaySiteInfoParam outParam = new OutGatewaySiteInfoParam();
         try {
             String responseBody = httpClient.execute(httpGet, responseHandler);
-            JsonNode node = JsonHelper.getJacksonMapper().readTree(responseBody);
-            JsonNode nodeGroup = JsonHelper.getJacksonMapper()
-                .readTree(node.get("data").toString());
+            JsonNode node = JsonHelper.mapper.readTree(responseBody);
+            JsonNode nodeGroup = JsonHelper.mapper.readTree(node.get("data").toString());
             outParam.setIp(nodeGroup.get("ip").asText());
             outParam.setPort(nodeGroup.get("port").asInt());
         } catch (Exception e) {

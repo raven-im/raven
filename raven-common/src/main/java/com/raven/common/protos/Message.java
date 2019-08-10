@@ -1016,9 +1016,9 @@ public final class Message {
        */
       NotifyMessage(8),
       /**
-       * <code>ConverReq = 11;</code>
+       * <code>ConverReq = 9;</code>
        */
-      ConverReq(11),
+      ConverReq(9),
       /**
        * <code>ConverAck = 10;</code>
        */
@@ -1063,9 +1063,9 @@ public final class Message {
        */
       public static final int NotifyMessage_VALUE = 8;
       /**
-       * <code>ConverReq = 11;</code>
+       * <code>ConverReq = 9;</code>
        */
-      public static final int ConverReq_VALUE = 11;
+      public static final int ConverReq_VALUE = 9;
       /**
        * <code>ConverAck = 10;</code>
        */
@@ -1099,7 +1099,7 @@ public final class Message {
           case 6: return HisMessagesReq;
           case 7: return HisMessagesAck;
           case 8: return NotifyMessage;
-          case 11: return ConverReq;
+          case 9: return ConverReq;
           case 10: return ConverAck;
           default: return null;
         }
@@ -6231,7 +6231,7 @@ public final class Message {
      * 内容
      * </pre>
      *
-     * <code>.com.raven.common.protos.MessageContent content = 9;</code>
+     * <code>.com.raven.common.protos.MessageContent content = 8;</code>
      */
     boolean hasContent();
     /**
@@ -6239,7 +6239,7 @@ public final class Message {
      * 内容
      * </pre>
      *
-     * <code>.com.raven.common.protos.MessageContent content = 9;</code>
+     * <code>.com.raven.common.protos.MessageContent content = 8;</code>
      */
     com.raven.common.protos.Message.MessageContent getContent();
     /**
@@ -6247,7 +6247,7 @@ public final class Message {
      * 内容
      * </pre>
      *
-     * <code>.com.raven.common.protos.MessageContent content = 9;</code>
+     * <code>.com.raven.common.protos.MessageContent content = 8;</code>
      */
     com.raven.common.protos.Message.MessageContentOrBuilder getContentOrBuilder();
   }
@@ -6341,7 +6341,7 @@ public final class Message {
               converType_ = rawValue;
               break;
             }
-            case 74: {
+            case 66: {
               com.raven.common.protos.Message.MessageContent.Builder subBuilder = null;
               if (content_ != null) {
                 subBuilder = content_.toBuilder();
@@ -6605,14 +6605,14 @@ public final class Message {
       return result == null ? com.raven.common.protos.Message.ConverType.UNRECOGNIZED : result;
     }
 
-    public static final int CONTENT_FIELD_NUMBER = 9;
+    public static final int CONTENT_FIELD_NUMBER = 8;
     private com.raven.common.protos.Message.MessageContent content_;
     /**
      * <pre>
      * 内容
      * </pre>
      *
-     * <code>.com.raven.common.protos.MessageContent content = 9;</code>
+     * <code>.com.raven.common.protos.MessageContent content = 8;</code>
      */
     public boolean hasContent() {
       return content_ != null;
@@ -6622,7 +6622,7 @@ public final class Message {
      * 内容
      * </pre>
      *
-     * <code>.com.raven.common.protos.MessageContent content = 9;</code>
+     * <code>.com.raven.common.protos.MessageContent content = 8;</code>
      */
     public com.raven.common.protos.Message.MessageContent getContent() {
       return content_ == null ? com.raven.common.protos.Message.MessageContent.getDefaultInstance() : content_;
@@ -6632,7 +6632,7 @@ public final class Message {
      * 内容
      * </pre>
      *
-     * <code>.com.raven.common.protos.MessageContent content = 9;</code>
+     * <code>.com.raven.common.protos.MessageContent content = 8;</code>
      */
     public com.raven.common.protos.Message.MessageContentOrBuilder getContentOrBuilder() {
       return getContent();
@@ -6674,7 +6674,7 @@ public final class Message {
         output.writeEnum(7, converType_);
       }
       if (content_ != null) {
-        output.writeMessage(9, getContent());
+        output.writeMessage(8, getContent());
       }
       unknownFields.writeTo(output);
     }
@@ -6711,7 +6711,7 @@ public final class Message {
       }
       if (content_ != null) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(9, getContent());
+          .computeMessageSize(8, getContent());
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -7583,7 +7583,7 @@ public final class Message {
        * 内容
        * </pre>
        *
-       * <code>.com.raven.common.protos.MessageContent content = 9;</code>
+       * <code>.com.raven.common.protos.MessageContent content = 8;</code>
        */
       public boolean hasContent() {
         return contentBuilder_ != null || content_ != null;
@@ -7593,7 +7593,7 @@ public final class Message {
        * 内容
        * </pre>
        *
-       * <code>.com.raven.common.protos.MessageContent content = 9;</code>
+       * <code>.com.raven.common.protos.MessageContent content = 8;</code>
        */
       public com.raven.common.protos.Message.MessageContent getContent() {
         if (contentBuilder_ == null) {
@@ -7607,7 +7607,7 @@ public final class Message {
        * 内容
        * </pre>
        *
-       * <code>.com.raven.common.protos.MessageContent content = 9;</code>
+       * <code>.com.raven.common.protos.MessageContent content = 8;</code>
        */
       public Builder setContent(com.raven.common.protos.Message.MessageContent value) {
         if (contentBuilder_ == null) {
@@ -7627,7 +7627,7 @@ public final class Message {
        * 内容
        * </pre>
        *
-       * <code>.com.raven.common.protos.MessageContent content = 9;</code>
+       * <code>.com.raven.common.protos.MessageContent content = 8;</code>
        */
       public Builder setContent(
           com.raven.common.protos.Message.MessageContent.Builder builderForValue) {
@@ -7645,7 +7645,7 @@ public final class Message {
        * 内容
        * </pre>
        *
-       * <code>.com.raven.common.protos.MessageContent content = 9;</code>
+       * <code>.com.raven.common.protos.MessageContent content = 8;</code>
        */
       public Builder mergeContent(com.raven.common.protos.Message.MessageContent value) {
         if (contentBuilder_ == null) {
@@ -7667,7 +7667,7 @@ public final class Message {
        * 内容
        * </pre>
        *
-       * <code>.com.raven.common.protos.MessageContent content = 9;</code>
+       * <code>.com.raven.common.protos.MessageContent content = 8;</code>
        */
       public Builder clearContent() {
         if (contentBuilder_ == null) {
@@ -7685,7 +7685,7 @@ public final class Message {
        * 内容
        * </pre>
        *
-       * <code>.com.raven.common.protos.MessageContent content = 9;</code>
+       * <code>.com.raven.common.protos.MessageContent content = 8;</code>
        */
       public com.raven.common.protos.Message.MessageContent.Builder getContentBuilder() {
         
@@ -7697,7 +7697,7 @@ public final class Message {
        * 内容
        * </pre>
        *
-       * <code>.com.raven.common.protos.MessageContent content = 9;</code>
+       * <code>.com.raven.common.protos.MessageContent content = 8;</code>
        */
       public com.raven.common.protos.Message.MessageContentOrBuilder getContentOrBuilder() {
         if (contentBuilder_ != null) {
@@ -7712,7 +7712,7 @@ public final class Message {
        * 内容
        * </pre>
        *
-       * <code>.com.raven.common.protos.MessageContent content = 9;</code>
+       * <code>.com.raven.common.protos.MessageContent content = 8;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           com.raven.common.protos.Message.MessageContent, com.raven.common.protos.Message.MessageContent.Builder, com.raven.common.protos.Message.MessageContentOrBuilder> 
@@ -17329,7 +17329,7 @@ public final class Message {
       "nAck\020\001\022\016\n\nServerInfo\020\002\022\021\n\rUpDownMessage\020" +
       "\003\022\r\n\tHeartBeat\020\004\022\016\n\nMessageAck\020\005\022\022\n\016HisM" +
       "essagesReq\020\006\022\022\n\016HisMessagesAck\020\007\022\021\n\rNoti" +
-      "fyMessage\020\010\022\r\n\tConverReq\020\013\022\r\n\tConverAck\020" +
+      "fyMessage\020\010\022\r\n\tConverReq\020\t\022\r\n\tConverAck\020" +
       "\nB\006\n\004data\"/\n\005Login\022\n\n\002id\030\001 \001(\004\022\013\n\003uid\030\002 " +
       "\001(\t\022\r\n\005token\030\003 \001(\t\"^\n\010LoginAck\022\n\n\002id\030\001 \001" +
       "(\004\022+\n\004code\030\002 \001(\0162\035.com.raven.common.prot" +
@@ -17339,7 +17339,7 @@ public final class Message {
       "cid\030\002 \001(\004\022\017\n\007fromUid\030\003 \001(\t\022\021\n\ttargetUid\030" +
       "\004 \001(\t\022\017\n\007groupId\030\005 \001(\t\022\020\n\010converId\030\006 \001(\t" +
       "\0227\n\nconverType\030\007 \001(\0162#.com.raven.common." +
-      "protos.ConverType\0228\n\007content\030\t \001(\0132\'.com" +
+      "protos.ConverType\0228\n\007content\030\010 \001(\0132\'.com" +
       ".raven.common.protos.MessageContent\"V\n\tH" +
       "eartBeat\022\n\n\002id\030\001 \001(\004\022=\n\rheartBeatType\030\002 " +
       "\001(\0162&.com.raven.common.protos.HeartBeatT" +

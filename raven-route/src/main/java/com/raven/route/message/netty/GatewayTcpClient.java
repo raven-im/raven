@@ -37,11 +37,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-@DependsOn("internalServerChannelManager")
+@DependsOn("gateWayServerChannelManager")
 public class GatewayTcpClient {
 
     @Autowired
-    private ServerChannelManager internalServerChannelManager;
+    private ServerChannelManager gateWayServerChannelManager;
 
     @Autowired
     private MessageHandler messageHandler;
@@ -62,11 +62,11 @@ public class GatewayTcpClient {
     @PreDestroy
     public void destroy() {
         workGroup.shutdownGracefully().syncUninterruptibly();
-        log.info("close raven-single client success");
+        log.info("close raven route server success");
     }
 
     private Channel connectServer(GatewayServerInfo server) {
-        if (null != internalServerChannelManager.getChannelByServer(server)) {
+        if (null != gateWayServerChannelManager.getChannelByServer(server)) {
             return null;
         }
         EventLoopGroup group = new NioEventLoopGroup();
@@ -124,7 +124,7 @@ public class GatewayTcpClient {
                         internalPort);
                     Channel channel = connectServer(server);
                     if (null != channel) {
-                        internalServerChannelManager.addServer2Channel(server, channel);
+                        gateWayServerChannelManager.addServer2Channel(server, channel);
                     }
                 }
             }

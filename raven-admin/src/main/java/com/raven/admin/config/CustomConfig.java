@@ -1,7 +1,7 @@
 package com.raven.admin.config;
 
 import com.raven.common.netty.ServerChannelManager;
-import com.raven.common.netty.impl.InternalServerChannelManager;
+import com.raven.common.netty.impl.GatewayServerChannelManager;
 import com.raven.storage.conver.ConverManager;
 import com.raven.storage.route.RouteManager;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -49,8 +49,8 @@ public class CustomConfig {
     }
 
     @Bean
-    public ServerChannelManager internalServerChannelManager() {
-        return new InternalServerChannelManager();
+    public ServerChannelManager gateWayServerChannelManager() {
+        return new GatewayServerChannelManager();
     }
 
     @Bean

@@ -6,7 +6,7 @@ import com.raven.gateway.handler.AckMessageHandler;
 import com.raven.gateway.handler.ConversationHandler;
 import com.raven.gateway.handler.HeartBeatHandler;
 import com.raven.gateway.handler.HistoryHandler;
-import com.raven.gateway.handler.LoginAuthHandler;
+import com.raven.gateway.handler.AuthenticationHandler;
 import com.raven.gateway.handler.MessageHandler;
 import com.raven.storage.route.RouteManager;
 import io.netty.bootstrap.ServerBootstrap;
@@ -57,7 +57,7 @@ public class TcpProtobufServer {
     private HeartBeatHandler heartBeatHandler;
 
     @Autowired
-    private LoginAuthHandler loginAuthHandler;
+    private AuthenticationHandler authenticationHandler;
 
     @Autowired
     private MessageHandler messageHandler;
@@ -98,7 +98,7 @@ public class TcpProtobufServer {
                     // 对protobuf协议的消息头上加上一个长度为32的整形字段
                     pipeline.addLast(new ProtobufVarint32LengthFieldPrepender());
                     pipeline.addLast(new ProtobufEncoder());
-                    pipeline.addLast("LoginAuthHandler", loginAuthHandler);
+                    pipeline.addLast("AuthenticationHandler", authenticationHandler);
                     pipeline.addLast("HeartBeatHandler", heartBeatHandler);
                     pipeline.addLast(executorGroup,"MessageHandler", messageHandler);
                     pipeline.addLast(executorGroup,"AckMessageHandler", ackMessageHandler);

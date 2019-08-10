@@ -7,6 +7,7 @@ import com.raven.common.protos.Message.HeartBeatType;
 import com.raven.common.protos.Message.RavenMessage;
 import com.raven.common.protos.Message.RavenMessage.Type;
 import com.raven.common.protos.Message.UpDownMessage;
+import com.raven.common.utils.JsonHelper;
 import com.raven.common.utils.SnowFlake;
 import com.raven.storage.conver.ConverManager;
 import io.netty.channel.Channel;
@@ -18,7 +19,6 @@ import io.netty.handler.timeout.IdleStateEvent;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -59,7 +59,7 @@ public class MessageRouteHandler extends SimpleChannelInboundHandler<RavenMessag
         NettyAttrUtil.updateReaderTime(ctx.channel(), System.currentTimeMillis());
         if (msg.getType() == Type.HeartBeat) {
             HeartBeat heartBeat = msg.getHeartBeat();
-            log.info("receive hearbeat :{}", heartBeat);
+            log.info("receive hearbeat :{}", JsonHelper.toJsonString(heartBeat));
             if (heartBeat.getHeartBeatType() == HeartBeatType.PING) {
                 HeartBeat heartBeatAck = HeartBeat.newBuilder()
                     .setId(heartBeat.getId())
@@ -71,7 +71,7 @@ public class MessageRouteHandler extends SimpleChannelInboundHandler<RavenMessag
             }
         } else if (msg.getType() == Type.UpDownMessage) {
             UpDownMessage downMessage = msg.getUpDownMessage();
-            log.info("receive down message:{}", downMessage);
+            log.info("receive down message:{}", JsonHelper.toJsonString(downMessage));
             converManager.saveWaitUserAckMsg(downMessage.getTargetUid(), downMessage.getConverId(),
                 downMessage.getId());
             List<Channel> channels = uidChannelManager
@@ -86,6 +86,8 @@ public class MessageRouteHandler extends SimpleChannelInboundHandler<RavenMessag
                     }
                 });
             }
+        } else {
+            ctx.fireChannelRead(msg);
         }
     }
 

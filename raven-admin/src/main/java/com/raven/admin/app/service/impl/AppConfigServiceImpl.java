@@ -31,7 +31,6 @@ public class AppConfigServiceImpl implements AppConfigService {
     }
 
     @Override
-    @Cacheable(cacheNames = "UnboundedCache", key = "methodName+'_'+#uid")
     public AppConfigModel getApp(String uid) {
         AppConfigModel model = new AppConfigModel();
         model.setUid(uid);

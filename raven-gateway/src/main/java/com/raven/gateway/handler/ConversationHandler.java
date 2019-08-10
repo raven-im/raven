@@ -1,9 +1,8 @@
 package com.raven.gateway.handler;
 
-import com.raven.common.model.UserConversation;
 import com.raven.common.model.MsgContent;
+import com.raven.common.model.UserConversation;
 import com.raven.common.netty.IdChannelManager;
-import com.raven.common.protos.Message;
 import com.raven.common.protos.Message.Code;
 import com.raven.common.protos.Message.ConverAck;
 import com.raven.common.protos.Message.ConverInfo;
@@ -15,6 +14,7 @@ import com.raven.common.protos.Message.MessageType;
 import com.raven.common.protos.Message.OperationType;
 import com.raven.common.protos.Message.RavenMessage;
 import com.raven.common.protos.Message.RavenMessage.Type;
+import com.raven.common.utils.JsonHelper;
 import com.raven.storage.conver.ConverManager;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
@@ -59,7 +59,7 @@ public class ConversationHandler extends SimpleChannelInboundHandler<RavenMessag
     }
 
     private void processConverReqMsg(ChannelHandlerContext ctx, ConverReq conversationReq) {
-        log.debug("receive conver request message:{}", conversationReq);
+        log.debug("receive conver request message:{}", JsonHelper.toJsonString(conversationReq));
         if (conversationReq.getType() == OperationType.DETAIL) {
             UserConversation userConversation = converManager
                 .getConverListInfo(uidChannelManager.getIdByChannel(ctx.channel()),

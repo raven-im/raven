@@ -30,7 +30,7 @@ message RavenMessage {
     HisMessagesReq = 6;
     HisMessagesAck = 7;
     NotifyMessage = 8;
-    ConverReq = 11;
+    ConverReq = 9;
     ConverAck = 10;
   }
 }
@@ -63,7 +63,7 @@ message UpDownMessage {
   string groupId = 5; //  群ID
   string converId = 6; // 会话id
   ConverType converType = 7; // 会话类型
-  MessageContent content = 9; // 内容
+  MessageContent content = 8; // 内容
 }
 
 // 心跳

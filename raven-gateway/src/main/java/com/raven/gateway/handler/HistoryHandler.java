@@ -1,6 +1,5 @@
 package com.raven.gateway.handler;
 
-import com.raven.common.model.Conversation;
 import com.raven.common.model.MsgContent;
 import com.raven.common.protos.Message.HisMessagesAck;
 import com.raven.common.protos.Message.HisMessagesReq;
@@ -8,6 +7,7 @@ import com.raven.common.protos.Message.MessageContent;
 import com.raven.common.protos.Message.MessageType;
 import com.raven.common.protos.Message.RavenMessage;
 import com.raven.common.protos.Message.RavenMessage.Type;
+import com.raven.common.utils.JsonHelper;
 import com.raven.storage.conver.ConverManager;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
@@ -30,7 +30,7 @@ public class HistoryHandler extends SimpleChannelInboundHandler<RavenMessage> {
     protected void channelRead0(ChannelHandlerContext ctx, RavenMessage message) throws Exception {
         if (message.getType() == Type.HisMessagesReq) {
             HisMessagesReq req = message.getHisMessagesReq();
-            log.info("receive history message request:{}", req);
+            log.info("receive history message request:{}",  JsonHelper.toJsonString(req));
             List<MsgContent> msgContents = converManager
                 .getHistoryMsg(req.getConverId(), req.getBeginId());
             List<MessageContent> contentList = new ArrayList<>();

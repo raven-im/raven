@@ -9,6 +9,7 @@ import com.raven.common.protos.Message.MessageAck;
 import com.raven.common.protos.Message.RavenMessage;
 import com.raven.common.protos.Message.RavenMessage.Type;
 import com.raven.common.protos.Message.UpDownMessage;
+import com.raven.common.utils.JsonHelper;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import java.io.IOException;
@@ -55,7 +56,7 @@ public class ClientPressureMemberHandler extends SimpleChannelInboundHandler<Rav
             }
         } else if (message.getType() == Type.MessageAck) {
             MessageAck messageAck = message.getMessageAck();
-            log.info("receive message ack:{}", messageAck);
+            log.info("receive message ack:{}", JsonHelper.toJsonString(messageAck));
         } else if (message.getType() == Type.UpDownMessage) {
             UpDownMessage upDownMessage = message.getUpDownMessage();
             logAvgTimeDiff(System.currentTimeMillis() - upDownMessage.getContent().getTime());

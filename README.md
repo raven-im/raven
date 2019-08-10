@@ -44,3 +44,8 @@ Test Account2:  13800333333, password: 333333
 ### Contact us
 * zhou.xiaoxiao@outlook.com
 * bbpatience@gmail.com
+
+#### QQ Group chat
+<div>
+<img src="doc/Images/RavenQRCode.png" height="330" width="190" >
+</div>

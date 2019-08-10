@@ -1,6 +1,6 @@
 package com.raven.gateway.handler;
 
-import com.googlecode.protobuf.format.JsonFormat;
+import com.google.protobuf.util.JsonFormat;
 import com.raven.common.netty.IdChannelManager;
 import com.raven.common.protos.Message.Code;
 import com.raven.common.protos.Message.ConverType;
@@ -12,6 +12,7 @@ import com.raven.common.protos.Message.UpDownMessage;
 import com.raven.common.result.Result;
 import com.raven.common.result.ResultCode;
 import com.raven.common.utils.Constants;
+import com.raven.common.utils.JsonHelper;
 import com.raven.common.utils.SnowFlake;
 import com.raven.common.utils.UidUtil;
 import com.raven.gateway.config.KafkaProducerManager;
@@ -46,7 +47,7 @@ public class MessageHandler extends SimpleChannelInboundHandler<RavenMessage> {
         if (message.getType() == Type.UpDownMessage) {
             UpDownMessage upMessage = message.getUpDownMessage();
             if (!isMsgClientIdValid(ctx, upMessage)) {
-                log.error(" client msg id repeat:{}",upMessage.getCid());
+                log.error(" client msg id repeat:{}", upMessage.getCid());
                 sendFailAck(ctx, upMessage, Code.CLIENT_ID_REPEAT);
                 return;
             } else {
@@ -75,14 +76,15 @@ public class MessageHandler extends SimpleChannelInboundHandler<RavenMessage> {
                 topic = Constants.KAFKA_TOPIC_SINGLE_MSG;
             } else if (upMessage.getConverType() == ConverType.GROUP) {
                 convId = upMessage.getConverId();
-                String groupId = upMessage.getGroupId();
                 if (StringUtils.isNotBlank(convId)) {
-                    if (!converManager.isGroupConverIdValid(convId)) {
+                    String groupId = converManager.getGroupIdByConverId(convId);
+                    if (StringUtils.isEmpty(groupId)) {
                         log.error("illegal conversation id.");
                         sendFailAck(ctx, upMessage, Code.CONVER_ID_INVALID);
                     }
-                } else if (StringUtils.isNotBlank(groupId)) {
-                    convId = UidUtil.uuid24ByFactor(groupId);
+                    upMessage = upMessage.toBuilder().setGroupId(groupId).build();
+                } else if (StringUtils.isNotBlank(upMessage.getGroupId())) {
+                    convId = UidUtil.uuid24ByFactor(upMessage.getGroupId());
                     upMessage = upMessage.toBuilder().setConverId(convId).build();
                 } else {
                     log.error("conversation id and group id all empty.");
@@ -162,7 +164,10 @@ public class MessageHandler extends SimpleChannelInboundHandler<RavenMessage> {
     }
 
     private boolean sendMsgToKafka(RavenMessage ravenMessage, long id, String topic) {
-        String message = JsonFormat.printToString(ravenMessage);
+        String message = JsonHelper.toJsonString(ravenMessage);
+        if (StringUtils.isEmpty(message)) {
+            return false;
+        }
         log.info("protobuf to json message:{}", message);
         Result result = kafkaProducerManager.send(topic, String.valueOf(id), message);
         return result.getCode().intValue() == ResultCode.COMMON_SUCCESS.getCode();

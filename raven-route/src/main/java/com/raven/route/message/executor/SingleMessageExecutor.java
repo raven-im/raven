@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 public class SingleMessageExecutor {
 
     @Autowired
-    private ServerChannelManager internalServerChannelManager;
+    private ServerChannelManager gateWayServerChannelManager;
 
     @Autowired
     private ConverManager converManager;
@@ -24,7 +24,7 @@ public class SingleMessageExecutor {
     private RouteManager routeManager;
 
     public void saveAndSendMsg(String message) {
-        SingleMessageProcessor processor = new SingleMessageProcessor(internalServerChannelManager,
+        SingleMessageProcessor processor = new SingleMessageProcessor(gateWayServerChannelManager,
             converManager, routeManager, message);
         CustomConfig.msgProcessorSevice.submit(processor);
     }

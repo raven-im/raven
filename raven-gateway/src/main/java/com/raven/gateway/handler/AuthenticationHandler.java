@@ -8,6 +8,7 @@ import com.raven.common.protos.Message.Login;
 import com.raven.common.protos.Message.LoginAck;
 import com.raven.common.protos.Message.RavenMessage;
 import com.raven.common.protos.Message.RavenMessage.Type;
+import com.raven.common.utils.JsonHelper;
 import com.raven.storage.route.RouteManager;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
@@ -23,7 +24,7 @@ import org.springframework.util.CollectionUtils;
 @Component
 @Sharable
 @Slf4j
-public class LoginAuthHandler extends SimpleChannelInboundHandler<RavenMessage> {
+public class AuthenticationHandler extends SimpleChannelInboundHandler<RavenMessage> {
 
     @Autowired
     private IdChannelManager uidChannelManager;
@@ -57,7 +58,7 @@ public class LoginAuthHandler extends SimpleChannelInboundHandler<RavenMessage> 
             .updateReaderTime(ctx.channel(), System.currentTimeMillis());
         if (message.getType() == Type.Login) {
             Login loginMessage = message.getLogin();
-            log.info("login msg:{}", loginMessage);
+            log.info("login msg:{}", JsonHelper.toJsonString(loginMessage));
             String token = loginMessage.getToken();
             if (!verifyToken(token)) {
                 LoginAck loginAck = LoginAck.newBuilder()

@@ -11,7 +11,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class InternalServerChannelManager implements ServerChannelManager {
+public class GatewayServerChannelManager implements ServerChannelManager {
 
     private final Map<GatewayServerInfo, Channel> serverChannel = new HashMap<>();
 

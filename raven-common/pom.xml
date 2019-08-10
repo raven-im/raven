@@ -45,9 +45,9 @@
             <version>${version.jackson}</version>
         </dependency>
         <dependency>
-            <groupId>com.googlecode.protobuf-java-format</groupId>
-            <artifactId>protobuf-java-format</artifactId>
-            <version>1.2</version>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java-util</artifactId>
+            <version>3.9.1</version>
         </dependency>
         <dependency>
             <groupId>org.apache.kafka</groupId>
@@ -72,13 +72,12 @@
         <dependency>
             <groupId>com.alibaba.boot</groupId>
             <artifactId>nacos-config-spring-boot-starter</artifactId>
-            <version>0.2.1</version>
+            <version>${version.nacos.starter}</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-alibaba-nacos-config -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
-            <version>0.2.1.RELEASE</version>
+            <version>${version.nacos.alibaba.config}</version>
         </dependency>
     </dependencies>
 </project>

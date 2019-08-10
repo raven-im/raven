@@ -30,13 +30,10 @@ public class KafkaMessageProcessor<K, V> implements Runnable {
             ConsumerRecords<K, V> records = kafkaConsumer.poll(Duration.ofMillis(MILLIS));
             if (!records.isEmpty()) {
                 for (ConsumerRecord<K, V> record : records) {
-                    try {
-                        log.info("current record:{} ",record.toString());
-                        messageListener.receive(topic, record.key(), record.value());
-                    } catch (Exception e) {
-                        log.error("failed to process record:{}, error: {}", record.toString(), e);
-                    }
+                    log.info("current record:{} ", record.toString());
+                    messageListener.receive(topic, record.key(), record.value());
                 }
+                kafkaConsumer.commitSync();
             } else {
                 sleep(MILLIS);
             }

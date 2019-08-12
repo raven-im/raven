@@ -76,6 +76,10 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public ResultCode joinGroup(GroupReqParam reqParam) {
         //params check.
+        if (reqParam.getMembers() == null || reqParam.getMembers().size() == 0) {
+            return ResultCode.COMMON_INVALID_PARAMETER;
+        }
+
         if (!groupValidator.isValid(reqParam.getGroupId())) {
             return groupValidator.errorCode();
         }
@@ -84,13 +88,27 @@ public class GroupServiceImpl implements GroupService {
         }
         Date now = DateTimeUtils.currentUTC();
         reqParam.getMembers().forEach(uid -> {
-            GroupMemberModel member = new GroupMemberModel();
-            member.setGroupId(reqParam.getGroupId());
-            member.setCreateDate(now);
-            member.setUpdateDate(now);
-            member.setMemberUid(uid);
-            member.setStatus(0);// 0 normal status;
-            memberMapper.insert(member);
+
+            Example example = new Example(GroupMemberModel.class);
+            example.createCriteria()
+                .andEqualTo("groupId", reqParam.getGroupId())
+                .andEqualTo("memberUid", uid);
+            List<GroupMemberModel> list = memberMapper.selectByExample(example);
+            if (list != null && list.size() > 0) {
+                //exists already.
+                GroupMemberModel member = new GroupMemberModel();
+                member.setUpdateDate(DateTimeUtils.currentUTC());
+                member.setStatus(0);// 0 for normal state.
+                memberMapper.updateByExampleSelective(member, example);
+            } else {
+                GroupMemberModel member = new GroupMemberModel();
+                member.setGroupId(reqParam.getGroupId());
+                member.setCreateDate(now);
+                member.setUpdateDate(now);
+                member.setMemberUid(uid);
+                member.setStatus(0);// 0 normal status;
+                memberMapper.insert(member);
+            }
         });
         //update new member conversation list.
         converManager.addMemberConverList(reqParam.getGroupId(), reqParam.getMembers());
@@ -100,6 +118,10 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public ResultCode quitGroup(GroupReqParam reqParam) {
         //params check.
+        if (reqParam.getMembers() == null || reqParam.getMembers().size() == 0) {
+            return ResultCode.COMMON_INVALID_PARAMETER;
+        }
+
         if (!groupValidator.isValid(reqParam.getGroupId())) {
             return groupValidator.errorCode();
         }

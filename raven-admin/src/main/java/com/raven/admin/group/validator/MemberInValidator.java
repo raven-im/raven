@@ -22,8 +22,7 @@ public class MemberInValidator implements Validator {
             .andNotEqualTo("status", 2)
             .andEqualTo("groupId", groupId)
             .andIn("memberUid", members);
-        List<GroupMemberModel> models = memberMapper.selectByExample(example);
-        return models.size() == 0;
+        return memberMapper.selectCountByExample(example) == 0;
     }
 
     @Override

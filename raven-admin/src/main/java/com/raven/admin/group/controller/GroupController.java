@@ -9,7 +9,9 @@ import com.raven.common.result.Result;
 import com.raven.common.result.ResultCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,50 +26,38 @@ public class GroupController {
     @Autowired
     private GroupService service;
 
-    @PostMapping("/create")
+    @PostMapping
     public Result create(@RequestBody GroupReqParam param) {
         log.info("group create name:{}", param.getName());
-        return Result.success(new GroupOutParam(service.createGroup(param)));
+        return service.createGroup(param);
     }
 
     @PostMapping("/join")
     public Result join(@RequestBody GroupReqParam param) {
         log.info("group join:{}", param.getGroupId());
-        ResultCode code = service.joinGroup(param);
-        if (ResultCode.COMMON_SUCCESS.getCode() != code.getCode()) {
-            return Result.failure(code);
-        }
-        return Result.success(code);
+        return service.joinGroup(param);
     }
 
     @PostMapping("/quit")
     public Result quit(@RequestBody GroupReqParam param) {
         log.info("group quit:{}", param.getGroupId());
-        ResultCode code = service.quitGroup(param);
-        if (ResultCode.COMMON_SUCCESS.getCode() != code.getCode()) {
-            return Result.failure(code);
-        }
-        return Result.success(code);
+        return service.quitGroup(param);
     }
 
-    @PostMapping("/dismiss")
-    public Result dismiss(@RequestBody GroupReqParam param) {
-        log.info("group dismiss:{}", param.getGroupId());
-        ResultCode code = service.dismissGroup(param);
-        if (ResultCode.COMMON_SUCCESS.getCode() != code.getCode()) {
-            return Result.failure(code);
-        }
-        return Result.success(code);
+    @DeleteMapping("/{id}")
+    public Result dismiss(@PathVariable("id") String groupId) {
+        log.info("group dismiss:{}", groupId);
+        return service.dismissGroup(groupId);
     }
 
-    @PostMapping("/detail")
-    public Result detailsPost(@RequestBody GroupReqParam param) {
-        log.info("group details:{}", param.getGroupId());
-        return service.groupDetail(param.getGroupId());
+    @GetMapping("/{id}")
+    public Result detailsGet(@PathVariable("id") String groupId) {
+        log.info("group details:{}", groupId);
+        return service.groupDetail(groupId);
     }
 
-    @GetMapping("/detail")
-    public Result detailsGet(@RequestParam("id") String groupId) {
+    @PostMapping("/{id}")
+    public Result detailsPost(@PathVariable("id") String groupId) {
         log.info("group details:{}", groupId);
         return service.groupDetail(groupId);
     }

@@ -14,6 +14,6 @@ public interface Validator {
     }
 
     default ResultCode errorCode() {
-        return ResultCode.COMMON_ERROR;
+        return ResultCode.COMMON_SERVER_ERROR;
     }
 }

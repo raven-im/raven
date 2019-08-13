@@ -27,7 +27,7 @@ public class KafkaProducerManager {
     }
 
     public Result send(String topic, String key, String message) {
-        if (Strings.isNullOrEmpty(topic) || message == null) {
+        if (Strings.isNullOrEmpty(topic) || Strings.isNullOrEmpty(message)) {
             log.error("param error! topic:{}, key:{}, message:{}", topic, key, message);
             return Result.failure(ResultCode.COMMON_KAFKA_PRODUCE_ERROR);
         }

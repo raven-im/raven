@@ -99,7 +99,7 @@ public class MessageHandler extends SimpleChannelInboundHandler<RavenMessage> {
             }
             long id = snowFlake.nextId();
             RavenMessage ravenMessage = buildRavenMessage(ctx, upMessage, id);
-            if (sendMsgToKafka(ravenMessage, ravenMessage.getUpDownMessage().getId(), topic)) {
+            if (sendMsgToKafka(ravenMessage, ravenMessage.getUpDownMessage().getConverId(), topic)) {
                 sendAck(ctx, upMessage, Code.SUCCESS, id);
             } else {
                 log.error("send msg to kafka fail");
@@ -163,13 +163,13 @@ public class MessageHandler extends SimpleChannelInboundHandler<RavenMessage> {
         converManager.saveUserCid(uid, upMessage.getCid());
     }
 
-    private boolean sendMsgToKafka(RavenMessage ravenMessage, long id, String topic) {
+    private boolean sendMsgToKafka(RavenMessage ravenMessage, String converId, String topic) {
         String message = JsonHelper.toJsonString(ravenMessage);
         if (StringUtils.isEmpty(message)) {
             return false;
         }
         log.info("protobuf to json message:{}", message);
-        Result result = kafkaProducerManager.send(topic, String.valueOf(id), message);
+        Result result = kafkaProducerManager.send(topic, converId, message);
         return result.getCode().intValue() == ResultCode.COMMON_SUCCESS.getCode();
     }
 

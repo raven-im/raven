@@ -21,22 +21,18 @@ public class GroupMessageProcessor implements Runnable {
 
     private RouteManager routeManager;
 
-    private String message;
+    private UpDownMessage upDownMessage;
 
     public GroupMessageProcessor(ServerChannelManager gateWayServerChannelManager,
-        ConverManager converManager, RouteManager routeManager, String message) {
+        ConverManager converManager, RouteManager routeManager, UpDownMessage upDownMessage) {
         this.gateWayServerChannelManager = gateWayServerChannelManager;
         this.converManager = converManager;
         this.routeManager = routeManager;
-        this.message = message;
+        this.upDownMessage = upDownMessage;
     }
 
     @Override
     public void run() {
-        RavenMessage.Builder builder = RavenMessage.newBuilder();
-        JsonHelper.readValue(message, builder);
-        UpDownMessage upDownMessage = builder.getUpDownMessage();
-        converManager.saveMsg2Conver(upDownMessage.getContent(), upDownMessage.getConverId());
         List<String> uidList = converManager
             .getUidListByConverExcludeSender(upDownMessage.getConverId(),
                 upDownMessage.getFromUid());

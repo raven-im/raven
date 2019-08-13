@@ -36,6 +36,7 @@ public class KafkaConsumerConfig<K, V> {
     public void start() {
         consumerProperties();
         this.analyzeMessageListeners(messageListeners);
+        int threadNum = messageListeners.size();
         for (Map.Entry<String, MessageListener> entry : messageListenerMap.entrySet()) {
             String topic = entry.getKey();
             MessageListener messageListener = entry.getValue();
@@ -43,7 +44,7 @@ public class KafkaConsumerConfig<K, V> {
             consumer.subscribe(Arrays.asList(topic));
             KafkaMessageProcessor<K, V> kafkaStreamProcessor = new KafkaMessageProcessor<K, V>(
                 topic, consumer, messageListener);
-            ExecutorService executorService = Executors.newFixedThreadPool(2);
+            ExecutorService executorService = Executors.newFixedThreadPool(threadNum);
             executorService.submit(kafkaStreamProcessor);
         }
     }

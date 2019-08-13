@@ -1,5 +1,6 @@
 package com.raven.common.kafka;
 
+import com.raven.common.utils.JsonHelper;
 import java.time.Duration;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -26,17 +27,25 @@ public class KafkaMessageProcessor<K, V> implements Runnable {
 
     @Override
     public void run() {
-        while (true) {
-            ConsumerRecords<K, V> records = kafkaConsumer.poll(Duration.ofMillis(MILLIS));
-            if (!records.isEmpty()) {
-                for (ConsumerRecord<K, V> record : records) {
-                    log.info("current record:{} ", record.toString());
-                    messageListener.receive(topic, record.key(), record.value());
+        try {
+            while (true) {
+                ConsumerRecords<K, V> records = kafkaConsumer.poll(Duration.ofMillis(MILLIS));
+                if (!records.isEmpty()) {
+                    for (ConsumerRecord<K, V> record : records) {
+                        try {
+                            messageListener.receive(topic, record.key(), record.value());
+                        } catch (Exception ex) {
+                            log.error("process kafka message record:{} error",
+                                JsonHelper.toJsonString(record), ex);
+                        }
+                    }
+                    kafkaConsumer.commitSync();
+                } else {
+                    sleep(MILLIS);
                 }
-                kafkaConsumer.commitSync();
-            } else {
-                sleep(MILLIS);
             }
+        } finally {
+            kafkaConsumer.close();
         }
     }
 

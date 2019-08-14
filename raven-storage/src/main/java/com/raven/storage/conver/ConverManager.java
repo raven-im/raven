@@ -164,8 +164,9 @@ public class ConverManager {
             conversation.getUidList().forEach(tmp -> log.info("member: {}", tmp));
             UserConversation converListInfo = new UserConversation().builder()
                 .id(conversation.getId()).groupId(conversation.getGroupId())
-                .uidList(conversation.getUidList())
+//                .uidList(conversation.getUidList())
                 .type(conversation.getType()).build();
+            converListInfo.setUidList(conversation.getUidList());
             Long readMsgId = getUserReadMessageId(uid, converId);
             if (null != readMsgId) {
                 converListInfo.setReadMsgId(readMsgId);

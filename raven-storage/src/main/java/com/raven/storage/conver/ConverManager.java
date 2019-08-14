@@ -147,11 +147,9 @@ public class ConverManager {
             return null;
         }
         Conversation conversation = JsonHelper.readValue(ob.toString(), Conversation.class);
-        log.info("getConversation {}", converId);
         if (conversation.getType() == ConverType.GROUP.getNumber()) {
             Set<String> uids = redisTemplate
                 .boundSetOps(PREFIX_GROUP_MEMBER + conversation.getGroupId()).members();
-            uids.forEach(uid -> log.info("member: {}", uid));
             conversation.setUidList(Lists.newArrayList(uids));
         }
         return conversation;
@@ -160,13 +158,10 @@ public class ConverManager {
     public UserConversation getConverListInfo(String uid, String converId) {
         Conversation conversation = getConversation(converId);
         if (null != conversation) {
-            log.info("member: {}", "here");
-            conversation.getUidList().forEach(tmp -> log.info("member: {}", tmp));
             UserConversation converListInfo = new UserConversation().builder()
                 .id(conversation.getId()).groupId(conversation.getGroupId())
-//                .uidList(conversation.getUidList())
+                .uidList(conversation.getUidList())
                 .type(conversation.getType()).build();
-            converListInfo.setUidList(conversation.getUidList());
             Long readMsgId = getUserReadMessageId(uid, converId);
             if (null != readMsgId) {
                 converListInfo.setReadMsgId(readMsgId);

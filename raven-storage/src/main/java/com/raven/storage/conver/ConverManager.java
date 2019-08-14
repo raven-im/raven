@@ -147,9 +147,11 @@ public class ConverManager {
             return null;
         }
         Conversation conversation = JsonHelper.readValue(ob.toString(), Conversation.class);
+        log.info("getConversation {}", converId);
         if (conversation.getType() == ConverType.GROUP.getNumber()) {
             Set<String> uids = redisTemplate
                 .boundSetOps(PREFIX_GROUP_MEMBER + conversation.getGroupId()).members();
+            uids.forEach(uid -> log.info("member: {}", uid));
             conversation.setUidList(Lists.newArrayList(uids));
         }
         return conversation;

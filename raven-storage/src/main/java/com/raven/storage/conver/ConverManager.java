@@ -160,6 +160,8 @@ public class ConverManager {
     public UserConversation getConverListInfo(String uid, String converId) {
         Conversation conversation = getConversation(converId);
         if (null != conversation) {
+            log.info("member: {}", "here");
+            conversation.getUidList().forEach(tmp -> log.info("member: {}", tmp));
             UserConversation converListInfo = new UserConversation().builder()
                 .id(conversation.getId()).groupId(conversation.getGroupId())
                 .uidList(conversation.getUidList())

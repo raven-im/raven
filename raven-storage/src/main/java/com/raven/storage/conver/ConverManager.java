@@ -5,6 +5,7 @@ import static com.raven.common.utils.Constants.PREFIX_GROUP_MEMBER;
 import static com.raven.common.utils.Constants.PREFIX_MESSAGE_ID;
 import static com.raven.common.utils.Constants.DEFAULT_SEPARATES_SIGN;
 
+import com.google.common.collect.Lists;
 import com.raven.common.model.Conversation;
 import com.raven.common.model.UserConversation;
 import com.raven.common.model.MsgContent;
@@ -145,7 +146,13 @@ public class ConverManager {
         if (null == ob) {
             return null;
         }
-        return JsonHelper.readValue(ob.toString(), Conversation.class);
+        Conversation conversation = JsonHelper.readValue(ob.toString(), Conversation.class);
+        if (conversation.getType() == ConverType.GROUP.getNumber()) {
+            Set<String> uids = redisTemplate
+                .boundSetOps(PREFIX_GROUP_MEMBER + conversation.getGroupId()).members();
+            conversation.setUidList(Lists.newArrayList(uids));
+        }
+        return conversation;
     }
 
     public UserConversation getConverListInfo(String uid, String converId) {
@@ -198,16 +205,8 @@ public class ConverManager {
     }
 
     public List<String> getUidListByConver(String converId) {
-        List<String> uidList = new ArrayList<>();
         Conversation conversation = getConversation(converId);
-        if (conversation.getType() == ConverType.SINGLE.getNumber()) {
-            uidList.addAll(conversation.getUidList());
-        } else if (conversation.getType() == ConverType.GROUP.getNumber()) {
-            Set<String> uids = redisTemplate
-                .boundSetOps(PREFIX_GROUP_MEMBER + conversation.getGroupId()).members();
-            uidList.addAll(uids);
-        }
-        return uidList;
+        return conversation.getUidList();
     }
 
     public List<String> getUidListByConverExcludeSender(String converId, String fromUser) {

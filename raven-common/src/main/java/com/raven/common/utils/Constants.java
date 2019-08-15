@@ -62,8 +62,18 @@ public class Constants {
     public static final String CONFIG_GATEWAY_SERVER_NAME = "raven-gateway";
 
     // kafka topic
-    public static final String KAFKA_TOPIC_SINGLE_MSG= "singleMsg";
+    public static final String KAFKA_TOPIC_SINGLE_MSG = "singleMsg";
 
-    public static final String KAFKA_TOPIC_GROUP_MSG= "groupMsg";
+    public static final String KAFKA_TOPIC_GROUP_MSG = "groupMsg";
 
+    public static final String KAFKA_TOPIC_NOTI_TO_CONV = "notify2Con";
+
+    public static final String KAFKA_TOPIC_NOTI_TO_USER = "notify2User";
+
+    //server api notify type.
+    public static final String SERVER_API_NOTIFY_CMD = "command";
+
+    public static final String SERVER_API_NOTIFY_NOTI = "notification";
+
+    public static final String SERVER_API_NOTIFY_BR = "broadcast";
 }

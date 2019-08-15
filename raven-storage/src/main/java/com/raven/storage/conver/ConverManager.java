@@ -141,7 +141,7 @@ public class ConverManager {
         return unReadCount;
     }
 
-    private Conversation getConversation(String converId) {
+    public Conversation getConversation(String converId) {
         Object ob = redisTemplate.opsForValue().get(converId);
         if (null == ob) {
             return null;

@@ -66,9 +66,9 @@ public class Constants {
 
     public static final String KAFKA_TOPIC_GROUP_MSG = "groupMsg";
 
-    public static final String KAFKA_TOPIC_NOTI_TO_CONV = "notify2Con";
+    public static final String KAFKA_TOPIC_NOTI_TO_CONV = "ConversationNotify";
 
-    public static final String KAFKA_TOPIC_NOTI_TO_USER = "notify2User";
+    public static final String KAFKA_TOPIC_NOTI_TO_USER = "UserNotify";
 
     //server api notify type.
     public static final String SERVER_API_NOTIFY_CMD = "command";

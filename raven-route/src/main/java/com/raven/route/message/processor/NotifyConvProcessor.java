@@ -13,7 +13,7 @@ import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class NotificationProcessor implements Runnable {
+public class NotifyConvProcessor implements Runnable {
 
     private ServerChannelManager gateWayServerChannelManager;
 
@@ -23,7 +23,7 @@ public class NotificationProcessor implements Runnable {
 
     private String notification;
 
-    public NotificationProcessor(ServerChannelManager gateWayServerChannelManager,
+    public NotifyConvProcessor(ServerChannelManager gateWayServerChannelManager,
         ConverManager converManager, RouteManager routeManager, String notification) {
         this.gateWayServerChannelManager = gateWayServerChannelManager;
         this.converManager = converManager;

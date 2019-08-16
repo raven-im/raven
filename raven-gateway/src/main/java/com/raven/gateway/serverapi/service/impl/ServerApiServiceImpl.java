@@ -33,7 +33,19 @@ public class ServerApiServiceImpl implements ServerApiService {
 
     @Override
     public Result notify2User(ReqMsgParam param) {
-        return null;
+        String userId = param.getTargetUid();
+        String topic = Constants.KAFKA_TOPIC_NOTI_TO_USER;
+        if (StringUtils.isNotEmpty(userId)) {
+            long id = snowFlake.nextId();
+            RavenMessage ravenMessage = buildRavenMessage(param, Constants.SERVER_API_NOTIFY_NOTI_USER, id);
+            if (sendMsgToKafka(ravenMessage, id, topic)) {
+                return Result.success(id);
+            } else {
+                log.error("send msg to kafka fail");
+                return Result.failure(ResultCode.COMMON_KAFKA_PRODUCE_ERROR);
+            }
+        }
+        return Result.failure(ResultCode.COMMON_INVALID_PARAMETER);
     }
 
     @Override
@@ -48,7 +60,7 @@ public class ServerApiServiceImpl implements ServerApiService {
                 return Result.failure(ResultCode.COMMON_INVALID_PARAMETER);
             }
             long id = snowFlake.nextId();
-            RavenMessage ravenMessage = buildRavenMessage(param, id);
+            RavenMessage ravenMessage = buildRavenMessage(param, Constants.SERVER_API_NOTIFY_NOTI_CONV, id);
             if (sendMsgToKafka(ravenMessage, id, topic)) {
                 return Result.success(id);
             } else {
@@ -79,13 +91,12 @@ public class ServerApiServiceImpl implements ServerApiService {
         return result.getCode().intValue() == ResultCode.COMMON_SUCCESS.getCode();
     }
 
-    private RavenMessage buildRavenMessage(ReqMsgParam param, long msgId) {
-
+    private RavenMessage buildRavenMessage(ReqMsgParam param, String type, long msgId) {
         NotifyMessage notifyMsg = NotifyMessage.newBuilder()
             .setId(msgId)
             .setTargetUid(param.getTargetUid())
             .setContent(param.getContent())
-            .setType(Constants.SERVER_API_NOTIFY_NOTI)
+            .setType(type)
             .setTime(System.currentTimeMillis())
             .build();
         return RavenMessage.newBuilder().setType(Type.NotifyMessage)

@@ -1,9 +1,13 @@
 package com.raven.gateway.serverapi.service.impl;
 
 import com.raven.common.model.Conversation;
+import com.raven.common.protos.Message.ConverType;
+import com.raven.common.protos.Message.MessageContent;
+import com.raven.common.protos.Message.MessageType;
 import com.raven.common.protos.Message.NotifyMessage;
 import com.raven.common.protos.Message.RavenMessage;
 import com.raven.common.protos.Message.RavenMessage.Type;
+import com.raven.common.protos.Message.UpDownMessage;
 import com.raven.common.result.Result;
 import com.raven.common.result.ResultCode;
 import com.raven.common.utils.Constants;
@@ -37,7 +41,7 @@ public class ServerApiServiceImpl implements ServerApiService {
         String topic = Constants.KAFKA_TOPIC_NOTI_TO_USER;
         if (StringUtils.isNotEmpty(userId)) {
             long id = snowFlake.nextId();
-            RavenMessage ravenMessage = buildRavenMessage(param, Constants.SERVER_API_NOTIFY_NOTI_USER, id);
+            RavenMessage ravenMessage = buildRavenNotification(param, Constants.SERVER_API_NOTIFY_NOTI_USER, id);
             if (sendMsgToKafka(ravenMessage, id, topic)) {
                 return Result.success(id);
             } else {
@@ -60,7 +64,7 @@ public class ServerApiServiceImpl implements ServerApiService {
                 return Result.failure(ResultCode.COMMON_INVALID_PARAMETER);
             }
             long id = snowFlake.nextId();
-            RavenMessage ravenMessage = buildRavenMessage(param, Constants.SERVER_API_NOTIFY_NOTI_CONV, id);
+            RavenMessage ravenMessage = buildRavenNotification(param, Constants.SERVER_API_NOTIFY_NOTI_CONV, id);
             if (sendMsgToKafka(ravenMessage, id, topic)) {
                 return Result.success(id);
             } else {
@@ -78,7 +82,30 @@ public class ServerApiServiceImpl implements ServerApiService {
 
     @Override
     public Result message2Conversation(ReqMsgParam param) {
-        return null;
+        String convId = param.getTargetUid();
+        String topic = Constants.KAFKA_TOPIC_GROUP_MSG;
+        ConverType type = ConverType.GROUP;
+        if (StringUtils.isNotEmpty(convId)) {
+            Conversation conv = converManager.getConversation(convId);
+
+            if (conv == null) {
+                log.error("illegal conversation id.");
+                return Result.failure(ResultCode.COMMON_INVALID_PARAMETER);
+            }
+            if (conv.getType() == ConverType.SINGLE.getNumber()) {
+                topic = Constants.KAFKA_TOPIC_SINGLE_MSG;
+                type = ConverType.SINGLE;
+            }
+            long id = snowFlake.nextId();
+            RavenMessage ravenMessage = buildRavenMessage(param, id, type, convId);
+            if (sendMsgToKafka(ravenMessage, id, topic)) {
+                return Result.success(id);
+            } else {
+                log.error("send msg to kafka fail");
+                return Result.failure(ResultCode.COMMON_KAFKA_PRODUCE_ERROR);
+            }
+        }
+        return Result.failure(ResultCode.COMMON_INVALID_PARAMETER);
     }
 
     private boolean sendMsgToKafka(RavenMessage ravenMessage, long id, String topic) {
@@ -91,7 +118,7 @@ public class ServerApiServiceImpl implements ServerApiService {
         return result.getCode().intValue() == ResultCode.COMMON_SUCCESS.getCode();
     }
 
-    private RavenMessage buildRavenMessage(ReqMsgParam param, String type, long msgId) {
+    private RavenMessage buildRavenNotification(ReqMsgParam param, String type, long msgId) {
         NotifyMessage notifyMsg = NotifyMessage.newBuilder()
             .setId(msgId)
             .setTargetUid(param.getTargetUid())
@@ -101,5 +128,25 @@ public class ServerApiServiceImpl implements ServerApiService {
             .build();
         return RavenMessage.newBuilder().setType(Type.NotifyMessage)
             .setNotifyMessage(notifyMsg).build();
+    }
+
+    private RavenMessage buildRavenMessage(ReqMsgParam param, long msgId, ConverType type, String convId) {
+        MessageContent content = MessageContent.newBuilder()
+            .setId(msgId)
+            .setType(MessageType.TEXT) //TODO  server api only support text message now.
+            .setUid(param.getFromUid())
+            .setContent(param.getContent())
+            .setTime(System.currentTimeMillis()).build();
+        UpDownMessage upMessage = UpDownMessage.newBuilder().setId(msgId)
+//            .setCid()
+            .setFromUid(param.getFromUid())
+            .setTargetUid(param.getTargetUid())
+            .setContent(content)
+            .setConverId(convId)
+            .setConverType(type)
+//            .setGroupId(upDownMessage.getGroupId())
+            .build();
+        return RavenMessage.newBuilder().setType(Type.UpDownMessage)
+            .setUpDownMessage(upMessage).build();
     }
 }

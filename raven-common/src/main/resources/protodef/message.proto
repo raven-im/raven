@@ -133,8 +133,9 @@ message HisMessagesReq {
 message HisMessagesAck {
   uint64 id = 1; // 消息ID  客户端生成
   string converId = 2; // 会话id
-  repeated MessageContent messageList = 3; // 消息列表
-  uint64 unReadCount = 4; // 历史消息未读数
+  ConverType convType = 3; // 会话类型
+  repeated MessageContent messageList = 4; // 消息列表
+  uint64 unReadCount = 5; // 历史消息未读数
 }
 
 // 会话操作请求  消息ID使用客户端生成

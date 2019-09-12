@@ -11352,10 +11352,27 @@ public final class Message {
 
     /**
      * <pre>
+     * 会话类型
+     * </pre>
+     *
+     * <code>.com.raven.common.protos.ConverType convType = 3;</code>
+     */
+    int getConvTypeValue();
+    /**
+     * <pre>
+     * 会话类型
+     * </pre>
+     *
+     * <code>.com.raven.common.protos.ConverType convType = 3;</code>
+     */
+    com.raven.common.protos.Message.ConverType getConvType();
+
+    /**
+     * <pre>
      * 消息列表
      * </pre>
      *
-     * <code>repeated .com.raven.common.protos.MessageContent messageList = 3;</code>
+     * <code>repeated .com.raven.common.protos.MessageContent messageList = 4;</code>
      */
     java.util.List<com.raven.common.protos.Message.MessageContent> 
         getMessageListList();
@@ -11364,7 +11381,7 @@ public final class Message {
      * 消息列表
      * </pre>
      *
-     * <code>repeated .com.raven.common.protos.MessageContent messageList = 3;</code>
+     * <code>repeated .com.raven.common.protos.MessageContent messageList = 4;</code>
      */
     com.raven.common.protos.Message.MessageContent getMessageList(int index);
     /**
@@ -11372,7 +11389,7 @@ public final class Message {
      * 消息列表
      * </pre>
      *
-     * <code>repeated .com.raven.common.protos.MessageContent messageList = 3;</code>
+     * <code>repeated .com.raven.common.protos.MessageContent messageList = 4;</code>
      */
     int getMessageListCount();
     /**
@@ -11380,7 +11397,7 @@ public final class Message {
      * 消息列表
      * </pre>
      *
-     * <code>repeated .com.raven.common.protos.MessageContent messageList = 3;</code>
+     * <code>repeated .com.raven.common.protos.MessageContent messageList = 4;</code>
      */
     java.util.List<? extends com.raven.common.protos.Message.MessageContentOrBuilder> 
         getMessageListOrBuilderList();
@@ -11389,7 +11406,7 @@ public final class Message {
      * 消息列表
      * </pre>
      *
-     * <code>repeated .com.raven.common.protos.MessageContent messageList = 3;</code>
+     * <code>repeated .com.raven.common.protos.MessageContent messageList = 4;</code>
      */
     com.raven.common.protos.Message.MessageContentOrBuilder getMessageListOrBuilder(
         int index);
@@ -11399,7 +11416,7 @@ public final class Message {
      * 历史消息未读数
      * </pre>
      *
-     * <code>uint64 unReadCount = 4;</code>
+     * <code>uint64 unReadCount = 5;</code>
      */
     long getUnReadCount();
   }
@@ -11422,6 +11439,7 @@ public final class Message {
     private HisMessagesAck() {
       id_ = 0L;
       converId_ = "";
+      convType_ = 0;
       messageList_ = java.util.Collections.emptyList();
       unReadCount_ = 0L;
     }
@@ -11461,16 +11479,22 @@ public final class Message {
               converId_ = s;
               break;
             }
-            case 26: {
-              if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
+            case 24: {
+              int rawValue = input.readEnum();
+
+              convType_ = rawValue;
+              break;
+            }
+            case 34: {
+              if (!((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
                 messageList_ = new java.util.ArrayList<com.raven.common.protos.Message.MessageContent>();
-                mutable_bitField0_ |= 0x00000004;
+                mutable_bitField0_ |= 0x00000008;
               }
               messageList_.add(
                   input.readMessage(com.raven.common.protos.Message.MessageContent.parser(), extensionRegistry));
               break;
             }
-            case 32: {
+            case 40: {
 
               unReadCount_ = input.readUInt64();
               break;
@@ -11490,7 +11514,7 @@ public final class Message {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
+        if (((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
           messageList_ = java.util.Collections.unmodifiableList(messageList_);
         }
         this.unknownFields = unknownFields.build();
@@ -11566,14 +11590,39 @@ public final class Message {
       }
     }
 
-    public static final int MESSAGELIST_FIELD_NUMBER = 3;
+    public static final int CONVTYPE_FIELD_NUMBER = 3;
+    private int convType_;
+    /**
+     * <pre>
+     * 会话类型
+     * </pre>
+     *
+     * <code>.com.raven.common.protos.ConverType convType = 3;</code>
+     */
+    public int getConvTypeValue() {
+      return convType_;
+    }
+    /**
+     * <pre>
+     * 会话类型
+     * </pre>
+     *
+     * <code>.com.raven.common.protos.ConverType convType = 3;</code>
+     */
+    public com.raven.common.protos.Message.ConverType getConvType() {
+      @SuppressWarnings("deprecation")
+      com.raven.common.protos.Message.ConverType result = com.raven.common.protos.Message.ConverType.valueOf(convType_);
+      return result == null ? com.raven.common.protos.Message.ConverType.UNRECOGNIZED : result;
+    }
+
+    public static final int MESSAGELIST_FIELD_NUMBER = 4;
     private java.util.List<com.raven.common.protos.Message.MessageContent> messageList_;
     /**
      * <pre>
      * 消息列表
      * </pre>
      *
-     * <code>repeated .com.raven.common.protos.MessageContent messageList = 3;</code>
+     * <code>repeated .com.raven.common.protos.MessageContent messageList = 4;</code>
      */
     public java.util.List<com.raven.common.protos.Message.MessageContent> getMessageListList() {
       return messageList_;
@@ -11583,7 +11632,7 @@ public final class Message {
      * 消息列表
      * </pre>
      *
-     * <code>repeated .com.raven.common.protos.MessageContent messageList = 3;</code>
+     * <code>repeated .com.raven.common.protos.MessageContent messageList = 4;</code>
      */
     public java.util.List<? extends com.raven.common.protos.Message.MessageContentOrBuilder> 
         getMessageListOrBuilderList() {
@@ -11594,7 +11643,7 @@ public final class Message {
      * 消息列表
      * </pre>
      *
-     * <code>repeated .com.raven.common.protos.MessageContent messageList = 3;</code>
+     * <code>repeated .com.raven.common.protos.MessageContent messageList = 4;</code>
      */
     public int getMessageListCount() {
       return messageList_.size();
@@ -11604,7 +11653,7 @@ public final class Message {
      * 消息列表
      * </pre>
      *
-     * <code>repeated .com.raven.common.protos.MessageContent messageList = 3;</code>
+     * <code>repeated .com.raven.common.protos.MessageContent messageList = 4;</code>
      */
     public com.raven.common.protos.Message.MessageContent getMessageList(int index) {
       return messageList_.get(index);
@@ -11614,21 +11663,21 @@ public final class Message {
      * 消息列表
      * </pre>
      *
-     * <code>repeated .com.raven.common.protos.MessageContent messageList = 3;</code>
+     * <code>repeated .com.raven.common.protos.MessageContent messageList = 4;</code>
      */
     public com.raven.common.protos.Message.MessageContentOrBuilder getMessageListOrBuilder(
         int index) {
       return messageList_.get(index);
     }
 
-    public static final int UNREADCOUNT_FIELD_NUMBER = 4;
+    public static final int UNREADCOUNT_FIELD_NUMBER = 5;
     private long unReadCount_;
     /**
      * <pre>
      * 历史消息未读数
      * </pre>
      *
-     * <code>uint64 unReadCount = 4;</code>
+     * <code>uint64 unReadCount = 5;</code>
      */
     public long getUnReadCount() {
       return unReadCount_;
@@ -11654,11 +11703,14 @@ public final class Message {
       if (!getConverIdBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 2, converId_);
       }
+      if (convType_ != com.raven.common.protos.Message.ConverType.SINGLE.getNumber()) {
+        output.writeEnum(3, convType_);
+      }
       for (int i = 0; i < messageList_.size(); i++) {
-        output.writeMessage(3, messageList_.get(i));
+        output.writeMessage(4, messageList_.get(i));
       }
       if (unReadCount_ != 0L) {
-        output.writeUInt64(4, unReadCount_);
+        output.writeUInt64(5, unReadCount_);
       }
       unknownFields.writeTo(output);
     }
@@ -11676,13 +11728,17 @@ public final class Message {
       if (!getConverIdBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, converId_);
       }
+      if (convType_ != com.raven.common.protos.Message.ConverType.SINGLE.getNumber()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeEnumSize(3, convType_);
+      }
       for (int i = 0; i < messageList_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(3, messageList_.get(i));
+          .computeMessageSize(4, messageList_.get(i));
       }
       if (unReadCount_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-          .computeUInt64Size(4, unReadCount_);
+          .computeUInt64Size(5, unReadCount_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -11704,6 +11760,7 @@ public final class Message {
           == other.getId());
       result = result && getConverId()
           .equals(other.getConverId());
+      result = result && convType_ == other.convType_;
       result = result && getMessageListList()
           .equals(other.getMessageListList());
       result = result && (getUnReadCount()
@@ -11724,6 +11781,8 @@ public final class Message {
           getId());
       hash = (37 * hash) + CONVERID_FIELD_NUMBER;
       hash = (53 * hash) + getConverId().hashCode();
+      hash = (37 * hash) + CONVTYPE_FIELD_NUMBER;
+      hash = (53 * hash) + convType_;
       if (getMessageListCount() > 0) {
         hash = (37 * hash) + MESSAGELIST_FIELD_NUMBER;
         hash = (53 * hash) + getMessageListList().hashCode();
@@ -11873,9 +11932,11 @@ public final class Message {
 
         converId_ = "";
 
+        convType_ = 0;
+
         if (messageListBuilder_ == null) {
           messageList_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000004);
+          bitField0_ = (bitField0_ & ~0x00000008);
         } else {
           messageListBuilder_.clear();
         }
@@ -11911,10 +11972,11 @@ public final class Message {
         int to_bitField0_ = 0;
         result.id_ = id_;
         result.converId_ = converId_;
+        result.convType_ = convType_;
         if (messageListBuilder_ == null) {
-          if (((bitField0_ & 0x00000004) == 0x00000004)) {
+          if (((bitField0_ & 0x00000008) == 0x00000008)) {
             messageList_ = java.util.Collections.unmodifiableList(messageList_);
-            bitField0_ = (bitField0_ & ~0x00000004);
+            bitField0_ = (bitField0_ & ~0x00000008);
           }
           result.messageList_ = messageList_;
         } else {
@@ -11977,11 +12039,14 @@ public final class Message {
           converId_ = other.converId_;
           onChanged();
         }
+        if (other.convType_ != 0) {
+          setConvTypeValue(other.getConvTypeValue());
+        }
         if (messageListBuilder_ == null) {
           if (!other.messageList_.isEmpty()) {
             if (messageList_.isEmpty()) {
               messageList_ = other.messageList_;
-              bitField0_ = (bitField0_ & ~0x00000004);
+              bitField0_ = (bitField0_ & ~0x00000008);
             } else {
               ensureMessageListIsMutable();
               messageList_.addAll(other.messageList_);
@@ -11994,7 +12059,7 @@ public final class Message {
               messageListBuilder_.dispose();
               messageListBuilder_ = null;
               messageList_ = other.messageList_;
-              bitField0_ = (bitField0_ & ~0x00000004);
+              bitField0_ = (bitField0_ & ~0x00000008);
               messageListBuilder_ = 
                 com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
                    getMessageListFieldBuilder() : null;
@@ -12163,12 +12228,77 @@ public final class Message {
         return this;
       }
 
+      private int convType_ = 0;
+      /**
+       * <pre>
+       * 会话类型
+       * </pre>
+       *
+       * <code>.com.raven.common.protos.ConverType convType = 3;</code>
+       */
+      public int getConvTypeValue() {
+        return convType_;
+      }
+      /**
+       * <pre>
+       * 会话类型
+       * </pre>
+       *
+       * <code>.com.raven.common.protos.ConverType convType = 3;</code>
+       */
+      public Builder setConvTypeValue(int value) {
+        convType_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * 会话类型
+       * </pre>
+       *
+       * <code>.com.raven.common.protos.ConverType convType = 3;</code>
+       */
+      public com.raven.common.protos.Message.ConverType getConvType() {
+        @SuppressWarnings("deprecation")
+        com.raven.common.protos.Message.ConverType result = com.raven.common.protos.Message.ConverType.valueOf(convType_);
+        return result == null ? com.raven.common.protos.Message.ConverType.UNRECOGNIZED : result;
+      }
+      /**
+       * <pre>
+       * 会话类型
+       * </pre>
+       *
+       * <code>.com.raven.common.protos.ConverType convType = 3;</code>
+       */
+      public Builder setConvType(com.raven.common.protos.Message.ConverType value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        
+        convType_ = value.getNumber();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * 会话类型
+       * </pre>
+       *
+       * <code>.com.raven.common.protos.ConverType convType = 3;</code>
+       */
+      public Builder clearConvType() {
+        
+        convType_ = 0;
+        onChanged();
+        return this;
+      }
+
       private java.util.List<com.raven.common.protos.Message.MessageContent> messageList_ =
         java.util.Collections.emptyList();
       private void ensureMessageListIsMutable() {
-        if (!((bitField0_ & 0x00000004) == 0x00000004)) {
+        if (!((bitField0_ & 0x00000008) == 0x00000008)) {
           messageList_ = new java.util.ArrayList<com.raven.common.protos.Message.MessageContent>(messageList_);
-          bitField0_ |= 0x00000004;
+          bitField0_ |= 0x00000008;
          }
       }
 
@@ -12180,7 +12310,7 @@ public final class Message {
        * 消息列表
        * </pre>
        *
-       * <code>repeated .com.raven.common.protos.MessageContent messageList = 3;</code>
+       * <code>repeated .com.raven.common.protos.MessageContent messageList = 4;</code>
        */
       public java.util.List<com.raven.common.protos.Message.MessageContent> getMessageListList() {
         if (messageListBuilder_ == null) {
@@ -12194,7 +12324,7 @@ public final class Message {
        * 消息列表
        * </pre>
        *
-       * <code>repeated .com.raven.common.protos.MessageContent messageList = 3;</code>
+       * <code>repeated .com.raven.common.protos.MessageContent messageList = 4;</code>
        */
       public int getMessageListCount() {
         if (messageListBuilder_ == null) {
@@ -12208,7 +12338,7 @@ public final class Message {
        * 消息列表
        * </pre>
        *
-       * <code>repeated .com.raven.common.protos.MessageContent messageList = 3;</code>
+       * <code>repeated .com.raven.common.protos.MessageContent messageList = 4;</code>
        */
       public com.raven.common.protos.Message.MessageContent getMessageList(int index) {
         if (messageListBuilder_ == null) {
@@ -12222,7 +12352,7 @@ public final class Message {
        * 消息列表
        * </pre>
        *
-       * <code>repeated .com.raven.common.protos.MessageContent messageList = 3;</code>
+       * <code>repeated .com.raven.common.protos.MessageContent messageList = 4;</code>
        */
       public Builder setMessageList(
           int index, com.raven.common.protos.Message.MessageContent value) {
@@ -12243,7 +12373,7 @@ public final class Message {
        * 消息列表
        * </pre>
        *
-       * <code>repeated .com.raven.common.protos.MessageContent messageList = 3;</code>
+       * <code>repeated .com.raven.common.protos.MessageContent messageList = 4;</code>
        */
       public Builder setMessageList(
           int index, com.raven.common.protos.Message.MessageContent.Builder builderForValue) {
@@ -12261,7 +12391,7 @@ public final class Message {
        * 消息列表
        * </pre>
        *
-       * <code>repeated .com.raven.common.protos.MessageContent messageList = 3;</code>
+       * <code>repeated .com.raven.common.protos.MessageContent messageList = 4;</code>
        */
       public Builder addMessageList(com.raven.common.protos.Message.MessageContent value) {
         if (messageListBuilder_ == null) {
@@ -12281,7 +12411,7 @@ public final class Message {
        * 消息列表
        * </pre>
        *
-       * <code>repeated .com.raven.common.protos.MessageContent messageList = 3;</code>
+       * <code>repeated .com.raven.common.protos.MessageContent messageList = 4;</code>
        */
       public Builder addMessageList(
           int index, com.raven.common.protos.Message.MessageContent value) {
@@ -12302,7 +12432,7 @@ public final class Message {
        * 消息列表
        * </pre>
        *
-       * <code>repeated .com.raven.common.protos.MessageContent messageList = 3;</code>
+       * <code>repeated .com.raven.common.protos.MessageContent messageList = 4;</code>
        */
       public Builder addMessageList(
           com.raven.common.protos.Message.MessageContent.Builder builderForValue) {
@@ -12320,7 +12450,7 @@ public final class Message {
        * 消息列表
        * </pre>
        *
-       * <code>repeated .com.raven.common.protos.MessageContent messageList = 3;</code>
+       * <code>repeated .com.raven.common.protos.MessageContent messageList = 4;</code>
        */
       public Builder addMessageList(
           int index, com.raven.common.protos.Message.MessageContent.Builder builderForValue) {
@@ -12338,7 +12468,7 @@ public final class Message {
        * 消息列表
        * </pre>
        *
-       * <code>repeated .com.raven.common.protos.MessageContent messageList = 3;</code>
+       * <code>repeated .com.raven.common.protos.MessageContent messageList = 4;</code>
        */
       public Builder addAllMessageList(
           java.lang.Iterable<? extends com.raven.common.protos.Message.MessageContent> values) {
@@ -12357,12 +12487,12 @@ public final class Message {
        * 消息列表
        * </pre>
        *
-       * <code>repeated .com.raven.common.protos.MessageContent messageList = 3;</code>
+       * <code>repeated .com.raven.common.protos.MessageContent messageList = 4;</code>
        */
       public Builder clearMessageList() {
         if (messageListBuilder_ == null) {
           messageList_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000004);
+          bitField0_ = (bitField0_ & ~0x00000008);
           onChanged();
         } else {
           messageListBuilder_.clear();
@@ -12374,7 +12504,7 @@ public final class Message {
        * 消息列表
        * </pre>
        *
-       * <code>repeated .com.raven.common.protos.MessageContent messageList = 3;</code>
+       * <code>repeated .com.raven.common.protos.MessageContent messageList = 4;</code>
        */
       public Builder removeMessageList(int index) {
         if (messageListBuilder_ == null) {
@@ -12391,7 +12521,7 @@ public final class Message {
        * 消息列表
        * </pre>
        *
-       * <code>repeated .com.raven.common.protos.MessageContent messageList = 3;</code>
+       * <code>repeated .com.raven.common.protos.MessageContent messageList = 4;</code>
        */
       public com.raven.common.protos.Message.MessageContent.Builder getMessageListBuilder(
           int index) {
@@ -12402,7 +12532,7 @@ public final class Message {
        * 消息列表
        * </pre>
        *
-       * <code>repeated .com.raven.common.protos.MessageContent messageList = 3;</code>
+       * <code>repeated .com.raven.common.protos.MessageContent messageList = 4;</code>
        */
       public com.raven.common.protos.Message.MessageContentOrBuilder getMessageListOrBuilder(
           int index) {
@@ -12416,7 +12546,7 @@ public final class Message {
        * 消息列表
        * </pre>
        *
-       * <code>repeated .com.raven.common.protos.MessageContent messageList = 3;</code>
+       * <code>repeated .com.raven.common.protos.MessageContent messageList = 4;</code>
        */
       public java.util.List<? extends com.raven.common.protos.Message.MessageContentOrBuilder> 
            getMessageListOrBuilderList() {
@@ -12431,7 +12561,7 @@ public final class Message {
        * 消息列表
        * </pre>
        *
-       * <code>repeated .com.raven.common.protos.MessageContent messageList = 3;</code>
+       * <code>repeated .com.raven.common.protos.MessageContent messageList = 4;</code>
        */
       public com.raven.common.protos.Message.MessageContent.Builder addMessageListBuilder() {
         return getMessageListFieldBuilder().addBuilder(
@@ -12442,7 +12572,7 @@ public final class Message {
        * 消息列表
        * </pre>
        *
-       * <code>repeated .com.raven.common.protos.MessageContent messageList = 3;</code>
+       * <code>repeated .com.raven.common.protos.MessageContent messageList = 4;</code>
        */
       public com.raven.common.protos.Message.MessageContent.Builder addMessageListBuilder(
           int index) {
@@ -12454,7 +12584,7 @@ public final class Message {
        * 消息列表
        * </pre>
        *
-       * <code>repeated .com.raven.common.protos.MessageContent messageList = 3;</code>
+       * <code>repeated .com.raven.common.protos.MessageContent messageList = 4;</code>
        */
       public java.util.List<com.raven.common.protos.Message.MessageContent.Builder> 
            getMessageListBuilderList() {
@@ -12467,7 +12597,7 @@ public final class Message {
           messageListBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
               com.raven.common.protos.Message.MessageContent, com.raven.common.protos.Message.MessageContent.Builder, com.raven.common.protos.Message.MessageContentOrBuilder>(
                   messageList_,
-                  ((bitField0_ & 0x00000004) == 0x00000004),
+                  ((bitField0_ & 0x00000008) == 0x00000008),
                   getParentForChildren(),
                   isClean());
           messageList_ = null;
@@ -12481,7 +12611,7 @@ public final class Message {
        * 历史消息未读数
        * </pre>
        *
-       * <code>uint64 unReadCount = 4;</code>
+       * <code>uint64 unReadCount = 5;</code>
        */
       public long getUnReadCount() {
         return unReadCount_;
@@ -12491,7 +12621,7 @@ public final class Message {
        * 历史消息未读数
        * </pre>
        *
-       * <code>uint64 unReadCount = 4;</code>
+       * <code>uint64 unReadCount = 5;</code>
        */
       public Builder setUnReadCount(long value) {
         
@@ -12504,7 +12634,7 @@ public final class Message {
        * 历史消息未读数
        * </pre>
        *
-       * <code>uint64 unReadCount = 4;</code>
+       * <code>uint64 unReadCount = 5;</code>
        */
       public Builder clearUnReadCount() {
         
@@ -17351,34 +17481,35 @@ public final class Message {
       "om.raven.common.protos.MessageType\022\017\n\007co" +
       "ntent\030\004 \001(\t\022\014\n\004time\030\005 \001(\004\"?\n\016HisMessages" +
       "Req\022\n\n\002id\030\001 \001(\004\022\020\n\010converId\030\002 \001(\t\022\017\n\007beg" +
-      "inId\030\003 \001(\004\"\201\001\n\016HisMessagesAck\022\n\n\002id\030\001 \001(" +
-      "\004\022\020\n\010converId\030\002 \001(\t\022<\n\013messageList\030\003 \003(\013" +
-      "2\'.com.raven.common.protos.MessageConten" +
-      "t\022\023\n\013unReadCount\030\004 \001(\004\"e\n\tConverReq\022\n\n\002i" +
-      "d\030\001 \001(\004\0224\n\004type\030\002 \001(\0162&.com.raven.common" +
-      ".protos.OperationType\022\026\n\016conversationId\030" +
-      "\003 \001(\t\"\304\001\n\tConverAck\022\n\n\002id\030\001 \001(\004\022+\n\004code\030" +
-      "\003 \001(\0162\035.com.raven.common.protos.Code\022\014\n\004" +
-      "time\030\004 \001(\004\0227\n\nconverInfo\030\005 \001(\0132#.com.rav" +
-      "en.common.protos.ConverInfo\0227\n\nconverLis" +
-      "t\030\006 \003(\0132#.com.raven.common.protos.Conver" +
-      "Info\"\304\001\n\nConverInfo\022\020\n\010converId\030\001 \001(\t\0221\n" +
-      "\004type\030\002 \001(\0162#.com.raven.common.protos.Co" +
-      "nverType\022\017\n\007uidList\030\003 \003(\t\022\017\n\007groupId\030\004 \001" +
-      "(\t\022\021\n\treadMsgId\030\005 \001(\004\022<\n\013lastContent\030\006 \001" +
-      "(\0132\'.com.raven.common.protos.MessageCont" +
-      "ent\"[\n\rNotifyMessage\022\n\n\002id\030\001 \001(\004\022\014\n\004type" +
-      "\030\002 \001(\t\022\021\n\ttargetUid\030\003 \001(\t\022\017\n\007content\030\004 \001" +
-      "(\t\022\014\n\004time\030\005 \001(\004*#\n\rHeartBeatType\022\010\n\004PIN" +
-      "G\020\000\022\010\n\004PONG\020\001*\250\001\n\004Code\022\013\n\007SUCCESS\020\000\022\024\n\020C" +
-      "LIENT_ID_REPEAT\020\001\022\027\n\023CONVER_TYPE_INVALID" +
-      "\020\002\022\017\n\013KAFKA_ERROR\020\003\022\025\n\021CONVER_ID_INVALID" +
-      "\020\004\022\r\n\tNO_TARGET\020\005\022\021\n\rTOKEN_INVALID\020\006\022\032\n\026" +
-      "OPERATION_TYPE_INVALID\020\007*#\n\nConverType\022\n" +
-      "\n\006SINGLE\020\000\022\t\n\005GROUP\020\001*:\n\013MessageType\022\010\n\004" +
-      "TEXT\020\000\022\013\n\007PICTURE\020\001\022\t\n\005VOICE\020\002\022\t\n\005VIDEO\020" +
-      "\003*$\n\rOperationType\022\n\n\006DETAIL\020\000\022\007\n\003ALL\020\001B" +
-      "\tB\007Messageb\006proto3"
+      "inId\030\003 \001(\004\"\270\001\n\016HisMessagesAck\022\n\n\002id\030\001 \001(" +
+      "\004\022\020\n\010converId\030\002 \001(\t\0225\n\010convType\030\003 \001(\0162#." +
+      "com.raven.common.protos.ConverType\022<\n\013me" +
+      "ssageList\030\004 \003(\0132\'.com.raven.common.proto" +
+      "s.MessageContent\022\023\n\013unReadCount\030\005 \001(\004\"e\n" +
+      "\tConverReq\022\n\n\002id\030\001 \001(\004\0224\n\004type\030\002 \001(\0162&.c" +
+      "om.raven.common.protos.OperationType\022\026\n\016" +
+      "conversationId\030\003 \001(\t\"\304\001\n\tConverAck\022\n\n\002id" +
+      "\030\001 \001(\004\022+\n\004code\030\003 \001(\0162\035.com.raven.common." +
+      "protos.Code\022\014\n\004time\030\004 \001(\004\0227\n\nconverInfo\030" +
+      "\005 \001(\0132#.com.raven.common.protos.ConverIn" +
+      "fo\0227\n\nconverList\030\006 \003(\0132#.com.raven.commo" +
+      "n.protos.ConverInfo\"\304\001\n\nConverInfo\022\020\n\010co" +
+      "nverId\030\001 \001(\t\0221\n\004type\030\002 \001(\0162#.com.raven.c" +
+      "ommon.protos.ConverType\022\017\n\007uidList\030\003 \003(\t" +
+      "\022\017\n\007groupId\030\004 \001(\t\022\021\n\treadMsgId\030\005 \001(\004\022<\n\013" +
+      "lastContent\030\006 \001(\0132\'.com.raven.common.pro" +
+      "tos.MessageContent\"[\n\rNotifyMessage\022\n\n\002i" +
+      "d\030\001 \001(\004\022\014\n\004type\030\002 \001(\t\022\021\n\ttargetUid\030\003 \001(\t" +
+      "\022\017\n\007content\030\004 \001(\t\022\014\n\004time\030\005 \001(\004*#\n\rHeart" +
+      "BeatType\022\010\n\004PING\020\000\022\010\n\004PONG\020\001*\250\001\n\004Code\022\013\n" +
+      "\007SUCCESS\020\000\022\024\n\020CLIENT_ID_REPEAT\020\001\022\027\n\023CONV" +
+      "ER_TYPE_INVALID\020\002\022\017\n\013KAFKA_ERROR\020\003\022\025\n\021CO" +
+      "NVER_ID_INVALID\020\004\022\r\n\tNO_TARGET\020\005\022\021\n\rTOKE" +
+      "N_INVALID\020\006\022\032\n\026OPERATION_TYPE_INVALID\020\007*" +
+      "#\n\nConverType\022\n\n\006SINGLE\020\000\022\t\n\005GROUP\020\001*:\n\013" +
+      "MessageType\022\010\n\004TEXT\020\000\022\013\n\007PICTURE\020\001\022\t\n\005VO" +
+      "ICE\020\002\022\t\n\005VIDEO\020\003*$\n\rOperationType\022\n\n\006DET" +
+      "AIL\020\000\022\007\n\003ALL\020\001B\tB\007Messageb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -17451,7 +17582,7 @@ public final class Message {
     internal_static_com_raven_common_protos_HisMessagesAck_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_raven_common_protos_HisMessagesAck_descriptor,
-        new java.lang.String[] { "Id", "ConverId", "MessageList", "UnReadCount", });
+        new java.lang.String[] { "Id", "ConverId", "ConvType", "MessageList", "UnReadCount", });
     internal_static_com_raven_common_protos_ConverReq_descriptor =
       getDescriptor().getMessageTypes().get(10);
     internal_static_com_raven_common_protos_ConverReq_fieldAccessorTable = new

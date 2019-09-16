@@ -5,6 +5,7 @@ import com.raven.common.protos.Message.ConverType;
 import com.raven.common.protos.Message.MessageContent;
 import com.raven.common.protos.Message.MessageType;
 import com.raven.common.protos.Message.NotifyMessage;
+import com.raven.common.protos.Message.NotifyType;
 import com.raven.common.protos.Message.RavenMessage;
 import com.raven.common.protos.Message.RavenMessage.Type;
 import com.raven.common.protos.Message.UpDownMessage;
@@ -41,7 +42,7 @@ public class ServerApiServiceImpl implements ServerApiService {
         String topic = Constants.KAFKA_TOPIC_NOTI_TO_USER;
         if (StringUtils.isNotEmpty(userId)) {
             long id = snowFlake.nextId();
-            RavenMessage ravenMessage = buildRavenNotification(param, Constants.SERVER_API_NOTIFY_NOTI_USER, id);
+            RavenMessage ravenMessage = buildNotification2User(param, NotifyType.USER, id);
             if (sendMsgToKafka(ravenMessage, id, topic)) {
                 return Result.success(id);
             } else {
@@ -64,7 +65,7 @@ public class ServerApiServiceImpl implements ServerApiService {
                 return Result.failure(ResultCode.COMMON_INVALID_PARAMETER);
             }
             long id = snowFlake.nextId();
-            RavenMessage ravenMessage = buildRavenNotification(param, Constants.SERVER_API_NOTIFY_NOTI_CONV, id);
+            RavenMessage ravenMessage = buildNotification2Conv(param, NotifyType.CONVERSATION, id, convId);
             if (sendMsgToKafka(ravenMessage, id, topic)) {
                 return Result.success(id);
             } else {
@@ -97,7 +98,7 @@ public class ServerApiServiceImpl implements ServerApiService {
                 type = ConverType.SINGLE;
             }
             long id = snowFlake.nextId();
-            RavenMessage ravenMessage = buildRavenMessage(param, id, type, convId);
+            RavenMessage ravenMessage = buildMessage(param, id, type, convId);
             if (sendMsgToKafka(ravenMessage, id, topic)) {
                 return Result.success(id);
             } else {
@@ -118,7 +119,7 @@ public class ServerApiServiceImpl implements ServerApiService {
         return result.getCode().intValue() == ResultCode.COMMON_SUCCESS.getCode();
     }
 
-    private RavenMessage buildRavenNotification(ReqMsgParam param, String type, long msgId) {
+    private RavenMessage buildNotification2User(ReqMsgParam param, NotifyType type, long msgId) {
         NotifyMessage notifyMsg = NotifyMessage.newBuilder()
             .setId(msgId)
             .setTargetUid(param.getTargetUid())
@@ -130,7 +131,20 @@ public class ServerApiServiceImpl implements ServerApiService {
             .setNotifyMessage(notifyMsg).build();
     }
 
-    private RavenMessage buildRavenMessage(ReqMsgParam param, long msgId, ConverType type, String convId) {
+    private RavenMessage buildNotification2Conv(ReqMsgParam param, NotifyType type, long msgId, String convId) {
+        NotifyMessage notifyMsg = NotifyMessage.newBuilder()
+            .setId(msgId)
+            .setTargetUid(param.getTargetUid())
+            .setContent(param.getContent())
+            .setType(type)
+            .setConverId(convId)
+            .setTime(System.currentTimeMillis())
+            .build();
+        return RavenMessage.newBuilder().setType(Type.NotifyMessage)
+            .setNotifyMessage(notifyMsg).build();
+    }
+
+    private RavenMessage buildMessage(ReqMsgParam param, long msgId, ConverType type, String convId) {
         MessageContent content = MessageContent.newBuilder()
             .setId(msgId)
             .setType(MessageType.TEXT) //TODO  server api only support text message now.

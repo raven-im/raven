@@ -43,9 +43,8 @@ public class NotifyConvProcessor implements Runnable {
             if (null != server) {
                 Channel channel = gateWayServerChannelManager.getChannelByServer(server);
                 if (channel != null) {
-                    NotifyMessage downNotification = NotifyMessage.newBuilder()
-                        .mergeFrom(notifyMessage)
-                        .build();
+                    NotifyMessage downNotification = NotifyMessage.newBuilder().mergeFrom(notifyMessage)
+                        .setTargetUid(uid).build();
                     RavenMessage ravenMessage = RavenMessage.newBuilder()
                         .setType(Type.NotifyMessage)
                         .setNotifyMessage(downNotification).build();

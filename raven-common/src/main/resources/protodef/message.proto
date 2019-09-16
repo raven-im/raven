@@ -180,6 +180,8 @@ message NotifyMessage {
   NotifyType type = 2; // 通知类型
   string targetUid = 3; // 接收id
   string converId = 4; // 若为通知到会话，提供会话id.
-  string content = 5; // 通知内容
-  uint64 time = 6; //消息时间
+  ConverType convType = 5; // 若为通知到会话，提供会话类型.
+  string content = 6; // 通知内容
+  uint64 time = 7; //消息时间
+  string fromUid = 8; //以谁的身份发送
 }

@@ -16431,10 +16431,27 @@ public final class Message {
 
     /**
      * <pre>
+     * 若为通知到会话，提供会话类型.
+     * </pre>
+     *
+     * <code>.com.raven.common.protos.ConverType convType = 5;</code>
+     */
+    int getConvTypeValue();
+    /**
+     * <pre>
+     * 若为通知到会话，提供会话类型.
+     * </pre>
+     *
+     * <code>.com.raven.common.protos.ConverType convType = 5;</code>
+     */
+    com.raven.common.protos.Message.ConverType getConvType();
+
+    /**
+     * <pre>
      * 通知内容
      * </pre>
      *
-     * <code>string content = 5;</code>
+     * <code>string content = 6;</code>
      */
     java.lang.String getContent();
     /**
@@ -16442,7 +16459,7 @@ public final class Message {
      * 通知内容
      * </pre>
      *
-     * <code>string content = 5;</code>
+     * <code>string content = 6;</code>
      */
     com.google.protobuf.ByteString
         getContentBytes();
@@ -16452,9 +16469,27 @@ public final class Message {
      *消息时间
      * </pre>
      *
-     * <code>uint64 time = 6;</code>
+     * <code>uint64 time = 7;</code>
      */
     long getTime();
+
+    /**
+     * <pre>
+     *以谁的身份发送
+     * </pre>
+     *
+     * <code>string fromUid = 8;</code>
+     */
+    java.lang.String getFromUid();
+    /**
+     * <pre>
+     *以谁的身份发送
+     * </pre>
+     *
+     * <code>string fromUid = 8;</code>
+     */
+    com.google.protobuf.ByteString
+        getFromUidBytes();
   }
   /**
    * <pre>
@@ -16477,8 +16512,10 @@ public final class Message {
       type_ = 0;
       targetUid_ = "";
       converId_ = "";
+      convType_ = 0;
       content_ = "";
       time_ = 0L;
+      fromUid_ = "";
     }
 
     @java.lang.Override
@@ -16528,15 +16565,27 @@ public final class Message {
               converId_ = s;
               break;
             }
-            case 42: {
+            case 40: {
+              int rawValue = input.readEnum();
+
+              convType_ = rawValue;
+              break;
+            }
+            case 50: {
               java.lang.String s = input.readStringRequireUtf8();
 
               content_ = s;
               break;
             }
-            case 48: {
+            case 56: {
 
               time_ = input.readUInt64();
+              break;
+            }
+            case 66: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              fromUid_ = s;
               break;
             }
             default: {
@@ -16693,14 +16742,39 @@ public final class Message {
       }
     }
 
-    public static final int CONTENT_FIELD_NUMBER = 5;
+    public static final int CONVTYPE_FIELD_NUMBER = 5;
+    private int convType_;
+    /**
+     * <pre>
+     * 若为通知到会话，提供会话类型.
+     * </pre>
+     *
+     * <code>.com.raven.common.protos.ConverType convType = 5;</code>
+     */
+    public int getConvTypeValue() {
+      return convType_;
+    }
+    /**
+     * <pre>
+     * 若为通知到会话，提供会话类型.
+     * </pre>
+     *
+     * <code>.com.raven.common.protos.ConverType convType = 5;</code>
+     */
+    public com.raven.common.protos.Message.ConverType getConvType() {
+      @SuppressWarnings("deprecation")
+      com.raven.common.protos.Message.ConverType result = com.raven.common.protos.Message.ConverType.valueOf(convType_);
+      return result == null ? com.raven.common.protos.Message.ConverType.UNRECOGNIZED : result;
+    }
+
+    public static final int CONTENT_FIELD_NUMBER = 6;
     private volatile java.lang.Object content_;
     /**
      * <pre>
      * 通知内容
      * </pre>
      *
-     * <code>string content = 5;</code>
+     * <code>string content = 6;</code>
      */
     public java.lang.String getContent() {
       java.lang.Object ref = content_;
@@ -16719,7 +16793,7 @@ public final class Message {
      * 通知内容
      * </pre>
      *
-     * <code>string content = 5;</code>
+     * <code>string content = 6;</code>
      */
     public com.google.protobuf.ByteString
         getContentBytes() {
@@ -16735,17 +16809,59 @@ public final class Message {
       }
     }
 
-    public static final int TIME_FIELD_NUMBER = 6;
+    public static final int TIME_FIELD_NUMBER = 7;
     private long time_;
     /**
      * <pre>
      *消息时间
      * </pre>
      *
-     * <code>uint64 time = 6;</code>
+     * <code>uint64 time = 7;</code>
      */
     public long getTime() {
       return time_;
+    }
+
+    public static final int FROMUID_FIELD_NUMBER = 8;
+    private volatile java.lang.Object fromUid_;
+    /**
+     * <pre>
+     *以谁的身份发送
+     * </pre>
+     *
+     * <code>string fromUid = 8;</code>
+     */
+    public java.lang.String getFromUid() {
+      java.lang.Object ref = fromUid_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        fromUid_ = s;
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     *以谁的身份发送
+     * </pre>
+     *
+     * <code>string fromUid = 8;</code>
+     */
+    public com.google.protobuf.ByteString
+        getFromUidBytes() {
+      java.lang.Object ref = fromUid_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        fromUid_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
     }
 
     private byte memoizedIsInitialized = -1;
@@ -16774,11 +16890,17 @@ public final class Message {
       if (!getConverIdBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 4, converId_);
       }
+      if (convType_ != com.raven.common.protos.Message.ConverType.SINGLE.getNumber()) {
+        output.writeEnum(5, convType_);
+      }
       if (!getContentBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 5, content_);
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 6, content_);
       }
       if (time_ != 0L) {
-        output.writeUInt64(6, time_);
+        output.writeUInt64(7, time_);
+      }
+      if (!getFromUidBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 8, fromUid_);
       }
       unknownFields.writeTo(output);
     }
@@ -16803,12 +16925,19 @@ public final class Message {
       if (!getConverIdBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, converId_);
       }
+      if (convType_ != com.raven.common.protos.Message.ConverType.SINGLE.getNumber()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeEnumSize(5, convType_);
+      }
       if (!getContentBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, content_);
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, content_);
       }
       if (time_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-          .computeUInt64Size(6, time_);
+          .computeUInt64Size(7, time_);
+      }
+      if (!getFromUidBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(8, fromUid_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -16833,10 +16962,13 @@ public final class Message {
           .equals(other.getTargetUid());
       result = result && getConverId()
           .equals(other.getConverId());
+      result = result && convType_ == other.convType_;
       result = result && getContent()
           .equals(other.getContent());
       result = result && (getTime()
           == other.getTime());
+      result = result && getFromUid()
+          .equals(other.getFromUid());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -16857,11 +16989,15 @@ public final class Message {
       hash = (53 * hash) + getTargetUid().hashCode();
       hash = (37 * hash) + CONVERID_FIELD_NUMBER;
       hash = (53 * hash) + getConverId().hashCode();
+      hash = (37 * hash) + CONVTYPE_FIELD_NUMBER;
+      hash = (53 * hash) + convType_;
       hash = (37 * hash) + CONTENT_FIELD_NUMBER;
       hash = (53 * hash) + getContent().hashCode();
       hash = (37 * hash) + TIME_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           getTime());
+      hash = (37 * hash) + FROMUID_FIELD_NUMBER;
+      hash = (53 * hash) + getFromUid().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -17007,9 +17143,13 @@ public final class Message {
 
         converId_ = "";
 
+        convType_ = 0;
+
         content_ = "";
 
         time_ = 0L;
+
+        fromUid_ = "";
 
         return this;
       }
@@ -17041,8 +17181,10 @@ public final class Message {
         result.type_ = type_;
         result.targetUid_ = targetUid_;
         result.converId_ = converId_;
+        result.convType_ = convType_;
         result.content_ = content_;
         result.time_ = time_;
+        result.fromUid_ = fromUid_;
         onBuilt();
         return result;
       }
@@ -17105,12 +17247,19 @@ public final class Message {
           converId_ = other.converId_;
           onChanged();
         }
+        if (other.convType_ != 0) {
+          setConvTypeValue(other.getConvTypeValue());
+        }
         if (!other.getContent().isEmpty()) {
           content_ = other.content_;
           onChanged();
         }
         if (other.getTime() != 0L) {
           setTime(other.getTime());
+        }
+        if (!other.getFromUid().isEmpty()) {
+          fromUid_ = other.fromUid_;
+          onChanged();
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -17422,13 +17571,78 @@ public final class Message {
         return this;
       }
 
+      private int convType_ = 0;
+      /**
+       * <pre>
+       * 若为通知到会话，提供会话类型.
+       * </pre>
+       *
+       * <code>.com.raven.common.protos.ConverType convType = 5;</code>
+       */
+      public int getConvTypeValue() {
+        return convType_;
+      }
+      /**
+       * <pre>
+       * 若为通知到会话，提供会话类型.
+       * </pre>
+       *
+       * <code>.com.raven.common.protos.ConverType convType = 5;</code>
+       */
+      public Builder setConvTypeValue(int value) {
+        convType_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * 若为通知到会话，提供会话类型.
+       * </pre>
+       *
+       * <code>.com.raven.common.protos.ConverType convType = 5;</code>
+       */
+      public com.raven.common.protos.Message.ConverType getConvType() {
+        @SuppressWarnings("deprecation")
+        com.raven.common.protos.Message.ConverType result = com.raven.common.protos.Message.ConverType.valueOf(convType_);
+        return result == null ? com.raven.common.protos.Message.ConverType.UNRECOGNIZED : result;
+      }
+      /**
+       * <pre>
+       * 若为通知到会话，提供会话类型.
+       * </pre>
+       *
+       * <code>.com.raven.common.protos.ConverType convType = 5;</code>
+       */
+      public Builder setConvType(com.raven.common.protos.Message.ConverType value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        
+        convType_ = value.getNumber();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * 若为通知到会话，提供会话类型.
+       * </pre>
+       *
+       * <code>.com.raven.common.protos.ConverType convType = 5;</code>
+       */
+      public Builder clearConvType() {
+        
+        convType_ = 0;
+        onChanged();
+        return this;
+      }
+
       private java.lang.Object content_ = "";
       /**
        * <pre>
        * 通知内容
        * </pre>
        *
-       * <code>string content = 5;</code>
+       * <code>string content = 6;</code>
        */
       public java.lang.String getContent() {
         java.lang.Object ref = content_;
@@ -17447,7 +17661,7 @@ public final class Message {
        * 通知内容
        * </pre>
        *
-       * <code>string content = 5;</code>
+       * <code>string content = 6;</code>
        */
       public com.google.protobuf.ByteString
           getContentBytes() {
@@ -17467,7 +17681,7 @@ public final class Message {
        * 通知内容
        * </pre>
        *
-       * <code>string content = 5;</code>
+       * <code>string content = 6;</code>
        */
       public Builder setContent(
           java.lang.String value) {
@@ -17484,7 +17698,7 @@ public final class Message {
        * 通知内容
        * </pre>
        *
-       * <code>string content = 5;</code>
+       * <code>string content = 6;</code>
        */
       public Builder clearContent() {
         
@@ -17497,7 +17711,7 @@ public final class Message {
        * 通知内容
        * </pre>
        *
-       * <code>string content = 5;</code>
+       * <code>string content = 6;</code>
        */
       public Builder setContentBytes(
           com.google.protobuf.ByteString value) {
@@ -17517,7 +17731,7 @@ public final class Message {
        *消息时间
        * </pre>
        *
-       * <code>uint64 time = 6;</code>
+       * <code>uint64 time = 7;</code>
        */
       public long getTime() {
         return time_;
@@ -17527,7 +17741,7 @@ public final class Message {
        *消息时间
        * </pre>
        *
-       * <code>uint64 time = 6;</code>
+       * <code>uint64 time = 7;</code>
        */
       public Builder setTime(long value) {
         
@@ -17540,11 +17754,100 @@ public final class Message {
        *消息时间
        * </pre>
        *
-       * <code>uint64 time = 6;</code>
+       * <code>uint64 time = 7;</code>
        */
       public Builder clearTime() {
         
         time_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object fromUid_ = "";
+      /**
+       * <pre>
+       *以谁的身份发送
+       * </pre>
+       *
+       * <code>string fromUid = 8;</code>
+       */
+      public java.lang.String getFromUid() {
+        java.lang.Object ref = fromUid_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          fromUid_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <pre>
+       *以谁的身份发送
+       * </pre>
+       *
+       * <code>string fromUid = 8;</code>
+       */
+      public com.google.protobuf.ByteString
+          getFromUidBytes() {
+        java.lang.Object ref = fromUid_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          fromUid_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       *以谁的身份发送
+       * </pre>
+       *
+       * <code>string fromUid = 8;</code>
+       */
+      public Builder setFromUid(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        fromUid_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *以谁的身份发送
+       * </pre>
+       *
+       * <code>string fromUid = 8;</code>
+       */
+      public Builder clearFromUid() {
+        
+        fromUid_ = getDefaultInstance().getFromUid();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *以谁的身份发送
+       * </pre>
+       *
+       * <code>string fromUid = 8;</code>
+       */
+      public Builder setFromUidBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        fromUid_ = value;
         onChanged();
         return this;
       }
@@ -17742,21 +18045,23 @@ public final class Message {
       "ommon.protos.ConverType\022\017\n\007uidList\030\003 \003(\t" +
       "\022\017\n\007groupId\030\004 \001(\t\022\021\n\treadMsgId\030\005 \001(\004\022<\n\013" +
       "lastContent\030\006 \001(\0132\'.com.raven.common.pro" +
-      "tos.MessageContent\"\222\001\n\rNotifyMessage\022\n\n\002" +
+      "tos.MessageContent\"\332\001\n\rNotifyMessage\022\n\n\002" +
       "id\030\001 \001(\004\0221\n\004type\030\002 \001(\0162#.com.raven.commo" +
       "n.protos.NotifyType\022\021\n\ttargetUid\030\003 \001(\t\022\020" +
-      "\n\010converId\030\004 \001(\t\022\017\n\007content\030\005 \001(\t\022\014\n\004tim" +
-      "e\030\006 \001(\004*#\n\rHeartBeatType\022\010\n\004PING\020\000\022\010\n\004PO" +
-      "NG\020\001*\250\001\n\004Code\022\013\n\007SUCCESS\020\000\022\024\n\020CLIENT_ID_" +
-      "REPEAT\020\001\022\027\n\023CONVER_TYPE_INVALID\020\002\022\017\n\013KAF" +
-      "KA_ERROR\020\003\022\025\n\021CONVER_ID_INVALID\020\004\022\r\n\tNO_" +
-      "TARGET\020\005\022\021\n\rTOKEN_INVALID\020\006\022\032\n\026OPERATION" +
-      "_TYPE_INVALID\020\007*#\n\nConverType\022\n\n\006SINGLE\020" +
-      "\000\022\t\n\005GROUP\020\001*:\n\013MessageType\022\010\n\004TEXT\020\000\022\013\n" +
-      "\007PICTURE\020\001\022\t\n\005VOICE\020\002\022\t\n\005VIDEO\020\003*$\n\rOper" +
-      "ationType\022\n\n\006DETAIL\020\000\022\007\n\003ALL\020\001*(\n\nNotify" +
-      "Type\022\010\n\004USER\020\000\022\020\n\014CONVERSATION\020\001B\tB\007Mess" +
-      "ageb\006proto3"
+      "\n\010converId\030\004 \001(\t\0225\n\010convType\030\005 \001(\0162#.com" +
+      ".raven.common.protos.ConverType\022\017\n\007conte" +
+      "nt\030\006 \001(\t\022\014\n\004time\030\007 \001(\004\022\017\n\007fromUid\030\010 \001(\t*" +
+      "#\n\rHeartBeatType\022\010\n\004PING\020\000\022\010\n\004PONG\020\001*\250\001\n" +
+      "\004Code\022\013\n\007SUCCESS\020\000\022\024\n\020CLIENT_ID_REPEAT\020\001" +
+      "\022\027\n\023CONVER_TYPE_INVALID\020\002\022\017\n\013KAFKA_ERROR" +
+      "\020\003\022\025\n\021CONVER_ID_INVALID\020\004\022\r\n\tNO_TARGET\020\005" +
+      "\022\021\n\rTOKEN_INVALID\020\006\022\032\n\026OPERATION_TYPE_IN" +
+      "VALID\020\007*#\n\nConverType\022\n\n\006SINGLE\020\000\022\t\n\005GRO" +
+      "UP\020\001*:\n\013MessageType\022\010\n\004TEXT\020\000\022\013\n\007PICTURE" +
+      "\020\001\022\t\n\005VOICE\020\002\022\t\n\005VIDEO\020\003*$\n\rOperationTyp" +
+      "e\022\n\n\006DETAIL\020\000\022\007\n\003ALL\020\001*(\n\nNotifyType\022\010\n\004" +
+      "USER\020\000\022\020\n\014CONVERSATION\020\001B\tB\007Messageb\006pro" +
+      "to3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -17853,7 +18158,7 @@ public final class Message {
     internal_static_com_raven_common_protos_NotifyMessage_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_raven_common_protos_NotifyMessage_descriptor,
-        new java.lang.String[] { "Id", "Type", "TargetUid", "ConverId", "Content", "Time", });
+        new java.lang.String[] { "Id", "Type", "TargetUid", "ConverId", "ConvType", "Content", "Time", "FromUid", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

@@ -65,7 +65,7 @@ public class ServerApiServiceImpl implements ServerApiService {
                 return Result.failure(ResultCode.COMMON_INVALID_PARAMETER);
             }
             long id = snowFlake.nextId();
-            RavenMessage ravenMessage = buildNotification2Conv(param, NotifyType.CONVERSATION, id, convId);
+            RavenMessage ravenMessage = buildNotification2Conv(param, NotifyType.CONVERSATION, id, conv);
             if (sendMsgToKafka(ravenMessage, id, topic)) {
                 return Result.success(id);
             } else {
@@ -125,19 +125,22 @@ public class ServerApiServiceImpl implements ServerApiService {
             .setTargetUid(param.getTargetUid())
             .setContent(param.getContent())
             .setType(type)
+            .setFromUid(param.getFromUid())
             .setTime(System.currentTimeMillis())
             .build();
         return RavenMessage.newBuilder().setType(Type.NotifyMessage)
             .setNotifyMessage(notifyMsg).build();
     }
 
-    private RavenMessage buildNotification2Conv(ReqMsgParam param, NotifyType type, long msgId, String convId) {
+    private RavenMessage buildNotification2Conv(ReqMsgParam param, NotifyType type, long msgId, Conversation conv) {
         NotifyMessage notifyMsg = NotifyMessage.newBuilder()
             .setId(msgId)
             .setTargetUid(param.getTargetUid())
             .setContent(param.getContent())
             .setType(type)
-            .setConverId(convId)
+            .setConvType(conv.getType() == ConverType.GROUP.getNumber() ? ConverType.GROUP : ConverType.SINGLE)
+            .setConverId(conv.getId())
+            .setFromUid(param.getFromUid())
             .setTime(System.currentTimeMillis())
             .build();
         return RavenMessage.newBuilder().setType(Type.NotifyMessage)

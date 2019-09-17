@@ -59,7 +59,7 @@ public class ConversationHandler extends SimpleChannelInboundHandler<RavenMessag
     }
 
     private void processConverReqMsg(ChannelHandlerContext ctx, ConverReq conversationReq) {
-        log.info("receive conver request message:{}", JsonHelper.toJsonString(conversationReq));
+        log.debug("receive conver request message:{}", JsonHelper.toJsonString(conversationReq));
         if (conversationReq.getType() == OperationType.DETAIL) {
             UserConversation userConversation = converManager
                 .getConverListInfo(uidChannelManager.getIdByChannel(ctx.channel()),

@@ -167,6 +167,7 @@ message ConverInfo {
   string groupId = 4; //  群会话 群ID
   uint64 readMsgId = 5; // 已读消息ID
   MessageContent lastContent = 6; // 最后一条消息
+  uint64 time = 7; // 会话创建时间
 }
 
 enum NotifyType {

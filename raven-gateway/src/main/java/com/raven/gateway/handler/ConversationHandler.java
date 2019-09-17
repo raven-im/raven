@@ -106,6 +106,7 @@ public class ConversationHandler extends SimpleChannelInboundHandler<RavenMessag
         builder.setConverId(userConversation.getId());
         builder.setType(ConverType.valueOf(userConversation.getType()));
         builder.addAllUidList(userConversation.getUidList());
+        builder.setTime(userConversation.getTime());
         if (ConverType.valueOf(userConversation.getType()) == ConverType.GROUP) {
             builder.setGroupId(userConversation.getGroupId());
         }

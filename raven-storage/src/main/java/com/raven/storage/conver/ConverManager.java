@@ -45,6 +45,7 @@ public class ConverManager {
         uidList.add(toUid);
         Conversation conversation = new Conversation().builder().id(converId)
             .type(ConverType.SINGLE.getNumber())
+            .time(System.currentTimeMillis())
             .uidList(new ArrayList<>(uidList)).build();
         boolean result = redisTemplate.opsForValue()
             .setIfAbsent(converId, JsonHelper.toJsonString(conversation));
@@ -61,6 +62,7 @@ public class ConverManager {
         String converId = UidUtil.uuid24ByFactor(groupId);
         Conversation conversation = new Conversation().builder().id(converId)
             .type(ConverType.GROUP.getNumber())
+            .time(System.currentTimeMillis())
             .groupId(groupId).build();
         boolean result = redisTemplate.opsForValue()
             .setIfAbsent(converId, JsonHelper.toJsonString(conversation));
@@ -161,6 +163,7 @@ public class ConverManager {
             UserConversation converListInfo = new UserConversation().builder()
                 .id(conversation.getId()).groupId(conversation.getGroupId())
                 .uidList(conversation.getUidList())
+                .time(conversation.getTime())
                 .type(conversation.getType()).build();
             Long readMsgId = getUserReadMessageId(uid, converId);
             if (null != readMsgId) {
@@ -189,6 +192,7 @@ public class ConverManager {
                 UserConversation converListInfo = new UserConversation().builder()
                     .id(conversation.getId()).groupId(conversation.getGroupId())
                     .uidList(conversation.getUidList()).type(conversation.getType())
+                    .time(conversation.getTime())
                     .readMsgId(entry.getValue()).build();
                 Set<String> strs = redisTemplate
                     .boundZSetOps(PREFIX_MESSAGE_ID + conversation.getId())

@@ -14991,6 +14991,15 @@ public final class Message {
      * <code>.com.raven.common.protos.MessageContent lastContent = 6;</code>
      */
     com.raven.common.protos.Message.MessageContentOrBuilder getLastContentOrBuilder();
+
+    /**
+     * <pre>
+     * 会话创建时间
+     * </pre>
+     *
+     * <code>uint64 time = 7;</code>
+     */
+    long getTime();
   }
   /**
    * <pre>
@@ -15014,6 +15023,7 @@ public final class Message {
       uidList_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       groupId_ = "";
       readMsgId_ = 0L;
+      time_ = 0L;
     }
 
     @java.lang.Override
@@ -15083,6 +15093,11 @@ public final class Message {
                 lastContent_ = subBuilder.buildPartial();
               }
 
+              break;
+            }
+            case 56: {
+
+              time_ = input.readUInt64();
               break;
             }
             default: {
@@ -15321,6 +15336,19 @@ public final class Message {
       return getLastContent();
     }
 
+    public static final int TIME_FIELD_NUMBER = 7;
+    private long time_;
+    /**
+     * <pre>
+     * 会话创建时间
+     * </pre>
+     *
+     * <code>uint64 time = 7;</code>
+     */
+    public long getTime() {
+      return time_;
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -15352,6 +15380,9 @@ public final class Message {
       }
       if (lastContent_ != null) {
         output.writeMessage(6, getLastContent());
+      }
+      if (time_ != 0L) {
+        output.writeUInt64(7, time_);
       }
       unknownFields.writeTo(output);
     }
@@ -15388,6 +15419,10 @@ public final class Message {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(6, getLastContent());
       }
+      if (time_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt64Size(7, time_);
+      }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
@@ -15418,6 +15453,8 @@ public final class Message {
         result = result && getLastContent()
             .equals(other.getLastContent());
       }
+      result = result && (getTime()
+          == other.getTime());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -15446,6 +15483,9 @@ public final class Message {
         hash = (37 * hash) + LASTCONTENT_FIELD_NUMBER;
         hash = (53 * hash) + getLastContent().hashCode();
       }
+      hash = (37 * hash) + TIME_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getTime());
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -15599,6 +15639,8 @@ public final class Message {
           lastContent_ = null;
           lastContentBuilder_ = null;
         }
+        time_ = 0L;
+
         return this;
       }
 
@@ -15641,6 +15683,7 @@ public final class Message {
         } else {
           result.lastContent_ = lastContentBuilder_.build();
         }
+        result.time_ = time_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -15716,6 +15759,9 @@ public final class Message {
         }
         if (other.hasLastContent()) {
           mergeLastContent(other.getLastContent());
+        }
+        if (other.getTime() != 0L) {
+          setTime(other.getTime());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -16309,6 +16355,44 @@ public final class Message {
           lastContent_ = null;
         }
         return lastContentBuilder_;
+      }
+
+      private long time_ ;
+      /**
+       * <pre>
+       * 会话创建时间
+       * </pre>
+       *
+       * <code>uint64 time = 7;</code>
+       */
+      public long getTime() {
+        return time_;
+      }
+      /**
+       * <pre>
+       * 会话创建时间
+       * </pre>
+       *
+       * <code>uint64 time = 7;</code>
+       */
+      public Builder setTime(long value) {
+        
+        time_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * 会话创建时间
+       * </pre>
+       *
+       * <code>uint64 time = 7;</code>
+       */
+      public Builder clearTime() {
+        
+        time_ = 0L;
+        onChanged();
+        return this;
       }
       @java.lang.Override
       public final Builder setUnknownFields(
@@ -18040,28 +18124,28 @@ public final class Message {
       "protos.Code\022\014\n\004time\030\004 \001(\004\0227\n\nconverInfo\030" +
       "\005 \001(\0132#.com.raven.common.protos.ConverIn" +
       "fo\0227\n\nconverList\030\006 \003(\0132#.com.raven.commo" +
-      "n.protos.ConverInfo\"\304\001\n\nConverInfo\022\020\n\010co" +
+      "n.protos.ConverInfo\"\322\001\n\nConverInfo\022\020\n\010co" +
       "nverId\030\001 \001(\t\0221\n\004type\030\002 \001(\0162#.com.raven.c" +
       "ommon.protos.ConverType\022\017\n\007uidList\030\003 \003(\t" +
       "\022\017\n\007groupId\030\004 \001(\t\022\021\n\treadMsgId\030\005 \001(\004\022<\n\013" +
       "lastContent\030\006 \001(\0132\'.com.raven.common.pro" +
-      "tos.MessageContent\"\332\001\n\rNotifyMessage\022\n\n\002" +
-      "id\030\001 \001(\004\0221\n\004type\030\002 \001(\0162#.com.raven.commo" +
-      "n.protos.NotifyType\022\021\n\ttargetUid\030\003 \001(\t\022\020" +
-      "\n\010converId\030\004 \001(\t\0225\n\010convType\030\005 \001(\0162#.com" +
-      ".raven.common.protos.ConverType\022\017\n\007conte" +
-      "nt\030\006 \001(\t\022\014\n\004time\030\007 \001(\004\022\017\n\007fromUid\030\010 \001(\t*" +
-      "#\n\rHeartBeatType\022\010\n\004PING\020\000\022\010\n\004PONG\020\001*\250\001\n" +
-      "\004Code\022\013\n\007SUCCESS\020\000\022\024\n\020CLIENT_ID_REPEAT\020\001" +
-      "\022\027\n\023CONVER_TYPE_INVALID\020\002\022\017\n\013KAFKA_ERROR" +
-      "\020\003\022\025\n\021CONVER_ID_INVALID\020\004\022\r\n\tNO_TARGET\020\005" +
-      "\022\021\n\rTOKEN_INVALID\020\006\022\032\n\026OPERATION_TYPE_IN" +
-      "VALID\020\007*#\n\nConverType\022\n\n\006SINGLE\020\000\022\t\n\005GRO" +
-      "UP\020\001*:\n\013MessageType\022\010\n\004TEXT\020\000\022\013\n\007PICTURE" +
-      "\020\001\022\t\n\005VOICE\020\002\022\t\n\005VIDEO\020\003*$\n\rOperationTyp" +
-      "e\022\n\n\006DETAIL\020\000\022\007\n\003ALL\020\001*(\n\nNotifyType\022\010\n\004" +
-      "USER\020\000\022\020\n\014CONVERSATION\020\001B\tB\007Messageb\006pro" +
-      "to3"
+      "tos.MessageContent\022\014\n\004time\030\007 \001(\004\"\332\001\n\rNot" +
+      "ifyMessage\022\n\n\002id\030\001 \001(\004\0221\n\004type\030\002 \001(\0162#.c" +
+      "om.raven.common.protos.NotifyType\022\021\n\ttar" +
+      "getUid\030\003 \001(\t\022\020\n\010converId\030\004 \001(\t\0225\n\010convTy" +
+      "pe\030\005 \001(\0162#.com.raven.common.protos.Conve" +
+      "rType\022\017\n\007content\030\006 \001(\t\022\014\n\004time\030\007 \001(\004\022\017\n\007" +
+      "fromUid\030\010 \001(\t*#\n\rHeartBeatType\022\010\n\004PING\020\000" +
+      "\022\010\n\004PONG\020\001*\250\001\n\004Code\022\013\n\007SUCCESS\020\000\022\024\n\020CLIE" +
+      "NT_ID_REPEAT\020\001\022\027\n\023CONVER_TYPE_INVALID\020\002\022" +
+      "\017\n\013KAFKA_ERROR\020\003\022\025\n\021CONVER_ID_INVALID\020\004\022" +
+      "\r\n\tNO_TARGET\020\005\022\021\n\rTOKEN_INVALID\020\006\022\032\n\026OPE" +
+      "RATION_TYPE_INVALID\020\007*#\n\nConverType\022\n\n\006S" +
+      "INGLE\020\000\022\t\n\005GROUP\020\001*:\n\013MessageType\022\010\n\004TEX" +
+      "T\020\000\022\013\n\007PICTURE\020\001\022\t\n\005VOICE\020\002\022\t\n\005VIDEO\020\003*$" +
+      "\n\rOperationType\022\n\n\006DETAIL\020\000\022\007\n\003ALL\020\001*(\n\n" +
+      "NotifyType\022\010\n\004USER\020\000\022\020\n\014CONVERSATION\020\001B\t" +
+      "B\007Messageb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -18152,7 +18236,7 @@ public final class Message {
     internal_static_com_raven_common_protos_ConverInfo_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_raven_common_protos_ConverInfo_descriptor,
-        new java.lang.String[] { "ConverId", "Type", "UidList", "GroupId", "ReadMsgId", "LastContent", });
+        new java.lang.String[] { "ConverId", "Type", "UidList", "GroupId", "ReadMsgId", "LastContent", "Time", });
     internal_static_com_raven_common_protos_NotifyMessage_descriptor =
       getDescriptor().getMessageTypes().get(13);
     internal_static_com_raven_common_protos_NotifyMessage_fieldAccessorTable = new

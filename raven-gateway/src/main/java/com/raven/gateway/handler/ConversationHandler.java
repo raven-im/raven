@@ -106,17 +106,20 @@ public class ConversationHandler extends SimpleChannelInboundHandler<RavenMessag
         builder.setConverId(userConversation.getId());
         builder.setType(ConverType.valueOf(userConversation.getType()));
         builder.addAllUidList(userConversation.getUidList());
+        builder.setTime(userConversation.getTime());
         if (ConverType.valueOf(userConversation.getType()) == ConverType.GROUP) {
             builder.setGroupId(userConversation.getGroupId());
         }
         MsgContent msgContent = userConversation.getLastContent();
-        MessageContent content = MessageContent.newBuilder().setId(msgContent.getId())
-            .setUid(msgContent.getUid())
-            .setType(MessageType.valueOf(msgContent.getType()))
-            .setContent(msgContent.getContent())
-            .setTime(msgContent.getTime())
-            .build();
-        builder.setLastContent(content);
+        if (msgContent != null) {
+            MessageContent content = MessageContent.newBuilder().setId(msgContent.getId())
+                .setUid(msgContent.getUid())
+                .setType(MessageType.valueOf(msgContent.getType()))
+                .setContent(msgContent.getContent())
+                .setTime(msgContent.getTime())
+                .build();
+            builder.setLastContent(content);
+        }
         builder.setReadMsgId(userConversation.getReadMsgId());
         ConverInfo info = builder.build();
         return info;

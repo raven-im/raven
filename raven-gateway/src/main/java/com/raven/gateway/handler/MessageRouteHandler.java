@@ -4,6 +4,7 @@ import com.raven.common.netty.IdChannelManager;
 import com.raven.common.netty.NettyAttrUtil;
 import com.raven.common.protos.Message.HeartBeat;
 import com.raven.common.protos.Message.HeartBeatType;
+import com.raven.common.protos.Message.NotifyMessage;
 import com.raven.common.protos.Message.RavenMessage;
 import com.raven.common.protos.Message.RavenMessage.Type;
 import com.raven.common.protos.Message.UpDownMessage;
@@ -82,6 +83,19 @@ public class MessageRouteHandler extends SimpleChannelInboundHandler<RavenMessag
                 channel.writeAndFlush(ravenMessage).addListener(future -> {
                     if (!future.isSuccess()) {
                         log.info("push msg to uid:{} fail", downMessage.getTargetUid());
+                        channel.close();
+                    }
+                });
+            }
+        } else if (msg.getType() == Type.NotifyMessage) {
+            NotifyMessage notification = msg.getNotifyMessage();
+            log.info("receive down notification:{}", JsonHelper.toJsonString(notification));
+            List<Channel> channels = uidChannelManager
+                .getChannelsById(notification.getTargetUid());
+            for (Channel channel : channels) {
+                channel.writeAndFlush(msg).addListener(future -> {
+                    if (!future.isSuccess()) {
+                        log.info("push msg to uid:{} fail", notification.getTargetUid());
                         channel.close();
                     }
                 });

@@ -21,4 +21,5 @@ public class Conversation implements Serializable {
 
     private String groupId;
 
+    private long time;//conversation 创建时间
 }

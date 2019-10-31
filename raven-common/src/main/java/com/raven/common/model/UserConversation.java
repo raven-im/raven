@@ -25,4 +25,5 @@ public class UserConversation implements Serializable {
 
     MsgContent lastContent; // 最后一条消息
 
+    private long time; //conversation 创建时间
 }

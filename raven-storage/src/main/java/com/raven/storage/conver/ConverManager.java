@@ -5,6 +5,7 @@ import static com.raven.common.utils.Constants.PREFIX_GROUP_MEMBER;
 import static com.raven.common.utils.Constants.PREFIX_MESSAGE_ID;
 import static com.raven.common.utils.Constants.DEFAULT_SEPARATES_SIGN;
 
+import com.google.common.collect.Lists;
 import com.raven.common.model.Conversation;
 import com.raven.common.model.UserConversation;
 import com.raven.common.model.MsgContent;
@@ -44,6 +45,7 @@ public class ConverManager {
         uidList.add(toUid);
         Conversation conversation = new Conversation().builder().id(converId)
             .type(ConverType.SINGLE.getNumber())
+            .time(System.currentTimeMillis())
             .uidList(new ArrayList<>(uidList)).build();
         boolean result = redisTemplate.opsForValue()
             .setIfAbsent(converId, JsonHelper.toJsonString(conversation));
@@ -60,6 +62,7 @@ public class ConverManager {
         String converId = UidUtil.uuid24ByFactor(groupId);
         Conversation conversation = new Conversation().builder().id(converId)
             .type(ConverType.GROUP.getNumber())
+            .time(System.currentTimeMillis())
             .groupId(groupId).build();
         boolean result = redisTemplate.opsForValue()
             .setIfAbsent(converId, JsonHelper.toJsonString(conversation));
@@ -140,12 +143,18 @@ public class ConverManager {
         return unReadCount;
     }
 
-    private Conversation getConversation(String converId) {
+    public Conversation getConversation(String converId) {
         Object ob = redisTemplate.opsForValue().get(converId);
         if (null == ob) {
             return null;
         }
-        return JsonHelper.readValue(ob.toString(), Conversation.class);
+        Conversation conversation = JsonHelper.readValue(ob.toString(), Conversation.class);
+        if (conversation.getType() == ConverType.GROUP.getNumber()) {
+            Set<String> uids = redisTemplate
+                .boundSetOps(PREFIX_GROUP_MEMBER + conversation.getGroupId()).members();
+            conversation.setUidList(Lists.newArrayList(uids));
+        }
+        return conversation;
     }
 
     public UserConversation getConverListInfo(String uid, String converId) {
@@ -154,6 +163,7 @@ public class ConverManager {
             UserConversation converListInfo = new UserConversation().builder()
                 .id(conversation.getId()).groupId(conversation.getGroupId())
                 .uidList(conversation.getUidList())
+                .time(conversation.getTime())
                 .type(conversation.getType()).build();
             Long readMsgId = getUserReadMessageId(uid, converId);
             if (null != readMsgId) {
@@ -182,6 +192,7 @@ public class ConverManager {
                 UserConversation converListInfo = new UserConversation().builder()
                     .id(conversation.getId()).groupId(conversation.getGroupId())
                     .uidList(conversation.getUidList()).type(conversation.getType())
+                    .time(conversation.getTime())
                     .readMsgId(entry.getValue()).build();
                 Set<String> strs = redisTemplate
                     .boundZSetOps(PREFIX_MESSAGE_ID + conversation.getId())
@@ -198,16 +209,8 @@ public class ConverManager {
     }
 
     public List<String> getUidListByConver(String converId) {
-        List<String> uidList = new ArrayList<>();
         Conversation conversation = getConversation(converId);
-        if (conversation.getType() == ConverType.SINGLE.getNumber()) {
-            uidList.addAll(conversation.getUidList());
-        } else if (conversation.getType() == ConverType.GROUP.getNumber()) {
-            Set<String> uids = redisTemplate
-                .boundSetOps(PREFIX_GROUP_MEMBER + conversation.getGroupId()).members();
-            uidList.addAll(uids);
-        }
-        return uidList;
+        return conversation.getUidList();
     }
 
     public List<String> getUidListByConverExcludeSender(String converId, String fromUser) {

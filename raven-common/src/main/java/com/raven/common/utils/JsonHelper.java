@@ -15,7 +15,8 @@ public class JsonHelper {
 
     public static final ObjectMapper mapper = new ObjectMapper();
 
-    public static final JsonFormat.Parser parser = JsonFormat.parser().ignoringUnknownFields();
+//    public static final JsonFormat.Parser parser = JsonFormat.parser().ignoringUnknownFields();
+    public static final JsonFormat.Parser parser = JsonFormat.parser();
 
     public static final JsonFormat.Printer printer = JsonFormat.printer().includingDefaultValueFields().printingEnumsAsInts();
 

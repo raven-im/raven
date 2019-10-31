@@ -19,7 +19,7 @@ public class ExceptionController {
     @ResponseBody
     public Result handleException(Exception exception) {
         log.error("handle exception", exception);
-        return Result.failure(ResultCode.COMMON_ERROR, exception.getMessage());
+        return Result.failure(ResultCode.COMMON_SERVER_ERROR, exception.getMessage());
     }
 
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
@@ -27,7 +27,7 @@ public class ExceptionController {
     @ResponseBody
     public Result handleRuntimeException(RuntimeException exception) {
         log.error("handle runtimeexception", exception);
-        return Result.failure(ResultCode.COMMON_ERROR, exception.getMessage());
+        return Result.failure(ResultCode.COMMON_SERVER_ERROR, exception.getMessage());
     }
 
 }

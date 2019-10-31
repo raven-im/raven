@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS `t_app_config` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '自增主键',
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '自增主键',
   `uid` varchar(36) NOT NULL COMMENT 'App Key',
   `secret`  varchar(36) NOT NULL COMMENT 'App Secret',
   `create_dt` DATETIME NOT NULL,

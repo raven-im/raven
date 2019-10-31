@@ -47,7 +47,7 @@ public class GroupServiceImpl implements GroupService {
     private MemberInValidator memberInValidator;
 
     @Override
-    public GroupModel createGroup(GroupReqParam reqParam) {
+    public Result createGroup(GroupReqParam reqParam) {
         String groupId = UidUtil.uuid();
         Date now = DateTimeUtils.currentUTC();
         GroupModel model = new GroupModel();
@@ -70,7 +70,7 @@ public class GroupServiceImpl implements GroupService {
             member.setStatus(0);// 0 normal status;
             memberMapper.insert(member);
         });
-        return model;
+        return Result.success(new GroupOutParam(model));
     }
 
     @Override
@@ -79,12 +79,11 @@ public class GroupServiceImpl implements GroupService {
         if (reqParam.getMembers() == null || reqParam.getMembers().size() == 0) {
             return ResultCode.COMMON_INVALID_PARAMETER;
         }
-
         if (!groupValidator.isValid(reqParam.getGroupId())) {
-            return groupValidator.errorCode();
+            return Result.failure(groupValidator.errorCode());
         }
         if (!memberInValidator.isValid(reqParam.getGroupId(), reqParam.getMembers())) {
-            return memberInValidator.errorCode();
+            return Result.failure(memberInValidator.errorCode());
         }
         Date now = DateTimeUtils.currentUTC();
         reqParam.getMembers().forEach(uid -> {
@@ -110,9 +109,8 @@ public class GroupServiceImpl implements GroupService {
                 memberMapper.insert(member);
             }
         });
-        //update new member conversation list.
         converManager.addMemberConverList(reqParam.getGroupId(), reqParam.getMembers());
-        return ResultCode.COMMON_SUCCESS;
+        return Result.success();
     }
 
     @Override
@@ -123,12 +121,11 @@ public class GroupServiceImpl implements GroupService {
         }
 
         if (!groupValidator.isValid(reqParam.getGroupId())) {
-            return groupValidator.errorCode();
+            return Result.failure(groupValidator.errorCode());
         }
         if (!memberNotValidator.isValid(reqParam.getGroupId(), reqParam.getMembers())) {
-            return memberNotValidator.errorCode();
+            return Result.failure(groupValidator.errorCode());
         }
-
         reqParam.getMembers().forEach(uid -> {
             GroupMemberModel member = new GroupMemberModel();
             member.setUpdateDate(DateTimeUtils.currentUTC());
@@ -140,60 +137,46 @@ public class GroupServiceImpl implements GroupService {
                 .andEqualTo("memberUid", uid);
             memberMapper.updateByExampleSelective(member, example);
         });
-        //update deleted member conversation list.
         converManager.removeMemberConverList(reqParam.getGroupId(), reqParam.getMembers());
-        return ResultCode.COMMON_SUCCESS;
+        return Result.success();
     }
 
     @Override
-    public ResultCode dismissGroup(GroupReqParam reqParam) {
-        //params check.
-        if (!groupValidator.isValid(reqParam.getGroupId())) {
-            return groupValidator.errorCode();
+    public Result dismissGroup(String groupId) {
+        if (!groupValidator.isValid(groupId)) {
+            return Result.failure(groupValidator.errorCode());
         }
-        // conversation delete.
         Example example1 = new Example(GroupMemberModel.class);
         example1.createCriteria()
-            .andEqualTo("groupId", reqParam.getGroupId());
-//        List<GroupMemberModel> members = memberMapper.selectByExample(example1);
-//        List<String> memberModels = members.stream()
-//            .map((x) -> x.getMemberUid())
-//            .collect(Collectors.toList());
-        converManager.dismissGroup(reqParam.getGroupId());
-        // clean group info
+            .andEqualTo("groupId", groupId);
+        converManager.dismissGroup(groupId);
         GroupModel model = new GroupModel();
         model.setStatus(2); //2 for mark delete
         model.setUpdateDate(DateTimeUtils.currentUTC());
         Example example = new Example(GroupModel.class);
         example.createCriteria()
-            .andEqualTo("uid", reqParam.getGroupId());
+            .andEqualTo("uid", groupId);
         groupMapper.updateByExampleSelective(model, example);
-
-        //clean group member info
         GroupMemberModel member = new GroupMemberModel();
         member.setUpdateDate(DateTimeUtils.currentUTC());
         member.setStatus(2);// 2 mark delete.
         memberMapper.updateByExampleSelective(member, example1);
-        return ResultCode.COMMON_SUCCESS;
+        return Result.success();
     }
 
     @Override
     public Result groupDetail(String groupId) {
-        //params check.
         if (!groupValidator.isValid(groupId)) {
             return Result.failure(groupValidator.errorCode());
         }
         Example example = new Example(GroupModel.class);
-        example.createCriteria()
-            .andEqualTo("status", 0)
-            .andEqualTo("uid", groupId);
-        List<GroupModel> info = groupMapper.selectByExample(example);
+        example.createCriteria().andEqualTo("status", 0).andEqualTo("uid", groupId);
+        GroupModel info = groupMapper.selectOneByExample(example);
         Example example1 = new Example(GroupMemberModel.class);
         example1.createCriteria()
             .andEqualTo("status", 0)
             .andEqualTo("groupId", groupId);
         List<GroupMemberModel> members = memberMapper.selectByExample(example1);
-
-        return Result.success(new GroupOutParam(info.get(0), members));
+        return Result.success(new GroupOutParam(info, members));
     }
 }

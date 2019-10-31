@@ -3,13 +3,14 @@ package com.raven.gateway.server;
 import com.raven.common.loadbalance.GatewayServerInfo;
 import com.raven.common.protos.Message;
 import com.raven.gateway.handler.AckMessageHandler;
+import com.raven.gateway.handler.AuthenticationHandler;
 import com.raven.gateway.handler.ConversationHandler;
 import com.raven.gateway.handler.HeartBeatHandler;
 import com.raven.gateway.handler.HistoryHandler;
-import com.raven.gateway.handler.AuthenticationHandler;
 import com.raven.gateway.handler.MessageHandler;
 import com.raven.storage.route.RouteManager;
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.buffer.PooledByteBufAllocator;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.ChannelPipeline;
@@ -120,6 +121,8 @@ public class TcpProtobufServer {
         bootstrap.option(ChannelOption.SO_BACKLOG, 1024);
         bootstrap.childOption(ChannelOption.TCP_NODELAY, true);
         bootstrap.childOption(ChannelOption.SO_REUSEADDR, true); //调试用
+        bootstrap.childOption(ChannelOption.SO_KEEPALIVE, true);
+        bootstrap.childOption(ChannelOption.ALLOCATOR,  new PooledByteBufAllocator(true));
     }
 
     @PreDestroy

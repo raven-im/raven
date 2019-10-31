@@ -44,10 +44,10 @@ public enum ResultCode {
     UPLOAD_FILE_COMMON_ERROR(14000, "File Upload common error."),
     UPLOAD_FILE_EMPTY(14001, "File empty."),
     UPLOAD_FILE_UPLOAD_PARAMETER_ERROR(14002, "File upload Parameters error."),
-    UPLOAD_FILE_UPLOAD_ERROR(14003, "File upload error."),
+    UPLOAD_FILE_UPLOAD_ERROR(14003, "File upload error.");
 
-    COMMON_ERROR(500, "error");
     private int code;
+
     private String msg;
 
     ResultCode(int code, String msg) {

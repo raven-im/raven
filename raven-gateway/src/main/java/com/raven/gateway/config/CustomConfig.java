@@ -27,7 +27,10 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @Slf4j
 public class CustomConfig {
 
-    @Value("${node-id}")
+    @Value("${node.data-center-id}")
+    private int dataCenterId;
+
+    @Value("${node.machine-id}")
     private int nodeId;
 
     @Bean
@@ -56,7 +59,7 @@ public class CustomConfig {
 
     @Bean
     public SnowFlake snowFlake() {
-        return new SnowFlake(1, nodeId);
+        return new SnowFlake(dataCenterId, nodeId);
     }
 
     @Bean

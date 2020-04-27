@@ -2,8 +2,132 @@ spring:
   application:
     name: raven-gateway
 
-nacos:
-  config:
-    server-addr: nacos.raven.api:8848
+  http:
+    encoding:
+      charset: UTF-8
+      force: true
+      enabled: true
+  redis:
+    host: ${site.redis}
+    port: 6379
+    pool:
+      max-active: 20
+      max-wait: 60000
+      max-idle: 5
+      min-idle: 1
+  kafka:
+    producer:
+      acks: all
+      retries: 2
+      buffer-memory: 33554432
+      bootstrap-servers: ${site.kafka}
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      max-in-flight-requests.per.connection: 1
 
-node-id: 1
+  main:
+    banner-mode: log
+  cloud:
+    zookeeper:
+      connect-string: ${site.zookeeper}
+      discovery:
+        prefer-ip-address: true
+        metadata:
+          tcp-port: ${netty.tcp.port}
+          websocket-port: ${netty.websocket.port}
+          internal-port: ${netty.internal.port}
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: raven-file
+          uri: lb://raven-file
+          predicates:
+            - Path=/raven/file/**
+          filters:
+            - StripPrefix=2
+            - name: Hystrix
+              args:
+                name: default
+                fallbackUri: forward:/fallback
+        - id: raven-admin
+          uri: lb://raven-admin
+          predicates:
+            - Path=/raven/admin/**
+          filters:
+            - StripPrefix=2
+            - name: Hystrix
+              args:
+                name: default
+                fallbackUri: forward:/fallback
+
+server:
+  port: 8080
+  servlet:
+    context-path: /raven
+
+ribbon:
+  eager-load:
+    enabled: true # 立即加载ribbon负载均衡器
+  ConnectTimeout: 10000
+  ReadTimeout: 10000
+  MaxAutoRetries: 0
+  MaxAutoRetriesNextServer: 1
+
+# 熔断时间
+hystrix:
+  command:
+    default:
+      fallback:
+        isolation:
+          semaphore:
+            maxConcurrentRequests: 50
+      metrics:
+        rollingStats:
+          timeInMilliseconds: 10000
+          numBuckets: 10
+      execution:
+        isolation:
+          thread:
+            interruptOnCancel: true
+            timeoutInMilliseconds: 5000
+      circuitBreaker:
+        requestVolumeThreshold: 5
+        sleepWindowInMilliseconds=: 60000
+
+
+# actuator相关配置
+management:
+  security:
+    enabled: false
+  endpoint:
+    health:
+      show-details: always
+      enabled: true
+    prometheus:
+      enabled: true
+    shutdown:
+      enabled: false
+  endpoints:
+    web:
+      exposure:
+        include: '*' #开放所有监控接口
+
+netty:
+  tcp:
+    port: 7010
+  websocket:
+    port: 7011
+  internal:
+    port: 7012
+
+node:
+  data-center-id: 1
+  machine-id: 1
+
+site:
+  zookeeper: 127.0.0.1:2181
+  redis: 127.0.0.1
+  kafka: 127.0.0.1:9092
+

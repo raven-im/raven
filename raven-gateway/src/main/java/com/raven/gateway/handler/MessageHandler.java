@@ -137,7 +137,7 @@ public class MessageHandler extends SimpleChannelInboundHandler<RavenMessage> {
             .setUid(uid)
             .setContent(upDownMessage.getContent().getContent())
             .setTime(System.currentTimeMillis()).build();
-        UpDownMessage upMesaage = UpDownMessage.newBuilder().setId(msgId)
+        UpDownMessage upMessage = UpDownMessage.newBuilder().setId(msgId)
             .setCid(upDownMessage.getCid())
             .setFromUid(uid)
             .setTargetUid(upDownMessage.getTargetUid())
@@ -147,7 +147,7 @@ public class MessageHandler extends SimpleChannelInboundHandler<RavenMessage> {
             .setGroupId(upDownMessage.getGroupId())
             .build();
         return RavenMessage.newBuilder().setType(Type.UpDownMessage)
-            .setUpDownMessage(upMesaage).build();
+            .setUpDownMessage(upMessage).build();
     }
 
     private boolean isMsgClientIdValid(ChannelHandlerContext ctx, UpDownMessage upMessage) {
@@ -155,7 +155,7 @@ public class MessageHandler extends SimpleChannelInboundHandler<RavenMessage> {
             return false;
         }
         String uid = uidChannelManager.getIdByChannel(ctx.channel());
-        return !converManager.isUerCidExist(uid, upMessage.getCid());
+        return !converManager.isUserCidExist(uid, upMessage.getCid());
     }
 
     private void saveUserClientId(ChannelHandlerContext ctx, UpDownMessage upMessage) {
@@ -170,7 +170,7 @@ public class MessageHandler extends SimpleChannelInboundHandler<RavenMessage> {
         }
         log.info("protobuf to json message:{}", message);
         Result result = kafkaProducerManager.send(topic, String.valueOf(id), message);
-        return result.getCode().intValue() == ResultCode.COMMON_SUCCESS.getCode();
+        return result.getCode() == ResultCode.COMMON_SUCCESS.getCode();
     }
 
 }

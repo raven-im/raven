@@ -2,11 +2,8 @@ package com.raven.route.config;
 
 import com.raven.common.kafka.KafkaMessageProcessor;
 import com.raven.common.kafka.MessageListener;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import javax.annotation.PostConstruct;
@@ -40,7 +37,7 @@ public class KafkaConsumerConfig<K, V> {
             String topic = entry.getKey();
             MessageListener messageListener = entry.getValue();
             KafkaConsumer<K, V> consumer = new KafkaConsumer(properties);
-            consumer.subscribe(Arrays.asList(topic));
+            consumer.subscribe(Collections.singletonList(topic));
             KafkaMessageProcessor<K, V> kafkaStreamProcessor = new KafkaMessageProcessor<K, V>(
                 topic, consumer, messageListener);
             ExecutorService executorService = Executors.newFixedThreadPool(2);

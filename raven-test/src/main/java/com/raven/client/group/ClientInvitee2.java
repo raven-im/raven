@@ -23,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ClientInvitee2 {
 
-    private static final String HOST = "127.0.0.1";
+    private static final String HOST = "114.67.79.183";
     private static final int PORT = 7010;
     public static SnowFlake snowFlake = new SnowFlake(1, 2);
 

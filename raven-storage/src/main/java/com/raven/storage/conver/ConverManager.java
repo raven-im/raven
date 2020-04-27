@@ -236,7 +236,7 @@ public class ConverManager {
         return null;
     }
 
-    public boolean isUerCidExist(String uid, Long clientId) {
+    public boolean isUserCidExist(String uid, Long clientId) {
         return null != redisTemplate.boundZSetOps(Constants.PREFIX_USER_CID + uid).rank(clientId);
     }
 

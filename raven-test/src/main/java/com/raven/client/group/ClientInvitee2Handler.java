@@ -78,7 +78,7 @@ public class ClientInvitee2Handler extends SimpleChannelInboundHandler<RavenMess
             ctx.writeAndFlush(ravenMessage);
         } else if (message.getType() == Type.HeartBeat) {
             HeartBeat heartBeat = message.getHeartBeat();
-            log.info("receive hearbeat :{}",JsonHelper.toJsonString(heartBeat) );
+            log.info("receive heartbeat :{}",JsonHelper.toJsonString(heartBeat) );
             if (heartBeat.getHeartBeatType() == HeartBeatType.PING) {
                 HeartBeat heartBeatAck = HeartBeat.newBuilder()
                     .setId(heartBeat.getId())

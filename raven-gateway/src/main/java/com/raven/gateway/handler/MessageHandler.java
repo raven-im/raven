@@ -1,14 +1,8 @@
 package com.raven.gateway.handler;
 
-import com.google.protobuf.util.JsonFormat;
 import com.raven.common.netty.IdChannelManager;
-import com.raven.common.protos.Message.Code;
-import com.raven.common.protos.Message.ConverType;
-import com.raven.common.protos.Message.MessageAck;
-import com.raven.common.protos.Message.MessageContent;
-import com.raven.common.protos.Message.RavenMessage;
+import com.raven.common.protos.Message.*;
 import com.raven.common.protos.Message.RavenMessage.Type;
-import com.raven.common.protos.Message.UpDownMessage;
 import com.raven.common.result.Result;
 import com.raven.common.result.ResultCode;
 import com.raven.common.utils.Constants;
@@ -66,7 +60,7 @@ public class MessageHandler extends SimpleChannelInboundHandler<RavenMessage> {
                     }
                 } else if (StringUtils.isNotBlank(upMessage.getTargetUid())) {
                     convId = converManager
-                        .newSingleConverId(upMessage.getFromUid(), upMessage.getTargetUid());
+                            .newSingleConverId(upMessage.getFromUid(), upMessage.getTargetUid());
                     upMessage = upMessage.toBuilder().setConverId(convId).build();
                 } else {
                     log.error("conversation id and target uid all empty.");
@@ -112,15 +106,15 @@ public class MessageHandler extends SimpleChannelInboundHandler<RavenMessage> {
 
     private void sendAck(ChannelHandlerContext ctx, UpDownMessage message, Code code, long msgId) {
         MessageAck messageAck = MessageAck.newBuilder()
-            .setId(msgId)
-            .setConverId(message.getConverId())
-            .setTargetUid(message.getFromUid())
-            .setCid(message.getCid())
-            .setCode(code)
-            .setTime(System.currentTimeMillis())
-            .build();
+                .setId(msgId)
+                .setConverId(message.getConverId())
+                .setTargetUid(message.getFromUid())
+                .setCid(message.getCid())
+                .setCode(code)
+                .setTime(System.currentTimeMillis())
+                .build();
         RavenMessage ravenMessage = RavenMessage.newBuilder().setType(Type.MessageAck)
-            .setMessageAck(messageAck).build();
+                .setMessageAck(messageAck).build();
         ctx.writeAndFlush(ravenMessage);
     }
 
@@ -129,25 +123,25 @@ public class MessageHandler extends SimpleChannelInboundHandler<RavenMessage> {
     }
 
     private RavenMessage buildRavenMessage(ChannelHandlerContext ctx, UpDownMessage upDownMessage,
-        long msgId) {
+                                           long msgId) {
         String uid = uidChannelManager.getIdByChannel(ctx.channel());
         MessageContent content = MessageContent.newBuilder()
-            .setId(msgId)
-            .setType(upDownMessage.getContent().getType())
-            .setUid(uid)
-            .setContent(upDownMessage.getContent().getContent())
-            .setTime(System.currentTimeMillis()).build();
+                .setId(msgId)
+                .setType(upDownMessage.getContent().getType())
+                .setUid(uid)
+                .setContent(upDownMessage.getContent().getContent())
+                .setTime(System.currentTimeMillis()).build();
         UpDownMessage upMessage = UpDownMessage.newBuilder().setId(msgId)
-            .setCid(upDownMessage.getCid())
-            .setFromUid(uid)
-            .setTargetUid(upDownMessage.getTargetUid())
-            .setContent(content)
-            .setConverId(upDownMessage.getConverId())
-            .setConverType(upDownMessage.getConverType())
-            .setGroupId(upDownMessage.getGroupId())
-            .build();
+                .setCid(upDownMessage.getCid())
+                .setFromUid(uid)
+                .setTargetUid(upDownMessage.getTargetUid())
+                .setContent(content)
+                .setConverId(upDownMessage.getConverId())
+                .setConverType(upDownMessage.getConverType())
+                .setGroupId(upDownMessage.getGroupId())
+                .build();
         return RavenMessage.newBuilder().setType(Type.UpDownMessage)
-            .setUpDownMessage(upMessage).build();
+                .setUpDownMessage(upMessage).build();
     }
 
     private boolean isMsgClientIdValid(ChannelHandlerContext ctx, UpDownMessage upMessage) {

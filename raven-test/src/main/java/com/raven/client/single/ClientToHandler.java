@@ -68,18 +68,18 @@ public class ClientToHandler extends SimpleChannelInboundHandler<RavenMessage> {
             RavenMessage ravenMessage = RavenMessage.newBuilder().setType(Type.MessageAck)
                 .setMessageAck(messageAck).build();
             ctx.writeAndFlush(ravenMessage);
-            MessageContent content = MessageContent.newBuilder().setUid(uid)
-                .setType(MessageType.TEXT)
-                .setContent("hello world").build();
-            UpDownMessage upDownMessage1 = UpDownMessage.newBuilder()
-                .setCid(ClientFrom.snowFlake.nextId())
-                .setFromUid(uid)
-                .setTargetUid(upDownMessage.getFromUid())
-                .setConverType(ConverType.SINGLE)
-                .setContent(content).build();
-            ravenMessage = RavenMessage.newBuilder().setType(Type.UpDownMessage)
-                .setUpDownMessage(upDownMessage1).build();
-            ctx.writeAndFlush(ravenMessage);
+//            MessageContent content = MessageContent.newBuilder().setUid(uid)
+//                .setType(MessageType.TEXT)
+//                .setContent("hello world").build();
+//            UpDownMessage upDownMessage1 = UpDownMessage.newBuilder()
+//                .setCid(ClientFrom.snowFlake.nextId())
+//                .setFromUid(uid)
+//                .setTargetUid(upDownMessage.getFromUid())
+//                .setConverType(ConverType.SINGLE)
+//                .setContent(content).build();
+//            ravenMessage = RavenMessage.newBuilder().setType(Type.UpDownMessage)
+//                .setUpDownMessage(upDownMessage1).build();
+//            ctx.writeAndFlush(ravenMessage);
 
         } else if (message.getType() == Type.HeartBeat) {
             HeartBeat heartBeat = message.getHeartBeat();

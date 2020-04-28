@@ -42,7 +42,7 @@ public class Utils {
         String groupName = "test-group";
         String portrait = "http://google.com/1.jpg";
         GroupReqParam param = new GroupReqParam(groupName, portrait, members);
-        HttpPost httpPost = new HttpPost("http://114.67.79.183:8084/raven/admin/group/create");
+        HttpPost httpPost = new HttpPost("http://127.0.0.1:8090/api/admin/group/create");
         httpPost.addHeader("Content-Type", "application/json;charset=UTF-8");
         try {
             StringEntity stringEntity = new StringEntity(JsonHelper.toJsonString(param), "UTF-8");
@@ -61,7 +61,7 @@ public class Utils {
 
     public static String getToken(String uid) {
         HttpGet httpGet = new HttpGet(
-            "http://114.67.79.183:8084/raven/admin/gateway/token?uid=" + uid);
+            "http://127.0.0.1:8010/gateway/token?uid=" + uid);
         httpGet.addHeader("Content-Type", "application/json;charset=UTF-8");
         httpGet.addHeader("AppKey", "u43tOdeHSx8r0XfJRuRDgo");
         httpGet.addHeader("Nonce", "abc");

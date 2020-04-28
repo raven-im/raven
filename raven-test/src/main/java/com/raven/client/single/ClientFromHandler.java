@@ -65,8 +65,9 @@ public class ClientFromHandler extends SimpleChannelInboundHandler<RavenMessage>
                     MessageContent content = MessageContent.newBuilder().setUid(uid)
                         .setType(MessageType.TEXT)
                         .setContent("hello world").build();
+                    long cid = ClientFrom.snowFlake.nextId();
                     UpDownMessage upDownMessage = UpDownMessage.newBuilder()
-                        .setCid(ClientFrom.snowFlake.nextId())
+                        .setCid(cid)
                         .setFromUid(uid)
                         .setTargetUid(toUid)
                         .setConverType(ConverType.SINGLE)
@@ -74,15 +75,16 @@ public class ClientFromHandler extends SimpleChannelInboundHandler<RavenMessage>
                     RavenMessage ravenMessage = RavenMessage.newBuilder()
                         .setType(Type.UpDownMessage)
                         .setUpDownMessage(upDownMessage).build();
+                    log.info("send message cid :{}", cid);
                     ctx.writeAndFlush(ravenMessage);
                 }
-                Thread.sleep(2000);
-                ConverReq converReq = ConverReq.newBuilder().setId(ClientFrom.snowFlake.nextId())
-                    .setType(OperationType.ALL)
-                    .build();
-                RavenMessage ravenMessage = RavenMessage.newBuilder().setType(Type.ConverReq)
-                    .setConverReq(converReq).build();
-                ctx.writeAndFlush(ravenMessage);
+//                Thread.sleep(2000);
+//                ConverReq converReq = ConverReq.newBuilder().setId(ClientFrom.snowFlake.nextId())
+//                    .setType(OperationType.ALL)
+//                    .build();
+//                RavenMessage ravenMessage = RavenMessage.newBuilder().setType(Type.ConverReq)
+//                    .setConverReq(converReq).build();
+//                ctx.writeAndFlush(ravenMessage);
             }
         }
         if (message.getType() == Type.MessageAck) {
@@ -114,46 +116,46 @@ public class ClientFromHandler extends SimpleChannelInboundHandler<RavenMessage>
                     .setHeartBeat(heartBeatAck).build();
                 ctx.writeAndFlush(ravenMessage);
             }
-            for (String toUid : toUidList) {
-                Thread.sleep(1000);
-                MessageContent content = MessageContent.newBuilder().setUid(uid)
-                    .setType(MessageType.TEXT)
-                    .setContent("hello world").build();
-                UpDownMessage upDownMessage = UpDownMessage.newBuilder()
-                    .setCid(ClientFrom.snowFlake.nextId())
-                    .setFromUid(uid)
-                    .setTargetUid(toUid)
-                    .setConverType(ConverType.SINGLE)
-                    .setContent(content).build();
-                RavenMessage ravenMessage = RavenMessage.newBuilder().setType(Type.UpDownMessage)
-                    .setUpDownMessage(upDownMessage).build();
-                ctx.writeAndFlush(ravenMessage);
-            }
-            Thread.sleep(2000);
-            ConverReq converReq = ConverReq.newBuilder().setId(ClientFrom.snowFlake.nextId())
-                .setType(OperationType.ALL)
-                .build();
-            RavenMessage ravenMessage = RavenMessage.newBuilder().setType(Type.ConverReq)
-                .setConverReq(converReq).build();
-            ctx.writeAndFlush(ravenMessage);
+//            for (String toUid : toUidList) {
+//                Thread.sleep(1000);
+//                MessageContent content = MessageContent.newBuilder().setUid(uid)
+//                    .setType(MessageType.TEXT)
+//                    .setContent("hello world").build();
+//                UpDownMessage upDownMessage = UpDownMessage.newBuilder()
+//                    .setCid(ClientFrom.snowFlake.nextId())
+//                    .setFromUid(uid)
+//                    .setTargetUid(toUid)
+//                    .setConverType(ConverType.SINGLE)
+//                    .setContent(content).build();
+//                RavenMessage ravenMessage = RavenMessage.newBuilder().setType(Type.UpDownMessage)
+//                    .setUpDownMessage(upDownMessage).build();
+//                ctx.writeAndFlush(ravenMessage);
+//            }
+//            Thread.sleep(2000);
+//            ConverReq converReq = ConverReq.newBuilder().setId(ClientFrom.snowFlake.nextId())
+//                .setType(OperationType.ALL)
+//                .build();
+//            RavenMessage ravenMessage = RavenMessage.newBuilder().setType(Type.ConverReq)
+//                .setConverReq(converReq).build();
+//            ctx.writeAndFlush(ravenMessage);
         }
-        if (message.getType() == Type.ConverAck) {
-            ConverAck converAck = message.getConverAck();
-            log.info("receive conver ack message:{}", JsonHelper.toJsonString(converAck));
-            Long beginTime = Long.valueOf("1");
-            for (ConverInfo converInfo : converAck.getConverListList()) {
-                HisMessagesReq hisMessagesReq = HisMessagesReq.newBuilder()
-                    .setId(ClientFrom.snowFlake.nextId())
-                    .setBeginId(beginTime).setConverId(converInfo.getConverId()).build();
-                RavenMessage ravenMessage = RavenMessage.newBuilder().setType(Type.HisMessagesReq)
-                    .setHisMessagesReq(hisMessagesReq).build();
-                ctx.writeAndFlush(ravenMessage);
-            }
-        }
-        if (message.getType() == Type.HisMessagesAck) {
-            HisMessagesAck hisMessagesAck = message.getHisMessagesAck();
-            log.info("receive history message ack:{}", JsonHelper.toJsonString(hisMessagesAck));
-        }
+//        if (message.getType() == Type.ConverAck) {
+//            ConverAck converAck = message.getConverAck();
+//            log.info("receive conver ack message:{}", JsonHelper.toJsonString(converAck));
+//            Long beginTime = Long.valueOf("1");
+//            for (ConverInfo converInfo : converAck.getConverListList()) {
+//                HisMessagesReq hisMessagesReq = HisMessagesReq.newBuilder()
+//                    .setId(ClientFrom.snowFlake.nextId())
+//                    .setBeginId(beginTime).setConverId(converInfo.getConverId()).build();
+//                RavenMessage ravenMessage = RavenMessage.newBuilder().setType(Type.HisMessagesReq)
+//                    .setHisMessagesReq(hisMessagesReq).build();
+//                ctx.writeAndFlush(ravenMessage);
+//            }
+//        }
+//        if (message.getType() == Type.HisMessagesAck) {
+//            HisMessagesAck hisMessagesAck = message.getHisMessagesAck();
+//            log.info("receive history message ack:{}", JsonHelper.toJsonString(hisMessagesAck));
+//        }
     }
 
     @Override

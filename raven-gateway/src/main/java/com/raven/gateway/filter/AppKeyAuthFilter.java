@@ -1,17 +1,10 @@
 package com.raven.gateway.filter;
 
-import static com.raven.common.utils.Constants.AUTH_APP_KEY;
-import static com.raven.common.utils.Constants.AUTH_NONCE;
-import static com.raven.common.utils.Constants.AUTH_SIGNATURE;
-import static com.raven.common.utils.Constants.AUTH_TIMESTAMP;
-
 import com.raven.common.param.OutAppConfigParam;
 import com.raven.common.result.Result;
 import com.raven.common.result.ResultCode;
 import com.raven.common.utils.JsonHelper;
 import com.raven.gateway.feign.AdminFeignClient;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang.StringUtils;
@@ -29,12 +22,16 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
+import java.nio.charset.StandardCharsets;
+
+import static com.raven.common.utils.Constants.*;
+
 @Slf4j
 @Component
 public class AppKeyAuthFilter implements GlobalFilter, Ordered {
 
-    @Autowired
-    private AdminFeignClient ravenAdminClient;
+//    @Autowired
+//    private AdminFeignClient ravenAdminClient;
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
@@ -67,28 +64,29 @@ public class AppKeyAuthFilter implements GlobalFilter, Ordered {
     }
 
     private boolean isAuthPass(String key, String nonce, String timestamp, String sign) {
-        if (StringUtils.isNotBlank(key) && StringUtils.isNotBlank(nonce) && StringUtils
-            .isNotBlank(timestamp) && StringUtils.isNotBlank(sign)) {
-            log.info("calculate the hash. key {} nonce {} timestamp {} sign {}", key, nonce,
-                timestamp, sign);
-            String scret = getAppSecret(key);
-            if (null != scret) {
-                String toSign = scret + nonce + timestamp;
-                if (sign.equalsIgnoreCase(DigestUtils.sha1Hex(toSign))) {
-                    return true;
-                }
-            }
-        }
-        return false;
+//        if (StringUtils.isNotBlank(key) && StringUtils.isNotBlank(nonce) && StringUtils
+//                .isNotBlank(timestamp) && StringUtils.isNotBlank(sign)) {
+//            log.info("calculate the hash. key {} nonce {} timestamp {} sign {}", key, nonce,
+//                    timestamp, sign);
+//            String secret = getAppSecret(key);
+//            if (null != secret) {
+//                String toSign = secret + nonce + timestamp;
+//                if (sign.equalsIgnoreCase(DigestUtils.sha1Hex(toSign))) {
+//                    return true;
+//                }
+//            }
+//        }
+//        return false;
+        return true;
     }
 
-    private String getAppSecret(String uid) {
-        Result result = ravenAdminClient.getApp(uid);
-        if (ResultCode.COMMON_SUCCESS.getCode() == result.getCode()) {
-            OutAppConfigParam response = JsonHelper
-                .readValue(JsonHelper.toJsonString(result.getData()), OutAppConfigParam.class);
-            return response.getSecret();
-        }
-        return null;
-    }
+//    private String getAppSecret(String uid) {
+//        Result result = ravenAdminClient.getApp(uid);
+//        if (ResultCode.COMMON_SUCCESS.getCode() == result.getCode()) {
+//            OutAppConfigParam response = JsonHelper
+//                    .readValue(JsonHelper.toJsonString(result.getData()), OutAppConfigParam.class);
+//            return response.getSecret();
+//        }
+//        return null;
+//    }
 }

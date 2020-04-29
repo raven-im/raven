@@ -54,8 +54,7 @@ public class AuthenticationHandler extends SimpleChannelInboundHandler<RavenMess
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, RavenMessage message) throws Exception {
-        NettyAttrUtil
-            .updateReaderTime(ctx.channel(), System.currentTimeMillis());
+        NettyAttrUtil.updateReaderTime(ctx.channel(), System.currentTimeMillis());
         if (message.getType() == Type.Login) {
             Login loginMessage = message.getLogin();
             log.info("login msg:{}", JsonHelper.toJsonString(loginMessage));

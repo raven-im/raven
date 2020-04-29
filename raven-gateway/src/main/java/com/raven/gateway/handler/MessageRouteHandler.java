@@ -60,14 +60,16 @@ public class MessageRouteHandler extends SimpleChannelInboundHandler<RavenMessag
         NettyAttrUtil.updateReaderTime(ctx.channel(), System.currentTimeMillis());
         if (msg.getType() == Type.HeartBeat) {
             HeartBeat heartBeat = msg.getHeartBeat();
-            log.info("receive hearbeat :{}", JsonHelper.toJsonString(heartBeat));
+            log.debug("receive heartbeat :{}", JsonHelper.toJsonString(heartBeat));
             if (heartBeat.getHeartBeatType() == HeartBeatType.PING) {
                 HeartBeat heartBeatAck = HeartBeat.newBuilder()
                     .setId(heartBeat.getId())
                     .setHeartBeatType(HeartBeatType.PONG)
                     .build();
-                RavenMessage ravenMessage = RavenMessage.newBuilder().setType(Type.HeartBeat)
-                    .setHeartBeat(heartBeatAck).build();
+                RavenMessage ravenMessage = RavenMessage.newBuilder()
+                        .setType(Type.HeartBeat)
+                        .setHeartBeat(heartBeatAck)
+                        .build();
                 ctx.writeAndFlush(ravenMessage);
             }
         } else if (msg.getType() == Type.UpDownMessage) {
@@ -75,14 +77,15 @@ public class MessageRouteHandler extends SimpleChannelInboundHandler<RavenMessag
             log.info("receive down message:{}", JsonHelper.toJsonString(downMessage));
             converManager.saveWaitUserAckMsg(downMessage.getTargetUid(), downMessage.getConverId(),
                 downMessage.getId());
-            List<Channel> channels = uidChannelManager
-                .getChannelsById(downMessage.getTargetUid());
-            RavenMessage ravenMessage = RavenMessage.newBuilder().setType(Type.UpDownMessage)
-                .setUpDownMessage(downMessage).build();
+            List<Channel> channels = uidChannelManager.getChannelsById(downMessage.getTargetUid());
+            RavenMessage ravenMessage = RavenMessage.newBuilder()
+                    .setType(Type.UpDownMessage)
+                    .setUpDownMessage(downMessage)
+                    .build();
             for (Channel channel : channels) {
                 channel.writeAndFlush(ravenMessage).addListener(future -> {
                     if (!future.isSuccess()) {
-                        log.info("push msg to uid:{} fail", downMessage.getTargetUid());
+                        log.error("push msg to uid:{} fail", downMessage.getTargetUid());
                         channel.close();
                     }
                 });
@@ -90,12 +93,11 @@ public class MessageRouteHandler extends SimpleChannelInboundHandler<RavenMessag
         } else if (msg.getType() == Type.NotifyMessage) {
             NotifyMessage notification = msg.getNotifyMessage();
             log.info("receive down notification:{}", JsonHelper.toJsonString(notification));
-            List<Channel> channels = uidChannelManager
-                .getChannelsById(notification.getTargetUid());
+            List<Channel> channels = uidChannelManager.getChannelsById(notification.getTargetUid());
             for (Channel channel : channels) {
                 channel.writeAndFlush(msg).addListener(future -> {
                     if (!future.isSuccess()) {
-                        log.info("push msg to uid:{} fail", notification.getTargetUid());
+                        log.error("push notification to uid:{} fail", notification.getTargetUid());
                         channel.close();
                     }
                 });

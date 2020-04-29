@@ -1,5 +1,6 @@
 package com.raven.gateway.handler;
 
+import com.raven.common.dubbo.MessageService;
 import com.raven.common.netty.IdChannelManager;
 import com.raven.common.protos.Message.*;
 import com.raven.common.protos.Message.RavenMessage.Type;
@@ -35,6 +36,9 @@ public class MessageHandler extends SimpleChannelInboundHandler<RavenMessage> {
 
     @Autowired
     private KafkaProducerManager kafkaProducerManager;
+
+    @Autowired
+    private MessageService msgService;
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, RavenMessage message) throws Exception {
@@ -93,12 +97,18 @@ public class MessageHandler extends SimpleChannelInboundHandler<RavenMessage> {
             }
             long id = snowFlake.nextId();
             RavenMessage ravenMessage = buildRavenMessage(ctx, upMessage, id);
-            if (sendMsgToKafka(ravenMessage, ravenMessage.getUpDownMessage().getId(), topic)) {
+            if (sendMsg(ravenMessage)) {
                 sendAck(ctx, upMessage, Code.SUCCESS, id);
             } else {
                 log.error("send msg to kafka fail");
                 sendFailAck(ctx, upMessage, Code.KAFKA_ERROR);
             }
+//            if (sendMsgToKafka(ravenMessage, ravenMessage.getUpDownMessage().getId(), topic)) {
+//                sendAck(ctx, upMessage, Code.SUCCESS, id);
+//            } else {
+//                log.error("send msg to kafka fail");
+//                sendFailAck(ctx, upMessage, Code.KAFKA_ERROR);
+//            }
         } else {
             ctx.fireChannelRead(message);
         }
@@ -167,4 +177,13 @@ public class MessageHandler extends SimpleChannelInboundHandler<RavenMessage> {
         return result.getCode() == ResultCode.COMMON_SUCCESS.getCode();
     }
 
+    private boolean sendMsg(RavenMessage ravenMessage) {
+        String message = JsonHelper.toJsonString(ravenMessage);
+        if (StringUtils.isEmpty(message)) {
+            return false;
+        }
+        log.debug("protobuf to json message:{}", message);
+        msgService.singleMsgSend(message);
+        return true;
+    }
 }

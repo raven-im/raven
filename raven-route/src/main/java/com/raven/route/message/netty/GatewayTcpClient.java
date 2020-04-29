@@ -87,15 +87,12 @@ public class GatewayTcpClient {
                     p.addLast("MessageHandler", messageHandler);
                 }
             });
-        ChannelFuture future = bootstrap.connect(server.getIp(), server.getInternalPort())
-            .syncUninterruptibly();
+        ChannelFuture future = bootstrap.connect(server.getIp(), server.getInternalPort()).syncUninterruptibly();
         if (future.isSuccess()) {
-            log.info("connect server success ip:{},port:{}", server.getIp(),
-                server.getInternalPort());
+            log.info("connect server success ip:{},port:{}", server.getIp(), server.getInternalPort());
             return future.channel();
         } else {
-            log.error("connect server failed ip:{},port:{}", server.getIp(),
-                server.getInternalPort());
+            log.error("connect server failed ip:{},port:{}", server.getIp(), server.getInternalPort());
         }
         return null;
     }
@@ -107,21 +104,15 @@ public class GatewayTcpClient {
             public void childEvent(CuratorFramework curator,
                 PathChildrenCacheEvent event) throws Exception {
                 if (event.getType().equals(Type.CHILD_ADDED)) {
-                    log.info("zookeeper watched add gateway server node:{}",
-                        new String(event.getData().getData()));
-                    Map<String, Object> data = JsonHelper
-                        .strToMap(new String(event.getData().getData()));
+                    log.info("zookeeper watched add gateway server node:{}", new String(event.getData().getData()));
+                    Map<String, Object> data = JsonHelper.strToMap(new String(event.getData().getData()));
                     String address = (String) data.get("address");
                     Map<String, Object> payload = (Map<String, Object>) data.get("payload");
                     Map<String, Object> metadata = (Map<String, Object>) payload.get("metadata");
-                    int tcpPort = Integer
-                        .valueOf(metadata.get(Constants.CONFIG_TCP_PORT).toString());
-                    int wsPort = Integer
-                        .valueOf(metadata.get(Constants.CONFIG_WEBSOCKET_PORT).toString());
-                    int internalPort = Integer
-                        .valueOf(metadata.get(Constants.CONFIG_INTERNAL_PORT).toString());
-                    GatewayServerInfo server = new GatewayServerInfo(address, tcpPort, wsPort,
-                        internalPort);
+                    int tcpPort = Integer.valueOf(metadata.get(Constants.CONFIG_TCP_PORT).toString());
+                    int wsPort = Integer.valueOf(metadata.get(Constants.CONFIG_WEBSOCKET_PORT).toString());
+                    int internalPort = Integer.valueOf(metadata.get(Constants.CONFIG_INTERNAL_PORT).toString());
+                    GatewayServerInfo server = new GatewayServerInfo(address, tcpPort, wsPort, internalPort);
                     Channel channel = connectServer(server);
                     if (null != channel) {
                         gateWayServerChannelManager.addServer2Channel(server, channel);

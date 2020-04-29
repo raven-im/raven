@@ -45,8 +45,7 @@
         <version.caffeine>2.7.0</version.caffeine>
         <version.fastdfs>1.26.4</version.fastdfs>
         <version.commons.codec>1.12</version.commons.codec>
-        <version.nacos.starter>0.2.1</version.nacos.starter>
-        <version.nacos.alibaba.config>0.2.1.RELEASE</version.nacos.alibaba.config>
+        <version.dubbo.starter>2.7.6</version.dubbo.starter>
     </properties>
 
     <dependencyManagement>

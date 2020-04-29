@@ -76,3 +76,11 @@ site:
   mysql: 127.0.0.1:3306
   zookeeper: 127.0.0.1:2181
   redis: 127.0.0.1
+
+node:
+  data-center-id: 1
+  machine-id: 1
+
+dubbo:
+  registry:
+    address: ${site.zookeeper}

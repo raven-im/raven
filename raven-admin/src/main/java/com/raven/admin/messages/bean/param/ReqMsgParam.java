@@ -1,4 +1,4 @@
-package com.raven.gateway.serverapi.bean.param;
+package com.raven.admin.messages.bean.param;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

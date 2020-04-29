@@ -4,13 +4,9 @@ import com.raven.common.dubbo.MessageService;
 import com.raven.common.netty.IdChannelManager;
 import com.raven.common.protos.Message.*;
 import com.raven.common.protos.Message.RavenMessage.Type;
-import com.raven.common.result.Result;
-import com.raven.common.result.ResultCode;
-import com.raven.common.utils.Constants;
 import com.raven.common.utils.JsonHelper;
 import com.raven.common.utils.SnowFlake;
 import com.raven.common.utils.UidUtil;
-import com.raven.gateway.config.KafkaProducerManager;
 import com.raven.storage.conver.ConverManager;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
@@ -35,9 +31,6 @@ public class MessageHandler extends SimpleChannelInboundHandler<RavenMessage> {
     private ConverManager converManager;
 
     @Autowired
-    private KafkaProducerManager kafkaProducerManager;
-
-    @Autowired
     private MessageService msgService;
 
     @Override
@@ -51,7 +44,6 @@ public class MessageHandler extends SimpleChannelInboundHandler<RavenMessage> {
             } else {
                 saveUserClientId(ctx, upMessage);
             }
-            String topic;
             String convId;
             if (upMessage.getConverType() == ConverType.SINGLE) {
                 if (StringUtils.isNotBlank(upMessage.getConverId())) {
@@ -71,7 +63,6 @@ public class MessageHandler extends SimpleChannelInboundHandler<RavenMessage> {
                     sendFailAck(ctx, upMessage, Code.NO_TARGET);
                     return;
                 }
-                topic = Constants.KAFKA_TOPIC_SINGLE_MSG;
             } else if (upMessage.getConverType() == ConverType.GROUP) {
                 convId = upMessage.getConverId();
                 if (StringUtils.isNotBlank(convId)) {
@@ -89,7 +80,6 @@ public class MessageHandler extends SimpleChannelInboundHandler<RavenMessage> {
                     sendFailAck(ctx, upMessage, Code.NO_TARGET);
                     return;
                 }
-                topic = Constants.KAFKA_TOPIC_GROUP_MSG;
             } else {
                 log.error("illegal conversation type.");
                 sendFailAck(ctx, upMessage, Code.CONVER_TYPE_INVALID);
@@ -97,18 +87,12 @@ public class MessageHandler extends SimpleChannelInboundHandler<RavenMessage> {
             }
             long id = snowFlake.nextId();
             RavenMessage ravenMessage = buildRavenMessage(ctx, upMessage, id);
-            if (sendMsg(ravenMessage)) {
+            if (sendMsg(ravenMessage, upMessage.getConverType(), id)) {
                 sendAck(ctx, upMessage, Code.SUCCESS, id);
             } else {
-                log.error("send msg to kafka fail");
-                sendFailAck(ctx, upMessage, Code.KAFKA_ERROR);
+                log.error("send msg fail");
+                sendFailAck(ctx, upMessage, Code.NO_TARGET);
             }
-//            if (sendMsgToKafka(ravenMessage, ravenMessage.getUpDownMessage().getId(), topic)) {
-//                sendAck(ctx, upMessage, Code.SUCCESS, id);
-//            } else {
-//                log.error("send msg to kafka fail");
-//                sendFailAck(ctx, upMessage, Code.KAFKA_ERROR);
-//            }
         } else {
             ctx.fireChannelRead(message);
         }
@@ -167,23 +151,21 @@ public class MessageHandler extends SimpleChannelInboundHandler<RavenMessage> {
         converManager.saveUserCid(uid, upMessage.getCid());
     }
 
-    private boolean sendMsgToKafka(RavenMessage ravenMessage, long id, String topic) {
-        String message = JsonHelper.toJsonString(ravenMessage);
-        if (StringUtils.isEmpty(message)) {
-            return false;
-        }
-        log.info("protobuf to json message:{}", message);
-        Result result = kafkaProducerManager.send(topic, String.valueOf(id), message);
-        return result.getCode() == ResultCode.COMMON_SUCCESS.getCode();
-    }
-
-    private boolean sendMsg(RavenMessage ravenMessage) {
+    private boolean sendMsg(RavenMessage ravenMessage, ConverType type, long id) {
+        log.info("send Msg to {} : {}", id, type.getNumber());
         String message = JsonHelper.toJsonString(ravenMessage);
         if (StringUtils.isEmpty(message)) {
             return false;
         }
         log.debug("protobuf to json message:{}", message);
-        msgService.singleMsgSend(message);
+        if (type == ConverType.SINGLE) {
+            msgService.singleMsgSend(message);
+        } else if (type == ConverType.GROUP) {
+            msgService.groupMsgSend(message);
+        } else {
+            log.error("type error, message not sent:{}", message);
+            return false;
+        }
         return true;
     }
 }

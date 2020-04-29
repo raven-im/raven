@@ -82,7 +82,7 @@ public class ClientOwnerHandler extends SimpleChannelInboundHandler<RavenMessage
             log.info("receive down message:{}",JsonHelper.toJsonString(upDownMessage) );
         } else if (message.getType() == Type.HeartBeat) {
             HeartBeat heartBeat = message.getHeartBeat();
-            log.info("receive hearbeat :{}",JsonHelper.toJsonString(heartBeat) );
+//            log.info("receive heartbeat :{}",JsonHelper.toJsonString(heartBeat) );
             if (heartBeat.getHeartBeatType() == HeartBeatType.PING) {
                 HeartBeat heartBeatAck = HeartBeat.newBuilder()
                     .setId(heartBeat.getId())

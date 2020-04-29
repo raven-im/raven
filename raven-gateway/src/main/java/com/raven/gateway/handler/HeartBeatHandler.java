@@ -48,7 +48,7 @@ public class HeartBeatHandler extends SimpleChannelInboundHandler<RavenMessage> 
                     .setHeartBeat(heartBeatAck).build();
                 ctx.writeAndFlush(ravenMessage);
             }
-            processUserWaitAckMsg(ctx);
+//            processUserWaitAckMsg(ctx);
         } else {
             ctx.fireChannelRead(message);
         }

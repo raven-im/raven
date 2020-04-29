@@ -59,26 +59,26 @@ public class ClientInvitee2Handler extends SimpleChannelInboundHandler<RavenMess
         } else if (message.getType() == Type.UpDownMessage) {
             UpDownMessage upDownMessage = message.getUpDownMessage();
             log.info("receive down message:{}",JsonHelper.toJsonString(upDownMessage) );
-            MessageContent content = MessageContent.newBuilder()
-                .setId(ClientOwner.snowFlake.nextId())
-                .setUid(uid)
-                .setTime(System.currentTimeMillis())
-                .setType(MessageType.TEXT)
-                .setContent("hello world.")
-                .build();
-            UpDownMessage msg = UpDownMessage.newBuilder()
-                .setCid(ClientOwner.snowFlake.nextId())
-                .setFromUid(uid)
-                .setConverId(upDownMessage.getConverId())
-                .setConverType(ConverType.GROUP)
-                .setContent(content)
-                .build();
-            RavenMessage ravenMessage = RavenMessage.newBuilder().setType(Type.UpDownMessage)
-                .setUpDownMessage(msg).build();
-            ctx.writeAndFlush(ravenMessage);
+//            MessageContent content = MessageContent.newBuilder()
+//                .setId(ClientOwner.snowFlake.nextId())
+//                .setUid(uid)
+//                .setTime(System.currentTimeMillis())
+//                .setType(MessageType.TEXT)
+//                .setContent("hello world.")
+//                .build();
+//            UpDownMessage msg = UpDownMessage.newBuilder()
+//                .setCid(ClientOwner.snowFlake.nextId())
+//                .setFromUid(uid)
+//                .setConverId(upDownMessage.getConverId())
+//                .setConverType(ConverType.GROUP)
+//                .setContent(content)
+//                .build();
+//            RavenMessage ravenMessage = RavenMessage.newBuilder().setType(Type.UpDownMessage)
+//                .setUpDownMessage(msg).build();
+//            ctx.writeAndFlush(ravenMessage);
         } else if (message.getType() == Type.HeartBeat) {
             HeartBeat heartBeat = message.getHeartBeat();
-            log.info("receive heartbeat :{}",JsonHelper.toJsonString(heartBeat) );
+//            log.info("receive heartbeat :{}",JsonHelper.toJsonString(heartBeat) );
             if (heartBeat.getHeartBeatType() == HeartBeatType.PING) {
                 HeartBeat heartBeatAck = HeartBeat.newBuilder()
                     .setId(heartBeat.getId())

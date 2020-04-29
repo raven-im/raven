@@ -42,7 +42,7 @@ public class Utils {
         String groupName = "test-group";
         String portrait = "http://google.com/1.jpg";
         GroupReqParam param = new GroupReqParam(groupName, portrait, members);
-        HttpPost httpPost = new HttpPost("http://127.0.0.1:8090/api/admin/group/create");
+        HttpPost httpPost = new HttpPost("http://127.0.0.1:8010/group/create");
         httpPost.addHeader("Content-Type", "application/json;charset=UTF-8");
         try {
             StringEntity stringEntity = new StringEntity(JsonHelper.toJsonString(param), "UTF-8");

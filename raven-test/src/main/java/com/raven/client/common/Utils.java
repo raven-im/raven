@@ -18,6 +18,8 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
+import static com.raven.common.utils.Constants.*;
+
 @Slf4j
 public class Utils {
 
@@ -44,6 +46,10 @@ public class Utils {
         GroupReqParam param = new GroupReqParam(groupName, portrait, members);
         HttpPost httpPost = new HttpPost("http://127.0.0.1:8010/group/create");
         httpPost.addHeader("Content-Type", "application/json;charset=UTF-8");
+        httpPost.addHeader(AUTH_APP_KEY, "u43tOdeHSx8r0XfJRuRDgo");
+        httpPost.addHeader(AUTH_NONCE, "abc");
+        httpPost.addHeader(AUTH_TIMESTAMP, "1565936243000");
+        httpPost.addHeader(AUTH_SIGNATURE, "8b9e9323ccca5b5e78003699b0df5392404e8442");
         try {
             StringEntity stringEntity = new StringEntity(JsonHelper.toJsonString(param), "UTF-8");
             stringEntity.setContentEncoding("UTF-8");

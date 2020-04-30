@@ -37,6 +37,7 @@ public class NotifyConvProcessor implements Runnable {
         JsonHelper.readValue(notification, builder);
         NotifyMessage notifyMessage = builder.getNotifyMessage();
 
+        converManager.saveNotify2Conver(notifyMessage, notifyMessage.getConverId());
         List<String> uidList = converManager.getUidListByConver(notifyMessage.getTargetUid());
         for (String uid : uidList) {
             GatewayServerInfo server = routeManager.getServerByUid(uid);

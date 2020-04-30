@@ -7,8 +7,10 @@ import static com.raven.common.utils.Constants.DEFAULT_SEPARATES_SIGN;
 
 import com.google.common.collect.Lists;
 import com.raven.common.model.Conversation;
+import com.raven.common.model.NotifyContent;
 import com.raven.common.model.UserConversation;
 import com.raven.common.model.MsgContent;
+import com.raven.common.protos.Message.NotifyMessage;
 import com.raven.common.protos.Message.ConverType;
 import com.raven.common.protos.Message.MessageContent;
 import com.raven.common.protos.Message.MessageType;
@@ -119,8 +121,24 @@ public class ConverManager {
     }
 
     public void saveMsg2Conver(MessageContent msg, String converId) {
-        MsgContent msgContent = new MsgContent().builder().id(msg.getId()).uid(msg.getUid())
-            .type(msg.getType().getNumber()).content(msg.getContent()).time(msg.getTime()).build();
+        MsgContent msgContent = new MsgContent().builder()
+                .id(msg.getId())
+                .uid(msg.getUid())
+                .type(msg.getType().getNumber())
+                .content(msg.getContent())
+                .time(msg.getTime())
+                .build();
+        String str = JsonHelper.toJsonString(msgContent);
+        redisTemplate.boundZSetOps(PREFIX_MESSAGE_ID + converId).add(str, msgContent.getId());
+    }
+
+    public void saveNotify2Conver(NotifyMessage notify, String converId) {
+        NotifyContent msgContent = new NotifyContent().builder()
+                .id(notify.getId())
+                .type(notify.getType().getNumber())
+                .content(notify.getContent())
+                .time(notify.getTime())
+                .build();
         String str = JsonHelper.toJsonString(msgContent);
         redisTemplate.boundZSetOps(PREFIX_MESSAGE_ID + converId).add(str, msgContent.getId());
     }

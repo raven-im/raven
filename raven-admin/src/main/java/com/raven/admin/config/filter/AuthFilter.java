@@ -5,6 +5,7 @@ import com.raven.admin.app.service.AppConfigService;
 import com.raven.common.result.Result;
 import com.raven.common.result.ResultCode;
 import com.raven.common.utils.JsonHelper;
+import com.raven.common.utils.LRUCache;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang.StringUtils;
@@ -18,8 +19,6 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import static com.raven.common.utils.Constants.*;
 
@@ -28,7 +27,7 @@ import static com.raven.common.utils.Constants.*;
 @Slf4j
 public class AuthFilter implements Filter {
 
-    private Map<String, String> map = new ConcurrentHashMap<>(256);
+    private LRUCache<String, String> cache = new LRUCache<>(256);
 
     @Autowired
     private AppConfigService service;
@@ -81,11 +80,12 @@ public class AuthFilter implements Filter {
     }
 
     private String getAppSecret(String key) {
-        if (map.containsKey(key)) {
-            return map.get(key);
+        if (cache.containsKey(key)) {
+            return cache.get(key);
         }
         AppConfigModel model = service.getApp(key);
         if (null != model) {
+            cache.put(key, model.getSecret());
             return model.getSecret();
         }
         return null;

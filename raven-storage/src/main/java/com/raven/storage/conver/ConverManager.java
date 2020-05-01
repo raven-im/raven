@@ -120,18 +120,6 @@ public class ConverManager {
         return null;
     }
 
-    public void saveMsg2Conver(MessageContent msg, String converId) {
-        MsgContent msgContent = new MsgContent().builder()
-                .id(msg.getId())
-                .uid(msg.getUid())
-                .type(msg.getType().getNumber())
-                .content(msg.getContent())
-                .time(msg.getTime())
-                .build();
-        String str = JsonHelper.toJsonString(msgContent);
-        redisTemplate.boundZSetOps(PREFIX_MESSAGE_ID + converId).add(str, msgContent.getId());
-    }
-
     public void saveNotify2Conver(NotifyMessage notify, String converId) {
         NotifyContent msgContent = new NotifyContent().builder()
                 .id(notify.getId())

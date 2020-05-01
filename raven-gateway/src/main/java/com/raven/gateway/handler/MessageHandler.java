@@ -158,6 +158,7 @@ public class MessageHandler extends SimpleChannelInboundHandler<RavenMessage> {
             return false;
         }
         log.debug("protobuf to json message:{}", message);
+        //TODO  dubbo not support PB Serialize.    Need to find other solution?
         if (type == ConverType.SINGLE) {
             msgService.singleMsgSend(message);
         } else if (type == ConverType.GROUP) {

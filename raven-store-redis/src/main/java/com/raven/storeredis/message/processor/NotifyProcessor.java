@@ -22,7 +22,7 @@ public class NotifyProcessor implements Runnable {
         JsonHelper.readValue(notification, builder);
         NotifyMessage notify = builder.getNotifyMessage();
 
-        NotifyContent msgContent = new NotifyContent().builder()
+        NotifyContent msgContent = NotifyContent.builder()
                 .id(notify.getId())
                 .type(notify.getType().getNumber())
                 .content(notify.getContent())

@@ -25,7 +25,7 @@ public class MessageProcessor implements Runnable {
         JsonHelper.readValue(message, builder);
         UpDownMessage upDownMessage = builder.getUpDownMessage();
         Message.MessageContent msg = upDownMessage.getContent();
-        MsgContent msgContent = new MsgContent().builder()
+        MsgContent msgContent = MsgContent.builder()
                 .id(msg.getId())
                 .uid(msg.getUid())
                 .type(msg.getType().getNumber())

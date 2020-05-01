@@ -15,15 +15,6 @@ spring:
       max-wait: 60000
       max-idle: 5
       min-idle: 1
-  kafka:
-    producer:
-      acks: all
-      retries: 2
-      buffer-memory: 33554432
-      bootstrap-servers: ${site.kafka}
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
-      max-in-flight-requests.per.connection: 1
 
   main:
     banner-mode: log

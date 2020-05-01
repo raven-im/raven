@@ -21,15 +21,6 @@ public class NotificationController {
     private NotificationService service;
 
     /**
-     * notification sent to user.
-     */
-    @PostMapping("/user")
-    public Result send2User(@RequestBody ReqMsgParam param) {
-        log.info("send2User, fromUid {}, targetUid {}", param.getFromUid(), param.getTargetUid());
-        return service.notify2User(param);
-    }
-
-    /**
      * notification sent to conversation.
      */
     @PostMapping("/conversation")

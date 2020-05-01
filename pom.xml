@@ -21,6 +21,7 @@
         <module>raven-admin</module>
         <module>raven-storage</module>
         <module>raven-file</module>
+        <module>raven-store-redis</module>
     </modules>
 
     <properties>
@@ -40,7 +41,7 @@
         <version.spring.cloud>Greenwich.RELEASE</version.spring.cloud>
         <version.boot.admin>2.1.3</version.boot.admin>
         <docker.image.prefix>iamnotshady</docker.image.prefix>
-        <version.kafka>2.2.1</version.kafka>
+        <version.kafka>2.3.0</version.kafka>
         <version.zookeeper>3.4.14</version.zookeeper>
         <version.caffeine>2.7.0</version.caffeine>
         <version.fastdfs>1.26.4</version.fastdfs>

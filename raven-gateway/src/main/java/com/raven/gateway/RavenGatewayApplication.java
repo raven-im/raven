@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ImportResource;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@ImportResource({"classpath:dubbo-consumer.xml"})
+@ImportResource({"classpath:dubbo.xml"})
 public class RavenGatewayApplication {
 
     public static void main(String[] args) {

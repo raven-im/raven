@@ -4,8 +4,6 @@ import com.raven.common.netty.ServerChannelManager;
 import com.raven.common.netty.impl.GatewayServerChannelManager;
 import com.raven.storage.conver.ConverManager;
 import com.raven.storage.route.RouteManager;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,16 +15,19 @@ import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 @Configuration
 public class CustomConfig {
 
-    public static final ExecutorService msgProcessorSevice = Executors
-        .newFixedThreadPool(Runtime.getRuntime().availableProcessors()*2);
+    public static final ExecutorService msgProcessorService = Executors
+            .newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 2);
 
     @Bean
     @ConditionalOnMissingBean(name = "redisTemplate")
     public RedisTemplate<String, Object> redisTemplate(
-        RedisConnectionFactory redisConnectionFactory) {
+            RedisConnectionFactory redisConnectionFactory) {
         RedisTemplate<String, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(redisConnectionFactory);
         RedisSerializer stringSerializer = new StringRedisSerializer();

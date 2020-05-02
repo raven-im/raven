@@ -5,14 +5,18 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
-    <!-- 消费方应用名 -->
-    <dubbo:application name="access-service"  />
+    <dubbo:application name="route-service"  />
 
-    <!-- 注册中心服务地址 -->
+    <!-- dubbo registry -->
     <dubbo:registry id="zookeeper" protocol="zookeeper" address="${dubbo.registry.address}" />
 
-    <!-- 引用服务-->
-    <dubbo:reference id="msgService" interface="com.raven.common.dubbo.MessageService"
-                     check="false" version="1.0" url="" registry="zookeeper" protocol="dubbo" timeout="15000"/>
+    <!-- protocol port -->
+    <dubbo:protocol name="dubbo" port="30001" />
 
+    <!-- providers -->
+    <dubbo:service interface="com.raven.common.dubbo.MessageService" ref="msgService" version="1.0" registry="zookeeper"/>
+
+    <!-- consumers-->
+    <dubbo:reference id="outService" interface="com.raven.common.dubbo.MessageOutboundService"
+                     check="false" version="1.0" url="" registry="zookeeper" protocol="dubbo" timeout="15000"/>
 </beans>

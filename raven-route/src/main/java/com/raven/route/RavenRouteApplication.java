@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ImportResource;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@ImportResource({"classpath:dubbo-provider.xml"})
+@ImportResource({"classpath:dubbo.xml"})
 public class RavenRouteApplication {
 
     public static void main(String[] args) {

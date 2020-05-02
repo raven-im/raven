@@ -1,38 +1,32 @@
 package com.raven.client.single;
 
-import com.raven.client.common.Utils;
-import com.raven.common.protos.Message.Code;
-import com.raven.common.protos.Message.ConverAck;
-import com.raven.common.protos.Message.ConverInfo;
-import com.raven.common.protos.Message.ConverReq;
-import com.raven.common.protos.Message.ConverType;
-import com.raven.common.protos.Message.HeartBeat;
-import com.raven.common.protos.Message.HeartBeatType;
-import com.raven.common.protos.Message.HisMessagesAck;
-import com.raven.common.protos.Message.HisMessagesReq;
-import com.raven.common.protos.Message.Login;
-import com.raven.common.protos.Message.LoginAck;
-import com.raven.common.protos.Message.MessageAck;
-import com.raven.common.protos.Message.MessageContent;
-import com.raven.common.protos.Message.MessageType;
-import com.raven.common.protos.Message.OperationType;
-import com.raven.common.protos.Message.RavenMessage;
+import com.raven.common.protos.Message.*;
 import com.raven.common.protos.Message.RavenMessage.Type;
-import com.raven.common.protos.Message.UpDownMessage;
 import com.raven.common.utils.JsonHelper;
+import com.raven.common.utils.SnowFlake;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import java.io.IOException;
 import lombok.extern.slf4j.Slf4j;
+
+import java.io.IOException;
 
 @Slf4j
 public class ClientFromHandler extends SimpleChannelInboundHandler<RavenMessage> {
 
     private ChannelHandlerContext messageConnectionCtx;
 
-    private String uid = "test2";
+    private String uid;
+    private String token;
+    private SnowFlake snowFlake;
 
     private String[] toUidList = {"test1"};
+
+    public ClientFromHandler(String uid, String token, SnowFlake snowFlake) {
+        super(true);
+        this.uid = uid;
+        this.token = token;
+        this.snowFlake = snowFlake;
+    }
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws IOException {
@@ -41,21 +35,21 @@ public class ClientFromHandler extends SimpleChannelInboundHandler<RavenMessage>
     }
 
     private void sendLogin(ChannelHandlerContext ctx, String uid) {
-        String token = Utils.getToken(uid);
-        log.info("token{}" + token);
         Login login = Login.newBuilder()
-            .setUid(uid)
-            .setToken(token)
-            .setId(ClientFrom.snowFlake.nextId())
-            .build();
-        RavenMessage ravenMessage = RavenMessage.newBuilder().setType(Type.Login).setLogin(login)
-            .build();
+                .setUid(uid)
+                .setToken(token)
+                .setId(snowFlake.nextId())
+                .build();
+        RavenMessage ravenMessage = RavenMessage.newBuilder()
+                .setType(Type.Login)
+                .setLogin(login)
+                .build();
         ctx.writeAndFlush(ravenMessage);
     }
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, RavenMessage message)
-        throws Exception {
+            throws Exception {
         if (message.getType() == Type.LoginAck) {
             LoginAck loginAck = message.getLoginAck();
             log.info("login ack:{}", JsonHelper.toJsonString(loginAck));
@@ -63,18 +57,18 @@ public class ClientFromHandler extends SimpleChannelInboundHandler<RavenMessage>
                 for (String toUid : toUidList) {
                     Thread.sleep(1000);
                     MessageContent content = MessageContent.newBuilder().setUid(uid)
-                        .setType(MessageType.TEXT)
-                        .setContent("hello world").build();
-                    long cid = ClientFrom.snowFlake.nextId();
+                            .setType(MessageType.TEXT)
+                            .setContent("hello world").build();
+                    long cid = snowFlake.nextId();
                     UpDownMessage upDownMessage = UpDownMessage.newBuilder()
-                        .setCid(cid)
-                        .setFromUid(uid)
-                        .setTargetUid(toUid)
-                        .setConverType(ConverType.SINGLE)
-                        .setContent(content).build();
+                            .setCid(cid)
+                            .setFromUid(uid)
+                            .setTargetUid(toUid)
+                            .setConverType(ConverType.SINGLE)
+                            .setContent(content).build();
                     RavenMessage ravenMessage = RavenMessage.newBuilder()
-                        .setType(Type.UpDownMessage)
-                        .setUpDownMessage(upDownMessage).build();
+                            .setType(Type.UpDownMessage)
+                            .setUpDownMessage(upDownMessage).build();
                     log.info("send message cid :{}", cid);
                     ctx.writeAndFlush(ravenMessage);
                 }
@@ -95,13 +89,13 @@ public class ClientFromHandler extends SimpleChannelInboundHandler<RavenMessage>
             UpDownMessage upDownMessage = message.getUpDownMessage();
             log.info("receive down message:{}", JsonHelper.toJsonString(upDownMessage));
             MessageAck messageAck = MessageAck.newBuilder()
-                .setId(upDownMessage.getId())
-                .setConverId(upDownMessage.getConverId())
-                .setCode(Code.SUCCESS)
-                .setTime(System.currentTimeMillis())
-                .build();
+                    .setId(upDownMessage.getId())
+                    .setConverId(upDownMessage.getConverId())
+                    .setCode(Code.SUCCESS)
+                    .setTime(System.currentTimeMillis())
+                    .build();
             RavenMessage ravenMessage = RavenMessage.newBuilder().setType(Type.MessageAck)
-                .setMessageAck(messageAck).build();
+                    .setMessageAck(messageAck).build();
             ctx.writeAndFlush(ravenMessage);
         }
         if (message.getType() == Type.HeartBeat) {
@@ -109,11 +103,11 @@ public class ClientFromHandler extends SimpleChannelInboundHandler<RavenMessage>
 //            log.info("receive heartbeat :{}", JsonHelper.toJsonString(heartBeat));
             if (heartBeat.getHeartBeatType() == HeartBeatType.PING) {
                 HeartBeat heartBeatAck = HeartBeat.newBuilder()
-                    .setId(heartBeat.getId())
-                    .setHeartBeatType(HeartBeatType.PONG)
-                    .build();
+                        .setId(heartBeat.getId())
+                        .setHeartBeatType(HeartBeatType.PONG)
+                        .build();
                 RavenMessage ravenMessage = RavenMessage.newBuilder().setType(Type.HeartBeat)
-                    .setHeartBeat(heartBeatAck).build();
+                        .setHeartBeat(heartBeatAck).build();
                 ctx.writeAndFlush(ravenMessage);
             }
 //            for (String toUid : toUidList) {

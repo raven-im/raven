@@ -87,6 +87,7 @@ public class GatewayServiceImpl implements GatewayService {
         if (CollectionUtils.isNotEmpty(gatewayServers)) {
             LoadBalancer lb = new ConsistentHashLoadBalancer();
             GatewayServerInfo origin = lb.select(gatewayServers, uid);
+            log.info("user[{}] access server info: {}:{}/{}", uid, origin.getIp(), origin.getTcpPort(), origin.getWsPort());
             if (type == GatewayServerType.WEBSOCKET) {
                 return Result.success(new OutGatewaySiteInfoParam(origin.getIp(), origin.getWsPort()));
             }

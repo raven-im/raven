@@ -69,3 +69,5 @@ site:
 dubbo:
   registry:
     address: ${site.zookeeper}
+  protocol:
+    port: 30002

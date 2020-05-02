@@ -5,10 +5,8 @@ import com.raven.client.group.bean.GroupOutParam;
 import com.raven.client.group.bean.GroupReqParam;
 import com.raven.common.param.OutGatewaySiteInfoParam;
 import com.raven.common.utils.JsonHelper;
-import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
@@ -17,6 +15,8 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+
+import java.util.List;
 
 import static com.raven.common.utils.Constants.*;
 
@@ -58,7 +58,7 @@ public class Utils {
             JsonNode node = JsonHelper.mapper.readTree(responseBody);
             JsonNode nodeGroup = JsonHelper.mapper.readTree(node.get("data").toString());
             return new GroupOutParam(nodeGroup.get("groupId").asText(),
-                nodeGroup.get("converId").asText());
+                    nodeGroup.get("converId").asText());
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
@@ -66,21 +66,10 @@ public class Utils {
     }
 
     public static String getToken(String uid) {
-        HttpGet httpGet = new HttpGet(
-            "http://127.0.0.1:8010/gateway/token?uid=" + uid);
-        httpGet.addHeader("Content-Type", "application/json;charset=UTF-8");
-        httpGet.addHeader("AppKey", "u43tOdeHSx8r0XfJRuRDgo");
-        httpGet.addHeader("Nonce", "abc");
-        long timestamp = System.currentTimeMillis();
-        httpGet.addHeader("Timestamp", String.valueOf(timestamp));
-        String toSign = "aX7-E5ZyTGEkvTWQgJpMog" + "abc" + timestamp;
-        String sign = DigestUtils.sha1Hex(toSign);
-        httpGet.addHeader("Sign", sign);
+        HttpGet httpGet = new HttpGet("http://127.0.0.1:8010/gateway/token?uid=" + uid);
+        addAuthHeader(httpGet);
         String token = null;
         try {
-            for (Header header : httpGet.getAllHeaders()) {
-                log.info(header.toString());
-            }
             String responseBody = httpClient.execute(httpGet, responseHandler);
             JsonNode node = JsonHelper.mapper.readTree(responseBody);
             JsonNode nodeGroup = JsonHelper.mapper.readTree(node.get("data").toString());
@@ -88,11 +77,13 @@ public class Utils {
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
+        log.info("user[{}], token[{}]", uid, token);
         return token;
     }
 
     public static OutGatewaySiteInfoParam getGatewaySite(String token) {
-        HttpGet httpGet = new HttpGet("http://localhost:8080/raven/admin/gateway");
+        HttpGet httpGet = new HttpGet("http://localhost:8010/gateway/socket");
+        addAuthHeader(httpGet);
         httpGet.addHeader("Token", token);
         OutGatewaySiteInfoParam outParam = new OutGatewaySiteInfoParam();
         try {
@@ -104,7 +95,18 @@ public class Utils {
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
+        log.info("access server[{}]", outParam);
         return outParam;
     }
 
+    private static void addAuthHeader(HttpGet httpGet) {
+        httpGet.addHeader("Content-Type", "application/json;charset=UTF-8");
+        httpGet.addHeader(AUTH_APP_KEY, "u43tOdeHSx8r0XfJRuRDgo");
+        httpGet.addHeader(AUTH_NONCE, "abc");
+        long timestamp = System.currentTimeMillis();
+        httpGet.addHeader(AUTH_TIMESTAMP, String.valueOf(timestamp));
+        String toSign = "aX7-E5ZyTGEkvTWQgJpMog" + "abc" + timestamp;
+        String sign = DigestUtils.sha1Hex(toSign);
+        httpGet.addHeader(AUTH_SIGNATURE, sign);
+    }
 }

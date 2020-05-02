@@ -10,9 +10,6 @@
     <!-- dubbo registry -->
     <dubbo:registry id="zookeeper" protocol="zookeeper" address="${dubbo.registry.address}" />
 
-    <!-- protocol port -->
-    <dubbo:protocol name="dubbo" port="30001" />
-
     <!-- providers -->
     <dubbo:service interface="com.raven.common.dubbo.MessageService" ref="msgService" version="1.0" registry="zookeeper"/>
 

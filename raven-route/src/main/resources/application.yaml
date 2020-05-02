@@ -61,3 +61,5 @@ site:
 dubbo:
   registry:
     address: ${site.zookeeper}  #注册zookeeper的地址
+  protocol:
+    port: 30001

@@ -16,7 +16,7 @@ import tk.mybatis.spring.annotation.MapperScan;
 @ImportResource({"classpath:dubbo-consumer.xml"})
 public class RavenAdminApplication {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         SpringApplication.run(RavenAdminApplication.class, args);
     }
 

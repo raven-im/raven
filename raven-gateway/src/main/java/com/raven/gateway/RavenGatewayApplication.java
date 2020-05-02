@@ -10,7 +10,7 @@ import org.springframework.context.annotation.ImportResource;
 @ImportResource({"classpath:dubbo-consumer.xml"})
 public class RavenGatewayApplication {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         SpringApplication.run(RavenGatewayApplication.class, args);
     }
 

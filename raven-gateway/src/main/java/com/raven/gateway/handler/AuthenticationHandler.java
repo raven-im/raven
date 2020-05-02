@@ -44,9 +44,6 @@ public class AuthenticationHandler extends SimpleChannelInboundHandler<RavenMess
     @Value("${netty.websocket.port}")
     private int wsPort;
 
-    @Value("${netty.internal.port}")
-    private int internalPort;
-
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         log.info("client connected remote address:{}", ctx.channel().remoteAddress());
@@ -61,15 +58,14 @@ public class AuthenticationHandler extends SimpleChannelInboundHandler<RavenMess
             String token = loginMessage.getToken();
             if (!verifyToken(token)) {
                 LoginAck loginAck = LoginAck.newBuilder()
-                    .setId(loginMessage.getId())
-                    .setCode(Code.TOKEN_INVALID)
-                    .setTime(System.currentTimeMillis())
-                    .build();
+                        .setId(loginMessage.getId())
+                        .setCode(Code.TOKEN_INVALID)
+                        .setTime(System.currentTimeMillis())
+                        .build();
                 ctx.writeAndFlush(loginAck);
             }
             routeManager.addUser2Server(loginMessage.getUid(),
-                new GatewayServerInfo(zookeeperDiscoveryProperties.getInstanceHost(), tcpPort,
-                    wsPort, internalPort));
+                    new GatewayServerInfo(zookeeperDiscoveryProperties.getInstanceHost(), tcpPort, wsPort));
             uidChannelManager.addId2Channel(loginMessage.getUid(), ctx.channel());
             sendLoginAck(ctx, loginMessage.getId(), Code.SUCCESS);
         } else {
@@ -89,8 +85,7 @@ public class AuthenticationHandler extends SimpleChannelInboundHandler<RavenMess
             // 最后一台设备下线才清除路由
             if (CollectionUtils.isEmpty(uidChannelManager.getChannelsById(uid))) {
                 routeManager.removerUserFromServer(uid,
-                    new GatewayServerInfo(zookeeperDiscoveryProperties.getInstanceHost(), tcpPort,
-                        wsPort, internalPort));
+                        new GatewayServerInfo(zookeeperDiscoveryProperties.getInstanceHost(), tcpPort, wsPort));
             }
         }
     }
@@ -110,12 +105,12 @@ public class AuthenticationHandler extends SimpleChannelInboundHandler<RavenMess
 
     private void sendLoginAck(ChannelHandlerContext ctx, long id, Code code) {
         LoginAck loginAck = LoginAck.newBuilder()
-            .setId(id)
-            .setCode(code)
-            .setTime(System.currentTimeMillis())
-            .build();
+                .setId(id)
+                .setCode(code)
+                .setTime(System.currentTimeMillis())
+                .build();
         RavenMessage ravenMessage = RavenMessage.newBuilder().setType(Type.LoginAck)
-            .setLoginAck(loginAck).build();
+                .setLoginAck(loginAck).build();
         ctx.writeAndFlush(ravenMessage);
     }
 

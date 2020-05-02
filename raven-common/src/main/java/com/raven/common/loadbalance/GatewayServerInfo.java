@@ -2,10 +2,11 @@ package com.raven.common.loadbalance;
 
 
 import com.raven.common.utils.JsonHelper;
-import java.util.Objects;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Objects;
 
 @Data
 @AllArgsConstructor
@@ -18,8 +19,6 @@ public class GatewayServerInfo {
 
     private int wsPort;
 
-    private int internalPort;
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -30,14 +29,13 @@ public class GatewayServerInfo {
         }
         GatewayServerInfo that = (GatewayServerInfo) o;
         return tcpPort == that.tcpPort &&
-            wsPort == that.wsPort &&
-            internalPort == that.internalPort &&
-            Objects.equals(ip, that.ip);
+                wsPort == that.wsPort &&
+                Objects.equals(ip, that.ip);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(ip, tcpPort, wsPort, internalPort);
+        return Objects.hash(ip, tcpPort, wsPort);
     }
 
     @Override

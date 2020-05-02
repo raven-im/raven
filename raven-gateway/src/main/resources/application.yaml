@@ -26,7 +26,6 @@ spring:
         metadata:
           tcp-port: ${netty.tcp.port}
           websocket-port: ${netty.websocket.port}
-          internal-port: ${netty.internal.port}
 
 server:
   port: 8080

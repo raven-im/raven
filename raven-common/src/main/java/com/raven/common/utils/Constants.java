@@ -57,8 +57,6 @@ public class Constants {
 
     public static final String CONFIG_WEBSOCKET_PORT = "websocket-port";
 
-    public static final String CONFIG_INTERNAL_PORT = "internal-port";
-
     public static final String CONFIG_GATEWAY_SERVER_NAME = "raven-gateway";
 
     // kafka topic

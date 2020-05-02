@@ -131,7 +131,6 @@ public class TcpProtobufServer {
     }
 
     private GatewayServerInfo getLocalServer() {
-        return new GatewayServerInfo(zookeeperDiscoveryProperties.getInstanceHost(), tcpPort, wsPort,
-            internalPort);
+        return new GatewayServerInfo(zookeeperDiscoveryProperties.getInstanceHost(), tcpPort, wsPort);
     }
 }

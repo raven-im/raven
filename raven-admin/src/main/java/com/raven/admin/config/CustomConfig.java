@@ -1,7 +1,5 @@
 package com.raven.admin.config;
 
-import com.raven.common.netty.ServerChannelManager;
-import com.raven.common.netty.impl.GatewayServerChannelManager;
 import com.raven.common.utils.SnowFlake;
 import com.raven.storage.conver.ConverManager;
 import com.raven.storage.route.RouteManager;
@@ -70,11 +68,6 @@ public class CustomConfig {
     @DependsOn("redisTemplate")
     public RouteManager routeManager(RedisTemplate redisTemplate) {
         return new RouteManager(redisTemplate);
-    }
-
-    @Bean
-    public ServerChannelManager gateWayServerChannelManager() {
-        return new GatewayServerChannelManager();
     }
 
     @Bean

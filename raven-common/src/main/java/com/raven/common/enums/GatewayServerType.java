@@ -4,9 +4,7 @@ public enum GatewayServerType {
 
     TCP("tcp"),
 
-    WEBSOCKET("websocket"),
-
-    INTERNAL("internal");
+    WEBSOCKET("websocket");
 
     private String type;
 

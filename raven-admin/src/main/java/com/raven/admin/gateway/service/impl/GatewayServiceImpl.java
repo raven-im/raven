@@ -1,28 +1,17 @@
 package com.raven.admin.gateway.service.impl;
 
-import static com.raven.common.utils.Constants.CONFIG_GATEWAY_SERVER_NAME;
-import static com.raven.common.utils.Constants.CONFIG_INTERNAL_PORT;
-import static com.raven.common.utils.Constants.CONFIG_TCP_PORT;
-import static com.raven.common.utils.Constants.CONFIG_WEBSOCKET_PORT;
-import static com.raven.common.utils.Constants.DEFAULT_SEPARATES_SIGN;
-import static com.raven.common.utils.Constants.TOKEN_CACHE_DURATION;
-
 import com.raven.admin.gateway.bean.Token;
 import com.raven.admin.gateway.service.GatewayService;
 import com.raven.common.enums.GatewayServerType;
 import com.raven.common.exception.TokenException;
-import com.raven.common.loadbalance.GatewayServerInfo;
 import com.raven.common.loadbalance.ConsistentHashLoadBalancer;
+import com.raven.common.loadbalance.GatewayServerInfo;
 import com.raven.common.loadbalance.LoadBalancer;
 import com.raven.common.param.OutGatewaySiteInfoParam;
 import com.raven.common.param.OutTokenInfoParam;
 import com.raven.common.result.Result;
 import com.raven.common.result.ResultCode;
 import com.raven.storage.route.RouteManager;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-import javax.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.curator.framework.CuratorFramework;
@@ -35,6 +24,13 @@ import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.PostConstruct;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import static com.raven.common.utils.Constants.*;
 
 @Service
 @Slf4j
@@ -91,17 +87,12 @@ public class GatewayServiceImpl implements GatewayService {
             }
         } else {
             if (CollectionUtils.isEmpty(gatewayServers)) {
-                List<ServiceInstance> instances = discoveryClient
-                    .getInstances(CONFIG_GATEWAY_SERVER_NAME);
+                List<ServiceInstance> instances = discoveryClient.getInstances(CONFIG_GATEWAY_SERVER_NAME);
                 List<GatewayServerInfo> servers = new ArrayList<>();
                 for (ServiceInstance instance : instances) {
                     int tcpPort = Integer.valueOf(instance.getMetadata().get(CONFIG_TCP_PORT));
                     int wsPort = Integer.valueOf(instance.getMetadata().get(CONFIG_WEBSOCKET_PORT));
-                    int internalPort = Integer
-                        .valueOf(instance.getMetadata().get(CONFIG_INTERNAL_PORT));
-                    GatewayServerInfo serverInfo = new GatewayServerInfo(instance.getHost(), tcpPort,
-                        wsPort, internalPort);
-                    servers.add(serverInfo);
+                    servers.add(new GatewayServerInfo(instance.getHost(), tcpPort, wsPort));
                 }
                 setGatewayServerList(servers);
             }
@@ -110,11 +101,11 @@ public class GatewayServiceImpl implements GatewayService {
                 GatewayServerInfo origin = lb.select(gatewayServers, uid);
                 if (type == GatewayServerType.WEBSOCKET) {
                     return Result
-                        .success(new OutGatewaySiteInfoParam(origin.getIp(), origin.getWsPort()));
+                            .success(new OutGatewaySiteInfoParam(origin.getIp(), origin.getWsPort()));
                 }
                 if (type == GatewayServerType.TCP) {
                     return Result
-                        .success(new OutGatewaySiteInfoParam(origin.getIp(), origin.getTcpPort()));
+                            .success(new OutGatewaySiteInfoParam(origin.getIp(), origin.getTcpPort()));
                 }
             }
 
@@ -127,9 +118,9 @@ public class GatewayServiceImpl implements GatewayService {
         gatewayWatcher.getListenable().addListener(new PathChildrenCacheListener() {
             @Override
             public void childEvent(CuratorFramework curator,
-                PathChildrenCacheEvent event) throws Exception {
+                                   PathChildrenCacheEvent event) throws Exception {
                 log.info("watched add gateway server node:{}",
-                    new String(event.getData().getData()));
+                        new String(event.getData().getData()));
                 clearGatewayServerList();
             }
         });

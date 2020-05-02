@@ -1,8 +1,6 @@
 package com.raven.gateway.config;
 
 import com.raven.common.netty.IdChannelManager;
-import com.raven.common.netty.ServerChannelManager;
-import com.raven.common.netty.impl.GatewayServerChannelManager;
 import com.raven.common.netty.impl.UidChannelManager;
 import com.raven.common.utils.SnowFlake;
 import com.raven.storage.conver.ConverManager;
@@ -35,8 +33,7 @@ public class CustomConfig {
 
     @Bean
     @ConditionalOnMissingBean(name = "redisTemplate")
-    public RedisTemplate<String, Object> redisTemplate(
-        RedisConnectionFactory redisConnectionFactory) {
+    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
         RedisTemplate<String, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(redisConnectionFactory);
         RedisSerializer stringSerializer = new StringRedisSerializer();
@@ -65,11 +62,6 @@ public class CustomConfig {
     @Bean
     public IdChannelManager uidChannelManager() {
         return new UidChannelManager();
-    }
-
-    @Bean
-    public ServerChannelManager gateWayServerChannelManager() {
-        return new GatewayServerChannelManager();
     }
 
     @Bean

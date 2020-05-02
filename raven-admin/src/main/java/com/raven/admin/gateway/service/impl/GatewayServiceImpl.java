@@ -11,7 +11,6 @@ import com.raven.common.param.OutGatewaySiteInfoParam;
 import com.raven.common.param.OutTokenInfoParam;
 import com.raven.common.result.Result;
 import com.raven.common.result.ResultCode;
-import com.raven.storage.route.RouteManager;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.curator.framework.CuratorFramework;
@@ -46,9 +45,6 @@ public class GatewayServiceImpl implements GatewayService {
     private StringRedisTemplate stringRedisTemplate;
 
     @Autowired
-    private RouteManager routeManager;
-
-    @Autowired
     private CuratorFramework curator;
 
     private List<GatewayServerInfo> gatewayServers = new ArrayList();
@@ -77,39 +73,28 @@ public class GatewayServiceImpl implements GatewayService {
         }
         String tokenStr = stringRedisTemplate.opsForValue().get(token);
         String uid = tokenStr.split(DEFAULT_SEPARATES_SIGN)[1];
-        GatewayServerInfo server = routeManager.getServerByUid(uid);
-        if (null != server) {
+
+        if (CollectionUtils.isEmpty(gatewayServers)) {
+            List<ServiceInstance> instances = discoveryClient.getInstances(CONFIG_GATEWAY_SERVER_NAME);
+            List<GatewayServerInfo> servers = new ArrayList<>();
+            for (ServiceInstance instance : instances) {
+                int tcpPort = Integer.parseInt(instance.getMetadata().get(CONFIG_TCP_PORT));
+                int wsPort = Integer.parseInt(instance.getMetadata().get(CONFIG_WEBSOCKET_PORT));
+                servers.add(new GatewayServerInfo(instance.getHost(), tcpPort, wsPort));
+            }
+            setGatewayServerList(servers);
+        }
+        if (CollectionUtils.isNotEmpty(gatewayServers)) {
+            LoadBalancer lb = new ConsistentHashLoadBalancer();
+            GatewayServerInfo origin = lb.select(gatewayServers, uid);
             if (type == GatewayServerType.WEBSOCKET) {
-                return Result.success(new OutGatewaySiteInfoParam(server.getIp(), server.getWsPort()));
+                return Result.success(new OutGatewaySiteInfoParam(origin.getIp(), origin.getWsPort()));
             }
             if (type == GatewayServerType.TCP) {
-                return Result.success(new OutGatewaySiteInfoParam(server.getIp(), server.getTcpPort()));
+                return Result.success(new OutGatewaySiteInfoParam(origin.getIp(), origin.getTcpPort()));
             }
-        } else {
-            if (CollectionUtils.isEmpty(gatewayServers)) {
-                List<ServiceInstance> instances = discoveryClient.getInstances(CONFIG_GATEWAY_SERVER_NAME);
-                List<GatewayServerInfo> servers = new ArrayList<>();
-                for (ServiceInstance instance : instances) {
-                    int tcpPort = Integer.valueOf(instance.getMetadata().get(CONFIG_TCP_PORT));
-                    int wsPort = Integer.valueOf(instance.getMetadata().get(CONFIG_WEBSOCKET_PORT));
-                    servers.add(new GatewayServerInfo(instance.getHost(), tcpPort, wsPort));
-                }
-                setGatewayServerList(servers);
-            }
-            if (CollectionUtils.isNotEmpty(gatewayServers)) {
-                LoadBalancer lb = new ConsistentHashLoadBalancer();
-                GatewayServerInfo origin = lb.select(gatewayServers, uid);
-                if (type == GatewayServerType.WEBSOCKET) {
-                    return Result
-                            .success(new OutGatewaySiteInfoParam(origin.getIp(), origin.getWsPort()));
-                }
-                if (type == GatewayServerType.TCP) {
-                    return Result
-                            .success(new OutGatewaySiteInfoParam(origin.getIp(), origin.getTcpPort()));
-                }
-            }
-
         }
+
         return Result.failure(ResultCode.COMMON_NO_GATEWAY_ERROR);
     }
 

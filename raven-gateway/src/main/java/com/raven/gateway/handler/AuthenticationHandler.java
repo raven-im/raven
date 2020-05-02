@@ -9,7 +9,6 @@ import com.raven.common.protos.Message.LoginAck;
 import com.raven.common.protos.Message.RavenMessage;
 import com.raven.common.protos.Message.RavenMessage.Type;
 import com.raven.common.utils.JsonHelper;
-import com.raven.storage.route.RouteManager;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -31,9 +30,6 @@ public class AuthenticationHandler extends SimpleChannelInboundHandler<RavenMess
 
     @Autowired
     private RedisTemplate redisTemplate;
-
-    @Autowired
-    private RouteManager routeManager;
 
     @Autowired
     private ZookeeperDiscoveryProperties zookeeperDiscoveryProperties;
@@ -64,8 +60,6 @@ public class AuthenticationHandler extends SimpleChannelInboundHandler<RavenMess
                         .build();
                 ctx.writeAndFlush(loginAck);
             }
-            routeManager.addUser2Server(loginMessage.getUid(),
-                    new GatewayServerInfo(zookeeperDiscoveryProperties.getInstanceHost(), tcpPort, wsPort));
             uidChannelManager.addId2Channel(loginMessage.getUid(), ctx.channel());
             sendLoginAck(ctx, loginMessage.getId(), Code.SUCCESS);
         } else {
@@ -82,11 +76,6 @@ public class AuthenticationHandler extends SimpleChannelInboundHandler<RavenMess
         if (null != uid) {
             log.info("client disconnected uid:{}", uid);
             uidChannelManager.removeChannel(ctx.channel());
-            // 最后一台设备下线才清除路由
-            if (CollectionUtils.isEmpty(uidChannelManager.getChannelsById(uid))) {
-                routeManager.removerUserFromServer(uid,
-                        new GatewayServerInfo(zookeeperDiscoveryProperties.getInstanceHost(), tcpPort, wsPort));
-            }
         }
     }
 

@@ -2,7 +2,6 @@ package com.raven.admin.config;
 
 import com.raven.common.utils.SnowFlake;
 import com.raven.storage.conver.ConverManager;
-import com.raven.storage.route.RouteManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -62,12 +61,6 @@ public class CustomConfig {
         StringRedisTemplate template = new StringRedisTemplate();
         template.setConnectionFactory(redisConnectionFactory);
         return template;
-    }
-
-    @Bean
-    @DependsOn("redisTemplate")
-    public RouteManager routeManager(RedisTemplate redisTemplate) {
-        return new RouteManager(redisTemplate);
     }
 
     @Bean

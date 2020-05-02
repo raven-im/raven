@@ -4,7 +4,6 @@ import com.raven.common.netty.IdChannelManager;
 import com.raven.common.netty.impl.UidChannelManager;
 import com.raven.common.utils.SnowFlake;
 import com.raven.storage.conver.ConverManager;
-import com.raven.storage.route.RouteManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -68,12 +67,6 @@ public class CustomConfig {
     @DependsOn("redisTemplate")
     public ConverManager conversationManager(RedisTemplate redisTemplate) {
         return new ConverManager(redisTemplate);
-    }
-
-    @Bean
-    @DependsOn("redisTemplate")
-    public RouteManager routeManager(RedisTemplate redisTemplate) {
-        return new RouteManager(redisTemplate);
     }
 
 }

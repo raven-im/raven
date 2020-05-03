@@ -1,6 +1,6 @@
 package com.raven.route.message.processor;
 
-import com.raven.common.dubbo.MessageOutboundService;
+import com.raven.common.dubbo.AccessService;
 import com.raven.common.protos.Message.RavenMessage;
 import com.raven.common.protos.Message.RavenMessage.Type;
 import com.raven.common.protos.Message.UpDownMessage;
@@ -23,7 +23,7 @@ public class GroupMessageProcessor implements Runnable {
 
     private KafkaProducerManager kafka;
 
-    private MessageOutboundService msgOutService;
+    private AccessService accessService;
 
     @Override
     public void run() {
@@ -48,8 +48,7 @@ public class GroupMessageProcessor implements Runnable {
                     .build();
             String downMsg = JsonHelper.toJsonString(ravenMessage);
             // use uid for consistency hash, find a access server, and send it.
-            // TODO merge same message (uids to same access)
-            msgOutService.outboundMsgSend(downMsg);
+            accessService.outboundMsgSend(uid, downMsg);
         }
     }
 }

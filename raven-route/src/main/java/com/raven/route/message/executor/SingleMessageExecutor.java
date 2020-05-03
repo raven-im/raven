@@ -1,6 +1,6 @@
 package com.raven.route.message.executor;
 
-import com.raven.common.dubbo.MessageOutboundService;
+import com.raven.common.dubbo.AccessService;
 import com.raven.route.config.CustomConfig;
 import com.raven.route.config.KafkaProducerManager;
 import com.raven.route.message.processor.SingleMessageProcessor;
@@ -21,10 +21,10 @@ public class SingleMessageExecutor {
     private KafkaProducerManager kafka;
 
     @Autowired
-    private MessageOutboundService msgOutService;
+    private AccessService accessService;
 
     public void saveAndSendMsg(String message) {
-        SingleMessageProcessor processor = new SingleMessageProcessor(converManager, message, kafka, msgOutService);
+        SingleMessageProcessor processor = new SingleMessageProcessor(converManager, message, kafka, accessService);
         CustomConfig.msgProcessorService.submit(processor);
     }
 

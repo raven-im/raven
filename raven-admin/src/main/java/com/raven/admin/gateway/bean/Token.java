@@ -1,6 +1,6 @@
 package com.raven.admin.gateway.bean;
 
-import static com.raven.common.utils.Constants.DEFAULT_SEPARATES_SIGN;
+import static com.raven.common.utils.Constants.DEFAULT_SEPARATOR;
 
 import com.raven.common.exception.TokenException;
 import com.raven.common.utils.DesUtils;
@@ -24,7 +24,7 @@ public class Token {
     }
 
     public String getToken(String secret) throws TokenException {
-        String token = uid + DEFAULT_SEPARATES_SIGN + timestamp + DEFAULT_SEPARATES_SIGN + appKey;
+        String token = uid + DEFAULT_SEPARATOR + timestamp + DEFAULT_SEPARATOR + appKey;
         byte[] encryptCode = DesUtils.encrypt(secret.getBytes(), token.getBytes());
         return new String(Base64.getEncoder().encode(encryptCode), StandardCharsets.UTF_8);
     }

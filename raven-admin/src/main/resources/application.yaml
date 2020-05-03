@@ -37,7 +37,6 @@ spring:
       connect-string: ${site.zookeeper}
       discovery:
         prefer-ip-address: true
-      gateway-server-path: /services/raven-gateway
 
 server:
   port: 8010

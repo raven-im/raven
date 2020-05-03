@@ -1,16 +1,9 @@
 package com.raven.storage.conver;
 
-import static com.raven.common.utils.Constants.PREFIX_CONVERSATION_LIST;
-import static com.raven.common.utils.Constants.PREFIX_GROUP_MEMBER;
-import static com.raven.common.utils.Constants.PREFIX_MESSAGE_ID;
-import static com.raven.common.utils.Constants.DEFAULT_SEPARATES_SIGN;
-
 import com.google.common.collect.Lists;
 import com.raven.common.model.Conversation;
-import com.raven.common.model.NotifyContent;
-import com.raven.common.model.UserConversation;
 import com.raven.common.model.MsgContent;
-import com.raven.common.protos.Message.NotifyMessage;
+import com.raven.common.model.UserConversation;
 import com.raven.common.protos.Message.ConverType;
 import com.raven.common.protos.Message.MessageContent;
 import com.raven.common.protos.Message.MessageType;
@@ -18,15 +11,14 @@ import com.raven.common.protos.Message.UpDownMessage;
 import com.raven.common.utils.Constants;
 import com.raven.common.utils.JsonHelper;
 import com.raven.common.utils.UidUtil;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.data.redis.core.RedisTemplate;
+
+import java.util.*;
+import java.util.Map.Entry;
+
+import static com.raven.common.utils.Constants.*;
 
 @Slf4j
 public class ConverManager {
@@ -46,16 +38,16 @@ public class ConverManager {
         uidList.add(fromUid);
         uidList.add(toUid);
         Conversation conversation = new Conversation().builder().id(converId)
-            .type(ConverType.SINGLE.getNumber())
-            .time(System.currentTimeMillis())
-            .uidList(new ArrayList<>(uidList)).build();
+                .type(ConverType.SINGLE.getNumber())
+                .time(System.currentTimeMillis())
+                .uidList(new ArrayList<>(uidList)).build();
         boolean result = redisTemplate.opsForValue()
-            .setIfAbsent(converId, JsonHelper.toJsonString(conversation));
+                .setIfAbsent(converId, JsonHelper.toJsonString(conversation));
         if (result) {
             redisTemplate.boundHashOps(PREFIX_CONVERSATION_LIST + fromUid)
-                .put(converId, Long.MIN_VALUE);
+                    .put(converId, Long.MIN_VALUE);
             redisTemplate.boundHashOps(PREFIX_CONVERSATION_LIST + toUid)
-                .put(converId, Long.MIN_VALUE);
+                    .put(converId, Long.MIN_VALUE);
         }
         return converId;
     }
@@ -63,16 +55,16 @@ public class ConverManager {
     public String newGroupConverId(String groupId, List<String> members) {
         String converId = UidUtil.uuid24ByFactor(groupId);
         Conversation conversation = new Conversation().builder().id(converId)
-            .type(ConverType.GROUP.getNumber())
-            .time(System.currentTimeMillis())
-            .groupId(groupId).build();
+                .type(ConverType.GROUP.getNumber())
+                .time(System.currentTimeMillis())
+                .groupId(groupId).build();
         boolean result = redisTemplate.opsForValue()
-            .setIfAbsent(converId, JsonHelper.toJsonString(conversation));
+                .setIfAbsent(converId, JsonHelper.toJsonString(conversation));
         if (result) {
             for (String member : members) {
                 redisTemplate.boundSetOps(PREFIX_GROUP_MEMBER + groupId).add(member);
                 redisTemplate.boundHashOps(PREFIX_CONVERSATION_LIST + member)
-                    .put(converId, Long.MIN_VALUE);
+                        .put(converId, Long.MIN_VALUE);
             }
         }
         return converId;
@@ -83,7 +75,7 @@ public class ConverManager {
         for (String member : members) {
             redisTemplate.boundSetOps(PREFIX_GROUP_MEMBER + groupId).add(member);
             redisTemplate.boundHashOps(PREFIX_CONVERSATION_LIST + member)
-                .put(converId, Long.MIN_VALUE);
+                    .put(converId, Long.MIN_VALUE);
         }
     }
 
@@ -98,7 +90,7 @@ public class ConverManager {
     public void dismissGroup(String groupId) {
         String converId = UidUtil.uuid24ByFactor(groupId);
         Set<String> uids = redisTemplate
-            .boundSetOps(PREFIX_GROUP_MEMBER + groupId).members();
+                .boundSetOps(PREFIX_GROUP_MEMBER + groupId).members();
         for (String uid : uids) {
             redisTemplate.boundHashOps(PREFIX_CONVERSATION_LIST + uid).delete(converId);
         }
@@ -109,7 +101,7 @@ public class ConverManager {
     public boolean isSingleConverIdValid(String converId) {
         Conversation conversation = getConversation(converId);
         return conversation == null ? false
-            : conversation.getType() == ConverType.SINGLE.getNumber();
+                : conversation.getType() == ConverType.SINGLE.getNumber();
     }
 
     public String getGroupIdByConverId(String converId) {
@@ -123,8 +115,8 @@ public class ConverManager {
     public List<MsgContent> getHistoryMsg(String converId, Long beginId) {
         List<MsgContent> msgContents = new ArrayList<>();
         Set<String> messages = redisTemplate.opsForZSet()
-            .rangeByScore(PREFIX_MESSAGE_ID + converId, beginId + 1,
-                Long.MAX_VALUE, 0, 100);
+                .rangeByScore(PREFIX_MESSAGE_ID + converId, beginId + 1,
+                        Long.MAX_VALUE, 0, 100);
         for (String message : messages) {
             MsgContent msgContent = JsonHelper.readValue(message, MsgContent.class);
             msgContents.add(msgContent);
@@ -134,7 +126,7 @@ public class ConverManager {
 
     public long getHistoryUnReadCount(String converId, Long beginId) {
         Long unReadCount = redisTemplate.boundZSetOps(PREFIX_MESSAGE_ID + converId)
-            .count(beginId + 1, Long.MAX_VALUE);
+                .count(beginId + 1, Long.MAX_VALUE);
         return unReadCount;
     }
 
@@ -146,7 +138,7 @@ public class ConverManager {
         Conversation conversation = JsonHelper.readValue(ob.toString(), Conversation.class);
         if (conversation.getType() == ConverType.GROUP.getNumber()) {
             Set<String> uids = redisTemplate
-                .boundSetOps(PREFIX_GROUP_MEMBER + conversation.getGroupId()).members();
+                    .boundSetOps(PREFIX_GROUP_MEMBER + conversation.getGroupId()).members();
             conversation.setUidList(Lists.newArrayList(uids));
         }
         return conversation;
@@ -156,20 +148,20 @@ public class ConverManager {
         Conversation conversation = getConversation(converId);
         if (null != conversation) {
             UserConversation converListInfo = new UserConversation().builder()
-                .id(conversation.getId()).groupId(conversation.getGroupId())
-                .uidList(conversation.getUidList())
-                .time(conversation.getTime())
-                .type(conversation.getType()).build();
+                    .id(conversation.getId()).groupId(conversation.getGroupId())
+                    .uidList(conversation.getUidList())
+                    .time(conversation.getTime())
+                    .type(conversation.getType()).build();
             Long readMsgId = getUserReadMessageId(uid, converId);
             if (null != readMsgId) {
                 converListInfo.setReadMsgId(readMsgId);
             }
             Set<String> strs = redisTemplate
-                .boundZSetOps(PREFIX_MESSAGE_ID + conversation.getId())
-                .range(-1, -1);
+                    .boundZSetOps(PREFIX_MESSAGE_ID + conversation.getId())
+                    .range(-1, -1);
             if (strs.size() >= 1) {
                 MsgContent msgContent = JsonHelper
-                    .readValue(strs.iterator().next().toString(), MsgContent.class);
+                        .readValue(strs.iterator().next().toString(), MsgContent.class);
                 converListInfo.setLastContent(msgContent);
             }
             return converListInfo;
@@ -180,21 +172,21 @@ public class ConverManager {
     public List<UserConversation> getConverListByUid(String uid) {
         List<UserConversation> list = new ArrayList<>();
         Map<String, Long> converList = redisTemplate.boundHashOps(PREFIX_CONVERSATION_LIST + uid)
-            .entries();
+                .entries();
         for (Entry<String, Long> entry : converList.entrySet()) {
             Conversation conversation = getConversation(entry.getKey());
             if (null != conversation) {
                 UserConversation converListInfo = new UserConversation().builder()
-                    .id(conversation.getId()).groupId(conversation.getGroupId())
-                    .uidList(conversation.getUidList()).type(conversation.getType())
-                    .time(conversation.getTime())
-                    .readMsgId(entry.getValue()).build();
+                        .id(conversation.getId()).groupId(conversation.getGroupId())
+                        .uidList(conversation.getUidList()).type(conversation.getType())
+                        .time(conversation.getTime())
+                        .readMsgId(entry.getValue()).build();
                 Set<String> strs = redisTemplate
-                    .boundZSetOps(PREFIX_MESSAGE_ID + conversation.getId())
-                    .range(-1, -1);
+                        .boundZSetOps(PREFIX_MESSAGE_ID + conversation.getId())
+                        .range(-1, -1);
                 if (strs.size() >= 1) {
                     MsgContent msgContent = JsonHelper
-                        .readValue(strs.iterator().next(), MsgContent.class);
+                            .readValue(strs.iterator().next(), MsgContent.class);
                     converListInfo.setLastContent(msgContent);
                 }
                 list.add(converListInfo);
@@ -237,55 +229,55 @@ public class ConverManager {
 
     public void saveUserCid(String uid, Long clientId) {
         redisTemplate.boundZSetOps(Constants.PREFIX_USER_CID + uid)
-            .removeRangeByScore(0, System.currentTimeMillis() - (1000 * 60 * 5));
+                .removeRangeByScore(0, System.currentTimeMillis() - (1000 * 60 * 5));
         redisTemplate
-            .boundZSetOps(Constants.PREFIX_USER_CID + uid)
-            .add(clientId, System.currentTimeMillis());
+                .boundZSetOps(Constants.PREFIX_USER_CID + uid)
+                .add(clientId, System.currentTimeMillis());
     }
 
     public void saveWaitUserAckMsg(String uid, String converId, Long msgId) {
         String key = Constants.PREFIX_WAIT_USER_ACK_MID + uid;
         redisTemplate.boundZSetOps(key)
-            .add(converId + DEFAULT_SEPARATES_SIGN + msgId, System.currentTimeMillis());
+                .add(converId + DEFAULT_SEPARATOR + msgId, System.currentTimeMillis());
         log.info("save user:{} wait ack msg,converId:{},msgId:{}", uid, converId, msgId);
     }
 
     public void delWaitUserAckMsg(String uid, String converId, Long msgId) {
         String key = Constants.PREFIX_WAIT_USER_ACK_MID + uid;
-        redisTemplate.boundZSetOps(key).remove(converId + DEFAULT_SEPARATES_SIGN + msgId);
+        redisTemplate.boundZSetOps(key).remove(converId + DEFAULT_SEPARATOR + msgId);
         log.info("delete user:{} wait ack msg,converId:{},msgId:{}", uid, converId, msgId);
     }
 
     public List<UpDownMessage> getWaitUserAckMsg(String uid) {
         String key = Constants.PREFIX_WAIT_USER_ACK_MID + uid;
         Set<String> keyList = redisTemplate.opsForZSet()
-            .rangeByScore(key, 0, System.currentTimeMillis() - 5000, 0, 3);
+                .rangeByScore(key, 0, System.currentTimeMillis() - 5000, 0, 3);
         List<UpDownMessage> upDownMessages = new ArrayList<>();
         for (String str : keyList) {
             log.info("not ack msg key:{}", str);
-            String converId = str.split(DEFAULT_SEPARATES_SIGN)[0];
-            String msgId = str.split(DEFAULT_SEPARATES_SIGN)[1];
+            String converId = str.split(DEFAULT_SEPARATOR)[0];
+            String msgId = str.split(DEFAULT_SEPARATOR)[1];
             Set<String> messages = redisTemplate.opsForZSet()
-                .rangeByScore(PREFIX_MESSAGE_ID + converId, Long.valueOf(msgId),
-                    Long.valueOf(msgId), 0, 1);
+                    .rangeByScore(PREFIX_MESSAGE_ID + converId, Long.valueOf(msgId),
+                            Long.valueOf(msgId), 0, 1);
             if (CollectionUtils.isNotEmpty(messages)) {
                 MsgContent msgContent = JsonHelper
-                    .readValue(messages.iterator().next(), MsgContent.class);
+                        .readValue(messages.iterator().next(), MsgContent.class);
                 MessageContent content = MessageContent.newBuilder()
-                    .setId(msgContent.getId())
-                    .setUid(msgContent.getUid())
-                    .setContent(msgContent.getContent())
-                    .setTime(msgContent.getTime())
-                    .setType(MessageType.valueOf(msgContent.getType())).build();
+                        .setId(msgContent.getId())
+                        .setUid(msgContent.getUid())
+                        .setContent(msgContent.getContent())
+                        .setTime(msgContent.getTime())
+                        .setType(MessageType.valueOf(msgContent.getType())).build();
                 Conversation conversation = getConversation(converId);
                 UpDownMessage downMessage = UpDownMessage.newBuilder()
-                    .setId(msgContent.getId())
-                    .setFromUid(msgContent.getUid())
-                    .setTargetUid(uid)
-                    .setConverType(ConverType.forNumber(conversation.getType()))
-                    .setContent(content)
-                    .setConverId(converId)
-                    .build();
+                        .setId(msgContent.getId())
+                        .setFromUid(msgContent.getUid())
+                        .setTargetUid(uid)
+                        .setConverType(ConverType.forNumber(conversation.getType()))
+                        .setContent(content)
+                        .setConverId(converId)
+                        .build();
                 upDownMessages.add(downMessage);
             }
         }

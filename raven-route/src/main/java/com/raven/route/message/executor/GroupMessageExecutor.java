@@ -1,6 +1,6 @@
 package com.raven.route.message.executor;
 
-import com.raven.common.dubbo.MessageOutboundService;
+import com.raven.common.dubbo.AccessService;
 import com.raven.route.config.CustomConfig;
 import com.raven.route.config.KafkaProducerManager;
 import com.raven.route.message.processor.GroupMessageProcessor;
@@ -20,11 +20,10 @@ public class GroupMessageExecutor {
     private KafkaProducerManager kafka;
 
     @Autowired
-    private MessageOutboundService msgOutService;
+    private AccessService accessService;
 
     public void saveAndSendMsg(String message) {
-        GroupMessageProcessor processor = new GroupMessageProcessor(
-                converManager, message, kafka, msgOutService);
+        GroupMessageProcessor processor = new GroupMessageProcessor(converManager, message, kafka, accessService);
         CustomConfig.msgProcessorService.submit(processor);
     }
 }

@@ -145,8 +145,7 @@ public class WebsocketServer {
         bindConnectionOptions(bootstrap);
         bootstrap.bind(new InetSocketAddress(nettyWebsocketPort)).addListener(future -> {
             if (future.isSuccess()) {
-                log.info("raven-gateway websocket server start success on port:{}",
-                        nettyWebsocketPort);
+                log.info("raven-gateway websocket server start success on port:{}", nettyWebsocketPort);
             } else {
                 log.error("raven-gateway websocket server start failed!");
             }

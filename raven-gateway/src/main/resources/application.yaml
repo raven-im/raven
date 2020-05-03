@@ -23,9 +23,6 @@ spring:
       connect-string: ${site.zookeeper}
       discovery:
         prefer-ip-address: true
-        metadata:
-          tcp-port: ${netty.tcp.port}
-          websocket-port: ${netty.websocket.port}
 
 server:
   port: 8080
@@ -50,12 +47,11 @@ management:
         include: '*' #开放所有监控接口
 
 netty:
+  ip: 127.0.0.1 # 配置外网ip，Access 接入用
   tcp:
     port: 7010
   websocket:
     port: 7011
-  internal:
-    port: 7012
 
 node:
   data-center-id: 1

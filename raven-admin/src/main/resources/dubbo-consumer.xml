@@ -15,4 +15,6 @@
     <dubbo:reference id="msgService" interface="com.raven.common.dubbo.MessageService"
                      check="false" version="1.0" url="" registry="zookeeper" protocol="dubbo" timeout="15000"/>
 
+    <dubbo:reference id="accessService" interface="com.raven.common.dubbo.AccessService"
+                     check="false" version="1.0" url="" registry="zookeeper" protocol="dubbo" timeout="15000" loadbalance="consistenthash"/>
 </beans>

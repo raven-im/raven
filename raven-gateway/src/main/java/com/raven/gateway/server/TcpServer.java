@@ -21,7 +21,6 @@ import io.netty.util.concurrent.EventExecutorGroup;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.zookeeper.discovery.ZookeeperDiscoveryProperties;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -34,12 +33,6 @@ public class TcpServer {
 
     @Value("${netty.tcp.port}")
     private int tcpPort;
-
-    @Value("${netty.websocket.port}")
-    private int wsPort;
-
-    @Value("${netty.internal.port}")
-    private int internalPort;
 
     private EventLoopGroup bossGroup = new NioEventLoopGroup(1);
 
@@ -64,9 +57,6 @@ public class TcpServer {
 
     @Autowired
     private AckMessageHandler ackMessageHandler;
-
-    @Autowired
-    private ZookeeperDiscoveryProperties zookeeperDiscoveryProperties;
 
     @PostConstruct
     public void startServer() {

@@ -12,7 +12,7 @@
     <dubbo:registry id="zookeeper" protocol="zookeeper" address="${dubbo.registry.address}" />
 
     <!-- providers -->
-    <dubbo:service interface="com.raven.common.dubbo.MessageOutboundService" ref="outService" version="1.0" registry="zookeeper"/>
+    <dubbo:service interface="com.raven.common.dubbo.AccessService" ref="accessService" version="1.0" registry="zookeeper"/>
 
     <!-- consumers -->
     <dubbo:reference id="msgService" interface="com.raven.common.dubbo.MessageService"

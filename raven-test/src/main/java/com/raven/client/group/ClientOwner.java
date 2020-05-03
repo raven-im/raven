@@ -14,7 +14,7 @@ public class ClientOwner extends ImClient {
     public static final String CLIENT_UID = "owner";
 
     public static void main(String[] args) throws Exception {
-        List<String> members = Arrays.asList(ClientOwner.CLIENT_UID, ClientInvitee1.CLIENT_UID, ClientInvitee2.CLIENT_UID);
+        List<String> members = Arrays.asList(ClientOwner.CLIENT_UID, ClientInvitee1.CLIENT_UID, ClientInvitee2.CLIENT_UID, ClientInvitee3.CLIENT_UID);
         GroupOutParam groupInfo = Utils.newGroup(members);
         String token = Utils.getToken(CLIENT_UID);
         OutGatewaySiteInfoParam serverInfo = Utils.getGatewaySite(token);

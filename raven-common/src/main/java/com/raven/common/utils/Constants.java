@@ -48,7 +48,7 @@ public class Constants {
     /**
      * Default separate sign.
      */
-    public static final String DEFAULT_SEPARATES_SIGN = ":";
+    public static final String DEFAULT_SEPARATOR = ":";
 
     /**
      * Global config.

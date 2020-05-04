@@ -22,7 +22,7 @@ public class ClientForGatewayHash extends ImClient {
             uids.add(PREFIX + i);
         }
         for (String uid : uids) {
-            String token = Utils.getToken(uid);
+            String token = Utils.getToken(uid, uid + "_device");
             OutGatewaySiteInfoParam serverInfo = Utils.getGatewaySite(token);
             log.info("uid [{}] access server: {}:{}", uid, serverInfo.getIp(), serverInfo.getPort());
         }

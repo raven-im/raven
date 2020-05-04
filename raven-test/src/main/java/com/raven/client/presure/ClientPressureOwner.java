@@ -34,7 +34,7 @@ public class ClientPressureOwner {
             members.add(member);
         }
 //        GroupOutParam groupInfo = Utils.newGroup(members);
-        String token = Utils.getToken(uid);
+        String token = Utils.getToken(uid, uid + "_device");
 //        log.info("$$$$$:{}",groupInfo.getGroupId());
         loginAndSendMessage(uid, token, "lBOx-9GTSrEnlpOChMccy0");
     }

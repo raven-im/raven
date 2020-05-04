@@ -62,7 +62,7 @@ public class ConversationHandler extends SimpleChannelInboundHandler<RavenMessag
         log.debug("receive conver request message:{}", JsonHelper.toJsonString(conversationReq));
         if (conversationReq.getType() == OperationType.DETAIL) {
             UserConversation userConversation = converManager
-                .getConverListInfo(uidChannelManager.getIdByChannel(ctx.channel()),
+                .getConverListInfo(uidChannelManager.getUidByChannel(ctx.channel()),
                     conversationReq.getConversationId());
             if (null == userConversation) {
                 sendFailAck(ctx, conversationReq.getId(), Code.OPERATION_TYPE_INVALID);
@@ -80,7 +80,7 @@ public class ConversationHandler extends SimpleChannelInboundHandler<RavenMessag
             ctx.writeAndFlush(ravenMessage);
         } else if (conversationReq.getType() == OperationType.ALL) {
             List<UserConversation> converList = converManager
-                .getConverListByUid(uidChannelManager.getIdByChannel(ctx.channel()));
+                .getConverListByUid(uidChannelManager.getUidByChannel(ctx.channel()));
             List<ConverInfo> converInfos = new ArrayList<>();
             for (UserConversation converListInfo : converList) {
                 ConverInfo info = buildConverInfo(converListInfo);

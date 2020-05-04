@@ -32,6 +32,7 @@ import javax.annotation.PreDestroy;
 import java.net.InetSocketAddress;
 import java.util.List;
 
+import static com.raven.common.utils.Constants.HEART_BEAT_DETECT;
 import static io.netty.buffer.Unpooled.wrappedBuffer;
 
 @Component
@@ -79,66 +80,64 @@ public class WebsocketServer {
                     protected void initChannel(SocketChannel channel)
                             throws Exception {
                         ChannelPipeline pipeline = channel.pipeline();
-                        pipeline.addLast(new IdleStateHandler(10, 10, 15));
-                        // HTTP请求的解码和编码
-                        pipeline.addLast(new HttpServerCodec());
-                        // 把多个消息转换为一个单一的FullHttpRequest或是FullHttpResponse，
-                        // 原因是HTTP解码器会在每个HTTP消息中生成多个消息对象HttpRequest/HttpResponse,HttpContent,LastHttpContent
-                        pipeline.addLast(new HttpObjectAggregator(65536));
-                        // 主要用于处理大数据流，比如一个1G大小的文件如果你直接传输肯定会撑暴jvm内存的; 增加之后就不用考虑这个问题了
-                        pipeline.addLast(new ChunkedWriteHandler());
-                        // WebSocket数据压缩
-                        pipeline.addLast(new WebSocketServerCompressionHandler());
-                        // 协议包长度限制
-                        pipeline
-                                .addLast(new WebSocketServerProtocolHandler("/ws", null, true, 1024 * 10));
-                        // 协议包解码
-                        pipeline.addLast(new MessageToMessageDecoder<WebSocketFrame>() {
-                            @Override
-                            protected void decode(ChannelHandlerContext ctx, WebSocketFrame frame,
-                                                  List<Object> out) throws Exception {
-                                if (frame instanceof BinaryWebSocketFrame) {
-                                    ByteBuf buf = frame.content();
-                                    out.add(buf);
-                                    buf.retain();
-                                } else if (frame instanceof PingWebSocketFrame) {
-                                    ctx.channel()
-                                            .writeAndFlush(new PongWebSocketFrame(frame.content()
-                                                    .retain()));
-                                } else {
-                                    throw new IllegalStateException(
-                                            "Unsupported web socket msg " + frame);
-                                }
-                            }
-                        });
-                        // 协议包编码
-                        pipeline.addLast(new MessageToMessageEncoder<MessageLiteOrBuilder>() {
-                            @Override
-                            protected void encode(ChannelHandlerContext ctx, MessageLiteOrBuilder msg,
-                                                  List<Object> out) throws Exception {
-                                ByteBuf result = null;
-                                if (msg instanceof MessageLite) {
-                                    result = wrappedBuffer(((MessageLite) msg).toByteArray());
-                                }
-                                if (msg instanceof MessageLite.Builder) {
-                                    result = wrappedBuffer(
-                                            ((MessageLite.Builder) msg).build().toByteArray());
-                                }
-                                // 然后下面再转成websocket二进制流，因为客户端不能直接解析protobuf编码生成的
-                                WebSocketFrame frame = new BinaryWebSocketFrame(result);
-                                out.add(frame);
-                            }
-                        });
-                        // 协议包解码时指定Protobuf字节数实例化为RavenMessage类型
-                        pipeline
-                                .addLast(new ProtobufDecoder(Message.RavenMessage.getDefaultInstance()));
-                        // 业务处理器
-                        pipeline.addLast("AuthenticationHandler", authenticationHandler);
-                        pipeline.addLast("HeartBeatHandler", heartBeatHandler);
-                        pipeline.addLast(executorGroup, "MessageHandler", messageHandler);
-                        pipeline.addLast(executorGroup, "AckMessageHandler", ackMessageHandler);
-                        pipeline.addLast(executorGroup, "ConversationHandler", conversationHandler);
-                        pipeline.addLast(executorGroup, "HistoryHandler", historyHandler);
+                        pipeline.addLast(new IdleStateHandler(0, 0, HEART_BEAT_DETECT))
+                                // HTTP请求的解码和编码
+                                .addLast(new HttpServerCodec())
+                                // 把多个消息转换为一个单一的FullHttpRequest或是FullHttpResponse，
+                                // 原因是HTTP解码器会在每个HTTP消息中生成多个消息对象HttpRequest/HttpResponse,HttpContent,LastHttpContent
+                                .addLast(new HttpObjectAggregator(65536))
+                                // 主要用于处理大数据流，比如一个1G大小的文件如果你直接传输肯定会撑暴jvm内存的; 增加之后就不用考虑这个问题了
+                                .addLast(new ChunkedWriteHandler())
+                                // WebSocket数据压缩
+                                .addLast(new WebSocketServerCompressionHandler())
+                                // 协议包长度限制
+                                .addLast(new WebSocketServerProtocolHandler("/ws", null, true, 1024 * 10))
+                                // 协议包解码
+                                .addLast(new MessageToMessageDecoder<WebSocketFrame>() {
+                                    @Override
+                                    protected void decode(ChannelHandlerContext ctx, WebSocketFrame frame,
+                                                          List<Object> out) throws Exception {
+                                        if (frame instanceof BinaryWebSocketFrame) {
+                                            ByteBuf buf = frame.content();
+                                            out.add(buf);
+                                            buf.retain();
+                                        } else if (frame instanceof PingWebSocketFrame) {
+                                            ctx.channel()
+                                                    .writeAndFlush(new PongWebSocketFrame(frame.content()
+                                                            .retain()));
+                                        } else {
+                                            throw new IllegalStateException(
+                                                    "Unsupported web socket msg " + frame);
+                                        }
+                                    }
+                                })
+                                // 协议包编码
+                                .addLast(new MessageToMessageEncoder<MessageLiteOrBuilder>() {
+                                    @Override
+                                    protected void encode(ChannelHandlerContext ctx, MessageLiteOrBuilder msg,
+                                                          List<Object> out) throws Exception {
+                                        ByteBuf result = null;
+                                        if (msg instanceof MessageLite) {
+                                            result = wrappedBuffer(((MessageLite) msg).toByteArray());
+                                        }
+                                        if (msg instanceof MessageLite.Builder) {
+                                            result = wrappedBuffer(
+                                                    ((MessageLite.Builder) msg).build().toByteArray());
+                                        }
+                                        // 然后下面再转成websocket二进制流，因为客户端不能直接解析protobuf编码生成的
+                                        WebSocketFrame frame = new BinaryWebSocketFrame(result);
+                                        out.add(frame);
+                                    }
+                                })
+                                // 协议包解码时指定Protobuf字节数实例化为RavenMessage类型
+                                .addLast(new ProtobufDecoder(Message.RavenMessage.getDefaultInstance()))
+                                // 业务处理器
+                                .addLast("AuthenticationHandler", authenticationHandler)
+                                .addLast("HeartBeatHandler", heartBeatHandler)
+                                .addLast(executorGroup, "MessageHandler", messageHandler)
+                                .addLast(executorGroup, "AckMessageHandler", ackMessageHandler)
+                                .addLast(executorGroup, "ConversationHandler", conversationHandler)
+                                .addLast(executorGroup, "HistoryHandler", historyHandler);
 
                     }
                 });

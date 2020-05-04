@@ -38,12 +38,13 @@ public class Constants {
 
     public static final String AUTH_TOKEN = "Token";
 
-    public static final long TOKEN_CACHE_DURATION = 1; // 7 days
+    public final static String TOKEN_ENCRYPT_KEY = "T0Day1sGood";
 
+    public final static long TOKEN_EXPIRE_DAY = 30 * 24 * 3600L; // token expire 30 days.
     /**
      * Default cipher algorithm
      */
-    public static final String DEFAULT_CIPHER_ALGORITHM = "DES";
+    public static final String DEFAULT_CIPHER_ALGORITHM = "AES";
 
     /**
      * Default separate sign.
@@ -63,4 +64,7 @@ public class Constants {
     public static final String KAFKA_TOPIC_SINGLE_MSG = "singleMsg";
 
     public static final String KAFKA_TOPIC_GROUP_MSG = "groupMsg";
+
+    // heart beat detect.
+    public final static int HEART_BEAT_DETECT = 20;
 }

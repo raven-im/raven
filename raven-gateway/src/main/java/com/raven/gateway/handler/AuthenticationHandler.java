@@ -1,6 +1,8 @@
 package com.raven.gateway.handler;
 
-import com.raven.common.loadbalance.GatewayServerInfo;
+import com.raven.common.exception.TokenException;
+import com.raven.common.exception.TokenExceptionType;
+import com.raven.common.model.Token;
 import com.raven.common.netty.IdChannelManager;
 import com.raven.common.netty.NettyAttrUtil;
 import com.raven.common.protos.Message.Code;
@@ -15,10 +17,10 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.zookeeper.discovery.ZookeeperDiscoveryProperties;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
+
+import static com.raven.common.netty.NettyAttrUtil.*;
+import static com.raven.common.utils.Constants.DEFAULT_SEPARATOR;
 
 @Component
 @Sharable
@@ -28,12 +30,6 @@ public class AuthenticationHandler extends SimpleChannelInboundHandler<RavenMess
     @Autowired
     private IdChannelManager uidChannelManager;
 
-    @Autowired
-    private RedisTemplate redisTemplate;
-
-    @Autowired
-    private ZookeeperDiscoveryProperties zookeeperDiscoveryProperties;
-
     @Value("${netty.tcp.port}")
     private int tcpPort;
 
@@ -42,28 +38,36 @@ public class AuthenticationHandler extends SimpleChannelInboundHandler<RavenMess
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        log.info("client connected remote address:{}", ctx.channel().remoteAddress());
+        log.debug("client connected remote address:{}", ctx.channel().remoteAddress());
     }
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, RavenMessage message) throws Exception {
-        NettyAttrUtil.updateReaderTime(ctx.channel(), System.currentTimeMillis());
         if (message.getType() == Type.Login) {
             Login loginMessage = message.getLogin();
-            log.info("login msg:{}", JsonHelper.toJsonString(loginMessage));
-            String token = loginMessage.getToken();
-            if (!verifyToken(token)) {
-                LoginAck loginAck = LoginAck.newBuilder()
-                        .setId(loginMessage.getId())
-                        .setCode(Code.TOKEN_INVALID)
-                        .setTime(System.currentTimeMillis())
-                        .build();
-                ctx.writeAndFlush(loginAck);
+            log.debug("login msg:{}", JsonHelper.toJsonString(loginMessage));
+
+            try {
+                Token token = Token.parseFromString(loginMessage.getToken());
+                log.info("AppKey [{}], User[{}], Device[{}] login.", token.getAppKey(), token.getUid(), token.getDeviceId());
+                //set channel attributes.
+                NettyAttrUtil.setAttrKey(ctx.channel(), ATTR_KEY_APP_KEY, token.getAppKey());
+                NettyAttrUtil.setAttrKey(ctx.channel(), ATTR_KEY_USER_ID, token.getUid());
+                NettyAttrUtil.setAttrKey(ctx.channel(), ATTR_KEY_DEVICE_ID, token.getDeviceId());
+                NettyAttrUtil.setAttrKey(ctx.channel(), ATTR_KEY_LOGIN_TIME, String.valueOf(System.currentTimeMillis()));
+
+                String uid = token.getAppKey() + DEFAULT_SEPARATOR + token.getUid();
+                uidChannelManager.addUid2Channel(uid, ctx.channel(), token.getDeviceId());
+                sendLoginAck(ctx, loginMessage.getId(), Code.SUCCESS);
+            } catch (TokenException e) {
+                if (TokenExceptionType.TOKEN_INVALID == e.getType()) {
+                    sendLoginAck(ctx, loginMessage.getId(), Code.TOKEN_INVALID);
+                } else if (TokenExceptionType.TOKEN_EXPIRE == e.getType()) {
+                    sendLoginAck(ctx, loginMessage.getId(), Code.TOKEN_EXPIRE);
+                }
             }
-            uidChannelManager.addId2Channel(loginMessage.getUid(), ctx.channel());
-            sendLoginAck(ctx, loginMessage.getId(), Code.SUCCESS);
         } else {
-            if (null == uidChannelManager.getIdByChannel(ctx.channel())) {
+            if (null == uidChannelManager.getUidByChannel(ctx.channel())) {
                 ctx.close();
             }
             ctx.fireChannelRead(message);
@@ -72,24 +76,24 @@ public class AuthenticationHandler extends SimpleChannelInboundHandler<RavenMess
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-        String uid = uidChannelManager.getIdByChannel(ctx.channel());
+        String uid = uidChannelManager.getUidByChannel(ctx.channel());
         if (null != uid) {
-            log.info("client disconnected uid:{}", uid);
+            String appKey = NettyAttrUtil.getAttribute(ctx.channel(), ATTR_KEY_APP_KEY);
+            String userId = NettyAttrUtil.getAttribute(ctx.channel(), ATTR_KEY_USER_ID);
+            String deviceId = NettyAttrUtil.getAttribute(ctx.channel(), ATTR_KEY_DEVICE_ID);
+            String loginTime = NettyAttrUtil.getAttribute(ctx.channel(), ATTR_KEY_LOGIN_TIME);
+            long eclipse = (System.currentTimeMillis() - Long.parseLong(loginTime)) / 1000L;
+            log.info("AppKey [{}], User[{}], Device[{}] disconnected. connection time [{}] seconds",
+                    appKey, userId, deviceId, eclipse);
             uidChannelManager.removeChannel(ctx.channel());
+            ctx.close();
         }
     }
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-        if ("Connection reset by peer".equals(cause.getMessage())) {
-            return;
-        }
         log.error(cause.getMessage(), cause);
-    }
-
-    private boolean verifyToken(String token) {
-        // TODO 验证UID
-        return redisTemplate.hasKey(token);
+        ctx.close();
     }
 
     private void sendLoginAck(ChannelHandlerContext ctx, long id, Code code) {
@@ -98,8 +102,10 @@ public class AuthenticationHandler extends SimpleChannelInboundHandler<RavenMess
                 .setCode(code)
                 .setTime(System.currentTimeMillis())
                 .build();
-        RavenMessage ravenMessage = RavenMessage.newBuilder().setType(Type.LoginAck)
-                .setLoginAck(loginAck).build();
+        RavenMessage ravenMessage = RavenMessage.newBuilder()
+                .setType(Type.LoginAck)
+                .setLoginAck(loginAck)
+                .build();
         ctx.writeAndFlush(ravenMessage);
     }
 

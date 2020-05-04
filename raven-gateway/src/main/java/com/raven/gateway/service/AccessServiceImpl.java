@@ -38,7 +38,8 @@ public class AccessServiceImpl implements AccessService {
         UpDownMessage downMessage = builder.getUpDownMessage();
 
         log.info("receive down message:{}", JsonHelper.toJsonString(downMessage));
-        List<Channel> channels = uidChannelManager.getChannelsById(downMessage.getTargetUid());
+        //TODO ??
+        List<Channel> channels = uidChannelManager.getChannelsByUid(downMessage.getTargetUid());
         if (channels.isEmpty()) {
             //TODO  new router, maybe response with 304 to relocate the access server.   maybe re-create the hash ring.
             log.error("no channel match {}, maybe caused by bad routing.", downMessage.getTargetUid());

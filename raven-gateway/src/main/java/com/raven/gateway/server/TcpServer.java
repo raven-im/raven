@@ -27,6 +27,8 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.net.InetSocketAddress;
 
+import static com.raven.common.utils.Constants.HEART_BEAT_DETECT;
+
 @Component
 @Slf4j
 public class TcpServer {
@@ -69,22 +71,21 @@ public class TcpServer {
                 .channel(NioServerSocketChannel.class)
                 .childHandler(new ChannelInitializer<SocketChannel>() {
                     @Override
-                    protected void initChannel(SocketChannel channel)
-                            throws Exception {
+                    protected void initChannel(SocketChannel channel) throws Exception {
                         ChannelPipeline pipeline = channel.pipeline();
-                        pipeline.addLast(new IdleStateHandler(10, 10, 15));
-                        pipeline.addLast(new ProtobufVarint32FrameDecoder());
-                        pipeline
-                                .addLast(new ProtobufDecoder(Message.RavenMessage.getDefaultInstance()));
-                        // 对protobuf协议的消息头上加上一个长度为32的整形字段
-                        pipeline.addLast(new ProtobufVarint32LengthFieldPrepender());
-                        pipeline.addLast(new ProtobufEncoder());
-                        pipeline.addLast("AuthenticationHandler", authenticationHandler);
-                        pipeline.addLast("HeartBeatHandler", heartBeatHandler);
-                        pipeline.addLast(executorGroup, "MessageHandler", messageHandler);
-                        pipeline.addLast(executorGroup, "AckMessageHandler", ackMessageHandler);
-                        pipeline.addLast(executorGroup, "ConversationHandler", conversationHandler);
-                        pipeline.addLast(executorGroup, "HistoryHandler", historyHandler);
+                        // 20s trigger to close channel for no heart beat.
+                        pipeline.addLast(new IdleStateHandler(0, 0, HEART_BEAT_DETECT))
+                                .addLast(new ProtobufVarint32FrameDecoder())
+                                .addLast(new ProtobufDecoder(Message.RavenMessage.getDefaultInstance()))
+                                // 对protobuf协议的消息头上加上一个长度为32的整形字段
+                                .addLast(new ProtobufVarint32LengthFieldPrepender())
+                                .addLast(new ProtobufEncoder())
+                                .addLast("AuthenticationHandler", authenticationHandler)
+                                .addLast("HeartBeatHandler", heartBeatHandler)
+                                .addLast(executorGroup, "MessageHandler", messageHandler)
+                                .addLast(executorGroup, "AckMessageHandler", ackMessageHandler)
+                                .addLast(executorGroup, "ConversationHandler", conversationHandler)
+                                .addLast(executorGroup, "HistoryHandler", historyHandler);
                     }
                 });
         bindConnectionOptions(bootstrap);

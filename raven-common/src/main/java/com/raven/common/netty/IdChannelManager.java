@@ -5,15 +5,16 @@ import java.util.List;
 
 public interface IdChannelManager {
 
-    void addId2Channel(String id, Channel channel);
+    // uid =  AppKey + userId
+    void addUid2Channel(String uid, Channel channel, String deviceId);
 
-    List<Channel> getChannelsById(String id);
+    List<Channel> getChannelsByUid(String uid);
 
-    String getIdByChannel(Channel channel);
+    String getUidByChannel(Channel channel);
 
     void removeChannel(Channel channel);
-
-    List<String> getAllIds();
-
-    List<Channel> getAllChannels();
+//
+//    List<String> getAllIds();
+//
+//    List<Channel> getAllChannels();
 }

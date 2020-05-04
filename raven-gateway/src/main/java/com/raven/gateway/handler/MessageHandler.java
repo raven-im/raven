@@ -118,7 +118,7 @@ public class MessageHandler extends SimpleChannelInboundHandler<RavenMessage> {
 
     private RavenMessage buildRavenMessage(ChannelHandlerContext ctx, UpDownMessage upDownMessage,
                                            long msgId) {
-        String uid = uidChannelManager.getIdByChannel(ctx.channel());
+        String uid = uidChannelManager.getUidByChannel(ctx.channel());
         MessageContent content = MessageContent.newBuilder()
                 .setId(msgId)
                 .setType(upDownMessage.getContent().getType())
@@ -142,12 +142,12 @@ public class MessageHandler extends SimpleChannelInboundHandler<RavenMessage> {
         if (0 == upMessage.getCid()) {
             return false;
         }
-        String uid = uidChannelManager.getIdByChannel(ctx.channel());
+        String uid = uidChannelManager.getUidByChannel(ctx.channel());
         return !converManager.isUserCidExist(uid, upMessage.getCid());
     }
 
     private void saveUserClientId(ChannelHandlerContext ctx, UpDownMessage upMessage) {
-        String uid = uidChannelManager.getIdByChannel(ctx.channel());
+        String uid = uidChannelManager.getUidByChannel(ctx.channel());
         converManager.saveUserCid(uid, upMessage.getCid());
     }
 

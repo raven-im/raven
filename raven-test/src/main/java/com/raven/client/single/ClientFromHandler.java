@@ -3,12 +3,13 @@ package com.raven.client.single;
 import com.raven.common.protos.Message.*;
 import com.raven.common.protos.Message.RavenMessage.Type;
 import com.raven.common.utils.JsonHelper;
-import com.raven.common.utils.SnowFlake;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
+
+import static com.raven.client.common.Utils.*;
 
 @Slf4j
 public class ClientFromHandler extends SimpleChannelInboundHandler<RavenMessage> {
@@ -17,34 +18,19 @@ public class ClientFromHandler extends SimpleChannelInboundHandler<RavenMessage>
 
     private String uid;
     private String token;
-    private SnowFlake snowFlake;
 
     private String[] toUidList = {"test1"};
 
-    public ClientFromHandler(String uid, String token, SnowFlake snowFlake) {
+    public ClientFromHandler(String uid, String token) {
         super(true);
         this.uid = uid;
         this.token = token;
-        this.snowFlake = snowFlake;
     }
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws IOException {
         messageConnectionCtx = ctx;
-        sendLogin(ctx, uid);
-    }
-
-    private void sendLogin(ChannelHandlerContext ctx, String uid) {
-        Login login = Login.newBuilder()
-                .setUid(uid)
-                .setToken(token)
-                .setId(snowFlake.nextId())
-                .build();
-        RavenMessage ravenMessage = RavenMessage.newBuilder()
-                .setType(Type.Login)
-                .setLogin(login)
-                .build();
-        ctx.writeAndFlush(ravenMessage);
+        sendLogin(ctx, token);
     }
 
     @Override
@@ -54,6 +40,7 @@ public class ClientFromHandler extends SimpleChannelInboundHandler<RavenMessage>
             LoginAck loginAck = message.getLoginAck();
             log.info("login ack:{}", JsonHelper.toJsonString(loginAck));
             if (loginAck.getCode() == Code.SUCCESS) {
+                sendHeartBeat(ctx);
                 for (String toUid : toUidList) {
                     Thread.sleep(1000);
                     MessageContent content = MessageContent.newBuilder().setUid(uid)
@@ -72,13 +59,6 @@ public class ClientFromHandler extends SimpleChannelInboundHandler<RavenMessage>
                     log.info("send message cid :{}", cid);
                     ctx.writeAndFlush(ravenMessage);
                 }
-//                Thread.sleep(2000);
-//                ConverReq converReq = ConverReq.newBuilder().setId(ClientFrom.snowFlake.nextId())
-//                    .setType(OperationType.ALL)
-//                    .build();
-//                RavenMessage ravenMessage = RavenMessage.newBuilder().setType(Type.ConverReq)
-//                    .setConverReq(converReq).build();
-//                ctx.writeAndFlush(ravenMessage);
             }
         }
         if (message.getType() == Type.MessageAck) {
@@ -99,57 +79,8 @@ public class ClientFromHandler extends SimpleChannelInboundHandler<RavenMessage>
             ctx.writeAndFlush(ravenMessage);
         }
         if (message.getType() == Type.HeartBeat) {
-            HeartBeat heartBeat = message.getHeartBeat();
-//            log.info("receive heartbeat :{}", JsonHelper.toJsonString(heartBeat));
-            if (heartBeat.getHeartBeatType() == HeartBeatType.PING) {
-                HeartBeat heartBeatAck = HeartBeat.newBuilder()
-                        .setId(heartBeat.getId())
-                        .setHeartBeatType(HeartBeatType.PONG)
-                        .build();
-                RavenMessage ravenMessage = RavenMessage.newBuilder().setType(Type.HeartBeat)
-                        .setHeartBeat(heartBeatAck).build();
-                ctx.writeAndFlush(ravenMessage);
-            }
-//            for (String toUid : toUidList) {
-//                Thread.sleep(1000);
-//                MessageContent content = MessageContent.newBuilder().setUid(uid)
-//                    .setType(MessageType.TEXT)
-//                    .setContent("hello world").build();
-//                UpDownMessage upDownMessage = UpDownMessage.newBuilder()
-//                    .setCid(ClientFrom.snowFlake.nextId())
-//                    .setFromUid(uid)
-//                    .setTargetUid(toUid)
-//                    .setConverType(ConverType.SINGLE)
-//                    .setContent(content).build();
-//                RavenMessage ravenMessage = RavenMessage.newBuilder().setType(Type.UpDownMessage)
-//                    .setUpDownMessage(upDownMessage).build();
-//                ctx.writeAndFlush(ravenMessage);
-//            }
-//            Thread.sleep(2000);
-//            ConverReq converReq = ConverReq.newBuilder().setId(ClientFrom.snowFlake.nextId())
-//                .setType(OperationType.ALL)
-//                .build();
-//            RavenMessage ravenMessage = RavenMessage.newBuilder().setType(Type.ConverReq)
-//                .setConverReq(converReq).build();
-//            ctx.writeAndFlush(ravenMessage);
+            rspHeartBeat(ctx, message.getHeartBeat());
         }
-//        if (message.getType() == Type.ConverAck) {
-//            ConverAck converAck = message.getConverAck();
-//            log.info("receive conver ack message:{}", JsonHelper.toJsonString(converAck));
-//            Long beginTime = Long.valueOf("1");
-//            for (ConverInfo converInfo : converAck.getConverListList()) {
-//                HisMessagesReq hisMessagesReq = HisMessagesReq.newBuilder()
-//                    .setId(ClientFrom.snowFlake.nextId())
-//                    .setBeginId(beginTime).setConverId(converInfo.getConverId()).build();
-//                RavenMessage ravenMessage = RavenMessage.newBuilder().setType(Type.HisMessagesReq)
-//                    .setHisMessagesReq(hisMessagesReq).build();
-//                ctx.writeAndFlush(ravenMessage);
-//            }
-//        }
-//        if (message.getType() == Type.HisMessagesAck) {
-//            HisMessagesAck hisMessagesAck = message.getHisMessagesAck();
-//            log.info("receive history message ack:{}", JsonHelper.toJsonString(hisMessagesAck));
-//        }
     }
 
     @Override

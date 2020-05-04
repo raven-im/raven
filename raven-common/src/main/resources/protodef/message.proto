@@ -37,8 +37,7 @@ message RavenMessage {
 
 message Login {
   uint64 id = 1; //消息ID
-  string uid = 2;
-  string token = 3; // token
+  string token = 2; // token
 }
 
 message LoginAck {
@@ -95,7 +94,8 @@ enum Code {
   CONVER_ID_INVALID = 4;
   NO_TARGET = 5;
   TOKEN_INVALID = 6;
-  OPERATION_TYPE_INVALID = 7;
+  TOKEN_EXPIRE = 7;
+  OPERATION_TYPE_INVALID = 8;
 
 }
 

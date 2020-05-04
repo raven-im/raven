@@ -37,7 +37,7 @@ public enum ResultCode {
     APP_ERROR_KEY_INVALID(13001, "app key is invalid."),
     APP_ERROR_TOKEN_CREATE_ERROR(13002, "token cannot be made."),
     APP_ERROR_TOKEN_INVALID(13003, "token is invalid."),
-
+    APP_ERROR_TOKEN_EXPIRE(13004, "token is expired."),
     /*
      * File Upload.  [14000, 15000)
      */

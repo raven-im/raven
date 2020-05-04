@@ -33,7 +33,7 @@ public class ClientPressureMember {
         countTimeDiff.lazySet(0);
         msgCount.lazySet(0);
         log.info("消息总数:{} 总延迟:{} 最大延迟:{}", msgCount.get(), countTimeDiff.get(), maxTimeDiff);
-        String token = Utils.getToken("user1");
+        String token = Utils.getToken("user1", "user1_device");
         for (int i = 2; i < 2501; i++) {
             Thread.sleep(10);
             String uid = "user" + i;

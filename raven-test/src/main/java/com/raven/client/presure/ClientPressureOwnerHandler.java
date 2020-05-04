@@ -13,6 +13,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import lombok.extern.slf4j.Slf4j;
 
+import static com.raven.client.common.Utils.rspHeartBeat;
+import static com.raven.client.common.Utils.sendLogin;
+
 @Slf4j
 public class ClientPressureOwnerHandler extends SimpleChannelInboundHandler<RavenMessage> {
 
@@ -35,23 +38,17 @@ public class ClientPressureOwnerHandler extends SimpleChannelInboundHandler<Rave
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws IOException {
         messageConnectionCtx = ctx;
-        sendLogin(ctx, uid);
+        sendLogin(ctx, token);
     }
 
-    private void sendLogin(ChannelHandlerContext ctx, String uid) {
-        Login login = Login.newBuilder()
-            .setUid(uid)
-            .setId(ClientPressureOwner.snowFlake.nextId())
-            .setToken(token)
-            .build();
-        RavenMessage ravenMessage = RavenMessage.newBuilder().setType(Type.Login).setLogin(login)
-            .build();
-        ctx.writeAndFlush(ravenMessage);
-    }
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, RavenMessage message)
         throws Exception {
+        if (message.getType() == Type.HeartBeat) {
+            rspHeartBeat(ctx, message.getHeartBeat());
+        }
+        //TODO ??
         while (true) {
             sendMessage(ctx);
             Thread.sleep(357);

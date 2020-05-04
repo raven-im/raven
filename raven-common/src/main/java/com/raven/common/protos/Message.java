@@ -146,9 +146,13 @@ public final class Message {
      */
     TOKEN_INVALID(6),
     /**
-     * <code>OPERATION_TYPE_INVALID = 7;</code>
+     * <code>TOKEN_EXPIRE = 7;</code>
      */
-    OPERATION_TYPE_INVALID(7),
+    TOKEN_EXPIRE(7),
+    /**
+     * <code>OPERATION_TYPE_INVALID = 8;</code>
+     */
+    OPERATION_TYPE_INVALID(8),
     UNRECOGNIZED(-1),
     ;
 
@@ -181,9 +185,13 @@ public final class Message {
      */
     public static final int TOKEN_INVALID_VALUE = 6;
     /**
-     * <code>OPERATION_TYPE_INVALID = 7;</code>
+     * <code>TOKEN_EXPIRE = 7;</code>
      */
-    public static final int OPERATION_TYPE_INVALID_VALUE = 7;
+    public static final int TOKEN_EXPIRE_VALUE = 7;
+    /**
+     * <code>OPERATION_TYPE_INVALID = 8;</code>
+     */
+    public static final int OPERATION_TYPE_INVALID_VALUE = 8;
 
 
     public final int getNumber() {
@@ -211,7 +219,8 @@ public final class Message {
         case 4: return CONVER_ID_INVALID;
         case 5: return NO_TARGET;
         case 6: return TOKEN_INVALID;
-        case 7: return OPERATION_TYPE_INVALID;
+        case 7: return TOKEN_EXPIRE;
+        case 8: return OPERATION_TYPE_INVALID;
         default: return null;
       }
     }
@@ -3855,21 +3864,11 @@ public final class Message {
     long getId();
 
     /**
-     * <code>string uid = 2;</code>
-     */
-    java.lang.String getUid();
-    /**
-     * <code>string uid = 2;</code>
-     */
-    com.google.protobuf.ByteString
-        getUidBytes();
-
-    /**
      * <pre>
      * token
      * </pre>
      *
-     * <code>string token = 3;</code>
+     * <code>string token = 2;</code>
      */
     java.lang.String getToken();
     /**
@@ -3877,7 +3876,7 @@ public final class Message {
      * token
      * </pre>
      *
-     * <code>string token = 3;</code>
+     * <code>string token = 2;</code>
      */
     com.google.protobuf.ByteString
         getTokenBytes();
@@ -3896,7 +3895,6 @@ public final class Message {
     }
     private Login() {
       id_ = 0L;
-      uid_ = "";
       token_ = "";
     }
 
@@ -3930,12 +3928,6 @@ public final class Message {
               break;
             }
             case 18: {
-              java.lang.String s = input.readStringRequireUtf8();
-
-              uid_ = s;
-              break;
-            }
-            case 26: {
               java.lang.String s = input.readStringRequireUtf8();
 
               token_ = s;
@@ -3986,48 +3978,14 @@ public final class Message {
       return id_;
     }
 
-    public static final int UID_FIELD_NUMBER = 2;
-    private volatile java.lang.Object uid_;
-    /**
-     * <code>string uid = 2;</code>
-     */
-    public java.lang.String getUid() {
-      java.lang.Object ref = uid_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        uid_ = s;
-        return s;
-      }
-    }
-    /**
-     * <code>string uid = 2;</code>
-     */
-    public com.google.protobuf.ByteString
-        getUidBytes() {
-      java.lang.Object ref = uid_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        uid_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    public static final int TOKEN_FIELD_NUMBER = 3;
+    public static final int TOKEN_FIELD_NUMBER = 2;
     private volatile java.lang.Object token_;
     /**
      * <pre>
      * token
      * </pre>
      *
-     * <code>string token = 3;</code>
+     * <code>string token = 2;</code>
      */
     public java.lang.String getToken() {
       java.lang.Object ref = token_;
@@ -4046,7 +4004,7 @@ public final class Message {
      * token
      * </pre>
      *
-     * <code>string token = 3;</code>
+     * <code>string token = 2;</code>
      */
     public com.google.protobuf.ByteString
         getTokenBytes() {
@@ -4079,11 +4037,8 @@ public final class Message {
       if (id_ != 0L) {
         output.writeUInt64(1, id_);
       }
-      if (!getUidBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, uid_);
-      }
       if (!getTokenBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, token_);
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, token_);
       }
       unknownFields.writeTo(output);
     }
@@ -4098,11 +4053,8 @@ public final class Message {
         size += com.google.protobuf.CodedOutputStream
           .computeUInt64Size(1, id_);
       }
-      if (!getUidBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, uid_);
-      }
       if (!getTokenBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, token_);
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, token_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -4122,8 +4074,6 @@ public final class Message {
       boolean result = true;
       result = result && (getId()
           == other.getId());
-      result = result && getUid()
-          .equals(other.getUid());
       result = result && getToken()
           .equals(other.getToken());
       result = result && unknownFields.equals(other.unknownFields);
@@ -4140,8 +4090,6 @@ public final class Message {
       hash = (37 * hash) + ID_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           getId());
-      hash = (37 * hash) + UID_FIELD_NUMBER;
-      hash = (53 * hash) + getUid().hashCode();
       hash = (37 * hash) + TOKEN_FIELD_NUMBER;
       hash = (53 * hash) + getToken().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
@@ -4279,8 +4227,6 @@ public final class Message {
         super.clear();
         id_ = 0L;
 
-        uid_ = "";
-
         token_ = "";
 
         return this;
@@ -4310,7 +4256,6 @@ public final class Message {
       public com.raven.common.protos.Message.Login buildPartial() {
         com.raven.common.protos.Message.Login result = new com.raven.common.protos.Message.Login(this);
         result.id_ = id_;
-        result.uid_ = uid_;
         result.token_ = token_;
         onBuilt();
         return result;
@@ -4362,10 +4307,6 @@ public final class Message {
         if (other == com.raven.common.protos.Message.Login.getDefaultInstance()) return this;
         if (other.getId() != 0L) {
           setId(other.getId());
-        }
-        if (!other.getUid().isEmpty()) {
-          uid_ = other.uid_;
-          onChanged();
         }
         if (!other.getToken().isEmpty()) {
           token_ = other.token_;
@@ -4438,82 +4379,13 @@ public final class Message {
         return this;
       }
 
-      private java.lang.Object uid_ = "";
-      /**
-       * <code>string uid = 2;</code>
-       */
-      public java.lang.String getUid() {
-        java.lang.Object ref = uid_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          uid_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <code>string uid = 2;</code>
-       */
-      public com.google.protobuf.ByteString
-          getUidBytes() {
-        java.lang.Object ref = uid_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          uid_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>string uid = 2;</code>
-       */
-      public Builder setUid(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        uid_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string uid = 2;</code>
-       */
-      public Builder clearUid() {
-        
-        uid_ = getDefaultInstance().getUid();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string uid = 2;</code>
-       */
-      public Builder setUidBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        uid_ = value;
-        onChanged();
-        return this;
-      }
-
       private java.lang.Object token_ = "";
       /**
        * <pre>
        * token
        * </pre>
        *
-       * <code>string token = 3;</code>
+       * <code>string token = 2;</code>
        */
       public java.lang.String getToken() {
         java.lang.Object ref = token_;
@@ -4532,7 +4404,7 @@ public final class Message {
        * token
        * </pre>
        *
-       * <code>string token = 3;</code>
+       * <code>string token = 2;</code>
        */
       public com.google.protobuf.ByteString
           getTokenBytes() {
@@ -4552,7 +4424,7 @@ public final class Message {
        * token
        * </pre>
        *
-       * <code>string token = 3;</code>
+       * <code>string token = 2;</code>
        */
       public Builder setToken(
           java.lang.String value) {
@@ -4569,7 +4441,7 @@ public final class Message {
        * token
        * </pre>
        *
-       * <code>string token = 3;</code>
+       * <code>string token = 2;</code>
        */
       public Builder clearToken() {
         
@@ -4582,7 +4454,7 @@ public final class Message {
        * token
        * </pre>
        *
-       * <code>string token = 3;</code>
+       * <code>string token = 2;</code>
        */
       public Builder setTokenBytes(
           com.google.protobuf.ByteString value) {
@@ -18091,61 +17963,61 @@ public final class Message {
       "\003\022\r\n\tHeartBeat\020\004\022\016\n\nMessageAck\020\005\022\022\n\016HisM" +
       "essagesReq\020\006\022\022\n\016HisMessagesAck\020\007\022\021\n\rNoti" +
       "fyMessage\020\010\022\r\n\tConverReq\020\t\022\r\n\tConverAck\020" +
-      "\nB\006\n\004data\"/\n\005Login\022\n\n\002id\030\001 \001(\004\022\013\n\003uid\030\002 " +
-      "\001(\t\022\r\n\005token\030\003 \001(\t\"^\n\010LoginAck\022\n\n\002id\030\001 \001" +
-      "(\004\022+\n\004code\030\002 \001(\0162\035.com.raven.common.prot" +
-      "os.Code\022\013\n\003msg\030\003 \001(\t\022\014\n\004time\030\004 \001(\004\"2\n\nSe" +
-      "rverInfo\022\n\n\002id\030\001 \001(\004\022\n\n\002ip\030\002 \001(\t\022\014\n\004port" +
-      "\030\003 \001(\r\"\342\001\n\rUpDownMessage\022\n\n\002id\030\001 \001(\004\022\013\n\003" +
-      "cid\030\002 \001(\004\022\017\n\007fromUid\030\003 \001(\t\022\021\n\ttargetUid\030" +
-      "\004 \001(\t\022\017\n\007groupId\030\005 \001(\t\022\020\n\010converId\030\006 \001(\t" +
-      "\0227\n\nconverType\030\007 \001(\0162#.com.raven.common." +
-      "protos.ConverType\0228\n\007content\030\010 \001(\0132\'.com" +
-      ".raven.common.protos.MessageContent\"V\n\tH" +
-      "eartBeat\022\n\n\002id\030\001 \001(\004\022=\n\rheartBeatType\030\002 " +
-      "\001(\0162&.com.raven.common.protos.HeartBeatT" +
-      "ype\"\205\001\n\nMessageAck\022\n\n\002id\030\001 \001(\004\022\013\n\003cid\030\002 " +
-      "\001(\004\022\021\n\ttargetUid\030\003 \001(\t\022\020\n\010converId\030\004 \001(\t" +
-      "\022\014\n\004time\030\005 \001(\004\022+\n\004code\030\006 \001(\0162\035.com.raven" +
-      ".common.protos.Code\"|\n\016MessageContent\022\n\n" +
-      "\002id\030\001 \001(\004\022\013\n\003uid\030\002 \001(\t\0222\n\004type\030\003 \001(\0162$.c" +
-      "om.raven.common.protos.MessageType\022\017\n\007co" +
-      "ntent\030\004 \001(\t\022\014\n\004time\030\005 \001(\004\"?\n\016HisMessages" +
-      "Req\022\n\n\002id\030\001 \001(\004\022\020\n\010converId\030\002 \001(\t\022\017\n\007beg" +
-      "inId\030\003 \001(\004\"\270\001\n\016HisMessagesAck\022\n\n\002id\030\001 \001(" +
-      "\004\022\020\n\010converId\030\002 \001(\t\0225\n\010convType\030\003 \001(\0162#." +
-      "com.raven.common.protos.ConverType\022<\n\013me" +
-      "ssageList\030\004 \003(\0132\'.com.raven.common.proto" +
-      "s.MessageContent\022\023\n\013unReadCount\030\005 \001(\004\"e\n" +
-      "\tConverReq\022\n\n\002id\030\001 \001(\004\0224\n\004type\030\002 \001(\0162&.c" +
-      "om.raven.common.protos.OperationType\022\026\n\016" +
-      "conversationId\030\003 \001(\t\"\304\001\n\tConverAck\022\n\n\002id" +
-      "\030\001 \001(\004\022+\n\004code\030\003 \001(\0162\035.com.raven.common." +
-      "protos.Code\022\014\n\004time\030\004 \001(\004\0227\n\nconverInfo\030" +
-      "\005 \001(\0132#.com.raven.common.protos.ConverIn" +
-      "fo\0227\n\nconverList\030\006 \003(\0132#.com.raven.commo" +
-      "n.protos.ConverInfo\"\322\001\n\nConverInfo\022\020\n\010co" +
-      "nverId\030\001 \001(\t\0221\n\004type\030\002 \001(\0162#.com.raven.c" +
-      "ommon.protos.ConverType\022\017\n\007uidList\030\003 \003(\t" +
-      "\022\017\n\007groupId\030\004 \001(\t\022\021\n\treadMsgId\030\005 \001(\004\022<\n\013" +
-      "lastContent\030\006 \001(\0132\'.com.raven.common.pro" +
-      "tos.MessageContent\022\014\n\004time\030\007 \001(\004\"\332\001\n\rNot" +
-      "ifyMessage\022\n\n\002id\030\001 \001(\004\0221\n\004type\030\002 \001(\0162#.c" +
-      "om.raven.common.protos.NotifyType\022\021\n\ttar" +
-      "getUid\030\003 \001(\t\022\020\n\010converId\030\004 \001(\t\0225\n\010convTy" +
-      "pe\030\005 \001(\0162#.com.raven.common.protos.Conve" +
-      "rType\022\017\n\007content\030\006 \001(\t\022\014\n\004time\030\007 \001(\004\022\017\n\007" +
-      "fromUid\030\010 \001(\t*#\n\rHeartBeatType\022\010\n\004PING\020\000" +
-      "\022\010\n\004PONG\020\001*\250\001\n\004Code\022\013\n\007SUCCESS\020\000\022\024\n\020CLIE" +
-      "NT_ID_REPEAT\020\001\022\027\n\023CONVER_TYPE_INVALID\020\002\022" +
-      "\017\n\013KAFKA_ERROR\020\003\022\025\n\021CONVER_ID_INVALID\020\004\022" +
-      "\r\n\tNO_TARGET\020\005\022\021\n\rTOKEN_INVALID\020\006\022\032\n\026OPE" +
-      "RATION_TYPE_INVALID\020\007*#\n\nConverType\022\n\n\006S" +
-      "INGLE\020\000\022\t\n\005GROUP\020\001*:\n\013MessageType\022\010\n\004TEX" +
-      "T\020\000\022\013\n\007PICTURE\020\001\022\t\n\005VOICE\020\002\022\t\n\005VIDEO\020\003*$" +
-      "\n\rOperationType\022\n\n\006DETAIL\020\000\022\007\n\003ALL\020\001*(\n\n" +
-      "NotifyType\022\010\n\004USER\020\000\022\020\n\014CONVERSATION\020\001B\t" +
-      "B\007Messageb\006proto3"
+      "\nB\006\n\004data\"\"\n\005Login\022\n\n\002id\030\001 \001(\004\022\r\n\005token\030" +
+      "\002 \001(\t\"^\n\010LoginAck\022\n\n\002id\030\001 \001(\004\022+\n\004code\030\002 " +
+      "\001(\0162\035.com.raven.common.protos.Code\022\013\n\003ms" +
+      "g\030\003 \001(\t\022\014\n\004time\030\004 \001(\004\"2\n\nServerInfo\022\n\n\002i" +
+      "d\030\001 \001(\004\022\n\n\002ip\030\002 \001(\t\022\014\n\004port\030\003 \001(\r\"\342\001\n\rUp" +
+      "DownMessage\022\n\n\002id\030\001 \001(\004\022\013\n\003cid\030\002 \001(\004\022\017\n\007" +
+      "fromUid\030\003 \001(\t\022\021\n\ttargetUid\030\004 \001(\t\022\017\n\007grou" +
+      "pId\030\005 \001(\t\022\020\n\010converId\030\006 \001(\t\0227\n\nconverTyp" +
+      "e\030\007 \001(\0162#.com.raven.common.protos.Conver" +
+      "Type\0228\n\007content\030\010 \001(\0132\'.com.raven.common" +
+      ".protos.MessageContent\"V\n\tHeartBeat\022\n\n\002i" +
+      "d\030\001 \001(\004\022=\n\rheartBeatType\030\002 \001(\0162&.com.rav" +
+      "en.common.protos.HeartBeatType\"\205\001\n\nMessa" +
+      "geAck\022\n\n\002id\030\001 \001(\004\022\013\n\003cid\030\002 \001(\004\022\021\n\ttarget" +
+      "Uid\030\003 \001(\t\022\020\n\010converId\030\004 \001(\t\022\014\n\004time\030\005 \001(" +
+      "\004\022+\n\004code\030\006 \001(\0162\035.com.raven.common.proto" +
+      "s.Code\"|\n\016MessageContent\022\n\n\002id\030\001 \001(\004\022\013\n\003" +
+      "uid\030\002 \001(\t\0222\n\004type\030\003 \001(\0162$.com.raven.comm" +
+      "on.protos.MessageType\022\017\n\007content\030\004 \001(\t\022\014" +
+      "\n\004time\030\005 \001(\004\"?\n\016HisMessagesReq\022\n\n\002id\030\001 \001" +
+      "(\004\022\020\n\010converId\030\002 \001(\t\022\017\n\007beginId\030\003 \001(\004\"\270\001" +
+      "\n\016HisMessagesAck\022\n\n\002id\030\001 \001(\004\022\020\n\010converId" +
+      "\030\002 \001(\t\0225\n\010convType\030\003 \001(\0162#.com.raven.com" +
+      "mon.protos.ConverType\022<\n\013messageList\030\004 \003" +
+      "(\0132\'.com.raven.common.protos.MessageCont" +
+      "ent\022\023\n\013unReadCount\030\005 \001(\004\"e\n\tConverReq\022\n\n" +
+      "\002id\030\001 \001(\004\0224\n\004type\030\002 \001(\0162&.com.raven.comm" +
+      "on.protos.OperationType\022\026\n\016conversationI" +
+      "d\030\003 \001(\t\"\304\001\n\tConverAck\022\n\n\002id\030\001 \001(\004\022+\n\004cod" +
+      "e\030\003 \001(\0162\035.com.raven.common.protos.Code\022\014" +
+      "\n\004time\030\004 \001(\004\0227\n\nconverInfo\030\005 \001(\0132#.com.r" +
+      "aven.common.protos.ConverInfo\0227\n\nconverL" +
+      "ist\030\006 \003(\0132#.com.raven.common.protos.Conv" +
+      "erInfo\"\322\001\n\nConverInfo\022\020\n\010converId\030\001 \001(\t\022" +
+      "1\n\004type\030\002 \001(\0162#.com.raven.common.protos." +
+      "ConverType\022\017\n\007uidList\030\003 \003(\t\022\017\n\007groupId\030\004" +
+      " \001(\t\022\021\n\treadMsgId\030\005 \001(\004\022<\n\013lastContent\030\006" +
+      " \001(\0132\'.com.raven.common.protos.MessageCo" +
+      "ntent\022\014\n\004time\030\007 \001(\004\"\332\001\n\rNotifyMessage\022\n\n" +
+      "\002id\030\001 \001(\004\0221\n\004type\030\002 \001(\0162#.com.raven.comm" +
+      "on.protos.NotifyType\022\021\n\ttargetUid\030\003 \001(\t\022" +
+      "\020\n\010converId\030\004 \001(\t\0225\n\010convType\030\005 \001(\0162#.co" +
+      "m.raven.common.protos.ConverType\022\017\n\007cont" +
+      "ent\030\006 \001(\t\022\014\n\004time\030\007 \001(\004\022\017\n\007fromUid\030\010 \001(\t" +
+      "*#\n\rHeartBeatType\022\010\n\004PING\020\000\022\010\n\004PONG\020\001*\272\001" +
+      "\n\004Code\022\013\n\007SUCCESS\020\000\022\024\n\020CLIENT_ID_REPEAT\020" +
+      "\001\022\027\n\023CONVER_TYPE_INVALID\020\002\022\017\n\013KAFKA_ERRO" +
+      "R\020\003\022\025\n\021CONVER_ID_INVALID\020\004\022\r\n\tNO_TARGET\020" +
+      "\005\022\021\n\rTOKEN_INVALID\020\006\022\020\n\014TOKEN_EXPIRE\020\007\022\032" +
+      "\n\026OPERATION_TYPE_INVALID\020\010*#\n\nConverType" +
+      "\022\n\n\006SINGLE\020\000\022\t\n\005GROUP\020\001*:\n\013MessageType\022\010" +
+      "\n\004TEXT\020\000\022\013\n\007PICTURE\020\001\022\t\n\005VOICE\020\002\022\t\n\005VIDE" +
+      "O\020\003*$\n\rOperationType\022\n\n\006DETAIL\020\000\022\007\n\003ALL\020" +
+      "\001*(\n\nNotifyType\022\010\n\004USER\020\000\022\020\n\014CONVERSATIO" +
+      "N\020\001B\tB\007Messageb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -18170,7 +18042,7 @@ public final class Message {
     internal_static_com_raven_common_protos_Login_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_raven_common_protos_Login_descriptor,
-        new java.lang.String[] { "Id", "Uid", "Token", });
+        new java.lang.String[] { "Id", "Token", });
     internal_static_com_raven_common_protos_LoginAck_descriptor =
       getDescriptor().getMessageTypes().get(2);
     internal_static_com_raven_common_protos_LoginAck_fieldAccessorTable = new

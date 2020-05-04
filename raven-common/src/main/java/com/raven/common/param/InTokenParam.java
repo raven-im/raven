@@ -13,4 +13,6 @@ public class InTokenParam {
     private String appKey;
 
     private String uid;
+
+    private String deviceId;
 }

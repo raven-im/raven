@@ -1,19 +1,15 @@
 package com.raven.client.presure;
 
-import com.raven.common.protos.Message.Code;
-import com.raven.common.protos.Message.HeartBeat;
-import com.raven.common.protos.Message.HeartBeatType;
-import com.raven.common.protos.Message.Login;
-import com.raven.common.protos.Message.LoginAck;
-import com.raven.common.protos.Message.MessageAck;
-import com.raven.common.protos.Message.RavenMessage;
+import com.raven.common.protos.Message.*;
 import com.raven.common.protos.Message.RavenMessage.Type;
-import com.raven.common.protos.Message.UpDownMessage;
 import com.raven.common.utils.JsonHelper;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import java.io.IOException;
 import lombok.extern.slf4j.Slf4j;
+
+import java.io.IOException;
+
+import static com.raven.client.common.Utils.*;
 
 @Slf4j
 public class ClientPressureMemberHandler extends SimpleChannelInboundHandler<RavenMessage> {
@@ -32,28 +28,17 @@ public class ClientPressureMemberHandler extends SimpleChannelInboundHandler<Rav
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws IOException {
         messageConnectionCtx = ctx;
-        sendLogin(ctx, uid);
-    }
-
-    private void sendLogin(ChannelHandlerContext ctx, String uid) {
-        Login login = Login.newBuilder()
-            .setUid(uid)
-            .setId(ClientPressureOwner.snowFlake.nextId())
-            .setToken(token)
-            .build();
-        RavenMessage ravenMessage = RavenMessage.newBuilder().setType(Type.Login).setLogin(login)
-            .build();
-        ctx.writeAndFlush(ravenMessage);
+        sendLogin(ctx, token);
     }
 
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, RavenMessage message)
-        throws Exception {
+    protected void channelRead0(ChannelHandlerContext ctx, RavenMessage message) throws Exception {
         if (message.getType() == Type.LoginAck) {
             LoginAck loginAck = message.getLoginAck();
             if (loginAck.getCode() == Code.SUCCESS) {
                 log.info("uid:{} login success", uid);
             }
+            sendHeartBeat(ctx);
         } else if (message.getType() == Type.MessageAck) {
             MessageAck messageAck = message.getMessageAck();
             log.info("receive message ack:{}", JsonHelper.toJsonString(messageAck));
@@ -61,16 +46,7 @@ public class ClientPressureMemberHandler extends SimpleChannelInboundHandler<Rav
             UpDownMessage upDownMessage = message.getUpDownMessage();
             logAvgTimeDiff(System.currentTimeMillis() - upDownMessage.getContent().getTime());
         } else if (message.getType() == Type.HeartBeat) {
-            HeartBeat heartBeat = message.getHeartBeat();
-            if (heartBeat.getHeartBeatType() == HeartBeatType.PING) {
-                HeartBeat heartBeatAck = HeartBeat.newBuilder()
-                    .setId(heartBeat.getId())
-                    .setHeartBeatType(HeartBeatType.PONG)
-                    .build();
-                RavenMessage ravenMessage = RavenMessage.newBuilder().setType(Type.HeartBeat)
-                    .setHeartBeat(heartBeatAck).build();
-                ctx.writeAndFlush(ravenMessage);
-            }
+            rspHeartBeat(ctx, message.getHeartBeat());
         }
     }
 

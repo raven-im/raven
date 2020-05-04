@@ -7,6 +7,8 @@ package com.raven.common.exception;
  **/
 public class TokenException extends Exception {
 
+    private TokenExceptionType type;
+
     public TokenException(String message, Throwable e) {
         super(message, e);
     }
@@ -15,8 +17,13 @@ public class TokenException extends Exception {
         super(e);
     }
 
-    public TokenException(String message) {
+    public TokenException(String message, TokenExceptionType type) {
         super(message);
+        this.type = type;
+    }
+
+    public TokenExceptionType getType() {
+        return type;
     }
 
     @Override

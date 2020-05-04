@@ -4,7 +4,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.raven.client.group.bean.GroupOutParam;
 import com.raven.client.group.bean.GroupReqParam;
 import com.raven.common.param.OutGatewaySiteInfoParam;
+import com.raven.common.protos.Message;
 import com.raven.common.utils.JsonHelper;
+import com.raven.common.utils.SnowFlake;
+import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.http.HttpEntity;
@@ -17,13 +20,17 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static com.raven.common.utils.Constants.*;
 
 @Slf4j
 public class Utils {
 
+    public static final long CLIENT_HEART_BEAT = 15 * 1000L;
     public static final HttpClient httpClient;
+    public static SnowFlake snowFlake = new SnowFlake(1, 2);
 
     public static final ResponseHandler<String> responseHandler = (response) -> {
         int status = response.getStatusLine().getStatusCode();
@@ -65,8 +72,8 @@ public class Utils {
         return null;
     }
 
-    public static String getToken(String uid) {
-        HttpGet httpGet = new HttpGet("http://127.0.0.1:8010/gateway/token?uid=" + uid);
+    public static String getToken(String uid, String device) {
+        HttpGet httpGet = new HttpGet("http://127.0.0.1:8010/access/token?uid=" + uid + "&deviceId=" + device);
         addAuthHeader(httpGet);
         String token = null;
         try {
@@ -82,7 +89,7 @@ public class Utils {
     }
 
     public static OutGatewaySiteInfoParam getGatewaySite(String token) {
-        HttpGet httpGet = new HttpGet("http://localhost:8010/gateway/socket");
+        HttpGet httpGet = new HttpGet("http://localhost:8010/access/socket");
         addAuthHeader(httpGet);
         httpGet.addHeader("Token", token);
         OutGatewaySiteInfoParam outParam = new OutGatewaySiteInfoParam();
@@ -108,5 +115,41 @@ public class Utils {
         String toSign = "aX7-E5ZyTGEkvTWQgJpMog" + "abc" + timestamp;
         String sign = DigestUtils.sha1Hex(toSign);
         httpGet.addHeader(AUTH_SIGNATURE, sign);
+    }
+
+    public static void sendLogin(ChannelHandlerContext ctx, String token) {
+        Message.Login login = Message.Login.newBuilder()
+                .setId(snowFlake.nextId())
+                .setToken(token)
+                .build();
+        Message.RavenMessage ravenMessage = Message.RavenMessage.newBuilder()
+                .setType(Message.RavenMessage.Type.Login)
+                .setLogin(login)
+                .build();
+        ctx.writeAndFlush(ravenMessage);
+    }
+
+    public static void sendHeartBeat(ChannelHandlerContext ctx) {
+        Message.HeartBeat heartBeat = Message.HeartBeat.newBuilder()
+                .setId(snowFlake.nextId())
+                .setHeartBeatType(Message.HeartBeatType.PING)
+                .build();
+        Message.RavenMessage ravenMessage = Message.RavenMessage.newBuilder()
+                .setType(Message.RavenMessage.Type.HeartBeat)
+                .setHeartBeat(heartBeat)
+                .build();
+        ctx.writeAndFlush(ravenMessage);
+    }
+
+    public static void rspHeartBeat(ChannelHandlerContext ctx, Message.HeartBeat heartBeat) {
+        log.info("receive heartbeat PONG {}", heartBeat.getId());
+        if (heartBeat.getHeartBeatType() == Message.HeartBeatType.PONG) {
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    sendHeartBeat(ctx);
+                }
+            }, CLIENT_HEART_BEAT);
+        }
     }
 }

@@ -40,8 +40,6 @@ public class ClientOwnerHandler extends SimpleChannelInboundHandler<RavenMessage
                 sendHeartBeat(ctx);
                 Thread.sleep(1000);
                 MessageContent content = MessageContent.newBuilder()
-                        .setId(snowFlake.nextId())
-                        .setUid(uid)
                         .setTime(System.currentTimeMillis())
                         .setType(MessageType.TEXT)
                         .setContent("hello world.")
@@ -49,7 +47,7 @@ public class ClientOwnerHandler extends SimpleChannelInboundHandler<RavenMessage
                 UpDownMessage msg = UpDownMessage.newBuilder()
                         .setCid(snowFlake.nextId())
                         .setFromUid(uid)
-                        .setGroupId(groupId)
+                        .setTargetUid(groupId)
                         .setConverType(ConverType.GROUP)
                         .setContent(content)
                         .build();

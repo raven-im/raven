@@ -2,7 +2,7 @@ package com.raven.route.message.processor;
 
 import com.raven.common.dubbo.AccessService;
 import com.raven.common.protos.Message.RavenMessage;
-import com.raven.common.protos.Message.UpDownMessage;
+import com.raven.common.protos.Message.SSMessage;
 import com.raven.common.utils.Constants;
 import com.raven.common.utils.JsonHelper;
 import com.raven.route.config.KafkaProducerManager;
@@ -28,15 +28,16 @@ public class SingleMessageProcessor implements Runnable {
     public void run() {
         RavenMessage.Builder builder = RavenMessage.newBuilder();
         JsonHelper.readValue(message, builder);
-        UpDownMessage upDownMessage = builder.getUpDownMessage();
+        SSMessage ssMessage = builder.getSsMessage();
 
         //TODO  发单聊的时候，  API 只能发到 二人中的一个， 一般是conversation建立起来的时候的targetUid.
         //send to kafka
-        kafka.send(Constants.KAFKA_TOPIC_SINGLE_MSG, upDownMessage.getConverId(), message);
+        //以targetUid为序，保证同一个会话有序
+        kafka.send(Constants.KAFKA_TOPIC_SINGLE_MSG, ssMessage.getConvId(), message);
 
         //route to target access server.
-        List<String> uidList = converManager.getUidListByConverExcludeSender(upDownMessage.getConverId(),
-                upDownMessage.getFromUid());
+        List<String> uidList = converManager.getUidListByConverExcludeSender(ssMessage.getConvId(),
+                ssMessage.getFromUid());
         for (String uid : uidList) {
             // use uid for consistency hash, find a access server, and send it.
             accessService.outboundMsgSend(uid, message);

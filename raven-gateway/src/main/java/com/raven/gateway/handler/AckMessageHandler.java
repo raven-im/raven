@@ -32,8 +32,8 @@ public class AckMessageHandler extends SimpleChannelInboundHandler<RavenMessage>
             log.info("receive ack message:{}", JsonHelper.toJsonString(messageAck));
             String uid = uidChannelManager.getUidByChannel(ctx.channel());
             //TODO ??
-            converManager.delWaitUserAckMsg(uid, messageAck.getConverId(), messageAck.getId());
-            converManager.updateUserReadMessageId(uid,messageAck.getConverId(), messageAck.getId());
+//            converManager.delWaitUserAckMsg(uid, messageAck.getConverId(), messageAck.getId());
+//            converManager.updateUserReadMessageId(uid,messageAck.getConverId(), messageAck.getId());
         } else {
             ctx.fireChannelRead(msg);
         }

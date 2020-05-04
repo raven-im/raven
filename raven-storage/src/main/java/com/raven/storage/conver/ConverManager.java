@@ -33,22 +33,19 @@ public class ConverManager {
     }
 
     public String newSingleConverId(String fromUid, String toUid) {
+        // fromUid 和 toUid总会比较大小，所以创建出来的conversation id总唯一，无论是两方谁创建。
         String converId = UidUtil.uuid24By2Factor(fromUid, toUid);
         Set<String> uidList = new HashSet<>();
         uidList.add(fromUid);
         uidList.add(toUid);
-        Conversation conversation = new Conversation().builder().id(converId)
+        Conversation conversation = Conversation.builder()
+                .id(converId)
                 .type(ConverType.SINGLE.getNumber())
                 .time(System.currentTimeMillis())
-                .uidList(new ArrayList<>(uidList)).build();
-        boolean result = redisTemplate.opsForValue()
-                .setIfAbsent(converId, JsonHelper.toJsonString(conversation));
-        if (result) {
-            redisTemplate.boundHashOps(PREFIX_CONVERSATION_LIST + fromUid)
-                    .put(converId, Long.MIN_VALUE);
-            redisTemplate.boundHashOps(PREFIX_CONVERSATION_LIST + toUid)
-                    .put(converId, Long.MIN_VALUE);
-        }
+                .uidList(new ArrayList<>(uidList))
+                .build();
+        //setIfAbsent 保证并发情况
+        redisTemplate.opsForValue().setIfAbsent(converId, JsonHelper.toJsonString(conversation));
         return converId;
     }
 
@@ -100,13 +97,12 @@ public class ConverManager {
 
     public boolean isSingleConverIdValid(String converId) {
         Conversation conversation = getConversation(converId);
-        return conversation == null ? false
-                : conversation.getType() == ConverType.SINGLE.getNumber();
+        return conversation != null && conversation.getType() == ConverType.SINGLE.getNumber();
     }
 
     public String getGroupIdByConverId(String converId) {
         Conversation conversation = getConversation(converId);
-        if (conversation == null ? false : conversation.getType() == ConverType.GROUP.getNumber()) {
+        if (conversation != null && conversation.getType() == ConverType.GROUP.getNumber()) {
             return conversation.getGroupId();
         }
         return null;
@@ -264,8 +260,6 @@ public class ConverManager {
                 MsgContent msgContent = JsonHelper
                         .readValue(messages.iterator().next(), MsgContent.class);
                 MessageContent content = MessageContent.newBuilder()
-                        .setId(msgContent.getId())
-                        .setUid(msgContent.getUid())
                         .setContent(msgContent.getContent())
                         .setTime(msgContent.getTime())
                         .setType(MessageType.valueOf(msgContent.getType())).build();
@@ -276,7 +270,6 @@ public class ConverManager {
                         .setTargetUid(uid)
                         .setConverType(ConverType.forNumber(conversation.getType()))
                         .setContent(content)
-                        .setConverId(converId)
                         .build();
                 upDownMessages.add(downMessage);
             }

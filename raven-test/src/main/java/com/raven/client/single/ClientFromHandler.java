@@ -43,20 +43,23 @@ public class ClientFromHandler extends SimpleChannelInboundHandler<RavenMessage>
                 sendHeartBeat(ctx);
                 for (String toUid : toUidList) {
                     Thread.sleep(1000);
-                    MessageContent content = MessageContent.newBuilder().setUid(uid)
+                    MessageContent content = MessageContent.newBuilder()
                             .setType(MessageType.TEXT)
-                            .setContent("hello world").build();
+                            .setContent("hello world")
+                            .build();
                     long cid = snowFlake.nextId();
                     UpDownMessage upDownMessage = UpDownMessage.newBuilder()
                             .setCid(cid)
                             .setFromUid(uid)
                             .setTargetUid(toUid)
                             .setConverType(ConverType.SINGLE)
-                            .setContent(content).build();
+                            .setContent(content)
+                            .build();
                     RavenMessage ravenMessage = RavenMessage.newBuilder()
                             .setType(Type.UpDownMessage)
-                            .setUpDownMessage(upDownMessage).build();
-                    log.info("send message cid :{}", cid);
+                            .setUpDownMessage(upDownMessage)
+                            .build();
+                    log.info("send message :{}", JsonHelper.toJsonString(upDownMessage));
                     ctx.writeAndFlush(ravenMessage);
                 }
             }
@@ -64,19 +67,6 @@ public class ClientFromHandler extends SimpleChannelInboundHandler<RavenMessage>
         if (message.getType() == Type.MessageAck) {
             MessageAck messageAck = message.getMessageAck();
             log.info("receive message ack:{}", JsonHelper.toJsonString(messageAck));
-        }
-        if (message.getType() == Type.UpDownMessage) {
-            UpDownMessage upDownMessage = message.getUpDownMessage();
-            log.info("receive down message:{}", JsonHelper.toJsonString(upDownMessage));
-            MessageAck messageAck = MessageAck.newBuilder()
-                    .setId(upDownMessage.getId())
-                    .setConverId(upDownMessage.getConverId())
-                    .setCode(Code.SUCCESS)
-                    .setTime(System.currentTimeMillis())
-                    .build();
-            RavenMessage ravenMessage = RavenMessage.newBuilder().setType(Type.MessageAck)
-                    .setMessageAck(messageAck).build();
-            ctx.writeAndFlush(ravenMessage);
         }
         if (message.getType() == Type.HeartBeat) {
             rspHeartBeat(ctx, message.getHeartBeat());

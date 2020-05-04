@@ -48,7 +48,6 @@ public class ClientToHandler extends SimpleChannelInboundHandler<RavenMessage> {
             log.info("receive down message:{}", JsonHelper.toJsonString(upDownMessage));
             MessageAck messageAck = MessageAck.newBuilder()
                     .setId(upDownMessage.getId())
-                    .setConverId(upDownMessage.getConverId())
                     .setCode(Code.SUCCESS)
                     .setTime(System.currentTimeMillis())
                     .build();

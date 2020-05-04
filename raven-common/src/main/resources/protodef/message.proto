@@ -9,29 +9,27 @@ message RavenMessage {
   oneof data {
     Login login = 2;
     LoginAck loginAck = 3;
-    ServerInfo serverInfo = 4;
-    UpDownMessage upDownMessage = 5;
-    HeartBeat heartBeat = 6;
-    MessageAck messageAck = 7;
-    HisMessagesReq hisMessagesReq = 8;
-    HisMessagesAck hisMessagesAck = 9;
-    NotifyMessage notifyMessage = 10;
-    ConverReq converReq = 11;
-    ConverAck converAck = 12;
+    UpDownMessage upDownMessage = 4;
+    HeartBeat heartBeat = 5;
+    MessageAck messageAck = 6;
+    HisMessagesReq hisMessagesReq = 7;
+    HisMessagesAck hisMessagesAck = 8;
+    ConverReq converReq = 9;
+    ConverAck converAck = 10;
+    SSMessage ssMessage = 11;
   }
 
   enum Type {
     Login = 0;
     LoginAck = 1;
-    ServerInfo = 2;
-    UpDownMessage = 3;
-    HeartBeat = 4;
-    MessageAck = 5;
-    HisMessagesReq = 6;
-    HisMessagesAck = 7;
-    NotifyMessage = 8;
-    ConverReq = 9;
-    ConverAck = 10;
+    UpDownMessage = 2;
+    HeartBeat = 3;
+    MessageAck = 4;
+    HisMessagesReq = 5;
+    HisMessagesAck = 6;
+    ConverReq = 7;
+    ConverAck = 8;
+    SSMessage = 9;
   }
 }
 
@@ -43,26 +41,27 @@ message Login {
 message LoginAck {
   uint64 id = 1; //消息ID
   Code code = 2; //返回码
-  string msg = 3; //描述
-  uint64 time = 4; //消息时间
+  uint64 time = 3; //消息时间
 }
 
-message ServerInfo {
-  uint64 id = 1; //消息ID
-  string ip = 2;
-  uint32 port = 3;
-}
-
-// 上下行消息
+// 客户端至服务器，上下行消息
 message UpDownMessage {
   uint64 id = 1; // 服务端消息ID
-  uint64 cid = 2; // 客户端消息ID
+  uint64 cid = 2; // 客户端消息ID，上行CS需要，下行SC不需要
   string fromUid = 3; // 发送人ID
-  string targetUid = 4; // 接收人ID
-  string groupId = 5; //  群ID
-  string converId = 6; // 会话id
-  ConverType converType = 7; // 会话类型
-  MessageContent content = 8; // 内容
+  string targetUid = 4; // 单聊为接收者id, 群聊为group id
+  ConverType converType = 5; // 会话类型
+  MessageContent content = 6; // 内容
+}
+
+// 服务器至服务器消息，用于RPC通讯
+message SSMessage {
+  uint64 id = 1; // 服务端消息ID
+  string appKey = 2; // 应用信息
+  string fromUid = 3; // 发送人ID
+  string convId = 4; // 会话id
+  ConverType converType = 5; // 会话类型
+  MessageContent content = 6; // 内容
 }
 
 // 心跳
@@ -80,10 +79,8 @@ enum HeartBeatType {
 message MessageAck {
   uint64 id = 1; // 服务端消息ID
   uint64 cid = 2; // 客户端消息ID
-  string targetUid = 3; // 接收人ID
-  string converId = 4; // 会话id
-  uint64 time = 5; // 发送时间
-  Code code = 6; // 返回码
+  uint64 time = 3; // 发送时间
+  Code code = 4; // 返回码
 }
 
 enum Code {
@@ -96,7 +93,6 @@ enum Code {
   TOKEN_INVALID = 6;
   TOKEN_EXPIRE = 7;
   OPERATION_TYPE_INVALID = 8;
-
 }
 
 // 会话类型
@@ -107,11 +103,9 @@ enum ConverType {
 
 // 消息内容
 message MessageContent {
-  uint64 id = 1; // 消息ID
-  string uid = 2; // 发送方uid
-  MessageType type = 3;
-  string content = 4; // 内容
-  uint64 time = 5; // 消息时间
+  MessageType type = 1;
+  string content = 2; // 内容
+  uint64 time = 3; // 消息时间
 }
 
 // 消息类型
@@ -168,21 +162,4 @@ message ConverInfo {
   uint64 readMsgId = 5; // 已读消息ID
   MessageContent lastContent = 6; // 最后一条消息
   uint64 time = 7; // 会话创建时间
-}
-
-enum NotifyType {
-  USER = 0; //通知到用户
-  CONVERSATION = 1; //通知到会话
-}
-
-//通知消息
-message NotifyMessage {
-  uint64 id = 1; //消息ID
-  NotifyType type = 2; // 通知类型
-  string targetUid = 3; // 接收id
-  string converId = 4; // 若为通知到会话，提供会话id.
-  ConverType convType = 5; // 若为通知到会话，提供会话类型.
-  string content = 6; // 通知内容
-  uint64 time = 7; //消息时间
-  string fromUid = 8; //以谁的身份发送
 }

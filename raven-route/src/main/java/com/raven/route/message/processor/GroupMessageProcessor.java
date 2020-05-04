@@ -33,10 +33,10 @@ public class GroupMessageProcessor implements Runnable {
 
         //send to kafka
         // same conversation to same partition, keep the sequence in a conversation.
-        kafka.send(Constants.KAFKA_TOPIC_GROUP_MSG, upDownMessage.getConverId(), message);
+        kafka.send(Constants.KAFKA_TOPIC_GROUP_MSG, upDownMessage.getTargetUid(), message);
 
         //route to target access server.
-        List<String> uidList = converManager.getUidListByConverExcludeSender(upDownMessage.getConverId(), upDownMessage.getFromUid());
+        List<String> uidList = converManager.getUidListByConverExcludeSender(upDownMessage.getTargetUid(), upDownMessage.getFromUid());
         for (String uid : uidList) {
             UpDownMessage downMessage = UpDownMessage.newBuilder()
                     .mergeFrom(upDownMessage)

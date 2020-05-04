@@ -112,8 +112,7 @@ public class ConversationHandler extends SimpleChannelInboundHandler<RavenMessag
         }
         MsgContent msgContent = userConversation.getLastContent();
         if (msgContent != null) {
-            MessageContent content = MessageContent.newBuilder().setId(msgContent.getId())
-                .setUid(msgContent.getUid())
+            MessageContent content = MessageContent.newBuilder()
                 .setType(MessageType.valueOf(msgContent.getType()))
                 .setContent(msgContent.getContent())
                 .setTime(msgContent.getTime())

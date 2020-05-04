@@ -38,8 +38,7 @@ public class HistoryHandler extends SimpleChannelInboundHandler<RavenMessage> {
                 .getHistoryMsg(req.getConverId(), req.getBeginId());
             List<MessageContent> contentList = new ArrayList<>();
             for (MsgContent msgContent : msgContents) {
-                MessageContent content = MessageContent.newBuilder().setId(msgContent.getId())
-                    .setUid(msgContent.getUid())
+                MessageContent content = MessageContent.newBuilder()
                     .setContent(msgContent.getContent()).setTime(msgContent.getTime()).setType(
                         MessageType.valueOf(msgContent.getType())).build();
                 contentList.add(content);

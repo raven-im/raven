@@ -49,7 +49,7 @@ public class MessageServiceImpl implements MessagesService {
                 type = ConverType.SINGLE;
             }
             long id = snowFlake.nextId();
-            RavenMessage ravenMessage = buildMessage(param, id, type, convId);
+            RavenMessage ravenMessage = buildMessage(param, id, type);
             if (sendMsg(ravenMessage, type, id)) {
                 return Result.success(id);
             } else {
@@ -78,11 +78,9 @@ public class MessageServiceImpl implements MessagesService {
         return true;
     }
 
-    private RavenMessage buildMessage(ReqMsgParam param, long msgId, ConverType type, String convId) {
+    private RavenMessage buildMessage(ReqMsgParam param, long msgId, ConverType type) {
         MessageContent content = MessageContent.newBuilder()
-                .setId(msgId)
                 .setType(MessageType.TEXT) //TODO  server api only support text message now.
-                .setUid(param.getFromUid())
                 .setContent(param.getContent())
                 .setTime(System.currentTimeMillis()).build();
         UpDownMessage upMessage = UpDownMessage.newBuilder().setId(msgId)
@@ -90,9 +88,7 @@ public class MessageServiceImpl implements MessagesService {
                 .setFromUid(param.getFromUid())
                 .setTargetUid(param.getTargetUid())
                 .setContent(content)
-                .setConverId(convId)
                 .setConverType(type)
-//            .setGroupId(upDownMessage.getGroupId())
                 .build();
         return RavenMessage.newBuilder().setType(Type.UpDownMessage)
                 .setUpDownMessage(upMessage).build();

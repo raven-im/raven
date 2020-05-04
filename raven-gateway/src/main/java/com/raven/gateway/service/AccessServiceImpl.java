@@ -3,6 +3,7 @@ package com.raven.gateway.service;
 import com.raven.common.dubbo.AccessService;
 import com.raven.common.netty.IdChannelManager;
 import com.raven.common.protos.Message.RavenMessage;
+import com.raven.common.protos.Message.SSMessage;
 import com.raven.common.protos.Message.UpDownMessage;
 import com.raven.common.utils.JsonHelper;
 import io.netty.channel.Channel;
@@ -35,24 +36,22 @@ public class AccessServiceImpl implements AccessService {
     public void outboundMsgSend(String uid, String msg) {
         RavenMessage.Builder builder = RavenMessage.newBuilder();
         JsonHelper.readValue(msg, builder);
-        UpDownMessage downMessage = builder.getUpDownMessage();
+        SSMessage downMessage = builder.getSsMessage();
 
         log.info("receive down message:{}", JsonHelper.toJsonString(downMessage));
         //TODO ??
-        List<Channel> channels = uidChannelManager.getChannelsByUid(downMessage.getTargetUid());
+        String key = downMessage.getAppKey() + DEFAULT_SEPARATOR + uid;
+        List<Channel> channels = uidChannelManager.getChannelsByUid(key);
         if (channels.isEmpty()) {
             //TODO  new router, maybe response with 304 to relocate the access server.   maybe re-create the hash ring.
-            log.error("no channel match {}, maybe caused by bad routing.", downMessage.getTargetUid());
+            log.error("no channel match {}, maybe caused by bad routing.", key);
             return;
         }
-        RavenMessage ravenMessage = RavenMessage.newBuilder()
-                .setType(RavenMessage.Type.UpDownMessage)
-                .setUpDownMessage(downMessage)
-                .build();
+        RavenMessage ravenMessage = buildRavenMessage(downMessage, uid);
         for (Channel channel : channels) {
             channel.writeAndFlush(ravenMessage).addListener(future -> {
                 if (!future.isSuccess()) {
-                    log.error("push msg to uid:{} fail", downMessage.getTargetUid());
+                    log.error("push msg to uid:{} fail", key);
                     channel.close();
                 }
             });
@@ -64,5 +63,19 @@ public class AccessServiceImpl implements AccessService {
         String accessNode = ip + DEFAULT_SEPARATOR + tcpPort + DEFAULT_SEPARATOR + wsPort;
         log.info("uid[{}] access node: {}", uid, accessNode);
         return accessNode;
+    }
+
+    private RavenMessage buildRavenMessage(SSMessage ssMessage, String targetUid) {
+        UpDownMessage message = UpDownMessage.newBuilder()
+                .setId(ssMessage.getId())
+                .setFromUid(ssMessage.getFromUid())
+                .setTargetUid(targetUid)
+                .setConverType(ssMessage.getConverType())
+                .setContent(ssMessage.getContent())
+                .build();
+        return RavenMessage.newBuilder()
+                .setType(RavenMessage.Type.UpDownMessage)
+                .setUpDownMessage(message)
+                .build();
     }
 }

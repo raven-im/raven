@@ -593,120 +593,6 @@ public final class Message {
     // @@protoc_insertion_point(enum_scope:com.raven.common.protos.OperationType)
   }
 
-  /**
-   * Protobuf enum {@code com.raven.common.protos.NotifyType}
-   */
-  public enum NotifyType
-      implements com.google.protobuf.ProtocolMessageEnum {
-    /**
-     * <pre>
-     *通知到用户
-     * </pre>
-     *
-     * <code>USER = 0;</code>
-     */
-    USER(0),
-    /**
-     * <pre>
-     *通知到会话
-     * </pre>
-     *
-     * <code>CONVERSATION = 1;</code>
-     */
-    CONVERSATION(1),
-    UNRECOGNIZED(-1),
-    ;
-
-    /**
-     * <pre>
-     *通知到用户
-     * </pre>
-     *
-     * <code>USER = 0;</code>
-     */
-    public static final int USER_VALUE = 0;
-    /**
-     * <pre>
-     *通知到会话
-     * </pre>
-     *
-     * <code>CONVERSATION = 1;</code>
-     */
-    public static final int CONVERSATION_VALUE = 1;
-
-
-    public final int getNumber() {
-      if (this == UNRECOGNIZED) {
-        throw new java.lang.IllegalArgumentException(
-            "Can't get the number of an unknown enum value.");
-      }
-      return value;
-    }
-
-    /**
-     * @deprecated Use {@link #forNumber(int)} instead.
-     */
-    @java.lang.Deprecated
-    public static NotifyType valueOf(int value) {
-      return forNumber(value);
-    }
-
-    public static NotifyType forNumber(int value) {
-      switch (value) {
-        case 0: return USER;
-        case 1: return CONVERSATION;
-        default: return null;
-      }
-    }
-
-    public static com.google.protobuf.Internal.EnumLiteMap<NotifyType>
-        internalGetValueMap() {
-      return internalValueMap;
-    }
-    private static final com.google.protobuf.Internal.EnumLiteMap<
-        NotifyType> internalValueMap =
-          new com.google.protobuf.Internal.EnumLiteMap<NotifyType>() {
-            public NotifyType findValueByNumber(int number) {
-              return NotifyType.forNumber(number);
-            }
-          };
-
-    public final com.google.protobuf.Descriptors.EnumValueDescriptor
-        getValueDescriptor() {
-      return getDescriptor().getValues().get(ordinal());
-    }
-    public final com.google.protobuf.Descriptors.EnumDescriptor
-        getDescriptorForType() {
-      return getDescriptor();
-    }
-    public static final com.google.protobuf.Descriptors.EnumDescriptor
-        getDescriptor() {
-      return com.raven.common.protos.Message.getDescriptor().getEnumTypes().get(5);
-    }
-
-    private static final NotifyType[] VALUES = values();
-
-    public static NotifyType valueOf(
-        com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-      if (desc.getType() != getDescriptor()) {
-        throw new java.lang.IllegalArgumentException(
-          "EnumValueDescriptor is not for this type.");
-      }
-      if (desc.getIndex() == -1) {
-        return UNRECOGNIZED;
-      }
-      return VALUES[desc.getIndex()];
-    }
-
-    private final int value;
-
-    private NotifyType(int value) {
-      this.value = value;
-    }
-
-    // @@protoc_insertion_point(enum_scope:com.raven.common.protos.NotifyType)
-  }
-
   public interface RavenMessageOrBuilder extends
       // @@protoc_insertion_point(interface_extends:com.raven.common.protos.RavenMessage)
       com.google.protobuf.MessageOrBuilder {
@@ -747,121 +633,108 @@ public final class Message {
     com.raven.common.protos.Message.LoginAckOrBuilder getLoginAckOrBuilder();
 
     /**
-     * <code>.com.raven.common.protos.ServerInfo serverInfo = 4;</code>
-     */
-    boolean hasServerInfo();
-    /**
-     * <code>.com.raven.common.protos.ServerInfo serverInfo = 4;</code>
-     */
-    com.raven.common.protos.Message.ServerInfo getServerInfo();
-    /**
-     * <code>.com.raven.common.protos.ServerInfo serverInfo = 4;</code>
-     */
-    com.raven.common.protos.Message.ServerInfoOrBuilder getServerInfoOrBuilder();
-
-    /**
-     * <code>.com.raven.common.protos.UpDownMessage upDownMessage = 5;</code>
+     * <code>.com.raven.common.protos.UpDownMessage upDownMessage = 4;</code>
      */
     boolean hasUpDownMessage();
     /**
-     * <code>.com.raven.common.protos.UpDownMessage upDownMessage = 5;</code>
+     * <code>.com.raven.common.protos.UpDownMessage upDownMessage = 4;</code>
      */
     com.raven.common.protos.Message.UpDownMessage getUpDownMessage();
     /**
-     * <code>.com.raven.common.protos.UpDownMessage upDownMessage = 5;</code>
+     * <code>.com.raven.common.protos.UpDownMessage upDownMessage = 4;</code>
      */
     com.raven.common.protos.Message.UpDownMessageOrBuilder getUpDownMessageOrBuilder();
 
     /**
-     * <code>.com.raven.common.protos.HeartBeat heartBeat = 6;</code>
+     * <code>.com.raven.common.protos.HeartBeat heartBeat = 5;</code>
      */
     boolean hasHeartBeat();
     /**
-     * <code>.com.raven.common.protos.HeartBeat heartBeat = 6;</code>
+     * <code>.com.raven.common.protos.HeartBeat heartBeat = 5;</code>
      */
     com.raven.common.protos.Message.HeartBeat getHeartBeat();
     /**
-     * <code>.com.raven.common.protos.HeartBeat heartBeat = 6;</code>
+     * <code>.com.raven.common.protos.HeartBeat heartBeat = 5;</code>
      */
     com.raven.common.protos.Message.HeartBeatOrBuilder getHeartBeatOrBuilder();
 
     /**
-     * <code>.com.raven.common.protos.MessageAck messageAck = 7;</code>
+     * <code>.com.raven.common.protos.MessageAck messageAck = 6;</code>
      */
     boolean hasMessageAck();
     /**
-     * <code>.com.raven.common.protos.MessageAck messageAck = 7;</code>
+     * <code>.com.raven.common.protos.MessageAck messageAck = 6;</code>
      */
     com.raven.common.protos.Message.MessageAck getMessageAck();
     /**
-     * <code>.com.raven.common.protos.MessageAck messageAck = 7;</code>
+     * <code>.com.raven.common.protos.MessageAck messageAck = 6;</code>
      */
     com.raven.common.protos.Message.MessageAckOrBuilder getMessageAckOrBuilder();
 
     /**
-     * <code>.com.raven.common.protos.HisMessagesReq hisMessagesReq = 8;</code>
+     * <code>.com.raven.common.protos.HisMessagesReq hisMessagesReq = 7;</code>
      */
     boolean hasHisMessagesReq();
     /**
-     * <code>.com.raven.common.protos.HisMessagesReq hisMessagesReq = 8;</code>
+     * <code>.com.raven.common.protos.HisMessagesReq hisMessagesReq = 7;</code>
      */
     com.raven.common.protos.Message.HisMessagesReq getHisMessagesReq();
     /**
-     * <code>.com.raven.common.protos.HisMessagesReq hisMessagesReq = 8;</code>
+     * <code>.com.raven.common.protos.HisMessagesReq hisMessagesReq = 7;</code>
      */
     com.raven.common.protos.Message.HisMessagesReqOrBuilder getHisMessagesReqOrBuilder();
 
     /**
-     * <code>.com.raven.common.protos.HisMessagesAck hisMessagesAck = 9;</code>
+     * <code>.com.raven.common.protos.HisMessagesAck hisMessagesAck = 8;</code>
      */
     boolean hasHisMessagesAck();
     /**
-     * <code>.com.raven.common.protos.HisMessagesAck hisMessagesAck = 9;</code>
+     * <code>.com.raven.common.protos.HisMessagesAck hisMessagesAck = 8;</code>
      */
     com.raven.common.protos.Message.HisMessagesAck getHisMessagesAck();
     /**
-     * <code>.com.raven.common.protos.HisMessagesAck hisMessagesAck = 9;</code>
+     * <code>.com.raven.common.protos.HisMessagesAck hisMessagesAck = 8;</code>
      */
     com.raven.common.protos.Message.HisMessagesAckOrBuilder getHisMessagesAckOrBuilder();
 
     /**
-     * <code>.com.raven.common.protos.NotifyMessage notifyMessage = 10;</code>
-     */
-    boolean hasNotifyMessage();
-    /**
-     * <code>.com.raven.common.protos.NotifyMessage notifyMessage = 10;</code>
-     */
-    com.raven.common.protos.Message.NotifyMessage getNotifyMessage();
-    /**
-     * <code>.com.raven.common.protos.NotifyMessage notifyMessage = 10;</code>
-     */
-    com.raven.common.protos.Message.NotifyMessageOrBuilder getNotifyMessageOrBuilder();
-
-    /**
-     * <code>.com.raven.common.protos.ConverReq converReq = 11;</code>
+     * <code>.com.raven.common.protos.ConverReq converReq = 9;</code>
      */
     boolean hasConverReq();
     /**
-     * <code>.com.raven.common.protos.ConverReq converReq = 11;</code>
+     * <code>.com.raven.common.protos.ConverReq converReq = 9;</code>
      */
     com.raven.common.protos.Message.ConverReq getConverReq();
     /**
-     * <code>.com.raven.common.protos.ConverReq converReq = 11;</code>
+     * <code>.com.raven.common.protos.ConverReq converReq = 9;</code>
      */
     com.raven.common.protos.Message.ConverReqOrBuilder getConverReqOrBuilder();
 
     /**
-     * <code>.com.raven.common.protos.ConverAck converAck = 12;</code>
+     * <code>.com.raven.common.protos.ConverAck converAck = 10;</code>
      */
     boolean hasConverAck();
     /**
-     * <code>.com.raven.common.protos.ConverAck converAck = 12;</code>
+     * <code>.com.raven.common.protos.ConverAck converAck = 10;</code>
      */
     com.raven.common.protos.Message.ConverAck getConverAck();
     /**
-     * <code>.com.raven.common.protos.ConverAck converAck = 12;</code>
+     * <code>.com.raven.common.protos.ConverAck converAck = 10;</code>
      */
     com.raven.common.protos.Message.ConverAckOrBuilder getConverAckOrBuilder();
+
+    /**
+     * <code>.com.raven.common.protos.SSMessage ssMessage = 11;</code>
+     */
+    boolean hasSsMessage();
+    /**
+     * <code>.com.raven.common.protos.SSMessage ssMessage = 11;</code>
+     */
+    com.raven.common.protos.Message.SSMessage getSsMessage();
+    /**
+     * <code>.com.raven.common.protos.SSMessage ssMessage = 11;</code>
+     */
+    com.raven.common.protos.Message.SSMessageOrBuilder getSsMessageOrBuilder();
 
     public com.raven.common.protos.Message.RavenMessage.DataCase getDataCase();
   }
@@ -940,22 +813,8 @@ public final class Message {
               break;
             }
             case 34: {
-              com.raven.common.protos.Message.ServerInfo.Builder subBuilder = null;
-              if (dataCase_ == 4) {
-                subBuilder = ((com.raven.common.protos.Message.ServerInfo) data_).toBuilder();
-              }
-              data_ =
-                  input.readMessage(com.raven.common.protos.Message.ServerInfo.parser(), extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom((com.raven.common.protos.Message.ServerInfo) data_);
-                data_ = subBuilder.buildPartial();
-              }
-              dataCase_ = 4;
-              break;
-            }
-            case 42: {
               com.raven.common.protos.Message.UpDownMessage.Builder subBuilder = null;
-              if (dataCase_ == 5) {
+              if (dataCase_ == 4) {
                 subBuilder = ((com.raven.common.protos.Message.UpDownMessage) data_).toBuilder();
               }
               data_ =
@@ -964,12 +823,12 @@ public final class Message {
                 subBuilder.mergeFrom((com.raven.common.protos.Message.UpDownMessage) data_);
                 data_ = subBuilder.buildPartial();
               }
-              dataCase_ = 5;
+              dataCase_ = 4;
               break;
             }
-            case 50: {
+            case 42: {
               com.raven.common.protos.Message.HeartBeat.Builder subBuilder = null;
-              if (dataCase_ == 6) {
+              if (dataCase_ == 5) {
                 subBuilder = ((com.raven.common.protos.Message.HeartBeat) data_).toBuilder();
               }
               data_ =
@@ -978,12 +837,12 @@ public final class Message {
                 subBuilder.mergeFrom((com.raven.common.protos.Message.HeartBeat) data_);
                 data_ = subBuilder.buildPartial();
               }
-              dataCase_ = 6;
+              dataCase_ = 5;
               break;
             }
-            case 58: {
+            case 50: {
               com.raven.common.protos.Message.MessageAck.Builder subBuilder = null;
-              if (dataCase_ == 7) {
+              if (dataCase_ == 6) {
                 subBuilder = ((com.raven.common.protos.Message.MessageAck) data_).toBuilder();
               }
               data_ =
@@ -992,12 +851,12 @@ public final class Message {
                 subBuilder.mergeFrom((com.raven.common.protos.Message.MessageAck) data_);
                 data_ = subBuilder.buildPartial();
               }
-              dataCase_ = 7;
+              dataCase_ = 6;
               break;
             }
-            case 66: {
+            case 58: {
               com.raven.common.protos.Message.HisMessagesReq.Builder subBuilder = null;
-              if (dataCase_ == 8) {
+              if (dataCase_ == 7) {
                 subBuilder = ((com.raven.common.protos.Message.HisMessagesReq) data_).toBuilder();
               }
               data_ =
@@ -1006,12 +865,12 @@ public final class Message {
                 subBuilder.mergeFrom((com.raven.common.protos.Message.HisMessagesReq) data_);
                 data_ = subBuilder.buildPartial();
               }
-              dataCase_ = 8;
+              dataCase_ = 7;
               break;
             }
-            case 74: {
+            case 66: {
               com.raven.common.protos.Message.HisMessagesAck.Builder subBuilder = null;
-              if (dataCase_ == 9) {
+              if (dataCase_ == 8) {
                 subBuilder = ((com.raven.common.protos.Message.HisMessagesAck) data_).toBuilder();
               }
               data_ =
@@ -1020,26 +879,12 @@ public final class Message {
                 subBuilder.mergeFrom((com.raven.common.protos.Message.HisMessagesAck) data_);
                 data_ = subBuilder.buildPartial();
               }
-              dataCase_ = 9;
+              dataCase_ = 8;
               break;
             }
-            case 82: {
-              com.raven.common.protos.Message.NotifyMessage.Builder subBuilder = null;
-              if (dataCase_ == 10) {
-                subBuilder = ((com.raven.common.protos.Message.NotifyMessage) data_).toBuilder();
-              }
-              data_ =
-                  input.readMessage(com.raven.common.protos.Message.NotifyMessage.parser(), extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom((com.raven.common.protos.Message.NotifyMessage) data_);
-                data_ = subBuilder.buildPartial();
-              }
-              dataCase_ = 10;
-              break;
-            }
-            case 90: {
+            case 74: {
               com.raven.common.protos.Message.ConverReq.Builder subBuilder = null;
-              if (dataCase_ == 11) {
+              if (dataCase_ == 9) {
                 subBuilder = ((com.raven.common.protos.Message.ConverReq) data_).toBuilder();
               }
               data_ =
@@ -1048,12 +893,12 @@ public final class Message {
                 subBuilder.mergeFrom((com.raven.common.protos.Message.ConverReq) data_);
                 data_ = subBuilder.buildPartial();
               }
-              dataCase_ = 11;
+              dataCase_ = 9;
               break;
             }
-            case 98: {
+            case 82: {
               com.raven.common.protos.Message.ConverAck.Builder subBuilder = null;
-              if (dataCase_ == 12) {
+              if (dataCase_ == 10) {
                 subBuilder = ((com.raven.common.protos.Message.ConverAck) data_).toBuilder();
               }
               data_ =
@@ -1062,7 +907,21 @@ public final class Message {
                 subBuilder.mergeFrom((com.raven.common.protos.Message.ConverAck) data_);
                 data_ = subBuilder.buildPartial();
               }
-              dataCase_ = 12;
+              dataCase_ = 10;
+              break;
+            }
+            case 90: {
+              com.raven.common.protos.Message.SSMessage.Builder subBuilder = null;
+              if (dataCase_ == 11) {
+                subBuilder = ((com.raven.common.protos.Message.SSMessage) data_).toBuilder();
+              }
+              data_ =
+                  input.readMessage(com.raven.common.protos.Message.SSMessage.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom((com.raven.common.protos.Message.SSMessage) data_);
+                data_ = subBuilder.buildPartial();
+              }
+              dataCase_ = 11;
               break;
             }
             default: {
@@ -1111,41 +970,37 @@ public final class Message {
        */
       LoginAck(1),
       /**
-       * <code>ServerInfo = 2;</code>
+       * <code>UpDownMessage = 2;</code>
        */
-      ServerInfo(2),
+      UpDownMessage(2),
       /**
-       * <code>UpDownMessage = 3;</code>
+       * <code>HeartBeat = 3;</code>
        */
-      UpDownMessage(3),
+      HeartBeat(3),
       /**
-       * <code>HeartBeat = 4;</code>
+       * <code>MessageAck = 4;</code>
        */
-      HeartBeat(4),
+      MessageAck(4),
       /**
-       * <code>MessageAck = 5;</code>
+       * <code>HisMessagesReq = 5;</code>
        */
-      MessageAck(5),
+      HisMessagesReq(5),
       /**
-       * <code>HisMessagesReq = 6;</code>
+       * <code>HisMessagesAck = 6;</code>
        */
-      HisMessagesReq(6),
+      HisMessagesAck(6),
       /**
-       * <code>HisMessagesAck = 7;</code>
+       * <code>ConverReq = 7;</code>
        */
-      HisMessagesAck(7),
+      ConverReq(7),
       /**
-       * <code>NotifyMessage = 8;</code>
+       * <code>ConverAck = 8;</code>
        */
-      NotifyMessage(8),
+      ConverAck(8),
       /**
-       * <code>ConverReq = 9;</code>
+       * <code>SSMessage = 9;</code>
        */
-      ConverReq(9),
-      /**
-       * <code>ConverAck = 10;</code>
-       */
-      ConverAck(10),
+      SSMessage(9),
       UNRECOGNIZED(-1),
       ;
 
@@ -1158,41 +1013,37 @@ public final class Message {
        */
       public static final int LoginAck_VALUE = 1;
       /**
-       * <code>ServerInfo = 2;</code>
+       * <code>UpDownMessage = 2;</code>
        */
-      public static final int ServerInfo_VALUE = 2;
+      public static final int UpDownMessage_VALUE = 2;
       /**
-       * <code>UpDownMessage = 3;</code>
+       * <code>HeartBeat = 3;</code>
        */
-      public static final int UpDownMessage_VALUE = 3;
+      public static final int HeartBeat_VALUE = 3;
       /**
-       * <code>HeartBeat = 4;</code>
+       * <code>MessageAck = 4;</code>
        */
-      public static final int HeartBeat_VALUE = 4;
+      public static final int MessageAck_VALUE = 4;
       /**
-       * <code>MessageAck = 5;</code>
+       * <code>HisMessagesReq = 5;</code>
        */
-      public static final int MessageAck_VALUE = 5;
+      public static final int HisMessagesReq_VALUE = 5;
       /**
-       * <code>HisMessagesReq = 6;</code>
+       * <code>HisMessagesAck = 6;</code>
        */
-      public static final int HisMessagesReq_VALUE = 6;
+      public static final int HisMessagesAck_VALUE = 6;
       /**
-       * <code>HisMessagesAck = 7;</code>
+       * <code>ConverReq = 7;</code>
        */
-      public static final int HisMessagesAck_VALUE = 7;
+      public static final int ConverReq_VALUE = 7;
       /**
-       * <code>NotifyMessage = 8;</code>
+       * <code>ConverAck = 8;</code>
        */
-      public static final int NotifyMessage_VALUE = 8;
+      public static final int ConverAck_VALUE = 8;
       /**
-       * <code>ConverReq = 9;</code>
+       * <code>SSMessage = 9;</code>
        */
-      public static final int ConverReq_VALUE = 9;
-      /**
-       * <code>ConverAck = 10;</code>
-       */
-      public static final int ConverAck_VALUE = 10;
+      public static final int SSMessage_VALUE = 9;
 
 
       public final int getNumber() {
@@ -1215,15 +1066,14 @@ public final class Message {
         switch (value) {
           case 0: return Login;
           case 1: return LoginAck;
-          case 2: return ServerInfo;
-          case 3: return UpDownMessage;
-          case 4: return HeartBeat;
-          case 5: return MessageAck;
-          case 6: return HisMessagesReq;
-          case 7: return HisMessagesAck;
-          case 8: return NotifyMessage;
-          case 9: return ConverReq;
-          case 10: return ConverAck;
+          case 2: return UpDownMessage;
+          case 3: return HeartBeat;
+          case 4: return MessageAck;
+          case 5: return HisMessagesReq;
+          case 6: return HisMessagesAck;
+          case 7: return ConverReq;
+          case 8: return ConverAck;
+          case 9: return SSMessage;
           default: return null;
         }
       }
@@ -1282,15 +1132,14 @@ public final class Message {
         implements com.google.protobuf.Internal.EnumLite {
       LOGIN(2),
       LOGINACK(3),
-      SERVERINFO(4),
-      UPDOWNMESSAGE(5),
-      HEARTBEAT(6),
-      MESSAGEACK(7),
-      HISMESSAGESREQ(8),
-      HISMESSAGESACK(9),
-      NOTIFYMESSAGE(10),
-      CONVERREQ(11),
-      CONVERACK(12),
+      UPDOWNMESSAGE(4),
+      HEARTBEAT(5),
+      MESSAGEACK(6),
+      HISMESSAGESREQ(7),
+      HISMESSAGESACK(8),
+      CONVERREQ(9),
+      CONVERACK(10),
+      SSMESSAGE(11),
       DATA_NOT_SET(0);
       private final int value;
       private DataCase(int value) {
@@ -1308,15 +1157,14 @@ public final class Message {
         switch (value) {
           case 2: return LOGIN;
           case 3: return LOGINACK;
-          case 4: return SERVERINFO;
-          case 5: return UPDOWNMESSAGE;
-          case 6: return HEARTBEAT;
-          case 7: return MESSAGEACK;
-          case 8: return HISMESSAGESREQ;
-          case 9: return HISMESSAGESACK;
-          case 10: return NOTIFYMESSAGE;
-          case 11: return CONVERREQ;
-          case 12: return CONVERACK;
+          case 4: return UPDOWNMESSAGE;
+          case 5: return HEARTBEAT;
+          case 6: return MESSAGEACK;
+          case 7: return HISMESSAGESREQ;
+          case 8: return HISMESSAGESACK;
+          case 9: return CONVERREQ;
+          case 10: return CONVERACK;
+          case 11: return SSMESSAGE;
           case 0: return DATA_NOT_SET;
           default: return null;
         }
@@ -1401,238 +1249,212 @@ public final class Message {
       return com.raven.common.protos.Message.LoginAck.getDefaultInstance();
     }
 
-    public static final int SERVERINFO_FIELD_NUMBER = 4;
+    public static final int UPDOWNMESSAGE_FIELD_NUMBER = 4;
     /**
-     * <code>.com.raven.common.protos.ServerInfo serverInfo = 4;</code>
+     * <code>.com.raven.common.protos.UpDownMessage upDownMessage = 4;</code>
      */
-    public boolean hasServerInfo() {
+    public boolean hasUpDownMessage() {
       return dataCase_ == 4;
     }
     /**
-     * <code>.com.raven.common.protos.ServerInfo serverInfo = 4;</code>
+     * <code>.com.raven.common.protos.UpDownMessage upDownMessage = 4;</code>
      */
-    public com.raven.common.protos.Message.ServerInfo getServerInfo() {
+    public com.raven.common.protos.Message.UpDownMessage getUpDownMessage() {
       if (dataCase_ == 4) {
-         return (com.raven.common.protos.Message.ServerInfo) data_;
+         return (com.raven.common.protos.Message.UpDownMessage) data_;
       }
-      return com.raven.common.protos.Message.ServerInfo.getDefaultInstance();
+      return com.raven.common.protos.Message.UpDownMessage.getDefaultInstance();
     }
     /**
-     * <code>.com.raven.common.protos.ServerInfo serverInfo = 4;</code>
+     * <code>.com.raven.common.protos.UpDownMessage upDownMessage = 4;</code>
      */
-    public com.raven.common.protos.Message.ServerInfoOrBuilder getServerInfoOrBuilder() {
+    public com.raven.common.protos.Message.UpDownMessageOrBuilder getUpDownMessageOrBuilder() {
       if (dataCase_ == 4) {
-         return (com.raven.common.protos.Message.ServerInfo) data_;
+         return (com.raven.common.protos.Message.UpDownMessage) data_;
       }
-      return com.raven.common.protos.Message.ServerInfo.getDefaultInstance();
+      return com.raven.common.protos.Message.UpDownMessage.getDefaultInstance();
     }
 
-    public static final int UPDOWNMESSAGE_FIELD_NUMBER = 5;
+    public static final int HEARTBEAT_FIELD_NUMBER = 5;
     /**
-     * <code>.com.raven.common.protos.UpDownMessage upDownMessage = 5;</code>
+     * <code>.com.raven.common.protos.HeartBeat heartBeat = 5;</code>
      */
-    public boolean hasUpDownMessage() {
+    public boolean hasHeartBeat() {
       return dataCase_ == 5;
     }
     /**
-     * <code>.com.raven.common.protos.UpDownMessage upDownMessage = 5;</code>
+     * <code>.com.raven.common.protos.HeartBeat heartBeat = 5;</code>
      */
-    public com.raven.common.protos.Message.UpDownMessage getUpDownMessage() {
+    public com.raven.common.protos.Message.HeartBeat getHeartBeat() {
       if (dataCase_ == 5) {
-         return (com.raven.common.protos.Message.UpDownMessage) data_;
+         return (com.raven.common.protos.Message.HeartBeat) data_;
       }
-      return com.raven.common.protos.Message.UpDownMessage.getDefaultInstance();
+      return com.raven.common.protos.Message.HeartBeat.getDefaultInstance();
     }
     /**
-     * <code>.com.raven.common.protos.UpDownMessage upDownMessage = 5;</code>
+     * <code>.com.raven.common.protos.HeartBeat heartBeat = 5;</code>
      */
-    public com.raven.common.protos.Message.UpDownMessageOrBuilder getUpDownMessageOrBuilder() {
+    public com.raven.common.protos.Message.HeartBeatOrBuilder getHeartBeatOrBuilder() {
       if (dataCase_ == 5) {
-         return (com.raven.common.protos.Message.UpDownMessage) data_;
+         return (com.raven.common.protos.Message.HeartBeat) data_;
       }
-      return com.raven.common.protos.Message.UpDownMessage.getDefaultInstance();
+      return com.raven.common.protos.Message.HeartBeat.getDefaultInstance();
     }
 
-    public static final int HEARTBEAT_FIELD_NUMBER = 6;
+    public static final int MESSAGEACK_FIELD_NUMBER = 6;
     /**
-     * <code>.com.raven.common.protos.HeartBeat heartBeat = 6;</code>
+     * <code>.com.raven.common.protos.MessageAck messageAck = 6;</code>
      */
-    public boolean hasHeartBeat() {
+    public boolean hasMessageAck() {
       return dataCase_ == 6;
     }
     /**
-     * <code>.com.raven.common.protos.HeartBeat heartBeat = 6;</code>
+     * <code>.com.raven.common.protos.MessageAck messageAck = 6;</code>
      */
-    public com.raven.common.protos.Message.HeartBeat getHeartBeat() {
+    public com.raven.common.protos.Message.MessageAck getMessageAck() {
       if (dataCase_ == 6) {
-         return (com.raven.common.protos.Message.HeartBeat) data_;
+         return (com.raven.common.protos.Message.MessageAck) data_;
       }
-      return com.raven.common.protos.Message.HeartBeat.getDefaultInstance();
+      return com.raven.common.protos.Message.MessageAck.getDefaultInstance();
     }
     /**
-     * <code>.com.raven.common.protos.HeartBeat heartBeat = 6;</code>
+     * <code>.com.raven.common.protos.MessageAck messageAck = 6;</code>
      */
-    public com.raven.common.protos.Message.HeartBeatOrBuilder getHeartBeatOrBuilder() {
+    public com.raven.common.protos.Message.MessageAckOrBuilder getMessageAckOrBuilder() {
       if (dataCase_ == 6) {
-         return (com.raven.common.protos.Message.HeartBeat) data_;
+         return (com.raven.common.protos.Message.MessageAck) data_;
       }
-      return com.raven.common.protos.Message.HeartBeat.getDefaultInstance();
+      return com.raven.common.protos.Message.MessageAck.getDefaultInstance();
     }
 
-    public static final int MESSAGEACK_FIELD_NUMBER = 7;
+    public static final int HISMESSAGESREQ_FIELD_NUMBER = 7;
     /**
-     * <code>.com.raven.common.protos.MessageAck messageAck = 7;</code>
+     * <code>.com.raven.common.protos.HisMessagesReq hisMessagesReq = 7;</code>
      */
-    public boolean hasMessageAck() {
+    public boolean hasHisMessagesReq() {
       return dataCase_ == 7;
     }
     /**
-     * <code>.com.raven.common.protos.MessageAck messageAck = 7;</code>
+     * <code>.com.raven.common.protos.HisMessagesReq hisMessagesReq = 7;</code>
      */
-    public com.raven.common.protos.Message.MessageAck getMessageAck() {
+    public com.raven.common.protos.Message.HisMessagesReq getHisMessagesReq() {
       if (dataCase_ == 7) {
-         return (com.raven.common.protos.Message.MessageAck) data_;
+         return (com.raven.common.protos.Message.HisMessagesReq) data_;
       }
-      return com.raven.common.protos.Message.MessageAck.getDefaultInstance();
+      return com.raven.common.protos.Message.HisMessagesReq.getDefaultInstance();
     }
     /**
-     * <code>.com.raven.common.protos.MessageAck messageAck = 7;</code>
+     * <code>.com.raven.common.protos.HisMessagesReq hisMessagesReq = 7;</code>
      */
-    public com.raven.common.protos.Message.MessageAckOrBuilder getMessageAckOrBuilder() {
+    public com.raven.common.protos.Message.HisMessagesReqOrBuilder getHisMessagesReqOrBuilder() {
       if (dataCase_ == 7) {
-         return (com.raven.common.protos.Message.MessageAck) data_;
+         return (com.raven.common.protos.Message.HisMessagesReq) data_;
       }
-      return com.raven.common.protos.Message.MessageAck.getDefaultInstance();
+      return com.raven.common.protos.Message.HisMessagesReq.getDefaultInstance();
     }
 
-    public static final int HISMESSAGESREQ_FIELD_NUMBER = 8;
+    public static final int HISMESSAGESACK_FIELD_NUMBER = 8;
     /**
-     * <code>.com.raven.common.protos.HisMessagesReq hisMessagesReq = 8;</code>
+     * <code>.com.raven.common.protos.HisMessagesAck hisMessagesAck = 8;</code>
      */
-    public boolean hasHisMessagesReq() {
+    public boolean hasHisMessagesAck() {
       return dataCase_ == 8;
     }
     /**
-     * <code>.com.raven.common.protos.HisMessagesReq hisMessagesReq = 8;</code>
+     * <code>.com.raven.common.protos.HisMessagesAck hisMessagesAck = 8;</code>
      */
-    public com.raven.common.protos.Message.HisMessagesReq getHisMessagesReq() {
+    public com.raven.common.protos.Message.HisMessagesAck getHisMessagesAck() {
       if (dataCase_ == 8) {
-         return (com.raven.common.protos.Message.HisMessagesReq) data_;
+         return (com.raven.common.protos.Message.HisMessagesAck) data_;
       }
-      return com.raven.common.protos.Message.HisMessagesReq.getDefaultInstance();
+      return com.raven.common.protos.Message.HisMessagesAck.getDefaultInstance();
     }
     /**
-     * <code>.com.raven.common.protos.HisMessagesReq hisMessagesReq = 8;</code>
+     * <code>.com.raven.common.protos.HisMessagesAck hisMessagesAck = 8;</code>
      */
-    public com.raven.common.protos.Message.HisMessagesReqOrBuilder getHisMessagesReqOrBuilder() {
+    public com.raven.common.protos.Message.HisMessagesAckOrBuilder getHisMessagesAckOrBuilder() {
       if (dataCase_ == 8) {
-         return (com.raven.common.protos.Message.HisMessagesReq) data_;
+         return (com.raven.common.protos.Message.HisMessagesAck) data_;
       }
-      return com.raven.common.protos.Message.HisMessagesReq.getDefaultInstance();
+      return com.raven.common.protos.Message.HisMessagesAck.getDefaultInstance();
     }
 
-    public static final int HISMESSAGESACK_FIELD_NUMBER = 9;
+    public static final int CONVERREQ_FIELD_NUMBER = 9;
     /**
-     * <code>.com.raven.common.protos.HisMessagesAck hisMessagesAck = 9;</code>
+     * <code>.com.raven.common.protos.ConverReq converReq = 9;</code>
      */
-    public boolean hasHisMessagesAck() {
+    public boolean hasConverReq() {
       return dataCase_ == 9;
     }
     /**
-     * <code>.com.raven.common.protos.HisMessagesAck hisMessagesAck = 9;</code>
+     * <code>.com.raven.common.protos.ConverReq converReq = 9;</code>
      */
-    public com.raven.common.protos.Message.HisMessagesAck getHisMessagesAck() {
+    public com.raven.common.protos.Message.ConverReq getConverReq() {
       if (dataCase_ == 9) {
-         return (com.raven.common.protos.Message.HisMessagesAck) data_;
+         return (com.raven.common.protos.Message.ConverReq) data_;
       }
-      return com.raven.common.protos.Message.HisMessagesAck.getDefaultInstance();
+      return com.raven.common.protos.Message.ConverReq.getDefaultInstance();
     }
     /**
-     * <code>.com.raven.common.protos.HisMessagesAck hisMessagesAck = 9;</code>
+     * <code>.com.raven.common.protos.ConverReq converReq = 9;</code>
      */
-    public com.raven.common.protos.Message.HisMessagesAckOrBuilder getHisMessagesAckOrBuilder() {
+    public com.raven.common.protos.Message.ConverReqOrBuilder getConverReqOrBuilder() {
       if (dataCase_ == 9) {
-         return (com.raven.common.protos.Message.HisMessagesAck) data_;
+         return (com.raven.common.protos.Message.ConverReq) data_;
       }
-      return com.raven.common.protos.Message.HisMessagesAck.getDefaultInstance();
+      return com.raven.common.protos.Message.ConverReq.getDefaultInstance();
     }
 
-    public static final int NOTIFYMESSAGE_FIELD_NUMBER = 10;
+    public static final int CONVERACK_FIELD_NUMBER = 10;
     /**
-     * <code>.com.raven.common.protos.NotifyMessage notifyMessage = 10;</code>
+     * <code>.com.raven.common.protos.ConverAck converAck = 10;</code>
      */
-    public boolean hasNotifyMessage() {
+    public boolean hasConverAck() {
       return dataCase_ == 10;
     }
     /**
-     * <code>.com.raven.common.protos.NotifyMessage notifyMessage = 10;</code>
+     * <code>.com.raven.common.protos.ConverAck converAck = 10;</code>
      */
-    public com.raven.common.protos.Message.NotifyMessage getNotifyMessage() {
+    public com.raven.common.protos.Message.ConverAck getConverAck() {
       if (dataCase_ == 10) {
-         return (com.raven.common.protos.Message.NotifyMessage) data_;
+         return (com.raven.common.protos.Message.ConverAck) data_;
       }
-      return com.raven.common.protos.Message.NotifyMessage.getDefaultInstance();
+      return com.raven.common.protos.Message.ConverAck.getDefaultInstance();
     }
     /**
-     * <code>.com.raven.common.protos.NotifyMessage notifyMessage = 10;</code>
+     * <code>.com.raven.common.protos.ConverAck converAck = 10;</code>
      */
-    public com.raven.common.protos.Message.NotifyMessageOrBuilder getNotifyMessageOrBuilder() {
+    public com.raven.common.protos.Message.ConverAckOrBuilder getConverAckOrBuilder() {
       if (dataCase_ == 10) {
-         return (com.raven.common.protos.Message.NotifyMessage) data_;
+         return (com.raven.common.protos.Message.ConverAck) data_;
       }
-      return com.raven.common.protos.Message.NotifyMessage.getDefaultInstance();
+      return com.raven.common.protos.Message.ConverAck.getDefaultInstance();
     }
 
-    public static final int CONVERREQ_FIELD_NUMBER = 11;
+    public static final int SSMESSAGE_FIELD_NUMBER = 11;
     /**
-     * <code>.com.raven.common.protos.ConverReq converReq = 11;</code>
+     * <code>.com.raven.common.protos.SSMessage ssMessage = 11;</code>
      */
-    public boolean hasConverReq() {
+    public boolean hasSsMessage() {
       return dataCase_ == 11;
     }
     /**
-     * <code>.com.raven.common.protos.ConverReq converReq = 11;</code>
+     * <code>.com.raven.common.protos.SSMessage ssMessage = 11;</code>
      */
-    public com.raven.common.protos.Message.ConverReq getConverReq() {
+    public com.raven.common.protos.Message.SSMessage getSsMessage() {
       if (dataCase_ == 11) {
-         return (com.raven.common.protos.Message.ConverReq) data_;
+         return (com.raven.common.protos.Message.SSMessage) data_;
       }
-      return com.raven.common.protos.Message.ConverReq.getDefaultInstance();
+      return com.raven.common.protos.Message.SSMessage.getDefaultInstance();
     }
     /**
-     * <code>.com.raven.common.protos.ConverReq converReq = 11;</code>
+     * <code>.com.raven.common.protos.SSMessage ssMessage = 11;</code>
      */
-    public com.raven.common.protos.Message.ConverReqOrBuilder getConverReqOrBuilder() {
+    public com.raven.common.protos.Message.SSMessageOrBuilder getSsMessageOrBuilder() {
       if (dataCase_ == 11) {
-         return (com.raven.common.protos.Message.ConverReq) data_;
+         return (com.raven.common.protos.Message.SSMessage) data_;
       }
-      return com.raven.common.protos.Message.ConverReq.getDefaultInstance();
-    }
-
-    public static final int CONVERACK_FIELD_NUMBER = 12;
-    /**
-     * <code>.com.raven.common.protos.ConverAck converAck = 12;</code>
-     */
-    public boolean hasConverAck() {
-      return dataCase_ == 12;
-    }
-    /**
-     * <code>.com.raven.common.protos.ConverAck converAck = 12;</code>
-     */
-    public com.raven.common.protos.Message.ConverAck getConverAck() {
-      if (dataCase_ == 12) {
-         return (com.raven.common.protos.Message.ConverAck) data_;
-      }
-      return com.raven.common.protos.Message.ConverAck.getDefaultInstance();
-    }
-    /**
-     * <code>.com.raven.common.protos.ConverAck converAck = 12;</code>
-     */
-    public com.raven.common.protos.Message.ConverAckOrBuilder getConverAckOrBuilder() {
-      if (dataCase_ == 12) {
-         return (com.raven.common.protos.Message.ConverAck) data_;
-      }
-      return com.raven.common.protos.Message.ConverAck.getDefaultInstance();
+      return com.raven.common.protos.Message.SSMessage.getDefaultInstance();
     }
 
     private byte memoizedIsInitialized = -1;
@@ -1659,31 +1481,28 @@ public final class Message {
         output.writeMessage(3, (com.raven.common.protos.Message.LoginAck) data_);
       }
       if (dataCase_ == 4) {
-        output.writeMessage(4, (com.raven.common.protos.Message.ServerInfo) data_);
+        output.writeMessage(4, (com.raven.common.protos.Message.UpDownMessage) data_);
       }
       if (dataCase_ == 5) {
-        output.writeMessage(5, (com.raven.common.protos.Message.UpDownMessage) data_);
+        output.writeMessage(5, (com.raven.common.protos.Message.HeartBeat) data_);
       }
       if (dataCase_ == 6) {
-        output.writeMessage(6, (com.raven.common.protos.Message.HeartBeat) data_);
+        output.writeMessage(6, (com.raven.common.protos.Message.MessageAck) data_);
       }
       if (dataCase_ == 7) {
-        output.writeMessage(7, (com.raven.common.protos.Message.MessageAck) data_);
+        output.writeMessage(7, (com.raven.common.protos.Message.HisMessagesReq) data_);
       }
       if (dataCase_ == 8) {
-        output.writeMessage(8, (com.raven.common.protos.Message.HisMessagesReq) data_);
+        output.writeMessage(8, (com.raven.common.protos.Message.HisMessagesAck) data_);
       }
       if (dataCase_ == 9) {
-        output.writeMessage(9, (com.raven.common.protos.Message.HisMessagesAck) data_);
+        output.writeMessage(9, (com.raven.common.protos.Message.ConverReq) data_);
       }
       if (dataCase_ == 10) {
-        output.writeMessage(10, (com.raven.common.protos.Message.NotifyMessage) data_);
+        output.writeMessage(10, (com.raven.common.protos.Message.ConverAck) data_);
       }
       if (dataCase_ == 11) {
-        output.writeMessage(11, (com.raven.common.protos.Message.ConverReq) data_);
-      }
-      if (dataCase_ == 12) {
-        output.writeMessage(12, (com.raven.common.protos.Message.ConverAck) data_);
+        output.writeMessage(11, (com.raven.common.protos.Message.SSMessage) data_);
       }
       unknownFields.writeTo(output);
     }
@@ -1708,39 +1527,35 @@ public final class Message {
       }
       if (dataCase_ == 4) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(4, (com.raven.common.protos.Message.ServerInfo) data_);
+          .computeMessageSize(4, (com.raven.common.protos.Message.UpDownMessage) data_);
       }
       if (dataCase_ == 5) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(5, (com.raven.common.protos.Message.UpDownMessage) data_);
+          .computeMessageSize(5, (com.raven.common.protos.Message.HeartBeat) data_);
       }
       if (dataCase_ == 6) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(6, (com.raven.common.protos.Message.HeartBeat) data_);
+          .computeMessageSize(6, (com.raven.common.protos.Message.MessageAck) data_);
       }
       if (dataCase_ == 7) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(7, (com.raven.common.protos.Message.MessageAck) data_);
+          .computeMessageSize(7, (com.raven.common.protos.Message.HisMessagesReq) data_);
       }
       if (dataCase_ == 8) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(8, (com.raven.common.protos.Message.HisMessagesReq) data_);
+          .computeMessageSize(8, (com.raven.common.protos.Message.HisMessagesAck) data_);
       }
       if (dataCase_ == 9) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(9, (com.raven.common.protos.Message.HisMessagesAck) data_);
+          .computeMessageSize(9, (com.raven.common.protos.Message.ConverReq) data_);
       }
       if (dataCase_ == 10) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(10, (com.raven.common.protos.Message.NotifyMessage) data_);
+          .computeMessageSize(10, (com.raven.common.protos.Message.ConverAck) data_);
       }
       if (dataCase_ == 11) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(11, (com.raven.common.protos.Message.ConverReq) data_);
-      }
-      if (dataCase_ == 12) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(12, (com.raven.common.protos.Message.ConverAck) data_);
+          .computeMessageSize(11, (com.raven.common.protos.Message.SSMessage) data_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -1772,40 +1587,36 @@ public final class Message {
               .equals(other.getLoginAck());
           break;
         case 4:
-          result = result && getServerInfo()
-              .equals(other.getServerInfo());
-          break;
-        case 5:
           result = result && getUpDownMessage()
               .equals(other.getUpDownMessage());
           break;
-        case 6:
+        case 5:
           result = result && getHeartBeat()
               .equals(other.getHeartBeat());
           break;
-        case 7:
+        case 6:
           result = result && getMessageAck()
               .equals(other.getMessageAck());
           break;
-        case 8:
+        case 7:
           result = result && getHisMessagesReq()
               .equals(other.getHisMessagesReq());
           break;
-        case 9:
+        case 8:
           result = result && getHisMessagesAck()
               .equals(other.getHisMessagesAck());
           break;
-        case 10:
-          result = result && getNotifyMessage()
-              .equals(other.getNotifyMessage());
-          break;
-        case 11:
+        case 9:
           result = result && getConverReq()
               .equals(other.getConverReq());
           break;
-        case 12:
+        case 10:
           result = result && getConverAck()
               .equals(other.getConverAck());
+          break;
+        case 11:
+          result = result && getSsMessage()
+              .equals(other.getSsMessage());
           break;
         case 0:
         default:
@@ -1833,40 +1644,36 @@ public final class Message {
           hash = (53 * hash) + getLoginAck().hashCode();
           break;
         case 4:
-          hash = (37 * hash) + SERVERINFO_FIELD_NUMBER;
-          hash = (53 * hash) + getServerInfo().hashCode();
-          break;
-        case 5:
           hash = (37 * hash) + UPDOWNMESSAGE_FIELD_NUMBER;
           hash = (53 * hash) + getUpDownMessage().hashCode();
           break;
-        case 6:
+        case 5:
           hash = (37 * hash) + HEARTBEAT_FIELD_NUMBER;
           hash = (53 * hash) + getHeartBeat().hashCode();
           break;
-        case 7:
+        case 6:
           hash = (37 * hash) + MESSAGEACK_FIELD_NUMBER;
           hash = (53 * hash) + getMessageAck().hashCode();
           break;
-        case 8:
+        case 7:
           hash = (37 * hash) + HISMESSAGESREQ_FIELD_NUMBER;
           hash = (53 * hash) + getHisMessagesReq().hashCode();
           break;
-        case 9:
+        case 8:
           hash = (37 * hash) + HISMESSAGESACK_FIELD_NUMBER;
           hash = (53 * hash) + getHisMessagesAck().hashCode();
           break;
-        case 10:
-          hash = (37 * hash) + NOTIFYMESSAGE_FIELD_NUMBER;
-          hash = (53 * hash) + getNotifyMessage().hashCode();
-          break;
-        case 11:
+        case 9:
           hash = (37 * hash) + CONVERREQ_FIELD_NUMBER;
           hash = (53 * hash) + getConverReq().hashCode();
           break;
-        case 12:
+        case 10:
           hash = (37 * hash) + CONVERACK_FIELD_NUMBER;
           hash = (53 * hash) + getConverAck().hashCode();
+          break;
+        case 11:
+          hash = (37 * hash) + SSMESSAGE_FIELD_NUMBER;
+          hash = (53 * hash) + getSsMessage().hashCode();
           break;
         case 0:
         default:
@@ -2050,66 +1857,59 @@ public final class Message {
           }
         }
         if (dataCase_ == 4) {
-          if (serverInfoBuilder_ == null) {
-            result.data_ = data_;
-          } else {
-            result.data_ = serverInfoBuilder_.build();
-          }
-        }
-        if (dataCase_ == 5) {
           if (upDownMessageBuilder_ == null) {
             result.data_ = data_;
           } else {
             result.data_ = upDownMessageBuilder_.build();
           }
         }
-        if (dataCase_ == 6) {
+        if (dataCase_ == 5) {
           if (heartBeatBuilder_ == null) {
             result.data_ = data_;
           } else {
             result.data_ = heartBeatBuilder_.build();
           }
         }
-        if (dataCase_ == 7) {
+        if (dataCase_ == 6) {
           if (messageAckBuilder_ == null) {
             result.data_ = data_;
           } else {
             result.data_ = messageAckBuilder_.build();
           }
         }
-        if (dataCase_ == 8) {
+        if (dataCase_ == 7) {
           if (hisMessagesReqBuilder_ == null) {
             result.data_ = data_;
           } else {
             result.data_ = hisMessagesReqBuilder_.build();
           }
         }
-        if (dataCase_ == 9) {
+        if (dataCase_ == 8) {
           if (hisMessagesAckBuilder_ == null) {
             result.data_ = data_;
           } else {
             result.data_ = hisMessagesAckBuilder_.build();
           }
         }
-        if (dataCase_ == 10) {
-          if (notifyMessageBuilder_ == null) {
-            result.data_ = data_;
-          } else {
-            result.data_ = notifyMessageBuilder_.build();
-          }
-        }
-        if (dataCase_ == 11) {
+        if (dataCase_ == 9) {
           if (converReqBuilder_ == null) {
             result.data_ = data_;
           } else {
             result.data_ = converReqBuilder_.build();
           }
         }
-        if (dataCase_ == 12) {
+        if (dataCase_ == 10) {
           if (converAckBuilder_ == null) {
             result.data_ = data_;
           } else {
             result.data_ = converAckBuilder_.build();
+          }
+        }
+        if (dataCase_ == 11) {
+          if (ssMessageBuilder_ == null) {
+            result.data_ = data_;
+          } else {
+            result.data_ = ssMessageBuilder_.build();
           }
         }
         result.dataCase_ = dataCase_;
@@ -2173,10 +1973,6 @@ public final class Message {
             mergeLoginAck(other.getLoginAck());
             break;
           }
-          case SERVERINFO: {
-            mergeServerInfo(other.getServerInfo());
-            break;
-          }
           case UPDOWNMESSAGE: {
             mergeUpDownMessage(other.getUpDownMessage());
             break;
@@ -2197,16 +1993,16 @@ public final class Message {
             mergeHisMessagesAck(other.getHisMessagesAck());
             break;
           }
-          case NOTIFYMESSAGE: {
-            mergeNotifyMessage(other.getNotifyMessage());
-            break;
-          }
           case CONVERREQ: {
             mergeConverReq(other.getConverReq());
             break;
           }
           case CONVERACK: {
             mergeConverAck(other.getConverAck());
+            break;
+          }
+          case SSMESSAGE: {
+            mergeSsMessage(other.getSsMessage());
             break;
           }
           case DATA_NOT_SET: {
@@ -2575,167 +2371,31 @@ public final class Message {
       }
 
       private com.google.protobuf.SingleFieldBuilderV3<
-          com.raven.common.protos.Message.ServerInfo, com.raven.common.protos.Message.ServerInfo.Builder, com.raven.common.protos.Message.ServerInfoOrBuilder> serverInfoBuilder_;
+          com.raven.common.protos.Message.UpDownMessage, com.raven.common.protos.Message.UpDownMessage.Builder, com.raven.common.protos.Message.UpDownMessageOrBuilder> upDownMessageBuilder_;
       /**
-       * <code>.com.raven.common.protos.ServerInfo serverInfo = 4;</code>
+       * <code>.com.raven.common.protos.UpDownMessage upDownMessage = 4;</code>
        */
-      public boolean hasServerInfo() {
+      public boolean hasUpDownMessage() {
         return dataCase_ == 4;
       }
       /**
-       * <code>.com.raven.common.protos.ServerInfo serverInfo = 4;</code>
-       */
-      public com.raven.common.protos.Message.ServerInfo getServerInfo() {
-        if (serverInfoBuilder_ == null) {
-          if (dataCase_ == 4) {
-            return (com.raven.common.protos.Message.ServerInfo) data_;
-          }
-          return com.raven.common.protos.Message.ServerInfo.getDefaultInstance();
-        } else {
-          if (dataCase_ == 4) {
-            return serverInfoBuilder_.getMessage();
-          }
-          return com.raven.common.protos.Message.ServerInfo.getDefaultInstance();
-        }
-      }
-      /**
-       * <code>.com.raven.common.protos.ServerInfo serverInfo = 4;</code>
-       */
-      public Builder setServerInfo(com.raven.common.protos.Message.ServerInfo value) {
-        if (serverInfoBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          data_ = value;
-          onChanged();
-        } else {
-          serverInfoBuilder_.setMessage(value);
-        }
-        dataCase_ = 4;
-        return this;
-      }
-      /**
-       * <code>.com.raven.common.protos.ServerInfo serverInfo = 4;</code>
-       */
-      public Builder setServerInfo(
-          com.raven.common.protos.Message.ServerInfo.Builder builderForValue) {
-        if (serverInfoBuilder_ == null) {
-          data_ = builderForValue.build();
-          onChanged();
-        } else {
-          serverInfoBuilder_.setMessage(builderForValue.build());
-        }
-        dataCase_ = 4;
-        return this;
-      }
-      /**
-       * <code>.com.raven.common.protos.ServerInfo serverInfo = 4;</code>
-       */
-      public Builder mergeServerInfo(com.raven.common.protos.Message.ServerInfo value) {
-        if (serverInfoBuilder_ == null) {
-          if (dataCase_ == 4 &&
-              data_ != com.raven.common.protos.Message.ServerInfo.getDefaultInstance()) {
-            data_ = com.raven.common.protos.Message.ServerInfo.newBuilder((com.raven.common.protos.Message.ServerInfo) data_)
-                .mergeFrom(value).buildPartial();
-          } else {
-            data_ = value;
-          }
-          onChanged();
-        } else {
-          if (dataCase_ == 4) {
-            serverInfoBuilder_.mergeFrom(value);
-          }
-          serverInfoBuilder_.setMessage(value);
-        }
-        dataCase_ = 4;
-        return this;
-      }
-      /**
-       * <code>.com.raven.common.protos.ServerInfo serverInfo = 4;</code>
-       */
-      public Builder clearServerInfo() {
-        if (serverInfoBuilder_ == null) {
-          if (dataCase_ == 4) {
-            dataCase_ = 0;
-            data_ = null;
-            onChanged();
-          }
-        } else {
-          if (dataCase_ == 4) {
-            dataCase_ = 0;
-            data_ = null;
-          }
-          serverInfoBuilder_.clear();
-        }
-        return this;
-      }
-      /**
-       * <code>.com.raven.common.protos.ServerInfo serverInfo = 4;</code>
-       */
-      public com.raven.common.protos.Message.ServerInfo.Builder getServerInfoBuilder() {
-        return getServerInfoFieldBuilder().getBuilder();
-      }
-      /**
-       * <code>.com.raven.common.protos.ServerInfo serverInfo = 4;</code>
-       */
-      public com.raven.common.protos.Message.ServerInfoOrBuilder getServerInfoOrBuilder() {
-        if ((dataCase_ == 4) && (serverInfoBuilder_ != null)) {
-          return serverInfoBuilder_.getMessageOrBuilder();
-        } else {
-          if (dataCase_ == 4) {
-            return (com.raven.common.protos.Message.ServerInfo) data_;
-          }
-          return com.raven.common.protos.Message.ServerInfo.getDefaultInstance();
-        }
-      }
-      /**
-       * <code>.com.raven.common.protos.ServerInfo serverInfo = 4;</code>
-       */
-      private com.google.protobuf.SingleFieldBuilderV3<
-          com.raven.common.protos.Message.ServerInfo, com.raven.common.protos.Message.ServerInfo.Builder, com.raven.common.protos.Message.ServerInfoOrBuilder> 
-          getServerInfoFieldBuilder() {
-        if (serverInfoBuilder_ == null) {
-          if (!(dataCase_ == 4)) {
-            data_ = com.raven.common.protos.Message.ServerInfo.getDefaultInstance();
-          }
-          serverInfoBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              com.raven.common.protos.Message.ServerInfo, com.raven.common.protos.Message.ServerInfo.Builder, com.raven.common.protos.Message.ServerInfoOrBuilder>(
-                  (com.raven.common.protos.Message.ServerInfo) data_,
-                  getParentForChildren(),
-                  isClean());
-          data_ = null;
-        }
-        dataCase_ = 4;
-        onChanged();;
-        return serverInfoBuilder_;
-      }
-
-      private com.google.protobuf.SingleFieldBuilderV3<
-          com.raven.common.protos.Message.UpDownMessage, com.raven.common.protos.Message.UpDownMessage.Builder, com.raven.common.protos.Message.UpDownMessageOrBuilder> upDownMessageBuilder_;
-      /**
-       * <code>.com.raven.common.protos.UpDownMessage upDownMessage = 5;</code>
-       */
-      public boolean hasUpDownMessage() {
-        return dataCase_ == 5;
-      }
-      /**
-       * <code>.com.raven.common.protos.UpDownMessage upDownMessage = 5;</code>
+       * <code>.com.raven.common.protos.UpDownMessage upDownMessage = 4;</code>
        */
       public com.raven.common.protos.Message.UpDownMessage getUpDownMessage() {
         if (upDownMessageBuilder_ == null) {
-          if (dataCase_ == 5) {
+          if (dataCase_ == 4) {
             return (com.raven.common.protos.Message.UpDownMessage) data_;
           }
           return com.raven.common.protos.Message.UpDownMessage.getDefaultInstance();
         } else {
-          if (dataCase_ == 5) {
+          if (dataCase_ == 4) {
             return upDownMessageBuilder_.getMessage();
           }
           return com.raven.common.protos.Message.UpDownMessage.getDefaultInstance();
         }
       }
       /**
-       * <code>.com.raven.common.protos.UpDownMessage upDownMessage = 5;</code>
+       * <code>.com.raven.common.protos.UpDownMessage upDownMessage = 4;</code>
        */
       public Builder setUpDownMessage(com.raven.common.protos.Message.UpDownMessage value) {
         if (upDownMessageBuilder_ == null) {
@@ -2747,11 +2407,11 @@ public final class Message {
         } else {
           upDownMessageBuilder_.setMessage(value);
         }
-        dataCase_ = 5;
+        dataCase_ = 4;
         return this;
       }
       /**
-       * <code>.com.raven.common.protos.UpDownMessage upDownMessage = 5;</code>
+       * <code>.com.raven.common.protos.UpDownMessage upDownMessage = 4;</code>
        */
       public Builder setUpDownMessage(
           com.raven.common.protos.Message.UpDownMessage.Builder builderForValue) {
@@ -2761,15 +2421,15 @@ public final class Message {
         } else {
           upDownMessageBuilder_.setMessage(builderForValue.build());
         }
-        dataCase_ = 5;
+        dataCase_ = 4;
         return this;
       }
       /**
-       * <code>.com.raven.common.protos.UpDownMessage upDownMessage = 5;</code>
+       * <code>.com.raven.common.protos.UpDownMessage upDownMessage = 4;</code>
        */
       public Builder mergeUpDownMessage(com.raven.common.protos.Message.UpDownMessage value) {
         if (upDownMessageBuilder_ == null) {
-          if (dataCase_ == 5 &&
+          if (dataCase_ == 4 &&
               data_ != com.raven.common.protos.Message.UpDownMessage.getDefaultInstance()) {
             data_ = com.raven.common.protos.Message.UpDownMessage.newBuilder((com.raven.common.protos.Message.UpDownMessage) data_)
                 .mergeFrom(value).buildPartial();
@@ -2778,26 +2438,26 @@ public final class Message {
           }
           onChanged();
         } else {
-          if (dataCase_ == 5) {
+          if (dataCase_ == 4) {
             upDownMessageBuilder_.mergeFrom(value);
           }
           upDownMessageBuilder_.setMessage(value);
         }
-        dataCase_ = 5;
+        dataCase_ = 4;
         return this;
       }
       /**
-       * <code>.com.raven.common.protos.UpDownMessage upDownMessage = 5;</code>
+       * <code>.com.raven.common.protos.UpDownMessage upDownMessage = 4;</code>
        */
       public Builder clearUpDownMessage() {
         if (upDownMessageBuilder_ == null) {
-          if (dataCase_ == 5) {
+          if (dataCase_ == 4) {
             dataCase_ = 0;
             data_ = null;
             onChanged();
           }
         } else {
-          if (dataCase_ == 5) {
+          if (dataCase_ == 4) {
             dataCase_ = 0;
             data_ = null;
           }
@@ -2806,32 +2466,32 @@ public final class Message {
         return this;
       }
       /**
-       * <code>.com.raven.common.protos.UpDownMessage upDownMessage = 5;</code>
+       * <code>.com.raven.common.protos.UpDownMessage upDownMessage = 4;</code>
        */
       public com.raven.common.protos.Message.UpDownMessage.Builder getUpDownMessageBuilder() {
         return getUpDownMessageFieldBuilder().getBuilder();
       }
       /**
-       * <code>.com.raven.common.protos.UpDownMessage upDownMessage = 5;</code>
+       * <code>.com.raven.common.protos.UpDownMessage upDownMessage = 4;</code>
        */
       public com.raven.common.protos.Message.UpDownMessageOrBuilder getUpDownMessageOrBuilder() {
-        if ((dataCase_ == 5) && (upDownMessageBuilder_ != null)) {
+        if ((dataCase_ == 4) && (upDownMessageBuilder_ != null)) {
           return upDownMessageBuilder_.getMessageOrBuilder();
         } else {
-          if (dataCase_ == 5) {
+          if (dataCase_ == 4) {
             return (com.raven.common.protos.Message.UpDownMessage) data_;
           }
           return com.raven.common.protos.Message.UpDownMessage.getDefaultInstance();
         }
       }
       /**
-       * <code>.com.raven.common.protos.UpDownMessage upDownMessage = 5;</code>
+       * <code>.com.raven.common.protos.UpDownMessage upDownMessage = 4;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           com.raven.common.protos.Message.UpDownMessage, com.raven.common.protos.Message.UpDownMessage.Builder, com.raven.common.protos.Message.UpDownMessageOrBuilder> 
           getUpDownMessageFieldBuilder() {
         if (upDownMessageBuilder_ == null) {
-          if (!(dataCase_ == 5)) {
+          if (!(dataCase_ == 4)) {
             data_ = com.raven.common.protos.Message.UpDownMessage.getDefaultInstance();
           }
           upDownMessageBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
@@ -2841,7 +2501,7 @@ public final class Message {
                   isClean());
           data_ = null;
         }
-        dataCase_ = 5;
+        dataCase_ = 4;
         onChanged();;
         return upDownMessageBuilder_;
       }
@@ -2849,29 +2509,29 @@ public final class Message {
       private com.google.protobuf.SingleFieldBuilderV3<
           com.raven.common.protos.Message.HeartBeat, com.raven.common.protos.Message.HeartBeat.Builder, com.raven.common.protos.Message.HeartBeatOrBuilder> heartBeatBuilder_;
       /**
-       * <code>.com.raven.common.protos.HeartBeat heartBeat = 6;</code>
+       * <code>.com.raven.common.protos.HeartBeat heartBeat = 5;</code>
        */
       public boolean hasHeartBeat() {
-        return dataCase_ == 6;
+        return dataCase_ == 5;
       }
       /**
-       * <code>.com.raven.common.protos.HeartBeat heartBeat = 6;</code>
+       * <code>.com.raven.common.protos.HeartBeat heartBeat = 5;</code>
        */
       public com.raven.common.protos.Message.HeartBeat getHeartBeat() {
         if (heartBeatBuilder_ == null) {
-          if (dataCase_ == 6) {
+          if (dataCase_ == 5) {
             return (com.raven.common.protos.Message.HeartBeat) data_;
           }
           return com.raven.common.protos.Message.HeartBeat.getDefaultInstance();
         } else {
-          if (dataCase_ == 6) {
+          if (dataCase_ == 5) {
             return heartBeatBuilder_.getMessage();
           }
           return com.raven.common.protos.Message.HeartBeat.getDefaultInstance();
         }
       }
       /**
-       * <code>.com.raven.common.protos.HeartBeat heartBeat = 6;</code>
+       * <code>.com.raven.common.protos.HeartBeat heartBeat = 5;</code>
        */
       public Builder setHeartBeat(com.raven.common.protos.Message.HeartBeat value) {
         if (heartBeatBuilder_ == null) {
@@ -2883,11 +2543,11 @@ public final class Message {
         } else {
           heartBeatBuilder_.setMessage(value);
         }
-        dataCase_ = 6;
+        dataCase_ = 5;
         return this;
       }
       /**
-       * <code>.com.raven.common.protos.HeartBeat heartBeat = 6;</code>
+       * <code>.com.raven.common.protos.HeartBeat heartBeat = 5;</code>
        */
       public Builder setHeartBeat(
           com.raven.common.protos.Message.HeartBeat.Builder builderForValue) {
@@ -2897,15 +2557,15 @@ public final class Message {
         } else {
           heartBeatBuilder_.setMessage(builderForValue.build());
         }
-        dataCase_ = 6;
+        dataCase_ = 5;
         return this;
       }
       /**
-       * <code>.com.raven.common.protos.HeartBeat heartBeat = 6;</code>
+       * <code>.com.raven.common.protos.HeartBeat heartBeat = 5;</code>
        */
       public Builder mergeHeartBeat(com.raven.common.protos.Message.HeartBeat value) {
         if (heartBeatBuilder_ == null) {
-          if (dataCase_ == 6 &&
+          if (dataCase_ == 5 &&
               data_ != com.raven.common.protos.Message.HeartBeat.getDefaultInstance()) {
             data_ = com.raven.common.protos.Message.HeartBeat.newBuilder((com.raven.common.protos.Message.HeartBeat) data_)
                 .mergeFrom(value).buildPartial();
@@ -2914,26 +2574,26 @@ public final class Message {
           }
           onChanged();
         } else {
-          if (dataCase_ == 6) {
+          if (dataCase_ == 5) {
             heartBeatBuilder_.mergeFrom(value);
           }
           heartBeatBuilder_.setMessage(value);
         }
-        dataCase_ = 6;
+        dataCase_ = 5;
         return this;
       }
       /**
-       * <code>.com.raven.common.protos.HeartBeat heartBeat = 6;</code>
+       * <code>.com.raven.common.protos.HeartBeat heartBeat = 5;</code>
        */
       public Builder clearHeartBeat() {
         if (heartBeatBuilder_ == null) {
-          if (dataCase_ == 6) {
+          if (dataCase_ == 5) {
             dataCase_ = 0;
             data_ = null;
             onChanged();
           }
         } else {
-          if (dataCase_ == 6) {
+          if (dataCase_ == 5) {
             dataCase_ = 0;
             data_ = null;
           }
@@ -2942,32 +2602,32 @@ public final class Message {
         return this;
       }
       /**
-       * <code>.com.raven.common.protos.HeartBeat heartBeat = 6;</code>
+       * <code>.com.raven.common.protos.HeartBeat heartBeat = 5;</code>
        */
       public com.raven.common.protos.Message.HeartBeat.Builder getHeartBeatBuilder() {
         return getHeartBeatFieldBuilder().getBuilder();
       }
       /**
-       * <code>.com.raven.common.protos.HeartBeat heartBeat = 6;</code>
+       * <code>.com.raven.common.protos.HeartBeat heartBeat = 5;</code>
        */
       public com.raven.common.protos.Message.HeartBeatOrBuilder getHeartBeatOrBuilder() {
-        if ((dataCase_ == 6) && (heartBeatBuilder_ != null)) {
+        if ((dataCase_ == 5) && (heartBeatBuilder_ != null)) {
           return heartBeatBuilder_.getMessageOrBuilder();
         } else {
-          if (dataCase_ == 6) {
+          if (dataCase_ == 5) {
             return (com.raven.common.protos.Message.HeartBeat) data_;
           }
           return com.raven.common.protos.Message.HeartBeat.getDefaultInstance();
         }
       }
       /**
-       * <code>.com.raven.common.protos.HeartBeat heartBeat = 6;</code>
+       * <code>.com.raven.common.protos.HeartBeat heartBeat = 5;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           com.raven.common.protos.Message.HeartBeat, com.raven.common.protos.Message.HeartBeat.Builder, com.raven.common.protos.Message.HeartBeatOrBuilder> 
           getHeartBeatFieldBuilder() {
         if (heartBeatBuilder_ == null) {
-          if (!(dataCase_ == 6)) {
+          if (!(dataCase_ == 5)) {
             data_ = com.raven.common.protos.Message.HeartBeat.getDefaultInstance();
           }
           heartBeatBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
@@ -2977,7 +2637,7 @@ public final class Message {
                   isClean());
           data_ = null;
         }
-        dataCase_ = 6;
+        dataCase_ = 5;
         onChanged();;
         return heartBeatBuilder_;
       }
@@ -2985,29 +2645,29 @@ public final class Message {
       private com.google.protobuf.SingleFieldBuilderV3<
           com.raven.common.protos.Message.MessageAck, com.raven.common.protos.Message.MessageAck.Builder, com.raven.common.protos.Message.MessageAckOrBuilder> messageAckBuilder_;
       /**
-       * <code>.com.raven.common.protos.MessageAck messageAck = 7;</code>
+       * <code>.com.raven.common.protos.MessageAck messageAck = 6;</code>
        */
       public boolean hasMessageAck() {
-        return dataCase_ == 7;
+        return dataCase_ == 6;
       }
       /**
-       * <code>.com.raven.common.protos.MessageAck messageAck = 7;</code>
+       * <code>.com.raven.common.protos.MessageAck messageAck = 6;</code>
        */
       public com.raven.common.protos.Message.MessageAck getMessageAck() {
         if (messageAckBuilder_ == null) {
-          if (dataCase_ == 7) {
+          if (dataCase_ == 6) {
             return (com.raven.common.protos.Message.MessageAck) data_;
           }
           return com.raven.common.protos.Message.MessageAck.getDefaultInstance();
         } else {
-          if (dataCase_ == 7) {
+          if (dataCase_ == 6) {
             return messageAckBuilder_.getMessage();
           }
           return com.raven.common.protos.Message.MessageAck.getDefaultInstance();
         }
       }
       /**
-       * <code>.com.raven.common.protos.MessageAck messageAck = 7;</code>
+       * <code>.com.raven.common.protos.MessageAck messageAck = 6;</code>
        */
       public Builder setMessageAck(com.raven.common.protos.Message.MessageAck value) {
         if (messageAckBuilder_ == null) {
@@ -3019,11 +2679,11 @@ public final class Message {
         } else {
           messageAckBuilder_.setMessage(value);
         }
-        dataCase_ = 7;
+        dataCase_ = 6;
         return this;
       }
       /**
-       * <code>.com.raven.common.protos.MessageAck messageAck = 7;</code>
+       * <code>.com.raven.common.protos.MessageAck messageAck = 6;</code>
        */
       public Builder setMessageAck(
           com.raven.common.protos.Message.MessageAck.Builder builderForValue) {
@@ -3033,15 +2693,15 @@ public final class Message {
         } else {
           messageAckBuilder_.setMessage(builderForValue.build());
         }
-        dataCase_ = 7;
+        dataCase_ = 6;
         return this;
       }
       /**
-       * <code>.com.raven.common.protos.MessageAck messageAck = 7;</code>
+       * <code>.com.raven.common.protos.MessageAck messageAck = 6;</code>
        */
       public Builder mergeMessageAck(com.raven.common.protos.Message.MessageAck value) {
         if (messageAckBuilder_ == null) {
-          if (dataCase_ == 7 &&
+          if (dataCase_ == 6 &&
               data_ != com.raven.common.protos.Message.MessageAck.getDefaultInstance()) {
             data_ = com.raven.common.protos.Message.MessageAck.newBuilder((com.raven.common.protos.Message.MessageAck) data_)
                 .mergeFrom(value).buildPartial();
@@ -3050,26 +2710,26 @@ public final class Message {
           }
           onChanged();
         } else {
-          if (dataCase_ == 7) {
+          if (dataCase_ == 6) {
             messageAckBuilder_.mergeFrom(value);
           }
           messageAckBuilder_.setMessage(value);
         }
-        dataCase_ = 7;
+        dataCase_ = 6;
         return this;
       }
       /**
-       * <code>.com.raven.common.protos.MessageAck messageAck = 7;</code>
+       * <code>.com.raven.common.protos.MessageAck messageAck = 6;</code>
        */
       public Builder clearMessageAck() {
         if (messageAckBuilder_ == null) {
-          if (dataCase_ == 7) {
+          if (dataCase_ == 6) {
             dataCase_ = 0;
             data_ = null;
             onChanged();
           }
         } else {
-          if (dataCase_ == 7) {
+          if (dataCase_ == 6) {
             dataCase_ = 0;
             data_ = null;
           }
@@ -3078,32 +2738,32 @@ public final class Message {
         return this;
       }
       /**
-       * <code>.com.raven.common.protos.MessageAck messageAck = 7;</code>
+       * <code>.com.raven.common.protos.MessageAck messageAck = 6;</code>
        */
       public com.raven.common.protos.Message.MessageAck.Builder getMessageAckBuilder() {
         return getMessageAckFieldBuilder().getBuilder();
       }
       /**
-       * <code>.com.raven.common.protos.MessageAck messageAck = 7;</code>
+       * <code>.com.raven.common.protos.MessageAck messageAck = 6;</code>
        */
       public com.raven.common.protos.Message.MessageAckOrBuilder getMessageAckOrBuilder() {
-        if ((dataCase_ == 7) && (messageAckBuilder_ != null)) {
+        if ((dataCase_ == 6) && (messageAckBuilder_ != null)) {
           return messageAckBuilder_.getMessageOrBuilder();
         } else {
-          if (dataCase_ == 7) {
+          if (dataCase_ == 6) {
             return (com.raven.common.protos.Message.MessageAck) data_;
           }
           return com.raven.common.protos.Message.MessageAck.getDefaultInstance();
         }
       }
       /**
-       * <code>.com.raven.common.protos.MessageAck messageAck = 7;</code>
+       * <code>.com.raven.common.protos.MessageAck messageAck = 6;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           com.raven.common.protos.Message.MessageAck, com.raven.common.protos.Message.MessageAck.Builder, com.raven.common.protos.Message.MessageAckOrBuilder> 
           getMessageAckFieldBuilder() {
         if (messageAckBuilder_ == null) {
-          if (!(dataCase_ == 7)) {
+          if (!(dataCase_ == 6)) {
             data_ = com.raven.common.protos.Message.MessageAck.getDefaultInstance();
           }
           messageAckBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
@@ -3113,7 +2773,7 @@ public final class Message {
                   isClean());
           data_ = null;
         }
-        dataCase_ = 7;
+        dataCase_ = 6;
         onChanged();;
         return messageAckBuilder_;
       }
@@ -3121,29 +2781,29 @@ public final class Message {
       private com.google.protobuf.SingleFieldBuilderV3<
           com.raven.common.protos.Message.HisMessagesReq, com.raven.common.protos.Message.HisMessagesReq.Builder, com.raven.common.protos.Message.HisMessagesReqOrBuilder> hisMessagesReqBuilder_;
       /**
-       * <code>.com.raven.common.protos.HisMessagesReq hisMessagesReq = 8;</code>
+       * <code>.com.raven.common.protos.HisMessagesReq hisMessagesReq = 7;</code>
        */
       public boolean hasHisMessagesReq() {
-        return dataCase_ == 8;
+        return dataCase_ == 7;
       }
       /**
-       * <code>.com.raven.common.protos.HisMessagesReq hisMessagesReq = 8;</code>
+       * <code>.com.raven.common.protos.HisMessagesReq hisMessagesReq = 7;</code>
        */
       public com.raven.common.protos.Message.HisMessagesReq getHisMessagesReq() {
         if (hisMessagesReqBuilder_ == null) {
-          if (dataCase_ == 8) {
+          if (dataCase_ == 7) {
             return (com.raven.common.protos.Message.HisMessagesReq) data_;
           }
           return com.raven.common.protos.Message.HisMessagesReq.getDefaultInstance();
         } else {
-          if (dataCase_ == 8) {
+          if (dataCase_ == 7) {
             return hisMessagesReqBuilder_.getMessage();
           }
           return com.raven.common.protos.Message.HisMessagesReq.getDefaultInstance();
         }
       }
       /**
-       * <code>.com.raven.common.protos.HisMessagesReq hisMessagesReq = 8;</code>
+       * <code>.com.raven.common.protos.HisMessagesReq hisMessagesReq = 7;</code>
        */
       public Builder setHisMessagesReq(com.raven.common.protos.Message.HisMessagesReq value) {
         if (hisMessagesReqBuilder_ == null) {
@@ -3155,11 +2815,11 @@ public final class Message {
         } else {
           hisMessagesReqBuilder_.setMessage(value);
         }
-        dataCase_ = 8;
+        dataCase_ = 7;
         return this;
       }
       /**
-       * <code>.com.raven.common.protos.HisMessagesReq hisMessagesReq = 8;</code>
+       * <code>.com.raven.common.protos.HisMessagesReq hisMessagesReq = 7;</code>
        */
       public Builder setHisMessagesReq(
           com.raven.common.protos.Message.HisMessagesReq.Builder builderForValue) {
@@ -3169,15 +2829,15 @@ public final class Message {
         } else {
           hisMessagesReqBuilder_.setMessage(builderForValue.build());
         }
-        dataCase_ = 8;
+        dataCase_ = 7;
         return this;
       }
       /**
-       * <code>.com.raven.common.protos.HisMessagesReq hisMessagesReq = 8;</code>
+       * <code>.com.raven.common.protos.HisMessagesReq hisMessagesReq = 7;</code>
        */
       public Builder mergeHisMessagesReq(com.raven.common.protos.Message.HisMessagesReq value) {
         if (hisMessagesReqBuilder_ == null) {
-          if (dataCase_ == 8 &&
+          if (dataCase_ == 7 &&
               data_ != com.raven.common.protos.Message.HisMessagesReq.getDefaultInstance()) {
             data_ = com.raven.common.protos.Message.HisMessagesReq.newBuilder((com.raven.common.protos.Message.HisMessagesReq) data_)
                 .mergeFrom(value).buildPartial();
@@ -3186,26 +2846,26 @@ public final class Message {
           }
           onChanged();
         } else {
-          if (dataCase_ == 8) {
+          if (dataCase_ == 7) {
             hisMessagesReqBuilder_.mergeFrom(value);
           }
           hisMessagesReqBuilder_.setMessage(value);
         }
-        dataCase_ = 8;
+        dataCase_ = 7;
         return this;
       }
       /**
-       * <code>.com.raven.common.protos.HisMessagesReq hisMessagesReq = 8;</code>
+       * <code>.com.raven.common.protos.HisMessagesReq hisMessagesReq = 7;</code>
        */
       public Builder clearHisMessagesReq() {
         if (hisMessagesReqBuilder_ == null) {
-          if (dataCase_ == 8) {
+          if (dataCase_ == 7) {
             dataCase_ = 0;
             data_ = null;
             onChanged();
           }
         } else {
-          if (dataCase_ == 8) {
+          if (dataCase_ == 7) {
             dataCase_ = 0;
             data_ = null;
           }
@@ -3214,32 +2874,32 @@ public final class Message {
         return this;
       }
       /**
-       * <code>.com.raven.common.protos.HisMessagesReq hisMessagesReq = 8;</code>
+       * <code>.com.raven.common.protos.HisMessagesReq hisMessagesReq = 7;</code>
        */
       public com.raven.common.protos.Message.HisMessagesReq.Builder getHisMessagesReqBuilder() {
         return getHisMessagesReqFieldBuilder().getBuilder();
       }
       /**
-       * <code>.com.raven.common.protos.HisMessagesReq hisMessagesReq = 8;</code>
+       * <code>.com.raven.common.protos.HisMessagesReq hisMessagesReq = 7;</code>
        */
       public com.raven.common.protos.Message.HisMessagesReqOrBuilder getHisMessagesReqOrBuilder() {
-        if ((dataCase_ == 8) && (hisMessagesReqBuilder_ != null)) {
+        if ((dataCase_ == 7) && (hisMessagesReqBuilder_ != null)) {
           return hisMessagesReqBuilder_.getMessageOrBuilder();
         } else {
-          if (dataCase_ == 8) {
+          if (dataCase_ == 7) {
             return (com.raven.common.protos.Message.HisMessagesReq) data_;
           }
           return com.raven.common.protos.Message.HisMessagesReq.getDefaultInstance();
         }
       }
       /**
-       * <code>.com.raven.common.protos.HisMessagesReq hisMessagesReq = 8;</code>
+       * <code>.com.raven.common.protos.HisMessagesReq hisMessagesReq = 7;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           com.raven.common.protos.Message.HisMessagesReq, com.raven.common.protos.Message.HisMessagesReq.Builder, com.raven.common.protos.Message.HisMessagesReqOrBuilder> 
           getHisMessagesReqFieldBuilder() {
         if (hisMessagesReqBuilder_ == null) {
-          if (!(dataCase_ == 8)) {
+          if (!(dataCase_ == 7)) {
             data_ = com.raven.common.protos.Message.HisMessagesReq.getDefaultInstance();
           }
           hisMessagesReqBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
@@ -3249,7 +2909,7 @@ public final class Message {
                   isClean());
           data_ = null;
         }
-        dataCase_ = 8;
+        dataCase_ = 7;
         onChanged();;
         return hisMessagesReqBuilder_;
       }
@@ -3257,29 +2917,29 @@ public final class Message {
       private com.google.protobuf.SingleFieldBuilderV3<
           com.raven.common.protos.Message.HisMessagesAck, com.raven.common.protos.Message.HisMessagesAck.Builder, com.raven.common.protos.Message.HisMessagesAckOrBuilder> hisMessagesAckBuilder_;
       /**
-       * <code>.com.raven.common.protos.HisMessagesAck hisMessagesAck = 9;</code>
+       * <code>.com.raven.common.protos.HisMessagesAck hisMessagesAck = 8;</code>
        */
       public boolean hasHisMessagesAck() {
-        return dataCase_ == 9;
+        return dataCase_ == 8;
       }
       /**
-       * <code>.com.raven.common.protos.HisMessagesAck hisMessagesAck = 9;</code>
+       * <code>.com.raven.common.protos.HisMessagesAck hisMessagesAck = 8;</code>
        */
       public com.raven.common.protos.Message.HisMessagesAck getHisMessagesAck() {
         if (hisMessagesAckBuilder_ == null) {
-          if (dataCase_ == 9) {
+          if (dataCase_ == 8) {
             return (com.raven.common.protos.Message.HisMessagesAck) data_;
           }
           return com.raven.common.protos.Message.HisMessagesAck.getDefaultInstance();
         } else {
-          if (dataCase_ == 9) {
+          if (dataCase_ == 8) {
             return hisMessagesAckBuilder_.getMessage();
           }
           return com.raven.common.protos.Message.HisMessagesAck.getDefaultInstance();
         }
       }
       /**
-       * <code>.com.raven.common.protos.HisMessagesAck hisMessagesAck = 9;</code>
+       * <code>.com.raven.common.protos.HisMessagesAck hisMessagesAck = 8;</code>
        */
       public Builder setHisMessagesAck(com.raven.common.protos.Message.HisMessagesAck value) {
         if (hisMessagesAckBuilder_ == null) {
@@ -3291,11 +2951,11 @@ public final class Message {
         } else {
           hisMessagesAckBuilder_.setMessage(value);
         }
-        dataCase_ = 9;
+        dataCase_ = 8;
         return this;
       }
       /**
-       * <code>.com.raven.common.protos.HisMessagesAck hisMessagesAck = 9;</code>
+       * <code>.com.raven.common.protos.HisMessagesAck hisMessagesAck = 8;</code>
        */
       public Builder setHisMessagesAck(
           com.raven.common.protos.Message.HisMessagesAck.Builder builderForValue) {
@@ -3305,15 +2965,15 @@ public final class Message {
         } else {
           hisMessagesAckBuilder_.setMessage(builderForValue.build());
         }
-        dataCase_ = 9;
+        dataCase_ = 8;
         return this;
       }
       /**
-       * <code>.com.raven.common.protos.HisMessagesAck hisMessagesAck = 9;</code>
+       * <code>.com.raven.common.protos.HisMessagesAck hisMessagesAck = 8;</code>
        */
       public Builder mergeHisMessagesAck(com.raven.common.protos.Message.HisMessagesAck value) {
         if (hisMessagesAckBuilder_ == null) {
-          if (dataCase_ == 9 &&
+          if (dataCase_ == 8 &&
               data_ != com.raven.common.protos.Message.HisMessagesAck.getDefaultInstance()) {
             data_ = com.raven.common.protos.Message.HisMessagesAck.newBuilder((com.raven.common.protos.Message.HisMessagesAck) data_)
                 .mergeFrom(value).buildPartial();
@@ -3322,26 +2982,26 @@ public final class Message {
           }
           onChanged();
         } else {
-          if (dataCase_ == 9) {
+          if (dataCase_ == 8) {
             hisMessagesAckBuilder_.mergeFrom(value);
           }
           hisMessagesAckBuilder_.setMessage(value);
         }
-        dataCase_ = 9;
+        dataCase_ = 8;
         return this;
       }
       /**
-       * <code>.com.raven.common.protos.HisMessagesAck hisMessagesAck = 9;</code>
+       * <code>.com.raven.common.protos.HisMessagesAck hisMessagesAck = 8;</code>
        */
       public Builder clearHisMessagesAck() {
         if (hisMessagesAckBuilder_ == null) {
-          if (dataCase_ == 9) {
+          if (dataCase_ == 8) {
             dataCase_ = 0;
             data_ = null;
             onChanged();
           }
         } else {
-          if (dataCase_ == 9) {
+          if (dataCase_ == 8) {
             dataCase_ = 0;
             data_ = null;
           }
@@ -3350,32 +3010,32 @@ public final class Message {
         return this;
       }
       /**
-       * <code>.com.raven.common.protos.HisMessagesAck hisMessagesAck = 9;</code>
+       * <code>.com.raven.common.protos.HisMessagesAck hisMessagesAck = 8;</code>
        */
       public com.raven.common.protos.Message.HisMessagesAck.Builder getHisMessagesAckBuilder() {
         return getHisMessagesAckFieldBuilder().getBuilder();
       }
       /**
-       * <code>.com.raven.common.protos.HisMessagesAck hisMessagesAck = 9;</code>
+       * <code>.com.raven.common.protos.HisMessagesAck hisMessagesAck = 8;</code>
        */
       public com.raven.common.protos.Message.HisMessagesAckOrBuilder getHisMessagesAckOrBuilder() {
-        if ((dataCase_ == 9) && (hisMessagesAckBuilder_ != null)) {
+        if ((dataCase_ == 8) && (hisMessagesAckBuilder_ != null)) {
           return hisMessagesAckBuilder_.getMessageOrBuilder();
         } else {
-          if (dataCase_ == 9) {
+          if (dataCase_ == 8) {
             return (com.raven.common.protos.Message.HisMessagesAck) data_;
           }
           return com.raven.common.protos.Message.HisMessagesAck.getDefaultInstance();
         }
       }
       /**
-       * <code>.com.raven.common.protos.HisMessagesAck hisMessagesAck = 9;</code>
+       * <code>.com.raven.common.protos.HisMessagesAck hisMessagesAck = 8;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           com.raven.common.protos.Message.HisMessagesAck, com.raven.common.protos.Message.HisMessagesAck.Builder, com.raven.common.protos.Message.HisMessagesAckOrBuilder> 
           getHisMessagesAckFieldBuilder() {
         if (hisMessagesAckBuilder_ == null) {
-          if (!(dataCase_ == 9)) {
+          if (!(dataCase_ == 8)) {
             data_ = com.raven.common.protos.Message.HisMessagesAck.getDefaultInstance();
           }
           hisMessagesAckBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
@@ -3385,173 +3045,37 @@ public final class Message {
                   isClean());
           data_ = null;
         }
-        dataCase_ = 9;
+        dataCase_ = 8;
         onChanged();;
         return hisMessagesAckBuilder_;
       }
 
       private com.google.protobuf.SingleFieldBuilderV3<
-          com.raven.common.protos.Message.NotifyMessage, com.raven.common.protos.Message.NotifyMessage.Builder, com.raven.common.protos.Message.NotifyMessageOrBuilder> notifyMessageBuilder_;
-      /**
-       * <code>.com.raven.common.protos.NotifyMessage notifyMessage = 10;</code>
-       */
-      public boolean hasNotifyMessage() {
-        return dataCase_ == 10;
-      }
-      /**
-       * <code>.com.raven.common.protos.NotifyMessage notifyMessage = 10;</code>
-       */
-      public com.raven.common.protos.Message.NotifyMessage getNotifyMessage() {
-        if (notifyMessageBuilder_ == null) {
-          if (dataCase_ == 10) {
-            return (com.raven.common.protos.Message.NotifyMessage) data_;
-          }
-          return com.raven.common.protos.Message.NotifyMessage.getDefaultInstance();
-        } else {
-          if (dataCase_ == 10) {
-            return notifyMessageBuilder_.getMessage();
-          }
-          return com.raven.common.protos.Message.NotifyMessage.getDefaultInstance();
-        }
-      }
-      /**
-       * <code>.com.raven.common.protos.NotifyMessage notifyMessage = 10;</code>
-       */
-      public Builder setNotifyMessage(com.raven.common.protos.Message.NotifyMessage value) {
-        if (notifyMessageBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          data_ = value;
-          onChanged();
-        } else {
-          notifyMessageBuilder_.setMessage(value);
-        }
-        dataCase_ = 10;
-        return this;
-      }
-      /**
-       * <code>.com.raven.common.protos.NotifyMessage notifyMessage = 10;</code>
-       */
-      public Builder setNotifyMessage(
-          com.raven.common.protos.Message.NotifyMessage.Builder builderForValue) {
-        if (notifyMessageBuilder_ == null) {
-          data_ = builderForValue.build();
-          onChanged();
-        } else {
-          notifyMessageBuilder_.setMessage(builderForValue.build());
-        }
-        dataCase_ = 10;
-        return this;
-      }
-      /**
-       * <code>.com.raven.common.protos.NotifyMessage notifyMessage = 10;</code>
-       */
-      public Builder mergeNotifyMessage(com.raven.common.protos.Message.NotifyMessage value) {
-        if (notifyMessageBuilder_ == null) {
-          if (dataCase_ == 10 &&
-              data_ != com.raven.common.protos.Message.NotifyMessage.getDefaultInstance()) {
-            data_ = com.raven.common.protos.Message.NotifyMessage.newBuilder((com.raven.common.protos.Message.NotifyMessage) data_)
-                .mergeFrom(value).buildPartial();
-          } else {
-            data_ = value;
-          }
-          onChanged();
-        } else {
-          if (dataCase_ == 10) {
-            notifyMessageBuilder_.mergeFrom(value);
-          }
-          notifyMessageBuilder_.setMessage(value);
-        }
-        dataCase_ = 10;
-        return this;
-      }
-      /**
-       * <code>.com.raven.common.protos.NotifyMessage notifyMessage = 10;</code>
-       */
-      public Builder clearNotifyMessage() {
-        if (notifyMessageBuilder_ == null) {
-          if (dataCase_ == 10) {
-            dataCase_ = 0;
-            data_ = null;
-            onChanged();
-          }
-        } else {
-          if (dataCase_ == 10) {
-            dataCase_ = 0;
-            data_ = null;
-          }
-          notifyMessageBuilder_.clear();
-        }
-        return this;
-      }
-      /**
-       * <code>.com.raven.common.protos.NotifyMessage notifyMessage = 10;</code>
-       */
-      public com.raven.common.protos.Message.NotifyMessage.Builder getNotifyMessageBuilder() {
-        return getNotifyMessageFieldBuilder().getBuilder();
-      }
-      /**
-       * <code>.com.raven.common.protos.NotifyMessage notifyMessage = 10;</code>
-       */
-      public com.raven.common.protos.Message.NotifyMessageOrBuilder getNotifyMessageOrBuilder() {
-        if ((dataCase_ == 10) && (notifyMessageBuilder_ != null)) {
-          return notifyMessageBuilder_.getMessageOrBuilder();
-        } else {
-          if (dataCase_ == 10) {
-            return (com.raven.common.protos.Message.NotifyMessage) data_;
-          }
-          return com.raven.common.protos.Message.NotifyMessage.getDefaultInstance();
-        }
-      }
-      /**
-       * <code>.com.raven.common.protos.NotifyMessage notifyMessage = 10;</code>
-       */
-      private com.google.protobuf.SingleFieldBuilderV3<
-          com.raven.common.protos.Message.NotifyMessage, com.raven.common.protos.Message.NotifyMessage.Builder, com.raven.common.protos.Message.NotifyMessageOrBuilder> 
-          getNotifyMessageFieldBuilder() {
-        if (notifyMessageBuilder_ == null) {
-          if (!(dataCase_ == 10)) {
-            data_ = com.raven.common.protos.Message.NotifyMessage.getDefaultInstance();
-          }
-          notifyMessageBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              com.raven.common.protos.Message.NotifyMessage, com.raven.common.protos.Message.NotifyMessage.Builder, com.raven.common.protos.Message.NotifyMessageOrBuilder>(
-                  (com.raven.common.protos.Message.NotifyMessage) data_,
-                  getParentForChildren(),
-                  isClean());
-          data_ = null;
-        }
-        dataCase_ = 10;
-        onChanged();;
-        return notifyMessageBuilder_;
-      }
-
-      private com.google.protobuf.SingleFieldBuilderV3<
           com.raven.common.protos.Message.ConverReq, com.raven.common.protos.Message.ConverReq.Builder, com.raven.common.protos.Message.ConverReqOrBuilder> converReqBuilder_;
       /**
-       * <code>.com.raven.common.protos.ConverReq converReq = 11;</code>
+       * <code>.com.raven.common.protos.ConverReq converReq = 9;</code>
        */
       public boolean hasConverReq() {
-        return dataCase_ == 11;
+        return dataCase_ == 9;
       }
       /**
-       * <code>.com.raven.common.protos.ConverReq converReq = 11;</code>
+       * <code>.com.raven.common.protos.ConverReq converReq = 9;</code>
        */
       public com.raven.common.protos.Message.ConverReq getConverReq() {
         if (converReqBuilder_ == null) {
-          if (dataCase_ == 11) {
+          if (dataCase_ == 9) {
             return (com.raven.common.protos.Message.ConverReq) data_;
           }
           return com.raven.common.protos.Message.ConverReq.getDefaultInstance();
         } else {
-          if (dataCase_ == 11) {
+          if (dataCase_ == 9) {
             return converReqBuilder_.getMessage();
           }
           return com.raven.common.protos.Message.ConverReq.getDefaultInstance();
         }
       }
       /**
-       * <code>.com.raven.common.protos.ConverReq converReq = 11;</code>
+       * <code>.com.raven.common.protos.ConverReq converReq = 9;</code>
        */
       public Builder setConverReq(com.raven.common.protos.Message.ConverReq value) {
         if (converReqBuilder_ == null) {
@@ -3563,11 +3087,11 @@ public final class Message {
         } else {
           converReqBuilder_.setMessage(value);
         }
-        dataCase_ = 11;
+        dataCase_ = 9;
         return this;
       }
       /**
-       * <code>.com.raven.common.protos.ConverReq converReq = 11;</code>
+       * <code>.com.raven.common.protos.ConverReq converReq = 9;</code>
        */
       public Builder setConverReq(
           com.raven.common.protos.Message.ConverReq.Builder builderForValue) {
@@ -3577,15 +3101,15 @@ public final class Message {
         } else {
           converReqBuilder_.setMessage(builderForValue.build());
         }
-        dataCase_ = 11;
+        dataCase_ = 9;
         return this;
       }
       /**
-       * <code>.com.raven.common.protos.ConverReq converReq = 11;</code>
+       * <code>.com.raven.common.protos.ConverReq converReq = 9;</code>
        */
       public Builder mergeConverReq(com.raven.common.protos.Message.ConverReq value) {
         if (converReqBuilder_ == null) {
-          if (dataCase_ == 11 &&
+          if (dataCase_ == 9 &&
               data_ != com.raven.common.protos.Message.ConverReq.getDefaultInstance()) {
             data_ = com.raven.common.protos.Message.ConverReq.newBuilder((com.raven.common.protos.Message.ConverReq) data_)
                 .mergeFrom(value).buildPartial();
@@ -3594,26 +3118,26 @@ public final class Message {
           }
           onChanged();
         } else {
-          if (dataCase_ == 11) {
+          if (dataCase_ == 9) {
             converReqBuilder_.mergeFrom(value);
           }
           converReqBuilder_.setMessage(value);
         }
-        dataCase_ = 11;
+        dataCase_ = 9;
         return this;
       }
       /**
-       * <code>.com.raven.common.protos.ConverReq converReq = 11;</code>
+       * <code>.com.raven.common.protos.ConverReq converReq = 9;</code>
        */
       public Builder clearConverReq() {
         if (converReqBuilder_ == null) {
-          if (dataCase_ == 11) {
+          if (dataCase_ == 9) {
             dataCase_ = 0;
             data_ = null;
             onChanged();
           }
         } else {
-          if (dataCase_ == 11) {
+          if (dataCase_ == 9) {
             dataCase_ = 0;
             data_ = null;
           }
@@ -3622,32 +3146,32 @@ public final class Message {
         return this;
       }
       /**
-       * <code>.com.raven.common.protos.ConverReq converReq = 11;</code>
+       * <code>.com.raven.common.protos.ConverReq converReq = 9;</code>
        */
       public com.raven.common.protos.Message.ConverReq.Builder getConverReqBuilder() {
         return getConverReqFieldBuilder().getBuilder();
       }
       /**
-       * <code>.com.raven.common.protos.ConverReq converReq = 11;</code>
+       * <code>.com.raven.common.protos.ConverReq converReq = 9;</code>
        */
       public com.raven.common.protos.Message.ConverReqOrBuilder getConverReqOrBuilder() {
-        if ((dataCase_ == 11) && (converReqBuilder_ != null)) {
+        if ((dataCase_ == 9) && (converReqBuilder_ != null)) {
           return converReqBuilder_.getMessageOrBuilder();
         } else {
-          if (dataCase_ == 11) {
+          if (dataCase_ == 9) {
             return (com.raven.common.protos.Message.ConverReq) data_;
           }
           return com.raven.common.protos.Message.ConverReq.getDefaultInstance();
         }
       }
       /**
-       * <code>.com.raven.common.protos.ConverReq converReq = 11;</code>
+       * <code>.com.raven.common.protos.ConverReq converReq = 9;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           com.raven.common.protos.Message.ConverReq, com.raven.common.protos.Message.ConverReq.Builder, com.raven.common.protos.Message.ConverReqOrBuilder> 
           getConverReqFieldBuilder() {
         if (converReqBuilder_ == null) {
-          if (!(dataCase_ == 11)) {
+          if (!(dataCase_ == 9)) {
             data_ = com.raven.common.protos.Message.ConverReq.getDefaultInstance();
           }
           converReqBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
@@ -3657,7 +3181,7 @@ public final class Message {
                   isClean());
           data_ = null;
         }
-        dataCase_ = 11;
+        dataCase_ = 9;
         onChanged();;
         return converReqBuilder_;
       }
@@ -3665,29 +3189,29 @@ public final class Message {
       private com.google.protobuf.SingleFieldBuilderV3<
           com.raven.common.protos.Message.ConverAck, com.raven.common.protos.Message.ConverAck.Builder, com.raven.common.protos.Message.ConverAckOrBuilder> converAckBuilder_;
       /**
-       * <code>.com.raven.common.protos.ConverAck converAck = 12;</code>
+       * <code>.com.raven.common.protos.ConverAck converAck = 10;</code>
        */
       public boolean hasConverAck() {
-        return dataCase_ == 12;
+        return dataCase_ == 10;
       }
       /**
-       * <code>.com.raven.common.protos.ConverAck converAck = 12;</code>
+       * <code>.com.raven.common.protos.ConverAck converAck = 10;</code>
        */
       public com.raven.common.protos.Message.ConverAck getConverAck() {
         if (converAckBuilder_ == null) {
-          if (dataCase_ == 12) {
+          if (dataCase_ == 10) {
             return (com.raven.common.protos.Message.ConverAck) data_;
           }
           return com.raven.common.protos.Message.ConverAck.getDefaultInstance();
         } else {
-          if (dataCase_ == 12) {
+          if (dataCase_ == 10) {
             return converAckBuilder_.getMessage();
           }
           return com.raven.common.protos.Message.ConverAck.getDefaultInstance();
         }
       }
       /**
-       * <code>.com.raven.common.protos.ConverAck converAck = 12;</code>
+       * <code>.com.raven.common.protos.ConverAck converAck = 10;</code>
        */
       public Builder setConverAck(com.raven.common.protos.Message.ConverAck value) {
         if (converAckBuilder_ == null) {
@@ -3699,11 +3223,11 @@ public final class Message {
         } else {
           converAckBuilder_.setMessage(value);
         }
-        dataCase_ = 12;
+        dataCase_ = 10;
         return this;
       }
       /**
-       * <code>.com.raven.common.protos.ConverAck converAck = 12;</code>
+       * <code>.com.raven.common.protos.ConverAck converAck = 10;</code>
        */
       public Builder setConverAck(
           com.raven.common.protos.Message.ConverAck.Builder builderForValue) {
@@ -3713,15 +3237,15 @@ public final class Message {
         } else {
           converAckBuilder_.setMessage(builderForValue.build());
         }
-        dataCase_ = 12;
+        dataCase_ = 10;
         return this;
       }
       /**
-       * <code>.com.raven.common.protos.ConverAck converAck = 12;</code>
+       * <code>.com.raven.common.protos.ConverAck converAck = 10;</code>
        */
       public Builder mergeConverAck(com.raven.common.protos.Message.ConverAck value) {
         if (converAckBuilder_ == null) {
-          if (dataCase_ == 12 &&
+          if (dataCase_ == 10 &&
               data_ != com.raven.common.protos.Message.ConverAck.getDefaultInstance()) {
             data_ = com.raven.common.protos.Message.ConverAck.newBuilder((com.raven.common.protos.Message.ConverAck) data_)
                 .mergeFrom(value).buildPartial();
@@ -3730,26 +3254,26 @@ public final class Message {
           }
           onChanged();
         } else {
-          if (dataCase_ == 12) {
+          if (dataCase_ == 10) {
             converAckBuilder_.mergeFrom(value);
           }
           converAckBuilder_.setMessage(value);
         }
-        dataCase_ = 12;
+        dataCase_ = 10;
         return this;
       }
       /**
-       * <code>.com.raven.common.protos.ConverAck converAck = 12;</code>
+       * <code>.com.raven.common.protos.ConverAck converAck = 10;</code>
        */
       public Builder clearConverAck() {
         if (converAckBuilder_ == null) {
-          if (dataCase_ == 12) {
+          if (dataCase_ == 10) {
             dataCase_ = 0;
             data_ = null;
             onChanged();
           }
         } else {
-          if (dataCase_ == 12) {
+          if (dataCase_ == 10) {
             dataCase_ = 0;
             data_ = null;
           }
@@ -3758,32 +3282,32 @@ public final class Message {
         return this;
       }
       /**
-       * <code>.com.raven.common.protos.ConverAck converAck = 12;</code>
+       * <code>.com.raven.common.protos.ConverAck converAck = 10;</code>
        */
       public com.raven.common.protos.Message.ConverAck.Builder getConverAckBuilder() {
         return getConverAckFieldBuilder().getBuilder();
       }
       /**
-       * <code>.com.raven.common.protos.ConverAck converAck = 12;</code>
+       * <code>.com.raven.common.protos.ConverAck converAck = 10;</code>
        */
       public com.raven.common.protos.Message.ConverAckOrBuilder getConverAckOrBuilder() {
-        if ((dataCase_ == 12) && (converAckBuilder_ != null)) {
+        if ((dataCase_ == 10) && (converAckBuilder_ != null)) {
           return converAckBuilder_.getMessageOrBuilder();
         } else {
-          if (dataCase_ == 12) {
+          if (dataCase_ == 10) {
             return (com.raven.common.protos.Message.ConverAck) data_;
           }
           return com.raven.common.protos.Message.ConverAck.getDefaultInstance();
         }
       }
       /**
-       * <code>.com.raven.common.protos.ConverAck converAck = 12;</code>
+       * <code>.com.raven.common.protos.ConverAck converAck = 10;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           com.raven.common.protos.Message.ConverAck, com.raven.common.protos.Message.ConverAck.Builder, com.raven.common.protos.Message.ConverAckOrBuilder> 
           getConverAckFieldBuilder() {
         if (converAckBuilder_ == null) {
-          if (!(dataCase_ == 12)) {
+          if (!(dataCase_ == 10)) {
             data_ = com.raven.common.protos.Message.ConverAck.getDefaultInstance();
           }
           converAckBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
@@ -3793,9 +3317,145 @@ public final class Message {
                   isClean());
           data_ = null;
         }
-        dataCase_ = 12;
+        dataCase_ = 10;
         onChanged();;
         return converAckBuilder_;
+      }
+
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.raven.common.protos.Message.SSMessage, com.raven.common.protos.Message.SSMessage.Builder, com.raven.common.protos.Message.SSMessageOrBuilder> ssMessageBuilder_;
+      /**
+       * <code>.com.raven.common.protos.SSMessage ssMessage = 11;</code>
+       */
+      public boolean hasSsMessage() {
+        return dataCase_ == 11;
+      }
+      /**
+       * <code>.com.raven.common.protos.SSMessage ssMessage = 11;</code>
+       */
+      public com.raven.common.protos.Message.SSMessage getSsMessage() {
+        if (ssMessageBuilder_ == null) {
+          if (dataCase_ == 11) {
+            return (com.raven.common.protos.Message.SSMessage) data_;
+          }
+          return com.raven.common.protos.Message.SSMessage.getDefaultInstance();
+        } else {
+          if (dataCase_ == 11) {
+            return ssMessageBuilder_.getMessage();
+          }
+          return com.raven.common.protos.Message.SSMessage.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.com.raven.common.protos.SSMessage ssMessage = 11;</code>
+       */
+      public Builder setSsMessage(com.raven.common.protos.Message.SSMessage value) {
+        if (ssMessageBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          data_ = value;
+          onChanged();
+        } else {
+          ssMessageBuilder_.setMessage(value);
+        }
+        dataCase_ = 11;
+        return this;
+      }
+      /**
+       * <code>.com.raven.common.protos.SSMessage ssMessage = 11;</code>
+       */
+      public Builder setSsMessage(
+          com.raven.common.protos.Message.SSMessage.Builder builderForValue) {
+        if (ssMessageBuilder_ == null) {
+          data_ = builderForValue.build();
+          onChanged();
+        } else {
+          ssMessageBuilder_.setMessage(builderForValue.build());
+        }
+        dataCase_ = 11;
+        return this;
+      }
+      /**
+       * <code>.com.raven.common.protos.SSMessage ssMessage = 11;</code>
+       */
+      public Builder mergeSsMessage(com.raven.common.protos.Message.SSMessage value) {
+        if (ssMessageBuilder_ == null) {
+          if (dataCase_ == 11 &&
+              data_ != com.raven.common.protos.Message.SSMessage.getDefaultInstance()) {
+            data_ = com.raven.common.protos.Message.SSMessage.newBuilder((com.raven.common.protos.Message.SSMessage) data_)
+                .mergeFrom(value).buildPartial();
+          } else {
+            data_ = value;
+          }
+          onChanged();
+        } else {
+          if (dataCase_ == 11) {
+            ssMessageBuilder_.mergeFrom(value);
+          }
+          ssMessageBuilder_.setMessage(value);
+        }
+        dataCase_ = 11;
+        return this;
+      }
+      /**
+       * <code>.com.raven.common.protos.SSMessage ssMessage = 11;</code>
+       */
+      public Builder clearSsMessage() {
+        if (ssMessageBuilder_ == null) {
+          if (dataCase_ == 11) {
+            dataCase_ = 0;
+            data_ = null;
+            onChanged();
+          }
+        } else {
+          if (dataCase_ == 11) {
+            dataCase_ = 0;
+            data_ = null;
+          }
+          ssMessageBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>.com.raven.common.protos.SSMessage ssMessage = 11;</code>
+       */
+      public com.raven.common.protos.Message.SSMessage.Builder getSsMessageBuilder() {
+        return getSsMessageFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.com.raven.common.protos.SSMessage ssMessage = 11;</code>
+       */
+      public com.raven.common.protos.Message.SSMessageOrBuilder getSsMessageOrBuilder() {
+        if ((dataCase_ == 11) && (ssMessageBuilder_ != null)) {
+          return ssMessageBuilder_.getMessageOrBuilder();
+        } else {
+          if (dataCase_ == 11) {
+            return (com.raven.common.protos.Message.SSMessage) data_;
+          }
+          return com.raven.common.protos.Message.SSMessage.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.com.raven.common.protos.SSMessage ssMessage = 11;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.raven.common.protos.Message.SSMessage, com.raven.common.protos.Message.SSMessage.Builder, com.raven.common.protos.Message.SSMessageOrBuilder> 
+          getSsMessageFieldBuilder() {
+        if (ssMessageBuilder_ == null) {
+          if (!(dataCase_ == 11)) {
+            data_ = com.raven.common.protos.Message.SSMessage.getDefaultInstance();
+          }
+          ssMessageBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.raven.common.protos.Message.SSMessage, com.raven.common.protos.Message.SSMessage.Builder, com.raven.common.protos.Message.SSMessageOrBuilder>(
+                  (com.raven.common.protos.Message.SSMessage) data_,
+                  getParentForChildren(),
+                  isClean());
+          data_ = null;
+        }
+        dataCase_ = 11;
+        onChanged();;
+        return ssMessageBuilder_;
       }
       @java.lang.Override
       public final Builder setUnknownFields(
@@ -4552,28 +4212,10 @@ public final class Message {
 
     /**
      * <pre>
-     *描述
-     * </pre>
-     *
-     * <code>string msg = 3;</code>
-     */
-    java.lang.String getMsg();
-    /**
-     * <pre>
-     *描述
-     * </pre>
-     *
-     * <code>string msg = 3;</code>
-     */
-    com.google.protobuf.ByteString
-        getMsgBytes();
-
-    /**
-     * <pre>
      *消息时间
      * </pre>
      *
-     * <code>uint64 time = 4;</code>
+     * <code>uint64 time = 3;</code>
      */
     long getTime();
   }
@@ -4592,7 +4234,6 @@ public final class Message {
     private LoginAck() {
       id_ = 0L;
       code_ = 0;
-      msg_ = "";
       time_ = 0L;
     }
 
@@ -4631,13 +4272,7 @@ public final class Message {
               code_ = rawValue;
               break;
             }
-            case 26: {
-              java.lang.String s = input.readStringRequireUtf8();
-
-              msg_ = s;
-              break;
-            }
-            case 32: {
+            case 24: {
 
               time_ = input.readUInt64();
               break;
@@ -4712,56 +4347,14 @@ public final class Message {
       return result == null ? com.raven.common.protos.Message.Code.UNRECOGNIZED : result;
     }
 
-    public static final int MSG_FIELD_NUMBER = 3;
-    private volatile java.lang.Object msg_;
-    /**
-     * <pre>
-     *描述
-     * </pre>
-     *
-     * <code>string msg = 3;</code>
-     */
-    public java.lang.String getMsg() {
-      java.lang.Object ref = msg_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        msg_ = s;
-        return s;
-      }
-    }
-    /**
-     * <pre>
-     *描述
-     * </pre>
-     *
-     * <code>string msg = 3;</code>
-     */
-    public com.google.protobuf.ByteString
-        getMsgBytes() {
-      java.lang.Object ref = msg_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        msg_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    public static final int TIME_FIELD_NUMBER = 4;
+    public static final int TIME_FIELD_NUMBER = 3;
     private long time_;
     /**
      * <pre>
      *消息时间
      * </pre>
      *
-     * <code>uint64 time = 4;</code>
+     * <code>uint64 time = 3;</code>
      */
     public long getTime() {
       return time_;
@@ -4787,11 +4380,8 @@ public final class Message {
       if (code_ != com.raven.common.protos.Message.Code.SUCCESS.getNumber()) {
         output.writeEnum(2, code_);
       }
-      if (!getMsgBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, msg_);
-      }
       if (time_ != 0L) {
-        output.writeUInt64(4, time_);
+        output.writeUInt64(3, time_);
       }
       unknownFields.writeTo(output);
     }
@@ -4810,12 +4400,9 @@ public final class Message {
         size += com.google.protobuf.CodedOutputStream
           .computeEnumSize(2, code_);
       }
-      if (!getMsgBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, msg_);
-      }
       if (time_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-          .computeUInt64Size(4, time_);
+          .computeUInt64Size(3, time_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -4836,8 +4423,6 @@ public final class Message {
       result = result && (getId()
           == other.getId());
       result = result && code_ == other.code_;
-      result = result && getMsg()
-          .equals(other.getMsg());
       result = result && (getTime()
           == other.getTime());
       result = result && unknownFields.equals(other.unknownFields);
@@ -4856,8 +4441,6 @@ public final class Message {
           getId());
       hash = (37 * hash) + CODE_FIELD_NUMBER;
       hash = (53 * hash) + code_;
-      hash = (37 * hash) + MSG_FIELD_NUMBER;
-      hash = (53 * hash) + getMsg().hashCode();
       hash = (37 * hash) + TIME_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           getTime());
@@ -4998,8 +4581,6 @@ public final class Message {
 
         code_ = 0;
 
-        msg_ = "";
-
         time_ = 0L;
 
         return this;
@@ -5030,7 +4611,6 @@ public final class Message {
         com.raven.common.protos.Message.LoginAck result = new com.raven.common.protos.Message.LoginAck(this);
         result.id_ = id_;
         result.code_ = code_;
-        result.msg_ = msg_;
         result.time_ = time_;
         onBuilt();
         return result;
@@ -5085,10 +4665,6 @@ public final class Message {
         }
         if (other.code_ != 0) {
           setCodeValue(other.getCodeValue());
-        }
-        if (!other.getMsg().isEmpty()) {
-          msg_ = other.msg_;
-          onChanged();
         }
         if (other.getTime() != 0L) {
           setTime(other.getTime());
@@ -5225,102 +4801,13 @@ public final class Message {
         return this;
       }
 
-      private java.lang.Object msg_ = "";
-      /**
-       * <pre>
-       *描述
-       * </pre>
-       *
-       * <code>string msg = 3;</code>
-       */
-      public java.lang.String getMsg() {
-        java.lang.Object ref = msg_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          msg_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <pre>
-       *描述
-       * </pre>
-       *
-       * <code>string msg = 3;</code>
-       */
-      public com.google.protobuf.ByteString
-          getMsgBytes() {
-        java.lang.Object ref = msg_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          msg_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <pre>
-       *描述
-       * </pre>
-       *
-       * <code>string msg = 3;</code>
-       */
-      public Builder setMsg(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        msg_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       *描述
-       * </pre>
-       *
-       * <code>string msg = 3;</code>
-       */
-      public Builder clearMsg() {
-        
-        msg_ = getDefaultInstance().getMsg();
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       *描述
-       * </pre>
-       *
-       * <code>string msg = 3;</code>
-       */
-      public Builder setMsgBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        msg_ = value;
-        onChanged();
-        return this;
-      }
-
       private long time_ ;
       /**
        * <pre>
        *消息时间
        * </pre>
        *
-       * <code>uint64 time = 4;</code>
+       * <code>uint64 time = 3;</code>
        */
       public long getTime() {
         return time_;
@@ -5330,7 +4817,7 @@ public final class Message {
        *消息时间
        * </pre>
        *
-       * <code>uint64 time = 4;</code>
+       * <code>uint64 time = 3;</code>
        */
       public Builder setTime(long value) {
         
@@ -5343,7 +4830,7 @@ public final class Message {
        *消息时间
        * </pre>
        *
-       * <code>uint64 time = 4;</code>
+       * <code>uint64 time = 3;</code>
        */
       public Builder clearTime() {
         
@@ -5404,703 +4891,6 @@ public final class Message {
 
   }
 
-  public interface ServerInfoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.raven.common.protos.ServerInfo)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <pre>
-     *消息ID
-     * </pre>
-     *
-     * <code>uint64 id = 1;</code>
-     */
-    long getId();
-
-    /**
-     * <code>string ip = 2;</code>
-     */
-    java.lang.String getIp();
-    /**
-     * <code>string ip = 2;</code>
-     */
-    com.google.protobuf.ByteString
-        getIpBytes();
-
-    /**
-     * <code>uint32 port = 3;</code>
-     */
-    int getPort();
-  }
-  /**
-   * Protobuf type {@code com.raven.common.protos.ServerInfo}
-   */
-  public  static final class ServerInfo extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:com.raven.common.protos.ServerInfo)
-      ServerInfoOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use ServerInfo.newBuilder() to construct.
-    private ServerInfo(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-    private ServerInfo() {
-      id_ = 0L;
-      ip_ = "";
-      port_ = 0;
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return this.unknownFields;
-    }
-    private ServerInfo(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 8: {
-
-              id_ = input.readUInt64();
-              break;
-            }
-            case 18: {
-              java.lang.String s = input.readStringRequireUtf8();
-
-              ip_ = s;
-              break;
-            }
-            case 24: {
-
-              port_ = input.readUInt32();
-              break;
-            }
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return com.raven.common.protos.Message.internal_static_com_raven_common_protos_ServerInfo_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.raven.common.protos.Message.internal_static_com_raven_common_protos_ServerInfo_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.raven.common.protos.Message.ServerInfo.class, com.raven.common.protos.Message.ServerInfo.Builder.class);
-    }
-
-    public static final int ID_FIELD_NUMBER = 1;
-    private long id_;
-    /**
-     * <pre>
-     *消息ID
-     * </pre>
-     *
-     * <code>uint64 id = 1;</code>
-     */
-    public long getId() {
-      return id_;
-    }
-
-    public static final int IP_FIELD_NUMBER = 2;
-    private volatile java.lang.Object ip_;
-    /**
-     * <code>string ip = 2;</code>
-     */
-    public java.lang.String getIp() {
-      java.lang.Object ref = ip_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        ip_ = s;
-        return s;
-      }
-    }
-    /**
-     * <code>string ip = 2;</code>
-     */
-    public com.google.protobuf.ByteString
-        getIpBytes() {
-      java.lang.Object ref = ip_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        ip_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    public static final int PORT_FIELD_NUMBER = 3;
-    private int port_;
-    /**
-     * <code>uint32 port = 3;</code>
-     */
-    public int getPort() {
-      return port_;
-    }
-
-    private byte memoizedIsInitialized = -1;
-    @java.lang.Override
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    @java.lang.Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (id_ != 0L) {
-        output.writeUInt64(1, id_);
-      }
-      if (!getIpBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, ip_);
-      }
-      if (port_ != 0) {
-        output.writeUInt32(3, port_);
-      }
-      unknownFields.writeTo(output);
-    }
-
-    @java.lang.Override
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (id_ != 0L) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeUInt64Size(1, id_);
-      }
-      if (!getIpBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, ip_);
-      }
-      if (port_ != 0) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeUInt32Size(3, port_);
-      }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof com.raven.common.protos.Message.ServerInfo)) {
-        return super.equals(obj);
-      }
-      com.raven.common.protos.Message.ServerInfo other = (com.raven.common.protos.Message.ServerInfo) obj;
-
-      boolean result = true;
-      result = result && (getId()
-          == other.getId());
-      result = result && getIp()
-          .equals(other.getIp());
-      result = result && (getPort()
-          == other.getPort());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + ID_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-          getId());
-      hash = (37 * hash) + IP_FIELD_NUMBER;
-      hash = (53 * hash) + getIp().hashCode();
-      hash = (37 * hash) + PORT_FIELD_NUMBER;
-      hash = (53 * hash) + getPort();
-      hash = (29 * hash) + unknownFields.hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static com.raven.common.protos.Message.ServerInfo parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static com.raven.common.protos.Message.ServerInfo parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static com.raven.common.protos.Message.ServerInfo parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static com.raven.common.protos.Message.ServerInfo parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static com.raven.common.protos.Message.ServerInfo parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static com.raven.common.protos.Message.ServerInfo parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static com.raven.common.protos.Message.ServerInfo parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static com.raven.common.protos.Message.ServerInfo parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static com.raven.common.protos.Message.ServerInfo parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-    public static com.raven.common.protos.Message.ServerInfo parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static com.raven.common.protos.Message.ServerInfo parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static com.raven.common.protos.Message.ServerInfo parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    @java.lang.Override
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(com.raven.common.protos.Message.ServerInfo prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * Protobuf type {@code com.raven.common.protos.ServerInfo}
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.raven.common.protos.ServerInfo)
-        com.raven.common.protos.Message.ServerInfoOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return com.raven.common.protos.Message.internal_static_com_raven_common_protos_ServerInfo_descriptor;
-      }
-
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return com.raven.common.protos.Message.internal_static_com_raven_common_protos_ServerInfo_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                com.raven.common.protos.Message.ServerInfo.class, com.raven.common.protos.Message.ServerInfo.Builder.class);
-      }
-
-      // Construct using com.raven.common.protos.Message.ServerInfo.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-        }
-      }
-      @java.lang.Override
-      public Builder clear() {
-        super.clear();
-        id_ = 0L;
-
-        ip_ = "";
-
-        port_ = 0;
-
-        return this;
-      }
-
-      @java.lang.Override
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return com.raven.common.protos.Message.internal_static_com_raven_common_protos_ServerInfo_descriptor;
-      }
-
-      @java.lang.Override
-      public com.raven.common.protos.Message.ServerInfo getDefaultInstanceForType() {
-        return com.raven.common.protos.Message.ServerInfo.getDefaultInstance();
-      }
-
-      @java.lang.Override
-      public com.raven.common.protos.Message.ServerInfo build() {
-        com.raven.common.protos.Message.ServerInfo result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      @java.lang.Override
-      public com.raven.common.protos.Message.ServerInfo buildPartial() {
-        com.raven.common.protos.Message.ServerInfo result = new com.raven.common.protos.Message.ServerInfo(this);
-        result.id_ = id_;
-        result.ip_ = ip_;
-        result.port_ = port_;
-        onBuilt();
-        return result;
-      }
-
-      @java.lang.Override
-      public Builder clone() {
-        return (Builder) super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.raven.common.protos.Message.ServerInfo) {
-          return mergeFrom((com.raven.common.protos.Message.ServerInfo)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(com.raven.common.protos.Message.ServerInfo other) {
-        if (other == com.raven.common.protos.Message.ServerInfo.getDefaultInstance()) return this;
-        if (other.getId() != 0L) {
-          setId(other.getId());
-        }
-        if (!other.getIp().isEmpty()) {
-          ip_ = other.ip_;
-          onChanged();
-        }
-        if (other.getPort() != 0) {
-          setPort(other.getPort());
-        }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
-        return this;
-      }
-
-      @java.lang.Override
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        com.raven.common.protos.Message.ServerInfo parsedMessage = null;
-        try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (com.raven.common.protos.Message.ServerInfo) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
-        } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
-        return this;
-      }
-
-      private long id_ ;
-      /**
-       * <pre>
-       *消息ID
-       * </pre>
-       *
-       * <code>uint64 id = 1;</code>
-       */
-      public long getId() {
-        return id_;
-      }
-      /**
-       * <pre>
-       *消息ID
-       * </pre>
-       *
-       * <code>uint64 id = 1;</code>
-       */
-      public Builder setId(long value) {
-        
-        id_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       *消息ID
-       * </pre>
-       *
-       * <code>uint64 id = 1;</code>
-       */
-      public Builder clearId() {
-        
-        id_ = 0L;
-        onChanged();
-        return this;
-      }
-
-      private java.lang.Object ip_ = "";
-      /**
-       * <code>string ip = 2;</code>
-       */
-      public java.lang.String getIp() {
-        java.lang.Object ref = ip_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          ip_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <code>string ip = 2;</code>
-       */
-      public com.google.protobuf.ByteString
-          getIpBytes() {
-        java.lang.Object ref = ip_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          ip_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>string ip = 2;</code>
-       */
-      public Builder setIp(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        ip_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string ip = 2;</code>
-       */
-      public Builder clearIp() {
-        
-        ip_ = getDefaultInstance().getIp();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string ip = 2;</code>
-       */
-      public Builder setIpBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        ip_ = value;
-        onChanged();
-        return this;
-      }
-
-      private int port_ ;
-      /**
-       * <code>uint32 port = 3;</code>
-       */
-      public int getPort() {
-        return port_;
-      }
-      /**
-       * <code>uint32 port = 3;</code>
-       */
-      public Builder setPort(int value) {
-        
-        port_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>uint32 port = 3;</code>
-       */
-      public Builder clearPort() {
-        
-        port_ = 0;
-        onChanged();
-        return this;
-      }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:com.raven.common.protos.ServerInfo)
-    }
-
-    // @@protoc_insertion_point(class_scope:com.raven.common.protos.ServerInfo)
-    private static final com.raven.common.protos.Message.ServerInfo DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new com.raven.common.protos.Message.ServerInfo();
-    }
-
-    public static com.raven.common.protos.Message.ServerInfo getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    private static final com.google.protobuf.Parser<ServerInfo>
-        PARSER = new com.google.protobuf.AbstractParser<ServerInfo>() {
-      @java.lang.Override
-      public ServerInfo parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new ServerInfo(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<ServerInfo> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<ServerInfo> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.raven.common.protos.Message.ServerInfo getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
   public interface UpDownMessageOrBuilder extends
       // @@protoc_insertion_point(interface_extends:com.raven.common.protos.UpDownMessage)
       com.google.protobuf.MessageOrBuilder {
@@ -6116,7 +4906,7 @@ public final class Message {
 
     /**
      * <pre>
-     * 客户端消息ID
+     * 客户端消息ID，上行CS需要，下行SC不需要
      * </pre>
      *
      * <code>uint64 cid = 2;</code>
@@ -6143,7 +4933,7 @@ public final class Message {
 
     /**
      * <pre>
-     * 接收人ID
+     * 单聊为接收者id, 群聊为group id
      * </pre>
      *
      * <code>string targetUid = 4;</code>
@@ -6151,7 +4941,7 @@ public final class Message {
     java.lang.String getTargetUid();
     /**
      * <pre>
-     * 接收人ID
+     * 单聊为接收者id, 群聊为group id
      * </pre>
      *
      * <code>string targetUid = 4;</code>
@@ -6161,46 +4951,10 @@ public final class Message {
 
     /**
      * <pre>
-     *  群ID
-     * </pre>
-     *
-     * <code>string groupId = 5;</code>
-     */
-    java.lang.String getGroupId();
-    /**
-     * <pre>
-     *  群ID
-     * </pre>
-     *
-     * <code>string groupId = 5;</code>
-     */
-    com.google.protobuf.ByteString
-        getGroupIdBytes();
-
-    /**
-     * <pre>
-     * 会话id
-     * </pre>
-     *
-     * <code>string converId = 6;</code>
-     */
-    java.lang.String getConverId();
-    /**
-     * <pre>
-     * 会话id
-     * </pre>
-     *
-     * <code>string converId = 6;</code>
-     */
-    com.google.protobuf.ByteString
-        getConverIdBytes();
-
-    /**
-     * <pre>
      * 会话类型
      * </pre>
      *
-     * <code>.com.raven.common.protos.ConverType converType = 7;</code>
+     * <code>.com.raven.common.protos.ConverType converType = 5;</code>
      */
     int getConverTypeValue();
     /**
@@ -6208,7 +4962,7 @@ public final class Message {
      * 会话类型
      * </pre>
      *
-     * <code>.com.raven.common.protos.ConverType converType = 7;</code>
+     * <code>.com.raven.common.protos.ConverType converType = 5;</code>
      */
     com.raven.common.protos.Message.ConverType getConverType();
 
@@ -6217,7 +4971,7 @@ public final class Message {
      * 内容
      * </pre>
      *
-     * <code>.com.raven.common.protos.MessageContent content = 8;</code>
+     * <code>.com.raven.common.protos.MessageContent content = 6;</code>
      */
     boolean hasContent();
     /**
@@ -6225,7 +4979,7 @@ public final class Message {
      * 内容
      * </pre>
      *
-     * <code>.com.raven.common.protos.MessageContent content = 8;</code>
+     * <code>.com.raven.common.protos.MessageContent content = 6;</code>
      */
     com.raven.common.protos.Message.MessageContent getContent();
     /**
@@ -6233,13 +4987,13 @@ public final class Message {
      * 内容
      * </pre>
      *
-     * <code>.com.raven.common.protos.MessageContent content = 8;</code>
+     * <code>.com.raven.common.protos.MessageContent content = 6;</code>
      */
     com.raven.common.protos.Message.MessageContentOrBuilder getContentOrBuilder();
   }
   /**
    * <pre>
-   * 上下行消息
+   * 客户端至服务器，上下行消息
    * </pre>
    *
    * Protobuf type {@code com.raven.common.protos.UpDownMessage}
@@ -6258,8 +5012,6 @@ public final class Message {
       cid_ = 0L;
       fromUid_ = "";
       targetUid_ = "";
-      groupId_ = "";
-      converId_ = "";
       converType_ = 0;
     }
 
@@ -6309,25 +5061,13 @@ public final class Message {
               targetUid_ = s;
               break;
             }
-            case 42: {
-              java.lang.String s = input.readStringRequireUtf8();
-
-              groupId_ = s;
-              break;
-            }
-            case 50: {
-              java.lang.String s = input.readStringRequireUtf8();
-
-              converId_ = s;
-              break;
-            }
-            case 56: {
+            case 40: {
               int rawValue = input.readEnum();
 
               converType_ = rawValue;
               break;
             }
-            case 66: {
+            case 50: {
               com.raven.common.protos.Message.MessageContent.Builder subBuilder = null;
               if (content_ != null) {
                 subBuilder = content_.toBuilder();
@@ -6389,7 +5129,7 @@ public final class Message {
     private long cid_;
     /**
      * <pre>
-     * 客户端消息ID
+     * 客户端消息ID，上行CS需要，下行SC不需要
      * </pre>
      *
      * <code>uint64 cid = 2;</code>
@@ -6444,7 +5184,7 @@ public final class Message {
     private volatile java.lang.Object targetUid_;
     /**
      * <pre>
-     * 接收人ID
+     * 单聊为接收者id, 群聊为group id
      * </pre>
      *
      * <code>string targetUid = 4;</code>
@@ -6463,7 +5203,7 @@ public final class Message {
     }
     /**
      * <pre>
-     * 接收人ID
+     * 单聊为接收者id, 群聊为group id
      * </pre>
      *
      * <code>string targetUid = 4;</code>
@@ -6482,98 +5222,14 @@ public final class Message {
       }
     }
 
-    public static final int GROUPID_FIELD_NUMBER = 5;
-    private volatile java.lang.Object groupId_;
-    /**
-     * <pre>
-     *  群ID
-     * </pre>
-     *
-     * <code>string groupId = 5;</code>
-     */
-    public java.lang.String getGroupId() {
-      java.lang.Object ref = groupId_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        groupId_ = s;
-        return s;
-      }
-    }
-    /**
-     * <pre>
-     *  群ID
-     * </pre>
-     *
-     * <code>string groupId = 5;</code>
-     */
-    public com.google.protobuf.ByteString
-        getGroupIdBytes() {
-      java.lang.Object ref = groupId_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        groupId_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    public static final int CONVERID_FIELD_NUMBER = 6;
-    private volatile java.lang.Object converId_;
-    /**
-     * <pre>
-     * 会话id
-     * </pre>
-     *
-     * <code>string converId = 6;</code>
-     */
-    public java.lang.String getConverId() {
-      java.lang.Object ref = converId_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        converId_ = s;
-        return s;
-      }
-    }
-    /**
-     * <pre>
-     * 会话id
-     * </pre>
-     *
-     * <code>string converId = 6;</code>
-     */
-    public com.google.protobuf.ByteString
-        getConverIdBytes() {
-      java.lang.Object ref = converId_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        converId_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    public static final int CONVERTYPE_FIELD_NUMBER = 7;
+    public static final int CONVERTYPE_FIELD_NUMBER = 5;
     private int converType_;
     /**
      * <pre>
      * 会话类型
      * </pre>
      *
-     * <code>.com.raven.common.protos.ConverType converType = 7;</code>
+     * <code>.com.raven.common.protos.ConverType converType = 5;</code>
      */
     public int getConverTypeValue() {
       return converType_;
@@ -6583,7 +5239,7 @@ public final class Message {
      * 会话类型
      * </pre>
      *
-     * <code>.com.raven.common.protos.ConverType converType = 7;</code>
+     * <code>.com.raven.common.protos.ConverType converType = 5;</code>
      */
     public com.raven.common.protos.Message.ConverType getConverType() {
       @SuppressWarnings("deprecation")
@@ -6591,14 +5247,14 @@ public final class Message {
       return result == null ? com.raven.common.protos.Message.ConverType.UNRECOGNIZED : result;
     }
 
-    public static final int CONTENT_FIELD_NUMBER = 8;
+    public static final int CONTENT_FIELD_NUMBER = 6;
     private com.raven.common.protos.Message.MessageContent content_;
     /**
      * <pre>
      * 内容
      * </pre>
      *
-     * <code>.com.raven.common.protos.MessageContent content = 8;</code>
+     * <code>.com.raven.common.protos.MessageContent content = 6;</code>
      */
     public boolean hasContent() {
       return content_ != null;
@@ -6608,7 +5264,7 @@ public final class Message {
      * 内容
      * </pre>
      *
-     * <code>.com.raven.common.protos.MessageContent content = 8;</code>
+     * <code>.com.raven.common.protos.MessageContent content = 6;</code>
      */
     public com.raven.common.protos.Message.MessageContent getContent() {
       return content_ == null ? com.raven.common.protos.Message.MessageContent.getDefaultInstance() : content_;
@@ -6618,7 +5274,7 @@ public final class Message {
      * 内容
      * </pre>
      *
-     * <code>.com.raven.common.protos.MessageContent content = 8;</code>
+     * <code>.com.raven.common.protos.MessageContent content = 6;</code>
      */
     public com.raven.common.protos.Message.MessageContentOrBuilder getContentOrBuilder() {
       return getContent();
@@ -6650,17 +5306,11 @@ public final class Message {
       if (!getTargetUidBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 4, targetUid_);
       }
-      if (!getGroupIdBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 5, groupId_);
-      }
-      if (!getConverIdBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 6, converId_);
-      }
       if (converType_ != com.raven.common.protos.Message.ConverType.SINGLE.getNumber()) {
-        output.writeEnum(7, converType_);
+        output.writeEnum(5, converType_);
       }
       if (content_ != null) {
-        output.writeMessage(8, getContent());
+        output.writeMessage(6, getContent());
       }
       unknownFields.writeTo(output);
     }
@@ -6685,19 +5335,13 @@ public final class Message {
       if (!getTargetUidBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, targetUid_);
       }
-      if (!getGroupIdBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, groupId_);
-      }
-      if (!getConverIdBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, converId_);
-      }
       if (converType_ != com.raven.common.protos.Message.ConverType.SINGLE.getNumber()) {
         size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(7, converType_);
+          .computeEnumSize(5, converType_);
       }
       if (content_ != null) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(8, getContent());
+          .computeMessageSize(6, getContent());
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -6723,10 +5367,6 @@ public final class Message {
           .equals(other.getFromUid());
       result = result && getTargetUid()
           .equals(other.getTargetUid());
-      result = result && getGroupId()
-          .equals(other.getGroupId());
-      result = result && getConverId()
-          .equals(other.getConverId());
       result = result && converType_ == other.converType_;
       result = result && (hasContent() == other.hasContent());
       if (hasContent()) {
@@ -6754,10 +5394,6 @@ public final class Message {
       hash = (53 * hash) + getFromUid().hashCode();
       hash = (37 * hash) + TARGETUID_FIELD_NUMBER;
       hash = (53 * hash) + getTargetUid().hashCode();
-      hash = (37 * hash) + GROUPID_FIELD_NUMBER;
-      hash = (53 * hash) + getGroupId().hashCode();
-      hash = (37 * hash) + CONVERID_FIELD_NUMBER;
-      hash = (53 * hash) + getConverId().hashCode();
       hash = (37 * hash) + CONVERTYPE_FIELD_NUMBER;
       hash = (53 * hash) + converType_;
       if (hasContent()) {
@@ -6861,7 +5497,7 @@ public final class Message {
     }
     /**
      * <pre>
-     * 上下行消息
+     * 客户端至服务器，上下行消息
      * </pre>
      *
      * Protobuf type {@code com.raven.common.protos.UpDownMessage}
@@ -6909,10 +5545,6 @@ public final class Message {
 
         targetUid_ = "";
 
-        groupId_ = "";
-
-        converId_ = "";
-
         converType_ = 0;
 
         if (contentBuilder_ == null) {
@@ -6951,8 +5583,6 @@ public final class Message {
         result.cid_ = cid_;
         result.fromUid_ = fromUid_;
         result.targetUid_ = targetUid_;
-        result.groupId_ = groupId_;
-        result.converId_ = converId_;
         result.converType_ = converType_;
         if (contentBuilder_ == null) {
           result.content_ = content_;
@@ -7019,14 +5649,6 @@ public final class Message {
         }
         if (!other.getTargetUid().isEmpty()) {
           targetUid_ = other.targetUid_;
-          onChanged();
-        }
-        if (!other.getGroupId().isEmpty()) {
-          groupId_ = other.groupId_;
-          onChanged();
-        }
-        if (!other.getConverId().isEmpty()) {
-          converId_ = other.converId_;
           onChanged();
         }
         if (other.converType_ != 0) {
@@ -7105,7 +5727,7 @@ public final class Message {
       private long cid_ ;
       /**
        * <pre>
-       * 客户端消息ID
+       * 客户端消息ID，上行CS需要，下行SC不需要
        * </pre>
        *
        * <code>uint64 cid = 2;</code>
@@ -7115,7 +5737,7 @@ public final class Message {
       }
       /**
        * <pre>
-       * 客户端消息ID
+       * 客户端消息ID，上行CS需要，下行SC不需要
        * </pre>
        *
        * <code>uint64 cid = 2;</code>
@@ -7128,7 +5750,7 @@ public final class Message {
       }
       /**
        * <pre>
-       * 客户端消息ID
+       * 客户端消息ID，上行CS需要，下行SC不需要
        * </pre>
        *
        * <code>uint64 cid = 2;</code>
@@ -7232,7 +5854,7 @@ public final class Message {
       private java.lang.Object targetUid_ = "";
       /**
        * <pre>
-       * 接收人ID
+       * 单聊为接收者id, 群聊为group id
        * </pre>
        *
        * <code>string targetUid = 4;</code>
@@ -7251,7 +5873,7 @@ public final class Message {
       }
       /**
        * <pre>
-       * 接收人ID
+       * 单聊为接收者id, 群聊为group id
        * </pre>
        *
        * <code>string targetUid = 4;</code>
@@ -7271,7 +5893,7 @@ public final class Message {
       }
       /**
        * <pre>
-       * 接收人ID
+       * 单聊为接收者id, 群聊为group id
        * </pre>
        *
        * <code>string targetUid = 4;</code>
@@ -7288,7 +5910,7 @@ public final class Message {
       }
       /**
        * <pre>
-       * 接收人ID
+       * 单聊为接收者id, 群聊为group id
        * </pre>
        *
        * <code>string targetUid = 4;</code>
@@ -7301,7 +5923,7 @@ public final class Message {
       }
       /**
        * <pre>
-       * 接收人ID
+       * 单聊为接收者id, 群聊为group id
        * </pre>
        *
        * <code>string targetUid = 4;</code>
@@ -7318,191 +5940,13 @@ public final class Message {
         return this;
       }
 
-      private java.lang.Object groupId_ = "";
-      /**
-       * <pre>
-       *  群ID
-       * </pre>
-       *
-       * <code>string groupId = 5;</code>
-       */
-      public java.lang.String getGroupId() {
-        java.lang.Object ref = groupId_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          groupId_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <pre>
-       *  群ID
-       * </pre>
-       *
-       * <code>string groupId = 5;</code>
-       */
-      public com.google.protobuf.ByteString
-          getGroupIdBytes() {
-        java.lang.Object ref = groupId_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          groupId_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <pre>
-       *  群ID
-       * </pre>
-       *
-       * <code>string groupId = 5;</code>
-       */
-      public Builder setGroupId(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        groupId_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       *  群ID
-       * </pre>
-       *
-       * <code>string groupId = 5;</code>
-       */
-      public Builder clearGroupId() {
-        
-        groupId_ = getDefaultInstance().getGroupId();
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       *  群ID
-       * </pre>
-       *
-       * <code>string groupId = 5;</code>
-       */
-      public Builder setGroupIdBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        groupId_ = value;
-        onChanged();
-        return this;
-      }
-
-      private java.lang.Object converId_ = "";
-      /**
-       * <pre>
-       * 会话id
-       * </pre>
-       *
-       * <code>string converId = 6;</code>
-       */
-      public java.lang.String getConverId() {
-        java.lang.Object ref = converId_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          converId_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <pre>
-       * 会话id
-       * </pre>
-       *
-       * <code>string converId = 6;</code>
-       */
-      public com.google.protobuf.ByteString
-          getConverIdBytes() {
-        java.lang.Object ref = converId_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          converId_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <pre>
-       * 会话id
-       * </pre>
-       *
-       * <code>string converId = 6;</code>
-       */
-      public Builder setConverId(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        converId_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * 会话id
-       * </pre>
-       *
-       * <code>string converId = 6;</code>
-       */
-      public Builder clearConverId() {
-        
-        converId_ = getDefaultInstance().getConverId();
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * 会话id
-       * </pre>
-       *
-       * <code>string converId = 6;</code>
-       */
-      public Builder setConverIdBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        converId_ = value;
-        onChanged();
-        return this;
-      }
-
       private int converType_ = 0;
       /**
        * <pre>
        * 会话类型
        * </pre>
        *
-       * <code>.com.raven.common.protos.ConverType converType = 7;</code>
+       * <code>.com.raven.common.protos.ConverType converType = 5;</code>
        */
       public int getConverTypeValue() {
         return converType_;
@@ -7512,7 +5956,7 @@ public final class Message {
        * 会话类型
        * </pre>
        *
-       * <code>.com.raven.common.protos.ConverType converType = 7;</code>
+       * <code>.com.raven.common.protos.ConverType converType = 5;</code>
        */
       public Builder setConverTypeValue(int value) {
         converType_ = value;
@@ -7524,7 +5968,7 @@ public final class Message {
        * 会话类型
        * </pre>
        *
-       * <code>.com.raven.common.protos.ConverType converType = 7;</code>
+       * <code>.com.raven.common.protos.ConverType converType = 5;</code>
        */
       public com.raven.common.protos.Message.ConverType getConverType() {
         @SuppressWarnings("deprecation")
@@ -7536,7 +5980,7 @@ public final class Message {
        * 会话类型
        * </pre>
        *
-       * <code>.com.raven.common.protos.ConverType converType = 7;</code>
+       * <code>.com.raven.common.protos.ConverType converType = 5;</code>
        */
       public Builder setConverType(com.raven.common.protos.Message.ConverType value) {
         if (value == null) {
@@ -7552,7 +5996,7 @@ public final class Message {
        * 会话类型
        * </pre>
        *
-       * <code>.com.raven.common.protos.ConverType converType = 7;</code>
+       * <code>.com.raven.common.protos.ConverType converType = 5;</code>
        */
       public Builder clearConverType() {
         
@@ -7569,7 +6013,7 @@ public final class Message {
        * 内容
        * </pre>
        *
-       * <code>.com.raven.common.protos.MessageContent content = 8;</code>
+       * <code>.com.raven.common.protos.MessageContent content = 6;</code>
        */
       public boolean hasContent() {
         return contentBuilder_ != null || content_ != null;
@@ -7579,7 +6023,7 @@ public final class Message {
        * 内容
        * </pre>
        *
-       * <code>.com.raven.common.protos.MessageContent content = 8;</code>
+       * <code>.com.raven.common.protos.MessageContent content = 6;</code>
        */
       public com.raven.common.protos.Message.MessageContent getContent() {
         if (contentBuilder_ == null) {
@@ -7593,7 +6037,7 @@ public final class Message {
        * 内容
        * </pre>
        *
-       * <code>.com.raven.common.protos.MessageContent content = 8;</code>
+       * <code>.com.raven.common.protos.MessageContent content = 6;</code>
        */
       public Builder setContent(com.raven.common.protos.Message.MessageContent value) {
         if (contentBuilder_ == null) {
@@ -7613,7 +6057,7 @@ public final class Message {
        * 内容
        * </pre>
        *
-       * <code>.com.raven.common.protos.MessageContent content = 8;</code>
+       * <code>.com.raven.common.protos.MessageContent content = 6;</code>
        */
       public Builder setContent(
           com.raven.common.protos.Message.MessageContent.Builder builderForValue) {
@@ -7631,7 +6075,7 @@ public final class Message {
        * 内容
        * </pre>
        *
-       * <code>.com.raven.common.protos.MessageContent content = 8;</code>
+       * <code>.com.raven.common.protos.MessageContent content = 6;</code>
        */
       public Builder mergeContent(com.raven.common.protos.Message.MessageContent value) {
         if (contentBuilder_ == null) {
@@ -7653,7 +6097,7 @@ public final class Message {
        * 内容
        * </pre>
        *
-       * <code>.com.raven.common.protos.MessageContent content = 8;</code>
+       * <code>.com.raven.common.protos.MessageContent content = 6;</code>
        */
       public Builder clearContent() {
         if (contentBuilder_ == null) {
@@ -7671,7 +6115,7 @@ public final class Message {
        * 内容
        * </pre>
        *
-       * <code>.com.raven.common.protos.MessageContent content = 8;</code>
+       * <code>.com.raven.common.protos.MessageContent content = 6;</code>
        */
       public com.raven.common.protos.Message.MessageContent.Builder getContentBuilder() {
         
@@ -7683,7 +6127,7 @@ public final class Message {
        * 内容
        * </pre>
        *
-       * <code>.com.raven.common.protos.MessageContent content = 8;</code>
+       * <code>.com.raven.common.protos.MessageContent content = 6;</code>
        */
       public com.raven.common.protos.Message.MessageContentOrBuilder getContentOrBuilder() {
         if (contentBuilder_ != null) {
@@ -7698,7 +6142,7 @@ public final class Message {
        * 内容
        * </pre>
        *
-       * <code>.com.raven.common.protos.MessageContent content = 8;</code>
+       * <code>.com.raven.common.protos.MessageContent content = 6;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           com.raven.common.protos.Message.MessageContent, com.raven.common.protos.Message.MessageContent.Builder, com.raven.common.protos.Message.MessageContentOrBuilder> 
@@ -7761,6 +6205,1414 @@ public final class Message {
 
     @java.lang.Override
     public com.raven.common.protos.Message.UpDownMessage getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface SSMessageOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:com.raven.common.protos.SSMessage)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <pre>
+     * 服务端消息ID
+     * </pre>
+     *
+     * <code>uint64 id = 1;</code>
+     */
+    long getId();
+
+    /**
+     * <pre>
+     * 应用信息
+     * </pre>
+     *
+     * <code>string appKey = 2;</code>
+     */
+    java.lang.String getAppKey();
+    /**
+     * <pre>
+     * 应用信息
+     * </pre>
+     *
+     * <code>string appKey = 2;</code>
+     */
+    com.google.protobuf.ByteString
+        getAppKeyBytes();
+
+    /**
+     * <pre>
+     * 发送人ID
+     * </pre>
+     *
+     * <code>string fromUid = 3;</code>
+     */
+    java.lang.String getFromUid();
+    /**
+     * <pre>
+     * 发送人ID
+     * </pre>
+     *
+     * <code>string fromUid = 3;</code>
+     */
+    com.google.protobuf.ByteString
+        getFromUidBytes();
+
+    /**
+     * <pre>
+     * 会话id
+     * </pre>
+     *
+     * <code>string convId = 4;</code>
+     */
+    java.lang.String getConvId();
+    /**
+     * <pre>
+     * 会话id
+     * </pre>
+     *
+     * <code>string convId = 4;</code>
+     */
+    com.google.protobuf.ByteString
+        getConvIdBytes();
+
+    /**
+     * <pre>
+     * 会话类型
+     * </pre>
+     *
+     * <code>.com.raven.common.protos.ConverType converType = 5;</code>
+     */
+    int getConverTypeValue();
+    /**
+     * <pre>
+     * 会话类型
+     * </pre>
+     *
+     * <code>.com.raven.common.protos.ConverType converType = 5;</code>
+     */
+    com.raven.common.protos.Message.ConverType getConverType();
+
+    /**
+     * <pre>
+     * 内容
+     * </pre>
+     *
+     * <code>.com.raven.common.protos.MessageContent content = 6;</code>
+     */
+    boolean hasContent();
+    /**
+     * <pre>
+     * 内容
+     * </pre>
+     *
+     * <code>.com.raven.common.protos.MessageContent content = 6;</code>
+     */
+    com.raven.common.protos.Message.MessageContent getContent();
+    /**
+     * <pre>
+     * 内容
+     * </pre>
+     *
+     * <code>.com.raven.common.protos.MessageContent content = 6;</code>
+     */
+    com.raven.common.protos.Message.MessageContentOrBuilder getContentOrBuilder();
+  }
+  /**
+   * <pre>
+   * 服务器至服务器消息，用于RPC通讯
+   * </pre>
+   *
+   * Protobuf type {@code com.raven.common.protos.SSMessage}
+   */
+  public  static final class SSMessage extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:com.raven.common.protos.SSMessage)
+      SSMessageOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use SSMessage.newBuilder() to construct.
+    private SSMessage(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private SSMessage() {
+      id_ = 0L;
+      appKey_ = "";
+      fromUid_ = "";
+      convId_ = "";
+      converType_ = 0;
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private SSMessage(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 8: {
+
+              id_ = input.readUInt64();
+              break;
+            }
+            case 18: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              appKey_ = s;
+              break;
+            }
+            case 26: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              fromUid_ = s;
+              break;
+            }
+            case 34: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              convId_ = s;
+              break;
+            }
+            case 40: {
+              int rawValue = input.readEnum();
+
+              converType_ = rawValue;
+              break;
+            }
+            case 50: {
+              com.raven.common.protos.Message.MessageContent.Builder subBuilder = null;
+              if (content_ != null) {
+                subBuilder = content_.toBuilder();
+              }
+              content_ = input.readMessage(com.raven.common.protos.Message.MessageContent.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(content_);
+                content_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.raven.common.protos.Message.internal_static_com_raven_common_protos_SSMessage_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.raven.common.protos.Message.internal_static_com_raven_common_protos_SSMessage_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.raven.common.protos.Message.SSMessage.class, com.raven.common.protos.Message.SSMessage.Builder.class);
+    }
+
+    public static final int ID_FIELD_NUMBER = 1;
+    private long id_;
+    /**
+     * <pre>
+     * 服务端消息ID
+     * </pre>
+     *
+     * <code>uint64 id = 1;</code>
+     */
+    public long getId() {
+      return id_;
+    }
+
+    public static final int APPKEY_FIELD_NUMBER = 2;
+    private volatile java.lang.Object appKey_;
+    /**
+     * <pre>
+     * 应用信息
+     * </pre>
+     *
+     * <code>string appKey = 2;</code>
+     */
+    public java.lang.String getAppKey() {
+      java.lang.Object ref = appKey_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        appKey_ = s;
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     * 应用信息
+     * </pre>
+     *
+     * <code>string appKey = 2;</code>
+     */
+    public com.google.protobuf.ByteString
+        getAppKeyBytes() {
+      java.lang.Object ref = appKey_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        appKey_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int FROMUID_FIELD_NUMBER = 3;
+    private volatile java.lang.Object fromUid_;
+    /**
+     * <pre>
+     * 发送人ID
+     * </pre>
+     *
+     * <code>string fromUid = 3;</code>
+     */
+    public java.lang.String getFromUid() {
+      java.lang.Object ref = fromUid_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        fromUid_ = s;
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     * 发送人ID
+     * </pre>
+     *
+     * <code>string fromUid = 3;</code>
+     */
+    public com.google.protobuf.ByteString
+        getFromUidBytes() {
+      java.lang.Object ref = fromUid_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        fromUid_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int CONVID_FIELD_NUMBER = 4;
+    private volatile java.lang.Object convId_;
+    /**
+     * <pre>
+     * 会话id
+     * </pre>
+     *
+     * <code>string convId = 4;</code>
+     */
+    public java.lang.String getConvId() {
+      java.lang.Object ref = convId_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        convId_ = s;
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     * 会话id
+     * </pre>
+     *
+     * <code>string convId = 4;</code>
+     */
+    public com.google.protobuf.ByteString
+        getConvIdBytes() {
+      java.lang.Object ref = convId_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        convId_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int CONVERTYPE_FIELD_NUMBER = 5;
+    private int converType_;
+    /**
+     * <pre>
+     * 会话类型
+     * </pre>
+     *
+     * <code>.com.raven.common.protos.ConverType converType = 5;</code>
+     */
+    public int getConverTypeValue() {
+      return converType_;
+    }
+    /**
+     * <pre>
+     * 会话类型
+     * </pre>
+     *
+     * <code>.com.raven.common.protos.ConverType converType = 5;</code>
+     */
+    public com.raven.common.protos.Message.ConverType getConverType() {
+      @SuppressWarnings("deprecation")
+      com.raven.common.protos.Message.ConverType result = com.raven.common.protos.Message.ConverType.valueOf(converType_);
+      return result == null ? com.raven.common.protos.Message.ConverType.UNRECOGNIZED : result;
+    }
+
+    public static final int CONTENT_FIELD_NUMBER = 6;
+    private com.raven.common.protos.Message.MessageContent content_;
+    /**
+     * <pre>
+     * 内容
+     * </pre>
+     *
+     * <code>.com.raven.common.protos.MessageContent content = 6;</code>
+     */
+    public boolean hasContent() {
+      return content_ != null;
+    }
+    /**
+     * <pre>
+     * 内容
+     * </pre>
+     *
+     * <code>.com.raven.common.protos.MessageContent content = 6;</code>
+     */
+    public com.raven.common.protos.Message.MessageContent getContent() {
+      return content_ == null ? com.raven.common.protos.Message.MessageContent.getDefaultInstance() : content_;
+    }
+    /**
+     * <pre>
+     * 内容
+     * </pre>
+     *
+     * <code>.com.raven.common.protos.MessageContent content = 6;</code>
+     */
+    public com.raven.common.protos.Message.MessageContentOrBuilder getContentOrBuilder() {
+      return getContent();
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (id_ != 0L) {
+        output.writeUInt64(1, id_);
+      }
+      if (!getAppKeyBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, appKey_);
+      }
+      if (!getFromUidBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, fromUid_);
+      }
+      if (!getConvIdBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, convId_);
+      }
+      if (converType_ != com.raven.common.protos.Message.ConverType.SINGLE.getNumber()) {
+        output.writeEnum(5, converType_);
+      }
+      if (content_ != null) {
+        output.writeMessage(6, getContent());
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (id_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt64Size(1, id_);
+      }
+      if (!getAppKeyBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, appKey_);
+      }
+      if (!getFromUidBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, fromUid_);
+      }
+      if (!getConvIdBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, convId_);
+      }
+      if (converType_ != com.raven.common.protos.Message.ConverType.SINGLE.getNumber()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeEnumSize(5, converType_);
+      }
+      if (content_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(6, getContent());
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.raven.common.protos.Message.SSMessage)) {
+        return super.equals(obj);
+      }
+      com.raven.common.protos.Message.SSMessage other = (com.raven.common.protos.Message.SSMessage) obj;
+
+      boolean result = true;
+      result = result && (getId()
+          == other.getId());
+      result = result && getAppKey()
+          .equals(other.getAppKey());
+      result = result && getFromUid()
+          .equals(other.getFromUid());
+      result = result && getConvId()
+          .equals(other.getConvId());
+      result = result && converType_ == other.converType_;
+      result = result && (hasContent() == other.hasContent());
+      if (hasContent()) {
+        result = result && getContent()
+            .equals(other.getContent());
+      }
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + ID_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getId());
+      hash = (37 * hash) + APPKEY_FIELD_NUMBER;
+      hash = (53 * hash) + getAppKey().hashCode();
+      hash = (37 * hash) + FROMUID_FIELD_NUMBER;
+      hash = (53 * hash) + getFromUid().hashCode();
+      hash = (37 * hash) + CONVID_FIELD_NUMBER;
+      hash = (53 * hash) + getConvId().hashCode();
+      hash = (37 * hash) + CONVERTYPE_FIELD_NUMBER;
+      hash = (53 * hash) + converType_;
+      if (hasContent()) {
+        hash = (37 * hash) + CONTENT_FIELD_NUMBER;
+        hash = (53 * hash) + getContent().hashCode();
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.raven.common.protos.Message.SSMessage parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.raven.common.protos.Message.SSMessage parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.raven.common.protos.Message.SSMessage parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.raven.common.protos.Message.SSMessage parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.raven.common.protos.Message.SSMessage parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.raven.common.protos.Message.SSMessage parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.raven.common.protos.Message.SSMessage parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.raven.common.protos.Message.SSMessage parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.raven.common.protos.Message.SSMessage parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.raven.common.protos.Message.SSMessage parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.raven.common.protos.Message.SSMessage parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.raven.common.protos.Message.SSMessage parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.raven.common.protos.Message.SSMessage prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * <pre>
+     * 服务器至服务器消息，用于RPC通讯
+     * </pre>
+     *
+     * Protobuf type {@code com.raven.common.protos.SSMessage}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:com.raven.common.protos.SSMessage)
+        com.raven.common.protos.Message.SSMessageOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.raven.common.protos.Message.internal_static_com_raven_common_protos_SSMessage_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.raven.common.protos.Message.internal_static_com_raven_common_protos_SSMessage_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.raven.common.protos.Message.SSMessage.class, com.raven.common.protos.Message.SSMessage.Builder.class);
+      }
+
+      // Construct using com.raven.common.protos.Message.SSMessage.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        id_ = 0L;
+
+        appKey_ = "";
+
+        fromUid_ = "";
+
+        convId_ = "";
+
+        converType_ = 0;
+
+        if (contentBuilder_ == null) {
+          content_ = null;
+        } else {
+          content_ = null;
+          contentBuilder_ = null;
+        }
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.raven.common.protos.Message.internal_static_com_raven_common_protos_SSMessage_descriptor;
+      }
+
+      @java.lang.Override
+      public com.raven.common.protos.Message.SSMessage getDefaultInstanceForType() {
+        return com.raven.common.protos.Message.SSMessage.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.raven.common.protos.Message.SSMessage build() {
+        com.raven.common.protos.Message.SSMessage result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.raven.common.protos.Message.SSMessage buildPartial() {
+        com.raven.common.protos.Message.SSMessage result = new com.raven.common.protos.Message.SSMessage(this);
+        result.id_ = id_;
+        result.appKey_ = appKey_;
+        result.fromUid_ = fromUid_;
+        result.convId_ = convId_;
+        result.converType_ = converType_;
+        if (contentBuilder_ == null) {
+          result.content_ = content_;
+        } else {
+          result.content_ = contentBuilder_.build();
+        }
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.raven.common.protos.Message.SSMessage) {
+          return mergeFrom((com.raven.common.protos.Message.SSMessage)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.raven.common.protos.Message.SSMessage other) {
+        if (other == com.raven.common.protos.Message.SSMessage.getDefaultInstance()) return this;
+        if (other.getId() != 0L) {
+          setId(other.getId());
+        }
+        if (!other.getAppKey().isEmpty()) {
+          appKey_ = other.appKey_;
+          onChanged();
+        }
+        if (!other.getFromUid().isEmpty()) {
+          fromUid_ = other.fromUid_;
+          onChanged();
+        }
+        if (!other.getConvId().isEmpty()) {
+          convId_ = other.convId_;
+          onChanged();
+        }
+        if (other.converType_ != 0) {
+          setConverTypeValue(other.getConverTypeValue());
+        }
+        if (other.hasContent()) {
+          mergeContent(other.getContent());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.raven.common.protos.Message.SSMessage parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.raven.common.protos.Message.SSMessage) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private long id_ ;
+      /**
+       * <pre>
+       * 服务端消息ID
+       * </pre>
+       *
+       * <code>uint64 id = 1;</code>
+       */
+      public long getId() {
+        return id_;
+      }
+      /**
+       * <pre>
+       * 服务端消息ID
+       * </pre>
+       *
+       * <code>uint64 id = 1;</code>
+       */
+      public Builder setId(long value) {
+        
+        id_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * 服务端消息ID
+       * </pre>
+       *
+       * <code>uint64 id = 1;</code>
+       */
+      public Builder clearId() {
+        
+        id_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object appKey_ = "";
+      /**
+       * <pre>
+       * 应用信息
+       * </pre>
+       *
+       * <code>string appKey = 2;</code>
+       */
+      public java.lang.String getAppKey() {
+        java.lang.Object ref = appKey_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          appKey_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <pre>
+       * 应用信息
+       * </pre>
+       *
+       * <code>string appKey = 2;</code>
+       */
+      public com.google.protobuf.ByteString
+          getAppKeyBytes() {
+        java.lang.Object ref = appKey_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          appKey_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       * 应用信息
+       * </pre>
+       *
+       * <code>string appKey = 2;</code>
+       */
+      public Builder setAppKey(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        appKey_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * 应用信息
+       * </pre>
+       *
+       * <code>string appKey = 2;</code>
+       */
+      public Builder clearAppKey() {
+        
+        appKey_ = getDefaultInstance().getAppKey();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * 应用信息
+       * </pre>
+       *
+       * <code>string appKey = 2;</code>
+       */
+      public Builder setAppKeyBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        appKey_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object fromUid_ = "";
+      /**
+       * <pre>
+       * 发送人ID
+       * </pre>
+       *
+       * <code>string fromUid = 3;</code>
+       */
+      public java.lang.String getFromUid() {
+        java.lang.Object ref = fromUid_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          fromUid_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <pre>
+       * 发送人ID
+       * </pre>
+       *
+       * <code>string fromUid = 3;</code>
+       */
+      public com.google.protobuf.ByteString
+          getFromUidBytes() {
+        java.lang.Object ref = fromUid_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          fromUid_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       * 发送人ID
+       * </pre>
+       *
+       * <code>string fromUid = 3;</code>
+       */
+      public Builder setFromUid(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        fromUid_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * 发送人ID
+       * </pre>
+       *
+       * <code>string fromUid = 3;</code>
+       */
+      public Builder clearFromUid() {
+        
+        fromUid_ = getDefaultInstance().getFromUid();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * 发送人ID
+       * </pre>
+       *
+       * <code>string fromUid = 3;</code>
+       */
+      public Builder setFromUidBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        fromUid_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object convId_ = "";
+      /**
+       * <pre>
+       * 会话id
+       * </pre>
+       *
+       * <code>string convId = 4;</code>
+       */
+      public java.lang.String getConvId() {
+        java.lang.Object ref = convId_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          convId_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <pre>
+       * 会话id
+       * </pre>
+       *
+       * <code>string convId = 4;</code>
+       */
+      public com.google.protobuf.ByteString
+          getConvIdBytes() {
+        java.lang.Object ref = convId_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          convId_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       * 会话id
+       * </pre>
+       *
+       * <code>string convId = 4;</code>
+       */
+      public Builder setConvId(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        convId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * 会话id
+       * </pre>
+       *
+       * <code>string convId = 4;</code>
+       */
+      public Builder clearConvId() {
+        
+        convId_ = getDefaultInstance().getConvId();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * 会话id
+       * </pre>
+       *
+       * <code>string convId = 4;</code>
+       */
+      public Builder setConvIdBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        convId_ = value;
+        onChanged();
+        return this;
+      }
+
+      private int converType_ = 0;
+      /**
+       * <pre>
+       * 会话类型
+       * </pre>
+       *
+       * <code>.com.raven.common.protos.ConverType converType = 5;</code>
+       */
+      public int getConverTypeValue() {
+        return converType_;
+      }
+      /**
+       * <pre>
+       * 会话类型
+       * </pre>
+       *
+       * <code>.com.raven.common.protos.ConverType converType = 5;</code>
+       */
+      public Builder setConverTypeValue(int value) {
+        converType_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * 会话类型
+       * </pre>
+       *
+       * <code>.com.raven.common.protos.ConverType converType = 5;</code>
+       */
+      public com.raven.common.protos.Message.ConverType getConverType() {
+        @SuppressWarnings("deprecation")
+        com.raven.common.protos.Message.ConverType result = com.raven.common.protos.Message.ConverType.valueOf(converType_);
+        return result == null ? com.raven.common.protos.Message.ConverType.UNRECOGNIZED : result;
+      }
+      /**
+       * <pre>
+       * 会话类型
+       * </pre>
+       *
+       * <code>.com.raven.common.protos.ConverType converType = 5;</code>
+       */
+      public Builder setConverType(com.raven.common.protos.Message.ConverType value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        
+        converType_ = value.getNumber();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * 会话类型
+       * </pre>
+       *
+       * <code>.com.raven.common.protos.ConverType converType = 5;</code>
+       */
+      public Builder clearConverType() {
+        
+        converType_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private com.raven.common.protos.Message.MessageContent content_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.raven.common.protos.Message.MessageContent, com.raven.common.protos.Message.MessageContent.Builder, com.raven.common.protos.Message.MessageContentOrBuilder> contentBuilder_;
+      /**
+       * <pre>
+       * 内容
+       * </pre>
+       *
+       * <code>.com.raven.common.protos.MessageContent content = 6;</code>
+       */
+      public boolean hasContent() {
+        return contentBuilder_ != null || content_ != null;
+      }
+      /**
+       * <pre>
+       * 内容
+       * </pre>
+       *
+       * <code>.com.raven.common.protos.MessageContent content = 6;</code>
+       */
+      public com.raven.common.protos.Message.MessageContent getContent() {
+        if (contentBuilder_ == null) {
+          return content_ == null ? com.raven.common.protos.Message.MessageContent.getDefaultInstance() : content_;
+        } else {
+          return contentBuilder_.getMessage();
+        }
+      }
+      /**
+       * <pre>
+       * 内容
+       * </pre>
+       *
+       * <code>.com.raven.common.protos.MessageContent content = 6;</code>
+       */
+      public Builder setContent(com.raven.common.protos.Message.MessageContent value) {
+        if (contentBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          content_ = value;
+          onChanged();
+        } else {
+          contentBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <pre>
+       * 内容
+       * </pre>
+       *
+       * <code>.com.raven.common.protos.MessageContent content = 6;</code>
+       */
+      public Builder setContent(
+          com.raven.common.protos.Message.MessageContent.Builder builderForValue) {
+        if (contentBuilder_ == null) {
+          content_ = builderForValue.build();
+          onChanged();
+        } else {
+          contentBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <pre>
+       * 内容
+       * </pre>
+       *
+       * <code>.com.raven.common.protos.MessageContent content = 6;</code>
+       */
+      public Builder mergeContent(com.raven.common.protos.Message.MessageContent value) {
+        if (contentBuilder_ == null) {
+          if (content_ != null) {
+            content_ =
+              com.raven.common.protos.Message.MessageContent.newBuilder(content_).mergeFrom(value).buildPartial();
+          } else {
+            content_ = value;
+          }
+          onChanged();
+        } else {
+          contentBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <pre>
+       * 内容
+       * </pre>
+       *
+       * <code>.com.raven.common.protos.MessageContent content = 6;</code>
+       */
+      public Builder clearContent() {
+        if (contentBuilder_ == null) {
+          content_ = null;
+          onChanged();
+        } else {
+          content_ = null;
+          contentBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <pre>
+       * 内容
+       * </pre>
+       *
+       * <code>.com.raven.common.protos.MessageContent content = 6;</code>
+       */
+      public com.raven.common.protos.Message.MessageContent.Builder getContentBuilder() {
+        
+        onChanged();
+        return getContentFieldBuilder().getBuilder();
+      }
+      /**
+       * <pre>
+       * 内容
+       * </pre>
+       *
+       * <code>.com.raven.common.protos.MessageContent content = 6;</code>
+       */
+      public com.raven.common.protos.Message.MessageContentOrBuilder getContentOrBuilder() {
+        if (contentBuilder_ != null) {
+          return contentBuilder_.getMessageOrBuilder();
+        } else {
+          return content_ == null ?
+              com.raven.common.protos.Message.MessageContent.getDefaultInstance() : content_;
+        }
+      }
+      /**
+       * <pre>
+       * 内容
+       * </pre>
+       *
+       * <code>.com.raven.common.protos.MessageContent content = 6;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.raven.common.protos.Message.MessageContent, com.raven.common.protos.Message.MessageContent.Builder, com.raven.common.protos.Message.MessageContentOrBuilder> 
+          getContentFieldBuilder() {
+        if (contentBuilder_ == null) {
+          contentBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.raven.common.protos.Message.MessageContent, com.raven.common.protos.Message.MessageContent.Builder, com.raven.common.protos.Message.MessageContentOrBuilder>(
+                  getContent(),
+                  getParentForChildren(),
+                  isClean());
+          content_ = null;
+        }
+        return contentBuilder_;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:com.raven.common.protos.SSMessage)
+    }
+
+    // @@protoc_insertion_point(class_scope:com.raven.common.protos.SSMessage)
+    private static final com.raven.common.protos.Message.SSMessage DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.raven.common.protos.Message.SSMessage();
+    }
+
+    public static com.raven.common.protos.Message.SSMessage getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<SSMessage>
+        PARSER = new com.google.protobuf.AbstractParser<SSMessage>() {
+      @java.lang.Override
+      public SSMessage parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new SSMessage(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<SSMessage> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<SSMessage> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.raven.common.protos.Message.SSMessage getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -8389,46 +8241,10 @@ public final class Message {
 
     /**
      * <pre>
-     * 接收人ID
-     * </pre>
-     *
-     * <code>string targetUid = 3;</code>
-     */
-    java.lang.String getTargetUid();
-    /**
-     * <pre>
-     * 接收人ID
-     * </pre>
-     *
-     * <code>string targetUid = 3;</code>
-     */
-    com.google.protobuf.ByteString
-        getTargetUidBytes();
-
-    /**
-     * <pre>
-     * 会话id
-     * </pre>
-     *
-     * <code>string converId = 4;</code>
-     */
-    java.lang.String getConverId();
-    /**
-     * <pre>
-     * 会话id
-     * </pre>
-     *
-     * <code>string converId = 4;</code>
-     */
-    com.google.protobuf.ByteString
-        getConverIdBytes();
-
-    /**
-     * <pre>
      * 发送时间
      * </pre>
      *
-     * <code>uint64 time = 5;</code>
+     * <code>uint64 time = 3;</code>
      */
     long getTime();
 
@@ -8437,7 +8253,7 @@ public final class Message {
      * 返回码
      * </pre>
      *
-     * <code>.com.raven.common.protos.Code code = 6;</code>
+     * <code>.com.raven.common.protos.Code code = 4;</code>
      */
     int getCodeValue();
     /**
@@ -8445,7 +8261,7 @@ public final class Message {
      * 返回码
      * </pre>
      *
-     * <code>.com.raven.common.protos.Code code = 6;</code>
+     * <code>.com.raven.common.protos.Code code = 4;</code>
      */
     com.raven.common.protos.Message.Code getCode();
   }
@@ -8468,8 +8284,6 @@ public final class Message {
     private MessageAck() {
       id_ = 0L;
       cid_ = 0L;
-      targetUid_ = "";
-      converId_ = "";
       time_ = 0L;
       code_ = 0;
     }
@@ -8508,24 +8322,12 @@ public final class Message {
               cid_ = input.readUInt64();
               break;
             }
-            case 26: {
-              java.lang.String s = input.readStringRequireUtf8();
-
-              targetUid_ = s;
-              break;
-            }
-            case 34: {
-              java.lang.String s = input.readStringRequireUtf8();
-
-              converId_ = s;
-              break;
-            }
-            case 40: {
+            case 24: {
 
               time_ = input.readUInt64();
               break;
             }
-            case 48: {
+            case 32: {
               int rawValue = input.readEnum();
 
               code_ = rawValue;
@@ -8589,111 +8391,27 @@ public final class Message {
       return cid_;
     }
 
-    public static final int TARGETUID_FIELD_NUMBER = 3;
-    private volatile java.lang.Object targetUid_;
-    /**
-     * <pre>
-     * 接收人ID
-     * </pre>
-     *
-     * <code>string targetUid = 3;</code>
-     */
-    public java.lang.String getTargetUid() {
-      java.lang.Object ref = targetUid_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        targetUid_ = s;
-        return s;
-      }
-    }
-    /**
-     * <pre>
-     * 接收人ID
-     * </pre>
-     *
-     * <code>string targetUid = 3;</code>
-     */
-    public com.google.protobuf.ByteString
-        getTargetUidBytes() {
-      java.lang.Object ref = targetUid_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        targetUid_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    public static final int CONVERID_FIELD_NUMBER = 4;
-    private volatile java.lang.Object converId_;
-    /**
-     * <pre>
-     * 会话id
-     * </pre>
-     *
-     * <code>string converId = 4;</code>
-     */
-    public java.lang.String getConverId() {
-      java.lang.Object ref = converId_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        converId_ = s;
-        return s;
-      }
-    }
-    /**
-     * <pre>
-     * 会话id
-     * </pre>
-     *
-     * <code>string converId = 4;</code>
-     */
-    public com.google.protobuf.ByteString
-        getConverIdBytes() {
-      java.lang.Object ref = converId_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        converId_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    public static final int TIME_FIELD_NUMBER = 5;
+    public static final int TIME_FIELD_NUMBER = 3;
     private long time_;
     /**
      * <pre>
      * 发送时间
      * </pre>
      *
-     * <code>uint64 time = 5;</code>
+     * <code>uint64 time = 3;</code>
      */
     public long getTime() {
       return time_;
     }
 
-    public static final int CODE_FIELD_NUMBER = 6;
+    public static final int CODE_FIELD_NUMBER = 4;
     private int code_;
     /**
      * <pre>
      * 返回码
      * </pre>
      *
-     * <code>.com.raven.common.protos.Code code = 6;</code>
+     * <code>.com.raven.common.protos.Code code = 4;</code>
      */
     public int getCodeValue() {
       return code_;
@@ -8703,7 +8421,7 @@ public final class Message {
      * 返回码
      * </pre>
      *
-     * <code>.com.raven.common.protos.Code code = 6;</code>
+     * <code>.com.raven.common.protos.Code code = 4;</code>
      */
     public com.raven.common.protos.Message.Code getCode() {
       @SuppressWarnings("deprecation")
@@ -8731,17 +8449,11 @@ public final class Message {
       if (cid_ != 0L) {
         output.writeUInt64(2, cid_);
       }
-      if (!getTargetUidBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, targetUid_);
-      }
-      if (!getConverIdBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, converId_);
-      }
       if (time_ != 0L) {
-        output.writeUInt64(5, time_);
+        output.writeUInt64(3, time_);
       }
       if (code_ != com.raven.common.protos.Message.Code.SUCCESS.getNumber()) {
-        output.writeEnum(6, code_);
+        output.writeEnum(4, code_);
       }
       unknownFields.writeTo(output);
     }
@@ -8760,19 +8472,13 @@ public final class Message {
         size += com.google.protobuf.CodedOutputStream
           .computeUInt64Size(2, cid_);
       }
-      if (!getTargetUidBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, targetUid_);
-      }
-      if (!getConverIdBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, converId_);
-      }
       if (time_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-          .computeUInt64Size(5, time_);
+          .computeUInt64Size(3, time_);
       }
       if (code_ != com.raven.common.protos.Message.Code.SUCCESS.getNumber()) {
         size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(6, code_);
+          .computeEnumSize(4, code_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -8794,10 +8500,6 @@ public final class Message {
           == other.getId());
       result = result && (getCid()
           == other.getCid());
-      result = result && getTargetUid()
-          .equals(other.getTargetUid());
-      result = result && getConverId()
-          .equals(other.getConverId());
       result = result && (getTime()
           == other.getTime());
       result = result && code_ == other.code_;
@@ -8818,10 +8520,6 @@ public final class Message {
       hash = (37 * hash) + CID_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           getCid());
-      hash = (37 * hash) + TARGETUID_FIELD_NUMBER;
-      hash = (53 * hash) + getTargetUid().hashCode();
-      hash = (37 * hash) + CONVERID_FIELD_NUMBER;
-      hash = (53 * hash) + getConverId().hashCode();
       hash = (37 * hash) + TIME_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           getTime());
@@ -8968,10 +8666,6 @@ public final class Message {
 
         cid_ = 0L;
 
-        targetUid_ = "";
-
-        converId_ = "";
-
         time_ = 0L;
 
         code_ = 0;
@@ -9004,8 +8698,6 @@ public final class Message {
         com.raven.common.protos.Message.MessageAck result = new com.raven.common.protos.Message.MessageAck(this);
         result.id_ = id_;
         result.cid_ = cid_;
-        result.targetUid_ = targetUid_;
-        result.converId_ = converId_;
         result.time_ = time_;
         result.code_ = code_;
         onBuilt();
@@ -9061,14 +8753,6 @@ public final class Message {
         }
         if (other.getCid() != 0L) {
           setCid(other.getCid());
-        }
-        if (!other.getTargetUid().isEmpty()) {
-          targetUid_ = other.targetUid_;
-          onChanged();
-        }
-        if (!other.getConverId().isEmpty()) {
-          converId_ = other.converId_;
-          onChanged();
         }
         if (other.getTime() != 0L) {
           setTime(other.getTime());
@@ -9181,191 +8865,13 @@ public final class Message {
         return this;
       }
 
-      private java.lang.Object targetUid_ = "";
-      /**
-       * <pre>
-       * 接收人ID
-       * </pre>
-       *
-       * <code>string targetUid = 3;</code>
-       */
-      public java.lang.String getTargetUid() {
-        java.lang.Object ref = targetUid_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          targetUid_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <pre>
-       * 接收人ID
-       * </pre>
-       *
-       * <code>string targetUid = 3;</code>
-       */
-      public com.google.protobuf.ByteString
-          getTargetUidBytes() {
-        java.lang.Object ref = targetUid_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          targetUid_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <pre>
-       * 接收人ID
-       * </pre>
-       *
-       * <code>string targetUid = 3;</code>
-       */
-      public Builder setTargetUid(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        targetUid_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * 接收人ID
-       * </pre>
-       *
-       * <code>string targetUid = 3;</code>
-       */
-      public Builder clearTargetUid() {
-        
-        targetUid_ = getDefaultInstance().getTargetUid();
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * 接收人ID
-       * </pre>
-       *
-       * <code>string targetUid = 3;</code>
-       */
-      public Builder setTargetUidBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        targetUid_ = value;
-        onChanged();
-        return this;
-      }
-
-      private java.lang.Object converId_ = "";
-      /**
-       * <pre>
-       * 会话id
-       * </pre>
-       *
-       * <code>string converId = 4;</code>
-       */
-      public java.lang.String getConverId() {
-        java.lang.Object ref = converId_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          converId_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <pre>
-       * 会话id
-       * </pre>
-       *
-       * <code>string converId = 4;</code>
-       */
-      public com.google.protobuf.ByteString
-          getConverIdBytes() {
-        java.lang.Object ref = converId_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          converId_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <pre>
-       * 会话id
-       * </pre>
-       *
-       * <code>string converId = 4;</code>
-       */
-      public Builder setConverId(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        converId_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * 会话id
-       * </pre>
-       *
-       * <code>string converId = 4;</code>
-       */
-      public Builder clearConverId() {
-        
-        converId_ = getDefaultInstance().getConverId();
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * 会话id
-       * </pre>
-       *
-       * <code>string converId = 4;</code>
-       */
-      public Builder setConverIdBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        converId_ = value;
-        onChanged();
-        return this;
-      }
-
       private long time_ ;
       /**
        * <pre>
        * 发送时间
        * </pre>
        *
-       * <code>uint64 time = 5;</code>
+       * <code>uint64 time = 3;</code>
        */
       public long getTime() {
         return time_;
@@ -9375,7 +8881,7 @@ public final class Message {
        * 发送时间
        * </pre>
        *
-       * <code>uint64 time = 5;</code>
+       * <code>uint64 time = 3;</code>
        */
       public Builder setTime(long value) {
         
@@ -9388,7 +8894,7 @@ public final class Message {
        * 发送时间
        * </pre>
        *
-       * <code>uint64 time = 5;</code>
+       * <code>uint64 time = 3;</code>
        */
       public Builder clearTime() {
         
@@ -9403,7 +8909,7 @@ public final class Message {
        * 返回码
        * </pre>
        *
-       * <code>.com.raven.common.protos.Code code = 6;</code>
+       * <code>.com.raven.common.protos.Code code = 4;</code>
        */
       public int getCodeValue() {
         return code_;
@@ -9413,7 +8919,7 @@ public final class Message {
        * 返回码
        * </pre>
        *
-       * <code>.com.raven.common.protos.Code code = 6;</code>
+       * <code>.com.raven.common.protos.Code code = 4;</code>
        */
       public Builder setCodeValue(int value) {
         code_ = value;
@@ -9425,7 +8931,7 @@ public final class Message {
        * 返回码
        * </pre>
        *
-       * <code>.com.raven.common.protos.Code code = 6;</code>
+       * <code>.com.raven.common.protos.Code code = 4;</code>
        */
       public com.raven.common.protos.Message.Code getCode() {
         @SuppressWarnings("deprecation")
@@ -9437,7 +8943,7 @@ public final class Message {
        * 返回码
        * </pre>
        *
-       * <code>.com.raven.common.protos.Code code = 6;</code>
+       * <code>.com.raven.common.protos.Code code = 4;</code>
        */
       public Builder setCode(com.raven.common.protos.Message.Code value) {
         if (value == null) {
@@ -9453,7 +8959,7 @@ public final class Message {
        * 返回码
        * </pre>
        *
-       * <code>.com.raven.common.protos.Code code = 6;</code>
+       * <code>.com.raven.common.protos.Code code = 4;</code>
        */
       public Builder clearCode() {
         
@@ -9519,38 +9025,11 @@ public final class Message {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <pre>
-     * 消息ID
-     * </pre>
-     *
-     * <code>uint64 id = 1;</code>
-     */
-    long getId();
-
-    /**
-     * <pre>
-     * 发送方uid
-     * </pre>
-     *
-     * <code>string uid = 2;</code>
-     */
-    java.lang.String getUid();
-    /**
-     * <pre>
-     * 发送方uid
-     * </pre>
-     *
-     * <code>string uid = 2;</code>
-     */
-    com.google.protobuf.ByteString
-        getUidBytes();
-
-    /**
-     * <code>.com.raven.common.protos.MessageType type = 3;</code>
+     * <code>.com.raven.common.protos.MessageType type = 1;</code>
      */
     int getTypeValue();
     /**
-     * <code>.com.raven.common.protos.MessageType type = 3;</code>
+     * <code>.com.raven.common.protos.MessageType type = 1;</code>
      */
     com.raven.common.protos.Message.MessageType getType();
 
@@ -9559,7 +9038,7 @@ public final class Message {
      * 内容
      * </pre>
      *
-     * <code>string content = 4;</code>
+     * <code>string content = 2;</code>
      */
     java.lang.String getContent();
     /**
@@ -9567,7 +9046,7 @@ public final class Message {
      * 内容
      * </pre>
      *
-     * <code>string content = 4;</code>
+     * <code>string content = 2;</code>
      */
     com.google.protobuf.ByteString
         getContentBytes();
@@ -9577,7 +9056,7 @@ public final class Message {
      * 消息时间
      * </pre>
      *
-     * <code>uint64 time = 5;</code>
+     * <code>uint64 time = 3;</code>
      */
     long getTime();
   }
@@ -9598,8 +9077,6 @@ public final class Message {
       super(builder);
     }
     private MessageContent() {
-      id_ = 0L;
-      uid_ = "";
       type_ = 0;
       content_ = "";
       time_ = 0L;
@@ -9630,29 +9107,18 @@ public final class Message {
               done = true;
               break;
             case 8: {
-
-              id_ = input.readUInt64();
-              break;
-            }
-            case 18: {
-              java.lang.String s = input.readStringRequireUtf8();
-
-              uid_ = s;
-              break;
-            }
-            case 24: {
               int rawValue = input.readEnum();
 
               type_ = rawValue;
               break;
             }
-            case 34: {
+            case 18: {
               java.lang.String s = input.readStringRequireUtf8();
 
               content_ = s;
               break;
             }
-            case 40: {
+            case 24: {
 
               time_ = input.readUInt64();
               break;
@@ -9689,71 +9155,16 @@ public final class Message {
               com.raven.common.protos.Message.MessageContent.class, com.raven.common.protos.Message.MessageContent.Builder.class);
     }
 
-    public static final int ID_FIELD_NUMBER = 1;
-    private long id_;
-    /**
-     * <pre>
-     * 消息ID
-     * </pre>
-     *
-     * <code>uint64 id = 1;</code>
-     */
-    public long getId() {
-      return id_;
-    }
-
-    public static final int UID_FIELD_NUMBER = 2;
-    private volatile java.lang.Object uid_;
-    /**
-     * <pre>
-     * 发送方uid
-     * </pre>
-     *
-     * <code>string uid = 2;</code>
-     */
-    public java.lang.String getUid() {
-      java.lang.Object ref = uid_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        uid_ = s;
-        return s;
-      }
-    }
-    /**
-     * <pre>
-     * 发送方uid
-     * </pre>
-     *
-     * <code>string uid = 2;</code>
-     */
-    public com.google.protobuf.ByteString
-        getUidBytes() {
-      java.lang.Object ref = uid_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        uid_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    public static final int TYPE_FIELD_NUMBER = 3;
+    public static final int TYPE_FIELD_NUMBER = 1;
     private int type_;
     /**
-     * <code>.com.raven.common.protos.MessageType type = 3;</code>
+     * <code>.com.raven.common.protos.MessageType type = 1;</code>
      */
     public int getTypeValue() {
       return type_;
     }
     /**
-     * <code>.com.raven.common.protos.MessageType type = 3;</code>
+     * <code>.com.raven.common.protos.MessageType type = 1;</code>
      */
     public com.raven.common.protos.Message.MessageType getType() {
       @SuppressWarnings("deprecation")
@@ -9761,14 +9172,14 @@ public final class Message {
       return result == null ? com.raven.common.protos.Message.MessageType.UNRECOGNIZED : result;
     }
 
-    public static final int CONTENT_FIELD_NUMBER = 4;
+    public static final int CONTENT_FIELD_NUMBER = 2;
     private volatile java.lang.Object content_;
     /**
      * <pre>
      * 内容
      * </pre>
      *
-     * <code>string content = 4;</code>
+     * <code>string content = 2;</code>
      */
     public java.lang.String getContent() {
       java.lang.Object ref = content_;
@@ -9787,7 +9198,7 @@ public final class Message {
      * 内容
      * </pre>
      *
-     * <code>string content = 4;</code>
+     * <code>string content = 2;</code>
      */
     public com.google.protobuf.ByteString
         getContentBytes() {
@@ -9803,14 +9214,14 @@ public final class Message {
       }
     }
 
-    public static final int TIME_FIELD_NUMBER = 5;
+    public static final int TIME_FIELD_NUMBER = 3;
     private long time_;
     /**
      * <pre>
      * 消息时间
      * </pre>
      *
-     * <code>uint64 time = 5;</code>
+     * <code>uint64 time = 3;</code>
      */
     public long getTime() {
       return time_;
@@ -9830,20 +9241,14 @@ public final class Message {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (id_ != 0L) {
-        output.writeUInt64(1, id_);
-      }
-      if (!getUidBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, uid_);
-      }
       if (type_ != com.raven.common.protos.Message.MessageType.TEXT.getNumber()) {
-        output.writeEnum(3, type_);
+        output.writeEnum(1, type_);
       }
       if (!getContentBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, content_);
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, content_);
       }
       if (time_ != 0L) {
-        output.writeUInt64(5, time_);
+        output.writeUInt64(3, time_);
       }
       unknownFields.writeTo(output);
     }
@@ -9854,23 +9259,16 @@ public final class Message {
       if (size != -1) return size;
 
       size = 0;
-      if (id_ != 0L) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeUInt64Size(1, id_);
-      }
-      if (!getUidBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, uid_);
-      }
       if (type_ != com.raven.common.protos.Message.MessageType.TEXT.getNumber()) {
         size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(3, type_);
+          .computeEnumSize(1, type_);
       }
       if (!getContentBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, content_);
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, content_);
       }
       if (time_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-          .computeUInt64Size(5, time_);
+          .computeUInt64Size(3, time_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -9888,10 +9286,6 @@ public final class Message {
       com.raven.common.protos.Message.MessageContent other = (com.raven.common.protos.Message.MessageContent) obj;
 
       boolean result = true;
-      result = result && (getId()
-          == other.getId());
-      result = result && getUid()
-          .equals(other.getUid());
       result = result && type_ == other.type_;
       result = result && getContent()
           .equals(other.getContent());
@@ -9908,11 +9302,6 @@ public final class Message {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + ID_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-          getId());
-      hash = (37 * hash) + UID_FIELD_NUMBER;
-      hash = (53 * hash) + getUid().hashCode();
       hash = (37 * hash) + TYPE_FIELD_NUMBER;
       hash = (53 * hash) + type_;
       hash = (37 * hash) + CONTENT_FIELD_NUMBER;
@@ -10057,10 +9446,6 @@ public final class Message {
       @java.lang.Override
       public Builder clear() {
         super.clear();
-        id_ = 0L;
-
-        uid_ = "";
-
         type_ = 0;
 
         content_ = "";
@@ -10093,8 +9478,6 @@ public final class Message {
       @java.lang.Override
       public com.raven.common.protos.Message.MessageContent buildPartial() {
         com.raven.common.protos.Message.MessageContent result = new com.raven.common.protos.Message.MessageContent(this);
-        result.id_ = id_;
-        result.uid_ = uid_;
         result.type_ = type_;
         result.content_ = content_;
         result.time_ = time_;
@@ -10146,13 +9529,6 @@ public final class Message {
 
       public Builder mergeFrom(com.raven.common.protos.Message.MessageContent other) {
         if (other == com.raven.common.protos.Message.MessageContent.getDefaultInstance()) return this;
-        if (other.getId() != 0L) {
-          setId(other.getId());
-        }
-        if (!other.getUid().isEmpty()) {
-          uid_ = other.uid_;
-          onChanged();
-        }
         if (other.type_ != 0) {
           setTypeValue(other.getTypeValue());
         }
@@ -10192,142 +9568,15 @@ public final class Message {
         return this;
       }
 
-      private long id_ ;
-      /**
-       * <pre>
-       * 消息ID
-       * </pre>
-       *
-       * <code>uint64 id = 1;</code>
-       */
-      public long getId() {
-        return id_;
-      }
-      /**
-       * <pre>
-       * 消息ID
-       * </pre>
-       *
-       * <code>uint64 id = 1;</code>
-       */
-      public Builder setId(long value) {
-        
-        id_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * 消息ID
-       * </pre>
-       *
-       * <code>uint64 id = 1;</code>
-       */
-      public Builder clearId() {
-        
-        id_ = 0L;
-        onChanged();
-        return this;
-      }
-
-      private java.lang.Object uid_ = "";
-      /**
-       * <pre>
-       * 发送方uid
-       * </pre>
-       *
-       * <code>string uid = 2;</code>
-       */
-      public java.lang.String getUid() {
-        java.lang.Object ref = uid_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          uid_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <pre>
-       * 发送方uid
-       * </pre>
-       *
-       * <code>string uid = 2;</code>
-       */
-      public com.google.protobuf.ByteString
-          getUidBytes() {
-        java.lang.Object ref = uid_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          uid_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <pre>
-       * 发送方uid
-       * </pre>
-       *
-       * <code>string uid = 2;</code>
-       */
-      public Builder setUid(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        uid_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * 发送方uid
-       * </pre>
-       *
-       * <code>string uid = 2;</code>
-       */
-      public Builder clearUid() {
-        
-        uid_ = getDefaultInstance().getUid();
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * 发送方uid
-       * </pre>
-       *
-       * <code>string uid = 2;</code>
-       */
-      public Builder setUidBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        uid_ = value;
-        onChanged();
-        return this;
-      }
-
       private int type_ = 0;
       /**
-       * <code>.com.raven.common.protos.MessageType type = 3;</code>
+       * <code>.com.raven.common.protos.MessageType type = 1;</code>
        */
       public int getTypeValue() {
         return type_;
       }
       /**
-       * <code>.com.raven.common.protos.MessageType type = 3;</code>
+       * <code>.com.raven.common.protos.MessageType type = 1;</code>
        */
       public Builder setTypeValue(int value) {
         type_ = value;
@@ -10335,7 +9584,7 @@ public final class Message {
         return this;
       }
       /**
-       * <code>.com.raven.common.protos.MessageType type = 3;</code>
+       * <code>.com.raven.common.protos.MessageType type = 1;</code>
        */
       public com.raven.common.protos.Message.MessageType getType() {
         @SuppressWarnings("deprecation")
@@ -10343,7 +9592,7 @@ public final class Message {
         return result == null ? com.raven.common.protos.Message.MessageType.UNRECOGNIZED : result;
       }
       /**
-       * <code>.com.raven.common.protos.MessageType type = 3;</code>
+       * <code>.com.raven.common.protos.MessageType type = 1;</code>
        */
       public Builder setType(com.raven.common.protos.Message.MessageType value) {
         if (value == null) {
@@ -10355,7 +9604,7 @@ public final class Message {
         return this;
       }
       /**
-       * <code>.com.raven.common.protos.MessageType type = 3;</code>
+       * <code>.com.raven.common.protos.MessageType type = 1;</code>
        */
       public Builder clearType() {
         
@@ -10370,7 +9619,7 @@ public final class Message {
        * 内容
        * </pre>
        *
-       * <code>string content = 4;</code>
+       * <code>string content = 2;</code>
        */
       public java.lang.String getContent() {
         java.lang.Object ref = content_;
@@ -10389,7 +9638,7 @@ public final class Message {
        * 内容
        * </pre>
        *
-       * <code>string content = 4;</code>
+       * <code>string content = 2;</code>
        */
       public com.google.protobuf.ByteString
           getContentBytes() {
@@ -10409,7 +9658,7 @@ public final class Message {
        * 内容
        * </pre>
        *
-       * <code>string content = 4;</code>
+       * <code>string content = 2;</code>
        */
       public Builder setContent(
           java.lang.String value) {
@@ -10426,7 +9675,7 @@ public final class Message {
        * 内容
        * </pre>
        *
-       * <code>string content = 4;</code>
+       * <code>string content = 2;</code>
        */
       public Builder clearContent() {
         
@@ -10439,7 +9688,7 @@ public final class Message {
        * 内容
        * </pre>
        *
-       * <code>string content = 4;</code>
+       * <code>string content = 2;</code>
        */
       public Builder setContentBytes(
           com.google.protobuf.ByteString value) {
@@ -10459,7 +9708,7 @@ public final class Message {
        * 消息时间
        * </pre>
        *
-       * <code>uint64 time = 5;</code>
+       * <code>uint64 time = 3;</code>
        */
       public long getTime() {
         return time_;
@@ -10469,7 +9718,7 @@ public final class Message {
        * 消息时间
        * </pre>
        *
-       * <code>uint64 time = 5;</code>
+       * <code>uint64 time = 3;</code>
        */
       public Builder setTime(long value) {
         
@@ -10482,7 +9731,7 @@ public final class Message {
        * 消息时间
        * </pre>
        *
-       * <code>uint64 time = 5;</code>
+       * <code>uint64 time = 3;</code>
        */
       public Builder clearTime() {
         
@@ -16319,1547 +15568,6 @@ public final class Message {
 
   }
 
-  public interface NotifyMessageOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.raven.common.protos.NotifyMessage)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <pre>
-     *消息ID
-     * </pre>
-     *
-     * <code>uint64 id = 1;</code>
-     */
-    long getId();
-
-    /**
-     * <pre>
-     * 通知类型
-     * </pre>
-     *
-     * <code>.com.raven.common.protos.NotifyType type = 2;</code>
-     */
-    int getTypeValue();
-    /**
-     * <pre>
-     * 通知类型
-     * </pre>
-     *
-     * <code>.com.raven.common.protos.NotifyType type = 2;</code>
-     */
-    com.raven.common.protos.Message.NotifyType getType();
-
-    /**
-     * <pre>
-     * 接收id
-     * </pre>
-     *
-     * <code>string targetUid = 3;</code>
-     */
-    java.lang.String getTargetUid();
-    /**
-     * <pre>
-     * 接收id
-     * </pre>
-     *
-     * <code>string targetUid = 3;</code>
-     */
-    com.google.protobuf.ByteString
-        getTargetUidBytes();
-
-    /**
-     * <pre>
-     * 若为通知到会话，提供会话id.
-     * </pre>
-     *
-     * <code>string converId = 4;</code>
-     */
-    java.lang.String getConverId();
-    /**
-     * <pre>
-     * 若为通知到会话，提供会话id.
-     * </pre>
-     *
-     * <code>string converId = 4;</code>
-     */
-    com.google.protobuf.ByteString
-        getConverIdBytes();
-
-    /**
-     * <pre>
-     * 若为通知到会话，提供会话类型.
-     * </pre>
-     *
-     * <code>.com.raven.common.protos.ConverType convType = 5;</code>
-     */
-    int getConvTypeValue();
-    /**
-     * <pre>
-     * 若为通知到会话，提供会话类型.
-     * </pre>
-     *
-     * <code>.com.raven.common.protos.ConverType convType = 5;</code>
-     */
-    com.raven.common.protos.Message.ConverType getConvType();
-
-    /**
-     * <pre>
-     * 通知内容
-     * </pre>
-     *
-     * <code>string content = 6;</code>
-     */
-    java.lang.String getContent();
-    /**
-     * <pre>
-     * 通知内容
-     * </pre>
-     *
-     * <code>string content = 6;</code>
-     */
-    com.google.protobuf.ByteString
-        getContentBytes();
-
-    /**
-     * <pre>
-     *消息时间
-     * </pre>
-     *
-     * <code>uint64 time = 7;</code>
-     */
-    long getTime();
-
-    /**
-     * <pre>
-     *以谁的身份发送
-     * </pre>
-     *
-     * <code>string fromUid = 8;</code>
-     */
-    java.lang.String getFromUid();
-    /**
-     * <pre>
-     *以谁的身份发送
-     * </pre>
-     *
-     * <code>string fromUid = 8;</code>
-     */
-    com.google.protobuf.ByteString
-        getFromUidBytes();
-  }
-  /**
-   * <pre>
-   *通知消息
-   * </pre>
-   *
-   * Protobuf type {@code com.raven.common.protos.NotifyMessage}
-   */
-  public  static final class NotifyMessage extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:com.raven.common.protos.NotifyMessage)
-      NotifyMessageOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use NotifyMessage.newBuilder() to construct.
-    private NotifyMessage(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-    private NotifyMessage() {
-      id_ = 0L;
-      type_ = 0;
-      targetUid_ = "";
-      converId_ = "";
-      convType_ = 0;
-      content_ = "";
-      time_ = 0L;
-      fromUid_ = "";
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return this.unknownFields;
-    }
-    private NotifyMessage(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 8: {
-
-              id_ = input.readUInt64();
-              break;
-            }
-            case 16: {
-              int rawValue = input.readEnum();
-
-              type_ = rawValue;
-              break;
-            }
-            case 26: {
-              java.lang.String s = input.readStringRequireUtf8();
-
-              targetUid_ = s;
-              break;
-            }
-            case 34: {
-              java.lang.String s = input.readStringRequireUtf8();
-
-              converId_ = s;
-              break;
-            }
-            case 40: {
-              int rawValue = input.readEnum();
-
-              convType_ = rawValue;
-              break;
-            }
-            case 50: {
-              java.lang.String s = input.readStringRequireUtf8();
-
-              content_ = s;
-              break;
-            }
-            case 56: {
-
-              time_ = input.readUInt64();
-              break;
-            }
-            case 66: {
-              java.lang.String s = input.readStringRequireUtf8();
-
-              fromUid_ = s;
-              break;
-            }
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return com.raven.common.protos.Message.internal_static_com_raven_common_protos_NotifyMessage_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.raven.common.protos.Message.internal_static_com_raven_common_protos_NotifyMessage_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.raven.common.protos.Message.NotifyMessage.class, com.raven.common.protos.Message.NotifyMessage.Builder.class);
-    }
-
-    public static final int ID_FIELD_NUMBER = 1;
-    private long id_;
-    /**
-     * <pre>
-     *消息ID
-     * </pre>
-     *
-     * <code>uint64 id = 1;</code>
-     */
-    public long getId() {
-      return id_;
-    }
-
-    public static final int TYPE_FIELD_NUMBER = 2;
-    private int type_;
-    /**
-     * <pre>
-     * 通知类型
-     * </pre>
-     *
-     * <code>.com.raven.common.protos.NotifyType type = 2;</code>
-     */
-    public int getTypeValue() {
-      return type_;
-    }
-    /**
-     * <pre>
-     * 通知类型
-     * </pre>
-     *
-     * <code>.com.raven.common.protos.NotifyType type = 2;</code>
-     */
-    public com.raven.common.protos.Message.NotifyType getType() {
-      @SuppressWarnings("deprecation")
-      com.raven.common.protos.Message.NotifyType result = com.raven.common.protos.Message.NotifyType.valueOf(type_);
-      return result == null ? com.raven.common.protos.Message.NotifyType.UNRECOGNIZED : result;
-    }
-
-    public static final int TARGETUID_FIELD_NUMBER = 3;
-    private volatile java.lang.Object targetUid_;
-    /**
-     * <pre>
-     * 接收id
-     * </pre>
-     *
-     * <code>string targetUid = 3;</code>
-     */
-    public java.lang.String getTargetUid() {
-      java.lang.Object ref = targetUid_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        targetUid_ = s;
-        return s;
-      }
-    }
-    /**
-     * <pre>
-     * 接收id
-     * </pre>
-     *
-     * <code>string targetUid = 3;</code>
-     */
-    public com.google.protobuf.ByteString
-        getTargetUidBytes() {
-      java.lang.Object ref = targetUid_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        targetUid_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    public static final int CONVERID_FIELD_NUMBER = 4;
-    private volatile java.lang.Object converId_;
-    /**
-     * <pre>
-     * 若为通知到会话，提供会话id.
-     * </pre>
-     *
-     * <code>string converId = 4;</code>
-     */
-    public java.lang.String getConverId() {
-      java.lang.Object ref = converId_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        converId_ = s;
-        return s;
-      }
-    }
-    /**
-     * <pre>
-     * 若为通知到会话，提供会话id.
-     * </pre>
-     *
-     * <code>string converId = 4;</code>
-     */
-    public com.google.protobuf.ByteString
-        getConverIdBytes() {
-      java.lang.Object ref = converId_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        converId_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    public static final int CONVTYPE_FIELD_NUMBER = 5;
-    private int convType_;
-    /**
-     * <pre>
-     * 若为通知到会话，提供会话类型.
-     * </pre>
-     *
-     * <code>.com.raven.common.protos.ConverType convType = 5;</code>
-     */
-    public int getConvTypeValue() {
-      return convType_;
-    }
-    /**
-     * <pre>
-     * 若为通知到会话，提供会话类型.
-     * </pre>
-     *
-     * <code>.com.raven.common.protos.ConverType convType = 5;</code>
-     */
-    public com.raven.common.protos.Message.ConverType getConvType() {
-      @SuppressWarnings("deprecation")
-      com.raven.common.protos.Message.ConverType result = com.raven.common.protos.Message.ConverType.valueOf(convType_);
-      return result == null ? com.raven.common.protos.Message.ConverType.UNRECOGNIZED : result;
-    }
-
-    public static final int CONTENT_FIELD_NUMBER = 6;
-    private volatile java.lang.Object content_;
-    /**
-     * <pre>
-     * 通知内容
-     * </pre>
-     *
-     * <code>string content = 6;</code>
-     */
-    public java.lang.String getContent() {
-      java.lang.Object ref = content_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        content_ = s;
-        return s;
-      }
-    }
-    /**
-     * <pre>
-     * 通知内容
-     * </pre>
-     *
-     * <code>string content = 6;</code>
-     */
-    public com.google.protobuf.ByteString
-        getContentBytes() {
-      java.lang.Object ref = content_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        content_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    public static final int TIME_FIELD_NUMBER = 7;
-    private long time_;
-    /**
-     * <pre>
-     *消息时间
-     * </pre>
-     *
-     * <code>uint64 time = 7;</code>
-     */
-    public long getTime() {
-      return time_;
-    }
-
-    public static final int FROMUID_FIELD_NUMBER = 8;
-    private volatile java.lang.Object fromUid_;
-    /**
-     * <pre>
-     *以谁的身份发送
-     * </pre>
-     *
-     * <code>string fromUid = 8;</code>
-     */
-    public java.lang.String getFromUid() {
-      java.lang.Object ref = fromUid_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        fromUid_ = s;
-        return s;
-      }
-    }
-    /**
-     * <pre>
-     *以谁的身份发送
-     * </pre>
-     *
-     * <code>string fromUid = 8;</code>
-     */
-    public com.google.protobuf.ByteString
-        getFromUidBytes() {
-      java.lang.Object ref = fromUid_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        fromUid_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    private byte memoizedIsInitialized = -1;
-    @java.lang.Override
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    @java.lang.Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (id_ != 0L) {
-        output.writeUInt64(1, id_);
-      }
-      if (type_ != com.raven.common.protos.Message.NotifyType.USER.getNumber()) {
-        output.writeEnum(2, type_);
-      }
-      if (!getTargetUidBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, targetUid_);
-      }
-      if (!getConverIdBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, converId_);
-      }
-      if (convType_ != com.raven.common.protos.Message.ConverType.SINGLE.getNumber()) {
-        output.writeEnum(5, convType_);
-      }
-      if (!getContentBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 6, content_);
-      }
-      if (time_ != 0L) {
-        output.writeUInt64(7, time_);
-      }
-      if (!getFromUidBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 8, fromUid_);
-      }
-      unknownFields.writeTo(output);
-    }
-
-    @java.lang.Override
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (id_ != 0L) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeUInt64Size(1, id_);
-      }
-      if (type_ != com.raven.common.protos.Message.NotifyType.USER.getNumber()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(2, type_);
-      }
-      if (!getTargetUidBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, targetUid_);
-      }
-      if (!getConverIdBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, converId_);
-      }
-      if (convType_ != com.raven.common.protos.Message.ConverType.SINGLE.getNumber()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(5, convType_);
-      }
-      if (!getContentBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, content_);
-      }
-      if (time_ != 0L) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeUInt64Size(7, time_);
-      }
-      if (!getFromUidBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(8, fromUid_);
-      }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof com.raven.common.protos.Message.NotifyMessage)) {
-        return super.equals(obj);
-      }
-      com.raven.common.protos.Message.NotifyMessage other = (com.raven.common.protos.Message.NotifyMessage) obj;
-
-      boolean result = true;
-      result = result && (getId()
-          == other.getId());
-      result = result && type_ == other.type_;
-      result = result && getTargetUid()
-          .equals(other.getTargetUid());
-      result = result && getConverId()
-          .equals(other.getConverId());
-      result = result && convType_ == other.convType_;
-      result = result && getContent()
-          .equals(other.getContent());
-      result = result && (getTime()
-          == other.getTime());
-      result = result && getFromUid()
-          .equals(other.getFromUid());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + ID_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-          getId());
-      hash = (37 * hash) + TYPE_FIELD_NUMBER;
-      hash = (53 * hash) + type_;
-      hash = (37 * hash) + TARGETUID_FIELD_NUMBER;
-      hash = (53 * hash) + getTargetUid().hashCode();
-      hash = (37 * hash) + CONVERID_FIELD_NUMBER;
-      hash = (53 * hash) + getConverId().hashCode();
-      hash = (37 * hash) + CONVTYPE_FIELD_NUMBER;
-      hash = (53 * hash) + convType_;
-      hash = (37 * hash) + CONTENT_FIELD_NUMBER;
-      hash = (53 * hash) + getContent().hashCode();
-      hash = (37 * hash) + TIME_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-          getTime());
-      hash = (37 * hash) + FROMUID_FIELD_NUMBER;
-      hash = (53 * hash) + getFromUid().hashCode();
-      hash = (29 * hash) + unknownFields.hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static com.raven.common.protos.Message.NotifyMessage parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static com.raven.common.protos.Message.NotifyMessage parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static com.raven.common.protos.Message.NotifyMessage parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static com.raven.common.protos.Message.NotifyMessage parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static com.raven.common.protos.Message.NotifyMessage parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static com.raven.common.protos.Message.NotifyMessage parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static com.raven.common.protos.Message.NotifyMessage parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static com.raven.common.protos.Message.NotifyMessage parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static com.raven.common.protos.Message.NotifyMessage parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-    public static com.raven.common.protos.Message.NotifyMessage parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static com.raven.common.protos.Message.NotifyMessage parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static com.raven.common.protos.Message.NotifyMessage parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    @java.lang.Override
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(com.raven.common.protos.Message.NotifyMessage prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * <pre>
-     *通知消息
-     * </pre>
-     *
-     * Protobuf type {@code com.raven.common.protos.NotifyMessage}
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.raven.common.protos.NotifyMessage)
-        com.raven.common.protos.Message.NotifyMessageOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return com.raven.common.protos.Message.internal_static_com_raven_common_protos_NotifyMessage_descriptor;
-      }
-
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return com.raven.common.protos.Message.internal_static_com_raven_common_protos_NotifyMessage_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                com.raven.common.protos.Message.NotifyMessage.class, com.raven.common.protos.Message.NotifyMessage.Builder.class);
-      }
-
-      // Construct using com.raven.common.protos.Message.NotifyMessage.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-        }
-      }
-      @java.lang.Override
-      public Builder clear() {
-        super.clear();
-        id_ = 0L;
-
-        type_ = 0;
-
-        targetUid_ = "";
-
-        converId_ = "";
-
-        convType_ = 0;
-
-        content_ = "";
-
-        time_ = 0L;
-
-        fromUid_ = "";
-
-        return this;
-      }
-
-      @java.lang.Override
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return com.raven.common.protos.Message.internal_static_com_raven_common_protos_NotifyMessage_descriptor;
-      }
-
-      @java.lang.Override
-      public com.raven.common.protos.Message.NotifyMessage getDefaultInstanceForType() {
-        return com.raven.common.protos.Message.NotifyMessage.getDefaultInstance();
-      }
-
-      @java.lang.Override
-      public com.raven.common.protos.Message.NotifyMessage build() {
-        com.raven.common.protos.Message.NotifyMessage result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      @java.lang.Override
-      public com.raven.common.protos.Message.NotifyMessage buildPartial() {
-        com.raven.common.protos.Message.NotifyMessage result = new com.raven.common.protos.Message.NotifyMessage(this);
-        result.id_ = id_;
-        result.type_ = type_;
-        result.targetUid_ = targetUid_;
-        result.converId_ = converId_;
-        result.convType_ = convType_;
-        result.content_ = content_;
-        result.time_ = time_;
-        result.fromUid_ = fromUid_;
-        onBuilt();
-        return result;
-      }
-
-      @java.lang.Override
-      public Builder clone() {
-        return (Builder) super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.raven.common.protos.Message.NotifyMessage) {
-          return mergeFrom((com.raven.common.protos.Message.NotifyMessage)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(com.raven.common.protos.Message.NotifyMessage other) {
-        if (other == com.raven.common.protos.Message.NotifyMessage.getDefaultInstance()) return this;
-        if (other.getId() != 0L) {
-          setId(other.getId());
-        }
-        if (other.type_ != 0) {
-          setTypeValue(other.getTypeValue());
-        }
-        if (!other.getTargetUid().isEmpty()) {
-          targetUid_ = other.targetUid_;
-          onChanged();
-        }
-        if (!other.getConverId().isEmpty()) {
-          converId_ = other.converId_;
-          onChanged();
-        }
-        if (other.convType_ != 0) {
-          setConvTypeValue(other.getConvTypeValue());
-        }
-        if (!other.getContent().isEmpty()) {
-          content_ = other.content_;
-          onChanged();
-        }
-        if (other.getTime() != 0L) {
-          setTime(other.getTime());
-        }
-        if (!other.getFromUid().isEmpty()) {
-          fromUid_ = other.fromUid_;
-          onChanged();
-        }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
-        return this;
-      }
-
-      @java.lang.Override
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        com.raven.common.protos.Message.NotifyMessage parsedMessage = null;
-        try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (com.raven.common.protos.Message.NotifyMessage) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
-        } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
-        return this;
-      }
-
-      private long id_ ;
-      /**
-       * <pre>
-       *消息ID
-       * </pre>
-       *
-       * <code>uint64 id = 1;</code>
-       */
-      public long getId() {
-        return id_;
-      }
-      /**
-       * <pre>
-       *消息ID
-       * </pre>
-       *
-       * <code>uint64 id = 1;</code>
-       */
-      public Builder setId(long value) {
-        
-        id_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       *消息ID
-       * </pre>
-       *
-       * <code>uint64 id = 1;</code>
-       */
-      public Builder clearId() {
-        
-        id_ = 0L;
-        onChanged();
-        return this;
-      }
-
-      private int type_ = 0;
-      /**
-       * <pre>
-       * 通知类型
-       * </pre>
-       *
-       * <code>.com.raven.common.protos.NotifyType type = 2;</code>
-       */
-      public int getTypeValue() {
-        return type_;
-      }
-      /**
-       * <pre>
-       * 通知类型
-       * </pre>
-       *
-       * <code>.com.raven.common.protos.NotifyType type = 2;</code>
-       */
-      public Builder setTypeValue(int value) {
-        type_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * 通知类型
-       * </pre>
-       *
-       * <code>.com.raven.common.protos.NotifyType type = 2;</code>
-       */
-      public com.raven.common.protos.Message.NotifyType getType() {
-        @SuppressWarnings("deprecation")
-        com.raven.common.protos.Message.NotifyType result = com.raven.common.protos.Message.NotifyType.valueOf(type_);
-        return result == null ? com.raven.common.protos.Message.NotifyType.UNRECOGNIZED : result;
-      }
-      /**
-       * <pre>
-       * 通知类型
-       * </pre>
-       *
-       * <code>.com.raven.common.protos.NotifyType type = 2;</code>
-       */
-      public Builder setType(com.raven.common.protos.Message.NotifyType value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        
-        type_ = value.getNumber();
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * 通知类型
-       * </pre>
-       *
-       * <code>.com.raven.common.protos.NotifyType type = 2;</code>
-       */
-      public Builder clearType() {
-        
-        type_ = 0;
-        onChanged();
-        return this;
-      }
-
-      private java.lang.Object targetUid_ = "";
-      /**
-       * <pre>
-       * 接收id
-       * </pre>
-       *
-       * <code>string targetUid = 3;</code>
-       */
-      public java.lang.String getTargetUid() {
-        java.lang.Object ref = targetUid_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          targetUid_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <pre>
-       * 接收id
-       * </pre>
-       *
-       * <code>string targetUid = 3;</code>
-       */
-      public com.google.protobuf.ByteString
-          getTargetUidBytes() {
-        java.lang.Object ref = targetUid_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          targetUid_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <pre>
-       * 接收id
-       * </pre>
-       *
-       * <code>string targetUid = 3;</code>
-       */
-      public Builder setTargetUid(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        targetUid_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * 接收id
-       * </pre>
-       *
-       * <code>string targetUid = 3;</code>
-       */
-      public Builder clearTargetUid() {
-        
-        targetUid_ = getDefaultInstance().getTargetUid();
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * 接收id
-       * </pre>
-       *
-       * <code>string targetUid = 3;</code>
-       */
-      public Builder setTargetUidBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        targetUid_ = value;
-        onChanged();
-        return this;
-      }
-
-      private java.lang.Object converId_ = "";
-      /**
-       * <pre>
-       * 若为通知到会话，提供会话id.
-       * </pre>
-       *
-       * <code>string converId = 4;</code>
-       */
-      public java.lang.String getConverId() {
-        java.lang.Object ref = converId_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          converId_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <pre>
-       * 若为通知到会话，提供会话id.
-       * </pre>
-       *
-       * <code>string converId = 4;</code>
-       */
-      public com.google.protobuf.ByteString
-          getConverIdBytes() {
-        java.lang.Object ref = converId_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          converId_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <pre>
-       * 若为通知到会话，提供会话id.
-       * </pre>
-       *
-       * <code>string converId = 4;</code>
-       */
-      public Builder setConverId(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        converId_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * 若为通知到会话，提供会话id.
-       * </pre>
-       *
-       * <code>string converId = 4;</code>
-       */
-      public Builder clearConverId() {
-        
-        converId_ = getDefaultInstance().getConverId();
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * 若为通知到会话，提供会话id.
-       * </pre>
-       *
-       * <code>string converId = 4;</code>
-       */
-      public Builder setConverIdBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        converId_ = value;
-        onChanged();
-        return this;
-      }
-
-      private int convType_ = 0;
-      /**
-       * <pre>
-       * 若为通知到会话，提供会话类型.
-       * </pre>
-       *
-       * <code>.com.raven.common.protos.ConverType convType = 5;</code>
-       */
-      public int getConvTypeValue() {
-        return convType_;
-      }
-      /**
-       * <pre>
-       * 若为通知到会话，提供会话类型.
-       * </pre>
-       *
-       * <code>.com.raven.common.protos.ConverType convType = 5;</code>
-       */
-      public Builder setConvTypeValue(int value) {
-        convType_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * 若为通知到会话，提供会话类型.
-       * </pre>
-       *
-       * <code>.com.raven.common.protos.ConverType convType = 5;</code>
-       */
-      public com.raven.common.protos.Message.ConverType getConvType() {
-        @SuppressWarnings("deprecation")
-        com.raven.common.protos.Message.ConverType result = com.raven.common.protos.Message.ConverType.valueOf(convType_);
-        return result == null ? com.raven.common.protos.Message.ConverType.UNRECOGNIZED : result;
-      }
-      /**
-       * <pre>
-       * 若为通知到会话，提供会话类型.
-       * </pre>
-       *
-       * <code>.com.raven.common.protos.ConverType convType = 5;</code>
-       */
-      public Builder setConvType(com.raven.common.protos.Message.ConverType value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        
-        convType_ = value.getNumber();
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * 若为通知到会话，提供会话类型.
-       * </pre>
-       *
-       * <code>.com.raven.common.protos.ConverType convType = 5;</code>
-       */
-      public Builder clearConvType() {
-        
-        convType_ = 0;
-        onChanged();
-        return this;
-      }
-
-      private java.lang.Object content_ = "";
-      /**
-       * <pre>
-       * 通知内容
-       * </pre>
-       *
-       * <code>string content = 6;</code>
-       */
-      public java.lang.String getContent() {
-        java.lang.Object ref = content_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          content_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <pre>
-       * 通知内容
-       * </pre>
-       *
-       * <code>string content = 6;</code>
-       */
-      public com.google.protobuf.ByteString
-          getContentBytes() {
-        java.lang.Object ref = content_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          content_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <pre>
-       * 通知内容
-       * </pre>
-       *
-       * <code>string content = 6;</code>
-       */
-      public Builder setContent(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        content_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * 通知内容
-       * </pre>
-       *
-       * <code>string content = 6;</code>
-       */
-      public Builder clearContent() {
-        
-        content_ = getDefaultInstance().getContent();
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * 通知内容
-       * </pre>
-       *
-       * <code>string content = 6;</code>
-       */
-      public Builder setContentBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        content_ = value;
-        onChanged();
-        return this;
-      }
-
-      private long time_ ;
-      /**
-       * <pre>
-       *消息时间
-       * </pre>
-       *
-       * <code>uint64 time = 7;</code>
-       */
-      public long getTime() {
-        return time_;
-      }
-      /**
-       * <pre>
-       *消息时间
-       * </pre>
-       *
-       * <code>uint64 time = 7;</code>
-       */
-      public Builder setTime(long value) {
-        
-        time_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       *消息时间
-       * </pre>
-       *
-       * <code>uint64 time = 7;</code>
-       */
-      public Builder clearTime() {
-        
-        time_ = 0L;
-        onChanged();
-        return this;
-      }
-
-      private java.lang.Object fromUid_ = "";
-      /**
-       * <pre>
-       *以谁的身份发送
-       * </pre>
-       *
-       * <code>string fromUid = 8;</code>
-       */
-      public java.lang.String getFromUid() {
-        java.lang.Object ref = fromUid_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          fromUid_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <pre>
-       *以谁的身份发送
-       * </pre>
-       *
-       * <code>string fromUid = 8;</code>
-       */
-      public com.google.protobuf.ByteString
-          getFromUidBytes() {
-        java.lang.Object ref = fromUid_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          fromUid_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <pre>
-       *以谁的身份发送
-       * </pre>
-       *
-       * <code>string fromUid = 8;</code>
-       */
-      public Builder setFromUid(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        fromUid_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       *以谁的身份发送
-       * </pre>
-       *
-       * <code>string fromUid = 8;</code>
-       */
-      public Builder clearFromUid() {
-        
-        fromUid_ = getDefaultInstance().getFromUid();
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       *以谁的身份发送
-       * </pre>
-       *
-       * <code>string fromUid = 8;</code>
-       */
-      public Builder setFromUidBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        fromUid_ = value;
-        onChanged();
-        return this;
-      }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:com.raven.common.protos.NotifyMessage)
-    }
-
-    // @@protoc_insertion_point(class_scope:com.raven.common.protos.NotifyMessage)
-    private static final com.raven.common.protos.Message.NotifyMessage DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new com.raven.common.protos.Message.NotifyMessage();
-    }
-
-    public static com.raven.common.protos.Message.NotifyMessage getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    private static final com.google.protobuf.Parser<NotifyMessage>
-        PARSER = new com.google.protobuf.AbstractParser<NotifyMessage>() {
-      @java.lang.Override
-      public NotifyMessage parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new NotifyMessage(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<NotifyMessage> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<NotifyMessage> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.raven.common.protos.Message.NotifyMessage getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_com_raven_common_protos_RavenMessage_descriptor;
   private static final 
@@ -17876,15 +15584,15 @@ public final class Message {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_com_raven_common_protos_LoginAck_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_com_raven_common_protos_ServerInfo_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_com_raven_common_protos_ServerInfo_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_com_raven_common_protos_UpDownMessage_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_com_raven_common_protos_UpDownMessage_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_raven_common_protos_SSMessage_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_com_raven_common_protos_SSMessage_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_com_raven_common_protos_HeartBeat_descriptor;
   private static final 
@@ -17925,11 +15633,6 @@ public final class Message {
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_com_raven_common_protos_ConverInfo_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_com_raven_common_protos_NotifyMessage_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_com_raven_common_protos_NotifyMessage_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -17940,84 +15643,76 @@ public final class Message {
   static {
     java.lang.String[] descriptorData = {
       "\n\rmessage.proto\022\027com.raven.common.protos" +
-      "\"\236\007\n\014RavenMessage\0228\n\004type\030\001 \001(\0162*.com.ra" +
+      "\"\307\006\n\014RavenMessage\0228\n\004type\030\001 \001(\0162*.com.ra" +
       "ven.common.protos.RavenMessage.Type\022/\n\005l" +
       "ogin\030\002 \001(\0132\036.com.raven.common.protos.Log" +
       "inH\000\0225\n\010loginAck\030\003 \001(\0132!.com.raven.commo" +
-      "n.protos.LoginAckH\000\0229\n\nserverInfo\030\004 \001(\0132" +
-      "#.com.raven.common.protos.ServerInfoH\000\022?" +
-      "\n\rupDownMessage\030\005 \001(\0132&.com.raven.common" +
-      ".protos.UpDownMessageH\000\0227\n\theartBeat\030\006 \001" +
-      "(\0132\".com.raven.common.protos.HeartBeatH\000" +
-      "\0229\n\nmessageAck\030\007 \001(\0132#.com.raven.common." +
-      "protos.MessageAckH\000\022A\n\016hisMessagesReq\030\010 " +
-      "\001(\0132\'.com.raven.common.protos.HisMessage" +
-      "sReqH\000\022A\n\016hisMessagesAck\030\t \001(\0132\'.com.rav" +
-      "en.common.protos.HisMessagesAckH\000\022?\n\rnot" +
-      "ifyMessage\030\n \001(\0132&.com.raven.common.prot" +
-      "os.NotifyMessageH\000\0227\n\tconverReq\030\013 \001(\0132\"." +
-      "com.raven.common.protos.ConverReqH\000\0227\n\tc" +
-      "onverAck\030\014 \001(\0132\".com.raven.common.protos" +
-      ".ConverAckH\000\"\272\001\n\004Type\022\t\n\005Login\020\000\022\014\n\010Logi" +
-      "nAck\020\001\022\016\n\nServerInfo\020\002\022\021\n\rUpDownMessage\020" +
-      "\003\022\r\n\tHeartBeat\020\004\022\016\n\nMessageAck\020\005\022\022\n\016HisM" +
-      "essagesReq\020\006\022\022\n\016HisMessagesAck\020\007\022\021\n\rNoti" +
-      "fyMessage\020\010\022\r\n\tConverReq\020\t\022\r\n\tConverAck\020" +
-      "\nB\006\n\004data\"\"\n\005Login\022\n\n\002id\030\001 \001(\004\022\r\n\005token\030" +
-      "\002 \001(\t\"^\n\010LoginAck\022\n\n\002id\030\001 \001(\004\022+\n\004code\030\002 " +
-      "\001(\0162\035.com.raven.common.protos.Code\022\013\n\003ms" +
-      "g\030\003 \001(\t\022\014\n\004time\030\004 \001(\004\"2\n\nServerInfo\022\n\n\002i" +
-      "d\030\001 \001(\004\022\n\n\002ip\030\002 \001(\t\022\014\n\004port\030\003 \001(\r\"\342\001\n\rUp" +
-      "DownMessage\022\n\n\002id\030\001 \001(\004\022\013\n\003cid\030\002 \001(\004\022\017\n\007" +
-      "fromUid\030\003 \001(\t\022\021\n\ttargetUid\030\004 \001(\t\022\017\n\007grou" +
-      "pId\030\005 \001(\t\022\020\n\010converId\030\006 \001(\t\0227\n\nconverTyp" +
-      "e\030\007 \001(\0162#.com.raven.common.protos.Conver" +
-      "Type\0228\n\007content\030\010 \001(\0132\'.com.raven.common" +
-      ".protos.MessageContent\"V\n\tHeartBeat\022\n\n\002i" +
-      "d\030\001 \001(\004\022=\n\rheartBeatType\030\002 \001(\0162&.com.rav" +
-      "en.common.protos.HeartBeatType\"\205\001\n\nMessa" +
-      "geAck\022\n\n\002id\030\001 \001(\004\022\013\n\003cid\030\002 \001(\004\022\021\n\ttarget" +
-      "Uid\030\003 \001(\t\022\020\n\010converId\030\004 \001(\t\022\014\n\004time\030\005 \001(" +
-      "\004\022+\n\004code\030\006 \001(\0162\035.com.raven.common.proto" +
-      "s.Code\"|\n\016MessageContent\022\n\n\002id\030\001 \001(\004\022\013\n\003" +
-      "uid\030\002 \001(\t\0222\n\004type\030\003 \001(\0162$.com.raven.comm" +
-      "on.protos.MessageType\022\017\n\007content\030\004 \001(\t\022\014" +
-      "\n\004time\030\005 \001(\004\"?\n\016HisMessagesReq\022\n\n\002id\030\001 \001" +
-      "(\004\022\020\n\010converId\030\002 \001(\t\022\017\n\007beginId\030\003 \001(\004\"\270\001" +
-      "\n\016HisMessagesAck\022\n\n\002id\030\001 \001(\004\022\020\n\010converId" +
-      "\030\002 \001(\t\0225\n\010convType\030\003 \001(\0162#.com.raven.com" +
-      "mon.protos.ConverType\022<\n\013messageList\030\004 \003" +
-      "(\0132\'.com.raven.common.protos.MessageCont" +
-      "ent\022\023\n\013unReadCount\030\005 \001(\004\"e\n\tConverReq\022\n\n" +
-      "\002id\030\001 \001(\004\0224\n\004type\030\002 \001(\0162&.com.raven.comm" +
-      "on.protos.OperationType\022\026\n\016conversationI" +
-      "d\030\003 \001(\t\"\304\001\n\tConverAck\022\n\n\002id\030\001 \001(\004\022+\n\004cod" +
-      "e\030\003 \001(\0162\035.com.raven.common.protos.Code\022\014" +
-      "\n\004time\030\004 \001(\004\0227\n\nconverInfo\030\005 \001(\0132#.com.r" +
-      "aven.common.protos.ConverInfo\0227\n\nconverL" +
-      "ist\030\006 \003(\0132#.com.raven.common.protos.Conv" +
-      "erInfo\"\322\001\n\nConverInfo\022\020\n\010converId\030\001 \001(\t\022" +
-      "1\n\004type\030\002 \001(\0162#.com.raven.common.protos." +
-      "ConverType\022\017\n\007uidList\030\003 \003(\t\022\017\n\007groupId\030\004" +
-      " \001(\t\022\021\n\treadMsgId\030\005 \001(\004\022<\n\013lastContent\030\006" +
-      " \001(\0132\'.com.raven.common.protos.MessageCo" +
-      "ntent\022\014\n\004time\030\007 \001(\004\"\332\001\n\rNotifyMessage\022\n\n" +
-      "\002id\030\001 \001(\004\0221\n\004type\030\002 \001(\0162#.com.raven.comm" +
-      "on.protos.NotifyType\022\021\n\ttargetUid\030\003 \001(\t\022" +
-      "\020\n\010converId\030\004 \001(\t\0225\n\010convType\030\005 \001(\0162#.co" +
-      "m.raven.common.protos.ConverType\022\017\n\007cont" +
-      "ent\030\006 \001(\t\022\014\n\004time\030\007 \001(\004\022\017\n\007fromUid\030\010 \001(\t" +
-      "*#\n\rHeartBeatType\022\010\n\004PING\020\000\022\010\n\004PONG\020\001*\272\001" +
-      "\n\004Code\022\013\n\007SUCCESS\020\000\022\024\n\020CLIENT_ID_REPEAT\020" +
-      "\001\022\027\n\023CONVER_TYPE_INVALID\020\002\022\017\n\013KAFKA_ERRO" +
-      "R\020\003\022\025\n\021CONVER_ID_INVALID\020\004\022\r\n\tNO_TARGET\020" +
-      "\005\022\021\n\rTOKEN_INVALID\020\006\022\020\n\014TOKEN_EXPIRE\020\007\022\032" +
-      "\n\026OPERATION_TYPE_INVALID\020\010*#\n\nConverType" +
-      "\022\n\n\006SINGLE\020\000\022\t\n\005GROUP\020\001*:\n\013MessageType\022\010" +
-      "\n\004TEXT\020\000\022\013\n\007PICTURE\020\001\022\t\n\005VOICE\020\002\022\t\n\005VIDE" +
-      "O\020\003*$\n\rOperationType\022\n\n\006DETAIL\020\000\022\007\n\003ALL\020" +
-      "\001*(\n\nNotifyType\022\010\n\004USER\020\000\022\020\n\014CONVERSATIO" +
-      "N\020\001B\tB\007Messageb\006proto3"
+      "n.protos.LoginAckH\000\022?\n\rupDownMessage\030\004 \001" +
+      "(\0132&.com.raven.common.protos.UpDownMessa" +
+      "geH\000\0227\n\theartBeat\030\005 \001(\0132\".com.raven.comm" +
+      "on.protos.HeartBeatH\000\0229\n\nmessageAck\030\006 \001(" +
+      "\0132#.com.raven.common.protos.MessageAckH\000" +
+      "\022A\n\016hisMessagesReq\030\007 \001(\0132\'.com.raven.com" +
+      "mon.protos.HisMessagesReqH\000\022A\n\016hisMessag" +
+      "esAck\030\010 \001(\0132\'.com.raven.common.protos.Hi" +
+      "sMessagesAckH\000\0227\n\tconverReq\030\t \001(\0132\".com." +
+      "raven.common.protos.ConverReqH\000\0227\n\tconve" +
+      "rAck\030\n \001(\0132\".com.raven.common.protos.Con" +
+      "verAckH\000\0227\n\tssMessage\030\013 \001(\0132\".com.raven." +
+      "common.protos.SSMessageH\000\"\246\001\n\004Type\022\t\n\005Lo" +
+      "gin\020\000\022\014\n\010LoginAck\020\001\022\021\n\rUpDownMessage\020\002\022\r" +
+      "\n\tHeartBeat\020\003\022\016\n\nMessageAck\020\004\022\022\n\016HisMess" +
+      "agesReq\020\005\022\022\n\016HisMessagesAck\020\006\022\r\n\tConverR" +
+      "eq\020\007\022\r\n\tConverAck\020\010\022\r\n\tSSMessage\020\tB\006\n\004da" +
+      "ta\"\"\n\005Login\022\n\n\002id\030\001 \001(\004\022\r\n\005token\030\002 \001(\t\"Q" +
+      "\n\010LoginAck\022\n\n\002id\030\001 \001(\004\022+\n\004code\030\002 \001(\0162\035.c" +
+      "om.raven.common.protos.Code\022\014\n\004time\030\003 \001(" +
+      "\004\"\277\001\n\rUpDownMessage\022\n\n\002id\030\001 \001(\004\022\013\n\003cid\030\002" +
+      " \001(\004\022\017\n\007fromUid\030\003 \001(\t\022\021\n\ttargetUid\030\004 \001(\t" +
+      "\0227\n\nconverType\030\005 \001(\0162#.com.raven.common." +
+      "protos.ConverType\0228\n\007content\030\006 \001(\0132\'.com" +
+      ".raven.common.protos.MessageContent\"\273\001\n\t" +
+      "SSMessage\022\n\n\002id\030\001 \001(\004\022\016\n\006appKey\030\002 \001(\t\022\017\n" +
+      "\007fromUid\030\003 \001(\t\022\016\n\006convId\030\004 \001(\t\0227\n\nconver" +
+      "Type\030\005 \001(\0162#.com.raven.common.protos.Con" +
+      "verType\0228\n\007content\030\006 \001(\0132\'.com.raven.com" +
+      "mon.protos.MessageContent\"V\n\tHeartBeat\022\n" +
+      "\n\002id\030\001 \001(\004\022=\n\rheartBeatType\030\002 \001(\0162&.com." +
+      "raven.common.protos.HeartBeatType\"`\n\nMes" +
+      "sageAck\022\n\n\002id\030\001 \001(\004\022\013\n\003cid\030\002 \001(\004\022\014\n\004time" +
+      "\030\003 \001(\004\022+\n\004code\030\004 \001(\0162\035.com.raven.common." +
+      "protos.Code\"c\n\016MessageContent\0222\n\004type\030\001 " +
+      "\001(\0162$.com.raven.common.protos.MessageTyp" +
+      "e\022\017\n\007content\030\002 \001(\t\022\014\n\004time\030\003 \001(\004\"?\n\016HisM" +
+      "essagesReq\022\n\n\002id\030\001 \001(\004\022\020\n\010converId\030\002 \001(\t" +
+      "\022\017\n\007beginId\030\003 \001(\004\"\270\001\n\016HisMessagesAck\022\n\n\002" +
+      "id\030\001 \001(\004\022\020\n\010converId\030\002 \001(\t\0225\n\010convType\030\003" +
+      " \001(\0162#.com.raven.common.protos.ConverTyp" +
+      "e\022<\n\013messageList\030\004 \003(\0132\'.com.raven.commo" +
+      "n.protos.MessageContent\022\023\n\013unReadCount\030\005" +
+      " \001(\004\"e\n\tConverReq\022\n\n\002id\030\001 \001(\004\0224\n\004type\030\002 " +
+      "\001(\0162&.com.raven.common.protos.OperationT" +
+      "ype\022\026\n\016conversationId\030\003 \001(\t\"\304\001\n\tConverAc" +
+      "k\022\n\n\002id\030\001 \001(\004\022+\n\004code\030\003 \001(\0162\035.com.raven." +
+      "common.protos.Code\022\014\n\004time\030\004 \001(\004\0227\n\nconv" +
+      "erInfo\030\005 \001(\0132#.com.raven.common.protos.C" +
+      "onverInfo\0227\n\nconverList\030\006 \003(\0132#.com.rave" +
+      "n.common.protos.ConverInfo\"\322\001\n\nConverInf" +
+      "o\022\020\n\010converId\030\001 \001(\t\0221\n\004type\030\002 \001(\0162#.com." +
+      "raven.common.protos.ConverType\022\017\n\007uidLis" +
+      "t\030\003 \003(\t\022\017\n\007groupId\030\004 \001(\t\022\021\n\treadMsgId\030\005 " +
+      "\001(\004\022<\n\013lastContent\030\006 \001(\0132\'.com.raven.com" +
+      "mon.protos.MessageContent\022\014\n\004time\030\007 \001(\004*" +
+      "#\n\rHeartBeatType\022\010\n\004PING\020\000\022\010\n\004PONG\020\001*\272\001\n" +
+      "\004Code\022\013\n\007SUCCESS\020\000\022\024\n\020CLIENT_ID_REPEAT\020\001" +
+      "\022\027\n\023CONVER_TYPE_INVALID\020\002\022\017\n\013KAFKA_ERROR" +
+      "\020\003\022\025\n\021CONVER_ID_INVALID\020\004\022\r\n\tNO_TARGET\020\005" +
+      "\022\021\n\rTOKEN_INVALID\020\006\022\020\n\014TOKEN_EXPIRE\020\007\022\032\n" +
+      "\026OPERATION_TYPE_INVALID\020\010*#\n\nConverType\022" +
+      "\n\n\006SINGLE\020\000\022\t\n\005GROUP\020\001*:\n\013MessageType\022\010\n" +
+      "\004TEXT\020\000\022\013\n\007PICTURE\020\001\022\t\n\005VOICE\020\002\022\t\n\005VIDEO" +
+      "\020\003*$\n\rOperationType\022\n\n\006DETAIL\020\000\022\007\n\003ALL\020\001" +
+      "B\tB\007Messageb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -18036,7 +15731,7 @@ public final class Message {
     internal_static_com_raven_common_protos_RavenMessage_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_raven_common_protos_RavenMessage_descriptor,
-        new java.lang.String[] { "Type", "Login", "LoginAck", "ServerInfo", "UpDownMessage", "HeartBeat", "MessageAck", "HisMessagesReq", "HisMessagesAck", "NotifyMessage", "ConverReq", "ConverAck", "Data", });
+        new java.lang.String[] { "Type", "Login", "LoginAck", "UpDownMessage", "HeartBeat", "MessageAck", "HisMessagesReq", "HisMessagesAck", "ConverReq", "ConverAck", "SsMessage", "Data", });
     internal_static_com_raven_common_protos_Login_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_com_raven_common_protos_Login_fieldAccessorTable = new
@@ -18048,19 +15743,19 @@ public final class Message {
     internal_static_com_raven_common_protos_LoginAck_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_raven_common_protos_LoginAck_descriptor,
-        new java.lang.String[] { "Id", "Code", "Msg", "Time", });
-    internal_static_com_raven_common_protos_ServerInfo_descriptor =
-      getDescriptor().getMessageTypes().get(3);
-    internal_static_com_raven_common_protos_ServerInfo_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_com_raven_common_protos_ServerInfo_descriptor,
-        new java.lang.String[] { "Id", "Ip", "Port", });
+        new java.lang.String[] { "Id", "Code", "Time", });
     internal_static_com_raven_common_protos_UpDownMessage_descriptor =
-      getDescriptor().getMessageTypes().get(4);
+      getDescriptor().getMessageTypes().get(3);
     internal_static_com_raven_common_protos_UpDownMessage_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_raven_common_protos_UpDownMessage_descriptor,
-        new java.lang.String[] { "Id", "Cid", "FromUid", "TargetUid", "GroupId", "ConverId", "ConverType", "Content", });
+        new java.lang.String[] { "Id", "Cid", "FromUid", "TargetUid", "ConverType", "Content", });
+    internal_static_com_raven_common_protos_SSMessage_descriptor =
+      getDescriptor().getMessageTypes().get(4);
+    internal_static_com_raven_common_protos_SSMessage_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_com_raven_common_protos_SSMessage_descriptor,
+        new java.lang.String[] { "Id", "AppKey", "FromUid", "ConvId", "ConverType", "Content", });
     internal_static_com_raven_common_protos_HeartBeat_descriptor =
       getDescriptor().getMessageTypes().get(5);
     internal_static_com_raven_common_protos_HeartBeat_fieldAccessorTable = new
@@ -18072,13 +15767,13 @@ public final class Message {
     internal_static_com_raven_common_protos_MessageAck_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_raven_common_protos_MessageAck_descriptor,
-        new java.lang.String[] { "Id", "Cid", "TargetUid", "ConverId", "Time", "Code", });
+        new java.lang.String[] { "Id", "Cid", "Time", "Code", });
     internal_static_com_raven_common_protos_MessageContent_descriptor =
       getDescriptor().getMessageTypes().get(7);
     internal_static_com_raven_common_protos_MessageContent_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_raven_common_protos_MessageContent_descriptor,
-        new java.lang.String[] { "Id", "Uid", "Type", "Content", "Time", });
+        new java.lang.String[] { "Type", "Content", "Time", });
     internal_static_com_raven_common_protos_HisMessagesReq_descriptor =
       getDescriptor().getMessageTypes().get(8);
     internal_static_com_raven_common_protos_HisMessagesReq_fieldAccessorTable = new
@@ -18109,12 +15804,6 @@ public final class Message {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_raven_common_protos_ConverInfo_descriptor,
         new java.lang.String[] { "ConverId", "Type", "UidList", "GroupId", "ReadMsgId", "LastContent", "Time", });
-    internal_static_com_raven_common_protos_NotifyMessage_descriptor =
-      getDescriptor().getMessageTypes().get(13);
-    internal_static_com_raven_common_protos_NotifyMessage_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_com_raven_common_protos_NotifyMessage_descriptor,
-        new java.lang.String[] { "Id", "Type", "TargetUid", "ConverId", "ConvType", "Content", "Time", "FromUid", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

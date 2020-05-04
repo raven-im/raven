@@ -70,9 +70,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     private RavenMessage buildNotification(ReqMsgParam param, long msgId, Conversation conv) {
         MessageContent content = MessageContent.newBuilder()
-                .setId(msgId)
                 .setType(MessageType.TEXT) //TODO still build message. but Message Type different. MessageType.NOTIFY ????
-                .setUid(param.getFromUid())
                 .setContent(param.getContent()) // MessageType.NOTIFY ,content different.
                 .setTime(System.currentTimeMillis())
                 .build();
@@ -81,7 +79,6 @@ public class NotificationServiceImpl implements NotificationService {
                 .setFromUid(param.getFromUid())
                 .setTargetUid(param.getTargetUid())
                 .setContent(content)
-                .setConverId(param.getTargetUid())
                 .setConverType(conv.getType() == 1 ? ConverType.GROUP : ConverType.SINGLE)
 //            .setGroupId(upDownMessage.getGroupId())
                 .build();

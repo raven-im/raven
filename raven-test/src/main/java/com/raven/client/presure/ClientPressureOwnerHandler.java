@@ -67,7 +67,6 @@ public class ClientPressureOwnerHandler extends SimpleChannelInboundHandler<Rave
         long cid = ClientPressureOwner.snowFlake.nextId();
         long time = System.currentTimeMillis();
         MessageContent content = MessageContent.newBuilder()
-            .setUid(uid)
             .setTime(time)
             .setType(MessageType.TEXT)
             .setContent("hello world.")
@@ -75,7 +74,7 @@ public class ClientPressureOwnerHandler extends SimpleChannelInboundHandler<Rave
         UpDownMessage msg = UpDownMessage.newBuilder()
             .setCid(cid)
             .setFromUid(uid)
-            .setGroupId(groupId)
+            .setTargetUid(groupId)
             .setConverType(ConverType.GROUP)
             .setContent(content)
             .build();

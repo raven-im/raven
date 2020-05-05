@@ -142,7 +142,7 @@ public class Utils {
     }
 
     public static void rspHeartBeat(ChannelHandlerContext ctx, Message.HeartBeat heartBeat) {
-        log.info("receive heartbeat PONG {}", heartBeat.getId());
+//        log.info("receive heartbeat PONG {}", heartBeat.getId());
         if (heartBeat.getHeartBeatType() == Message.HeartBeatType.PONG) {
             new Timer().schedule(new TimerTask() {
                 @Override

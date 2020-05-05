@@ -1,5 +1,6 @@
 package com.raven.client.group;
 
+import com.raven.common.enums.MessageType;
 import com.raven.common.protos.Message.*;
 import com.raven.common.protos.Message.RavenMessage.Type;
 import com.raven.common.utils.JsonHelper;
@@ -41,13 +42,13 @@ public class ClientOwnerHandler extends SimpleChannelInboundHandler<RavenMessage
                 Thread.sleep(1000);
                 MessageContent content = MessageContent.newBuilder()
                         .setTime(System.currentTimeMillis())
-                        .setType(MessageType.TEXT)
+                        .setType(MessageType.TEXT.getType())
                         .setContent("hello world.")
                         .build();
                 UpDownMessage msg = UpDownMessage.newBuilder()
                         .setCid(snowFlake.nextId())
                         .setFromUid(uid)
-                        .setTargetUid(groupId)
+                        .setConvId(groupId)
                         .setConverType(ConverType.GROUP)
                         .setContent(content)
                         .build();

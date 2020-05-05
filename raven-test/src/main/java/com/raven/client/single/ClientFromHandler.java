@@ -1,5 +1,6 @@
 package com.raven.client.single;
 
+import com.raven.common.enums.MessageType;
 import com.raven.common.protos.Message.*;
 import com.raven.common.protos.Message.RavenMessage.Type;
 import com.raven.common.utils.JsonHelper;
@@ -44,14 +45,14 @@ public class ClientFromHandler extends SimpleChannelInboundHandler<RavenMessage>
                 for (String toUid : toUidList) {
                     Thread.sleep(1000);
                     MessageContent content = MessageContent.newBuilder()
-                            .setType(MessageType.TEXT)
+                            .setType(MessageType.TEXT.getType())
                             .setContent("hello world")
                             .build();
                     long cid = snowFlake.nextId();
                     UpDownMessage upDownMessage = UpDownMessage.newBuilder()
                             .setCid(cid)
                             .setFromUid(uid)
-                            .setTargetUid(toUid)
+                            .addTargetUid(toUid)
                             .setConverType(ConverType.SINGLE)
                             .setContent(content)
                             .build();

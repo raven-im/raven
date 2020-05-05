@@ -1,11 +1,12 @@
 package com.raven.common.model;
 
-import java.io.Serializable;
-import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
+import java.util.List;
 
 @Data
 @Builder
@@ -19,7 +20,5 @@ public class Conversation implements Serializable {
 
     private List<String> uidList;
 
-    private String groupId;
-
-    private long time;//conversation 创建时间
+    private long timestamp;
 }

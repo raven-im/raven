@@ -32,7 +32,7 @@ public class SingleMessageProcessor implements Runnable {
 
         //TODO  发单聊的时候，  API 只能发到 二人中的一个， 一般是conversation建立起来的时候的targetUid.
         //send to kafka
-        //以targetUid为序，保证同一个会话有序
+        //以conversation id为序，保证同一个会话有序
         kafka.send(Constants.KAFKA_TOPIC_SINGLE_MSG, ssMessage.getConvId(), message);
 
         //route to target access server.

@@ -13,14 +13,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class MsgContent implements Serializable {
 
-    private long id;
-
-    private String uid;
-
-    private int type;
+    private String type;
 
     private String content;
 
-    private long time;
+    private long timestamp;
 
 }

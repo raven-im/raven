@@ -49,9 +49,10 @@ message UpDownMessage {
   uint64 id = 1; // 服务端消息ID
   uint64 cid = 2; // 客户端消息ID，上行CS需要，下行SC不需要
   string fromUid = 3; // 发送人ID
-  string targetUid = 4; // 单聊为接收者id, 群聊为group id
-  ConverType converType = 5; // 会话类型
-  MessageContent content = 6; // 内容
+  repeated string targetUid = 4; // 单聊为接收者id, 群聊支持 群定向
+  string convId = 5; //
+  ConverType converType = 6; // 会话类型
+  MessageContent content = 7; // 内容
 }
 
 // 服务器至服务器消息，用于RPC通讯
@@ -59,9 +60,10 @@ message SSMessage {
   uint64 id = 1; // 服务端消息ID
   string appKey = 2; // 应用信息
   string fromUid = 3; // 发送人ID
-  string convId = 4; // 会话id
-  ConverType converType = 5; // 会话类型
-  MessageContent content = 6; // 内容
+  repeated string targetUid = 4; // 单聊为接收者id, 群聊支持 群定向
+  string convId = 5; // 会话id
+  ConverType converType = 6; // 会话类型
+  MessageContent content = 7; // 内容
 }
 
 // 心跳
@@ -79,8 +81,9 @@ enum HeartBeatType {
 message MessageAck {
   uint64 id = 1; // 服务端消息ID
   uint64 cid = 2; // 客户端消息ID
-  uint64 time = 3; // 发送时间
-  Code code = 4; // 返回码
+  string convId = 3; // 会话id
+  uint64 time = 4; // 发送时间
+  Code code = 5; // 返回码
 }
 
 enum Code {
@@ -103,17 +106,9 @@ enum ConverType {
 
 // 消息内容
 message MessageContent {
-  MessageType type = 1;
-  string content = 2; // 内容
+  string type = 1; //AH:TXT, AH:IMG,  自定义扩展，足够灵活，不用总改pb.
+  string content = 2; // 内容,按type进行json解析
   uint64 time = 3; // 消息时间
-}
-
-// 消息类型
-enum MessageType {
-  TEXT = 0;
-  PICTURE = 1;
-  VOICE = 2;
-  VIDEO = 3;
 }
 
 // 历史消息请求

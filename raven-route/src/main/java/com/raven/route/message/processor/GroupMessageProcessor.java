@@ -33,14 +33,14 @@ public class GroupMessageProcessor implements Runnable {
 
         //send to kafka
         // same conversation to same partition, keep the sequence in a conversation.
-        kafka.send(Constants.KAFKA_TOPIC_GROUP_MSG, upDownMessage.getTargetUid(), message);
+        kafka.send(Constants.KAFKA_TOPIC_GROUP_MSG, upDownMessage.getConvId(), message);
 
         //route to target access server.
-        List<String> uidList = converManager.getUidListByConverExcludeSender(upDownMessage.getTargetUid(), upDownMessage.getFromUid());
+        //TODO  处理群定向消息
+        List<String> uidList = converManager.getUidListByConverExcludeSender(upDownMessage.getConvId(), upDownMessage.getFromUid());
         for (String uid : uidList) {
             UpDownMessage downMessage = UpDownMessage.newBuilder()
                     .mergeFrom(upDownMessage)
-                    .setTargetUid(uid)
                     .build();
             RavenMessage ravenMessage = RavenMessage.newBuilder()
                     .setType(Type.UpDownMessage)

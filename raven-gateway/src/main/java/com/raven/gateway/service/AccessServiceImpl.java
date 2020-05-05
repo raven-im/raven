@@ -47,7 +47,7 @@ public class AccessServiceImpl implements AccessService {
             log.error("no channel match {}, maybe caused by bad routing.", key);
             return;
         }
-        RavenMessage ravenMessage = buildRavenMessage(downMessage, uid);
+        RavenMessage ravenMessage = buildRavenMessage(downMessage);
         for (Channel channel : channels) {
             channel.writeAndFlush(ravenMessage).addListener(future -> {
                 if (!future.isSuccess()) {
@@ -65,11 +65,11 @@ public class AccessServiceImpl implements AccessService {
         return accessNode;
     }
 
-    private RavenMessage buildRavenMessage(SSMessage ssMessage, String targetUid) {
+    private RavenMessage buildRavenMessage(SSMessage ssMessage) {
         UpDownMessage message = UpDownMessage.newBuilder()
                 .setId(ssMessage.getId())
                 .setFromUid(ssMessage.getFromUid())
-                .setTargetUid(targetUid)
+                .setConvId(ssMessage.getConvId())
                 .setConverType(ssMessage.getConverType())
                 .setContent(ssMessage.getContent())
                 .build();

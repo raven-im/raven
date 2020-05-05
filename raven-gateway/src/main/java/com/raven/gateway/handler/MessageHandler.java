@@ -48,16 +48,26 @@ public class MessageHandler extends SimpleChannelInboundHandler<RavenMessage> {
             }
             String convId;
             if (upMessage.getConverType() == ConverType.SINGLE) {
-                if (!StringUtils.isEmpty(upMessage.getTargetUid())) {
-                    //cache in redis.
-                    convId = converManager.newSingleConverId(upMessage.getFromUid(), upMessage.getTargetUid());
+                if (!StringUtils.isEmpty(upMessage.getConvId())) {
+                    if (!converManager.isSingleConverIdValid(upMessage.getConvId())) {
+                        log.error("illegal conversation id.");
+                        sendFailAck(ctx, upMessage, Code.CONVER_ID_INVALID);
+                        return;
+                    }  else {
+                        convId = upMessage.getConvId();
+                    }
+                }
+                else if (upMessage.getTargetUidCount() == 1) {
+                    //single chat , only support 1 target uid.
+                    convId = converManager.newSingleConverId(upMessage.getFromUid(), upMessage.getTargetUid(0));
+                    upMessage = upMessage.toBuilder().setConvId(convId).build();
                 } else {
                     log.error("No target!!");
                     sendFailAck(ctx, upMessage, Code.NO_TARGET);
                     return;
                 }
             } else if (upMessage.getConverType() == ConverType.GROUP) {
-                convId = upMessage.getTargetUid(); //TODO
+                convId = upMessage.getTargetUid(0); //TODO
 //                if (StringUtils.isNotBlank(convId)) {
 //                    //TODO ?? groupId == convId
 //                    String groupId = converManager.getGroupIdByConverId(convId);
@@ -80,7 +90,7 @@ public class MessageHandler extends SimpleChannelInboundHandler<RavenMessage> {
                 return;
             }
             long id = snowFlake.nextId();
-            RavenMessage ravenMessage = buildRavenMessage(ctx, upMessage, id, convId);
+            RavenMessage ravenMessage = buildRavenMessage(ctx, upMessage, id);
             if (sendMsg(ravenMessage, upMessage.getConverType(), id)) {
                 sendAck(ctx, upMessage, Code.SUCCESS, id);
             } else {
@@ -96,6 +106,7 @@ public class MessageHandler extends SimpleChannelInboundHandler<RavenMessage> {
         MessageAck messageAck = MessageAck.newBuilder()
                 .setId(msgId)
                 .setCid(message.getCid())
+                .setConvId(message.getConvId())
                 .setCode(code)
                 .setTime(System.currentTimeMillis())
                 .build();
@@ -110,8 +121,7 @@ public class MessageHandler extends SimpleChannelInboundHandler<RavenMessage> {
         sendAck(ctx, message, code, 0);
     }
 
-    private RavenMessage buildRavenMessage(ChannelHandlerContext ctx, UpDownMessage upDownMessage,
-                                           long msgId, String convId) {
+    private RavenMessage buildRavenMessage(ChannelHandlerContext ctx, UpDownMessage upDownMessage, long msgId) {
         String appKey = NettyAttrUtil.getAttribute(ctx.channel(), ATTR_KEY_APP_KEY);
         MessageContent content = MessageContent.newBuilder()
                 .setType(upDownMessage.getContent().getType())
@@ -121,7 +131,8 @@ public class MessageHandler extends SimpleChannelInboundHandler<RavenMessage> {
         SSMessage message = SSMessage.newBuilder()
                 .setId(msgId)
                 .setFromUid(upDownMessage.getFromUid())
-                .setConvId(convId)
+                .addAllTargetUid(upDownMessage.getTargetUidList())
+                .setConvId(upDownMessage.getConvId())
                 .setAppKey(appKey)
                 .setConverType(upDownMessage.getConverType())
                 .setContent(content)
@@ -152,8 +163,9 @@ public class MessageHandler extends SimpleChannelInboundHandler<RavenMessage> {
     }
 
     private boolean sendMsg(RavenMessage ravenMessage, ConverType type, long id) {
-        log.info("send Msg to {} : {}", id, type.getNumber());
+//        log.info("send Msg to {} : {}", id, type.getNumber());
         String message = JsonHelper.toJsonString(ravenMessage);
+        log.info("send Msg to {} : {}", id, message);
         if (StringUtils.isEmpty(message)) {
             return false;
         }

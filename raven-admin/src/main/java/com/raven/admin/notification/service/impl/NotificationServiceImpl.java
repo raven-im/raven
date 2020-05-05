@@ -3,8 +3,12 @@ package com.raven.admin.notification.service.impl;
 import com.raven.admin.messages.bean.param.ReqMsgParam;
 import com.raven.admin.notification.service.NotificationService;
 import com.raven.common.dubbo.MessageService;
+import com.raven.common.enums.MessageType;
 import com.raven.common.model.Conversation;
-import com.raven.common.protos.Message.*;
+import com.raven.common.protos.Message.ConverType;
+import com.raven.common.protos.Message.MessageContent;
+import com.raven.common.protos.Message.RavenMessage;
+import com.raven.common.protos.Message.UpDownMessage;
 import com.raven.common.result.Result;
 import com.raven.common.result.ResultCode;
 import com.raven.common.utils.JsonHelper;
@@ -70,14 +74,14 @@ public class NotificationServiceImpl implements NotificationService {
 
     private RavenMessage buildNotification(ReqMsgParam param, long msgId, Conversation conv) {
         MessageContent content = MessageContent.newBuilder()
-                .setType(MessageType.TEXT) //TODO still build message. but Message Type different. MessageType.NOTIFY ????
+                .setType(MessageType.TEXT.getType()) //TODO still build message. but Message Type different. MessageType.NOTIFY ????
                 .setContent(param.getContent()) // MessageType.NOTIFY ,content different.
                 .setTime(System.currentTimeMillis())
                 .build();
-        UpDownMessage upMessage = UpDownMessage.newBuilder().setId(msgId)
-//            .setCid()
+        UpDownMessage upMessage = UpDownMessage.newBuilder()
+                .setId(msgId)
                 .setFromUid(param.getFromUid())
-                .setTargetUid(param.getTargetUid())
+                .setConvId(param.getTargetUid())
                 .setContent(content)
                 .setConverType(conv.getType() == 1 ? ConverType.GROUP : ConverType.SINGLE)
 //            .setGroupId(upDownMessage.getGroupId())

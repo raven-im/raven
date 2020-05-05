@@ -3,6 +3,7 @@ package com.raven.admin.messages.service.impl;
 import com.raven.admin.messages.bean.param.ReqMsgParam;
 import com.raven.admin.messages.service.MessagesService;
 import com.raven.common.dubbo.MessageService;
+import com.raven.common.enums.MessageType;
 import com.raven.common.model.Conversation;
 import com.raven.common.protos.Message.*;
 import com.raven.common.protos.Message.RavenMessage.Type;
@@ -80,13 +81,13 @@ public class MessageServiceImpl implements MessagesService {
 
     private RavenMessage buildMessage(ReqMsgParam param, long msgId, ConverType type) {
         MessageContent content = MessageContent.newBuilder()
-                .setType(MessageType.TEXT) //TODO  server api only support text message now.
+                .setType(MessageType.TEXT.getType()) //TODO  server api only support text message now.
                 .setContent(param.getContent())
                 .setTime(System.currentTimeMillis()).build();
-        UpDownMessage upMessage = UpDownMessage.newBuilder().setId(msgId)
-//            .setCid()
+        UpDownMessage upMessage = UpDownMessage.newBuilder()
+                .setId(msgId)
                 .setFromUid(param.getFromUid())
-                .setTargetUid(param.getTargetUid())
+                .setConvId(param.getTargetUid())
                 .setContent(content)
                 .setConverType(type)
                 .build();

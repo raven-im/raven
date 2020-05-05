@@ -56,8 +56,6 @@ public class ConverManager {
         if (result) {
             for (String member : members) {
                 redisTemplate.boundSetOps(PREFIX_GROUP_MEMBER + converId).add(member);
-                redisTemplate.boundHashOps(PREFIX_CONVERSATION_LIST + member)
-                        .put(converId, Long.MIN_VALUE);
             }
         }
         return converId;

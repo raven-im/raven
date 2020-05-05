@@ -58,8 +58,7 @@ public class GroupServiceImpl implements GroupService {
         model.setCreateDate(now);
         model.setUpdateDate(now);
         model.setStatus(0); //0 for normal
-        String converId = converManager.newGroupConverId(groupId, reqParam.getMembers());
-        model.setConverId(converId);
+        converManager.newGroupConverId(groupId, reqParam.getMembers());
         groupMapper.insert(model);
         reqParam.getMembers().forEach(uid -> {
             GroupMemberModel member = new GroupMemberModel();
@@ -70,6 +69,8 @@ public class GroupServiceImpl implements GroupService {
             member.setStatus(0);// 0 normal status;
             memberMapper.insert(member);
         });
+        //update new member conversation list.
+        converManager.addMemberConverList(groupId, reqParam.getMembers());
         return model;
     }
 
@@ -174,6 +175,8 @@ public class GroupServiceImpl implements GroupService {
         member.setUpdateDate(DateTimeUtils.currentUTC());
         member.setStatus(2);// 2 mark delete.
         memberMapper.updateByExampleSelective(member, example1);
+
+        converManager.dismissGroup(reqParam.getGroupId());
         return ResultCode.COMMON_SUCCESS;
     }
 

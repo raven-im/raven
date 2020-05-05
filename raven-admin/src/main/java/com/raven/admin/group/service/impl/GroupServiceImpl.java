@@ -14,14 +14,14 @@ import com.raven.common.result.Result;
 import com.raven.common.result.ResultCode;
 import com.raven.common.utils.DateTimeUtils;
 import com.raven.common.utils.UidUtil;
+import com.raven.storage.conver.ConverManager;
+import java.util.Date;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
-
-import java.util.Date;
-import java.util.List;
 
 @Service
 @Transactional(rollbackFor = Throwable.class)
@@ -33,6 +33,9 @@ public class GroupServiceImpl implements GroupService {
 
     @Autowired
     private GroupMemberMapper memberMapper;
+
+    @Autowired
+    private ConverManager converManager;
 
     @Autowired
     private GroupValidator groupValidator;
@@ -55,6 +58,8 @@ public class GroupServiceImpl implements GroupService {
         model.setCreateDate(now);
         model.setUpdateDate(now);
         model.setStatus(0); //0 for normal
+        String converId = converManager.newGroupConverId(groupId, reqParam.getMembers());
+        model.setConverId(converId);
         groupMapper.insert(model);
         reqParam.getMembers().forEach(uid -> {
             GroupMemberModel member = new GroupMemberModel();
@@ -86,8 +91,8 @@ public class GroupServiceImpl implements GroupService {
 
             Example example = new Example(GroupMemberModel.class);
             example.createCriteria()
-                    .andEqualTo("groupId", reqParam.getGroupId())
-                    .andEqualTo("memberUid", uid);
+                .andEqualTo("groupId", reqParam.getGroupId())
+                .andEqualTo("memberUid", uid);
             List<GroupMemberModel> list = memberMapper.selectByExample(example);
             if (list != null && list.size() > 0) {
                 //exists already.
@@ -105,6 +110,8 @@ public class GroupServiceImpl implements GroupService {
                 memberMapper.insert(member);
             }
         });
+        //update new member conversation list.
+        converManager.addMemberConverList(reqParam.getGroupId(), reqParam.getMembers());
         return ResultCode.COMMON_SUCCESS;
     }
 
@@ -129,10 +136,12 @@ public class GroupServiceImpl implements GroupService {
 
             Example example = new Example(GroupMemberModel.class);
             example.createCriteria()
-                    .andEqualTo("groupId", reqParam.getGroupId())
-                    .andEqualTo("memberUid", uid);
+                .andEqualTo("groupId", reqParam.getGroupId())
+                .andEqualTo("memberUid", uid);
             memberMapper.updateByExampleSelective(member, example);
         });
+        //update deleted member conversation list.
+        converManager.removeMemberConverList(reqParam.getGroupId(), reqParam.getMembers());
         return ResultCode.COMMON_SUCCESS;
     }
 
@@ -145,18 +154,19 @@ public class GroupServiceImpl implements GroupService {
         // conversation delete.
         Example example1 = new Example(GroupMemberModel.class);
         example1.createCriteria()
-                .andEqualTo("groupId", reqParam.getGroupId());
+            .andEqualTo("groupId", reqParam.getGroupId());
 //        List<GroupMemberModel> members = memberMapper.selectByExample(example1);
 //        List<String> memberModels = members.stream()
 //            .map((x) -> x.getMemberUid())
 //            .collect(Collectors.toList());
+        converManager.dismissGroup(reqParam.getGroupId());
         // clean group info
         GroupModel model = new GroupModel();
         model.setStatus(2); //2 for mark delete
         model.setUpdateDate(DateTimeUtils.currentUTC());
         Example example = new Example(GroupModel.class);
         example.createCriteria()
-                .andEqualTo("uid", reqParam.getGroupId());
+            .andEqualTo("uid", reqParam.getGroupId());
         groupMapper.updateByExampleSelective(model, example);
 
         //clean group member info
@@ -175,13 +185,13 @@ public class GroupServiceImpl implements GroupService {
         }
         Example example = new Example(GroupModel.class);
         example.createCriteria()
-                .andEqualTo("status", 0)
-                .andEqualTo("uid", groupId);
+            .andEqualTo("status", 0)
+            .andEqualTo("uid", groupId);
         List<GroupModel> info = groupMapper.selectByExample(example);
         Example example1 = new Example(GroupMemberModel.class);
         example1.createCriteria()
-                .andEqualTo("status", 0)
-                .andEqualTo("groupId", groupId);
+            .andEqualTo("status", 0)
+            .andEqualTo("groupId", groupId);
         List<GroupMemberModel> members = memberMapper.selectByExample(example1);
 
         return Result.success(new GroupOutParam(info.get(0), members));

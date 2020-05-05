@@ -1,27 +1,26 @@
 package com.raven.admin.app.service.impl;
 
-import com.raven.admin.app.bean.model.AppConfigModel;
-import com.raven.admin.app.mapper.AppConfigMapper;
-import com.raven.admin.app.service.AppConfigService;
+import com.raven.admin.app.bean.model.AppRegModel;
+import com.raven.admin.app.mapper.AppRegMapper;
+import com.raven.admin.app.service.AppRegService;
 import com.raven.common.utils.DateTimeUtils;
 import com.raven.common.utils.UidUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Slf4j
-public class AppConfigServiceImpl implements AppConfigService {
+public class AppRegServiceImpl implements AppRegService {
 
     @Autowired
-    private AppConfigMapper mapper;
+    private AppRegMapper mapper;
 
     @Override
     @Transactional(rollbackFor = Throwable.class)
-    public AppConfigModel createApp() {
-        AppConfigModel model = new AppConfigModel();
+    public AppRegModel createApp() {
+        AppRegModel model = new AppRegModel();
         model.setUid(UidUtil.uuid());
         model.setSecret(UidUtil.uuid());
         model.setCreateDate(DateTimeUtils.currentUTC());
@@ -31,8 +30,8 @@ public class AppConfigServiceImpl implements AppConfigService {
     }
 
     @Override
-    public AppConfigModel getApp(String uid) {
-        AppConfigModel model = new AppConfigModel();
+    public AppRegModel getApp(String uid) {
+        AppRegModel model = new AppRegModel();
         model.setUid(uid);
         return mapper.selectOne(model);
     }
@@ -40,7 +39,7 @@ public class AppConfigServiceImpl implements AppConfigService {
     @Override
     @Transactional(rollbackFor = Throwable.class)
     public void delApp(String uid) {
-        AppConfigModel model = new AppConfigModel();
+        AppRegModel model = new AppRegModel();
         model.setUid(uid);
         mapper.delete(model);
     }

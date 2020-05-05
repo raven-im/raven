@@ -1,33 +1,28 @@
 package com.raven.admin.app.controller;
 
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-
-import com.raven.admin.app.bean.model.AppConfigModel;
-import com.raven.admin.app.service.AppConfigService;
+import com.raven.admin.app.bean.model.AppRegModel;
+import com.raven.admin.app.service.AppRegService;
 import com.raven.common.param.OutAppConfigParam;
 import com.raven.common.result.Result;
 import com.raven.common.result.ResultCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @Slf4j
 @RestController
 @RequestMapping(path = "/app", produces = APPLICATION_JSON_VALUE)
-public class AppConfigController {
+public class AppRegController {
 
     @Autowired
-    private AppConfigService service;
+    private AppRegService service;
 
     @PutMapping
     public Result createApp() {
         log.info("admin app create.");
-        AppConfigModel model = service.createApp();
+        AppRegModel model = service.createApp();
         return Result.success(new OutAppConfigParam(model.getUid(), model.getSecret()));
     }
 
@@ -41,7 +36,7 @@ public class AppConfigController {
     @GetMapping("/{uid}")
     public Result getApp(@PathVariable("uid") String uid) {
         log.info("admin app query . uid {}", uid);
-        AppConfigModel model = service.getApp(uid);
+        AppRegModel model = service.getApp(uid);
         if (model == null) {
             return Result.failure(ResultCode.COMMON_INVALID_PARAMETER);
         }

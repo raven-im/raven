@@ -6,7 +6,6 @@ CREATE TABLE IF NOT EXISTS `t_group` (
   `creator_uid` varchar(36) NOT NULL DEFAULT "" COMMENT '创建者uid',
   `create_dt` DATETIME NOT NULL,
   `update_dt` DATETIME NOT NULL,
-  `conv_id` varchar(36) NOT NULL DEFAULT "",
   `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '群组状态: 0: 正常 1: 禁用 2:标记删除',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_uid` (`uid`)

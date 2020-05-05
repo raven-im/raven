@@ -1,16 +1,17 @@
 package com.raven.admin.app.bean.model;
 
-import java.io.Serializable;
-import java.util.Date;
+import lombok.Data;
+
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import lombok.Data;
+import java.io.Serializable;
+import java.util.Date;
 
 @Data
-@Table(name="t_app_config")
-public class AppConfigModel implements Serializable {
+@Table(name = "t_app_registration")
+public class AppRegModel implements Serializable {
 
     private static final long serialVersionUID = 9129371215147758834L;
 
@@ -21,11 +22,11 @@ public class AppConfigModel implements Serializable {
     @Column
     private String uid;
 
-	@Column
+    @Column
     private String secret;
 
     @Column(name = "create_dt")
-	private Date createDate;
+    private Date createDate;
 
     @Column(name = "update_dt")
     private Date updateDate;

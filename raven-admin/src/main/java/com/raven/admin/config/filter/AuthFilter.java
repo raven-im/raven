@@ -1,7 +1,7 @@
 package com.raven.admin.config.filter;
 
-import com.raven.admin.app.bean.model.AppConfigModel;
-import com.raven.admin.app.service.AppConfigService;
+import com.raven.admin.app.bean.model.AppRegModel;
+import com.raven.admin.app.service.AppRegService;
 import com.raven.common.result.Result;
 import com.raven.common.result.ResultCode;
 import com.raven.common.utils.JsonHelper;
@@ -30,7 +30,7 @@ public class AuthFilter implements Filter {
     private LRUCache<String, String> cache = new LRUCache<>(256);
 
     @Autowired
-    private AppConfigService service;
+    private AppRegService service;
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain) throws IOException, ServletException {
@@ -83,7 +83,7 @@ public class AuthFilter implements Filter {
         if (cache.containsKey(key)) {
             return cache.get(key);
         }
-        AppConfigModel model = service.getApp(key);
+        AppRegModel model = service.getApp(key);
         if (null != model) {
             cache.put(key, model.getSecret());
             return model.getSecret();

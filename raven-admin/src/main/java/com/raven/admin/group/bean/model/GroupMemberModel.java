@@ -18,10 +18,10 @@ public class GroupMemberModel implements Serializable {
     @GeneratedValue(generator = "JDBC")
     private Long id;
 
-    @Column(name = "group_uid")
+    @Column(name = "guid")
     private String groupId;
 
-	@Column(name = "user_uid")
+	@Column(name = "uid")
     private String memberUid;
 
     @Column(name = "create_dt")

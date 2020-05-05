@@ -37,6 +37,7 @@ public class MessageHandler extends SimpleChannelInboundHandler<RavenMessage> {
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, RavenMessage message) throws Exception {
+
         if (message.getType() == Type.UpDownMessage) {
             UpDownMessage upMessage = message.getUpDownMessage();
             if (!isMsgClientIdValid(ctx, upMessage)) {
@@ -47,19 +48,19 @@ public class MessageHandler extends SimpleChannelInboundHandler<RavenMessage> {
                 saveUserClientId(ctx, upMessage);
             }
             String convId;
+            String appKey = NettyAttrUtil.getAttribute(ctx.channel(), ATTR_KEY_APP_KEY);
             if (upMessage.getConverType() == ConverType.SINGLE) {
                 if (!StringUtils.isEmpty(upMessage.getConvId())) {
                     if (!converManager.isSingleConverIdValid(upMessage.getConvId())) {
                         log.error("illegal conversation id.");
                         sendFailAck(ctx, upMessage, Code.CONVER_ID_INVALID);
                         return;
-                    }  else {
+                    } else {
                         convId = upMessage.getConvId();
                     }
-                }
-                else if (upMessage.getTargetUidCount() == 1) {
+                } else if (upMessage.getTargetUidCount() == 1) {
                     //single chat , only support 1 target uid.
-                    convId = converManager.newSingleConverId(upMessage.getFromUid(), upMessage.getTargetUid(0));
+                    convId = converManager.newSingleConverId(appKey, upMessage.getFromUid(), upMessage.getTargetUid(0));
                     upMessage = upMessage.toBuilder().setConvId(convId).build();
                 } else {
                     log.error("No target!!");
@@ -67,30 +68,23 @@ public class MessageHandler extends SimpleChannelInboundHandler<RavenMessage> {
                     return;
                 }
             } else if (upMessage.getConverType() == ConverType.GROUP) {
-                convId = upMessage.getTargetUid(0); //TODO
-//                if (StringUtils.isNotBlank(convId)) {
-//                    //TODO ?? groupId == convId
-//                    String groupId = converManager.getGroupIdByConverId(convId);
-//                    if (StringUtils.isEmpty(groupId)) {
-//                        log.error("illegal conversation id.");
-//                        sendFailAck(ctx, upMessage, Code.CONVER_ID_INVALID);
-//                    }
-//                    upMessage = upMessage.toBuilder().setConverId(groupId).build();
-//                } else if (StringUtils.isNotBlank(upMessage.getConverId())) {
-//                    convId = UidUtil.uuid24ByFactor(upMessage.getConverId());
-//                    upMessage = upMessage.toBuilder().setConverId(convId).build();
-//                } else {
-//                    log.error("conversation id and group id all empty.");
-//                    sendFailAck(ctx, upMessage, Code.NO_TARGET);
-//                    return;
-//                }
+                convId = upMessage.getConvId();
+                if (StringUtils.isEmpty(convId)) {
+                    log.error("no conversation id.");
+                    sendFailAck(ctx, upMessage, Code.NO_TARGET);
+                    return;
+                } else if (!converManager.isGroupConverIdValid(convId)) {
+                    log.error("illegal conversation id.");
+                    sendFailAck(ctx, upMessage, Code.CONVER_ID_INVALID);
+                    return;
+                }
             } else {
                 log.error("illegal conversation type.");
                 sendFailAck(ctx, upMessage, Code.CONVER_TYPE_INVALID);
                 return;
             }
             long id = snowFlake.nextId();
-            RavenMessage ravenMessage = buildRavenMessage(ctx, upMessage, id);
+            RavenMessage ravenMessage = buildRavenMessage(ctx, upMessage, id, appKey);
             if (sendMsg(ravenMessage, upMessage.getConverType(), id)) {
                 sendAck(ctx, upMessage, Code.SUCCESS, id);
             } else {
@@ -121,8 +115,7 @@ public class MessageHandler extends SimpleChannelInboundHandler<RavenMessage> {
         sendAck(ctx, message, code, 0);
     }
 
-    private RavenMessage buildRavenMessage(ChannelHandlerContext ctx, UpDownMessage upDownMessage, long msgId) {
-        String appKey = NettyAttrUtil.getAttribute(ctx.channel(), ATTR_KEY_APP_KEY);
+    private RavenMessage buildRavenMessage(ChannelHandlerContext ctx, UpDownMessage upDownMessage, long msgId, String appKey) {
         MessageContent content = MessageContent.newBuilder()
                 .setType(upDownMessage.getContent().getType())
                 .setContent(upDownMessage.getContent().getContent())

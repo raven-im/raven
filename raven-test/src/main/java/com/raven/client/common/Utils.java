@@ -64,8 +64,7 @@ public class Utils {
             String responseBody = httpClient.execute(httpPost, responseHandler);
             JsonNode node = JsonHelper.mapper.readTree(responseBody);
             JsonNode nodeGroup = JsonHelper.mapper.readTree(node.get("data").toString());
-            return new GroupOutParam(nodeGroup.get("groupId").asText(),
-                    nodeGroup.get("converId").asText());
+            return new GroupOutParam(nodeGroup.get("groupId").asText());
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }

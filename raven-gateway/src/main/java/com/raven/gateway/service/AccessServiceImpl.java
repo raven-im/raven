@@ -39,7 +39,6 @@ public class AccessServiceImpl implements AccessService {
         SSMessage downMessage = builder.getSsMessage();
 
         log.info("receive down message:{}", JsonHelper.toJsonString(downMessage));
-        //TODO ??
         String key = downMessage.getAppKey() + DEFAULT_SEPARATOR + uid;
         List<Channel> channels = uidChannelManager.getChannelsByUid(key);
         if (channels.isEmpty()) {

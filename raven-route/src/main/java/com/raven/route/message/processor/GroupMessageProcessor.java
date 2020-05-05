@@ -2,8 +2,7 @@ package com.raven.route.message.processor;
 
 import com.raven.common.dubbo.AccessService;
 import com.raven.common.protos.Message.RavenMessage;
-import com.raven.common.protos.Message.RavenMessage.Type;
-import com.raven.common.protos.Message.UpDownMessage;
+import com.raven.common.protos.Message.SSMessage;
 import com.raven.common.utils.Constants;
 import com.raven.common.utils.JsonHelper;
 import com.raven.route.config.KafkaProducerManager;
@@ -29,26 +28,19 @@ public class GroupMessageProcessor implements Runnable {
     public void run() {
         RavenMessage.Builder builder = RavenMessage.newBuilder();
         JsonHelper.readValue(message, builder);
-        UpDownMessage upDownMessage = builder.getUpDownMessage();
+        SSMessage ssMessage = builder.getSsMessage();
 
         //send to kafka
         // same conversation to same partition, keep the sequence in a conversation.
-        kafka.send(Constants.KAFKA_TOPIC_GROUP_MSG, upDownMessage.getConvId(), message);
+        kafka.send(Constants.KAFKA_TOPIC_GROUP_MSG, ssMessage.getConvId(), message);
 
         //route to target access server.
         //TODO  处理群定向消息
-        List<String> uidList = converManager.getUidListByConverExcludeSender(upDownMessage.getConvId(), upDownMessage.getFromUid());
+        List<String> uidList = converManager.getUidListByConverExcludeSender(ssMessage.getConvId(),
+                ssMessage.getFromUid());
         for (String uid : uidList) {
-            UpDownMessage downMessage = UpDownMessage.newBuilder()
-                    .mergeFrom(upDownMessage)
-                    .build();
-            RavenMessage ravenMessage = RavenMessage.newBuilder()
-                    .setType(Type.UpDownMessage)
-                    .setUpDownMessage(downMessage)
-                    .build();
-            String downMsg = JsonHelper.toJsonString(ravenMessage);
             // use uid for consistency hash, find a access server, and send it.
-            accessService.outboundMsgSend(uid, downMsg);
+            accessService.outboundMsgSend(uid, message);
         }
     }
 }

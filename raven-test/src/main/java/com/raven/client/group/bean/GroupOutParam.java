@@ -7,5 +7,4 @@ import lombok.Data;
 @AllArgsConstructor
 public class GroupOutParam {
     private String groupId;
-    private String converId;
 }

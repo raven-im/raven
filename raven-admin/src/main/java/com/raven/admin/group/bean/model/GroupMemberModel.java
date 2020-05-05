@@ -32,5 +32,8 @@ public class GroupMemberModel implements Serializable {
 
     @Column
     private Integer status;
+
+    @Column(name = "app_key")
+    private String appKey;
 }
 

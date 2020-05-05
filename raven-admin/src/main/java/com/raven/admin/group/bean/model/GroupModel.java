@@ -39,5 +39,8 @@ public class GroupModel implements Serializable {
 
     @Column
     private Integer status;
+
+    @Column(name = "app_key")
+    private String appKey;
 }
 

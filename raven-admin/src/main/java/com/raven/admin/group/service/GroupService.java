@@ -7,13 +7,13 @@ import com.raven.common.result.ResultCode;
 
 public interface GroupService {
 
-    GroupModel createGroup(GroupReqParam reqParam);
+    GroupModel createGroup(String appKey, GroupReqParam reqParam);
 
-    ResultCode joinGroup(GroupReqParam reqParam);
+    ResultCode joinGroup(String appKey, GroupReqParam reqParam);
 
-    ResultCode quitGroup(GroupReqParam reqParam);
+    ResultCode quitGroup(String appKey, GroupReqParam reqParam);
 
-    ResultCode dismissGroup(GroupReqParam reqParam);
+    ResultCode dismissGroup(String appKey, GroupReqParam reqParam);
 
-    Result groupDetail(String groupId);
+    Result groupDetail(String appKey, String groupId);
 }

@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import static com.raven.common.utils.Constants.AUTH_APP_KEY;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @Slf4j
@@ -20,15 +21,17 @@ public class GroupController {
     private GroupService service;
 
     @PostMapping("/create")
-    public Result create(@RequestBody GroupReqParam param) {
-        log.info("group create name:{}", param.getName());
-        return Result.success(new GroupOutParam(service.createGroup(param)));
+    public Result create(@RequestBody GroupReqParam param,
+                         @RequestHeader(value = AUTH_APP_KEY) String appKey) {
+        log.info("app key {}, group create name:{}", appKey, param.getName());
+        return Result.success(new GroupOutParam(service.createGroup(appKey, param)));
     }
 
     @PostMapping("/join")
-    public Result join(@RequestBody GroupReqParam param) {
-        log.info("group join:{}", param.getGroupId());
-        ResultCode code = service.joinGroup(param);
+    public Result join(@RequestBody GroupReqParam param,
+                       @RequestHeader(value = AUTH_APP_KEY) String appKey) {
+        log.info("app key {}, group join:{}", appKey, param.getGroupId());
+        ResultCode code = service.joinGroup(appKey, param);
         if (ResultCode.COMMON_SUCCESS.getCode() != code.getCode()) {
             return Result.failure(code);
         }
@@ -36,9 +39,10 @@ public class GroupController {
     }
 
     @PostMapping("/quit")
-    public Result quit(@RequestBody GroupReqParam param) {
-        log.info("group quit:{}", param.getGroupId());
-        ResultCode code = service.quitGroup(param);
+    public Result quit(@RequestBody GroupReqParam param,
+                       @RequestHeader(value = AUTH_APP_KEY) String appKey) {
+        log.info("app key {}, group quit:{}", appKey, param.getGroupId());
+        ResultCode code = service.quitGroup(appKey, param);
         if (ResultCode.COMMON_SUCCESS.getCode() != code.getCode()) {
             return Result.failure(code);
         }
@@ -46,9 +50,10 @@ public class GroupController {
     }
 
     @PostMapping("/dismiss")
-    public Result dismiss(@RequestBody GroupReqParam param) {
-        log.info("group dismiss:{}", param.getGroupId());
-        ResultCode code = service.dismissGroup(param);
+    public Result dismiss(@RequestBody GroupReqParam param,
+                          @RequestHeader(value = AUTH_APP_KEY) String appKey) {
+        log.info("app key {}, group dismiss:{}", appKey, param.getGroupId());
+        ResultCode code = service.dismissGroup(appKey, param);
         if (ResultCode.COMMON_SUCCESS.getCode() != code.getCode()) {
             return Result.failure(code);
         }
@@ -56,14 +61,16 @@ public class GroupController {
     }
 
     @PostMapping("/detail")
-    public Result detailsPost(@RequestBody GroupReqParam param) {
-        log.info("group details:{}", param.getGroupId());
-        return service.groupDetail(param.getGroupId());
+    public Result detailsPost(@RequestBody GroupReqParam param,
+                              @RequestHeader(value = AUTH_APP_KEY) String appKey) {
+        log.info("app key {}, group details:{}", appKey, param.getGroupId());
+        return service.groupDetail(appKey, param.getGroupId());
     }
 
     @GetMapping("/detail")
-    public Result detailsGet(@RequestParam("id") String groupId) {
-        log.info("group details:{}", groupId);
-        return service.groupDetail(groupId);
+    public Result detailsGet(@RequestParam("id") String groupId,
+                             @RequestHeader(value = AUTH_APP_KEY) String appKey) {
+        log.info("app key {}, group details:{}", appKey, groupId);
+        return service.groupDetail(appKey, groupId);
     }
 }

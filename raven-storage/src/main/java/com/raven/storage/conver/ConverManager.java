@@ -28,7 +28,7 @@ public class ConverManager {
     private ConverManager() {
     }
 
-    public String newSingleConverId(String fromUid, String toUid) {
+    public String newSingleConverId(String appKey, String fromUid, String toUid) {
         // fromUid 和 toUid总会比较大小，所以创建出来的conversation id总唯一，无论是两方谁创建。
         String converId = UidUtil.uuid24By2Factor(fromUid, toUid);
         Set<String> uidList = new HashSet<>();
@@ -36,6 +36,7 @@ public class ConverManager {
         uidList.add(toUid);
         Conversation conversation = Conversation.builder()
                 .id(converId)
+                .appKey(appKey)
                 .type(ConverType.SINGLE.getNumber())
                 .timestamp(System.currentTimeMillis())
                 .uidList(new ArrayList<>(uidList))
@@ -45,9 +46,11 @@ public class ConverManager {
         return converId;
     }
 
-    public String newGroupConverId(String converId, List<String> members) {
+    public String newGroupConverId(String appKey, List<String> members) {
+        String converId = UidUtil.uuid();
         Conversation conversation = Conversation.builder()
                 .id(converId)
+                .appKey(appKey)
                 .type(ConverType.GROUP.getNumber())
                 .timestamp(System.currentTimeMillis())
                 .build();
@@ -92,6 +95,11 @@ public class ConverManager {
     public boolean isSingleConverIdValid(String converId) {
         Conversation conversation = getConversation(converId);
         return conversation != null && conversation.getType() == ConverType.SINGLE.getNumber();
+    }
+
+    public boolean isGroupConverIdValid(String converId) {
+        Conversation conversation = getConversation(converId);
+        return conversation != null && conversation.getType() == ConverType.GROUP.getNumber();
     }
 
     public List<MsgContent> getHistoryMsg(String converId, Long beginId) {

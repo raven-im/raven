@@ -3,8 +3,9 @@ package com.raven.client.common;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.raven.client.group.bean.GroupOutParam;
 import com.raven.client.group.bean.GroupReqParam;
+import com.raven.common.enums.MessageType;
 import com.raven.common.param.OutGatewaySiteInfoParam;
-import com.raven.common.protos.Message;
+import com.raven.common.protos.Message.*;
 import com.raven.common.utils.JsonHelper;
 import com.raven.common.utils.SnowFlake;
 import io.netty.channel.ChannelHandlerContext;
@@ -117,32 +118,32 @@ public class Utils {
     }
 
     public static void sendLogin(ChannelHandlerContext ctx, String token) {
-        Message.Login login = Message.Login.newBuilder()
+        Login login = Login.newBuilder()
                 .setId(snowFlake.nextId())
                 .setToken(token)
                 .build();
-        Message.RavenMessage ravenMessage = Message.RavenMessage.newBuilder()
-                .setType(Message.RavenMessage.Type.Login)
+        RavenMessage ravenMessage = RavenMessage.newBuilder()
+                .setType(RavenMessage.Type.Login)
                 .setLogin(login)
                 .build();
         ctx.writeAndFlush(ravenMessage);
     }
 
     public static void sendHeartBeat(ChannelHandlerContext ctx) {
-        Message.HeartBeat heartBeat = Message.HeartBeat.newBuilder()
+        HeartBeat heartBeat = HeartBeat.newBuilder()
                 .setId(snowFlake.nextId())
-                .setHeartBeatType(Message.HeartBeatType.PING)
+                .setHeartBeatType(HeartBeatType.PING)
                 .build();
-        Message.RavenMessage ravenMessage = Message.RavenMessage.newBuilder()
-                .setType(Message.RavenMessage.Type.HeartBeat)
+        RavenMessage ravenMessage = RavenMessage.newBuilder()
+                .setType(RavenMessage.Type.HeartBeat)
                 .setHeartBeat(heartBeat)
                 .build();
         ctx.writeAndFlush(ravenMessage);
     }
 
-    public static void rspHeartBeat(ChannelHandlerContext ctx, Message.HeartBeat heartBeat) {
+    public static void rspHeartBeat(ChannelHandlerContext ctx, HeartBeat heartBeat) {
 //        log.info("receive heartbeat PONG {}", heartBeat.getId());
-        if (heartBeat.getHeartBeatType() == Message.HeartBeatType.PONG) {
+        if (heartBeat.getHeartBeatType() == HeartBeatType.PONG) {
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
@@ -150,5 +151,29 @@ public class Utils {
                 }
             }, CLIENT_HEART_BEAT);
         }
+    }
+
+    public static void sendMsg(ChannelHandlerContext ctx, String fromUid, String toUid, boolean isConversation) {
+        MessageContent content = MessageContent.newBuilder()
+                .setType(MessageType.TEXT.getType())
+                .setContent("hello world")
+                .build();
+        long cid = snowFlake.nextId();
+        UpDownMessage.Builder builder = UpDownMessage.newBuilder()
+                .setCid(cid)
+                .setFromUid(fromUid)
+                .setConverType(ConverType.SINGLE)
+                .setContent(content);
+        if (isConversation) {
+            builder.setConvId(toUid);
+        } else {
+            builder.addTargetUid(toUid);
+        }
+        RavenMessage ravenMessage = RavenMessage.newBuilder()
+                .setType(RavenMessage.Type.UpDownMessage)
+                .setUpDownMessage(builder.build())
+                .build();
+        log.info("send message :{}", JsonHelper.toJsonString(builder.build()));
+        ctx.writeAndFlush(ravenMessage);
     }
 }

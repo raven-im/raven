@@ -55,6 +55,7 @@ public class ClientToHandler extends SimpleChannelInboundHandler<RavenMessage> {
                     .setMessageAck(messageAck).build();
             ctx.writeAndFlush(ravenMessage);
 
+            sendMsg(ctx, uid, upDownMessage.getConvId(), true);
         } else if (message.getType() == Type.HeartBeat) {
             rspHeartBeat(ctx, message.getHeartBeat());
         }

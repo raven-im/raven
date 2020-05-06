@@ -44,33 +44,20 @@ public class ClientFromHandler extends SimpleChannelInboundHandler<RavenMessage>
                 sendHeartBeat(ctx);
                 for (String toUid : toUidList) {
                     Thread.sleep(1000);
-                    MessageContent content = MessageContent.newBuilder()
-                            .setType(MessageType.TEXT.getType())
-                            .setContent("hello world")
-                            .build();
-                    long cid = snowFlake.nextId();
-                    UpDownMessage upDownMessage = UpDownMessage.newBuilder()
-                            .setCid(cid)
-                            .setFromUid(uid)
-                            .addTargetUid(toUid)
-                            .setConverType(ConverType.SINGLE)
-                            .setContent(content)
-                            .build();
-                    RavenMessage ravenMessage = RavenMessage.newBuilder()
-                            .setType(Type.UpDownMessage)
-                            .setUpDownMessage(upDownMessage)
-                            .build();
-                    log.info("send message :{}", JsonHelper.toJsonString(upDownMessage));
-                    ctx.writeAndFlush(ravenMessage);
+                    sendMsg(ctx, uid, toUid, false);
                 }
             }
         }
-        if (message.getType() == Type.MessageAck) {
+        else if (message.getType() == Type.MessageAck) {
             MessageAck messageAck = message.getMessageAck();
             log.info("receive message ack:{}", JsonHelper.toJsonString(messageAck));
         }
-        if (message.getType() == Type.HeartBeat) {
+        else if (message.getType() == Type.HeartBeat) {
             rspHeartBeat(ctx, message.getHeartBeat());
+        }
+        else if (message.getType() == Type.UpDownMessage) {
+            UpDownMessage upDownMessage = message.getUpDownMessage();
+            log.info("receive down message:{}", JsonHelper.toJsonString(upDownMessage));
         }
     }
 

@@ -8,6 +8,7 @@ import com.raven.common.protos.Message.RavenMessage.Type;
 import com.raven.common.utils.JsonHelper;
 import com.raven.common.utils.SnowFlake;
 import com.raven.storage.conver.ConverManager;
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -16,7 +17,10 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 import static com.raven.common.netty.NettyAttrUtil.ATTR_KEY_APP_KEY;
+import static com.raven.common.netty.NettyAttrUtil.ATTR_KEY_DEVICE_ID;
 
 @Component
 @Sharable
@@ -87,6 +91,23 @@ public class MessageHandler extends SimpleChannelInboundHandler<RavenMessage> {
             RavenMessage ravenMessage = buildRavenMessage(ctx, upMessage, id, appKey);
             if (sendMsg(ravenMessage, upMessage.getConverType(), id)) {
                 sendAck(ctx, upMessage, Code.SUCCESS, id);
+
+                //send to other channels (from users)
+                String fromDeviceId = NettyAttrUtil.getAttribute(ctx.channel(), ATTR_KEY_DEVICE_ID);
+                String uid = uidChannelManager.getUidByChannel(ctx.channel());
+                List<Channel> channels = uidChannelManager.getChannelsByUid(uid);
+
+                for (Channel channel : channels) {
+                    String deviceId = NettyAttrUtil.getAttribute(channel, ATTR_KEY_DEVICE_ID);
+                    if (!fromDeviceId.equals(deviceId)) {
+                        channel.writeAndFlush(message).addListener(future -> {
+                            if (!future.isSuccess()) {
+                                log.error("push msg to uid:{} device {} fail", uid, deviceId);
+                                channel.close();
+                            }
+                        });
+                    }
+                }
             } else {
                 log.error("send msg fail");
                 sendFailAck(ctx, upMessage, Code.NO_TARGET);

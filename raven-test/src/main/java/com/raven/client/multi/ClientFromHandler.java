@@ -54,6 +54,10 @@ public class ClientFromHandler extends SimpleChannelInboundHandler<RavenMessage>
         else if (message.getType() == Type.HeartBeat) {
             rspHeartBeat(ctx, message.getHeartBeat());
         }
+        else if (message.getType() == Type.UpDownMessage) {
+            UpDownMessage upDownMessage = message.getUpDownMessage();
+            log.info("receive down message:{}", JsonHelper.toJsonString(upDownMessage));
+        }
     }
 
     @Override

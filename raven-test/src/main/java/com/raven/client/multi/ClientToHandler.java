@@ -18,6 +18,7 @@ public class ClientToHandler extends SimpleChannelInboundHandler<RavenMessage> {
 
     private String uid;
     private String token;
+    private static boolean flag = true;
 
     public ClientToHandler(String uid, String token) {
         super(true);
@@ -54,7 +55,10 @@ public class ClientToHandler extends SimpleChannelInboundHandler<RavenMessage> {
             RavenMessage ravenMessage = RavenMessage.newBuilder().setType(Type.MessageAck)
                     .setMessageAck(messageAck).build();
             ctx.writeAndFlush(ravenMessage);
-
+            if (uid.equals(ClientToDevice1.CLIENT_UID) && flag) {
+                sendMsg(ctx, uid, upDownMessage.getConvId(), true);
+                flag = false;
+            }
         } else if (message.getType() == Type.HeartBeat) {
             rspHeartBeat(ctx, message.getHeartBeat());
         }

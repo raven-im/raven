@@ -47,7 +47,7 @@ else
   JAVA_CMD=$JAVA_HOME/bin/java
  fi
 fi
-µ
+
 EXTRA_ARGS=
 CP="$INSTALLDIR/lib/*:$INSTALLDIR/drivers/*"
 

@@ -487,6 +487,124 @@ public final class Message {
   }
 
   /**
+   * <pre>
+   * 历史消息拉取方向
+   * </pre>
+   *
+   * Protobuf enum {@code com.raven.common.protos.PullDirection}
+   */
+  public enum PullDirection
+      implements com.google.protobuf.ProtocolMessageEnum {
+    /**
+     * <pre>
+     * 向下拉取, 获取比 beginId 更新的消息 (默认)
+     * </pre>
+     *
+     * <code>DOWN = 0;</code>
+     */
+    DOWN(0),
+    /**
+     * <pre>
+     * 向上拉取, 获取比 beginId 更早的消息
+     * </pre>
+     *
+     * <code>UP = 1;</code>
+     */
+    UP(1),
+    UNRECOGNIZED(-1),
+    ;
+
+    /**
+     * <pre>
+     * 向下拉取, 获取比 beginId 更新的消息 (默认)
+     * </pre>
+     *
+     * <code>DOWN = 0;</code>
+     */
+    public static final int DOWN_VALUE = 0;
+    /**
+     * <pre>
+     * 向上拉取, 获取比 beginId 更早的消息
+     * </pre>
+     *
+     * <code>UP = 1;</code>
+     */
+    public static final int UP_VALUE = 1;
+
+
+    public final int getNumber() {
+      if (this == UNRECOGNIZED) {
+        throw new java.lang.IllegalArgumentException(
+            "Can't get the number of an unknown enum value.");
+      }
+      return value;
+    }
+
+    /**
+     * @deprecated Use {@link #forNumber(int)} instead.
+     */
+    @java.lang.Deprecated
+    public static PullDirection valueOf(int value) {
+      return forNumber(value);
+    }
+
+    public static PullDirection forNumber(int value) {
+      switch (value) {
+        case 0: return DOWN;
+        case 1: return UP;
+        default: return null;
+      }
+    }
+
+    public static com.google.protobuf.Internal.EnumLiteMap<PullDirection>
+        internalGetValueMap() {
+      return internalValueMap;
+    }
+    private static final com.google.protobuf.Internal.EnumLiteMap<
+        PullDirection> internalValueMap =
+          new com.google.protobuf.Internal.EnumLiteMap<PullDirection>() {
+            public PullDirection findValueByNumber(int number) {
+              return PullDirection.forNumber(number);
+            }
+          };
+
+    public final com.google.protobuf.Descriptors.EnumValueDescriptor
+        getValueDescriptor() {
+      return getDescriptor().getValues().get(ordinal());
+    }
+    public final com.google.protobuf.Descriptors.EnumDescriptor
+        getDescriptorForType() {
+      return getDescriptor();
+    }
+    public static final com.google.protobuf.Descriptors.EnumDescriptor
+        getDescriptor() {
+      return com.raven.common.protos.Message.getDescriptor().getEnumTypes().get(4);
+    }
+
+    private static final PullDirection[] VALUES = values();
+
+    public static PullDirection valueOf(
+        com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+      if (desc.getType() != getDescriptor()) {
+        throw new java.lang.IllegalArgumentException(
+          "EnumValueDescriptor is not for this type.");
+      }
+      if (desc.getIndex() == -1) {
+        return UNRECOGNIZED;
+      }
+      return VALUES[desc.getIndex()];
+    }
+
+    private final int value;
+
+    private PullDirection(int value) {
+      this.value = value;
+    }
+
+    // @@protoc_insertion_point(enum_scope:com.raven.common.protos.PullDirection)
+  }
+
+  /**
    * Protobuf enum {@code com.raven.common.protos.OperationType}
    */
   public enum OperationType
@@ -558,7 +676,7 @@ public final class Message {
     }
     public static final com.google.protobuf.Descriptors.EnumDescriptor
         getDescriptor() {
-      return com.raven.common.protos.Message.getDescriptor().getEnumTypes().get(4);
+      return com.raven.common.protos.Message.getDescriptor().getEnumTypes().get(5);
     }
 
     private static final OperationType[] VALUES = values();
@@ -672,7 +790,7 @@ public final class Message {
     }
     public static final com.google.protobuf.Descriptors.EnumDescriptor
         getDescriptor() {
-      return com.raven.common.protos.Message.getDescriptor().getEnumTypes().get(5);
+      return com.raven.common.protos.Message.getDescriptor().getEnumTypes().get(6);
     }
 
     private static final NotifyType[] VALUES = values();
@@ -896,6 +1014,13 @@ public final class Message {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 8: {
               int rawValue = input.readEnum();
 
@@ -1056,13 +1181,6 @@ public final class Message {
               dataCase_ = 12;
               break;
             }
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -1080,7 +1198,6 @@ public final class Message {
       return com.raven.common.protos.Message.internal_static_com_raven_common_protos_RavenMessage_descriptor;
     }
 
-    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.raven.common.protos.Message.internal_static_com_raven_common_protos_RavenMessage_fieldAccessorTable
@@ -1335,7 +1452,6 @@ public final class Message {
      * <code>.com.raven.common.protos.RavenMessage.Type type = 1;</code>
      */
     public com.raven.common.protos.Message.RavenMessage.Type getType() {
-      @SuppressWarnings("deprecation")
       com.raven.common.protos.Message.RavenMessage.Type result = com.raven.common.protos.Message.RavenMessage.Type.valueOf(type_);
       return result == null ? com.raven.common.protos.Message.RavenMessage.Type.UNRECOGNIZED : result;
     }
@@ -1627,7 +1743,6 @@ public final class Message {
     }
 
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -1637,7 +1752,6 @@ public final class Message {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (type_ != com.raven.common.protos.Message.RavenMessage.Type.Login.getNumber()) {
@@ -1679,7 +1793,6 @@ public final class Message {
       unknownFields.writeTo(output);
     }
 
-    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -1937,7 +2050,6 @@ public final class Message {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -1945,7 +2057,6 @@ public final class Message {
     public static Builder newBuilder(com.raven.common.protos.Message.RavenMessage prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -1969,7 +2080,6 @@ public final class Message {
         return com.raven.common.protos.Message.internal_static_com_raven_common_protos_RavenMessage_descriptor;
       }
 
-      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return com.raven.common.protos.Message.internal_static_com_raven_common_protos_RavenMessage_fieldAccessorTable
@@ -1992,7 +2102,6 @@ public final class Message {
                 .alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
       public Builder clear() {
         super.clear();
         type_ = 0;
@@ -2002,18 +2111,15 @@ public final class Message {
         return this;
       }
 
-      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return com.raven.common.protos.Message.internal_static_com_raven_common_protos_RavenMessage_descriptor;
       }
 
-      @java.lang.Override
       public com.raven.common.protos.Message.RavenMessage getDefaultInstanceForType() {
         return com.raven.common.protos.Message.RavenMessage.getDefaultInstance();
       }
 
-      @java.lang.Override
       public com.raven.common.protos.Message.RavenMessage build() {
         com.raven.common.protos.Message.RavenMessage result = buildPartial();
         if (!result.isInitialized()) {
@@ -2022,7 +2128,6 @@ public final class Message {
         return result;
       }
 
-      @java.lang.Override
       public com.raven.common.protos.Message.RavenMessage buildPartial() {
         com.raven.common.protos.Message.RavenMessage result = new com.raven.common.protos.Message.RavenMessage(this);
         result.type_ = type_;
@@ -2108,39 +2213,32 @@ public final class Message {
         return result;
       }
 
-      @java.lang.Override
       public Builder clone() {
         return (Builder) super.clone();
       }
-      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
-      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
-      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
-      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
-      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.raven.common.protos.Message.RavenMessage) {
           return mergeFrom((com.raven.common.protos.Message.RavenMessage)other);
@@ -2209,12 +2307,10 @@ public final class Message {
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -2267,7 +2363,6 @@ public final class Message {
        * <code>.com.raven.common.protos.RavenMessage.Type type = 1;</code>
        */
       public com.raven.common.protos.Message.RavenMessage.Type getType() {
-        @SuppressWarnings("deprecation")
         com.raven.common.protos.Message.RavenMessage.Type result = com.raven.common.protos.Message.RavenMessage.Type.valueOf(type_);
         return result == null ? com.raven.common.protos.Message.RavenMessage.Type.UNRECOGNIZED : result;
       }
@@ -3788,13 +3883,11 @@ public final class Message {
         onChanged();;
         return converAckBuilder_;
       }
-      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFieldsProto3(unknownFields);
       }
 
-      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -3816,7 +3909,6 @@ public final class Message {
 
     private static final com.google.protobuf.Parser<RavenMessage>
         PARSER = new com.google.protobuf.AbstractParser<RavenMessage>() {
-      @java.lang.Override
       public RavenMessage parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -3834,7 +3926,6 @@ public final class Message {
       return PARSER;
     }
 
-    @java.lang.Override
     public com.raven.common.protos.Message.RavenMessage getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -3924,6 +4015,13 @@ public final class Message {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 8: {
 
               id_ = input.readUInt64();
@@ -3939,13 +4037,6 @@ public final class Message {
               java.lang.String s = input.readStringRequireUtf8();
 
               token_ = s;
-              break;
-            }
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
               break;
             }
           }
@@ -3965,7 +4056,6 @@ public final class Message {
       return com.raven.common.protos.Message.internal_static_com_raven_common_protos_Login_descriptor;
     }
 
-    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.raven.common.protos.Message.internal_static_com_raven_common_protos_Login_fieldAccessorTable
@@ -4063,7 +4153,6 @@ public final class Message {
     }
 
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -4073,7 +4162,6 @@ public final class Message {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (id_ != 0L) {
@@ -4088,7 +4176,6 @@ public final class Message {
       unknownFields.writeTo(output);
     }
 
-    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -4219,7 +4306,6 @@ public final class Message {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -4227,7 +4313,6 @@ public final class Message {
     public static Builder newBuilder(com.raven.common.protos.Message.Login prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -4251,7 +4336,6 @@ public final class Message {
         return com.raven.common.protos.Message.internal_static_com_raven_common_protos_Login_descriptor;
       }
 
-      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return com.raven.common.protos.Message.internal_static_com_raven_common_protos_Login_fieldAccessorTable
@@ -4274,7 +4358,6 @@ public final class Message {
                 .alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
       public Builder clear() {
         super.clear();
         id_ = 0L;
@@ -4286,18 +4369,15 @@ public final class Message {
         return this;
       }
 
-      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return com.raven.common.protos.Message.internal_static_com_raven_common_protos_Login_descriptor;
       }
 
-      @java.lang.Override
       public com.raven.common.protos.Message.Login getDefaultInstanceForType() {
         return com.raven.common.protos.Message.Login.getDefaultInstance();
       }
 
-      @java.lang.Override
       public com.raven.common.protos.Message.Login build() {
         com.raven.common.protos.Message.Login result = buildPartial();
         if (!result.isInitialized()) {
@@ -4306,7 +4386,6 @@ public final class Message {
         return result;
       }
 
-      @java.lang.Override
       public com.raven.common.protos.Message.Login buildPartial() {
         com.raven.common.protos.Message.Login result = new com.raven.common.protos.Message.Login(this);
         result.id_ = id_;
@@ -4316,39 +4395,32 @@ public final class Message {
         return result;
       }
 
-      @java.lang.Override
       public Builder clone() {
         return (Builder) super.clone();
       }
-      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
-      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
-      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
-      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
-      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.raven.common.protos.Message.Login) {
           return mergeFrom((com.raven.common.protos.Message.Login)other);
@@ -4376,12 +4448,10 @@ public final class Message {
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -4595,13 +4665,11 @@ public final class Message {
         onChanged();
         return this;
       }
-      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFieldsProto3(unknownFields);
       }
 
-      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -4623,7 +4691,6 @@ public final class Message {
 
     private static final com.google.protobuf.Parser<Login>
         PARSER = new com.google.protobuf.AbstractParser<Login>() {
-      @java.lang.Override
       public Login parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -4641,7 +4708,6 @@ public final class Message {
       return PARSER;
     }
 
-    @java.lang.Override
     public com.raven.common.protos.Message.Login getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -4748,6 +4814,13 @@ public final class Message {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 8: {
 
               id_ = input.readUInt64();
@@ -4770,13 +4843,6 @@ public final class Message {
               time_ = input.readUInt64();
               break;
             }
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -4794,7 +4860,6 @@ public final class Message {
       return com.raven.common.protos.Message.internal_static_com_raven_common_protos_LoginAck_descriptor;
     }
 
-    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.raven.common.protos.Message.internal_static_com_raven_common_protos_LoginAck_fieldAccessorTable
@@ -4835,7 +4900,6 @@ public final class Message {
      * <code>.com.raven.common.protos.Code code = 2;</code>
      */
     public com.raven.common.protos.Message.Code getCode() {
-      @SuppressWarnings("deprecation")
       com.raven.common.protos.Message.Code result = com.raven.common.protos.Message.Code.valueOf(code_);
       return result == null ? com.raven.common.protos.Message.Code.UNRECOGNIZED : result;
     }
@@ -4896,7 +4960,6 @@ public final class Message {
     }
 
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -4906,7 +4969,6 @@ public final class Message {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (id_ != 0L) {
@@ -4924,7 +4986,6 @@ public final class Message {
       unknownFields.writeTo(output);
     }
 
-    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -5064,7 +5125,6 @@ public final class Message {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -5072,7 +5132,6 @@ public final class Message {
     public static Builder newBuilder(com.raven.common.protos.Message.LoginAck prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -5096,7 +5155,6 @@ public final class Message {
         return com.raven.common.protos.Message.internal_static_com_raven_common_protos_LoginAck_descriptor;
       }
 
-      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return com.raven.common.protos.Message.internal_static_com_raven_common_protos_LoginAck_fieldAccessorTable
@@ -5119,7 +5177,6 @@ public final class Message {
                 .alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
       public Builder clear() {
         super.clear();
         id_ = 0L;
@@ -5133,18 +5190,15 @@ public final class Message {
         return this;
       }
 
-      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return com.raven.common.protos.Message.internal_static_com_raven_common_protos_LoginAck_descriptor;
       }
 
-      @java.lang.Override
       public com.raven.common.protos.Message.LoginAck getDefaultInstanceForType() {
         return com.raven.common.protos.Message.LoginAck.getDefaultInstance();
       }
 
-      @java.lang.Override
       public com.raven.common.protos.Message.LoginAck build() {
         com.raven.common.protos.Message.LoginAck result = buildPartial();
         if (!result.isInitialized()) {
@@ -5153,7 +5207,6 @@ public final class Message {
         return result;
       }
 
-      @java.lang.Override
       public com.raven.common.protos.Message.LoginAck buildPartial() {
         com.raven.common.protos.Message.LoginAck result = new com.raven.common.protos.Message.LoginAck(this);
         result.id_ = id_;
@@ -5164,39 +5217,32 @@ public final class Message {
         return result;
       }
 
-      @java.lang.Override
       public Builder clone() {
         return (Builder) super.clone();
       }
-      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
-      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
-      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
-      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
-      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.raven.common.protos.Message.LoginAck) {
           return mergeFrom((com.raven.common.protos.Message.LoginAck)other);
@@ -5226,12 +5272,10 @@ public final class Message {
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -5319,7 +5363,6 @@ public final class Message {
        * <code>.com.raven.common.protos.Code code = 2;</code>
        */
       public com.raven.common.protos.Message.Code getCode() {
-        @SuppressWarnings("deprecation")
         com.raven.common.protos.Message.Code result = com.raven.common.protos.Message.Code.valueOf(code_);
         return result == null ? com.raven.common.protos.Message.Code.UNRECOGNIZED : result;
       }
@@ -5479,13 +5522,11 @@ public final class Message {
         onChanged();
         return this;
       }
-      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFieldsProto3(unknownFields);
       }
 
-      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -5507,7 +5548,6 @@ public final class Message {
 
     private static final com.google.protobuf.Parser<LoginAck>
         PARSER = new com.google.protobuf.AbstractParser<LoginAck>() {
-      @java.lang.Override
       public LoginAck parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -5525,7 +5565,6 @@ public final class Message {
       return PARSER;
     }
 
-    @java.lang.Override
     public com.raven.common.protos.Message.LoginAck getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -5602,6 +5641,13 @@ public final class Message {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 8: {
 
               id_ = input.readUInt64();
@@ -5616,13 +5662,6 @@ public final class Message {
             case 24: {
 
               port_ = input.readUInt32();
-              break;
-            }
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
               break;
             }
           }
@@ -5642,7 +5681,6 @@ public final class Message {
       return com.raven.common.protos.Message.internal_static_com_raven_common_protos_ServerInfo_descriptor;
     }
 
-    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.raven.common.protos.Message.internal_static_com_raven_common_protos_ServerInfo_fieldAccessorTable
@@ -5707,7 +5745,6 @@ public final class Message {
     }
 
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -5717,7 +5754,6 @@ public final class Message {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (id_ != 0L) {
@@ -5732,7 +5768,6 @@ public final class Message {
       unknownFields.writeTo(output);
     }
 
-    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -5864,7 +5899,6 @@ public final class Message {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -5872,7 +5906,6 @@ public final class Message {
     public static Builder newBuilder(com.raven.common.protos.Message.ServerInfo prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -5896,7 +5929,6 @@ public final class Message {
         return com.raven.common.protos.Message.internal_static_com_raven_common_protos_ServerInfo_descriptor;
       }
 
-      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return com.raven.common.protos.Message.internal_static_com_raven_common_protos_ServerInfo_fieldAccessorTable
@@ -5919,7 +5951,6 @@ public final class Message {
                 .alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
       public Builder clear() {
         super.clear();
         id_ = 0L;
@@ -5931,18 +5962,15 @@ public final class Message {
         return this;
       }
 
-      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return com.raven.common.protos.Message.internal_static_com_raven_common_protos_ServerInfo_descriptor;
       }
 
-      @java.lang.Override
       public com.raven.common.protos.Message.ServerInfo getDefaultInstanceForType() {
         return com.raven.common.protos.Message.ServerInfo.getDefaultInstance();
       }
 
-      @java.lang.Override
       public com.raven.common.protos.Message.ServerInfo build() {
         com.raven.common.protos.Message.ServerInfo result = buildPartial();
         if (!result.isInitialized()) {
@@ -5951,7 +5979,6 @@ public final class Message {
         return result;
       }
 
-      @java.lang.Override
       public com.raven.common.protos.Message.ServerInfo buildPartial() {
         com.raven.common.protos.Message.ServerInfo result = new com.raven.common.protos.Message.ServerInfo(this);
         result.id_ = id_;
@@ -5961,39 +5988,32 @@ public final class Message {
         return result;
       }
 
-      @java.lang.Override
       public Builder clone() {
         return (Builder) super.clone();
       }
-      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
-      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
-      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
-      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
-      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.raven.common.protos.Message.ServerInfo) {
           return mergeFrom((com.raven.common.protos.Message.ServerInfo)other);
@@ -6020,12 +6040,10 @@ public final class Message {
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -6176,13 +6194,11 @@ public final class Message {
         onChanged();
         return this;
       }
-      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFieldsProto3(unknownFields);
       }
 
-      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -6204,7 +6220,6 @@ public final class Message {
 
     private static final com.google.protobuf.Parser<ServerInfo>
         PARSER = new com.google.protobuf.AbstractParser<ServerInfo>() {
-      @java.lang.Override
       public ServerInfo parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -6222,7 +6237,6 @@ public final class Message {
       return PARSER;
     }
 
-    @java.lang.Override
     public com.raven.common.protos.Message.ServerInfo getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -6415,6 +6429,13 @@ public final class Message {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 8: {
 
               id_ = input.readUInt64();
@@ -6468,13 +6489,6 @@ public final class Message {
 
               break;
             }
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -6492,7 +6506,6 @@ public final class Message {
       return com.raven.common.protos.Message.internal_static_com_raven_common_protos_UpDownMessage_descriptor;
     }
 
-    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.raven.common.protos.Message.internal_static_com_raven_common_protos_UpDownMessage_fieldAccessorTable
@@ -6714,7 +6727,6 @@ public final class Message {
      * <code>.com.raven.common.protos.ConverType converType = 7;</code>
      */
     public com.raven.common.protos.Message.ConverType getConverType() {
-      @SuppressWarnings("deprecation")
       com.raven.common.protos.Message.ConverType result = com.raven.common.protos.Message.ConverType.valueOf(converType_);
       return result == null ? com.raven.common.protos.Message.ConverType.UNRECOGNIZED : result;
     }
@@ -6753,7 +6765,6 @@ public final class Message {
     }
 
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -6763,7 +6774,6 @@ public final class Message {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (id_ != 0L) {
@@ -6793,7 +6803,6 @@ public final class Message {
       unknownFields.writeTo(output);
     }
 
-    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -6967,7 +6976,6 @@ public final class Message {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -6975,7 +6983,6 @@ public final class Message {
     public static Builder newBuilder(com.raven.common.protos.Message.UpDownMessage prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -7003,7 +7010,6 @@ public final class Message {
         return com.raven.common.protos.Message.internal_static_com_raven_common_protos_UpDownMessage_descriptor;
       }
 
-      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return com.raven.common.protos.Message.internal_static_com_raven_common_protos_UpDownMessage_fieldAccessorTable
@@ -7026,7 +7032,6 @@ public final class Message {
                 .alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
       public Builder clear() {
         super.clear();
         id_ = 0L;
@@ -7052,18 +7057,15 @@ public final class Message {
         return this;
       }
 
-      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return com.raven.common.protos.Message.internal_static_com_raven_common_protos_UpDownMessage_descriptor;
       }
 
-      @java.lang.Override
       public com.raven.common.protos.Message.UpDownMessage getDefaultInstanceForType() {
         return com.raven.common.protos.Message.UpDownMessage.getDefaultInstance();
       }
 
-      @java.lang.Override
       public com.raven.common.protos.Message.UpDownMessage build() {
         com.raven.common.protos.Message.UpDownMessage result = buildPartial();
         if (!result.isInitialized()) {
@@ -7072,7 +7074,6 @@ public final class Message {
         return result;
       }
 
-      @java.lang.Override
       public com.raven.common.protos.Message.UpDownMessage buildPartial() {
         com.raven.common.protos.Message.UpDownMessage result = new com.raven.common.protos.Message.UpDownMessage(this);
         result.id_ = id_;
@@ -7091,39 +7092,32 @@ public final class Message {
         return result;
       }
 
-      @java.lang.Override
       public Builder clone() {
         return (Builder) super.clone();
       }
-      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
-      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
-      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
-      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
-      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.raven.common.protos.Message.UpDownMessage) {
           return mergeFrom((com.raven.common.protos.Message.UpDownMessage)other);
@@ -7168,12 +7162,10 @@ public final class Message {
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -7655,7 +7647,6 @@ public final class Message {
        * <code>.com.raven.common.protos.ConverType converType = 7;</code>
        */
       public com.raven.common.protos.Message.ConverType getConverType() {
-        @SuppressWarnings("deprecation")
         com.raven.common.protos.Message.ConverType result = com.raven.common.protos.Message.ConverType.valueOf(converType_);
         return result == null ? com.raven.common.protos.Message.ConverType.UNRECOGNIZED : result;
       }
@@ -7841,13 +7832,11 @@ public final class Message {
         }
         return contentBuilder_;
       }
-      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFieldsProto3(unknownFields);
       }
 
-      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -7869,7 +7858,6 @@ public final class Message {
 
     private static final com.google.protobuf.Parser<UpDownMessage>
         PARSER = new com.google.protobuf.AbstractParser<UpDownMessage>() {
-      @java.lang.Override
       public UpDownMessage parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -7887,7 +7875,6 @@ public final class Message {
       return PARSER;
     }
 
-    @java.lang.Override
     public com.raven.common.protos.Message.UpDownMessage getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -7961,6 +7948,13 @@ public final class Message {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 8: {
 
               id_ = input.readUInt64();
@@ -7970,13 +7964,6 @@ public final class Message {
               int rawValue = input.readEnum();
 
               heartBeatType_ = rawValue;
-              break;
-            }
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
               break;
             }
           }
@@ -7996,7 +7983,6 @@ public final class Message {
       return com.raven.common.protos.Message.internal_static_com_raven_common_protos_HeartBeat_descriptor;
     }
 
-    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.raven.common.protos.Message.internal_static_com_raven_common_protos_HeartBeat_fieldAccessorTable
@@ -8029,13 +8015,11 @@ public final class Message {
      * <code>.com.raven.common.protos.HeartBeatType heartBeatType = 2;</code>
      */
     public com.raven.common.protos.Message.HeartBeatType getHeartBeatType() {
-      @SuppressWarnings("deprecation")
       com.raven.common.protos.Message.HeartBeatType result = com.raven.common.protos.Message.HeartBeatType.valueOf(heartBeatType_);
       return result == null ? com.raven.common.protos.Message.HeartBeatType.UNRECOGNIZED : result;
     }
 
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -8045,7 +8029,6 @@ public final class Message {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (id_ != 0L) {
@@ -8057,7 +8040,6 @@ public final class Message {
       unknownFields.writeTo(output);
     }
 
-    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -8181,7 +8163,6 @@ public final class Message {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -8189,7 +8170,6 @@ public final class Message {
     public static Builder newBuilder(com.raven.common.protos.Message.HeartBeat prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -8217,7 +8197,6 @@ public final class Message {
         return com.raven.common.protos.Message.internal_static_com_raven_common_protos_HeartBeat_descriptor;
       }
 
-      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return com.raven.common.protos.Message.internal_static_com_raven_common_protos_HeartBeat_fieldAccessorTable
@@ -8240,7 +8219,6 @@ public final class Message {
                 .alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
       public Builder clear() {
         super.clear();
         id_ = 0L;
@@ -8250,18 +8228,15 @@ public final class Message {
         return this;
       }
 
-      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return com.raven.common.protos.Message.internal_static_com_raven_common_protos_HeartBeat_descriptor;
       }
 
-      @java.lang.Override
       public com.raven.common.protos.Message.HeartBeat getDefaultInstanceForType() {
         return com.raven.common.protos.Message.HeartBeat.getDefaultInstance();
       }
 
-      @java.lang.Override
       public com.raven.common.protos.Message.HeartBeat build() {
         com.raven.common.protos.Message.HeartBeat result = buildPartial();
         if (!result.isInitialized()) {
@@ -8270,7 +8245,6 @@ public final class Message {
         return result;
       }
 
-      @java.lang.Override
       public com.raven.common.protos.Message.HeartBeat buildPartial() {
         com.raven.common.protos.Message.HeartBeat result = new com.raven.common.protos.Message.HeartBeat(this);
         result.id_ = id_;
@@ -8279,39 +8253,32 @@ public final class Message {
         return result;
       }
 
-      @java.lang.Override
       public Builder clone() {
         return (Builder) super.clone();
       }
-      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
-      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
-      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
-      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
-      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.raven.common.protos.Message.HeartBeat) {
           return mergeFrom((com.raven.common.protos.Message.HeartBeat)other);
@@ -8334,12 +8301,10 @@ public final class Message {
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -8415,7 +8380,6 @@ public final class Message {
        * <code>.com.raven.common.protos.HeartBeatType heartBeatType = 2;</code>
        */
       public com.raven.common.protos.Message.HeartBeatType getHeartBeatType() {
-        @SuppressWarnings("deprecation")
         com.raven.common.protos.Message.HeartBeatType result = com.raven.common.protos.Message.HeartBeatType.valueOf(heartBeatType_);
         return result == null ? com.raven.common.protos.Message.HeartBeatType.UNRECOGNIZED : result;
       }
@@ -8440,13 +8404,11 @@ public final class Message {
         onChanged();
         return this;
       }
-      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFieldsProto3(unknownFields);
       }
 
-      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -8468,7 +8430,6 @@ public final class Message {
 
     private static final com.google.protobuf.Parser<HeartBeat>
         PARSER = new com.google.protobuf.AbstractParser<HeartBeat>() {
-      @java.lang.Override
       public HeartBeat parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -8486,7 +8447,6 @@ public final class Message {
       return PARSER;
     }
 
-    @java.lang.Override
     public com.raven.common.protos.Message.HeartBeat getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -8626,6 +8586,13 @@ public final class Message {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 8: {
 
               id_ = input.readUInt64();
@@ -8659,13 +8626,6 @@ public final class Message {
               code_ = rawValue;
               break;
             }
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -8683,7 +8643,6 @@ public final class Message {
       return com.raven.common.protos.Message.internal_static_com_raven_common_protos_MessageAck_descriptor;
     }
 
-    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.raven.common.protos.Message.internal_static_com_raven_common_protos_MessageAck_fieldAccessorTable
@@ -8834,13 +8793,11 @@ public final class Message {
      * <code>.com.raven.common.protos.Code code = 6;</code>
      */
     public com.raven.common.protos.Message.Code getCode() {
-      @SuppressWarnings("deprecation")
       com.raven.common.protos.Message.Code result = com.raven.common.protos.Message.Code.valueOf(code_);
       return result == null ? com.raven.common.protos.Message.Code.UNRECOGNIZED : result;
     }
 
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -8850,7 +8807,6 @@ public final class Message {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (id_ != 0L) {
@@ -8874,7 +8830,6 @@ public final class Message {
       unknownFields.writeTo(output);
     }
 
-    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -9030,7 +8985,6 @@ public final class Message {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -9038,7 +8992,6 @@ public final class Message {
     public static Builder newBuilder(com.raven.common.protos.Message.MessageAck prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -9066,7 +9019,6 @@ public final class Message {
         return com.raven.common.protos.Message.internal_static_com_raven_common_protos_MessageAck_descriptor;
       }
 
-      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return com.raven.common.protos.Message.internal_static_com_raven_common_protos_MessageAck_fieldAccessorTable
@@ -9089,7 +9041,6 @@ public final class Message {
                 .alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
       public Builder clear() {
         super.clear();
         id_ = 0L;
@@ -9107,18 +9058,15 @@ public final class Message {
         return this;
       }
 
-      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return com.raven.common.protos.Message.internal_static_com_raven_common_protos_MessageAck_descriptor;
       }
 
-      @java.lang.Override
       public com.raven.common.protos.Message.MessageAck getDefaultInstanceForType() {
         return com.raven.common.protos.Message.MessageAck.getDefaultInstance();
       }
 
-      @java.lang.Override
       public com.raven.common.protos.Message.MessageAck build() {
         com.raven.common.protos.Message.MessageAck result = buildPartial();
         if (!result.isInitialized()) {
@@ -9127,7 +9075,6 @@ public final class Message {
         return result;
       }
 
-      @java.lang.Override
       public com.raven.common.protos.Message.MessageAck buildPartial() {
         com.raven.common.protos.Message.MessageAck result = new com.raven.common.protos.Message.MessageAck(this);
         result.id_ = id_;
@@ -9140,39 +9087,32 @@ public final class Message {
         return result;
       }
 
-      @java.lang.Override
       public Builder clone() {
         return (Builder) super.clone();
       }
-      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
-      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
-      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
-      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
-      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.raven.common.protos.Message.MessageAck) {
           return mergeFrom((com.raven.common.protos.Message.MessageAck)other);
@@ -9209,12 +9149,10 @@ public final class Message {
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -9556,7 +9494,6 @@ public final class Message {
        * <code>.com.raven.common.protos.Code code = 6;</code>
        */
       public com.raven.common.protos.Message.Code getCode() {
-        @SuppressWarnings("deprecation")
         com.raven.common.protos.Message.Code result = com.raven.common.protos.Message.Code.valueOf(code_);
         return result == null ? com.raven.common.protos.Message.Code.UNRECOGNIZED : result;
       }
@@ -9589,13 +9526,11 @@ public final class Message {
         onChanged();
         return this;
       }
-      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFieldsProto3(unknownFields);
       }
 
-      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -9617,7 +9552,6 @@ public final class Message {
 
     private static final com.google.protobuf.Parser<MessageAck>
         PARSER = new com.google.protobuf.AbstractParser<MessageAck>() {
-      @java.lang.Override
       public MessageAck parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -9635,7 +9569,6 @@ public final class Message {
       return PARSER;
     }
 
-    @java.lang.Override
     public com.raven.common.protos.Message.MessageAck getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -9757,6 +9690,13 @@ public final class Message {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 8: {
 
               id_ = input.readUInt64();
@@ -9785,13 +9725,6 @@ public final class Message {
               time_ = input.readUInt64();
               break;
             }
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -9809,7 +9742,6 @@ public final class Message {
       return com.raven.common.protos.Message.internal_static_com_raven_common_protos_MessageContent_descriptor;
     }
 
-    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.raven.common.protos.Message.internal_static_com_raven_common_protos_MessageContent_fieldAccessorTable
@@ -9884,7 +9816,6 @@ public final class Message {
      * <code>.com.raven.common.protos.MessageType type = 3;</code>
      */
     public com.raven.common.protos.Message.MessageType getType() {
-      @SuppressWarnings("deprecation")
       com.raven.common.protos.Message.MessageType result = com.raven.common.protos.Message.MessageType.valueOf(type_);
       return result == null ? com.raven.common.protos.Message.MessageType.UNRECOGNIZED : result;
     }
@@ -9945,7 +9876,6 @@ public final class Message {
     }
 
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -9955,7 +9885,6 @@ public final class Message {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (id_ != 0L) {
@@ -9976,7 +9905,6 @@ public final class Message {
       unknownFields.writeTo(output);
     }
 
-    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -10123,7 +10051,6 @@ public final class Message {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -10131,7 +10058,6 @@ public final class Message {
     public static Builder newBuilder(com.raven.common.protos.Message.MessageContent prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -10159,7 +10085,6 @@ public final class Message {
         return com.raven.common.protos.Message.internal_static_com_raven_common_protos_MessageContent_descriptor;
       }
 
-      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return com.raven.common.protos.Message.internal_static_com_raven_common_protos_MessageContent_fieldAccessorTable
@@ -10182,7 +10107,6 @@ public final class Message {
                 .alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
       public Builder clear() {
         super.clear();
         id_ = 0L;
@@ -10198,18 +10122,15 @@ public final class Message {
         return this;
       }
 
-      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return com.raven.common.protos.Message.internal_static_com_raven_common_protos_MessageContent_descriptor;
       }
 
-      @java.lang.Override
       public com.raven.common.protos.Message.MessageContent getDefaultInstanceForType() {
         return com.raven.common.protos.Message.MessageContent.getDefaultInstance();
       }
 
-      @java.lang.Override
       public com.raven.common.protos.Message.MessageContent build() {
         com.raven.common.protos.Message.MessageContent result = buildPartial();
         if (!result.isInitialized()) {
@@ -10218,7 +10139,6 @@ public final class Message {
         return result;
       }
 
-      @java.lang.Override
       public com.raven.common.protos.Message.MessageContent buildPartial() {
         com.raven.common.protos.Message.MessageContent result = new com.raven.common.protos.Message.MessageContent(this);
         result.id_ = id_;
@@ -10230,39 +10150,32 @@ public final class Message {
         return result;
       }
 
-      @java.lang.Override
       public Builder clone() {
         return (Builder) super.clone();
       }
-      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
-      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
-      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
-      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
-      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.raven.common.protos.Message.MessageContent) {
           return mergeFrom((com.raven.common.protos.Message.MessageContent)other);
@@ -10296,12 +10209,10 @@ public final class Message {
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -10466,7 +10377,6 @@ public final class Message {
        * <code>.com.raven.common.protos.MessageType type = 3;</code>
        */
       public com.raven.common.protos.Message.MessageType getType() {
-        @SuppressWarnings("deprecation")
         com.raven.common.protos.Message.MessageType result = com.raven.common.protos.Message.MessageType.valueOf(type_);
         return result == null ? com.raven.common.protos.Message.MessageType.UNRECOGNIZED : result;
       }
@@ -10618,13 +10528,11 @@ public final class Message {
         onChanged();
         return this;
       }
-      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFieldsProto3(unknownFields);
       }
 
-      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -10646,7 +10554,6 @@ public final class Message {
 
     private static final com.google.protobuf.Parser<MessageContent>
         PARSER = new com.google.protobuf.AbstractParser<MessageContent>() {
-      @java.lang.Override
       public MessageContent parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -10664,7 +10571,6 @@ public final class Message {
       return PARSER;
     }
 
-    @java.lang.Override
     public com.raven.common.protos.Message.MessageContent getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -10710,6 +10616,32 @@ public final class Message {
      * <code>uint64 beginId = 3;</code>
      */
     long getBeginId();
+
+    /**
+     * <pre>
+     * 拉取条数, 小于等于0时使用服务端默认值
+     * </pre>
+     *
+     * <code>uint32 count = 4;</code>
+     */
+    int getCount();
+
+    /**
+     * <pre>
+     * 拉取方向, 默认向下
+     * </pre>
+     *
+     * <code>.com.raven.common.protos.PullDirection direction = 5;</code>
+     */
+    int getDirectionValue();
+    /**
+     * <pre>
+     * 拉取方向, 默认向下
+     * </pre>
+     *
+     * <code>.com.raven.common.protos.PullDirection direction = 5;</code>
+     */
+    com.raven.common.protos.Message.PullDirection getDirection();
   }
   /**
    * <pre>
@@ -10731,6 +10663,8 @@ public final class Message {
       id_ = 0L;
       converId_ = "";
       beginId_ = 0L;
+      count_ = 0;
+      direction_ = 0;
     }
 
     @java.lang.Override
@@ -10757,6 +10691,13 @@ public final class Message {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 8: {
 
               id_ = input.readUInt64();
@@ -10773,11 +10714,15 @@ public final class Message {
               beginId_ = input.readUInt64();
               break;
             }
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
+            case 32: {
+
+              count_ = input.readUInt32();
+              break;
+            }
+            case 40: {
+              int rawValue = input.readEnum();
+
+              direction_ = rawValue;
               break;
             }
           }
@@ -10797,7 +10742,6 @@ public final class Message {
       return com.raven.common.protos.Message.internal_static_com_raven_common_protos_HisMessagesReq_descriptor;
     }
 
-    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.raven.common.protos.Message.internal_static_com_raven_common_protos_HisMessagesReq_fieldAccessorTable
@@ -10873,8 +10817,44 @@ public final class Message {
       return beginId_;
     }
 
+    public static final int COUNT_FIELD_NUMBER = 4;
+    private int count_;
+    /**
+     * <pre>
+     * 拉取条数, 小于等于0时使用服务端默认值
+     * </pre>
+     *
+     * <code>uint32 count = 4;</code>
+     */
+    public int getCount() {
+      return count_;
+    }
+
+    public static final int DIRECTION_FIELD_NUMBER = 5;
+    private int direction_;
+    /**
+     * <pre>
+     * 拉取方向, 默认向下
+     * </pre>
+     *
+     * <code>.com.raven.common.protos.PullDirection direction = 5;</code>
+     */
+    public int getDirectionValue() {
+      return direction_;
+    }
+    /**
+     * <pre>
+     * 拉取方向, 默认向下
+     * </pre>
+     *
+     * <code>.com.raven.common.protos.PullDirection direction = 5;</code>
+     */
+    public com.raven.common.protos.Message.PullDirection getDirection() {
+      com.raven.common.protos.Message.PullDirection result = com.raven.common.protos.Message.PullDirection.valueOf(direction_);
+      return result == null ? com.raven.common.protos.Message.PullDirection.UNRECOGNIZED : result;
+    }
+
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -10884,7 +10864,6 @@ public final class Message {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (id_ != 0L) {
@@ -10896,10 +10875,15 @@ public final class Message {
       if (beginId_ != 0L) {
         output.writeUInt64(3, beginId_);
       }
+      if (count_ != 0) {
+        output.writeUInt32(4, count_);
+      }
+      if (direction_ != com.raven.common.protos.Message.PullDirection.DOWN.getNumber()) {
+        output.writeEnum(5, direction_);
+      }
       unknownFields.writeTo(output);
     }
 
-    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -10915,6 +10899,14 @@ public final class Message {
       if (beginId_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
           .computeUInt64Size(3, beginId_);
+      }
+      if (count_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(4, count_);
+      }
+      if (direction_ != com.raven.common.protos.Message.PullDirection.DOWN.getNumber()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeEnumSize(5, direction_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -10938,6 +10930,9 @@ public final class Message {
           .equals(other.getConverId());
       result = result && (getBeginId()
           == other.getBeginId());
+      result = result && (getCount()
+          == other.getCount());
+      result = result && direction_ == other.direction_;
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -10957,6 +10952,10 @@ public final class Message {
       hash = (37 * hash) + BEGINID_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           getBeginId());
+      hash = (37 * hash) + COUNT_FIELD_NUMBER;
+      hash = (53 * hash) + getCount();
+      hash = (37 * hash) + DIRECTION_FIELD_NUMBER;
+      hash = (53 * hash) + direction_;
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -11032,7 +11031,6 @@ public final class Message {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -11040,7 +11038,6 @@ public final class Message {
     public static Builder newBuilder(com.raven.common.protos.Message.HisMessagesReq prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -11068,7 +11065,6 @@ public final class Message {
         return com.raven.common.protos.Message.internal_static_com_raven_common_protos_HisMessagesReq_descriptor;
       }
 
-      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return com.raven.common.protos.Message.internal_static_com_raven_common_protos_HisMessagesReq_fieldAccessorTable
@@ -11091,7 +11087,6 @@ public final class Message {
                 .alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
       public Builder clear() {
         super.clear();
         id_ = 0L;
@@ -11100,21 +11095,22 @@ public final class Message {
 
         beginId_ = 0L;
 
+        count_ = 0;
+
+        direction_ = 0;
+
         return this;
       }
 
-      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return com.raven.common.protos.Message.internal_static_com_raven_common_protos_HisMessagesReq_descriptor;
       }
 
-      @java.lang.Override
       public com.raven.common.protos.Message.HisMessagesReq getDefaultInstanceForType() {
         return com.raven.common.protos.Message.HisMessagesReq.getDefaultInstance();
       }
 
-      @java.lang.Override
       public com.raven.common.protos.Message.HisMessagesReq build() {
         com.raven.common.protos.Message.HisMessagesReq result = buildPartial();
         if (!result.isInitialized()) {
@@ -11123,49 +11119,43 @@ public final class Message {
         return result;
       }
 
-      @java.lang.Override
       public com.raven.common.protos.Message.HisMessagesReq buildPartial() {
         com.raven.common.protos.Message.HisMessagesReq result = new com.raven.common.protos.Message.HisMessagesReq(this);
         result.id_ = id_;
         result.converId_ = converId_;
         result.beginId_ = beginId_;
+        result.count_ = count_;
+        result.direction_ = direction_;
         onBuilt();
         return result;
       }
 
-      @java.lang.Override
       public Builder clone() {
         return (Builder) super.clone();
       }
-      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
-      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
-      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
-      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
-      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.raven.common.protos.Message.HisMessagesReq) {
           return mergeFrom((com.raven.common.protos.Message.HisMessagesReq)other);
@@ -11187,17 +11177,21 @@ public final class Message {
         if (other.getBeginId() != 0L) {
           setBeginId(other.getBeginId());
         }
+        if (other.getCount() != 0) {
+          setCount(other.getCount());
+        }
+        if (other.direction_ != 0) {
+          setDirectionValue(other.getDirectionValue());
+        }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -11380,13 +11374,113 @@ public final class Message {
         onChanged();
         return this;
       }
-      @java.lang.Override
+
+      private int count_ ;
+      /**
+       * <pre>
+       * 拉取条数, 小于等于0时使用服务端默认值
+       * </pre>
+       *
+       * <code>uint32 count = 4;</code>
+       */
+      public int getCount() {
+        return count_;
+      }
+      /**
+       * <pre>
+       * 拉取条数, 小于等于0时使用服务端默认值
+       * </pre>
+       *
+       * <code>uint32 count = 4;</code>
+       */
+      public Builder setCount(int value) {
+        
+        count_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * 拉取条数, 小于等于0时使用服务端默认值
+       * </pre>
+       *
+       * <code>uint32 count = 4;</code>
+       */
+      public Builder clearCount() {
+        
+        count_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int direction_ = 0;
+      /**
+       * <pre>
+       * 拉取方向, 默认向下
+       * </pre>
+       *
+       * <code>.com.raven.common.protos.PullDirection direction = 5;</code>
+       */
+      public int getDirectionValue() {
+        return direction_;
+      }
+      /**
+       * <pre>
+       * 拉取方向, 默认向下
+       * </pre>
+       *
+       * <code>.com.raven.common.protos.PullDirection direction = 5;</code>
+       */
+      public Builder setDirectionValue(int value) {
+        direction_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * 拉取方向, 默认向下
+       * </pre>
+       *
+       * <code>.com.raven.common.protos.PullDirection direction = 5;</code>
+       */
+      public com.raven.common.protos.Message.PullDirection getDirection() {
+        com.raven.common.protos.Message.PullDirection result = com.raven.common.protos.Message.PullDirection.valueOf(direction_);
+        return result == null ? com.raven.common.protos.Message.PullDirection.UNRECOGNIZED : result;
+      }
+      /**
+       * <pre>
+       * 拉取方向, 默认向下
+       * </pre>
+       *
+       * <code>.com.raven.common.protos.PullDirection direction = 5;</code>
+       */
+      public Builder setDirection(com.raven.common.protos.Message.PullDirection value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        
+        direction_ = value.getNumber();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * 拉取方向, 默认向下
+       * </pre>
+       *
+       * <code>.com.raven.common.protos.PullDirection direction = 5;</code>
+       */
+      public Builder clearDirection() {
+        
+        direction_ = 0;
+        onChanged();
+        return this;
+      }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFieldsProto3(unknownFields);
       }
 
-      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -11408,7 +11502,6 @@ public final class Message {
 
     private static final com.google.protobuf.Parser<HisMessagesReq>
         PARSER = new com.google.protobuf.AbstractParser<HisMessagesReq>() {
-      @java.lang.Override
       public HisMessagesReq parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -11426,7 +11519,6 @@ public final class Message {
       return PARSER;
     }
 
-    @java.lang.Override
     public com.raven.common.protos.Message.HisMessagesReq getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -11582,6 +11674,13 @@ public final class Message {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 8: {
 
               id_ = input.readUInt64();
@@ -11613,13 +11712,6 @@ public final class Message {
               unReadCount_ = input.readUInt64();
               break;
             }
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -11640,7 +11732,6 @@ public final class Message {
       return com.raven.common.protos.Message.internal_static_com_raven_common_protos_HisMessagesAck_descriptor;
     }
 
-    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.raven.common.protos.Message.internal_static_com_raven_common_protos_HisMessagesAck_fieldAccessorTable
@@ -11724,7 +11815,6 @@ public final class Message {
      * <code>.com.raven.common.protos.ConverType convType = 3;</code>
      */
     public com.raven.common.protos.Message.ConverType getConvType() {
-      @SuppressWarnings("deprecation")
       com.raven.common.protos.Message.ConverType result = com.raven.common.protos.Message.ConverType.valueOf(convType_);
       return result == null ? com.raven.common.protos.Message.ConverType.UNRECOGNIZED : result;
     }
@@ -11798,7 +11888,6 @@ public final class Message {
     }
 
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -11808,7 +11897,6 @@ public final class Message {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (id_ != 0L) {
@@ -11829,7 +11917,6 @@ public final class Message {
       unknownFields.writeTo(output);
     }
 
-    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -11979,7 +12066,6 @@ public final class Message {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -11987,7 +12073,6 @@ public final class Message {
     public static Builder newBuilder(com.raven.common.protos.Message.HisMessagesAck prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -12015,7 +12100,6 @@ public final class Message {
         return com.raven.common.protos.Message.internal_static_com_raven_common_protos_HisMessagesAck_descriptor;
       }
 
-      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return com.raven.common.protos.Message.internal_static_com_raven_common_protos_HisMessagesAck_fieldAccessorTable
@@ -12039,7 +12123,6 @@ public final class Message {
           getMessageListFieldBuilder();
         }
       }
-      @java.lang.Override
       public Builder clear() {
         super.clear();
         id_ = 0L;
@@ -12059,18 +12142,15 @@ public final class Message {
         return this;
       }
 
-      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return com.raven.common.protos.Message.internal_static_com_raven_common_protos_HisMessagesAck_descriptor;
       }
 
-      @java.lang.Override
       public com.raven.common.protos.Message.HisMessagesAck getDefaultInstanceForType() {
         return com.raven.common.protos.Message.HisMessagesAck.getDefaultInstance();
       }
 
-      @java.lang.Override
       public com.raven.common.protos.Message.HisMessagesAck build() {
         com.raven.common.protos.Message.HisMessagesAck result = buildPartial();
         if (!result.isInitialized()) {
@@ -12079,7 +12159,6 @@ public final class Message {
         return result;
       }
 
-      @java.lang.Override
       public com.raven.common.protos.Message.HisMessagesAck buildPartial() {
         com.raven.common.protos.Message.HisMessagesAck result = new com.raven.common.protos.Message.HisMessagesAck(this);
         int from_bitField0_ = bitField0_;
@@ -12102,39 +12181,32 @@ public final class Message {
         return result;
       }
 
-      @java.lang.Override
       public Builder clone() {
         return (Builder) super.clone();
       }
-      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
-      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
-      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
-      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
-      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.raven.common.protos.Message.HisMessagesAck) {
           return mergeFrom((com.raven.common.protos.Message.HisMessagesAck)other);
@@ -12190,12 +12262,10 @@ public final class Message {
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -12373,7 +12443,6 @@ public final class Message {
        * <code>.com.raven.common.protos.ConverType convType = 3;</code>
        */
       public com.raven.common.protos.Message.ConverType getConvType() {
-        @SuppressWarnings("deprecation")
         com.raven.common.protos.Message.ConverType result = com.raven.common.protos.Message.ConverType.valueOf(convType_);
         return result == null ? com.raven.common.protos.Message.ConverType.UNRECOGNIZED : result;
       }
@@ -12756,13 +12825,11 @@ public final class Message {
         onChanged();
         return this;
       }
-      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFieldsProto3(unknownFields);
       }
 
-      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -12784,7 +12851,6 @@ public final class Message {
 
     private static final com.google.protobuf.Parser<HisMessagesAck>
         PARSER = new com.google.protobuf.AbstractParser<HisMessagesAck>() {
-      @java.lang.Override
       public HisMessagesAck parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -12802,7 +12868,6 @@ public final class Message {
       return PARSER;
     }
 
-    @java.lang.Override
     public com.raven.common.protos.Message.HisMessagesAck getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -12895,6 +12960,13 @@ public final class Message {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 8: {
 
               id_ = input.readUInt64();
@@ -12910,13 +12982,6 @@ public final class Message {
               java.lang.String s = input.readStringRequireUtf8();
 
               conversationId_ = s;
-              break;
-            }
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
               break;
             }
           }
@@ -12936,7 +13001,6 @@ public final class Message {
       return com.raven.common.protos.Message.internal_static_com_raven_common_protos_ConverReq_descriptor;
     }
 
-    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.raven.common.protos.Message.internal_static_com_raven_common_protos_ConverReq_fieldAccessorTable
@@ -12969,7 +13033,6 @@ public final class Message {
      * <code>.com.raven.common.protos.OperationType type = 2;</code>
      */
     public com.raven.common.protos.Message.OperationType getType() {
-      @SuppressWarnings("deprecation")
       com.raven.common.protos.Message.OperationType result = com.raven.common.protos.Message.OperationType.valueOf(type_);
       return result == null ? com.raven.common.protos.Message.OperationType.UNRECOGNIZED : result;
     }
@@ -13017,7 +13080,6 @@ public final class Message {
     }
 
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -13027,7 +13089,6 @@ public final class Message {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (id_ != 0L) {
@@ -13042,7 +13103,6 @@ public final class Message {
       unknownFields.writeTo(output);
     }
 
-    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -13173,7 +13233,6 @@ public final class Message {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -13181,7 +13240,6 @@ public final class Message {
     public static Builder newBuilder(com.raven.common.protos.Message.ConverReq prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -13209,7 +13267,6 @@ public final class Message {
         return com.raven.common.protos.Message.internal_static_com_raven_common_protos_ConverReq_descriptor;
       }
 
-      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return com.raven.common.protos.Message.internal_static_com_raven_common_protos_ConverReq_fieldAccessorTable
@@ -13232,7 +13289,6 @@ public final class Message {
                 .alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
       public Builder clear() {
         super.clear();
         id_ = 0L;
@@ -13244,18 +13300,15 @@ public final class Message {
         return this;
       }
 
-      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return com.raven.common.protos.Message.internal_static_com_raven_common_protos_ConverReq_descriptor;
       }
 
-      @java.lang.Override
       public com.raven.common.protos.Message.ConverReq getDefaultInstanceForType() {
         return com.raven.common.protos.Message.ConverReq.getDefaultInstance();
       }
 
-      @java.lang.Override
       public com.raven.common.protos.Message.ConverReq build() {
         com.raven.common.protos.Message.ConverReq result = buildPartial();
         if (!result.isInitialized()) {
@@ -13264,7 +13317,6 @@ public final class Message {
         return result;
       }
 
-      @java.lang.Override
       public com.raven.common.protos.Message.ConverReq buildPartial() {
         com.raven.common.protos.Message.ConverReq result = new com.raven.common.protos.Message.ConverReq(this);
         result.id_ = id_;
@@ -13274,39 +13326,32 @@ public final class Message {
         return result;
       }
 
-      @java.lang.Override
       public Builder clone() {
         return (Builder) super.clone();
       }
-      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
-      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
-      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
-      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
-      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.raven.common.protos.Message.ConverReq) {
           return mergeFrom((com.raven.common.protos.Message.ConverReq)other);
@@ -13333,12 +13378,10 @@ public final class Message {
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -13414,7 +13457,6 @@ public final class Message {
        * <code>.com.raven.common.protos.OperationType type = 2;</code>
        */
       public com.raven.common.protos.Message.OperationType getType() {
-        @SuppressWarnings("deprecation")
         com.raven.common.protos.Message.OperationType result = com.raven.common.protos.Message.OperationType.valueOf(type_);
         return result == null ? com.raven.common.protos.Message.OperationType.UNRECOGNIZED : result;
       }
@@ -13528,13 +13570,11 @@ public final class Message {
         onChanged();
         return this;
       }
-      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFieldsProto3(unknownFields);
       }
 
-      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -13556,7 +13596,6 @@ public final class Message {
 
     private static final com.google.protobuf.Parser<ConverReq>
         PARSER = new com.google.protobuf.AbstractParser<ConverReq>() {
-      @java.lang.Override
       public ConverReq parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -13574,7 +13613,6 @@ public final class Message {
       return PARSER;
     }
 
-    @java.lang.Override
     public com.raven.common.protos.Message.ConverReq getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -13704,6 +13742,13 @@ public final class Message {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 8: {
 
               id_ = input.readUInt64();
@@ -13742,13 +13787,6 @@ public final class Message {
                   input.readMessage(com.raven.common.protos.Message.ConverInfo.parser(), extensionRegistry));
               break;
             }
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -13769,7 +13807,6 @@ public final class Message {
       return com.raven.common.protos.Message.internal_static_com_raven_common_protos_ConverAck_descriptor;
     }
 
-    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.raven.common.protos.Message.internal_static_com_raven_common_protos_ConverAck_fieldAccessorTable
@@ -13811,7 +13848,6 @@ public final class Message {
      * <code>.com.raven.common.protos.Code code = 3;</code>
      */
     public com.raven.common.protos.Message.Code getCode() {
-      @SuppressWarnings("deprecation")
       com.raven.common.protos.Message.Code result = com.raven.common.protos.Message.Code.valueOf(code_);
       return result == null ? com.raven.common.protos.Message.Code.UNRECOGNIZED : result;
     }
@@ -13886,7 +13922,6 @@ public final class Message {
     }
 
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -13896,7 +13931,6 @@ public final class Message {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (id_ != 0L) {
@@ -13917,7 +13951,6 @@ public final class Message {
       unknownFields.writeTo(output);
     }
 
-    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -14073,7 +14106,6 @@ public final class Message {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -14081,7 +14113,6 @@ public final class Message {
     public static Builder newBuilder(com.raven.common.protos.Message.ConverAck prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -14109,7 +14140,6 @@ public final class Message {
         return com.raven.common.protos.Message.internal_static_com_raven_common_protos_ConverAck_descriptor;
       }
 
-      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return com.raven.common.protos.Message.internal_static_com_raven_common_protos_ConverAck_fieldAccessorTable
@@ -14133,7 +14163,6 @@ public final class Message {
           getConverListFieldBuilder();
         }
       }
-      @java.lang.Override
       public Builder clear() {
         super.clear();
         id_ = 0L;
@@ -14157,18 +14186,15 @@ public final class Message {
         return this;
       }
 
-      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return com.raven.common.protos.Message.internal_static_com_raven_common_protos_ConverAck_descriptor;
       }
 
-      @java.lang.Override
       public com.raven.common.protos.Message.ConverAck getDefaultInstanceForType() {
         return com.raven.common.protos.Message.ConverAck.getDefaultInstance();
       }
 
-      @java.lang.Override
       public com.raven.common.protos.Message.ConverAck build() {
         com.raven.common.protos.Message.ConverAck result = buildPartial();
         if (!result.isInitialized()) {
@@ -14177,7 +14203,6 @@ public final class Message {
         return result;
       }
 
-      @java.lang.Override
       public com.raven.common.protos.Message.ConverAck buildPartial() {
         com.raven.common.protos.Message.ConverAck result = new com.raven.common.protos.Message.ConverAck(this);
         int from_bitField0_ = bitField0_;
@@ -14204,39 +14229,32 @@ public final class Message {
         return result;
       }
 
-      @java.lang.Override
       public Builder clone() {
         return (Builder) super.clone();
       }
-      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
-      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
-      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
-      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
-      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.raven.common.protos.Message.ConverAck) {
           return mergeFrom((com.raven.common.protos.Message.ConverAck)other);
@@ -14291,12 +14309,10 @@ public final class Message {
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -14385,7 +14401,6 @@ public final class Message {
        * <code>.com.raven.common.protos.Code code = 3;</code>
        */
       public com.raven.common.protos.Message.Code getCode() {
-        @SuppressWarnings("deprecation")
         com.raven.common.protos.Message.Code result = com.raven.common.protos.Message.Code.valueOf(code_);
         return result == null ? com.raven.common.protos.Message.Code.UNRECOGNIZED : result;
       }
@@ -14813,13 +14828,11 @@ public final class Message {
         }
         return converListBuilder_;
       }
-      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFieldsProto3(unknownFields);
       }
 
-      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -14841,7 +14854,6 @@ public final class Message {
 
     private static final com.google.protobuf.Parser<ConverAck>
         PARSER = new com.google.protobuf.AbstractParser<ConverAck>() {
-      @java.lang.Override
       public ConverAck parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -14859,7 +14871,6 @@ public final class Message {
       return PARSER;
     }
 
-    @java.lang.Override
     public com.raven.common.protos.Message.ConverAck getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -15050,6 +15061,13 @@ public final class Message {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 10: {
               java.lang.String s = input.readStringRequireUtf8();
 
@@ -15100,13 +15118,6 @@ public final class Message {
               time_ = input.readUInt64();
               break;
             }
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -15127,7 +15138,6 @@ public final class Message {
       return com.raven.common.protos.Message.internal_static_com_raven_common_protos_ConverInfo_descriptor;
     }
 
-    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.raven.common.protos.Message.internal_static_com_raven_common_protos_ConverInfo_fieldAccessorTable
@@ -15198,7 +15208,6 @@ public final class Message {
      * <code>.com.raven.common.protos.ConverType type = 2;</code>
      */
     public com.raven.common.protos.Message.ConverType getType() {
-      @SuppressWarnings("deprecation")
       com.raven.common.protos.Message.ConverType result = com.raven.common.protos.Message.ConverType.valueOf(type_);
       return result == null ? com.raven.common.protos.Message.ConverType.UNRECOGNIZED : result;
     }
@@ -15350,7 +15359,6 @@ public final class Message {
     }
 
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -15360,7 +15368,6 @@ public final class Message {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (!getConverIdBytes().isEmpty()) {
@@ -15387,7 +15394,6 @@ public final class Message {
       unknownFields.writeTo(output);
     }
 
-    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -15561,7 +15567,6 @@ public final class Message {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -15569,7 +15574,6 @@ public final class Message {
     public static Builder newBuilder(com.raven.common.protos.Message.ConverInfo prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -15597,7 +15601,6 @@ public final class Message {
         return com.raven.common.protos.Message.internal_static_com_raven_common_protos_ConverInfo_descriptor;
       }
 
-      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return com.raven.common.protos.Message.internal_static_com_raven_common_protos_ConverInfo_fieldAccessorTable
@@ -15620,7 +15623,6 @@ public final class Message {
                 .alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
       public Builder clear() {
         super.clear();
         converId_ = "";
@@ -15644,18 +15646,15 @@ public final class Message {
         return this;
       }
 
-      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return com.raven.common.protos.Message.internal_static_com_raven_common_protos_ConverInfo_descriptor;
       }
 
-      @java.lang.Override
       public com.raven.common.protos.Message.ConverInfo getDefaultInstanceForType() {
         return com.raven.common.protos.Message.ConverInfo.getDefaultInstance();
       }
 
-      @java.lang.Override
       public com.raven.common.protos.Message.ConverInfo build() {
         com.raven.common.protos.Message.ConverInfo result = buildPartial();
         if (!result.isInitialized()) {
@@ -15664,7 +15663,6 @@ public final class Message {
         return result;
       }
 
-      @java.lang.Override
       public com.raven.common.protos.Message.ConverInfo buildPartial() {
         com.raven.common.protos.Message.ConverInfo result = new com.raven.common.protos.Message.ConverInfo(this);
         int from_bitField0_ = bitField0_;
@@ -15689,39 +15687,32 @@ public final class Message {
         return result;
       }
 
-      @java.lang.Override
       public Builder clone() {
         return (Builder) super.clone();
       }
-      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
-      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
-      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
-      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
-      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.raven.common.protos.Message.ConverInfo) {
           return mergeFrom((com.raven.common.protos.Message.ConverInfo)other);
@@ -15768,12 +15759,10 @@ public final class Message {
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -15913,7 +15902,6 @@ public final class Message {
        * <code>.com.raven.common.protos.ConverType type = 2;</code>
        */
       public com.raven.common.protos.Message.ConverType getType() {
-        @SuppressWarnings("deprecation")
         com.raven.common.protos.Message.ConverType result = com.raven.common.protos.Message.ConverType.valueOf(type_);
         return result == null ? com.raven.common.protos.Message.ConverType.UNRECOGNIZED : result;
       }
@@ -16394,13 +16382,11 @@ public final class Message {
         onChanged();
         return this;
       }
-      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFieldsProto3(unknownFields);
       }
 
-      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -16422,7 +16408,6 @@ public final class Message {
 
     private static final com.google.protobuf.Parser<ConverInfo>
         PARSER = new com.google.protobuf.AbstractParser<ConverInfo>() {
-      @java.lang.Override
       public ConverInfo parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -16440,7 +16425,6 @@ public final class Message {
       return PARSER;
     }
 
-    @java.lang.Override
     public com.raven.common.protos.Message.ConverInfo getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -16626,6 +16610,13 @@ public final class Message {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 8: {
 
               id_ = input.readUInt64();
@@ -16672,13 +16663,6 @@ public final class Message {
               fromUid_ = s;
               break;
             }
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -16696,7 +16680,6 @@ public final class Message {
       return com.raven.common.protos.Message.internal_static_com_raven_common_protos_NotifyMessage_descriptor;
     }
 
-    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.raven.common.protos.Message.internal_static_com_raven_common_protos_NotifyMessage_fieldAccessorTable
@@ -16737,7 +16720,6 @@ public final class Message {
      * <code>.com.raven.common.protos.NotifyType type = 2;</code>
      */
     public com.raven.common.protos.Message.NotifyType getType() {
-      @SuppressWarnings("deprecation")
       com.raven.common.protos.Message.NotifyType result = com.raven.common.protos.Message.NotifyType.valueOf(type_);
       return result == null ? com.raven.common.protos.Message.NotifyType.UNRECOGNIZED : result;
     }
@@ -16846,7 +16828,6 @@ public final class Message {
      * <code>.com.raven.common.protos.ConverType convType = 5;</code>
      */
     public com.raven.common.protos.Message.ConverType getConvType() {
-      @SuppressWarnings("deprecation")
       com.raven.common.protos.Message.ConverType result = com.raven.common.protos.Message.ConverType.valueOf(convType_);
       return result == null ? com.raven.common.protos.Message.ConverType.UNRECOGNIZED : result;
     }
@@ -16949,7 +16930,6 @@ public final class Message {
     }
 
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -16959,7 +16939,6 @@ public final class Message {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (id_ != 0L) {
@@ -16989,7 +16968,6 @@ public final class Message {
       unknownFields.writeTo(output);
     }
 
-    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -17157,7 +17135,6 @@ public final class Message {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -17165,7 +17142,6 @@ public final class Message {
     public static Builder newBuilder(com.raven.common.protos.Message.NotifyMessage prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -17193,7 +17169,6 @@ public final class Message {
         return com.raven.common.protos.Message.internal_static_com_raven_common_protos_NotifyMessage_descriptor;
       }
 
-      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return com.raven.common.protos.Message.internal_static_com_raven_common_protos_NotifyMessage_fieldAccessorTable
@@ -17216,7 +17191,6 @@ public final class Message {
                 .alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
       public Builder clear() {
         super.clear();
         id_ = 0L;
@@ -17238,18 +17212,15 @@ public final class Message {
         return this;
       }
 
-      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return com.raven.common.protos.Message.internal_static_com_raven_common_protos_NotifyMessage_descriptor;
       }
 
-      @java.lang.Override
       public com.raven.common.protos.Message.NotifyMessage getDefaultInstanceForType() {
         return com.raven.common.protos.Message.NotifyMessage.getDefaultInstance();
       }
 
-      @java.lang.Override
       public com.raven.common.protos.Message.NotifyMessage build() {
         com.raven.common.protos.Message.NotifyMessage result = buildPartial();
         if (!result.isInitialized()) {
@@ -17258,7 +17229,6 @@ public final class Message {
         return result;
       }
 
-      @java.lang.Override
       public com.raven.common.protos.Message.NotifyMessage buildPartial() {
         com.raven.common.protos.Message.NotifyMessage result = new com.raven.common.protos.Message.NotifyMessage(this);
         result.id_ = id_;
@@ -17273,39 +17243,32 @@ public final class Message {
         return result;
       }
 
-      @java.lang.Override
       public Builder clone() {
         return (Builder) super.clone();
       }
-      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
-      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
-      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
-      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
-      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.raven.common.protos.Message.NotifyMessage) {
           return mergeFrom((com.raven.common.protos.Message.NotifyMessage)other);
@@ -17350,12 +17313,10 @@ public final class Message {
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -17443,7 +17404,6 @@ public final class Message {
        * <code>.com.raven.common.protos.NotifyType type = 2;</code>
        */
       public com.raven.common.protos.Message.NotifyType getType() {
-        @SuppressWarnings("deprecation")
         com.raven.common.protos.Message.NotifyType result = com.raven.common.protos.Message.NotifyType.valueOf(type_);
         return result == null ? com.raven.common.protos.Message.NotifyType.UNRECOGNIZED : result;
       }
@@ -17686,7 +17646,6 @@ public final class Message {
        * <code>.com.raven.common.protos.ConverType convType = 5;</code>
        */
       public com.raven.common.protos.Message.ConverType getConvType() {
-        @SuppressWarnings("deprecation")
         com.raven.common.protos.Message.ConverType result = com.raven.common.protos.Message.ConverType.valueOf(convType_);
         return result == null ? com.raven.common.protos.Message.ConverType.UNRECOGNIZED : result;
       }
@@ -17935,13 +17894,11 @@ public final class Message {
         onChanged();
         return this;
       }
-      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFieldsProto3(unknownFields);
       }
 
-      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -17963,7 +17920,6 @@ public final class Message {
 
     private static final com.google.protobuf.Parser<NotifyMessage>
         PARSER = new com.google.protobuf.AbstractParser<NotifyMessage>() {
-      @java.lang.Override
       public NotifyMessage parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -17981,7 +17937,6 @@ public final class Message {
       return PARSER;
     }
 
-    @java.lang.Override
     public com.raven.common.protos.Message.NotifyMessage getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -18110,42 +18065,45 @@ public final class Message {
       ".common.protos.Code\"|\n\016MessageContent\022\n\n" +
       "\002id\030\001 \001(\004\022\013\n\003uid\030\002 \001(\t\0222\n\004type\030\003 \001(\0162$.c" +
       "om.raven.common.protos.MessageType\022\017\n\007co" +
-      "ntent\030\004 \001(\t\022\014\n\004time\030\005 \001(\004\"?\n\016HisMessages" +
-      "Req\022\n\n\002id\030\001 \001(\004\022\020\n\010converId\030\002 \001(\t\022\017\n\007beg" +
-      "inId\030\003 \001(\004\"\270\001\n\016HisMessagesAck\022\n\n\002id\030\001 \001(" +
-      "\004\022\020\n\010converId\030\002 \001(\t\0225\n\010convType\030\003 \001(\0162#." +
-      "com.raven.common.protos.ConverType\022<\n\013me" +
-      "ssageList\030\004 \003(\0132\'.com.raven.common.proto" +
-      "s.MessageContent\022\023\n\013unReadCount\030\005 \001(\004\"e\n" +
-      "\tConverReq\022\n\n\002id\030\001 \001(\004\0224\n\004type\030\002 \001(\0162&.c" +
-      "om.raven.common.protos.OperationType\022\026\n\016" +
-      "conversationId\030\003 \001(\t\"\304\001\n\tConverAck\022\n\n\002id" +
-      "\030\001 \001(\004\022+\n\004code\030\003 \001(\0162\035.com.raven.common." +
-      "protos.Code\022\014\n\004time\030\004 \001(\004\0227\n\nconverInfo\030" +
-      "\005 \001(\0132#.com.raven.common.protos.ConverIn" +
-      "fo\0227\n\nconverList\030\006 \003(\0132#.com.raven.commo" +
-      "n.protos.ConverInfo\"\322\001\n\nConverInfo\022\020\n\010co" +
-      "nverId\030\001 \001(\t\0221\n\004type\030\002 \001(\0162#.com.raven.c" +
-      "ommon.protos.ConverType\022\017\n\007uidList\030\003 \003(\t" +
-      "\022\017\n\007groupId\030\004 \001(\t\022\021\n\treadMsgId\030\005 \001(\004\022<\n\013" +
-      "lastContent\030\006 \001(\0132\'.com.raven.common.pro" +
-      "tos.MessageContent\022\014\n\004time\030\007 \001(\004\"\332\001\n\rNot" +
-      "ifyMessage\022\n\n\002id\030\001 \001(\004\0221\n\004type\030\002 \001(\0162#.c" +
-      "om.raven.common.protos.NotifyType\022\021\n\ttar" +
-      "getUid\030\003 \001(\t\022\020\n\010converId\030\004 \001(\t\0225\n\010convTy" +
-      "pe\030\005 \001(\0162#.com.raven.common.protos.Conve" +
-      "rType\022\017\n\007content\030\006 \001(\t\022\014\n\004time\030\007 \001(\004\022\017\n\007" +
-      "fromUid\030\010 \001(\t*#\n\rHeartBeatType\022\010\n\004PING\020\000" +
-      "\022\010\n\004PONG\020\001*\250\001\n\004Code\022\013\n\007SUCCESS\020\000\022\024\n\020CLIE" +
-      "NT_ID_REPEAT\020\001\022\027\n\023CONVER_TYPE_INVALID\020\002\022" +
-      "\017\n\013KAFKA_ERROR\020\003\022\025\n\021CONVER_ID_INVALID\020\004\022" +
-      "\r\n\tNO_TARGET\020\005\022\021\n\rTOKEN_INVALID\020\006\022\032\n\026OPE" +
-      "RATION_TYPE_INVALID\020\007*#\n\nConverType\022\n\n\006S" +
-      "INGLE\020\000\022\t\n\005GROUP\020\001*:\n\013MessageType\022\010\n\004TEX" +
-      "T\020\000\022\013\n\007PICTURE\020\001\022\t\n\005VOICE\020\002\022\t\n\005VIDEO\020\003*$" +
-      "\n\rOperationType\022\n\n\006DETAIL\020\000\022\007\n\003ALL\020\001*(\n\n" +
-      "NotifyType\022\010\n\004USER\020\000\022\020\n\014CONVERSATION\020\001B\t" +
-      "B\007Messageb\006proto3"
+      "ntent\030\004 \001(\t\022\014\n\004time\030\005 \001(\004\"\211\001\n\016HisMessage" +
+      "sReq\022\n\n\002id\030\001 \001(\004\022\020\n\010converId\030\002 \001(\t\022\017\n\007be" +
+      "ginId\030\003 \001(\004\022\r\n\005count\030\004 \001(\r\0229\n\tdirection\030" +
+      "\005 \001(\0162&.com.raven.common.protos.PullDire" +
+      "ction\"\270\001\n\016HisMessagesAck\022\n\n\002id\030\001 \001(\004\022\020\n\010" +
+      "converId\030\002 \001(\t\0225\n\010convType\030\003 \001(\0162#.com.r" +
+      "aven.common.protos.ConverType\022<\n\013message" +
+      "List\030\004 \003(\0132\'.com.raven.common.protos.Mes" +
+      "sageContent\022\023\n\013unReadCount\030\005 \001(\004\"e\n\tConv" +
+      "erReq\022\n\n\002id\030\001 \001(\004\0224\n\004type\030\002 \001(\0162&.com.ra" +
+      "ven.common.protos.OperationType\022\026\n\016conve" +
+      "rsationId\030\003 \001(\t\"\304\001\n\tConverAck\022\n\n\002id\030\001 \001(" +
+      "\004\022+\n\004code\030\003 \001(\0162\035.com.raven.common.proto" +
+      "s.Code\022\014\n\004time\030\004 \001(\004\0227\n\nconverInfo\030\005 \001(\013" +
+      "2#.com.raven.common.protos.ConverInfo\0227\n" +
+      "\nconverList\030\006 \003(\0132#.com.raven.common.pro" +
+      "tos.ConverInfo\"\322\001\n\nConverInfo\022\020\n\010converI" +
+      "d\030\001 \001(\t\0221\n\004type\030\002 \001(\0162#.com.raven.common" +
+      ".protos.ConverType\022\017\n\007uidList\030\003 \003(\t\022\017\n\007g" +
+      "roupId\030\004 \001(\t\022\021\n\treadMsgId\030\005 \001(\004\022<\n\013lastC" +
+      "ontent\030\006 \001(\0132\'.com.raven.common.protos.M" +
+      "essageContent\022\014\n\004time\030\007 \001(\004\"\332\001\n\rNotifyMe" +
+      "ssage\022\n\n\002id\030\001 \001(\004\0221\n\004type\030\002 \001(\0162#.com.ra" +
+      "ven.common.protos.NotifyType\022\021\n\ttargetUi" +
+      "d\030\003 \001(\t\022\020\n\010converId\030\004 \001(\t\0225\n\010convType\030\005 " +
+      "\001(\0162#.com.raven.common.protos.ConverType" +
+      "\022\017\n\007content\030\006 \001(\t\022\014\n\004time\030\007 \001(\004\022\017\n\007fromU" +
+      "id\030\010 \001(\t*#\n\rHeartBeatType\022\010\n\004PING\020\000\022\010\n\004P" +
+      "ONG\020\001*\250\001\n\004Code\022\013\n\007SUCCESS\020\000\022\024\n\020CLIENT_ID" +
+      "_REPEAT\020\001\022\027\n\023CONVER_TYPE_INVALID\020\002\022\017\n\013KA" +
+      "FKA_ERROR\020\003\022\025\n\021CONVER_ID_INVALID\020\004\022\r\n\tNO" +
+      "_TARGET\020\005\022\021\n\rTOKEN_INVALID\020\006\022\032\n\026OPERATIO" +
+      "N_TYPE_INVALID\020\007*#\n\nConverType\022\n\n\006SINGLE" +
+      "\020\000\022\t\n\005GROUP\020\001*:\n\013MessageType\022\010\n\004TEXT\020\000\022\013" +
+      "\n\007PICTURE\020\001\022\t\n\005VOICE\020\002\022\t\n\005VIDEO\020\003*!\n\rPul" +
+      "lDirection\022\010\n\004DOWN\020\000\022\006\n\002UP\020\001*$\n\rOperatio" +
+      "nType\022\n\n\006DETAIL\020\000\022\007\n\003ALL\020\001*(\n\nNotifyType" +
+      "\022\010\n\004USER\020\000\022\020\n\014CONVERSATION\020\001B\tB\007Messageb" +
+      "\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -18212,7 +18170,7 @@ public final class Message {
     internal_static_com_raven_common_protos_HisMessagesReq_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_raven_common_protos_HisMessagesReq_descriptor,
-        new java.lang.String[] { "Id", "ConverId", "BeginId", });
+        new java.lang.String[] { "Id", "ConverId", "BeginId", "Count", "Direction", });
     internal_static_com_raven_common_protos_HisMessagesAck_descriptor =
       getDescriptor().getMessageTypes().get(9);
     internal_static_com_raven_common_protos_HisMessagesAck_fieldAccessorTable = new

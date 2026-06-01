@@ -7,6 +7,7 @@ import com.raven.common.protos.Message.HisMessagesAck;
 import com.raven.common.protos.Message.HisMessagesReq;
 import com.raven.common.protos.Message.MessageContent;
 import com.raven.common.protos.Message.MessageType;
+import com.raven.common.protos.Message.PullDirection;
 import com.raven.common.protos.Message.RavenMessage;
 import com.raven.common.protos.Message.RavenMessage.Type;
 import com.raven.common.utils.JsonHelper;
@@ -34,8 +35,9 @@ public class HistoryHandler extends SimpleChannelInboundHandler<RavenMessage> {
             HisMessagesReq req = message.getHisMessagesReq();
             log.info("receive history message request:{}",  JsonHelper.toJsonString(req));
             Conversation conversation = converManager.getConversation(req.getConverId());
+            boolean up = req.getDirection() == PullDirection.UP;
             List<MsgContent> msgContents = converManager
-                .getHistoryMsg(req.getConverId(), req.getBeginId());
+                .getHistoryMsg(req.getConverId(), req.getBeginId(), req.getCount(), up);
             List<MessageContent> contentList = new ArrayList<>();
             for (MsgContent msgContent : msgContents) {
                 MessageContent content = MessageContent.newBuilder().setId(msgContent.getId())

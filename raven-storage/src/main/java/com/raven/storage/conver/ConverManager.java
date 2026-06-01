@@ -17,6 +17,7 @@ import com.raven.common.utils.Constants;
 import com.raven.common.utils.JsonHelper;
 import com.raven.common.utils.UidUtil;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -125,16 +126,56 @@ public class ConverManager {
         redisTemplate.boundZSetOps(PREFIX_MESSAGE_ID + converId).add(str, msgContent.getId());
     }
 
+    /** Default number of history messages returned when the client does not specify a count. */
+    public static final int DEFAULT_HISTORY_COUNT = 100;
+
+    /** Upper bound on a single history page so one request cannot drain a conversation. */
+    public static final int MAX_HISTORY_COUNT = 100;
+
     public List<MsgContent> getHistoryMsg(String converId, Long beginId) {
+        return getHistoryMsg(converId, beginId, DEFAULT_HISTORY_COUNT, false);
+    }
+
+    /**
+     * Pull a page of history messages for a conversation.
+     *
+     * @param beginId anchor message id (exclusive)
+     * @param count   requested page size; values &lt;= 0 or greater than
+     *                {@link #MAX_HISTORY_COUNT} fall back to a safe bound
+     * @param up      {@code true} to pull older messages (id &lt; beginId),
+     *                {@code false} to pull newer messages (id &gt; beginId)
+     * @return messages in ascending id (chronological) order
+     */
+    public List<MsgContent> getHistoryMsg(String converId, Long beginId, int count, boolean up) {
+        int limit = normalizeCount(count);
+        Set<String> messages;
+        if (up) {
+            // Closest older messages: take the highest-scored ids below beginId.
+            messages = redisTemplate.opsForZSet()
+                .reverseRangeByScore(PREFIX_MESSAGE_ID + converId, Long.MIN_VALUE, beginId - 1,
+                    0, limit);
+        } else {
+            messages = redisTemplate.opsForZSet()
+                .rangeByScore(PREFIX_MESSAGE_ID + converId, beginId + 1, Long.MAX_VALUE, 0, limit);
+        }
         List<MsgContent> msgContents = new ArrayList<>();
-        Set<String> messages = redisTemplate.opsForZSet()
-            .rangeByScore(PREFIX_MESSAGE_ID + converId, beginId + 1,
-                Long.MAX_VALUE, 0, 100);
-        for (String message : messages) {
-            MsgContent msgContent = JsonHelper.readValue(message, MsgContent.class);
-            msgContents.add(msgContent);
+        if (messages != null) {
+            for (String message : messages) {
+                msgContents.add(JsonHelper.readValue(message, MsgContent.class));
+            }
+        }
+        if (up) {
+            // reverseRangeByScore returns newest-first; flip back to chronological order.
+            Collections.reverse(msgContents);
         }
         return msgContents;
+    }
+
+    private int normalizeCount(int count) {
+        if (count <= 0 || count > MAX_HISTORY_COUNT) {
+            return DEFAULT_HISTORY_COUNT;
+        }
+        return count;
     }
 
     public long getHistoryUnReadCount(String converId, Long beginId) {

@@ -3,6 +3,7 @@ package com.raven.gateway.config;
 import com.google.common.base.Strings;
 import com.raven.common.result.Result;
 import com.raven.common.result.ResultCode;
+import com.raven.gateway.kafka.ConsistentHashPartitioner;
 import java.util.Properties;
 import java.util.concurrent.Future;
 import javax.annotation.PostConstruct;
@@ -76,6 +77,13 @@ public class KafkaProducerManager {
         properties.setProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         properties.setProperty(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, keySerializer);
         properties.setProperty(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, valueSerializer);
+        // Pin every conversation (record key) to one partition with a consistent hash.
+        properties.setProperty(ProducerConfig.PARTITIONER_CLASS_CONFIG,
+            ConsistentHashPartitioner.class.getName());
+        // Keep a single in-flight request per connection so retries cannot reorder
+        // messages within a partition; combined with the partitioner this makes the
+        // consumption order match the production order for a conversation.
+        properties.setProperty(ProducerConfig.MAX_IN_FLIGHT_REQUESTS_PER_CONNECTION, "1");
         return properties;
     }
 

@@ -74,10 +74,10 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public ResultCode joinGroup(GroupReqParam reqParam) {
+    public Result joinGroup(GroupReqParam reqParam) {
         //params check.
         if (reqParam.getMembers() == null || reqParam.getMembers().size() == 0) {
-            return ResultCode.COMMON_INVALID_PARAMETER;
+            return Result.failure(ResultCode.COMMON_INVALID_PARAMETER);
         }
         if (!groupValidator.isValid(reqParam.getGroupId())) {
             return Result.failure(groupValidator.errorCode());
@@ -114,17 +114,17 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public ResultCode quitGroup(GroupReqParam reqParam) {
+    public Result quitGroup(GroupReqParam reqParam) {
         //params check.
         if (reqParam.getMembers() == null || reqParam.getMembers().size() == 0) {
-            return ResultCode.COMMON_INVALID_PARAMETER;
+            return Result.failure(ResultCode.COMMON_INVALID_PARAMETER);
         }
 
         if (!groupValidator.isValid(reqParam.getGroupId())) {
             return Result.failure(groupValidator.errorCode());
         }
         if (!memberNotValidator.isValid(reqParam.getGroupId(), reqParam.getMembers())) {
-            return Result.failure(groupValidator.errorCode());
+            return Result.failure(memberNotValidator.errorCode());
         }
         reqParam.getMembers().forEach(uid -> {
             GroupMemberModel member = new GroupMemberModel();

@@ -6,6 +6,7 @@ import static com.raven.common.utils.Constants.CONFIG_TCP_PORT;
 import static com.raven.common.utils.Constants.CONFIG_WEBSOCKET_PORT;
 import static com.raven.common.utils.Constants.DEFAULT_SEPARATES_SIGN;
 import static com.raven.common.utils.Constants.TOKEN_CACHE_DURATION;
+import static com.raven.common.utils.Constants.USER_TOKEN;
 
 import com.raven.admin.gateway.bean.Token;
 import com.raven.admin.gateway.service.GatewayService;
@@ -64,14 +65,33 @@ public class GatewayServiceImpl implements GatewayService {
 
     @Override
     public Result getToken(String uid, String appKey) {
+        String key = appKey + DEFAULT_SEPARATES_SIGN + uid;
+        String userTokenKey = USER_TOKEN + key;
+        // Reuse the cached token so a user keeps exactly one valid token and we
+        // do not regenerate (and leave stale tokens behind) on every request.
+        String cachedToken = stringRedisTemplate.opsForValue().get(userTokenKey);
+        if (cachedToken != null && stringRedisTemplate.hasKey(cachedToken)) {
+            refreshTokenExpire(userTokenKey, cachedToken);
+            return Result.success(new OutTokenInfoParam(appKey, uid, cachedToken));
+        }
         try {
             String token = new Token(uid, appKey).getToken(appKey);
-            String key = appKey + DEFAULT_SEPARATES_SIGN + uid;
+            // Drop the previous token, if any, so only one token stays valid per user.
+            if (cachedToken != null) {
+                stringRedisTemplate.delete(cachedToken);
+            }
             stringRedisTemplate.opsForValue().set(token, key, TOKEN_CACHE_DURATION, TimeUnit.DAYS);
+            stringRedisTemplate.opsForValue()
+                .set(userTokenKey, token, TOKEN_CACHE_DURATION, TimeUnit.DAYS);
             return Result.success(new OutTokenInfoParam(appKey, uid, token));
         } catch (TokenException e) {
             return Result.failure(ResultCode.APP_ERROR_TOKEN_CREATE_ERROR);
         }
+    }
+
+    private void refreshTokenExpire(String userTokenKey, String token) {
+        stringRedisTemplate.expire(userTokenKey, TOKEN_CACHE_DURATION, TimeUnit.DAYS);
+        stringRedisTemplate.expire(token, TOKEN_CACHE_DURATION, TimeUnit.DAYS);
     }
 
     @Override
